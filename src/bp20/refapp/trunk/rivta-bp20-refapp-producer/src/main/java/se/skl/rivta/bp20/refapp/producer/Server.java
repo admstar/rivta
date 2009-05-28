@@ -15,7 +15,8 @@ public class Server {
 		
 		logger.info("Starting server...");
 
-		startService(new RIV13606RequestEHRExtractProducer(), "13606-GetEhrExtract.url");
+		startService(new RIV13606RequestEHRExtractProducer(), "13606-GetEhrExtract.http.url");
+		startService(new RIV13606RequestEHRExtractProducer(), "13606-GetEhrExtract.https.url");
         logger.info("Server ready!");
     }
 

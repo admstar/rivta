@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  This file configures the Consumer
+  
+  Would normally be called just cxf.xml for auto-detection.
+  Detection now is used by setting -Dcxf.config.file property
+  
+  When running in the project structure, relative path to certs work, need to be replaced by 
+  absolute path when running in other environment
+  Have not been able to get ${parameter} to work with cxf
+  -->
+
+<beans 
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:cxf="http://cxf.apache.org/core"
+	xmlns:sec="http://cxf.apache.org/configuration/security"
+	xmlns:http="http://cxf.apache.org/transports/http/configuration"
+	xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
+	xsi:schemaLocation="
+		http://cxf.apache.org/core                          http://cxf.apache.org/schemas/core.xsd
+        http://cxf.apache.org/configuration/security        http://cxf.apache.org/schemas/configuration/security.xsd
+        http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd
+        http://www.springframework.org/schema/beans         http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+   <http:conduit name="{urn:riv13606:13606RequestEHRExtract:v1}RIV13606REQUEST_EHR_EXTRACT_Port.http-conduit">
+    <http:tlsClientParameters disableCNCheck="true"> 
+      <sec:trustManagers>
+          <sec:keyStore type="JKS" password="password"
+               file="../certs/consumer-truststore.jks"/>
+      </sec:trustManagers>
+      <sec:keyManagers keyPassword="password">
+           <sec:keyStore type="JKS" password="password" 
+                file="../certs/consumer.jks"/>
+      </sec:keyManagers>
+      <sec:cipherSuitesFilter>
+        <!-- these filters ensure that a ciphersuite with
+          export-suitable or null encryption is used,
+          but exclude anonymous Diffie-Hellman key change as
+          this is vulnerable to man-in-the-middle attacks -->
+        <sec:include>.*_EXPORT_.*</sec:include>
+        <sec:include>.*_EXPORT1024_.*</sec:include>
+        <sec:include>.*_WITH_DES_.*</sec:include>
+        <sec:include>.*_WITH_NULL_.*</sec:include>
+        <sec:exclude>.*_DH_anon_.*</sec:exclude>
+      </sec:cipherSuitesFilter>
+    </http:tlsClientParameters>
+   </http:conduit>
+
+	<cxf:bus>
+		<cxf:features>
+			<cxf:logging />
+		</cxf:features>
+	</cxf:bus>
+
+</beans>

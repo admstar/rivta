@@ -22,7 +22,7 @@ public class Util {
 	private static void loadProperties() {
 		try {
 			properties = new Properties();
-			URL url = ClassLoader.getSystemResource("rivta-bp20-refapp-util.props");
+			URL url = Util.class.getResource("/rivta-bp20-refapp-util.properties");
 			properties.load(url.openStream());
 			logger.debug("Loaded properties: {}", properties);
 		} catch (IOException e) {
