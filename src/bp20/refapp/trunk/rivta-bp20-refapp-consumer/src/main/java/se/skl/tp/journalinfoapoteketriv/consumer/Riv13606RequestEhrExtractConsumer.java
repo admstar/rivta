@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xmlsoap.schemas.ws._2003._03.addressing.AttributedURI;
 
 import se.skl.riv.wsdl.v1.ReceiverIdType;
 import se.skl.riv.wsdl.v1.RivHeaderType;
@@ -51,12 +52,13 @@ public class Riv13606RequestEhrExtractConsumer {
 			createEndpointUrlFromServiceAddress(serviceAddress)).getRIV13606REQUESTEHREXTRACTPort();
 
 		RivHeaderType rivHeader = createRivHeader("VardgivareA-IVK", "VardgivareC-IVK");
-
+		AttributedURI logicalAddress = new AttributedURI();
+		logicalAddress.setValue("VardgivareC-IVK");
 		RIV13606REQUESTEHREXTRACTRequestType request = new RIV13606REQUESTEHREXTRACTRequestType();
 		II ii = new II();
 		ii.setRoot(id);
 		request.setSubjectOfCareId(ii);
-		RIV13606REQUESTEHREXTRACTResponseType result = service.riv13606REQUESTEHREXTRACT(rivHeader, request);
+		RIV13606REQUESTEHREXTRACTResponseType result = service.riv13606REQUESTEHREXTRACT(logicalAddress, rivHeader, request);
 
 		List<EHREXTRACT> list = result.getEhrExtract();
 

@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:rivh="urn:riv:v1" xmlns:tns="urn:riv13606:13606RequestEHRExtract:v1" targetNamespace="urn:riv13606:13606RequestEHRExtract:v1">
+<wsdl:definitions 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+	xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" 
+	xmlns:rivh="urn:riv:v1" 
+	xmlns:wsa="http://schemas.xmlsoap.org/ws/2003/03/addressing" 
+	xmlns:tns="urn:riv13606:13606RequestEHRExtract:v1" 
+	targetNamespace="urn:riv13606:13606RequestEHRExtract:v1">
+	
 	<wsdl:types>
 		<xs:schema>
 			<xs:import schemaLocation="13606RequestEHRExtract-1.0.xsd" namespace="urn:riv13606:13606RequestEHRExtract:v1"/>
@@ -7,14 +18,19 @@
 		<xs:schema >
 			<xs:import schemaLocation="../../technical/riv/RivHeader-1.0.xsd" namespace="urn:riv:v1"/>
 		</xs:schema>
+		<xs:schema >
+			<xs:import schemaLocation="../../technical/ws_addressing/ws-addressing-1.0.xsd" namespace="http://schemas.xmlsoap.org/ws/2003/03/addressing"/>
+		</xs:schema>
 	</wsdl:types>
 		
 	<wsdl:message name="RIV13606REQUEST_EHR_EXTRACT_request">
+		<wsdl:part name="LogicalAddress" element="wsa:To" />
 		<wsdl:part name="RivHeader" element="rivh:RivHeader" />
 		<wsdl:part name="parameters" element="tns:RIV13606REQUEST_EHR_EXTRACT"/>
 		<!-- Renamed to parameters and removed _request part in element name  -->
 	</wsdl:message>
 	<wsdl:message name="RIV13606REQUEST_EHR_EXTRACT_CONTINUATION_request">
+		<wsdl:part name="LogicalAddress" element="wsa:To" />
 		<wsdl:part name="RivHeader" element="rivh:RivHeader" />
 		<wsdl:part name="parameters" element="tns:RIV13606REQUEST_EHR_EXTRACT_CONTINUATION"/>
 		<!-- Renamed to parameters and removed _request part in element name  -->
@@ -37,8 +53,9 @@
 		<wsdl:operation name="RIV13606REQUEST_EHR_EXTRACT">
 			<soap:operation soapAction=""/>
 			<wsdl:input>
-				<soap:body use="literal" parts="parameters"/>
+				<soap:header use='literal' message='tns:RIV13606REQUEST_EHR_EXTRACT_request' part='LogicalAddress' />
 				<soap:header use='literal' message='tns:RIV13606REQUEST_EHR_EXTRACT_request' part='RivHeader' />
+				<soap:body use="literal" parts="parameters"/>
 			</wsdl:input>
 			<wsdl:output>
 				<soap:body use="literal"/>
@@ -47,8 +64,9 @@
 		<wsdl:operation name="RIV13606REQUEST_EHR_EXTRACT_CONTINUATION">
 			<soap:operation soapAction=""/>
 			<wsdl:input>
-				<soap:body use="literal" parts="parameters"/>
+				<soap:header use='literal' message='tns:RIV13606REQUEST_EHR_EXTRACT_CONTINUATION_request' part='LogicalAddress' />
 				<soap:header use='literal' message='tns:RIV13606REQUEST_EHR_EXTRACT_CONTINUATION_request' part='RivHeader' />
+				<soap:body use="literal" parts="parameters"/>
 			</wsdl:input>
 			<wsdl:output>
 				<soap:body use="literal"/>
