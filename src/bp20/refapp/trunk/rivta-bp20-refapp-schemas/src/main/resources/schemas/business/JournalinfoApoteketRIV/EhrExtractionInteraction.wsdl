@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsdl:definitions 
+	name="EhrExtractionInteraction"
 	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
 	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
 	xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" 
@@ -7,57 +8,62 @@
 	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
 	xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" 
 	xmlns:wsa="http://www.w3.org/2005/08/addressing" 
-	xmlns:tns="urn:riv13606:13606RequestEHRExtract:v1" 
-	targetNamespace="urn:riv13606:13606RequestEHRExtract:v1">
+	xmlns:tns="urn:riv:ehr:ehrexchange:EhrExtraction:1:rivtabp20" 
+	xmlns:tjs="urn:riv:ehr:ehrexchange:EhrExtractionResponder:1" 
+	targetNamespace="urn:riv:ehr:ehrexchange:EhrExtraction:1:rivtabp20">
 	
 	<wsdl:types>
 		<xs:schema>
-			<xs:import schemaLocation="13606RequestEHRExtract-1.0.xsd" namespace="urn:riv13606:13606RequestEHRExtract:v1"/>
+			<xs:import schemaLocation="EhrExtractionResponder_1.0.xsd" namespace="urn:riv:ehr:ehrexchange:EhrExtractionResponder:1"/>
 		</xs:schema>
 		<xs:schema >
 			<xs:import schemaLocation="../../technical/wsaddressing/ws-addressing-1.0.xsd" namespace="http://www.w3.org/2005/08/addressing"/>
 		</xs:schema>
 	</wsdl:types>
 		
-	<wsdl:message name="RIV13606REQUEST_EHR_EXTRACT_request">
+	<wsdl:message name="GetEhrExtractRequest">
 		<wsdl:part name="LogicalAddress" element="wsa:To" />
-		<wsdl:part name="parameters" element="tns:RIV13606REQUEST_EHR_EXTRACT"/>
-		<!-- Renamed to parameters and removed _request part in element name  -->
+		<wsdl:part name="parameters" element="tjs:GetEhrExtract"/>
 	</wsdl:message>
-	<wsdl:message name="RIV13606REQUEST_EHR_EXTRACT_CONTINUATION_request">
+	<wsdl:message name="GetEhrExtractContinuationRequest">
 		<wsdl:part name="LogicalAddress" element="wsa:To" />
-		<wsdl:part name="parameters" element="tns:RIV13606REQUEST_EHR_EXTRACT_CONTINUATION"/>
-		<!-- Renamed to parameters and removed _request part in element name  -->
+		<wsdl:part name="parameters" element="tjs:GetEhrExtractContinuation"/>
 	</wsdl:message>
-	<wsdl:message name="RIV13606REQUEST_EHR_EXTRACT_response">
-		<wsdl:part name="RIV13606REQUEST_EHR_EXTRACT_response" element="tns:RIV13606REQUEST_EHR_EXTRACT_RESPONSE"/>
+	<wsdl:message name="GetEhrExtractResponse">
+		<wsdl:part name="parameters" element="tjs:GetEhrExtractResponse"/>
 	</wsdl:message>
-	<wsdl:portType name="RIV13606REQUEST_EHR_EXTRACT_PortType">
-		<wsdl:operation name="RIV13606REQUEST_EHR_EXTRACT">
-			<wsdl:input message="tns:RIV13606REQUEST_EHR_EXTRACT_request"/>
-			<wsdl:output message="tns:RIV13606REQUEST_EHR_EXTRACT_response"/>
+	
+	<wsdl:portType name="EhrExtractionResponderInterface">
+	
+		<wsdl:operation name="GetEhrExtract">
+			<wsdl:input message="tns:GetEhrExtractRequest"/>
+			<wsdl:output message="tns:GetEhrExtractResponse"/>
 		</wsdl:operation>
-		<wsdl:operation name="RIV13606REQUEST_EHR_EXTRACT_CONTINUATION">
-			<wsdl:input message="tns:RIV13606REQUEST_EHR_EXTRACT_CONTINUATION_request"/>
-			<wsdl:output message="tns:RIV13606REQUEST_EHR_EXTRACT_response"/>
+		
+		<wsdl:operation name="GetEhrExtractContinuation">
+			<wsdl:input message="tns:GetEhrExtractContinuationRequest"/>
+			<wsdl:output message="tns:GetEhrExtractResponse"/>
 		</wsdl:operation>
 	</wsdl:portType>
-	<wsdl:binding name="RIV13606REQUEST_EHR_EXTRACT_Binding" type="tns:RIV13606REQUEST_EHR_EXTRACT_PortType">
+	
+	<wsdl:binding name="EhrExtractionResponderBinding" type="tns:EhrExtractionResponderInterface">
 		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-		<wsdl:operation name="RIV13606REQUEST_EHR_EXTRACT">
-			<soap:operation soapAction=""/>
+
+		<wsdl:operation name="GetEhrExtract">
+			<soap:operation soapAction="urn:riv:ehr:ehrexchange:EhrExtractionResponder:1:GetEhrExtract"/>
 			<wsdl:input>
-				<soap:header use='literal' message='tns:RIV13606REQUEST_EHR_EXTRACT_request' part='LogicalAddress' />
+				<soap:header use="literal" message="tns:GetEhrExtractRequest" part="LogicalAddress"/>
 				<soap:body use="literal" parts="parameters"/>
 			</wsdl:input>
 			<wsdl:output>
 				<soap:body use="literal"/>
 			</wsdl:output>
 		</wsdl:operation>
-		<wsdl:operation name="RIV13606REQUEST_EHR_EXTRACT_CONTINUATION">
-			<soap:operation soapAction=""/>
+
+		<wsdl:operation name="GetEhrExtractContinuation">
+			<soap:operation soapAction="urn:riv:ehr:ehrexchange:EhrExtractionResponder:1:GetEhrExtractContinuation"/>
 			<wsdl:input>
-				<soap:header use='literal' message='tns:RIV13606REQUEST_EHR_EXTRACT_CONTINUATION_request' part='LogicalAddress' />
+				<soap:header use="literal" message="tns:GetEhrExtractContinuationRequest" part="LogicalAddress"/>
 				<soap:body use="literal" parts="parameters"/>
 			</wsdl:input>
 			<wsdl:output>
@@ -66,6 +72,12 @@
 		</wsdl:operation>
 	</wsdl:binding>
 
+	<wsdl:service name="EhrExtractionResponderService">
+		<wsdl:port name="EhrExtractionResponderPort" binding="tns:EhrExtractionResponderBinding">
+			<soap:address location="http://tempuri.org/"/>
+		</wsdl:port>
+	</wsdl:service>
+	
 	<xs:annotation>
 		<xs:documentation>
 		Rodolfo Garcia
@@ -86,6 +98,8 @@
 			 used for this service specification, since it doesn't have a wire footprint. The namespace
 			 of the elements need however to be specific to the service, so that we can update the name space
 			 in case we need to break backwards compatibility for the payload. ]
+		
+		[ML: Adapted to RIV TA Basic Profile 2.0]
 		
 		The method has extended to support the following functionality:
 		

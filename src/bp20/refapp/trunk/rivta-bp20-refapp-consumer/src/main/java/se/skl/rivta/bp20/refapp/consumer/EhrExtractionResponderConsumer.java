@@ -8,15 +8,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3.wsaddressing10.AttributedURIType;
 
-import se.skl.riv13606.riv13606RequestEHRExtract.v1.RIV13606REQUESTEHREXTRACTPortType;
-import se.skl.riv13606.riv13606RequestEHRExtract.v1.RIV13606REQUESTEHREXTRACTRequestType;
-import se.skl.riv13606.riv13606RequestEHRExtract.v1.RIV13606REQUESTEHREXTRACTResponseType;
-import se.skl.riv13606.riv13606RequestEHRExtract.v1.RIV13606REQUESTEHREXTRACTService;
+import se.skl.riv.ehr.ehrexchange.ehrextraction.v1.rivtabp20.EhrExtractionResponderInterface;
+import se.skl.riv.ehr.ehrexchange.ehrextraction.v1.rivtabp20.EhrExtractionResponderService;
+import se.skl.riv.ehr.ehrexchange.ehrextractionresponder.v1.GetEhrExtractRequestType;
+import se.skl.riv.ehr.ehrexchange.ehrextractionresponder.v1.GetEhrExtractResponseType;
 import se.skl.riv13606.v1.EHREXTRACT;
 import se.skl.riv13606.v1.II;
 import se.skl.rivta.bp20.refapp.util.Util;
 
-public class Riv13606RequestEhrExtractConsumer {
+public class EhrExtractionResponderConsumer {
 
 	static private final Logger logger = LoggerFactory.getLogger(Util.class);
 
@@ -33,25 +33,26 @@ public class Riv13606RequestEhrExtractConsumer {
 
 		logger.info("Consumer connecting to "  + adress);
 		// alternative hsaid: "cn=server3,ou=Division 1,ou=Lasarettet i Ystad,o=Region Skåne,l=Skåne län c=SE"
-		String reply = callRequestEHRExtract("RIV TA BP2.0 Ref App OK", adress, "SE2321000016-3MKB");
+		String reply = callGetEhrExtract("RIV TA BP2.0 Ref App OK", adress, "SE2321000016-3MKB");
 		logger.info("Producer returned: " + reply);
 	}
 
-	public static String callRequestEHRExtract(String id, String serviceAddress, String logicalAddresss) {
+	public static String callGetEhrExtract(String id, String serviceAddress, String logicalAddresss) {
 		
-		RIV13606REQUESTEHREXTRACTPortType service = new RIV13606REQUESTEHREXTRACTService(
-			createEndpointUrlFromServiceAddress(serviceAddress)).getRIV13606REQUESTEHREXTRACTPort();
+		EhrExtractionResponderInterface service = new EhrExtractionResponderService(
+			createEndpointUrlFromServiceAddress(serviceAddress)).getEhrExtractionResponderPort();
 
 		AttributedURIType logicalAddressHeader = new AttributedURIType();
 		logicalAddressHeader.setValue(logicalAddresss);
-		RIV13606REQUESTEHREXTRACTRequestType request = new RIV13606REQUESTEHREXTRACTRequestType();
+
+		GetEhrExtractRequestType request = new GetEhrExtractRequestType();
 		II ii = new II();
 		ii.setRoot(id);
 		request.setSubjectOfCareId(ii);
-		RIV13606REQUESTEHREXTRACTResponseType result = service.riv13606REQUESTEHREXTRACT(logicalAddressHeader, request);
+		
+		GetEhrExtractResponseType result = service.getEhrExtract(logicalAddressHeader, request);
 
 		List<EHREXTRACT> list = result.getEhrExtract();
-
 		EHREXTRACT firstExtract = list.get(0);
 		return firstExtract.getSubjectOfCare().getIdentifierName();
 	}
