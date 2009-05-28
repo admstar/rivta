@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="urn:riv13606:13606RequestEHRExtract:v1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ehr="urn:riv13606:v1" targetNamespace="urn:riv13606:13606RequestEHRExtract:v1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+<xs:schema 
+	xmlns="urn:riv:ehr:ehrexchange:EhrExtractionResponder:1" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:ehr="urn:riv13606:v1" 
+	targetNamespace="urn:riv:ehr:ehrexchange:EhrExtractionResponder:1" 
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified" 
+	version="1.0">
+	
 	<xs:annotation>
-		<xs:documentation>
+		<xs:documentation>		
 		Rodolfo Garcia
 		Torbjorn Dahlin
 		Brainpool - Mawell AB
@@ -26,6 +34,8 @@
 		     The name space should only specify the major version. All minor versions
 		     within a major version (1.0, 1.1, 1.x but not 2.0 etc) are required to be
 		     formally and semantically backwards-compatible.]
+		
+		[ML: Adapted to RIV TA Basic Profile 2.0]
 		
 		XML Schema for Request_EHR_EXTRACT service from 13606-5.
 		The 13606-5 functionality has been extended to support the following functionality:
@@ -55,11 +65,14 @@
 		
 		</xs:documentation>
 	</xs:annotation>
+	
 	<xs:import namespace="urn:riv13606:v1" schemaLocation="ISO13606-1.0.xsd"/>
-	<xs:element name="RIV13606REQUEST_EHR_EXTRACT" type="RIV13606REQUEST_EHR_EXTRACT_request_type"/>
-	<xs:element name="RIV13606REQUEST_EHR_EXTRACT_RESPONSE" type="RIV13606REQUEST_EHR_EXTRACT_response_type"/>
-	<xs:element name="RIV13606REQUEST_EHR_EXTRACT_CONTINUATION" type="RIV13606REQUEST_EHR_EXTRACT_CONTINUATION_request_type"/>
-	<xs:complexType name="RIV13606REQUEST_EHR_EXTRACT_request_type">
+
+	<xs:element name="GetEhrExtract"             type="GetEhrExtractRequestType"/>
+	<xs:element name="GetEhrExtractContinuation" type="GetEhrExtractContinuationRequestType"/>
+	<xs:element name="GetEhrExtractResponse"     type="GetEhrExtractResponseType"/>
+
+	<xs:complexType name="GetEhrExtractRequestType">
 		<xs:sequence>
 			<xs:element name="subject_of_care_id" type="ehr:II"/>
 			<xs:element name="purpose" type="ehr:CD" minOccurs="0"/>
@@ -71,16 +84,17 @@
 			<xs:element name="archetype_ids" type="ehr:II" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="meanings" type="ehr:CD" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="max_records" type="ehr:INT" minOccurs="0"/>
-			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="parameter" type="Parameter_type" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	
-	<xs:complexType name="RIV13606REQUEST_EHR_EXTRACT_CONTINUATION_request_type">
+	<xs:complexType name="GetEhrExtractContinuationRequestType">
 		<xs:sequence>
 			<xs:element name="max_records" type="ehr:INT" minOccurs="0"/>
 			<xs:element name="start_record" type="ehr:INT" minOccurs="0"/>
 			<xs:element name="continuation_token" type="ehr:ST"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="Parameter_type">
@@ -90,11 +104,13 @@
 			<xs:element name="value" type="ehr:ST"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="RIV13606REQUEST_EHR_EXTRACT_response_type">
+	
+	<xs:complexType name="GetEhrExtractResponseType">
 		<xs:sequence>
 			<xs:element name="ehr_extract" type="ehr:EHR_EXTRACT" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="continuation_token" type="ehr:ST" minOccurs="0"/>
 			<xs:element name="response_detail" type="ResponseDetail_type" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ResponseDetail_type">
