@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration>
+<!--
+  Variable substitution for sys-properties: ${some.sys.property}
+-->
+
+  <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+    <param name="Target" value="System.out"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d %-5p %-30C{1} - %m%n"/>
+    </layout>
+  </appender>
+
+  <appender name="ROLLINGFILE" class="org.apache.log4j.RollingFileAppender">
+    <param name="file" value="skltppoc.log"/>
+    <param name="MaxFileSize" value="1000KB"/>
+    <param name="MaxBackupIndex" value="1"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d %-5p %-30C{1} - %m%n"/>
+    </layout>
+  </appender>
+
+  <!--
+    Loglevels: {OFF, FATAL, ERROR, WARN, INFO, DEBUG, TRACE, ALL}
+    See: http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/Level.html
+  -->
+  <logger name="se.skl.rivta.bp20.refapp">
+    <level value="debug"/>
+  </logger>
+  <logger name="org.apache">
+    <level value="warn"/>
+  </logger>
+  <logger name="org.apache.cxf.ws.security">
+    <level value="info"/>
+  </logger>
+  <logger name="org.springframework">
+    <level value="warn"/>
+  </logger>
+  
+  <root>
+    <priority value ="info"/>
+    <appender-ref ref="CONSOLE"/>
+    <appender-ref ref="ROLLINGFILE"/>
+  </root>
+
+</log4j:configuration>

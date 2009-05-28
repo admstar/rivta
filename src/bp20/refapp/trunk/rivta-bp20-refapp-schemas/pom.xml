@@ -1,0 +1,74 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>se.skl.rivta.bp20.refapp</groupId>
+  <artifactId>rivta-bp20-refapp-schemas</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>rivta-bp20-refapp-schemas</name>
+  <url>http://maven.apache.org</url>
+
+	<parent>
+		<groupId>se.skl.rivta.bp20.refapp</groupId>
+		<artifactId>rivta-bp20-refapp</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	
+	<properties>
+		<schema.path>${basedir}/src/main/resources/schemas/business</schema.path>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>se.skl.rivta.bp20.refapp</groupId>
+			<artifactId>rivta-bp20-refapp-util</artifactId>
+			<version>${rivta-bp20-refapp.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+            <plugin>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-codegen-plugin</artifactId>
+				<version>${cxf.version}</version>
+				<executions>
+					<execution>
+						<id>generate-sources</id>
+						<phase>generate-sources</phase>
+						<configuration>
+							<sourceRoot>${basedir}/target/generated/src/main/java</sourceRoot>
+							<wsdlOptions>
+								
+								<wsdlOption>
+									<extraargs>
+										<extraarg>-p</extraarg>
+										<!--
+										  Note: be careful when changing this - must be in sync for all schemas generations in this namespace!
+										-->
+										<extraarg>
+											urn:riv13606:v1=se.skl.riv13606.v1
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:riv:v1=se.skl.riv.wsdl.v1
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:riv13606:13606RequestEHRExtract:v1=se.skl.riv13606.riv13606RequestEHRExtract.v1
+										</extraarg>
+									</extraargs>
+									<wsdl>${schema.path}/JournalinfoApoteketRIV/wrapped-RIV13606_REQUEST_EHR_EXTRACT-1.0.wsdl</wsdl>
+								</wsdlOption>
+							</wsdlOptions>
+						</configuration>
+						<goals>
+							<goal>wsdl2java</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+</project>

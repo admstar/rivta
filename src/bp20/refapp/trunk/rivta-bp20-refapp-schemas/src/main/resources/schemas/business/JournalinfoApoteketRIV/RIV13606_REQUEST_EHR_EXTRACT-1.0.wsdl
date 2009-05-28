@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:rivh="urn:riv:v1" xmlns:tns="urn:riv13606:13606RequestEHRExtract:v1" targetNamespace="urn:riv13606:13606RequestEHRExtract:v1">
+	<wsdl:types>
+		<xs:schema>
+			<xs:import schemaLocation="13606RequestEHRExtract-1.0.xsd" namespace="urn:riv13606:13606RequestEHRExtract:v1"/>
+		</xs:schema>
+		<xs:schema >
+			<xs:import schemaLocation="../../technical/riv/RivHeader-1.0.xsd" namespace="urn:riv:v1"/>
+		</xs:schema>
+	</wsdl:types>
+		
+	<wsdl:message name="RIV13606REQUEST_EHR_EXTRACT_request">
+		<wsdl:part name="RivHeader" element="rivh:RivHeader" />
+		<wsdl:part name="parameters" element="tns:RIV13606REQUEST_EHR_EXTRACT"/>
+		<!-- Renamed to parameters and removed _request part in element name  -->
+	</wsdl:message>
+	<wsdl:message name="RIV13606REQUEST_EHR_EXTRACT_CONTINUATION_request">
+		<wsdl:part name="RivHeader" element="rivh:RivHeader" />
+		<wsdl:part name="parameters" element="tns:RIV13606REQUEST_EHR_EXTRACT_CONTINUATION"/>
+		<!-- Renamed to parameters and removed _request part in element name  -->
+	</wsdl:message>
+	<wsdl:message name="RIV13606REQUEST_EHR_EXTRACT_response">
+		<wsdl:part name="RIV13606REQUEST_EHR_EXTRACT_response" element="tns:RIV13606REQUEST_EHR_EXTRACT_RESPONSE"/>
+	</wsdl:message>
+	<wsdl:portType name="RIV13606REQUEST_EHR_EXTRACT_PortType">
+		<wsdl:operation name="RIV13606REQUEST_EHR_EXTRACT">
+			<wsdl:input message="tns:RIV13606REQUEST_EHR_EXTRACT_request"/>
+			<wsdl:output message="tns:RIV13606REQUEST_EHR_EXTRACT_response"/>
+		</wsdl:operation>
+		<wsdl:operation name="RIV13606REQUEST_EHR_EXTRACT_CONTINUATION">
+			<wsdl:input message="tns:RIV13606REQUEST_EHR_EXTRACT_CONTINUATION_request"/>
+			<wsdl:output message="tns:RIV13606REQUEST_EHR_EXTRACT_response"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="RIV13606REQUEST_EHR_EXTRACT_Binding" type="tns:RIV13606REQUEST_EHR_EXTRACT_PortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="RIV13606REQUEST_EHR_EXTRACT">
+			<soap:operation soapAction=""/>
+			<wsdl:input>
+				<soap:body use="literal" parts="parameters"/>
+				<soap:header use='literal' message='tns:RIV13606REQUEST_EHR_EXTRACT_request' part='RivHeader' />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="RIV13606REQUEST_EHR_EXTRACT_CONTINUATION">
+			<soap:operation soapAction=""/>
+			<wsdl:input>
+				<soap:body use="literal" parts="parameters"/>
+				<soap:header use='literal' message='tns:RIV13606REQUEST_EHR_EXTRACT_CONTINUATION_request' part='RivHeader' />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<xs:annotation>
+		<xs:documentation>
+		Rodolfo Garcia
+		Torbjorn Dahlin
+		Brainpool - Mawell AB
+		
+		WSDL descriptions for Request_EHR_EXTRACT method from 13606-5.
+		
+		[JE: Changed from xsd:include to xsd:import, which seems to be the "beat-practice" interpretation
+		     of the slightly ambiguous rule in WS-I Basic Profile v.1.1. ]
+		[JE: Added the RIV header to each operation and its bindning to the soap:header.
+		     This allows the header to be conveniently processed by project using 
+		     JSR-181 Web Services Metadata for the JavaTM Platform (JAXWS 2)]
+		[JE: Change name spaces of schemas to follow oasis best-practice, which also complies to BIF name space strategy.
+			 The initial name space was bound to the applied interoperability standard rather than this 
+			 specific application of it, which does not allow us to use name spaces to manage 
+			 versioning. The name space of the WSDL could remain as is, to document the interop standard
+			 used for this service specification, since it doesn't have a wire footprint. The namespace
+			 of the elements need however to be specific to the service, so that we can update the name space
+			 in case we need to break backwards compatibility for the payload. ]
+		
+		The method has extended to support the following functionality:
+		
+		Continuation
+		------------------
+		The ability to fetch batches of EHR_EXTRACTS
+		rather than all or nothing.
+		
+		[JE: Do we need to specifiy the expected lifetime of referenced collection? I.e.
+		     the contract may need to specify expectations on minimum validity time interval for the
+		     continuation token?]
+		
+		Multiple errors, warnings and/or informational messages
+		--------------------------------------------------------------------------------
+		This implementationen allows a collection of these types of
+		messages to be returned, with or without actual EHR_EXTRACT results.
+		
+		Generic parameters
+		----------------------------
+		A collection of generic (name, value) pairs are allowed as inbound
+		parameters.
+		
+		Use of ISO 21090 datatypes
+		-----------------------------------------
+		The ISO datatypes are used at the parameter level.
+		</xs:documentation>
+	</xs:annotation>
+</wsdl:definitions>
