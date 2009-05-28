@@ -6,11 +6,8 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.xmlsoap.schemas.ws._2003._03.addressing.AttributedURI;
+import org.w3.wsaddressing10.AttributedURIType;
 
-import se.skl.riv.wsdl.v1.ReceiverIdType;
-import se.skl.riv.wsdl.v1.RivHeaderType;
-import se.skl.riv.wsdl.v1.SenderIdType;
 import se.skl.riv13606.riv13606RequestEHRExtract.v1.RIV13606REQUESTEHREXTRACTPortType;
 import se.skl.riv13606.riv13606RequestEHRExtract.v1.RIV13606REQUESTEHREXTRACTRequestType;
 import se.skl.riv13606.riv13606RequestEHRExtract.v1.RIV13606REQUESTEHREXTRACTResponseType;
@@ -51,14 +48,16 @@ public class Riv13606RequestEhrExtractConsumer {
 		RIV13606REQUESTEHREXTRACTPortType service = new RIV13606REQUESTEHREXTRACTService(
 			createEndpointUrlFromServiceAddress(serviceAddress)).getRIV13606REQUESTEHREXTRACTPort();
 
-		RivHeaderType rivHeader = createRivHeader("VardgivareA-IVK", "VardgivareC-IVK");
-		AttributedURI logicalAddress = new AttributedURI();
-		logicalAddress.setValue("VardgivareC-IVK");
+		// subject= /DC=Nod1/C=SE/O=162321000016/CN=Ulf Palmgren/serialNumber=SE2321000016-3MKB
+		// hasid: "cn=server3,ou=Division 1,ou=Lasarettet i Ystad,o=Region Skåne,l=Skåne län c=SE"
+
+		AttributedURIType logicalAddress = new AttributedURIType();
+		logicalAddress.setValue("SE2321000016-3MKB");
 		RIV13606REQUESTEHREXTRACTRequestType request = new RIV13606REQUESTEHREXTRACTRequestType();
 		II ii = new II();
 		ii.setRoot(id);
 		request.setSubjectOfCareId(ii);
-		RIV13606REQUESTEHREXTRACTResponseType result = service.riv13606REQUESTEHREXTRACT(logicalAddress, rivHeader, request);
+		RIV13606REQUESTEHREXTRACTResponseType result = service.riv13606REQUESTEHREXTRACT(logicalAddress, request);
 
 		List<EHREXTRACT> list = result.getEhrExtract();
 
@@ -72,27 +71,5 @@ public class Riv13606RequestEhrExtractConsumer {
 		} catch (MalformedURLException e) {
 			throw new RuntimeException("Malformed URL Exception: " + e.getMessage());
 		}
-	}
-
-	/**
-	 * Helper method for creating a RivHeader
-	 * 
-	 * @param hsaSender
-	 * @param hsaReceiver
-	 * @return
-	 */
-	public static RivHeaderType createRivHeader(String hsaSender, String hsaReceiver) {
-		RivHeaderType rivh = new RivHeaderType();
-
-		ReceiverIdType receiverIdType = new ReceiverIdType();
-		receiverIdType.setReceiverIdType("hsaid");
-		receiverIdType.setValue(hsaReceiver);
-		rivh.setReceiverId(receiverIdType);
-
-		SenderIdType senderIdType = new SenderIdType();
-		senderIdType.setSenderIdType("hsaid");
-		senderIdType.setValue(hsaSender);
-		rivh.setSenderId(senderIdType);
-		return rivh;
 	}
 }

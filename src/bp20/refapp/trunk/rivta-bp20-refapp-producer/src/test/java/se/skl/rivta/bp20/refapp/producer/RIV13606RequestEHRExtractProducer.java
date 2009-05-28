@@ -5,9 +5,8 @@ import java.util.List;
 
 import javax.jws.WebService;
 
-import org.xmlsoap.schemas.ws._2003._03.addressing.AttributedURI;
+import org.w3.wsaddressing10.AttributedURIType;
 
-import se.skl.riv.wsdl.v1.RivHeaderType;
 import se.skl.riv13606.riv13606RequestEHRExtract.v1.RIV13606REQUESTEHREXTRACTCONTINUATIONRequestType;
 import se.skl.riv13606.riv13606RequestEHRExtract.v1.RIV13606REQUESTEHREXTRACTPortType;
 import se.skl.riv13606.riv13606RequestEHRExtract.v1.RIV13606REQUESTEHREXTRACTRequestType;
@@ -20,8 +19,7 @@ import se.skl.riv13606.v1.TS;
 public class RIV13606RequestEHRExtractProducer implements RIV13606REQUESTEHREXTRACTPortType {
 
 	public RIV13606REQUESTEHREXTRACTResponseType riv13606REQUESTEHREXTRACT(
-			AttributedURI logicalAddress,
-			RivHeaderType rivHeader,
+			AttributedURIType logicalAddress,
 			RIV13606REQUESTEHREXTRACTRequestType riv13606REQUESTEHREXTRACTRequest) {
 		try {
 			RIV13606REQUESTEHREXTRACTResponseType r = new RIV13606REQUESTEHREXTRACTResponseType();
@@ -67,8 +65,7 @@ public class RIV13606RequestEHRExtractProducer implements RIV13606REQUESTEHREXTR
 	}
 
 	public RIV13606REQUESTEHREXTRACTResponseType riv13606REQUESTEHREXTRACTCONTINUATION(
-			AttributedURI logicalAddress,
-			RivHeaderType rivHeader,
+			AttributedURIType logicalAddress,
 			RIV13606REQUESTEHREXTRACTCONTINUATIONRequestType riv13606REQUESTEHREXTRACTRequest) {
 		try {
 			RIV13606REQUESTEHREXTRACTResponseType r = new RIV13606REQUESTEHREXTRACTResponseType();
