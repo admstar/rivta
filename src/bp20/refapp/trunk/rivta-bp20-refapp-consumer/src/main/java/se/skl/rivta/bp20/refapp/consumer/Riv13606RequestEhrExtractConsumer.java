@@ -28,6 +28,7 @@ public class Riv13606RequestEhrExtractConsumer {
 		System.setProperty("javax.net.ssl.trustStore", "../certs/consumer-truststore.jks");
 		System.setProperty("javax.net.ssl.trustStorePassword", "password");
 
+		// Try 13606-GetEhrExtract.https.url for using plain http
 		String adress = Util.getProperty("13606-GetEhrExtract.https.url");
 
 		logger.info("Consumer connecting to "  + adress);
