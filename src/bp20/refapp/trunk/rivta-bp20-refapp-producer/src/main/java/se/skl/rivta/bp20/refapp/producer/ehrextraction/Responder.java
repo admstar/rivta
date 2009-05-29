@@ -9,6 +9,7 @@ import org.w3.wsaddressing10.AttributedURIType;
 
 import se.skl.riv.ehr.ehrexchange.ehrextraction.v1.rivtabp20.EhrExtractionResponderInterface;
 import se.skl.riv.ehr.ehrexchange.ehrextractionresponder.v1.GetEhrExtractContinuationRequestType;
+import se.skl.riv.ehr.ehrexchange.ehrextractionresponder.v1.GetEhrExtractContinuationResponseType;
 import se.skl.riv.ehr.ehrexchange.ehrextractionresponder.v1.GetEhrExtractRequestType;
 import se.skl.riv.ehr.ehrexchange.ehrextractionresponder.v1.GetEhrExtractResponseType;
 import se.skl.riv13606.v1.EHREXTRACT;
@@ -65,11 +66,11 @@ public class Responder implements EhrExtractionResponderInterface {
 		}
 	}
 
-	public GetEhrExtractResponseType getEhrExtractContinuation(
+	public GetEhrExtractContinuationResponseType getEhrExtractContinuation(
 			AttributedURIType logicalAddress,
 			GetEhrExtractContinuationRequestType parameters) {
 
-		GetEhrExtractResponseType response = new GetEhrExtractResponseType();
+		GetEhrExtractContinuationResponseType response = new GetEhrExtractContinuationResponseType();
 		return response;
 	}
 }
