@@ -1,4 +1,4 @@
-package se.skl.rivta.bp20.refapp.producer;
+package se.skl.rivta.bp20.refapp.producer.ehrextraction;
 
 import java.util.Date;
 import java.util.List;
@@ -16,7 +16,7 @@ import se.skl.riv13606.v1.II;
 import se.skl.riv13606.v1.TS;
 
 @WebService(serviceName = "EhrExtractionResponderService", portName = "EhrExtractionResponderPort", targetNamespace = "urn:riv:ehr:ehrexchange:EhrExtraction:1:rivtabp20")
-public class EhrExtractionResponderProducer implements EhrExtractionResponderInterface {
+public class Responder implements EhrExtractionResponderInterface {
 
 	public GetEhrExtractResponseType getEhrExtract(
 			AttributedURIType logicalAddress,

@@ -1,4 +1,4 @@
-package se.skl.rivta.bp20.refapp.consumer;
+package se.skl.rivta.bp20.refapp.consumer.ehrextraction;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,7 +16,7 @@ import se.skl.riv13606.v1.EHREXTRACT;
 import se.skl.riv13606.v1.II;
 import se.skl.rivta.bp20.refapp.util.Util;
 
-public class EhrExtractionResponderConsumer {
+public class Initiator {
 
 	static private final Logger logger = LoggerFactory.getLogger(Util.class);
 
