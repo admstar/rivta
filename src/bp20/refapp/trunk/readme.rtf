@@ -1,12 +1,58 @@
 {\rtf1\ansi\ansicpg1252\cocoartf949\cocoasubrtf460
-{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fmodern\fcharset0 Courier;\f2\fmodern\fcharset0 CourierNewPSMT;
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fmodern\fcharset0 CourierNewPSMT;\f2\fmodern\fcharset0 Courier;
 }
 {\colortbl;\red255\green255\blue255;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww17700\viewh9620\viewkind0
+\paperw11900\paperh16840\margl1440\margr1440\vieww23820\viewh16760\viewkind0
 \deftab720
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\ri-386\ql\qnatural
 
-\f0\b\fs32 \cf0 1. Configuration Management\
+\f0\fs24 \cf0 \
+
+\b \
+
+\b0 \
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\ri-386\ql\qnatural
+
+\b\fs32 \cf0 Checkout and build the refapp\
+\
+\pard\pardeftab720\ri-386\sl320\ql\qnatural
+
+\f1\b0\fs26 \cf0 svn checkout https://svn.forge.osor.eu/svn/rivta/src/bp20/refapp/trunk\
+cd trunk\
+mvn install\
+\pard\pardeftab720\ql\qnatural
+
+\f0\fs24 \cf0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\ri-386\ql\qnatural
+
+\b\fs32 \cf0 Running the refapp\
+\pard\pardeftab720\ri-386\sl320\ql\qnatural
+
+\f1\b0\fs26 \cf0 \
+cd rivta-bp20-refapp-producer\
+mvn -o exec:java -Dexec.mainClass="se.skl.rivta.bp20.refapp.producer.Server"\
+\
+cd rivta-bp20-refapp-consumer\
+mvn -o exec:java -Dexec.mainClass="se.skl.rivta.bp20.refapp.consumer.EhrExtractionResponderConsumer"\
+\
+\
+\pard\pardeftab720\ri-386\sl320\ql\qnatural
+
+\f0\b\fs32 \cf0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\ri-386\ql\qnatural
+\cf0 Prepare for Eclipse\
+\
+\pard\pardeftab720\ql\qnatural
+
+\f2\b0\fs24 \cf0 cd trunk\
+mvn eclipse:eclipse\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\ri-386\ql\qnatural
+
+\f0\b\fs32 \cf0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\ri-386\ql\qnatural
+\cf0 \
+Configuration Management\
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\ri-386\ql\qnatural
 
 \b0\fs24 \cf0 \
@@ -34,60 +80,15 @@
 
 \b - consumer\
 
-\b0   Service consumer\
+\b0   Service consumer
+\b\fs32 \
 
-\b \
-
-\b0 \
-\
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\ri-386\ql\qnatural
-
-\b\fs32 \cf0 Checkout and build the refapp\
-\
-\pard\pardeftab720\ql\qnatural
-
-\f1\b0\fs24 \cf0 svn checkout https://svn.forge.osor.eu/svn/rivta/src/bp20/refapp/trunk\
-cd trunk\
-mvn install\
-\pard\pardeftab720\ql\qnatural
-
-\f0 \cf0 \
-\
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\ri-386\ql\qnatural
-
-\b\fs32 \cf0 Running the refapp\
-\pard\pardeftab720\ri-386\sl320\ql\qnatural
-
-\f2\b0\fs26 \cf0 \
-cd rivta-bp20-refapp-producer\
-mvn -o exec:java -Dexec.mainClass="se.skl.rivta.bp20.refapp.producer.Server"\
-\
-cd rivta-bp20-refapp-consumer\
-mvn -o exec:java -Dexec.mainClass="se.skl.rivta.bp20.refapp.consumer.EhrExtractionResponderConsumer"\
-\
-\
-
-\f0\b\fs32 \
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\ri-386\ql\qnatural
-\cf0 Prepare for Eclipse\
-\
-\pard\pardeftab720\ql\qnatural
-
-\f1\b0\fs24 \cf0 cd trunk\
-mvn eclipse:eclipse\
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\ri-386\ql\qnatural
-
-\f0\b\fs32 \cf0 \
-\pard\pardeftab720\ri-386\sl320\ql\qnatural
-\cf0 \
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\ri-386\ql\qnatural
-
-\b0\fs24 \cf0 \
+\b0\fs24 \
 
 \b Generic maven command to create modules:\
 \pard\pardeftab720\ri-386\sl320\ql\qnatural
 
-\f2\b0\fs26 \cf0 mvn archetype:generate -B -DgroupId=se.skl.rivta.bp20.refapp -DartifactId=rivta-bp20-refapp-<modul namn> -Dpackage=se.skl.rivta.bp20.refapp.<paket namn>\
+\f1\b0\fs26 \cf0 mvn archetype:generate -B -DgroupId=se.skl.rivta.bp20.refapp -DartifactId=rivta-bp20-refapp-<modul namn> -Dpackage=se.skl.rivta.bp20.refapp.<paket namn>\
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\ri-386\ql\qnatural
 
 \f0\fs24 \cf0 \
@@ -96,7 +97,7 @@ mvn eclipse:eclipse\
 \b Maven commands to create the modules:\
 \pard\pardeftab720\ri-386\sl320\ql\qnatural
 
-\f2\b0\fs26 \cf0 \
+\f1\b0\fs26 \cf0 \
 mvn archetype:generate -B -DgroupId=se.skl.rivta.bp20.refapp -DartifactId=rivta-bp20-refapp-schemas -Dpackage=se.skl.rivta.bp20.refapp.schemas\
 \
 mvn archetype:generate -B -DgroupId=se.skl.rivta.bp20.refapp -DartifactId=rivta-bp20-refapp-util -Dpackage=se.skl.rivta.bp20.refapp.util\
