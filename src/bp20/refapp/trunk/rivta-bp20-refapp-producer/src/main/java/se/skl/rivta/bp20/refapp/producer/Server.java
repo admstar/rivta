@@ -5,6 +5,7 @@ import javax.xml.ws.Endpoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import se.skl.rivta.bp20.refapp.producer.ehrextraction.Responder;
 import se.skl.rivta.bp20.refapp.util.Util;
 
 public class Server {
@@ -15,8 +16,8 @@ public class Server {
 		
 		logger.info("Starting server...");
 
-		startService(new EhrExtractionResponderProducer(), "13606-GetEhrExtract.http.url");
-		startService(new EhrExtractionResponderProducer(), "13606-GetEhrExtract.https.url");
+		startService(new Responder(), "13606-GetEhrExtract.http.url");
+		startService(new Responder(), "13606-GetEhrExtract.https.url");
         logger.info("Server ready!");
     }
 
