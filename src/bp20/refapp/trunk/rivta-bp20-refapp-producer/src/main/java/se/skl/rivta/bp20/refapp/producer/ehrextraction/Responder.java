@@ -25,45 +25,50 @@ public class Responder implements EhrExtractionResponderInterface {
 
 		try {
 			GetEhrExtractResponseType response = new GetEhrExtractResponseType();
-			List<EHREXTRACT> list = response.getEhrExtract();
-			
-			EHREXTRACT e = new EHREXTRACT();
 
-			II ap = new II();
-			ap.setRoot("AuthorisingParty-UID");
-			e.setAuthorisingParty(ap);
+			EHREXTRACT e = createEhrExtract(parameters);
 
-			II eid = new II();
-			eid.setRoot("EhrId-UID");
-			e.setEhrId(eid);
+			response.getEhrExtract().add(e);
 
-			II es = new II();
-			es.setRoot("EhrSystem-UID");
-			e.setEhrSystem(es);
-
-			e.setRmId("RmId");
-
-			// relay something back that can be verified at the original
-			// requester (end user)
-			II soc = new II();
-			soc.setRoot("SubjectOfCare-UID");
-			soc.setFlavorId("sugar");
-			II socRequest = parameters.getSubjectOfCareId();
-			String identifierName = socRequest.getRoot();
-			soc.setIdentifierName(identifierName);
-			e.setSubjectOfCare(soc);
-
-			TS tc = new TS();
-			tc.setValue(new Date().toString());
-			e.setTimeCreated(tc);
-
-			list.add(e);
 			return response;
 
 		} catch (RuntimeException e) {
 			System.out.println("Error occured: " + e);
 			throw e;
 		}
+	}
+
+	private EHREXTRACT createEhrExtract(GetEhrExtractRequestType parameters) {
+		EHREXTRACT e = new EHREXTRACT();
+
+		II ap = new II();
+		ap.setRoot("AuthorisingParty-UID");
+		e.setAuthorisingParty(ap);
+
+		II eid = new II();
+		eid.setRoot("EhrId-UID");
+		e.setEhrId(eid);
+
+		II es = new II();
+		es.setRoot("EhrSystem-UID");
+		e.setEhrSystem(es);
+
+		e.setRmId("RmId");
+
+		// relay something back that can be verified at the original
+		// requester (end user)
+		II soc = new II();
+		soc.setRoot("SubjectOfCare-UID");
+		soc.setFlavorId("sugar");
+		II socRequest = parameters.getSubjectOfCareId();
+		String identifierName = socRequest.getRoot();
+		soc.setIdentifierName(identifierName);
+		e.setSubjectOfCare(soc);
+
+		TS tc = new TS();
+		tc.setValue(new Date().toString());
+		e.setTimeCreated(tc);
+		return e;
 	}
 
 	public GetEhrExtractContinuationResponseType getEhrExtractContinuation(
