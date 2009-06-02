@@ -12,6 +12,8 @@ import se.skl.riv.ehr.ehrexchange.ehrextraction.v1.rivtabp20.EhrExtractionRespon
 import se.skl.riv.ehr.ehrexchange.ehrextraction.v1.rivtabp20.EhrExtractionResponderService;
 import se.skl.riv.ehr.ehrexchange.ehrextractionresponder.v1.GetEhrExtractRequestType;
 import se.skl.riv.ehr.ehrexchange.ehrextractionresponder.v1.GetEhrExtractResponseType;
+import se.skl.riv.ehr.ehrexchange.ehrextractionresponder.v1.PingRequestType;
+import se.skl.riv.ehr.ehrexchange.ehrextractionresponder.v1.PingResponseType;
 import se.skl.riv13606.v1.EHREXTRACT;
 import se.skl.riv13606.v1.II;
 import se.skl.rivta.bp20.refapp.util.Util;
@@ -20,30 +22,54 @@ public class Initiator {
 
 	static private final Logger logger = LoggerFactory.getLogger(Util.class);
 
+	static private EhrExtractionResponderInterface service = null;
+
 	public static void main(String[] args) {
+		
+		String address = null;
+		if (args.length == 0) {
+			// Default address
+			address = Util.getProperty("cxf.url");
+		} else {
+			// Use the provided URL, note that this address has to be using the https - protocoll as defined in cxf.xml, i.e.: <http:conduit name="...">
+
+			address = args[0];			
+		}
+
+		Initiator initiator = new Initiator();
 
 		// Setup ssl info for the initial ?wsdl lookup...
+		initiator.setupSsl();
+		
+		String logicalAddress = "SE2321000016-3MKB"; // alternative hsaid: "cn=server3,ou=Division 1,ou=Lasarettet i Ystad,o=Region Skåne,l=Skåne län c=SE"		
+		String testMessage = "RIV TA BP2.0 Ref App OK";
+		logger.info("...Consumer connecting to {}/{}, testmessage: {}", new String[] {address, logicalAddress, testMessage});
+
+		logger.info("Calling ping-operation...");
+		PingResponseType pingReply = initiator.callPing(testMessage, address, logicalAddress);
+		logger.info("...Producer returned: {}/{}", pingReply.getLogicalAddress(), pingReply.getInfo());
+
+		logger.info("Calling getEhrExtract-operation...");
+		GetEhrExtractResponseType reply = initiator.callGetEhrExtract("RIV TA BP2.0 Ref App OK", address, logicalAddress);
+		logger.info("...Producer returned: " + initiator.getIdentifierName(reply));
+
+	}
+
+	/**
+	 * Setup ssl info for the initial ?wsdl lookup...
+	 */
+	public void setupSsl() {
 		System.setProperty("javax.net.ssl.keyStore","../certs/consumer.jks");
 		System.setProperty("javax.net.ssl.keyStorePassword", "password");
 		System.setProperty("javax.net.ssl.trustStore", "../certs/consumer-truststore.jks");
 		System.setProperty("javax.net.ssl.trustStorePassword", "password");
-
-		// Try 13606-GetEhrExtract.https.url for using plain http
-		String adress = Util.getProperty("13606-GetEhrExtract.https.url");
-
-		logger.info("Consumer connecting to "  + adress);
-		// alternative hsaid: "cn=server3,ou=Division 1,ou=Lasarettet i Ystad,o=Region Skåne,l=Skåne län c=SE"
-		String reply = callGetEhrExtract("RIV TA BP2.0 Ref App OK", adress, "SE2321000016-3MKB");
-		logger.info("Producer returned: " + reply);
 	}
 
-	public static String callGetEhrExtract(String id, String serviceAddress, String logicalAddresss) {
+	public GetEhrExtractResponseType callGetEhrExtract(String id, String serviceAddress, String logicalAddresss) {
 		
-		EhrExtractionResponderInterface service = new EhrExtractionResponderService(
-			createEndpointUrlFromServiceAddress(serviceAddress)).getEhrExtractionResponderPort();
+		EhrExtractionResponderInterface service = getService(serviceAddress);
 
-		AttributedURIType logicalAddressHeader = new AttributedURIType();
-		logicalAddressHeader.setValue(logicalAddresss);
+		AttributedURIType logicalAddressHeader = createLogicalAddressHeader(logicalAddresss);
 
 		GetEhrExtractRequestType request = new GetEhrExtractRequestType();
 		II ii = new II();
@@ -52,16 +78,48 @@ public class Initiator {
 		
 		GetEhrExtractResponseType result = service.getEhrExtract(logicalAddressHeader, request);
 
-		List<EHREXTRACT> list = result.getEhrExtract();
-		EHREXTRACT firstExtract = list.get(0);
-		return firstExtract.getSubjectOfCare().getIdentifierName();
+		return result;
 	}
 
-	public static URL createEndpointUrlFromServiceAddress(String serviceAddress) {
+	public PingResponseType callPing(String info, String serviceAddress, String logicalAddresss) {
+		
+		EhrExtractionResponderInterface service = getService(serviceAddress);
+
+		AttributedURIType logicalAddressHeader = createLogicalAddressHeader(logicalAddresss);
+
+		PingRequestType request = new PingRequestType();
+		request.setInfo(info);
+		
+		PingResponseType result = service.ping(logicalAddressHeader, request);
+
+		return result;
+	}
+
+	private EhrExtractionResponderInterface getService(String serviceAddress) {
+		if (service == null) {
+			service = new EhrExtractionResponderService(
+				createEndpointUrlFromServiceAddress(serviceAddress)).getEhrExtractionResponderPort();
+		}
+		return service;
+	}
+
+	private URL createEndpointUrlFromServiceAddress(String serviceAddress) {
 		try {
 			return new URL(serviceAddress + "?wsdl");
 		} catch (MalformedURLException e) {
 			throw new RuntimeException("Malformed URL Exception: " + e.getMessage());
 		}
+	}
+
+	private AttributedURIType createLogicalAddressHeader(String logicalAddresss) {
+		AttributedURIType logicalAddressHeader = new AttributedURIType();
+		logicalAddressHeader.setValue(logicalAddresss);
+		return logicalAddressHeader;
+	}
+
+	private String getIdentifierName(GetEhrExtractResponseType result) {
+		List<EHREXTRACT> list = result.getEhrExtract();
+		EHREXTRACT firstExtract = list.get(0);
+		return firstExtract.getSubjectOfCare().getIdentifierName();
 	}
 }

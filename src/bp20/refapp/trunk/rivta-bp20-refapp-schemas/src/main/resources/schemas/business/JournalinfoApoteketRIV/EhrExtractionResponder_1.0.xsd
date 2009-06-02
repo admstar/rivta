@@ -16,6 +16,9 @@
 	<xs:element name="GetEhrExtractContinuation"         type="GetEhrExtractContinuationRequestType"/>
 	<xs:element name="GetEhrExtractContinuationResponse" type="GetEhrExtractContinuationResponseType"/>
 
+	<xs:element name="Ping"                     type="PingRequestType"/>
+	<xs:element name="PingResponse"             type="PingResponseType"/>
+	
 	<xs:complexType name="GetEhrExtractRequestType">
 		<xs:sequence>
 			<xs:element name="subject_of_care_id" type="ehr:II"/>
@@ -54,6 +57,21 @@
 			<xs:element name="ehr_extract" type="ehr:EHR_EXTRACT" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="continuation_token" type="ehr:ST" minOccurs="0"/>
 			<xs:element name="response_detail" type="ResponseDetail_type" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="PingRequestType">
+		<xs:sequence>
+			<xs:element name="info" type="xs:string"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PingResponseType">
+		<xs:sequence>
+			<xs:element name="info" type="xs:string"/>
+			<xs:element name="logicalAddress" type="xs:string"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>

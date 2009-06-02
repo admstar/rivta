@@ -25,17 +25,26 @@
 		<wsdl:part name="LogicalAddress" element="wsa:To" />
 		<wsdl:part name="parameters" element="tjs:GetEhrExtract"/>
 	</wsdl:message>
+	<wsdl:message name="GetEhrExtractResponse">
+		<wsdl:part name="parameters" element="tjs:GetEhrExtractResponse"/>
+	</wsdl:message>
+
+	<wsdl:message name="GetEhrExtractContinuationResponse">
+		<wsdl:part name="parameters" element="tjs:GetEhrExtractContinuationResponse"/>
+	</wsdl:message>
 	<wsdl:message name="GetEhrExtractContinuationRequest">
 		<wsdl:part name="LogicalAddress" element="wsa:To" />
 		<wsdl:part name="parameters" element="tjs:GetEhrExtractContinuation"/>
 	</wsdl:message>
-	<wsdl:message name="GetEhrExtractResponse">
-		<wsdl:part name="parameters" element="tjs:GetEhrExtractResponse"/>
-	</wsdl:message>
-	<wsdl:message name="GetEhrExtractContinuationResponse">
-		<wsdl:part name="parameters" element="tjs:GetEhrExtractContinuationResponse"/>
-	</wsdl:message>
 	
+	<wsdl:message name="PingRequest">
+		<wsdl:part name="LogicalAddress" element="wsa:To" />
+		<wsdl:part name="parameters" element="tjs:Ping"/>
+	</wsdl:message>
+	<wsdl:message name="PingResponse">
+		<wsdl:part name="parameters" element="tjs:PingResponse"/>
+	</wsdl:message>
+
 	<wsdl:portType name="EhrExtractionResponderInterface">
 	
 		<wsdl:operation name="GetEhrExtract">
@@ -46,6 +55,11 @@
 		<wsdl:operation name="GetEhrExtractContinuation">
 			<wsdl:input message="GetEhrExtractContinuationRequest"/>
 			<wsdl:output message="GetEhrExtractContinuationResponse"/>
+		</wsdl:operation>
+		
+		<wsdl:operation name="Ping">
+			<wsdl:input message="PingRequest"/>
+			<wsdl:output message="PingResponse"/>
 		</wsdl:operation>
 	</wsdl:portType>
 	
@@ -67,6 +81,17 @@
 			<soap:operation soapAction="urn:riv:ehr:ehrexchange:EhrExtractionResponder:1:GetEhrExtractContinuation"/>
 			<wsdl:input>
 				<soap:header use="literal" message="GetEhrExtractContinuationRequest" part="LogicalAddress"/>
+				<soap:body use="literal" parts="parameters"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+
+		<wsdl:operation name="Ping">
+			<soap:operation soapAction="urn:riv:ehr:ehrexchange:EhrExtractionResponder:1:Ping"/>
+			<wsdl:input>
+				<soap:header use="literal" message="PingRequest" part="LogicalAddress"/>
 				<soap:body use="literal" parts="parameters"/>
 			</wsdl:input>
 			<wsdl:output>

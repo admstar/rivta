@@ -16,13 +16,17 @@ public class Server {
 		
 		logger.info("Starting server...");
 
-		startService(new Responder(), "13606-GetEhrExtract.http.url");
-		startService(new Responder(), "13606-GetEhrExtract.https.url");
-        logger.info("Server ready!");
+		if (args.length == 0) {
+			// Start default service
+			startService(new Responder(), Util.getProperty("cxf.url"));
+		} else {
+			// Start a service on the provided URL, note that this requires pre-configuration in cxf.xml to work, i.e.: <httpj:engine port="11000">
+			startService(new Responder(), args[0]);
+		}
+		logger.info("Server ready!");
     }
 
-	static private void startService(Object serviceImpl, String addressId) {
-        String address = Util.getProperty(addressId);
+	static private void startService(Object serviceImpl, String address) {
         Endpoint.publish(address, serviceImpl);
 		logger.info("Service available at: " + address + "?wsdl");
     }
