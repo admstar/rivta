@@ -12,6 +12,8 @@ import se.skl.riv.ehr.ehrexchange.ehrextractionresponder.v1.GetEhrExtractContinu
 import se.skl.riv.ehr.ehrexchange.ehrextractionresponder.v1.GetEhrExtractContinuationResponseType;
 import se.skl.riv.ehr.ehrexchange.ehrextractionresponder.v1.GetEhrExtractRequestType;
 import se.skl.riv.ehr.ehrexchange.ehrextractionresponder.v1.GetEhrExtractResponseType;
+import se.skl.riv.ehr.ehrexchange.ehrextractionresponder.v1.PingRequestType;
+import se.skl.riv.ehr.ehrexchange.ehrextractionresponder.v1.PingResponseType;
 import se.skl.riv13606.v1.EHREXTRACT;
 import se.skl.riv13606.v1.II;
 import se.skl.riv13606.v1.TS;
@@ -76,6 +78,13 @@ public class Responder implements EhrExtractionResponderInterface {
 			GetEhrExtractContinuationRequestType parameters) {
 
 		GetEhrExtractContinuationResponseType response = new GetEhrExtractContinuationResponseType();
+		return response;
+	}
+
+	public PingResponseType ping(AttributedURIType logicalAddress, PingRequestType parameters) {
+		PingResponseType response = new PingResponseType();
+		response.setInfo(parameters.getInfo());
+		response.setLogicalAddress(logicalAddress.getValue());
 		return response;
 	}
 }
