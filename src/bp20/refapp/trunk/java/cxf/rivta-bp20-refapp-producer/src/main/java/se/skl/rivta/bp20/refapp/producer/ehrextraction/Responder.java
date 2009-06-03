@@ -1,7 +1,6 @@
 package se.skl.rivta.bp20.refapp.producer.ehrextraction;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.jws.WebService;
 
