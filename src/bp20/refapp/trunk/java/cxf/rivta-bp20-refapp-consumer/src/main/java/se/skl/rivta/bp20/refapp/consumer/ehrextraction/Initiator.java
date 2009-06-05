@@ -59,18 +59,27 @@ public class Initiator {
 
 		// Setup ssl info for the initial ?wsdl lookup...
 		initiator.setupSsl();
-		
+
+		long ts = 0;
 		String logicalAddress = "SE2321000016-3MKB"; // alternative hsaid: "cn=server3,ou=Division 1,ou=Lasarettet i Ystad,o=Region Skåne,l=Skåne län c=SE"		
 		String testMessage = "RIV TA BP2.0 Ref App OK";
-		logger.info("...Consumer connecting to {}/{}, testmessage: {}", new String[] {address, logicalAddress, testMessage});
+		logger.info("RIV TA Basic Profile v2.0 - Ref App Consumer running on Java version {}", System.getProperty("java.version"));
+		logger.info("...connecting to {}/{}, testmessage: {}", new String[] {address, logicalAddress, testMessage});
+
+		logger.info("Initial warmup call to the ping-operation...");
+		ts = System.currentTimeMillis();
+		PingResponseType pingReply = initiator.callPing(testMessage, address, logicalAddress);
+		logger.info("...Producer returned (in {} ms): {}/{}", new Object[] {(System.currentTimeMillis() - ts), pingReply.getLogicalAddress(), pingReply.getInfo()});
 
 		logger.info("Calling ping-operation...");
-		PingResponseType pingReply = initiator.callPing(testMessage, address, logicalAddress);
-		logger.info("...Producer returned: {}/{}", pingReply.getLogicalAddress(), pingReply.getInfo());
+		ts = System.currentTimeMillis();
+		pingReply = initiator.callPing(testMessage, address, logicalAddress);
+		logger.info("...Producer returned (in {} ms): {}/{}", new Object[] {(System.currentTimeMillis() - ts), pingReply.getLogicalAddress(), pingReply.getInfo()});
 
 		logger.info("Calling getEhrExtract-operation...");
+		ts = System.currentTimeMillis();
 		GetEhrExtractResponseType reply = initiator.callGetEhrExtract("RIV TA BP2.0 Ref App OK", address, logicalAddress);
-		logger.info("...Producer returned: " + initiator.getIdentifierName(reply));
+		logger.info("...Producer returned (in {} ms): ", (System.currentTimeMillis() - ts), initiator.getIdentifierName(reply));
 
 	}
 
