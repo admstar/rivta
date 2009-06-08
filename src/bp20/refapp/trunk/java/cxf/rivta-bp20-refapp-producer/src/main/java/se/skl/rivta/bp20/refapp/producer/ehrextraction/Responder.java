@@ -23,6 +23,8 @@ import java.util.Date;
 
 import javax.jws.WebService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3.wsaddressing10.AttributedURIType;
 
 import se.skl.riv.ehr.ehrexchange.ehrextraction.v1.rivtabp20.EhrExtractionResponderInterface;
@@ -35,14 +37,18 @@ import se.skl.riv.ehr.ehrexchange.ehrextractionresponder.v1.PingResponseType;
 import se.skl.riv13606.v1.EHREXTRACT;
 import se.skl.riv13606.v1.II;
 import se.skl.riv13606.v1.TS;
+import se.skl.rivta.bp20.refapp.util.Util;
 
 @WebService(serviceName = "EhrExtractionResponderService", portName = "EhrExtractionResponderPort", targetNamespace = "urn:riv:ehr:ehrexchange:EhrExtraction:1:rivtabp20")
 public class Responder implements EhrExtractionResponderInterface {
+
+	static private final Logger logger = LoggerFactory.getLogger(Util.class);
 
 	public GetEhrExtractResponseType getEhrExtract(
 			AttributedURIType logicalAddress,
 			GetEhrExtractRequestType parameters) {
 
+		logger.info("Operation getEhrExtract called");
 		try {
 			GetEhrExtractResponseType response = new GetEhrExtractResponseType();
 
@@ -56,6 +62,24 @@ public class Responder implements EhrExtractionResponderInterface {
 			System.out.println("Error occured: " + e);
 			throw e;
 		}
+	}
+
+	public GetEhrExtractContinuationResponseType getEhrExtractContinuation(
+			AttributedURIType logicalAddress,
+			GetEhrExtractContinuationRequestType parameters) {
+
+		logger.info("Operation getEhrExtractContinuation called");
+
+		GetEhrExtractContinuationResponseType response = new GetEhrExtractContinuationResponseType();
+		return response;
+	}
+
+	public PingResponseType ping(AttributedURIType logicalAddress, PingRequestType parameters) {
+		logger.info("Operation ping called");
+		PingResponseType response = new PingResponseType();
+		response.setInfo(parameters.getInfo());
+		response.setLogicalAddress(logicalAddress.getValue());
+		return response;
 	}
 
 	private EHREXTRACT createEhrExtract(GetEhrExtractRequestType parameters) {
@@ -91,18 +115,4 @@ public class Responder implements EhrExtractionResponderInterface {
 		return e;
 	}
 
-	public GetEhrExtractContinuationResponseType getEhrExtractContinuation(
-			AttributedURIType logicalAddress,
-			GetEhrExtractContinuationRequestType parameters) {
-
-		GetEhrExtractContinuationResponseType response = new GetEhrExtractContinuationResponseType();
-		return response;
-	}
-
-	public PingResponseType ping(AttributedURIType logicalAddress, PingRequestType parameters) {
-		PingResponseType response = new PingResponseType();
-		response.setInfo(parameters.getInfo());
-		response.setLogicalAddress(logicalAddress.getValue());
-		return response;
-	}
 }
