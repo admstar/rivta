@@ -48,24 +48,24 @@ public class Initiator {
 
 	public static void main(String[] args) {
 		
+		// Make CXF use log4j (instead of JDK-logging), currently can't use slf4j
+		System.setProperty("org.apache.cxf.Logger", "org.apache.cxf.common.logging.Log4jLogger");
+
+		// Parse main arguments
 		String address = null;
 		if (args.length == 0) {
 			// Default address
 			address = Util.getProperty("cxf.url");
 		} else {
 			// Use the provided URL, note that this address has to be using the https - protocoll as defined in cxf.xml, i.e.: <http:conduit name="...">
-
 			address = args[0];			
 		}
 
         Initiator initiator = new Initiator(address);
 
-		// Setup ssl info for the initial ?wsdl lookup...
-		initiator.setupSsl();
-
 		long ts = 0;
 		logger.info("RIV TA Basic Profile v2.0 - Ref App, Apache CXF Consumer running on Java version {}", System.getProperty("java.version"));
-		logger.info("...connecting to {}/{}, testmessage: {}", new String[] {address, LOGICAL_ADDRESS, INFO_MSG});
+		logger.info("...connecting to {}", address);
 
 		logger.info("Calling ping-operation first time...");
 		ts = System.currentTimeMillis();
@@ -89,13 +89,16 @@ public class Initiator {
 	}
 
 	public Initiator(String address) {
+		// Setup ssl info for the initial ?wsdl lookup...
+		setupSsl();
+
 		service = new EhrExtractionResponderService(createEndpointUrlFromServiceAddress(address)).getEhrExtractionResponderPort();
 	}
 
 	/**
 	 * Setup ssl info for the initial ?wsdl lookup...
 	 */
-	public void setupSsl() {
+	private void setupSsl() {
 		System.setProperty("javax.net.ssl.keyStore","../certs/consumer.jks");
 		System.setProperty("javax.net.ssl.keyStorePassword", "password");
 		System.setProperty("javax.net.ssl.trustStore", "../certs/consumer-truststore.jks");
