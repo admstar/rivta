@@ -33,7 +33,7 @@ public class Server {
 
 	static public void main(String[] args) throws Exception {
 		
-		logger.info("RIV TA Basic Profile v2.0 - Ref App Producer running on Java version {}", System.getProperty("java.version"));
+		logger.info("RIV TA Basic Profile v2.0 - Ref App, Apache CXF Producer running on Java version {}", System.getProperty("java.version"));
 		logger.info("Starting server...");
 
 		if (args.length == 0) {

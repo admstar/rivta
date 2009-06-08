@@ -41,7 +41,10 @@ public class Initiator {
 
 	static private final Logger logger = LoggerFactory.getLogger(Util.class);
 
-	static private EhrExtractionResponderInterface service = null;
+	static private final String INFO_MSG = "RIV TA BP2.0 Ref App OK";
+	static private final String LOGICAL_ADDRESS = "SE2321000016-3MKB"; // alternative hsaid: "cn=server3,ou=Division 1,ou=Lasarettet i Ystad,o=Region Skåne,l=Skåne län c=SE"		
+	
+	private EhrExtractionResponderInterface service = null;
 
 	public static void main(String[] args) {
 		
@@ -55,32 +58,38 @@ public class Initiator {
 			address = args[0];			
 		}
 
-		Initiator initiator = new Initiator();
+        Initiator initiator = new Initiator(address);
 
 		// Setup ssl info for the initial ?wsdl lookup...
 		initiator.setupSsl();
 
 		long ts = 0;
-		String logicalAddress = "SE2321000016-3MKB"; // alternative hsaid: "cn=server3,ou=Division 1,ou=Lasarettet i Ystad,o=Region Skåne,l=Skåne län c=SE"		
-		String testMessage = "RIV TA BP2.0 Ref App OK";
-		logger.info("RIV TA Basic Profile v2.0 - Ref App Consumer running on Java version {}", System.getProperty("java.version"));
-		logger.info("...connecting to {}/{}, testmessage: {}", new String[] {address, logicalAddress, testMessage});
+		logger.info("RIV TA Basic Profile v2.0 - Ref App, Apache CXF Consumer running on Java version {}", System.getProperty("java.version"));
+		logger.info("...connecting to {}/{}, testmessage: {}", new String[] {address, LOGICAL_ADDRESS, INFO_MSG});
 
-		logger.info("Initial warmup call to the ping-operation...");
+		logger.info("Calling ping-operation first time...");
 		ts = System.currentTimeMillis();
-		PingResponseType pingReply = initiator.callPing(testMessage, address, logicalAddress);
+		PingResponseType pingReply = initiator.callPing(INFO_MSG, LOGICAL_ADDRESS);
 		logger.info("...Producer returned (in {} ms): {}/{}", new Object[] {(System.currentTimeMillis() - ts), pingReply.getLogicalAddress(), pingReply.getInfo()});
 
-		logger.info("Calling ping-operation...");
+		logger.info("Calling ping-operation second time...");
 		ts = System.currentTimeMillis();
-		pingReply = initiator.callPing(testMessage, address, logicalAddress);
+		pingReply = initiator.callPing(INFO_MSG, LOGICAL_ADDRESS);
 		logger.info("...Producer returned (in {} ms): {}/{}", new Object[] {(System.currentTimeMillis() - ts), pingReply.getLogicalAddress(), pingReply.getInfo()});
 
-		logger.info("Calling getEhrExtract-operation...");
+		logger.info("Calling getEhrExtract-operation first time...");
 		ts = System.currentTimeMillis();
-		GetEhrExtractResponseType reply = initiator.callGetEhrExtract("RIV TA BP2.0 Ref App OK", address, logicalAddress);
+		GetEhrExtractResponseType reply = initiator.callGetEhrExtract("RIV TA BP2.0 Ref App OK", LOGICAL_ADDRESS);
 		logger.info("...Producer returned (in {} ms): ", (System.currentTimeMillis() - ts), initiator.getIdentifierName(reply));
 
+		logger.info("Calling getEhrExtract-operation second time...");
+		ts = System.currentTimeMillis();
+		reply = initiator.callGetEhrExtract("RIV TA BP2.0 Ref App OK", LOGICAL_ADDRESS);
+		logger.info("...Producer returned (in {} ms): ", (System.currentTimeMillis() - ts), initiator.getIdentifierName(reply));
+	}
+
+	public Initiator(String address) {
+		service = new EhrExtractionResponderService(createEndpointUrlFromServiceAddress(address)).getEhrExtractionResponderPort();
 	}
 
 	/**
@@ -93,10 +102,8 @@ public class Initiator {
 		System.setProperty("javax.net.ssl.trustStorePassword", "password");
 	}
 
-	public GetEhrExtractResponseType callGetEhrExtract(String id, String serviceAddress, String logicalAddresss) {
+	public GetEhrExtractResponseType callGetEhrExtract(String id, String logicalAddresss) {
 		
-		EhrExtractionResponderInterface service = getService(serviceAddress);
-
 		AttributedURIType logicalAddressHeader = createLogicalAddressHeader(logicalAddresss);
 
 		GetEhrExtractRequestType request = new GetEhrExtractRequestType();
@@ -109,10 +116,8 @@ public class Initiator {
 		return result;
 	}
 
-	public PingResponseType callPing(String info, String serviceAddress, String logicalAddresss) {
+	public PingResponseType callPing(String info, String logicalAddresss) {
 		
-		EhrExtractionResponderInterface service = getService(serviceAddress);
-
 		AttributedURIType logicalAddressHeader = createLogicalAddressHeader(logicalAddresss);
 
 		PingRequestType request = new PingRequestType();
@@ -121,14 +126,6 @@ public class Initiator {
 		PingResponseType result = service.ping(logicalAddressHeader, request);
 
 		return result;
-	}
-
-	private EhrExtractionResponderInterface getService(String serviceAddress) {
-		if (service == null) {
-			service = new EhrExtractionResponderService(
-				createEndpointUrlFromServiceAddress(serviceAddress)).getEhrExtractionResponderPort();
-		}
-		return service;
 	}
 
 	private URL createEndpointUrlFromServiceAddress(String serviceAddress) {
