@@ -33,16 +33,22 @@ public class Server {
 
 	static public void main(String[] args) throws Exception {
 		
-		logger.info("RIV TA Basic Profile v2.0 - Ref App, Apache CXF Producer running on Java version {}", System.getProperty("java.version"));
-		logger.info("Starting server...");
+		// Make CXF use log4j (instead of JDK-logging), currently can't use slf4j
+		System.setProperty("org.apache.cxf.Logger", "org.apache.cxf.common.logging.Log4jLogger");
 
+		// Parse main arguments
+		String address = null;
 		if (args.length == 0) {
 			// Start default service
-			startService(new Responder(), Util.getProperty("cxf.url"));
+			address = Util.getProperty("cxf.url");
 		} else {
 			// Start a service on the provided URL, note that this requires pre-configuration in cxf.xml to work, i.e.: <httpj:engine port="11000">
-			startService(new Responder(), args[0]);
+			address = args[0];
 		}
+
+		logger.info("RIV TA Basic Profile v2.0 - Ref App, Apache CXF Producer running on Java version {}", System.getProperty("java.version"));
+		logger.info("Starting server...");
+		startService(new Responder(), address);
 		logger.info("Server ready!");
     }
 
