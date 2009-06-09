@@ -39,7 +39,11 @@ import se.skl.riv13606.v1.II;
 import se.skl.riv13606.v1.TS;
 import se.skl.rivta.bp20.refapp.util.Util;
 
-@WebService(serviceName = "EhrExtractionResponderService", portName = "EhrExtractionResponderPort", targetNamespace = "urn:riv:ehr:ehrexchange:EhrExtraction:1:rivtabp20")
+@WebService(
+	serviceName = "EhrExtractionResponderService", 
+	endpointInterface="se.skl.riv.ehr.ehrexchange.ehrextraction.v1.rivtabp20.EhrExtractionResponderInterface", 
+	portName = "EhrExtractionResponderPort", 
+	targetNamespace = "urn:riv:ehr:ehrexchange:EhrExtraction:1:rivtabp20")
 public class Responder implements EhrExtractionResponderInterface {
 
 	static private final Logger logger = LoggerFactory.getLogger(Util.class);
