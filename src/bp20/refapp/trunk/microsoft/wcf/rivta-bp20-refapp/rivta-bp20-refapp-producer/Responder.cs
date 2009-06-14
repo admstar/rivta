@@ -8,7 +8,7 @@ namespace rivta_bp20_refapp_producer
 {
     class Responder : EhrExtractionResponderInterface
     {
-        public GetEhrExtractResponse GetEhrExtract(GetEhrExtract request)
+        public GetEhrExtractResponse GetEhrExtract(GetEhrExtractRequest request)
         {
             GetEhrExtractResponse response = new GetEhrExtractResponse();
             EHR_EXTRACT[] list = new EHR_EXTRACT[1];
@@ -20,7 +20,7 @@ namespace rivta_bp20_refapp_producer
             return response;
         }
 
-        private EHR_EXTRACT createEhrExtract(GetEhrExtract request)
+        private EHR_EXTRACT createEhrExtract(GetEhrExtractRequest request)
         {
             EHR_EXTRACT e = new EHR_EXTRACT();
 
@@ -42,7 +42,7 @@ namespace rivta_bp20_refapp_producer
             II soc = new II();
             soc.root = "SubjectOfCare-UID";
             soc.flavorId = "sugar";
-            II socRequest = request.GetEhrExtract1.subject_of_care_id;
+            II socRequest = request.GetEhrExtract.subject_of_care_id;
             String identifierName = socRequest.root;
             soc.identifierName = identifierName;
             e.subject_of_care = soc;
@@ -53,15 +53,15 @@ namespace rivta_bp20_refapp_producer
             return e;
         }
 
-        public GetEhrExtractContinuationResponse GetEhrExtractContinuation(GetEhrExtractContinuation request)
+        public GetEhrExtractContinuationResponse GetEhrExtractContinuation(GetEhrExtractContinuationRequest request)
         {
             throw new NotImplementedException();
         }
 
-        public PingResponse Ping(Ping request)
+        public PingResponse Ping(PingRequest request)
         {
             PingResponse response = new PingResponse();
-            response.info = request.Ping1.info;
+            response.info = request.Ping.info;
             response.logicalAddress = request.To.Value;
             return response;
         }

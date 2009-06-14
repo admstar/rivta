@@ -94,7 +94,7 @@ namespace rivta_bp20_refapp_consumer
             ii.root = info;
             request.subject_of_care_id = ii;
 
-            GetEhrExtractResponse response = service.GetEhrExtract(new GetEhrExtract(logicalAddressHeader, request));
+            GetEhrExtractResponse response = service.GetEhrExtract(new GetEhrExtractRequest(logicalAddressHeader, request));
 
             return response;
         }
@@ -107,7 +107,7 @@ namespace rivta_bp20_refapp_consumer
             PingRequestType parameters = new PingRequestType();
             parameters.info = info;
 
-            PingResponse response = service.Ping(new Ping(logicalAddressHeader, parameters));
+            PingResponse response = service.Ping(new PingRequest(logicalAddressHeader, parameters));
 
             return response;
         }
