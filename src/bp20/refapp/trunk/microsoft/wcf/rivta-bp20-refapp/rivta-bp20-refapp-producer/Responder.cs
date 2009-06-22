@@ -10,6 +10,8 @@ namespace rivta_bp20_refapp_producer
     {
         public GetEhrExtractResponse GetEhrExtract(GetEhrExtractRequest request)
         {
+            Console.WriteLine("Operation GetEhrExtract called");
+
             GetEhrExtractResponse response = new GetEhrExtractResponse();
             EHR_EXTRACT[] list = new EHR_EXTRACT[1];
             response.ehr_extract = list;
@@ -60,6 +62,8 @@ namespace rivta_bp20_refapp_producer
 
         public PingResponse Ping(PingRequest request)
         {
+            Console.WriteLine("Operation Ping called");
+
             PingResponse response = new PingResponse();
             response.info = request.Ping.info;
             response.logicalAddress = request.To.Value;

@@ -75,11 +75,11 @@ namespace rivta_bp20_refapp_consumer
         {
             if (address == null)
             {
-                service = new EhrExtractionResponderInterfaceClient("EhrExtractionResponderPort");
+                service = new EhrExtractionResponderInterfaceClient("ResponderPort"); // EhrExtraction
             }
             else
             {
-                service = new EhrExtractionResponderInterfaceClient("EhrExtractionResponderPort", address);
+                service = new EhrExtractionResponderInterfaceClient("ResponderPort", address);
             }
 
         }
