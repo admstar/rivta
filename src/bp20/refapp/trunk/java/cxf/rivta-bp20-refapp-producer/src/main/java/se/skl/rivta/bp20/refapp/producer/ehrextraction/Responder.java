@@ -44,7 +44,7 @@ import se.skl.rivta.bp20.refapp.util.Util;
 	endpointInterface="se.skl.riv.ehr.ehrexchange.ehrextraction.v1.rivtabp20.EhrExtractionResponderInterface", 
 	portName = "EhrExtractionResponderPort", 
 	targetNamespace = "urn:riv:ehr:ehrexchange:EhrExtraction:1:rivtabp20",
-	wsdlLocation = "schemas/business/JournalinfoApoteketRIV/EhrExtractionInteraction.wsdl")
+	wsdlLocation = "schemas/business/JournalinfoApoteketRIV/EhrExtractionInteraction_1.1_rivtabp20.wsdl")
 public class Responder implements EhrExtractionResponderInterface {
 
 	static private final Logger logger = LoggerFactory.getLogger(Util.class);
