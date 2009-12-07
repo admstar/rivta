@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="urn:riv:crm:carelisting:GetListingResponder:1" targetNamespace="urn:riv:crm:carelisting:GetListingResponder:1"
+	elementFormDefault="qualified" xml:lang="en" xmlns:core="urn:riv:crm:carelisting:1"
+	version = "1.0">
+	<xs:import namespace="urn:riv:crm:carelisting:1" schemaLocation="crm_carelisting.xsd" />
+	<xs:annotation>
+		<xs:documentation>
+			Beskrivning: Meddelandetyper som används av Nationella Listingsstjänsten.
+			Revisioner: 2009-06-15: Version 1.0.
+		</xs:documentation>
+	</xs:annotation>
+
+	<!-- Globala element: Method parametrar -->
+	<xs:element name="getListing" type="tns:getListingRequestType" />
+	<xs:element name="getListingResponse" type="tns:getListingResponseType" />
+	<!-- Fel -->
+	<xs:element name="PersonNotFound" type="tns:PersonNotFound" />
+	<xs:element name="TechnicalException" type="core:TechnicalException" />
+
+	<!-- data typer -->
+	<xs:complexType name="getListingRequestType">
+		<xs:sequence>
+			<xs:element name="personId" type="core:SubjectOfCareIdType" />
+			<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>			
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="getListingResponseType">
+		<xs:sequence>
+			<xs:element name="subjectOfCare" type="core:SubjectOfCare" />
+			<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- Fel -->
+	<xs:complexType name="PersonNotFound">
+		<xs:sequence>
+			<xs:element name="code" type="xs:int" />
+			<xs:element name="description" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>		
+</xs:schema>
