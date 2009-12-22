@@ -1,0 +1,62 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>NLT</groupId>
+	<artifactId>NLT</artifactId>
+	<name>Nationell Listningstjänst</name>
+	<version>0.0.1-SNAPSHOT</version>
+	<description>Bygger Tjänstekontrakten för Nationell Listningstjänst</description>
+	<packaging>jar</packaging>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxws-maven-plugin</artifactId>
+				<version>1.12</version>				
+				<executions>
+					<execution>
+						<goals>
+							<goal>wsimport</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<wsdlDirectory>src/main/resources/META-INF/wsdl</wsdlDirectory>
+					<wsdlFiles>
+						<wsdlFile>GetAvailableFacilitiesInteraction.wsdl</wsdlFile>
+						<wsdlFile>CreateListningInteraction.wsdl</wsdlFile>
+						<wsdlFile>GetListningInteraction.wsdl</wsdlFile>
+						<wsdlFile>GetListningTypesInteraction.wsdl</wsdlFile>
+					</wsdlFiles>
+					<keep>true</keep>
+					<sourceDestDir>${basedir}/src/main/java</sourceDestDir>
+					<xadditionalHeaders>true</xadditionalHeaders>
+					<xnoAddressingDataBinding>true</xnoAddressingDataBinding>
+					<verbose>true</verbose>
+					
+					<args>
+					<!-- 	<arg>-b ${basedir}\src\main\resources\META-INF\wsdl\ws-addressing-1.0.xsd</arg>
+					-->
+					</args>
+
+				</configuration>
+			</plugin>
+
+			<!-- Don't forget Java 5!! -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>com.sun.xml.ws</groupId>
+			<artifactId>jaxws-rt</artifactId>
+			<version>2.1.7</version>
+		</dependency>
+	</dependencies>
+</project>
