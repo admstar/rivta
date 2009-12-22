@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="urn:riv:crm:carelisting:GetListingTypesResponder:1" targetNamespace="urn:riv:crm:carelisting:GetListingTypesResponder:1"
+	elementFormDefault="qualified" xml:lang="en" xmlns:core="urn:riv:crm:carelisting:1"
+	version = "1.0">
+	<xs:import namespace="urn:riv:crm:carelisting:1" schemaLocation="crm_carelisting.xsd" />
+	<xs:annotation>
+		<xs:documentation>
+			Beskrivning: Meddelandetyper som används av Nationella Listingsstjänsten.
+			Revisioner: 2009-12-21: Skapade tjänstekontraktet, version 1.0.
+		</xs:documentation>
+	</xs:annotation>
+
+	<!-- Globala element: Method parametrar -->
+	<xs:element name="getListingTypes" type="tns:getListingTypesRequestType" />
+	<xs:element name="getListingTypesResponse" type="tns:getListingTypesResponseType" />
+	<!-- Fel -->
+	<xs:element name="PersonNotFound" type="core:PersonNotFoundException" />
+	<xs:element name="TechnicalException" type="core:TechnicalException" />
+
+	<!-- data typer -->
+	<xs:complexType name="getListingTypesRequestType">
+		<xs:sequence>
+			<!-- Anger person ID som det önskas möjliga typer av listningar för. -->
+			<xs:element name="personId" type="core:SubjectOfCareIdType" />
+			<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>			
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="getListingTypesResponseType">
+		<xs:sequence>
+			<!-- Lista med koder som avser listningstyper, t.ex BVC. -->
+			<xs:element name="listingType" type="core:ListingType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

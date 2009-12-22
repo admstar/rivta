@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="urn:riv:crm:carelisting:CreateListingResponder:1" targetNamespace="urn:riv:crm:carelisting:CreateListingResponder:1"
+	elementFormDefault="qualified" xml:lang="en" xmlns:core="urn:riv:crm:carelisting:1"
+	version = "1.0">
+	<xs:import namespace="urn:riv:crm:carelisting:1" schemaLocation="crm_carelisting.xsd" />
+	<xs:annotation>
+		<xs:documentation>
+			Beskrivning: Meddelandetyper som används av Nationella Listingsstjänsten 'CreateListing'.
+			Revisioner: 2009-06-15: Version 1.0, skapade schemat. 
+						   2009-09-14: Version 1.0.1, Bytte createListingRequestType till att använda EHREXTRACT.
+						   2009-11-25: Version 1.0.2, Plockade bort 13606 datatyper och bytte namn på exception InvalidHASId till InvalidServiceProvider.
+						   2009-12-21: Version 1.0.3: Re-design i sammarbete med Modul1, Arkitekturledningen och Mawell.
+		</xs:documentation>
+	</xs:annotation>
+
+	<!-- Globala element: Method parametrar -->
+	<xs:element name="createListing" type="tns:createListingRequestType" />
+	<xs:element name="createListingResponse" type="tns:createListingResponseType" />
+   
+	<!-- Fel -->
+	<xs:element name="InvalidFacilityException" type="tns:InvalidFacilityException" />
+	<xs:element name="PersonNotFoundException" type="core:PersonNotFoundException" />
+	<xs:element name="TechnicalException" type="core:TechnicalException" />
+
+	<!-- data typer -->
+	<xs:complexType name="createListingRequestType">
+		<xs:sequence>
+			<xs:element name="personId" type="core:SubjectOfCareIdType" />
+			<!-- Typ av listning som man önskar göra, t.ex BVC. -->
+			<xs:element name="listingType" type="core:ListingType"/>
+			<!-- Vårdenhet -->
+			<xs:element name="healthcare_facility" type="core:HsaIdType" /> 
+			 <!-- resurs att lista sig på -->
+			<xs:element name="healthcare_professional" type="core:HsaIdType" minOccurs="0" />
+			<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>			
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="createListingResponseType">
+		<xs:sequence>
+			<xs:element name="code" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Returkod som beskriver resultatet av en listning.  1 = Success!, 0 = Misslyckad, X = Resten valfria, dvs specifika för olika anslutningspunkter.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			
+			<xs:element name="businessRule" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>
+					Det kan förekomma lokala regler för respektive Källsystem (Listningssystem) vilket dem
+					kan meddela genom att beskriva det i detta fältet.
+				</xs:documentation>
+			</xs:annotation>
+			</xs:element>
+			<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>			
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="InvalidFacilityException">
+		<xs:sequence>
+			<xs:element name="code" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
