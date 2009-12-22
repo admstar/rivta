@@ -36,9 +36,9 @@
       <xs:element name="timeTypeID" type="tns:TimeTypeIDType" minOccurs="0" maxOccurs="1" />
       <xs:element name="careTypeName" type="xs:string" minOccurs="0" maxOccurs="1" />
       <xs:element name="careTypeID" type="tns:CareTypeIDType" minOccurs="0" maxOccurs="1" />
-      <xs:element name="cancel_booking_allowed" type="xs:boolean" />
-      <xs:element name="rebooking_allowed" type="xs:boolean" />
-      <xs:element name="message_allowed" type="xs:boolean" />
+      <xs:element name="cancel_booking_allowed" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+      <xs:element name="rebooking_allowed" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+      <xs:element name="message_allowed" type="xs:boolean" minOccurs="0" maxOccurs="1" />
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -50,18 +50,14 @@
   </xs:simpleType>
   <xs:simpleType name="SubjectOfCareIdType">
     <xs:restriction base="xs:string">
-      <xs:pattern value="^[0-9]{6}-[0-9pPtTfF][0-9]{3}$" />
+      <xs:pattern value="^[0-9]{6}[0-9pPtTfF][0-9]{3}$" />
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="ResultCodeEnum">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="CONFIRMED" />
-      <xs:enumeration value="BOOKING_UNKNOWN" />
-      <xs:enumeration value="SLOT_UNAVAILABLE" />
-      <xs:enumeration value="SLOT_UNAVAILABLE_FOR_REQUESTED_PERFORMER" />
-      <xs:enumeration value="ACTION_CREATE_NOT_ALLOWED" />
-      <xs:enumeration value="ACTION_UPDATE_NOT_ALLOWED" />
-      <xs:enumeration value="ACTION_CANCEL_NOT_ALLOWED" />
+      <xs:enumeration value="OK" />
+      <xs:enumeration value="ERROR" />
+      <xs:enumeration value="INFO" />
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="SubjectOfCareType">
