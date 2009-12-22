@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+*************************************************************************************************************** 
+XML-struktur för Visa vårdval i Nationell Listningstjänst
+
+Datum: 20090513
+Version: 0.2
+
+Observera att detta endast är ett exempelmeddelande.
+
+För tillåten struktur per meddelandeinstans se 
+Meddelandestruktur_Visa_vårdval_Nationell_Listningstjänst_EN13606_version_0.1.xlsx.
+
+Revisionshistorik:
+20090513 - Skapat exempelmeddelandet
+20090529 - Ändrat meaning code för "Listningstyp" till att passa in med strukturen på övriga koder
+*************************************************************************************************************** 
+-->
+<ehr_extract xmlns="urn:riv:carelisting:13606:v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:riv:carelisting:13606:v1 SE13606-1_SVR_NLT.xsd">
+	<ehr_id nullFlavor="NA"/>
+	<ehr_system root="1.2.752.129.2.1.4.1" extension="systemID1"/>
+	<rm_id>EN 13606</rm_id>
+	<subject_of_care root="1.2.752.129.2.1.3.1" extension="195005055005"/>
+	<time_created value="20090513112900"/>
+	
+	<!--COMPOSITION_Informationsmängd Vård- och omsorgstjänst-->
+	<all_compositions>
+		<meaning codeSystem="1.2.752.129.2.2.2.1" code="vot">
+			<displayName value="Informationsmängd Vård- och omsorgstjänst"/>
+		</meaning>
+		<name nullFlavor="NA"/>
+		<rc_id nullFlavor="NA"/>
+		<synthesised value="true"/>
+		
+		<!--Tillhandahållande enhet-->
+		<other_participations>
+			<function codeSystem="1.2.752.129.2.2.2.22" code="the">
+				<displayName value="Tillhandahållande enhet"/>
+			</function>
+			<performer root="1.2.752.129.2.1.2.1" extension="SE2321000164-7381037591079"/>
+		</other_participations>
+		
+		<!--Registeringsinformation-->
+		<committal>
+			<committer nullFlavor="NA"/>
+			<ehr_system nullFlavor="NA"/>
+			<time_committed nullFlavor="NA"/>
+		</committal>
+		
+		<!--Ansvarig-->
+		<composer>
+			<healthcare_facility root="1.2.752.129.2.1.4.1" extension="SE2321000164-7381037591079"/>
+			<performer root="1.2.752.129.2.1.2.1" extension="SE2321000164-7381037590003hhr001"/>
+		</composer>
+
+		<!--ENTRY_Listningsstjänst-->
+		<content xsi:type="ENTRY">
+			<meaning codeSystem="1.2.752.129.2.2.2.1" code="vot-pri">
+				<displayName value="Primärvårdsstjänst"/>
+			</meaning>
+			<name nullFlavor="NA"/>
+			<rc_id nullFlavor="NA"/>
+			<synthesised value="false"/>
+			<uncertainty_expressed value="false"/>
+			
+			<!--ELEMENT_Tidsintervall-->
+			<items xsi:type="ELEMENT">
+				<meaning codeSystem="1.2.752.129.2.2.2.1" code="vot-pri-tid">
+					<displayName value="Tidsintervall"/>
+				</meaning>
+				<name nullFlavor="NA"/>
+				<rc_id nullFlavor="NA"/>
+				<synthesised value="false"/>
+				<value xsi:type="IVL_TS">
+					<low value="20051231"/>
+					<high nullFlavor="NI"/>
+				</value>
+			</items>
+
+			<!--ELEMENT_Beskrivning-->
+			<items xsi:type="ELEMENT">
+				<meaning codeSystem="1.2.752.129.2.2.2.1" code="vot-pri-bsk">
+					<displayName value="Beskrivning"/>
+				</meaning>
+				<name nullFlavor="NA"/>
+				<rc_id nullFlavor="NA"/>
+				<synthesised value="false"/>
+				<value xsi:type="ST" value="Husläkarmottagning"/>
+			</items>
+			
+			<!--ELEMENT_Listningstyp-->
+			<items xsi:type="ELEMENT">
+				<meaning codeSystem="1.2.752.129.2.2.2.1" code="vot-pri-typ">
+					<displayName value="Listningstyp"/>
+				</meaning>
+				<name nullFlavor="NA"/>
+				<rc_id nullFlavor="NA"/>
+				<synthesised value="false"/>
+				<value xsi:type="CD" codeSystem="" code="HLM">
+					<displayName value="Husläkarmottagning"/>
+				</value>
+			</items>
+		</content>
+	</all_compositions>
+	
+	<demographic_extract xsi:type="ORGANISATION">
+		<extract_id root="1.2.752.129.2.1.4.1" extension="193812217044"/>
+		<id root="1.2.752.129.2.1.4.1" extension="193812217044"/>
+		<telecom xsi:type="TEL.PHONE" value="tel:+46-46-123456"/>
+		<telecom xsi:type="TEL.EMAIL" value="mailto:enhet1@landstinget.se"/>
+		<code nullFlavor="NA"/>
+		<desc nullFlavor="NA"/>
+		<name value="Barn- och ungdomskliniken USÖ"/>
+		<addr>
+			<part type="AL">Universitetssjukhuset Örebro  701 85 ÖREBRO</part> 
+		</addr>
+		<addr>
+			<part  type="CEN">Örebro</part>
+		</addr>
+	</demographic_extract>
+	
+	<demographic_extract xsi:type="ORGANISATION">
+		<extract_id root="1.2.752.129.2.1.4.1" extension="SE2321000164-7381037591079"/>
+		<id root="1.2.752.129.2.1.4.1" extension="SE2321000164-7381037591079"/>
+		<telecom xsi:type="TEL.PHONE" value="tel:+46-46-789012"/>
+		<telecom xsi:type="TEL.EMAIL" value="mailto:enhet2@landstinget.se"/>
+		<code nullFlavor="NA"/>
+		<desc nullFlavor="NA"/>
+		<name value="Barn- och ungdomskliniken USÖ"/>
+		<addr>
+			<part type="AL">Universitetssjukhuset Örebro  701 85 ÖREBRO</part> 
+		</addr>
+		<addr>
+			<part  type="CEN">Örebro</part>
+		</addr>
+	</demographic_extract>
+	
+	<demographic_extract xsi:type="IDENTIFIED_HEALTHCARE_PROFESSIONAL">
+		<extract_id root="1.2.752.129.2.1.4.1" extension="SE2321000164-7381037590003ollvgiv-2"/>
+		<id root="1.2.752.129.2.1.4.1" extension="SE2321000164-7381037590003ollvgiv-2"/>
+		<name>
+			<part value="Kalle Karlsson"/>
+		</name>
+		<profession code="" codeSystem="1.2.752.129.2.2.1.4">
+			<displayName value="Vårdgivare"/>
+		</profession>
+		<scopingOrganisation_id root="1.2.752.129.2.1.4.1" extension="SE2321000164-7381037591079"/>
+	</demographic_extract>	
+</ehr_extract>
