@@ -1,0 +1,103 @@
+<xs:schema xmlns:tns="urn:riv:crm:carelisting:1" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" targetNamespace="urn:riv:crm:carelisting:1"
+	version="1.0" xml:lang="en">
+	<xs:annotation>
+		<xs:documentation>
+			Beskrivning: Meddelandetyper som används av Nationella Listingsstjänsterna.
+			Revisioner: 2009-11-24: Version 1.0, typerna HsaIdType och SubjectOfCareIdType kommer ifrån
+			                                     ett örebro projekt som också migrerat ifrån 13606.
+			            2009-12-21 version 1.0.2: Re-design i sammarbete med Modul1, Arkitekturledningen och Mawell.
+		</xs:documentation>
+	</xs:annotation>
+
+	<xs:simpleType name="HsaIdType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	
+	<xs:simpleType name="ListingType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	
+	<xs:simpleType name="SubjectOfCareIdType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="^[0-9]{6}-[0-9pPtTfF][0-9]{3}$" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="SubjectOfCare">
+		<xs:annotation>
+			<xs:documentation>Root element som beskriver tjänsteval för en	person. 
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="personId" type="tns:SubjectOfCareIdType" />
+			<xs:element name="listing" maxOccurs="unbounded"
+				minOccurs="0" type="tns:Listing" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Listing">
+		<xs:annotation>
+			<xs:documentation>En listning för en person, alltså att en person har en specificerad tjänsteleverantör.
+			Detta skulle kunna vara att en person har valt att lista sig/registrera sig att ha Vårdcentralen Kronan
+			i Sundbyberg som sin sjuk-hälså vårds tjänsteleverantör.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<!-- Anger datum för när listningen började gälla. -->
+			<xs:element name="validFromDate" type="xs:dateTime" />
+			<!--  Anger giltigt till datum, om datum saknas så blir det implicit obestämt in i framtiden. -->
+			<xs:element name="validToDate" type="xs:dateTime" />
+			<!-- Anger om en person står i kö på vårdenheten -->
+			<xs:element name="isInQueue" type="xs:boolean"/>
+			<!--  Anger typ av listning, t.ex BVC, HLM. typerna definieras i HSA kodverket, se ref: http://www.todo.se -->
+			<xs:element name="listingType" type="xs:string"/>
+			<xs:element name="healthcare_facility" type="tns:Facility" />
+			<!-- Om listning pekar ut en specifik resurs, t.ex en läkare eller husläkarteam. -->
+			<xs:element name="resource" type="tns:Resource" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Facility">
+	   <xs:annotation>
+			<xs:documentation>Vårdinrättning/vårdenhet som ansvarar för en person som listat sig hos dem. 
+			 Det är denna inrättning som för ekonomisk ersättning för personen.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="facilityId" type="tns:HsaIdType" />
+			<xs:element name="name" type="xs:string" />
+			<xs:element name="hasQueue" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Resource">
+	   <xs:annotation>
+			<xs:documentation>specifik resurs som utför listningstjänsten. 
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="resourceId" type="tns:HsaIdType" />
+			<xs:element name="name" type="xs:string" ></xs:element>			
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="TechnicalException">
+		<xs:annotation>
+			<xs:documentation>Tekniskt fel i tjänsten, det kan vara värt att försöka igen.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="code" type="xs:string" />
+			<xs:element name="description" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="PersonNotFoundException">
+		<xs:annotation>
+			<xs:documentation>Personen kunde inte hittas.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="code" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>	
+</xs:schema>
