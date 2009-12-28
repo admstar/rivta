@@ -1,30 +1,37 @@
 package com.mawell.vval.consumer;
 
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.rmi.RemoteException;
-import java.util.HashSet;
-
-import javax.xml.namespace.QName;
-import javax.xml.ws.Service;
 
 import org.apache.axis2.databinding.types.URI;
 
-import com.sun.media.sound.HsbParser;
 
-import rivtabp20._1.getavailableserviceproviders.carelisting.crm.riv.GetAvailableServiceProvidersResponderServiceStub;
-import rivtabp20._1.getavailableserviceproviders.carelisting.crm.riv.TechnicalException;
-import rivtabp20._1.getavailableserviceproviders.carelisting.crm.riv.GetAvailableServiceProvidersResponderServiceStub.AttributedURIType;
-import rivtabp20._1.getavailableserviceproviders.carelisting.crm.riv.GetAvailableServiceProvidersResponderServiceStub.GetAvailableServiceProviders;
-import rivtabp20._1.getavailableserviceproviders.carelisting.crm.riv.GetAvailableServiceProvidersResponderServiceStub.GetAvailableServiceProvidersRequestType;
-import rivtabp20._1.getavailableserviceproviders.carelisting.crm.riv.GetAvailableServiceProvidersResponderServiceStub.GetAvailableServiceProvidersResponse;
-import rivtabp20._1.getavailableserviceproviders.carelisting.crm.riv.GetAvailableServiceProvidersResponderServiceStub.HsaIdType;
-import rivtabp20._1.getavailableserviceproviders.carelisting.crm.riv.GetAvailableServiceProvidersResponderServiceStub.ServiceProvider;
-import rivtabp20._1.getavailableserviceproviders.carelisting.crm.riv.GetAvailableServiceProvidersResponderServiceStub.To;
-
-
+import rivtabp20._1.getavailablefacilities.carelisting.crm.riv.TechnicalException;
+import rivtabp20._1.getavailablefacilities.carelisting.crm.riv.GetAvailableFacilitiesResponderServiceStub;
+import rivtabp20._1.getavailablefacilities.carelisting.crm.riv.GetAvailableFacilitiesResponderServiceStub.AttributedURIType;
+import rivtabp20._1.getavailablefacilities.carelisting.crm.riv.GetAvailableFacilitiesResponderServiceStub.CountyCode;
+import rivtabp20._1.getavailablefacilities.carelisting.crm.riv.GetAvailableFacilitiesResponderServiceStub.Facility;
+import rivtabp20._1.getavailablefacilities.carelisting.crm.riv.GetAvailableFacilitiesResponderServiceStub.GetAvailableFacilities;
+import rivtabp20._1.getavailablefacilities.carelisting.crm.riv.GetAvailableFacilitiesResponderServiceStub.GetAvailableFacilitiesRequestType;
+import rivtabp20._1.getavailablefacilities.carelisting.crm.riv.GetAvailableFacilitiesResponderServiceStub.GetAvailableFacilitiesResponse;
+import rivtabp20._1.getavailablefacilities.carelisting.crm.riv.GetAvailableFacilitiesResponderServiceStub.To;
 
 /**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements. See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership. The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
  * Exempelkod för användningsfallet "Hämta tillgänglia tjänsteutövare".
  * Tjänsteutövare kan vara en vårdenhet.
  * @author Robert Siwerz, www.mawell.com.
@@ -39,29 +46,30 @@ public class UseCaseHamtaTillgangligaTjansteutovareAxis
     */
    public void useCaseHamtaTillgangligaVardenheter() throws MalformedURLException
    {
-      GetAvailableServiceProvidersResponse  response = null;
+      GetAvailableFacilitiesResponse response = null;
       
       try 
       {
-         GetAvailableServiceProvidersResponderServiceStub stub = new GetAvailableServiceProvidersResponderServiceStub("http://127.0.0.1:8088/mockGetAvailableServiceProvidersResponderBinding?WSDL");
-         GetAvailableServiceProviders getAvailableServiceProviders0 = new GetAvailableServiceProviders();
-         GetAvailableServiceProvidersRequestType data = new GetAvailableServiceProvidersRequestType();
-         HsaIdType hsaId = new HsaIdType();
-         hsaId.setHsaIdType("121212-1212");
-         data.setRegion(hsaId);
-         getAvailableServiceProviders0.setGetAvailableServiceProviders(data);
+         GetAvailableFacilitiesResponderServiceStub stub = new GetAvailableFacilitiesResponderServiceStub("http://127.0.0.1:8088/mockGetAvailableFacilitiesResponderBinding?WSDL");
          
+         GetAvailableFacilities getAvailableServiceProviders0 = new GetAvailableFacilities();
+         GetAvailableFacilitiesRequestType data = new GetAvailableFacilitiesRequestType();
+         CountyCode countyCode = new CountyCode();
+         countyCode.setCountyCode("01");
+         data.setCountyCode(countyCode);
+         getAvailableServiceProviders0.setGetAvailableFacilities(data);
+          
          To to1 = new To();
          AttributedURIType logicalAddress = new AttributedURIType();
          URI uri = new URI();
          uri.setPath("SE239482390-23SAD");
          logicalAddress.setAnyURI(uri); // HSAID till huvudmannen som skall svara på frågan.
          to1.setTo(logicalAddress);
-         
-         // Hämta tillgängliga tjänsteutövare. 
-         response = stub.getAvailableServiceProviders(getAvailableServiceProviders0, to1);
+          
+         // Hämta tillgängliga tjänsteutövare.  
+         response = stub.getAvailableFacilities(getAvailableServiceProviders0, to1);
       } catch (TechnicalException e) 
-      {
+      { 
          // Gör ett nytt försök...
       } catch (Exception e)
       {
@@ -71,13 +79,13 @@ public class UseCaseHamtaTillgangligaTjansteutovareAxis
       }
  
       // Skriver att tillgängliga tjänsteutövare. 
-      ServiceProvider[] hsaIDs = response.getGetAvailableServiceProvidersResponse().getServiceProvider();
+      Facility[] hsaIDs = response.getGetAvailableFacilitiesResponse().getHealthcare_facilities();
       System.out.println("Tillgängliga tjänsteutövare:");
 
       for (int i =0; i < hsaIDs.length; i++) 
       {  
-         ServiceProvider serviceProvider = hsaIDs[i]; 
-         System.out.println("HSAID: " + serviceProvider.getServiceProviderId() + ", " + serviceProvider.getName() + ", typ = " + serviceProvider.getServiceProviderType().getValue());
+         Facility serviceProvider = hsaIDs[i]; 
+         System.out.println("HSAID: " + serviceProvider.getFacilityId() + ", " + serviceProvider.getName());
       }  
    } 
 
