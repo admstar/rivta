@@ -1,3 +1,21 @@
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. The ASF licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->
 <xs:schema xmlns:tns="urn:riv:crm:carelisting:1" xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	elementFormDefault="qualified" targetNamespace="urn:riv:crm:carelisting:1"
 	version="1.0" xml:lang="en">
@@ -23,7 +41,17 @@
 			<xs:pattern value="^[0-9]{6}-[0-9pPtTfF][0-9]{3}$" />
 		</xs:restriction>
 	</xs:simpleType>
-
+	
+	<xs:simpleType name="CountyCode">
+		<xs:annotation>
+			<xs:documentation>Anger koder för län i Sverige, kodernas ursprung är ifrån SCB.
+				Statistiska centralbyrån (SCB) ansvarar för att förteckna regionala indelningar och 
+				ange koder för dessa. SCB anger koder för län och kommuner.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	
 	<xs:complexType name="SubjectOfCare">
 		<xs:annotation>
 			<xs:documentation>Root element som beskriver tjänsteval för en	person. 
@@ -33,6 +61,7 @@
 			<xs:element name="personId" type="tns:SubjectOfCareIdType" />
 			<xs:element name="listing" maxOccurs="unbounded"
 				minOccurs="0" type="tns:Listing" />
+			<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>
 		</xs:sequence>
 	</xs:complexType>
 
@@ -44,17 +73,33 @@
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<!-- Anger datum för när listningen började gälla. -->
-			<xs:element name="validFromDate" type="xs:dateTime" />
-			<!--  Anger giltigt till datum, om datum saknas så blir det implicit obestämt in i framtiden. -->
-			<xs:element name="validToDate" type="xs:dateTime" />
-			<!-- Anger om en person står i kö på vårdenheten -->
-			<xs:element name="isInQueue" type="xs:boolean"/>
-			<!--  Anger typ av listning, t.ex BVC, HLM. typerna definieras i HSA kodverket, se ref: http://www.todo.se -->
-			<xs:element name="listingType" type="xs:string"/>
+			<xs:element name="validFromDate" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Anger datum för när listningen började gälla.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="validToDate" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Anger datum när listningen slutade gälla, om datum saknas så blir det implicit obestämt in i framtiden.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isInQueue" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Anger om en person står i kö på vårdenheten. ValidFrom/To-Date ska vara tomma när man står i kö.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="listingType" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Anger typ av listning, t.ex BVC, HLM. typerna definieras i HSA kodverket, se ref: http://www.todo.se</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="healthcare_facility" type="tns:Facility" />
-			<!-- Om listning pekar ut en specifik resurs, t.ex en läkare eller husläkarteam. -->
-			<xs:element name="resource" type="tns:Resource" minOccurs="0" />
+			<xs:element name="resource" type="tns:Resource" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Om listning pekar ut en specifik resurs, t.ex en läkare eller husläkarteam.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>
 		</xs:sequence>
 	</xs:complexType>
 
@@ -66,8 +111,9 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="facilityId" type="tns:HsaIdType" />
-			<xs:element name="name" type="xs:string" />
+			<xs:element name="name" type="xs:string" minOccurs="0" />
 			<xs:element name="hasQueue" type="xs:boolean"/>
+			<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>
 		</xs:sequence>
 	</xs:complexType>
 
@@ -78,7 +124,8 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="resourceId" type="tns:HsaIdType" />
-			<xs:element name="name" type="xs:string" ></xs:element>			
+			<xs:element name="name" type="xs:string" ></xs:element>		
+			<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>	
 		</xs:sequence>
 	</xs:complexType>
 
