@@ -12,9 +12,9 @@ set AXIS2_CLASS_PATH=%AXIS2_HOME%
 FOR %%c in ("%AXIS2_HOME%\lib\*.jar") DO set AXIS2_CLASS_PATH=!AXIS2_CLASS_PATH!;%%c
 
 @rem ======================================================================
-CALL wsdl2java -g -uri GetAvailableServiceProvidersInteraction.wsdl
+CALL wsdl2java -g -uri GetAvailableFacilitiesInteraction.wsdl
 CALL javac -cp .;%AXIS2_CLASS_PATH%  src/rivtabp20/_1/getavailableserviceproviders/carelisting/crm/riv/*.java
 cd  src
-jar -cf ..\..\..\..\..\..\Lib\axis1.4.1_With_jdk5_0_19_listingservice.jar rivtabp20\_1\getavailableserviceproviders\carelisting\crm\riv
+jar -cf ..\lib\axis1.4.1_With_jdk5_0_19_listingservice.jar rivtabp20\_1\getavailableserviceproviders\carelisting\crm\riv
 cd ..
-rmdir /S /Q src
+rem rmdir /S /Q src
