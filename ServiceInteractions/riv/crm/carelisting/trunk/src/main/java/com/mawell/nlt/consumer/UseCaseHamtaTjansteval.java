@@ -96,7 +96,8 @@ public class UseCaseHamtaTjansteval
          String queue = (facility.isHasQueue())? "Ja" : "Nej";
          System.out.println(" 2. Är det kö just nu: " + queue);
          
-      } else if (resource != null)
+      }
+      if (resource != null)
       {
          // Tjänsteutövaren är en specifik läkare och innehåller följande
          // data.

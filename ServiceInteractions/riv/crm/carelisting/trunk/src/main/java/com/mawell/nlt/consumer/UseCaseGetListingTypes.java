@@ -60,7 +60,7 @@ public class UseCaseGetListingTypes
       }     
       
       // Itererar över listan med listningstyper.
-      System.out.println("Möjliga listingsval för personen");
+      System.out.println("Möjliga listningsval för personen");
       List<String> listingTypes = response.getListingType();
       
       for(String type : listingTypes)
