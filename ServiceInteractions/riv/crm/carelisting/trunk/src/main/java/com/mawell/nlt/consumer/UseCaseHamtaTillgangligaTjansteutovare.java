@@ -69,9 +69,9 @@ public class UseCaseHamtaTillgangligaTjansteutovare
 		}
  
 		// Skriver att tillgängliga tjänsteutövare. 
-		List<Facility> hsaIDs = response.getHealthcareFacilities();
+		List<Facility> facilities = response.getHealthcareFacilities();
 		System.out.println("Tillgängliga vårdenheter:");
-		Iterator<Facility> hsaIterator = hsaIDs.iterator();
+		Iterator<Facility> hsaIterator = facilities.iterator();
 
 		while (hsaIterator.hasNext()) 
 		{

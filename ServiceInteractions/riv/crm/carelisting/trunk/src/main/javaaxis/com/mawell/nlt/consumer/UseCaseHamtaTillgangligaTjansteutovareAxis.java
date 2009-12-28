@@ -73,14 +73,13 @@ public class UseCaseHamtaTillgangligaTjansteutovareAxis
          // Gör ett nytt försök...
       } catch (Exception e)
       {
-         // TODO Auto-generated catch block
          e.printStackTrace();
          return;
       }
  
       // Skriver att tillgängliga tjänsteutövare. 
       Facility[] hsaIDs = response.getGetAvailableFacilitiesResponse().getHealthcare_facilities();
-      System.out.println("Tillgängliga tjänsteutövare:");
+      System.out.println("Tillgängliga vårdenheter:");
 
       for (int i =0; i < hsaIDs.length; i++) 
       {  
