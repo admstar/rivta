@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. The ASF licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->
 <wsdl:definitions name="GetListingInteraction"
 	xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
 	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
@@ -50,8 +68,12 @@
 	<!-- Port typer -->
 	<wsdl:portType name="GetListingResponderInterface">
 		<wsdl:operation name="getListing">
-			<wsdl:documentation>Hämtar en listning för angivet	personnummer. Hämtar endast personens
-				aktuella val, ej historisk	data. Logisk adress är till vårdgivare som ska kunna svara på frågan.
+			<wsdl:documentation>
+			Hämtar en listning för angivet personnummer. Hämtar endast personens registrerade listningar.
+			En listning kan vara aktiv, registrerad med framtida aktiveringsdatum, eller info om att 
+			personen står i kö för begärt val.  Returnerade val kan gälla såväl aktiva val som framtida val. 
+			Returnerade val kan också vara vara plats i kö, dvs ej aktivt val. 
+			LogicalAdress ska vara Länskod (enligt Skatteverket) för det län där personen är mantalsskriven.
 			</wsdl:documentation>
 			<wsdl:input message="getListingRequest" />
 			<wsdl:output message="getListingResponse" />
