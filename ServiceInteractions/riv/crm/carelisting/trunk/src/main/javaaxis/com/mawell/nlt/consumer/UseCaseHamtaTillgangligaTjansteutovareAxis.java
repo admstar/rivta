@@ -49,7 +49,7 @@ public class UseCaseHamtaTillgangligaTjansteutovareAxis
       GetAvailableFacilitiesResponse response = null;
       
       try 
-      {
+      { 
          GetAvailableFacilitiesResponderServiceStub stub = new GetAvailableFacilitiesResponderServiceStub("http://127.0.0.1:8088/mockGetAvailableFacilitiesResponderBinding?WSDL");
          
          GetAvailableFacilities getAvailableServiceProviders0 = new GetAvailableFacilities();
