@@ -35,9 +35,9 @@
 	
 	<xs:simpleType name="ListingType">
 		<xs:annotation>
-			<xs:documentation>Vanliga typer är {HL=Husläkare, DSK=Distriktssköterska, BVC=Barnvavårdcentral, 
-								   HLM=Husläkarmottagning, HLT=Husläkarteam}. Det finns dock inte något kodverk i 
-								   HSA för detta.
+			<xs:documentation>Finns inte något kodverk i HSA för detta. Logiken rörande listningstyper är att en
+					anslutningspunkt är konsistent i benämningen mellan operationer som använder denna datatyp. Alltså 
+					t.ex Barnavårdcentral = BVC i en operation så ska det inte anges BVM för en annan operation.
 			</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string" />
@@ -90,10 +90,9 @@
 					<xs:documentation>Anger datum när listningen slutade gälla, om datum saknas så blir det implicit obestämt in i framtiden.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="isInQueue" type="xs:boolean" minOccurs="0">
+			<xs:element name="isInQueue" type="xs:boolean">
 				<xs:annotation>
-					<xs:documentation>Anger om en person står i kö på vårdenheten. ValidFrom/To-Date ska vara tomma när man står i kö. 
-					                  Detta element är inte obligatoriskt att alla anslutningspunkter fyller i.</xs:documentation>
+					<xs:documentation>Anger om en person står i kö på vårdenheten. ValidFrom/To-Date ska vara tomma när man står i kö.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="listingType" type="xs:string">
