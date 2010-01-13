@@ -14,5 +14,5 @@
 @REM 
 @REM --------------------------------------------------------------------------
 svcutil /language:cs CreateListningInteraction.wsdl ws-addressing-1.0.xsd CreateListing_1_0.xsd
-svcutil /language:cs GetAvailableServiceProvidersInteraction.wsdl ws-addressing-1.0.xsd GetAvailableServiceProviders_1_0.xsd ISO_dt.xsd
-svcutil /language:cs GetlListningInteraction.wsdl ws-addressing-1.0.xsd GetListing_1_0.xsd SE13606-1_SVR_NLT.xsd SE13606-1_demographics_SVR_NLT.xsd ISO_dt.xsd
+svcutil /language:cs GetAvailableServiceProvidersInteraction.wsdl ws-addressing-1.0.xsd GetAvailableServiceProviders_1_0.xsd 
+svcutil /language:cs GetlListningInteraction.wsdl ws-addressing-1.0.xsd GetListing_1_0.xsd 
