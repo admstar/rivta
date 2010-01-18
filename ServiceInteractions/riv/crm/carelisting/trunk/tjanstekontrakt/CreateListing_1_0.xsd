@@ -29,6 +29,7 @@
 						   2009-09-14: Version 1.0.1, Bytte createListingRequestType till att använda EHREXTRACT.
 						   2009-11-25: Version 1.0.2, Plockade bort 13606 datatyper och bytte namn på exception InvalidHASId till InvalidServiceProvider.
 						   2009-12-21: Version 1.0.3: Re-design i sammarbete med Modul1, Arkitekturledningen och Mawell.
+						   2010-01-18: version 1.0.4: Lade till kö in-parameter.
 		</xs:documentation>
 	</xs:annotation>
 
@@ -45,12 +46,23 @@
 	<xs:complexType name="createListingRequestType">
 		<xs:sequence>
 			<xs:element name="personId" type="core:SubjectOfCareIdType" />
-			<!-- Typ av listning som man önskar göra, t.ex BVC. -->
-			<xs:element name="listingType" type="core:ListingType"/>
-			<!-- Vårdenhet -->
-			<xs:element name="healthcare_facility" type="core:HsaIdType" /> 
-			 <!-- resurs att lista sig på -->
-			<xs:element name="healthcare_professional" type="core:HsaIdType" minOccurs="0" />
+			<xs:element name="listingType" type="core:ListingType">
+				<xs:annotation><xs:documentation>Typ av listning som man önskar göra, t.ex BVC.</xs:documentation>				
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="healthcare_facility" type="core:HsaIdType">
+				<xs:annotation><xs:documentation>Vårdenhet</xs:documentation>
+				</xs:annotation>
+			</xs:element>			 
+			<xs:element name="healthcare_professional" type="core:HsaIdType" minOccurs="0">
+				<xs:annotation><xs:documentation>resurs att lista sig på</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="addToQueue" type="xs:boolean">
+				<xs:annotation><xs:documentation>Anger om personen vill ställa sig i kö om det är kö
+														   på vårdenheten/resursen.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>			
 		</xs:sequence>
 	</xs:complexType>
