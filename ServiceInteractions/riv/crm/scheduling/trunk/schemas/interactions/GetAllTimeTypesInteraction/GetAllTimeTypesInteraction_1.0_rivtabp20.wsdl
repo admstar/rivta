@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://Cross/BookingService/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://Cross/BookingService/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://Cross/BookingService/">
+      <s:element name="GetAllTimeTypesI">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="doc">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllTimeTypesIResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllTimeTypesIResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetAllTimeTypesISoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllTimeTypesI" />
+  </wsdl:message>
+  <wsdl:message name="GetAllTimeTypesISoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllTimeTypesIResponse" />
+  </wsdl:message>
+  <wsdl:portType name="GetAllTimeTypesInteractionWSISoap">
+    <wsdl:operation name="GetAllTimeTypesI">
+      <wsdl:input message="tns:GetAllTimeTypesISoapIn" />
+      <wsdl:output message="tns:GetAllTimeTypesISoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GetAllTimeTypesInteractionWSISoap" type="tns:GetAllTimeTypesInteractionWSISoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetAllTimeTypesI">
+      <soap:operation soapAction="http://Cross/BookingService/GetAllTimeTypesI" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="GetAllTimeTypesInteractionWSISoap12" type="tns:GetAllTimeTypesInteractionWSISoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetAllTimeTypesI">
+      <soap12:operation soapAction="http://Cross/BookingService/GetAllTimeTypesI" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GetAllTimeTypesInteractionWSI">
+    <wsdl:port name="GetAllTimeTypesInteractionWSISoap" binding="tns:GetAllTimeTypesInteractionWSISoap">
+      <soap:address location="http://localhost/BookingService/GetAllTimeTypesInteractionWSI.asmx" />
+    </wsdl:port>
+    <wsdl:port name="GetAllTimeTypesInteractionWSISoap12" binding="tns:GetAllTimeTypesInteractionWSISoap12">
+      <soap12:address location="http://localhost/BookingService/GetAllTimeTypesInteractionWSI.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
