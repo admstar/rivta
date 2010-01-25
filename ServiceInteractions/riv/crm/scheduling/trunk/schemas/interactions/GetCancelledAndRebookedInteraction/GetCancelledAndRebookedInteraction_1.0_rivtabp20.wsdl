@@ -1,77 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://Cross/BookingService/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://Cross/BookingService/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
-  <wsdl:types>
-    <s:schema elementFormDefault="qualified" targetNamespace="http://Cross/BookingService/">
-      <s:element name="GetCancelledAndRebooked">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="doc">
-              <s:complexType mixed="true">
-                <s:sequence>
-                  <s:any />
-                </s:sequence>
-              </s:complexType>
-            </s:element>
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetCancelledAndRebookedResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetCancelledAndRebookedResult">
-              <s:complexType mixed="true">
-                <s:sequence>
-                  <s:any />
-                </s:sequence>
-              </s:complexType>
-            </s:element>
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-    </s:schema>
-  </wsdl:types>
-  <wsdl:message name="GetCancelledAndRebookedSoapIn">
-    <wsdl:part name="parameters" element="tns:GetCancelledAndRebooked" />
+<wsdl:definitions 
+	name="GetCancelledAndRebookedInteraction"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+	xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" 
+	xmlns:wsa="http://www.w3.org/2005/08/addressing" 
+	xmlns:tjs="urn:riv:crm:scheduling:GetCancelledAndRebookedResponder:1" 
+	xmlns:tns="urn:riv:crm:scheduling:GetCancelledAndRebooked:1:rivtabp20"
+	targetNamespace="urn:riv:crm:scheduling:GetCancelledAndRebooked:1:rivtabp20">
+
+	<xs:annotation>
+		<xs:documentation>
+			Tjänsteinteraktionens namn: GetCancelledAndRebookedInteraction
+			Beskrivning: 
+				Interaction to retrieve bookings that have been cancelled or rebooked.
+			Revisioner: 
+			Tjänstedomän: crm:scheduling
+			Tjänsteinteraktionstyp: Fråga-svar
+			RIV Teknisk Anvisning: Basic Profile 2.0
+			Förvaltas av: Örebro Läns Landsting
+		</xs:documentation>
+	</xs:annotation>
+
+	<wsdl:types>
+		<xs:schema>
+			<xs:import schemaLocation="GetCancelledAndRebookedResponder_1.0.xsd" namespace="urn:riv:crm:scheduling:GetCancelledAndRebookedResponder:1"/>
+		</xs:schema>
+		<xs:schema>
+			<xs:import schemaLocation="../../core_components/ws-addressing-1.0.xsd" namespace="http://www.w3.org/2005/08/addressing"/>
+		</xs:schema>
+	</wsdl:types>
+	
+  <wsdl:message name="GetCancelledAndRebookedRequest">
+	<xs:annotation>
+		<xs:documentation>
+			LogicalAddress is the hsaid of the healthcare_facility that is 
+			queried for cancelled or rebooked bookings.
+		</xs:documentation>
+	</xs:annotation>
+	<wsdl:part name="LogicalAddress" element="wsa:To" />
+    <wsdl:part name="parameters" element="tjs:GetCancelledAndRebooked" />
   </wsdl:message>
-  <wsdl:message name="GetCancelledAndRebookedSoapOut">
-    <wsdl:part name="parameters" element="tns:GetCancelledAndRebookedResponse" />
+
+  <wsdl:message name="GetCancelledAndRebookedResponse">
+    <wsdl:part name="parameters" element="tjs:GetCancelledAndRebookedResponse" />
   </wsdl:message>
-  <wsdl:portType name="GetCancelledAndRebookedInteractionWSISoap">
+
+  <wsdl:portType name="GetCancelledAndRebookedresponderInterface">
     <wsdl:operation name="GetCancelledAndRebooked">
-      <wsdl:input message="tns:GetCancelledAndRebookedSoapIn" />
-      <wsdl:output message="tns:GetCancelledAndRebookedSoapOut" />
+      <wsdl:input message="tns:GetCancelledAndRebookedRequest" />
+      <wsdl:output message="tns:GetCancelledAndRebookedResponse" />
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name="GetCancelledAndRebookedInteractionWSISoap" type="tns:GetCancelledAndRebookedInteractionWSISoap">
-    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="GetCancelledAndRebooked">
-      <soap:operation soapAction="http://Cross/BookingService/GetCancelledAndRebooked" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
+
+  <wsdl:binding name="GetCancelledAndRebookedResponderBinding" type="tns:GetCancelledAndRebookedresponderInterface">
+   		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+		<wsdl:operation name="GetCancelledAndRebooked">
+			<soap:operation soapAction="urn:riv:crm:scheduling:GetCancelledAndRebookedResponder:1:GetCancelledAndRebooked"/>
+			<wsdl:input>
+				<soap:header use="literal" message="tns:GetCancelledAndRebookedRequest" part="LogicalAddress"/>
+				<soap:body use="literal" parts="parameters"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
   </wsdl:binding>
-  <wsdl:binding name="GetCancelledAndRebookedInteractionWSISoap12" type="tns:GetCancelledAndRebookedInteractionWSISoap">
-    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="GetCancelledAndRebooked">
-      <soap12:operation soapAction="http://Cross/BookingService/GetCancelledAndRebooked" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-  </wsdl:binding>
-  <wsdl:service name="GetCancelledAndRebookedInteractionWSI">
-    <wsdl:port name="GetCancelledAndRebookedInteractionWSISoap" binding="tns:GetCancelledAndRebookedInteractionWSISoap">
-      <soap:address location="http://localhost/BookingService/GetCancelledAndRebookedInteractionWSI.asmx" />
-    </wsdl:port>
-    <wsdl:port name="GetCancelledAndRebookedInteractionWSISoap12" binding="tns:GetCancelledAndRebookedInteractionWSISoap12">
-      <soap12:address location="http://localhost/BookingService/GetCancelledAndRebookedInteractionWSI.asmx" />
-    </wsdl:port>
-  </wsdl:service>
+
+	<wsdl:service name="GetCancelledAndRebookedResponderService">
+		<wsdl:port name="GetCancelledAndRebookedResponderPort" binding="tns:GetCancelledAndRebookedResponderBinding">
+			<soap:address location="http://tempuri.org"/>
+		</wsdl:port>
+	</wsdl:service>
 </wsdl:definitions>
