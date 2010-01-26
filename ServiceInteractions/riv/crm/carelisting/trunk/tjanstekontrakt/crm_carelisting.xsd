@@ -26,6 +26,7 @@
 			                                     ett örebro projekt som också migrerat ifrån 13606.
 			            2009-12-21 version 1.0.2: Re-design i sammarbete med Modul1, Arkitekturledningen och Mawell.
 			            2010-01-13 version 1.0.3: Lade till supportedListingTypes på Facility.
+			            2010-01-26 version 1.0.4: Lade till köstatus. 
 		</xs:documentation>
 	</xs:annotation>
 
@@ -136,6 +137,17 @@
 			<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>	
 		</xs:sequence>
 	</xs:complexType>
+	
+	<xs:simpleType name="PersonQueueStatus">
+		<xs:annotation>
+			<xs:documentation>Köstatus för en person.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="inQueue" />
+			<xs:enumeration value="notInQueue" />
+		</xs:restriction>
+	</xs:simpleType>
 
 	<xs:complexType name="TechnicalException">
 		<xs:annotation>
