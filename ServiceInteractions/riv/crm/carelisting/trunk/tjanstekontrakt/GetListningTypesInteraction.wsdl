@@ -59,8 +59,8 @@
 	<wsdl:message name="TechnicalException">
 		<wsdl:part name="parameters" element="tjs:TechnicalException" />
 	</wsdl:message>
-	<wsdl:message name="PersonNotFound">
-		<wsdl:part name="parameters" element="tjs:PersonNotFound" />
+	<wsdl:message name="PersonNotFoundException">
+		<wsdl:part name="parameters" element="tjs:PersonNotFoundException" />
 	</wsdl:message>
 		
 	<!-- Port typer -->
@@ -71,7 +71,7 @@
 			</wsdl:documentation>
 			<wsdl:input message="getListingTypesRequest" />
 			<wsdl:output message="getListingTypesResponse" />
-			<wsdl:fault name="PersonNotFound" message="PersonNotFound"></wsdl:fault>
+			<wsdl:fault name="PersonNotFoundException" message="PersonNotFoundException"></wsdl:fault>
 			<wsdl:fault name="TechnicalException" message="TechnicalException"></wsdl:fault>
 		</wsdl:operation>
 	</wsdl:portType>
@@ -90,6 +90,9 @@
 			<wsdl:output>
 				<soap:body use="literal" />
 			</wsdl:output>
+			<wsdl:fault name="PersonNotFoundException">
+				<soap:fault use="literal" name="PersonNotFoundException" />
+			</wsdl:fault>	
 			<wsdl:fault name="TechnicalException">
 				<soap:fault use="literal" name="TechnicalException" />
 			</wsdl:fault>	
