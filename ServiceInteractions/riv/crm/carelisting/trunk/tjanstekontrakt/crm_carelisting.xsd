@@ -81,12 +81,12 @@
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="validFromDate" type="xs:dateTime">
+			<xs:element name="validFromDate" type="xs:dateTime" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Anger datum för när listningen började gälla.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="validToDate" type="xs:dateTime">
+			<xs:element name="validToDate" type="xs:dateTime" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Anger datum när listningen slutade gälla, om datum saknas så blir det implicit obestämt in i framtiden.</xs:documentation>
 				</xs:annotation>
@@ -114,7 +114,6 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="facilityId" type="tns:HsaIdType" />
-			<xs:element name="name" type="xs:string" minOccurs="0" />
 			<xs:element name="hasQueue" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Indikerar om vårdenheten har kö vid listningar. Kan utelämnas om information
@@ -138,7 +137,6 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="resourceId" type="tns:HsaIdType" />
-			<xs:element name="name" type="xs:string" ></xs:element>		
 			<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>	
 		</xs:sequence>
 	</xs:complexType>
