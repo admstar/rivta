@@ -46,7 +46,12 @@
 
 	<xs:complexType name="getListingResponseType">
 		<xs:sequence>
-			<xs:element name="subjectOfCare" type="core:SubjectOfCare" />
+			<xs:element name="subjectOfCare" type="core:SubjectOfCare">
+				<xs:annotation>
+					<xs:documentation>En persons listningar.
+					                  PostCondition: tillgängliga listningstyper för en listnings vårdenhet är utelämnad.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>
 		</xs:sequence>
 	</xs:complexType>
