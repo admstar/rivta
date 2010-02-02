@@ -87,11 +87,6 @@ public class UseCaseHamtaTjansteval
          // 1. Namn.
          System.out.println(" Vårdenhet:");
          
-         // *** Hämtar ut data ***
-         // 1. Namn
-         // 2. Har vårdenheten kö just nu.
-         System.out.println(" 1. Namn: " + facility.getName());
-         
          // 2. Har vårdenheten kö just nu.
          String queue = (facility.isHasQueue())? "Ja" : "Nej";
          System.out.println(" 2. Är det kö just nu: " + queue);
@@ -109,8 +104,6 @@ public class UseCaseHamtaTjansteval
          // 1. Person id.
          System.out.println(" 1. Person id: " + resource.getResourceId());
 
-         // 2. Namn.
-         System.out.println(" 2. Namn: " + resource.getName());
       }
    }
 
