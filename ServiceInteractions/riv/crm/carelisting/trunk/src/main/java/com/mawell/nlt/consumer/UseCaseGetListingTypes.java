@@ -11,6 +11,7 @@ import org.w3._2005._08.addressing.AttributedURIType;
 
 import riv.crm.carelisting.getlistingtypes._1.rivtabp20.GetListingTypesResponderInterface;
 import riv.crm.carelisting.getlistingtypes._1.rivtabp20.TechnicalException;
+import riv.crm.carelisting.getlistingtypes._1.rivtabp20.PersonNotFoundException;
 import riv.crm.carelisting.getlistingtypesresponder._1.GetListingTypesRequestType;
 import riv.crm.carelisting.getlistingtypesresponder._1.GetListingTypesResponseType;
 
@@ -54,10 +55,15 @@ public class UseCaseGetListingTypes
       try 
       {
          response = listingSEI.getListingTypes(logicalAddress, request);
-      } catch (TechnicalException e)
+      }
+      catch (TechnicalException e)
       {
          // Gör ett nytt försök...
-      }     
+      }
+      catch (PersonNotFoundException e)
+      {
+    	  
+      }
       
       // Itererar över listan med listningstyper.
       System.out.println("Möjliga listningsval för personen");

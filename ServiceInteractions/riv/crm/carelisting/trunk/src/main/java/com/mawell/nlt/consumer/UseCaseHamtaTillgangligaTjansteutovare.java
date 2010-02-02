@@ -76,7 +76,7 @@ public class UseCaseHamtaTillgangligaTjansteutovare
 		while (hsaIterator.hasNext()) 
 		{
 		   Facility facility = hsaIterator.next(); 
-			System.out.println("HSAID: " + facility.getFacilityId() + ", namn: " + facility.getName());
+			System.out.println("HSAID: " + facility.getFacilityId());
 		} 
 	}
 
