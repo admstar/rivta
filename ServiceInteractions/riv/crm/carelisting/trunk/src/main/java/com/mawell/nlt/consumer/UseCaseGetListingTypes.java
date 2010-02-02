@@ -62,7 +62,7 @@ public class UseCaseGetListingTypes
       }
       catch (PersonNotFoundException e)
       {
-    	  
+    	  // 
       }
       
       // Itererar över listan med listningstyper.
