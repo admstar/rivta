@@ -11,7 +11,7 @@ setlocal EnableDelayedExpansion
 set AXIS2_CLASS_PATH=%AXIS2_HOME%
 FOR %%c in ("%AXIS2_HOME%\lib\*.jar") DO set AXIS2_CLASS_PATH=!AXIS2_CLASS_PATH!;%%c
 
-@rem ======================================================================
+@REM ======================================================================
 
 CALL wsdl2java -g -uri ..\tjanstekontrakt\CreateListningInteraction.wsdl
 CALL wsdl2java -g -uri ..\tjanstekontrakt\GetAvailableFacilitiesInteraction.wsdl
