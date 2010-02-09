@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ @Copyright 2010 Sveriges Kommuner och Landsting
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. The ASF licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:tjs="urn:riv:ehr:ehrexchange:GetEhrExtractResponder:1" xmlns:tns="urn:riv:ehr:ehrexchange:GetEhrExtract:1:rivtabpip20" name="GetEhrExtractInteraction" targetNamespace="urn:riv:ehr:ehrexchange:GetEhrExtract:1:rivtabpip20">
+	<xs:annotation>
+		<xs:documentation>
+			Tjänsteinteraktionens namn: GetEhrExtract
+			Beskrivning: Tjänsteinteraktion för utbyte av EHR-Extract enligt urn:riv13606:v2, med stöd för SAML-biljett
+			Revisioner: 2010-02-09 Version 1.0
+			Tjänstedomän: ehr:ehrexchange
+			Tjänsteinteraktionstyp: Fråga-svar
+			RIV Teknisk Anvisning: Basic Profile med Intygspropagering 2.0 (RIVTABPIP20)
+			Förvaltas av: RIV-TA-förvaltningen inom CeHIS Arkitekturledning, SKL
+		</xs:documentation>
+	</xs:annotation>
+	<wsdl:types>
+		<xs:schema>
+			<xs:import schemaLocation="../profile/ws-addressing-1.0.xsd" namespace="http://www.w3.org/2005/08/addressing"/>
+		</xs:schema>
+		<xs:schema>
+			<xs:import schemaLocation="../profile/saml-schema-assertion-2.0.xsd" namespace="urn:oasis:names:tc:SAML:2.0:assertion"/>
+		</xs:schema>
+		<xs:schema>
+			<xs:import schemaLocation="GetEhrExtractResponder_1.0.xsd" namespace="urn:riv:ehr:ehrexchange:GetEhrExtractResponder:1"/>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="GetEhrExtractRequest">
+		<wsdl:documentation>
+				LogicalAddress ska vara HSA-id för den journalförande verksamhet från vilken 
+				begärt extrakt önskas. Det kan t.ex. vara ett HSA-id för en vårdenhet.
+				Om frågan ställs till tjänst som har nationell täckning (t.ex. NPÖ frågetjänst)
+				ska LogicalAddress vara HSA-id för Carelink AB: "SE165565968202-3P3Q".
+			</wsdl:documentation>
+		<wsdl:part name="LogicalAddress" element="wsa:To"/>
+		<wsdl:part name="HCAssertion" element="saml:Assertion"/>
+		<wsdl:part name="parameters" element="tjs:GetEhrExtract"/>
+	</wsdl:message>
+	<wsdl:message name="GetEhrExtractResponse">
+		<wsdl:part name="parameters" element="tjs:GetEhrExtractResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetEhrExtractContinuationRequest">
+		<wsdl:documentation>
+		LogicalAddress ska vara HSA-id för den journalförande verksamhet från vilken 
+		begärt extrakt önskas. Det kan t.ex. vara ett HSA-id för en vårdenhet.
+		Om frågan ställs till tjänst som har nationell täckning (t.ex. NPÖ frågetjänst)
+		ska LogicalAddress vara HSA-id för Carelink AB: "SE165565968202-3P3Q".
+	</wsdl:documentation>
+		<wsdl:part name="LogicalAddress" element="wsa:To"/>
+		<wsdl:part name="HCAssertion" element="saml:Assertion"/>
+		<wsdl:part name="parameters" element="tjs:GetEhrExtractContinuation"/>
+	</wsdl:message>
+	<wsdl:message name="GetEhrExtractContinuationResponse">
+		<wsdl:part name="parameters" element="tjs:GetEhrExtractContinuationResponse"/>
+	</wsdl:message>
+	<wsdl:message name="PingRequest">
+		<wsdl:part name="LogicalAddress" element="wsa:To"/>
+		<wsdl:part name="parameters" element="tjs:Ping"/>
+	</wsdl:message>
+	<wsdl:message name="PingResponse">
+		<wsdl:part name="parameters" element="tjs:PingResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="GetEhrExtractResponderInterface">
+		<wsdl:operation name="GetEhrExtract">
+			<wsdl:input message="tns:GetEhrExtractRequest"/>
+			<wsdl:output message="tns:GetEhrExtractResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetEhrExtractContinuation">
+			<wsdl:input message="tns:GetEhrExtractContinuationRequest"/>
+			<wsdl:output message="tns:GetEhrExtractContinuationResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="Ping">
+			<wsdl:input message="tns:PingRequest"/>
+			<wsdl:output message="tns:PingResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="GetEhrExtractResponderBinding" type="tns:GetEhrExtractResponderInterface">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetEhrExtract">
+			<soap:operation soapAction="urn:riv:ehr:ehrexchange:EhrExtractionResponder:1:GetEhrExtract"/>
+			<wsdl:input>
+				<soap:header use="literal" message="tns:GetEhrExtractRequest" part="LogicalAddress"/>
+				<soap:header use="literal" message="tns:GetEhrExtractRequest" part="HCAssertion"/>
+				<soap:body use="literal" parts="parameters"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetEhrExtractContinuation">
+			<soap:operation soapAction="urn:riv:ehr:ehrexchange:GetEhrExtractResponder:1:GetEhrExtractContinuation"/>
+			<wsdl:input>
+				<soap:header use="literal" message="tns:GetEhrExtractContinuationRequest" part="LogicalAddress"/>
+				<soap:header use="literal" message="tns:GetEhrExtractContinuationRequest" part="HCAssertion"/>
+				<soap:body use="literal" parts="parameters"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="Ping">
+			<soap:operation soapAction="urn:riv:ehr:ehrexchange:GetEhrExtractResponder:1:Ping"/>
+			<wsdl:input>
+				<soap:header use="literal" message="tns:PingRequest" part="LogicalAddress"/>
+				<soap:body use="literal" parts="parameters"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="GetEhrExtractResponderService">
+		<wsdl:port name="GetEhrExtractResponderPort" binding="tns:GetEhrExtractResponderBinding">
+			<soap:address location="http://tempuri.org"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
