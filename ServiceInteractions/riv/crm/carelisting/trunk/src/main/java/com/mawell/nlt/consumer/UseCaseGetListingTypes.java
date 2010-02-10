@@ -48,7 +48,8 @@ public class UseCaseGetListingTypes
          
       // Hämta tillgängliga tjänsteutövare. 
       AttributedURIType logicalAddress = new AttributedURIType();
-      logicalAddress.setValue("SE239482390-23SAD"); // HSAID till huvudmannen som skall svara på frågan.
+      logicalAddress.setValue("01"); // Områdeskod
+
       GetListingTypesRequestType request = new GetListingTypesRequestType();
       GetListingTypesResponseType response = null;
       

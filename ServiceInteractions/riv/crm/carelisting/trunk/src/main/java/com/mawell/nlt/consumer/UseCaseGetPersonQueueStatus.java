@@ -48,7 +48,8 @@ public class UseCaseGetPersonQueueStatus
          
       // Hämta köstsatus för person 
       AttributedURIType logicalAddress = new AttributedURIType();
-      logicalAddress.setValue("SE239482390-23SAD"); // HSAID till huvudmannen som skall svara på frågan.
+      logicalAddress.setValue("01"); // Områdeskod
+
       GetPersonQueueStatusRequestType request = new GetPersonQueueStatusRequestType();
       request.setPersonId("1212121212-1212");
       
@@ -68,11 +69,23 @@ public class UseCaseGetPersonQueueStatus
       }
       
       // Itererar över listan med listningstyper.
-      System.out.println("Köstatus för personen är");
+      System.out.println("Köstatus för personen ( " + request.getPersonId() + ") är");
+      
       if(response.getQueueStatus()==PersonQueueStatus.IN_QUEUE)
-    	  System.out.println("i kö");
+      {
+		  System.out.println(" står i kö");
+		  System.out.println("  ---------------");
+		  System.out.println("  På vårdenheten:");
+		  System.out.println("    HsaId: " + response.getHealthcareFacility().getFacilityId());
+		  System.out.println("    köstatus för vårdenheten: " + response.getHealthcareFacility().isHasQueue());
+		  System.out.println("    lisningstyper:");
+		  for (String listingType:response.getHealthcareFacility().getSupportedListingTypes())
+		  {
+			  System.out.println("    - " + listingType);
+		  }
+      }
       else
-    	  System.out.println("inte i kö");
+    	  System.out.println(" står inte i kö");
    }
    
    /**

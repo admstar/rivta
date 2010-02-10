@@ -52,7 +52,8 @@ public class UseCaseHamtaTjansteval
 
       // Hämtar listningsinformation för angiven person.
       AttributedURIType logicalAddress = new AttributedURIType();
-      logicalAddress.setValue("SE239482390-23SAD");   // HSAID till huvudmannen som skall svara på frågan.
+      logicalAddress.setValue("01"); // Områdeskod
+
       GetListingRequestType request = new GetListingRequestType();
       request.setPersonId("195005055005");
       GetListingResponseType response = null;
