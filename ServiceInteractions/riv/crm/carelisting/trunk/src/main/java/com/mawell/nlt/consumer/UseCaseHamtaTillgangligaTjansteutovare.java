@@ -56,8 +56,9 @@ public class UseCaseHamtaTillgangligaTjansteutovare
 		   
 		// Hämta tillgängliga tjänsteutövare. 
 		AttributedURIType logicalAddress = new AttributedURIType();
-		logicalAddress.setValue("SE239482390-23SAD"); // HSAID till huvudmannen som skall svara på frågan.
-		GetAvailableFacilitiesRequestType request = new GetAvailableFacilitiesRequestType();
+        logicalAddress.setValue("01"); // Områdeskod
+
+        GetAvailableFacilitiesRequestType request = new GetAvailableFacilitiesRequestType();
 		GetAvailableFacilitiesResponseType response = null;
 		
 		try 

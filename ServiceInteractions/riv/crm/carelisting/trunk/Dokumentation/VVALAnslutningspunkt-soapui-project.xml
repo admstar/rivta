@@ -1,5 +1,356 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project name="VVALAnslutningspunkt" resourceRoot="" soapui-version="3.0.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="CreateListingResponderBinding" type="wsdl" bindingName="{urn:riv:crm:carelisting:CreateListing:1:rivtabp20}CreateListingResponderBinding" soapVersion="1_1" anonymous="optional" definition="C:/Program/Java/eclipseworkspaces/NLT/tjänstekontrakt/CreateListningInteraction.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/C:/Program/Java/eclipseworkspaces/NLT/tjänstekontrakt/CreateListningInteraction.wsdl"><con:part><con:url>file:\C:\Program\Java\eclipseworkspaces\NLT\tjänstekontrakt\ws-addressing-1.0.xsd</con:url><con:content><![CDATA[<!--W3C XML Schema defined in the Web Services Addressing 1.0 specification
+<con:soapui-project name="VVALAnslutningspunkt" resourceRoot="" soapui-version="3.0.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="CreateListingResponderBinding" type="wsdl" bindingName="{urn:riv:crm:carelisting:CreateListing:1:rivtabp20}CreateListingResponderBinding" soapVersion="1_1" anonymous="optional" definition="file:/C:/Projects/NLT/tjanstekontrakt/CreateListingInteraction_1.0_rivtabp20.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/C:\Projects\NLT\tjanstekontrakt\CreateListingInteraction_1.0_rivtabp20.wsdl"><con:part><con:url>file:/C:\Projects\NLT\tjanstekontrakt\CreateListingInteraction_1.0_rivtabp20.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. The ASF licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.-->
+<wsdl:definitions name="CreateListingInteraction" targetNamespace="urn:riv:crm:carelisting:CreateListing:1:rivtabp20" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tjs="urn:riv:crm:carelisting:CreateListingResponder:1" xmlns="urn:riv:crm:carelisting:CreateListing:1:rivtabp20">
+  <xsd:annotation>
+    <xsd:documentation>Beskrivning: Tjänstekontraktet som ingår NationellaListingsstjänten.
+			Revisioner: 2009-06-15 Version 1.0: Uppdelat i flera meddelanden (en per operation) efter 
+							kommentarer ifrån Arkitekturledningen. 
+							2009-06-22 version 1.0.1: Plockade bort wsa:Action ifrån wsdl:portType.
+							2009-11-25 version 1.0.2: Byte namn på wsdl:fault till InvalidServiceProvider.
+							2009-12-21 version 1.0.3: Re-design i sammarbete med Modul1, Arkitekturledningen och Mawell.
+							2010-12-26 version 1.0.4: Ändrat i Documentation för createListing.
+			Tjänstedomän: crm:carelisting. crm=Customer Relationship Management.
+			Tjänsteinteraktionens namn: CreateListing.
+			Tjänsteinteraktionstyp: Fråga-Svar.	
+			RIV Tekniska Anvisning: Basic Profile 2.0</xsd:documentation>
+  </xsd:annotation>
+  <!--Egendefinierade typer-->
+  <wsdl:types>
+    <xsd:schema elementFormDefault="qualified">
+      <xsd:import schemaLocation="CreateListing_1_0.xsd" namespace="urn:riv:crm:carelisting:CreateListingResponder:1"/>
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import schemaLocation="ws-addressing-1.0.xsd" namespace="http://www.w3.org/2005/08/addressing"/>
+    </xsd:schema>
+  </wsdl:types>
+  <!--Meddelanden-->
+  <!--Skapar en Listing för en person.-->
+  <wsdl:message name="createListingRequest">
+    <wsdl:part name="LogicalAddress" element="wsa:To"/>
+    <wsdl:part name="parameters" element="tjs:createListing"/>
+  </wsdl:message>
+  <wsdl:message name="createListingResponse">
+    <wsdl:part name="parameters" element="tjs:createListingResponse"/>
+  </wsdl:message>
+  <wsdl:message name="PersonNotFoundException">
+    <wsdl:part name="parameters" element="tjs:PersonNotFoundException"/>
+  </wsdl:message>
+  <wsdl:message name="InvalidFacilityException">
+    <wsdl:part name="parameters" element="tjs:InvalidFacilityException"/>
+  </wsdl:message>
+  <wsdl:message name="TechnicalException">
+    <wsdl:part name="parameters" element="tjs:TechnicalException"/>
+  </wsdl:message>
+  <!--Port typer-->
+  <wsdl:portType name="CreateListingResponderInterface">
+    <wsdl:operation name="createListing">
+      <wsdl:documentation>Ändrar en medborgares vårdval.
+									  LogicalAddress ska ange länskod enligt skatteverket, för det län mot vilken operationen är riktad.</wsdl:documentation>
+      <wsdl:input message="createListingRequest"/>
+      <wsdl:output message="createListingResponse"/>
+      <wsdl:fault name="PersonNotFound" message="PersonNotFoundException"/>
+      <wsdl:fault name="InvalidServiceProvider" message="InvalidFacilityException"/>
+      <wsdl:fault name="TechnicalException" message="TechnicalException"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <!--Bindningar-->
+  <wsdl:binding name="CreateListingResponderBinding" type="CreateListingResponderInterface">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <wsdl:operation name="createListing">
+      <soap:operation soapAction="urn:riv:crm:carelisting:CreateListingResponder:1:createListing"/>
+      <wsdl:input>
+        <soap:header use="literal" message="createListingRequest" part="LogicalAddress"/>
+        <soap:body use="literal" parts="parameters"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="PersonNotFound">
+        <soap:fault use="literal" name="PersonNotFound"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidServiceProvider">
+        <soap:fault use="literal" name="InvalidServiceProvider"/>
+      </wsdl:fault>
+      <wsdl:fault name="TechnicalException">
+        <soap:fault use="literal" name="TechnicalException"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <!--Servicar-->
+  <wsdl:service name="CreateListingResponderService">
+    <wsdl:port name="CreateListingResponderPort" binding="CreateListingResponderBinding">
+      <soap:address location="http://temp.uri/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:\C:\Projects\NLT\tjanstekontrakt\CreateListing_1_0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one or more
+		contributor license agreements. See the NOTICE file distributed with
+		this work for additional information regarding copyright ownership.
+		The ASF licenses this file to you under the Apache License, Version
+		2.0 (the "License"); you may not use this file except in compliance
+		with the License. You may obtain a copy of the License at
+
+		http://www.apache.org/licenses/LICENSE-2.0 Unless required by
+		applicable law or agreed to in writing, software distributed under the
+		License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+		CONDITIONS OF ANY KIND, either express or implied. See the License for
+		the specific language governing permissions and limitations under the
+		License.-->
+<xs:schema targetNamespace="urn:riv:crm:carelisting:CreateListingResponder:1" elementFormDefault="qualified" xml:lang="en" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:crm:carelisting:CreateListingResponder:1" xmlns:core="urn:riv:crm:carelisting:1">
+  <xs:import namespace="urn:riv:crm:carelisting:1" schemaLocation="crm_carelisting_1_0.xsd"/>
+  <xs:annotation>
+    <xs:documentation>Beskrivning: Meddelandetyper som används av
+			Nationella Listingsstjänsten 'CreateListing'.
+			Revisioner: 2009-06-15:
+			Version 1.0, skapade schemat.
+			2009-09-14: Version 1.0.1, Bytte createListingRequestType till att använda
+			EHREXTRACT.
+			2009-11-25: Version 1.0.2, Plockade bort 13606 datatyper och bytte namn på
+			exception InvalidHASId till InvalidServiceProvider.
+			2009-12-21: Version 1.0.3: Re-design i sammarbete med Modul1,
+			Arkitekturledningen och Mawell.
+			2010-01-18: version 1.0.4: Lade till kö in-parameter.</xs:documentation>
+  </xs:annotation>
+  <!--Globala element: Method parametrar-->
+  <xs:element name="createListing" type="tns:createListingRequestType"/>
+  <xs:element name="createListingResponse" type="tns:createListingResponseType"/>
+  <!--Fel-->
+  <xs:element name="InvalidFacilityException" type="tns:InvalidFacilityException"/>
+  <xs:element name="PersonNotFoundException" type="core:PersonNotFoundException"/>
+  <xs:element name="TechnicalException" type="core:TechnicalException"/>
+  <!--data typer-->
+  <xs:complexType name="createListingRequestType">
+    <xs:sequence>
+      <xs:element name="personId" type="core:SubjectOfCareIdType"/>
+      <xs:element name="listingType" type="core:ListingType">
+        <xs:annotation>
+          <xs:documentation>Typ av listning som man önskar göra, t.ex BVC.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="healthcare_facility" type="core:HsaIdType">
+        <xs:annotation>
+          <xs:documentation>Vårdenhet</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="healthcare_professional" type="core:HsaIdType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>resurs att lista sig på</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="addToQueue" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Anger om personen vill ställa sig i kö om det är
+						kö
+						på vårdenheten/resursen.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="createListingResponseType">
+    <xs:sequence>
+      <xs:element name="success" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>True if the requested listing was successfully
+						completed, else false. False indicates that the user needs to try
+						another option for listing.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="comment" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Information som kompletterar angiven status.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="systemCode" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Kod från underliggande listningssystem, i syfte att användas i dialog
+						med respektive
+						listningssystems förvaltning. Tjänstekonsumenten får inte binda logik till värden
+						på dessa koder.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!--<xs:complexType name="createListingResponseType"> <xs:sequence>
+		<xs:element name="code" type="xs:int"> <xs:annotation>
+		<xs:documentation>Returkod som beskriver resultatet av en listning. 1
+		= Success!, 0 = Misslyckad, X = Resten valfria, dvs specifika för
+		olika anslutningspunkter.</xs:documentation> </xs:annotation>
+		</xs:element> <xs:element name="businessRule" type="xs:string">
+		<xs:annotation> <xs:documentation> Det kan förekomma lokala regler för
+		respektive Källsystem (Listningssystem) vilket dem kan meddela genom
+		att beskriva det i detta fältet. </xs:documentation> </xs:annotation>
+		</xs:element> <xs:any processContents="lax" minOccurs="0"
+		maxOccurs="unbounded" namespace="##other"/> </xs:sequence>
+		</xs:complexType>-->
+  <xs:complexType name="InvalidFacilityException">
+    <xs:sequence>
+      <xs:element name="code" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:\C:\Projects\NLT\tjanstekontrakt\crm_carelisting_1_0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. The ASF licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.-->
+<xs:schema elementFormDefault="qualified" targetNamespace="urn:riv:crm:carelisting:1" version="1.0" xml:lang="en" xmlns:tns="urn:riv:crm:carelisting:1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:annotation>
+    <xs:documentation>Beskrivning: Meddelandetyper som används av Nationella Listingsstjänsterna.
+			Revisioner: 2009-11-24: Version 1.0, typerna HsaIdType och SubjectOfCareIdType kommer ifrån
+			                                     ett örebro projekt som också migrerat ifrån 13606.
+			            2009-12-21 version 1.0.2: Re-design i sammarbete med Modul1, Arkitekturledningen och Mawell.
+			            2010-01-13 version 1.0.3: Lade till supportedListingTypes på Facility.
+			            2010-01-26 version 1.0.4: Lade till köstatus och plockade bort det ifrån Listing.</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="HsaIdType">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:simpleType name="ListingType">
+    <xs:annotation>
+      <xs:documentation>Finns inte något kodverk i HSA för detta. Logiken rörande listningstyper är att en
+					anslutningspunkt är konsistent i benämningen mellan operationer som använder denna datatyp. Alltså 
+					t.ex Barnavårdcentral = BVC i en operation så ska det inte anges BVM för en annan operation.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:simpleType name="SubjectOfCareIdType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="^[0-9]{6}-[0-9pPtTfF][0-9]{3}$"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CountyCode">
+    <xs:annotation>
+      <xs:documentation>Anger koder för län i Sverige, kodernas ursprung är ifrån SCB.
+				Statistiska centralbyrån (SCB) ansvarar för att förteckna regionala indelningar och 
+				ange koder för dessa. SCB anger koder för län och kommuner.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:complexType name="SubjectOfCare">
+    <xs:annotation>
+      <xs:documentation>Root element som beskriver tjänsteval för en	person.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="personId" type="tns:SubjectOfCareIdType"/>
+      <xs:element name="listing" maxOccurs="unbounded" minOccurs="0" type="tns:Listing"/>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Listing">
+    <xs:annotation>
+      <xs:documentation>En listning för en person, alltså att en person har en specificerad tjänsteleverantör.
+			Detta skulle kunna vara att en person har valt att lista sig/registrera sig att ha Vårdcentralen Kronan
+			i Sundbyberg som sin sjuk-hälså vårds tjänsteleverantör.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="validFromDate" type="xs:dateTime" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Anger datum för när listningen började gälla.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="validToDate" type="xs:dateTime" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Anger datum när listningen slutade gälla, om datum saknas så blir det implicit obestämt in i framtiden.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="listingType" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Anger typ av listning, t.ex BVC, HLM. typerna definieras i HSA kodverket, se ref: http://www.todo.se</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="healthcare_facility" type="tns:Facility"/>
+      <xs:element name="resource" type="tns:Resource" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Om listning pekar ut en specifik resurs, t.ex en läkare eller husläkarteam.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Facility">
+    <xs:annotation>
+      <xs:documentation>Vårdinrättning/vårdenhet som ansvarar för en person som listat sig hos dem. 
+			 Det är denna inrättning som för ekonomisk ersättning för personen.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="facilityId" type="tns:HsaIdType"/>
+      <xs:element name="hasQueue" type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Indikerar om vårdenheten har kö vid listningar. Kan utelämnas om information
+					inte har någon betydelse i kontexten.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="supportedListingTypes" type="tns:ListingType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Lista med listningstyper som vårdeneheten stödjer. Kan utelämnas om information
+					saknas eller om informationen inte behövs i kontexten där entiteten är tänkt att användas i.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Resource">
+    <xs:annotation>
+      <xs:documentation>specifik resurs som utför listningstjänsten.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="resourceId" type="tns:HsaIdType"/>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="PersonQueueStatus">
+    <xs:annotation>
+      <xs:documentation>Köstatus för en person.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="inQueue"/>
+      <xs:enumeration value="notInQueue"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="TechnicalException">
+    <xs:annotation>
+      <xs:documentation>Tekniskt fel i tjänsten, det kan vara värt att försöka igen.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="code" type="xs:string"/>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersonNotFoundException">
+    <xs:annotation>
+      <xs:documentation>Personen kunde inte hittas.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="code" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:\C:\Projects\NLT\tjanstekontrakt\ws-addressing-1.0.xsd</con:url><con:content><![CDATA[<!--W3C XML Schema defined in the Web Services Addressing 1.0 specification
     http://www.w3.org/TR/ws-addr-core
 
    Copyright © 2005 World Wide Web Consortium,
@@ -121,318 +472,21 @@
     <xs:anyAttribute namespace="##other" processContents="lax"/>
   </xs:complexType>
   <xs:element name="test" type="xs:string"/>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/C:/Program/Java/eclipseworkspaces/NLT/tjänstekontrakt/CreateListningInteraction.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
- or more contributor license agreements. See the NOTICE file
- distributed with this work for additional information
- regarding copyright ownership. The ASF licenses this file
- to you under the Apache License, Version 2.0 (the
- "License"); you may not use this file except in compliance
- with the License. You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing,
- software distributed under the License is distributed on an
- "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- KIND, either express or implied. See the License for the
- specific language governing permissions and limitations
- under the License.-->
-<wsdl:definitions name="CreateListingInteraction" targetNamespace="urn:riv:crm:carelisting:CreateListing:1:rivtabp20" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tjs="urn:riv:crm:carelisting:CreateListingResponder:1" xmlns="urn:riv:crm:carelisting:CreateListing:1:rivtabp20">
-  <xsd:annotation>
-    <xsd:documentation>Beskrivning: Tjänstekontraktet som ingår NationellaListingsstjänten.
-			Revisioner: 2009-06-15 Version 1.0: Uppdelat i flera meddelanden (en per operation) efter 
-							kommentarer ifrån Arkitekturledningen. 
-							2009-06-22 version 1.0.1: Plockade bort wsa:Action ifrån wsdl:portType.
-							2009-11-25 version 1.0.2: Byte namn på wsdl:fault till InvalidServiceProvider.
-							2009-12-21 version 1.0.3: Re-design i sammarbete med Modul1, Arkitekturledningen och Mawell.
-			Tjänstedomän: crm:carelisting. crm=Customer Relationship Management.
-			Tjänsteinteraktionens namn: CreateListing.
-			Tjänsteinteraktionstyp: Fråga-Svar.	
-			RIV Tekniska Anvisning: Basic Profile 2.0</xsd:documentation>
-  </xsd:annotation>
-  <!--Egendefinierade typer-->
-  <wsdl:types>
-    <xsd:schema elementFormDefault="qualified">
-      <xsd:import schemaLocation="CreateListing_1_0.xsd" namespace="urn:riv:crm:carelisting:CreateListingResponder:1"/>
-    </xsd:schema>
-    <xsd:schema>
-      <xsd:import schemaLocation="ws-addressing-1.0.xsd" namespace="http://www.w3.org/2005/08/addressing"/>
-    </xsd:schema>
-  </wsdl:types>
-  <!--Meddelanden-->
-  <!--Skapar en Listing för en person.-->
-  <wsdl:message name="createListingRequest">
-    <wsdl:part name="LogicalAddress" element="wsa:To"/>
-    <wsdl:part name="parameters" element="tjs:createListing"/>
-  </wsdl:message>
-  <wsdl:message name="createListingResponse">
-    <wsdl:part name="parameters" element="tjs:createListingResponse"/>
-  </wsdl:message>
-  <wsdl:message name="PersonNotFoundException">
-    <wsdl:part name="parameters" element="tjs:PersonNotFoundException"/>
-  </wsdl:message>
-  <wsdl:message name="InvalidFacilityException">
-    <wsdl:part name="parameters" element="tjs:InvalidFacilityException"/>
-  </wsdl:message>
-  <wsdl:message name="TechnicalException">
-    <wsdl:part name="parameters" element="tjs:TechnicalException"/>
-  </wsdl:message>
-  <!--Port typer-->
-  <wsdl:portType name="CreateListingResponderInterface">
-    <wsdl:operation name="createListing">
-      <wsdl:documentation>Ändrar en medborgares vårdval.
-									  Logisk adress är till vårdgivare som ska kunna svara på frågan.</wsdl:documentation>
-      <wsdl:input message="createListingRequest"/>
-      <wsdl:output message="createListingResponse"/>
-      <wsdl:fault name="PersonNotFound" message="PersonNotFoundException"/>
-      <wsdl:fault name="InvalidServiceProvider" message="InvalidFacilityException"/>
-      <wsdl:fault name="TechnicalException" message="TechnicalException"/>
-    </wsdl:operation>
-  </wsdl:portType>
-  <!--Bindningar-->
-  <wsdl:binding name="CreateListingResponderBinding" type="CreateListingResponderInterface">
-    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-    <wsdl:operation name="createListing">
-      <soap:operation soapAction="urn:riv:crm:carelisting:CreateListingResponder:1:createListing"/>
-      <wsdl:input>
-        <soap:header use="literal" message="createListingRequest" part="LogicalAddress"/>
-        <soap:body use="literal" parts="parameters"/>
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="PersonNotFound">
-        <soap:fault use="literal" name="PersonNotFound"/>
-      </wsdl:fault>
-      <wsdl:fault name="InvalidServiceProvider">
-        <soap:fault use="literal" name="InvalidServiceProvider"/>
-      </wsdl:fault>
-      <wsdl:fault name="TechnicalException">
-        <soap:fault use="literal" name="TechnicalException"/>
-      </wsdl:fault>
-    </wsdl:operation>
-  </wsdl:binding>
-  <!--Servicar-->
-  <wsdl:service name="CreateListingResponderService">
-    <wsdl:port name="CreateListingResponderPort" binding="CreateListingResponderBinding">
-      <soap:address location="http://temp.uri/"/>
-    </wsdl:port>
-  </wsdl:service>
-</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:\C:\Program\Java\eclipseworkspaces\NLT\tjänstekontrakt\crm_carelisting.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
- or more contributor license agreements. See the NOTICE file
- distributed with this work for additional information
- regarding copyright ownership. The ASF licenses this file
- to you under the Apache License, Version 2.0 (the
- "License"); you may not use this file except in compliance
- with the License. You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing,
- software distributed under the License is distributed on an
- "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- KIND, either express or implied. See the License for the
- specific language governing permissions and limitations
- under the License.-->
-<xs:schema elementFormDefault="qualified" targetNamespace="urn:riv:crm:carelisting:1" version="1.0" xml:lang="en" xmlns:tns="urn:riv:crm:carelisting:1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:annotation>
-    <xs:documentation>Beskrivning: Meddelandetyper som används av Nationella Listingsstjänsterna.
-			Revisioner: 2009-11-24: Version 1.0, typerna HsaIdType och SubjectOfCareIdType kommer ifrån
-			                                     ett örebro projekt som också migrerat ifrån 13606.
-			            2009-12-21 version 1.0.2: Re-design i sammarbete med Modul1, Arkitekturledningen och Mawell.</xs:documentation>
-  </xs:annotation>
-  <xs:simpleType name="HsaIdType">
-    <xs:restriction base="xs:string"/>
-  </xs:simpleType>
-  <xs:simpleType name="ListingType">
-    <xs:annotation>
-      <xs:documentation>Vanliga typer är {HL=Husläkare, DSK=Distriktssköterska, BVC=Barnvavårdcentral, 
-								   HLM=Husläkarmottagning, HLT=Husläkarteam}. Det finns dock inte något kodverk i 
-								   HSA för detta.</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string"/>
-  </xs:simpleType>
-  <xs:simpleType name="SubjectOfCareIdType">
-    <xs:restriction base="xs:string">
-      <xs:pattern value="^[0-9]{6}-[0-9pPtTfF][0-9]{3}$"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="CountyCode">
-    <xs:annotation>
-      <xs:documentation>Anger koder för län i Sverige, kodernas ursprung är ifrån SCB.
-				Statistiska centralbyrån (SCB) ansvarar för att förteckna regionala indelningar och 
-				ange koder för dessa. SCB anger koder för län och kommuner.</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string"/>
-  </xs:simpleType>
-  <xs:complexType name="SubjectOfCare">
-    <xs:annotation>
-      <xs:documentation>Root element som beskriver tjänsteval för en	person.</xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="personId" type="tns:SubjectOfCareIdType"/>
-      <xs:element name="listing" maxOccurs="unbounded" minOccurs="0" type="tns:Listing"/>
-      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="Listing">
-    <xs:annotation>
-      <xs:documentation>En listning för en person, alltså att en person har en specificerad tjänsteleverantör.
-			Detta skulle kunna vara att en person har valt att lista sig/registrera sig att ha Vårdcentralen Kronan
-			i Sundbyberg som sin sjuk-hälså vårds tjänsteleverantör.</xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="validFromDate" type="xs:dateTime">
-        <xs:annotation>
-          <xs:documentation>Anger datum för när listningen började gälla.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="validToDate" type="xs:dateTime">
-        <xs:annotation>
-          <xs:documentation>Anger datum när listningen slutade gälla, om datum saknas så blir det implicit obestämt in i framtiden.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="isInQueue" type="xs:boolean" minOccurs="0">
-        <xs:annotation>
-          <xs:documentation>Anger om en person står i kö på vårdenheten. ValidFrom/To-Date ska vara tomma när man står i kö. 
-					                  Detta element är inte obligatoriskt att alla anslutningspunkter fyller i.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="listingType" type="xs:string">
-        <xs:annotation>
-          <xs:documentation>Anger typ av listning, t.ex BVC, HLM. typerna definieras i HSA kodverket, se ref: http://www.todo.se</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="healthcare_facility" type="tns:Facility"/>
-      <xs:element name="resource" type="tns:Resource" minOccurs="0">
-        <xs:annotation>
-          <xs:documentation>Om listning pekar ut en specifik resurs, t.ex en läkare eller husläkarteam.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="Facility">
-    <xs:annotation>
-      <xs:documentation>Vårdinrättning/vårdenhet som ansvarar för en person som listat sig hos dem. 
-			 Det är denna inrättning som för ekonomisk ersättning för personen.</xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="facilityId" type="tns:HsaIdType"/>
-      <xs:element name="name" type="xs:string" minOccurs="0"/>
-      <xs:element name="hasQueue" type="xs:boolean"/>
-      <xs:element name="supportedListingTypes" type="tns:ListingType" maxOccurs="unbounded"/>
-      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="Resource">
-    <xs:annotation>
-      <xs:documentation>specifik resurs som utför listningstjänsten.</xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="resourceId" type="tns:HsaIdType"/>
-      <xs:element name="name" type="xs:string"/>
-      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="TechnicalException">
-    <xs:annotation>
-      <xs:documentation>Tekniskt fel i tjänsten, det kan vara värt att försöka igen.</xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="code" type="xs:string"/>
-      <xs:element name="description" type="xs:string" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="PersonNotFoundException">
-    <xs:annotation>
-      <xs:documentation>Personen kunde inte hittas.</xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="code" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:\C:\Program\Java\eclipseworkspaces\NLT\tjänstekontrakt\CreateListing_1_0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
- or more contributor license agreements. See the NOTICE file
- distributed with this work for additional information
- regarding copyright ownership. The ASF licenses this file
- to you under the Apache License, Version 2.0 (the
- "License"); you may not use this file except in compliance
- with the License. You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing,
- software distributed under the License is distributed on an
- "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- KIND, either express or implied. See the License for the
- specific language governing permissions and limitations
- under the License.-->
-<xs:schema targetNamespace="urn:riv:crm:carelisting:CreateListingResponder:1" elementFormDefault="qualified" xml:lang="en" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:crm:carelisting:CreateListingResponder:1" xmlns:core="urn:riv:crm:carelisting:1">
-  <xs:import namespace="urn:riv:crm:carelisting:1" schemaLocation="crm_carelisting.xsd"/>
-  <xs:annotation>
-    <xs:documentation>Beskrivning: Meddelandetyper som används av Nationella Listingsstjänsten 'CreateListing'.
-			Revisioner: 2009-06-15: Version 1.0, skapade schemat. 
-						   2009-09-14: Version 1.0.1, Bytte createListingRequestType till att använda EHREXTRACT.
-						   2009-11-25: Version 1.0.2, Plockade bort 13606 datatyper och bytte namn på exception InvalidHASId till InvalidServiceProvider.
-						   2009-12-21: Version 1.0.3: Re-design i sammarbete med Modul1, Arkitekturledningen och Mawell.</xs:documentation>
-  </xs:annotation>
-  <!--Globala element: Method parametrar-->
-  <xs:element name="createListing" type="tns:createListingRequestType"/>
-  <xs:element name="createListingResponse" type="tns:createListingResponseType"/>
-  <!--Fel-->
-  <xs:element name="InvalidFacilityException" type="tns:InvalidFacilityException"/>
-  <xs:element name="PersonNotFoundException" type="core:PersonNotFoundException"/>
-  <xs:element name="TechnicalException" type="core:TechnicalException"/>
-  <!--data typer-->
-  <xs:complexType name="createListingRequestType">
-    <xs:sequence>
-      <xs:element name="personId" type="core:SubjectOfCareIdType"/>
-      <!--Typ av listning som man önskar göra, t.ex BVC.-->
-      <xs:element name="listingType" type="core:ListingType"/>
-      <!--Vårdenhet-->
-      <xs:element name="healthcare_facility" type="core:HsaIdType"/>
-      <!--resurs att lista sig på-->
-      <xs:element name="healthcare_professional" type="core:HsaIdType" minOccurs="0"/>
-      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="createListingResponseType">
-    <xs:sequence>
-      <xs:element name="code" type="xs:int">
-        <xs:annotation>
-          <xs:documentation>Returkod som beskriver resultatet av en listning.  1 = Success!, 0 = Misslyckad, X = Resten valfria, dvs specifika för olika anslutningspunkter.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="businessRule" type="xs:string">
-        <xs:annotation>
-          <xs:documentation>Det kan förekomma lokala regler för respektive Källsystem (Listningssystem) vilket dem
-					kan meddela genom att beskriva det i detta fältet.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="InvalidFacilityException">
-    <xs:sequence>
-      <xs:element name="code" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
 </xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://temp.uri/</con:endpoint><con:endpoint>http://127.0.0.1:8088/mockCreateListingResponderBinding</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:crm:carelisting:CreateListingResponder:1:createListing" name="createListing" bindingOperationName="createListing" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.0.1:8088/mockCreateListingResponderBinding</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:add="http://www.w3.org/2005/08/addressing" xmlns:urn="urn:riv:crm:carelisting:CreateListingResponder:1">
    <soapenv:Header>
       <add:To>?</add:To>
    </soapenv:Header>
    <soapenv:Body>
       <urn:createListing>
-         <urn:personId>121212-1212</urn:personId>
-         <urn:listingType>BVC</urn:listingType>
-         <urn:healthcare_facility>SE93493-A34SD</urn:healthcare_facility>
+         <urn:personId>?</urn:personId>
+         <urn:listingType>?</urn:listingType>
+         <urn:healthcare_facility>?</urn:healthcare_facility>
          <!--Optional:-->
-         <urn:healthcare_professional></urn:healthcare_professional>
+         <urn:healthcare_professional>?</urn:healthcare_professional>
          <!--You may enter ANY elements at this point-->
       </urn:createListing>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:crm:carelisting:CreateListing:1:rivtabp20/CreateListingResponderInterface/createListingRequest"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetListingResponderBinding" type="wsdl" bindingName="{urn:riv:crm:carelisting:GetListing:1:rivtabp20}GetListingResponderBinding" soapVersion="1_1" anonymous="optional" definition="C:/Program/Java/eclipseworkspaces/NLT/tjänstekontrakt/GetListningInteraction.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/C:/Program/Java/eclipseworkspaces/NLT/tjänstekontrakt/GetListningInteraction.wsdl"><con:part><con:url>file:\C:\Program\Java\eclipseworkspaces\NLT\tjänstekontrakt\ws-addressing-1.0.xsd</con:url><con:content><![CDATA[<!--W3C XML Schema defined in the Web Services Addressing 1.0 specification
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:crm:carelisting:CreateListing:1:rivtabp20/CreateListingResponderInterface/createListingRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetListingResponderBinding" type="wsdl" bindingName="{urn:riv:crm:carelisting:GetListing:1:rivtabp20}GetListingResponderBinding" soapVersion="1_1" anonymous="optional" definition="C:/Program/Java/eclipseworkspaces/NLT/tjänstekontrakt/GetListningInteraction.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/C:/Program/Java/eclipseworkspaces/NLT/tjänstekontrakt/GetListningInteraction.wsdl"><con:part><con:url>file:\C:\Program\Java\eclipseworkspaces\NLT\tjänstekontrakt\ws-addressing-1.0.xsd</con:url><con:content><![CDATA[<!--W3C XML Schema defined in the Web Services Addressing 1.0 specification
     http://www.w3.org/TR/ws-addr-core
 
    Copyright © 2005 World Wide Web Consortium,
@@ -831,7 +885,7 @@
          <!--You may enter ANY elements at this point-->
       </urn:getListing>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:crm:carelisting:GetListing:1:rivtabp20/GetListingResponderInterface/getListingRequest"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetAvailableFacilitiesResponderBinding" type="wsdl" bindingName="{urn:riv:crm:carelisting:GetAvailableFacilities:1:rivtabp20}GetAvailableFacilitiesResponderBinding" soapVersion="1_1" anonymous="optional" definition="C:/Program/Java/eclipseworkspaces/NLT/tjänstekontrakt/GetAvailableFacilitiesInteraction.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/C:/Program/Java/eclipseworkspaces/NLT/tjänstekontrakt/GetAvailableFacilitiesInteraction.wsdl"><con:part><con:url>file:\C:\Program\Java\eclipseworkspaces\NLT\tjänstekontrakt\GetAvailableFacilities_1_0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:crm:carelisting:GetListing:1:rivtabp20/GetListingResponderInterface/getListingRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetAvailableFacilitiesResponderBinding" type="wsdl" bindingName="{urn:riv:crm:carelisting:GetAvailableFacilities:1:rivtabp20}GetAvailableFacilitiesResponderBinding" soapVersion="1_1" anonymous="optional" definition="C:/Program/Java/eclipseworkspaces/NLT/tjänstekontrakt/GetAvailableFacilitiesInteraction.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/C:/Program/Java/eclipseworkspaces/NLT/tjänstekontrakt/GetAvailableFacilitiesInteraction.wsdl"><con:part><con:url>file:\C:\Program\Java\eclipseworkspaces\NLT\tjänstekontrakt\GetAvailableFacilities_1_0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. The ASF licenses this file
@@ -1620,9 +1674,17 @@
       <xs:element name="code" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://temp.uri/</con:endpoint><con:endpoint>http://127.0.0.1:8088/mockGetListingTypesResponderBinding</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:crm:carelisting:GetListingTypesResponder:1:getListingTypes" name="getListingTypes" bindingOperationName="getListingTypes" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://MAW066:8088/mockGetListingTypesResponderBinding</con:endpoint><con:request>&lt;soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
-   &lt;soapenv:Body/>
-&lt;/soapenv:Envelope></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:crm:carelisting:GetListingTypes:1:rivtabp20/GetListingTypesResponderInterface/getListingTypesRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetPersonQueueStatusResponderBinding" type="wsdl" bindingName="{urn:riv:crm:carelisting:GetPersonQueueStatus:1:rivtabp20}GetPersonQueueStatusResponderBinding" soapVersion="1_1" anonymous="optional" definition="file:/C:/Projects/NLT/tjanstekontrakt/GetPersonQueueStatusInteraction.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/C:/Projects/NLT/tjanstekontrakt/GetPersonQueueStatusInteraction.wsdl"><con:part><con:url>file:/C:/Projects/NLT/tjanstekontrakt/GetPersonQueueStatusInteraction.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://temp.uri/</con:endpoint><con:endpoint>http://127.0.0.1:8088/mockGetListingTypesResponderBinding</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:crm:carelisting:GetListingTypesResponder:1:getListingTypes" name="getListingTypes" bindingOperationName="getListingTypes" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://MAW066:8088/mockGetListingTypesResponderBinding</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:add="http://www.w3.org/2005/08/addressing" xmlns:urn="urn:riv:crm:carelisting:GetListingTypesResponder:1">
+   <soapenv:Header>
+      <add:To>?</add:To>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn:getListingTypes>
+         <urn:personId>?</urn:personId>
+         <!--You may enter ANY elements at this point-->
+      </urn:getListingTypes>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:crm:carelisting:GetListingTypes:1:rivtabp20/GetListingTypesResponderInterface/getListingTypesRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetPersonQueueStatusResponderBinding" type="wsdl" bindingName="{urn:riv:crm:carelisting:GetPersonQueueStatus:1:rivtabp20}GetPersonQueueStatusResponderBinding" soapVersion="1_1" anonymous="optional" definition="file:/C:/Projects/NLT/tjanstekontrakt/GetPersonQueueStatusInteraction_1.0_rivtabp20.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/C:/Projects/NLT/tjanstekontrakt/GetPersonQueueStatusInteraction_1.0_rivtabp20.wsdl"><con:part><con:url>file:/C:/Projects/NLT/tjanstekontrakt/GetPersonQueueStatusInteraction_1.0_rivtabp20.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. The ASF licenses this file
@@ -1725,7 +1787,7 @@
  specific language governing permissions and limitations
  under the License.-->
 <xs:schema targetNamespace="urn:riv:crm:carelisting:GetPersonQueueStatusResponder:1" elementFormDefault="qualified" xml:lang="en" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:crm:carelisting:GetPersonQueueStatusResponder:1" xmlns:core="urn:riv:crm:carelisting:1">
-  <xs:import namespace="urn:riv:crm:carelisting:1" schemaLocation="crm_carelisting.xsd"/>
+  <xs:import namespace="urn:riv:crm:carelisting:1" schemaLocation="crm_carelisting_1_0.xsd"/>
   <xs:annotation>
     <xs:documentation>Beskrivning: Meddelandetyper som används av Nationella Listingsstjänsten.
 			Revisioner: 2010-01-26: Version 1.0.</xs:documentation>
@@ -1746,10 +1808,11 @@
   <xs:complexType name="getPersonQueueStatusResponseType">
     <xs:sequence>
       <xs:element name="queueStatus" type="core:PersonQueueStatus"/>
+      <xs:element name="healthcare_facility" type="core:Facility" minOccurs="0" maxOccurs="1"/>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>
     </xs:sequence>
   </xs:complexType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:\C:\Projects\NLT\tjanstekontrakt\crm_carelisting.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:\C:\Projects\NLT\tjanstekontrakt\crm_carelisting_1_0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. The ASF licenses this file
@@ -1772,7 +1835,7 @@
 			                                     ett örebro projekt som också migrerat ifrån 13606.
 			            2009-12-21 version 1.0.2: Re-design i sammarbete med Modul1, Arkitekturledningen och Mawell.
 			            2010-01-13 version 1.0.3: Lade till supportedListingTypes på Facility.
-			            2010-01-26 version 1.0.4: Lade till köstatus.</xs:documentation>
+			            2010-01-26 version 1.0.4: Lade till köstatus och plockade bort det ifrån Listing.</xs:documentation>
   </xs:annotation>
   <xs:simpleType name="HsaIdType">
     <xs:restriction base="xs:string"/>
@@ -1815,19 +1878,14 @@
 			i Sundbyberg som sin sjuk-hälså vårds tjänsteleverantör.</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="validFromDate" type="xs:dateTime">
+      <xs:element name="validFromDate" type="xs:dateTime" minOccurs="0">
         <xs:annotation>
           <xs:documentation>Anger datum för när listningen började gälla.</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="validToDate" type="xs:dateTime">
+      <xs:element name="validToDate" type="xs:dateTime" minOccurs="0">
         <xs:annotation>
           <xs:documentation>Anger datum när listningen slutade gälla, om datum saknas så blir det implicit obestämt in i framtiden.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="isInQueue" type="xs:boolean">
-        <xs:annotation>
-          <xs:documentation>Anger om en person står i kö på vårdenheten. ValidFrom/To-Date ska vara tomma när man står i kö.</xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element name="listingType" type="xs:string">
@@ -1851,9 +1909,18 @@
     </xs:annotation>
     <xs:sequence>
       <xs:element name="facilityId" type="tns:HsaIdType"/>
-      <xs:element name="name" type="xs:string" minOccurs="0"/>
-      <xs:element name="hasQueue" type="xs:boolean"/>
-      <xs:element name="supportedListingTypes" type="tns:ListingType" maxOccurs="unbounded"/>
+      <xs:element name="hasQueue" type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Indikerar om vårdenheten har kö vid listningar. Kan utelämnas om information
+					inte har någon betydelse i kontexten.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="supportedListingTypes" type="tns:ListingType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Lista med listningstyper som vårdeneheten stödjer. Kan utelämnas om information
+					saknas eller om informationen inte behövs i kontexten där entiteten är tänkt att användas i.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>
     </xs:sequence>
   </xs:complexType>
@@ -1863,13 +1930,12 @@
     </xs:annotation>
     <xs:sequence>
       <xs:element name="resourceId" type="tns:HsaIdType"/>
-      <xs:element name="name" type="xs:string"/>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>
     </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="PersonQueueStatus">
     <xs:annotation>
-      <xs:documentation></xs:documentation>
+      <xs:documentation>Köstatus för en person.</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:enumeration value="inQueue"/>
@@ -2029,8 +2095,9 @@
    <soapenv:Header/>
    <soapenv:Body>
       <urn:createListingResponse>
-         <urn:code>1</urn:code>
-         <urn:businessRule>Listningen kommer att gälla omgående.</urn:businessRule>
+         <urn:success>false</urn:success>
+	 <urn:comment>Listningen genomfördes inte pga. kö på vårdenheten</urn:comment>
+	 <urn:systemCode>1</urn:systemCode>
       </urn:createListingResponse>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:crm:carelisting:CreateListing:1:rivtabp20/CreateListingResponderInterface/createListingResponse"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:mockService port="8088" path="/mockGetListingResponderBinding" name="GetListingResponderBinding MockService" host="MAW066"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="getListing" interface="GetListingResponderBinding" operation="getListing"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>MockResponse 1</con:defaultResponse><con:response name="MockResponse 1" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:crm:carelisting:GetListingResponder:1" xmlns:urn1="urn:riv:crm:carelisting:1">
@@ -2107,11 +2174,17 @@
 	<urn:listingType>HLM</urn:listingType>
       </urn:getListingTypesResponse>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:crm:carelisting:GetListingTypes:1:rivtabp20/GetListingTypesResponderInterface/getListingTypesResponse"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:mockService port="8088" path="/mockGetPersonQueueStatusResponderBinding" host="MAW066" name="GetPersonQueueStatusResponderBinding MockService"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="getPersonQueueStatus" interface="GetPersonQueueStatusResponderBinding" operation="getPersonQueueStatus"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="Response 1" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:crm:carelisting:GetPersonQueueStatusResponder:1">
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:crm:carelisting:GetListingTypes:1:rivtabp20/GetListingTypesResponderInterface/getListingTypesResponse"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:mockService port="8088" path="/mockGetPersonQueueStatusResponderBinding" host="MAW066" name="GetPersonQueueStatusResponderBinding MockService"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="getPersonQueueStatus" interface="GetPersonQueueStatusResponderBinding" operation="getPersonQueueStatus"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="Response 1" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:crm:carelisting:GetPersonQueueStatusResponder:1" xmlns:urn1="urn:riv:crm:carelisting:1">
    <soapenv:Header/>
    <soapenv:Body>
       <urn:getPersonQueueStatusResponse>
-         <urn:queueStatus>notInQueue</urn:queueStatus>
+         <urn:queueStatus>inQueue</urn:queueStatus>
+         <urn:healthcare_facility>
+            <urn1:facilityId>SE2342322-886A</urn1:facilityId>
+            <urn1:hasQueue>true</urn1:hasQueue>
+            <urn1:supportedListingTypes>BVC</urn1:supportedListingTypes>
+            <urn1:supportedListingTypes>HLM</urn1:supportedListingTypes>
+         </urn:healthcare_facility>
       </urn:getPersonQueueStatusResponse>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:crm:carelisting:GetPersonQueueStatusResponder:1:getPersonQueueStatus"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:properties/><con:wssContainer/></con:soapui-project>

@@ -52,9 +52,7 @@ public class UseCasePerformAListing
       try
       {
          AttributedURIType logicalAddress = new AttributedURIType();
-         logicalAddress.setValue("SE239482390-23SAD"); // HSAID till huvudmannen
-                                                       // som skall svara på
-                                                       // frågan.
+         logicalAddress.setValue("01"); // Områdeskod
 
          // Skapar ett fråge objekt.
          CreateListingRequestType request = new CreateListingRequestType();
@@ -64,9 +62,10 @@ public class UseCasePerformAListing
          // Utför tjänstevalet.
          CreateListingResponseType response = listingSEI.createListing(logicalAddress, request);
 
-         String status = (response.getCode() == 1) ? "OK" : "FEL";
+         String status = (response.isSuccess() == true) ? "OK" : "FEL";
          System.out.println("Listnings status: " + status);
-         System.out.println("Affärsregel som kan förekomma vid listning: " + response.getBusinessRule());
+         System.out.println("Kommleterande information om listningsstatus: " + response.getComment());
+         System.out.println("Kod från listningstjänsten: " + response.getSystemCode());
       } catch (PersonNotFoundException e)
       {
          System.out.println("Felkod:" + e.getFaultInfo().getCode());
