@@ -26,7 +26,8 @@
 			                                     ett örebro projekt som också migrerat ifrån 13606.
 			            2009-12-21 version 1.0.2: Re-design i sammarbete med Modul1, Arkitekturledningen och Mawell.
 			            2010-01-13 version 1.0.3: Lade till supportedListingTypes på Facility.
-			            2010-01-26 version 1.0.4: Lade till köstatus och plockade bort det ifrån Listing. 
+			            2010-01-26 version 1.0.4: Lade till köstatus och plockade bort det ifrån Listing.
+			            2010-02-18 version 1.0.5: Lade till namn på facility och resource 
 		</xs:documentation>
 	</xs:annotation>
 
@@ -46,7 +47,7 @@
 	
 	<xs:simpleType name="SubjectOfCareIdType">
 		<xs:restriction base="xs:string">
-			<xs:pattern value="^[0-9]{6}-[0-9pPtTfF][0-9]{3}$" />
+			<xs:pattern value="^[0-9]{6}\-[0-9pPtTfF][0-9]{3}$" />
 		</xs:restriction>
 	</xs:simpleType>
 	
@@ -126,6 +127,11 @@
 					saknas eller om informationen inte behövs i kontexten där entiteten är tänkt att användas i.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="facilityName" type="xs:string" >
+				<xs:annotation>
+					<xs:documentation>Namn på vårdenheten.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -137,6 +143,11 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="resourceId" type="tns:HsaIdType" />
+			<xs:element name="resourceName" type="xs:string" >
+				<xs:annotation>
+					<xs:documentation>Namn på vårdgivaren</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" namespace="##other"/>	
 		</xs:sequence>
 	</xs:complexType>
