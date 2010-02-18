@@ -72,7 +72,7 @@ public class UseCaseHamtaTjansteval
       // Skriver ut debug information
       SubjectOfCare patientData = response.getSubjectOfCare();
       // 1. Personnummer
-      System.out.println("1. Personens personnummer: " + patientData.getPersonId());
+      System.out.println("1. Sökandes personnummer: " + patientData.getPersonId());
 
       // 2. Tjänsteutövarens (t.ex. Vårdenhet) HSAID
       String hsaID = patientData.getListing().get(0).getHealthcareFacility().getFacilityId();
@@ -81,29 +81,29 @@ public class UseCaseHamtaTjansteval
       // 3. Hämtar mer detaljer om tjänsteutövaren.
       Facility facility = patientData.getListing().get(0).getHealthcareFacility();
       Resource resource = patientData.getListing().get(0).getResource();
-      
+            
       if(facility != null)
       {
          // tjänsteutövaren är en vårdenhet och innehåller följande data.
-         // 1. Namn.
-         System.out.println(" Vårdenhet:");
+
+          System.out.println(" Vårdenhet:");
+          // 1. Namn.
+          System.out.println(" 1. Namn: " + facility.getFacilityName());
          
          // 2. Har vårdenheten kö just nu.
          String queue = (facility.isHasQueue())? "Ja" : "Nej";
          System.out.println(" 2. Är det kö just nu: " + queue);
-         
       }
       if (resource != null)
       {
          // Tjänsteutövaren är en specifik läkare och innehåller följande
-         // data.
-         // 1. Person id.
-         // 2. Namn.
-         System.out.println(" Läkare:");
+         System.out.println(" Vårdgivare:");
          
          // *** Hämtar ut data ***
          // 1. Person id.
          System.out.println(" 1. Person id: " + resource.getResourceId());
+         // 1. Namn.
+         System.out.println(" 2. Namn: " + resource.getResourceName());
 
       }
    }
