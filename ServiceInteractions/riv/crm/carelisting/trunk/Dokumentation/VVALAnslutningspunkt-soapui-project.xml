@@ -1325,16 +1325,13 @@
     <xs:anyAttribute namespace="##other" processContents="lax"/>
   </xs:complexType>
   <xs:element name="test" type="xs:string"/>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://temp.uri/</con:endpoint><con:endpoint>http://127.0.0.1:8088/mockGetAvailableFacilitiesResponderBinding</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:crm:carelisting:GetAvailableFacilitiesResponder:1:getAvailableFacilities" name="getAvailableFacilities" bindingOperationName="getAvailableFacilities" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://MAW066:8088/mockGetAvailableFacilitiesResponderBinding</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:add="http://www.w3.org/2005/08/addressing" xmlns:urn="urn:riv:crm:carelisting:GetAvailableFacilitiesResponder:1">
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://temp.uri/</con:endpoint><con:endpoint>http://127.0.0.1:8088/mockGetAvailableFacilitiesResponderBinding</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:crm:carelisting:GetAvailableFacilitiesResponder:1:getAvailableFacilities" name="getAvailableFacilities" bindingOperationName="getAvailableFacilities" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://ci-dotnet.mawell.com/NLT/serviceimplGetAvailableFacilitiesInteractionImpl.svc?wsdl</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:add="http://www.w3.org/2005/08/addressing" xmlns:urn="urn:riv:crm:carelisting:GetAvailableFacilitiesResponder:1">
    <soapenv:Header>
       <add:To>?</add:To>
    </soapenv:Header>
    <soapenv:Body>
       <urn:getAvailableFacilities>
-         <urn:countyCode>?</urn:countyCode>
-         <!--Zero or more repetitions:-->
-         <urn:healthcare_facilities>?</urn:healthcare_facilities>
-         <!--You may enter ANY elements at this point-->
+         <urn:countyCode>01</urn:countyCode>
       </urn:getAvailableFacilities>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:crm:carelisting:GetAvailableFacilities:1:rivtabp20/GetAvailableFacilitiesResponderInterface/getAvailableFacilitiesRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetListingTypesResponderBinding" type="wsdl" bindingName="{urn:riv:crm:carelisting:GetListingTypes:1:rivtabp20}GetListingTypesResponderBinding" soapVersion="1_1" anonymous="optional" definition="file:/C:/Projects/NLT/tjanstekontrakt/GetListingTypesInteraction_1.0_rivtabp20.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/C:/Projects/NLT/tjanstekontrakt/GetListingTypesInteraction_1.0_rivtabp20.wsdl"><con:part><con:url>file:/C:/Projects/NLT/tjanstekontrakt/GetListingTypesInteraction_1.0_rivtabp20.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
@@ -1496,7 +1493,8 @@
 			                                     ett örebro projekt som också migrerat ifrån 13606.
 			            2009-12-21 version 1.0.2: Re-design i sammarbete med Modul1, Arkitekturledningen och Mawell.
 			            2010-01-13 version 1.0.3: Lade till supportedListingTypes på Facility.
-			            2010-01-26 version 1.0.4: Lade till köstatus och plockade bort det ifrån Listing.</xs:documentation>
+			            2010-01-26 version 1.0.4: Lade till köstatus och plockade bort det ifrån Listing.
+			            2010-02-18 version 1.0.5: Lade till namn på facility och resource</xs:documentation>
   </xs:annotation>
   <xs:simpleType name="HsaIdType">
     <xs:restriction base="xs:string"/>
@@ -1510,8 +1508,11 @@
     <xs:restriction base="xs:string"/>
   </xs:simpleType>
   <xs:simpleType name="SubjectOfCareIdType">
+    <xs:annotation>
+      <xs:documentation>Personnummer ska anges med eller utan sekelsiffror.Bindestreck är också valfritt</xs:documentation>
+    </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:pattern value="^[0-9]{6}-[0-9pPtTfF][0-9]{3}$"/>
+      <xs:pattern value="(([1-9]\d{7})|(\d{6}))[\-]?\d{4}"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="CountyCode">
@@ -1752,14 +1753,13 @@
     <xs:anyAttribute namespace="##other" processContents="lax"/>
   </xs:complexType>
   <xs:element name="test" type="xs:string"/>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://temp.uri/</con:endpoint><con:endpoint>http://127.0.0.1:8088/mockGetListingTypesResponderBinding</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:crm:carelisting:GetListingTypesResponder:1:getListingTypes" name="getListingTypes" bindingOperationName="getListingTypes" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://MAW066:8088/mockGetListingTypesResponderBinding</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:add="http://www.w3.org/2005/08/addressing" xmlns:urn="urn:riv:crm:carelisting:GetListingTypesResponder:1">
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://ci-dotnet.mawell.com/NLT/serviceimplGetListingTypes.svc?wsdl</con:endpoint><con:endpoint>http://127.0.0.1:8088/mockGetListingTypesResponderBinding</con:endpoint><con:endpoint>http://temp.uri/</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:crm:carelisting:GetListingTypesResponder:1:getListingTypes" name="getListingTypes" bindingOperationName="getListingTypes" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.0.1:8088/mockGetListingTypesResponderBinding</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:add="http://www.w3.org/2005/08/addressing" xmlns:urn="urn:riv:crm:carelisting:GetListingTypesResponder:1">
    <soapenv:Header>
       <add:To>?</add:To>
    </soapenv:Header>
    <soapenv:Body>
       <urn:getListingTypes>
-         <urn:personId>?</urn:personId>
-         <!--You may enter ANY elements at this point-->
+         <urn:personId>197805180531</urn:personId>
       </urn:getListingTypes>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:crm:carelisting:GetListingTypes:1:rivtabp20/GetListingTypesResponderInterface/getListingTypesRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetPersonQueueStatusResponderBinding" type="wsdl" bindingName="{urn:riv:crm:carelisting:GetPersonQueueStatus:1:rivtabp20}GetPersonQueueStatusResponderBinding" soapVersion="1_1" anonymous="optional" definition="file:/C:/Projects/NLT/tjanstekontrakt/GetPersonQueueStatusInteraction_1.0_rivtabp20.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/C:/Projects/NLT/tjanstekontrakt/GetPersonQueueStatusInteraction_1.0_rivtabp20.wsdl"><con:part><con:url>file:/C:/Projects/NLT/tjanstekontrakt/GetPersonQueueStatusInteraction_1.0_rivtabp20.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
@@ -2203,10 +2203,6 @@
                   <urn1:supportedListingTypes>BVC</urn1:supportedListingTypes>
                   <urn1:facilityName>Björkhagens BVC</urn1:facilityName>
                </urn1:healthcare_facility>
-               <urn1:resource>
-                  <urn1:resourceId>SE90KC22-KU27</urn1:resourceId>
-                  <urn1:resourceName>Erik Tryggelin</urn1:resourceName>
-               </urn1:resource>
             </urn1:listing>
          </urn:subjectOfCare>
       </urn:getListingResponse>
@@ -2220,17 +2216,16 @@
             <urn1:listing>
                <urn1:validFromDate/>
                <urn1:validToDate/>
-               <urn1:isInQueue>false</urn1:isInQueue>
                <urn1:listingType>BVC</urn1:listingType>
                <urn1:healthcare_facility>
                   <urn1:facilityId>SE90KC2-232A</urn1:facilityId>
-                  <urn1:name>Björkhagens BVC</urn1:name>
                   <urn1:hasQueue>false</urn1:hasQueue>
                   <urn1:supportedListingTypes>BVC</urn1:supportedListingTypes>
+                  <urn1:facilityName>Björkhagens BVC</urn1:facilityName>
                </urn1:healthcare_facility>
                <urn1:resource>
                   <urn1:resourceId>SE90KC2-2KU27</urn1:resourceId>
-                  <urn1:name>Erik Tryggelin</urn1:name>
+                  <urn1:resourceName>Erik Tryggelin</urn1:resourceName>
                </urn1:resource>
             </urn1:listing>
          </urn:subjectOfCare>
