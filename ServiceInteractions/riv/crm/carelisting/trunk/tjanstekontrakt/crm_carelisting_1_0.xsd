@@ -28,6 +28,8 @@
 			            2010-01-13 version 1.0.3: Lade till supportedListingTypes på Facility.
 			            2010-01-26 version 1.0.4: Lade till köstatus och plockade bort det ifrån Listing.
 			            2010-02-18 version 1.0.5: Lade till namn på facility och resource 
+			            2010-03-08 version 1.0.6: Ändrat listingtype i Listing
+			            2010-03-11 version 1.0.6: Ändrat listingtype till tvingad i Facility
 		</xs:documentation>
 	</xs:annotation>
 
@@ -95,11 +97,7 @@
 					<xs:documentation>Anger datum när listningen slutade gälla, om datum saknas så blir det implicit obestämt in i framtiden.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="listingType" type="xs:string">
-				<xs:annotation>
-					<xs:documentation>Anger typ av listning, t.ex BVC, HLM. typerna definieras i HSA kodverket, se ref: http://www.todo.se</xs:documentation>
-				</xs:annotation>
-			</xs:element>
+			<xs:element name="listingType" type="tns:ListingType" />
 			<xs:element name="healthcare_facility" type="tns:Facility" />
 			<xs:element name="resource" type="tns:Resource" minOccurs="0">
 				<xs:annotation>
@@ -124,7 +122,7 @@
 					inte har någon betydelse i kontexten.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="supportedListingTypes" type="tns:ListingType" maxOccurs="unbounded">
+			<xs:element name="supportedListingTypes" type="tns:ListingType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Lista med listningstyper som vårdeneheten stödjer. Kan utelämnas om information
 					saknas eller om informationen inte behövs i kontexten där entiteten är tänkt att användas i.</xs:documentation>
