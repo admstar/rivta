@@ -212,7 +212,10 @@
 			                                     ett örebro projekt som också migrerat ifrån 13606.
 			            2009-12-21 version 1.0.2: Re-design i sammarbete med Modul1, Arkitekturledningen och Mawell.
 			            2010-01-13 version 1.0.3: Lade till supportedListingTypes på Facility.
-			            2010-01-26 version 1.0.4: Lade till köstatus och plockade bort det ifrån Listing.</xs:documentation>
+			            2010-01-26 version 1.0.4: Lade till köstatus och plockade bort det ifrån Listing.
+			            2010-02-18 version 1.0.5: Lade till namn på facility och resource 
+			            2010-03-08 version 1.0.6: Ändrat listingtype i Listing
+			            2010-03-11 version 1.0.6: Ändrat listingtype till tvingad i Facility</xs:documentation>
   </xs:annotation>
   <xs:simpleType name="HsaIdType">
     <xs:restriction base="xs:string"/>
@@ -226,8 +229,11 @@
     <xs:restriction base="xs:string"/>
   </xs:simpleType>
   <xs:simpleType name="SubjectOfCareIdType">
+    <xs:annotation>
+      <xs:documentation>Personnummer kan anges med eller utan sekelsiffror.Bindestreck är också valfritt</xs:documentation>
+    </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:pattern value="^[0-9]{6}-[0-9pPtTfF][0-9]{3}$"/>
+      <xs:pattern value="(([1-9]\d{7})|(\d{6}))[\-]?\d{4}"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="CountyCode">
@@ -265,11 +271,7 @@
           <xs:documentation>Anger datum när listningen slutade gälla, om datum saknas så blir det implicit obestämt in i framtiden.</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="listingType" type="xs:string">
-        <xs:annotation>
-          <xs:documentation>Anger typ av listning, t.ex BVC, HLM. typerna definieras i HSA kodverket, se ref: http://www.todo.se</xs:documentation>
-        </xs:annotation>
-      </xs:element>
+      <xs:element name="listingType" type="tns:ListingType"/>
       <xs:element name="healthcare_facility" type="tns:Facility"/>
       <xs:element name="resource" type="tns:Resource" minOccurs="0">
         <xs:annotation>
@@ -292,7 +294,7 @@
 					inte har någon betydelse i kontexten.</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="supportedListingTypes" type="tns:ListingType" maxOccurs="unbounded">
+      <xs:element name="supportedListingTypes" type="tns:ListingType" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation>
           <xs:documentation>Lista med listningstyper som vårdeneheten stödjer. Kan utelämnas om information
 					saknas eller om informationen inte behövs i kontexten där entiteten är tänkt att användas i.</xs:documentation>
@@ -469,17 +471,12 @@
   </xs:complexType>
   <xs:element name="test" type="xs:string"/>
 </xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://temp.uri/</con:endpoint><con:endpoint>http://127.0.0.1:8088/mockCreateListingResponderBinding</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:crm:carelisting:CreateListingResponder:1:createListing" name="createListing" bindingOperationName="createListing" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.0.1:8088/mockCreateListingResponderBinding</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:add="http://www.w3.org/2005/08/addressing" xmlns:urn="urn:riv:crm:carelisting:CreateListingResponder:1">
-   <soapenv:Header>
-      <add:To>?</add:To>
-   </soapenv:Header>
    <soapenv:Body>
       <urn:createListing>
-         <urn:personId>?</urn:personId>
-         <urn:listingType>?</urn:listingType>
-         <urn:healthcare_facility>?</urn:healthcare_facility>
-         <!--Optional:-->
-         <urn:healthcare_professional>?</urn:healthcare_professional>
-         <!--You may enter ANY elements at this point-->
+         <urn:personId>197805180531</urn:personId>
+         <urn:listingType>BVC</urn:listingType>
+         <urn:healthcare_facility>SE2321000016-108J</urn:healthcare_facility>
+         <urn:addToQueue>false</urn:addToQueue>
       </urn:createListing>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:crm:carelisting:CreateListing:1:rivtabp20/CreateListingResponderInterface/createListingRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetListingResponderBinding" type="wsdl" bindingName="{urn:riv:crm:carelisting:GetListing:1:rivtabp20}GetListingResponderBinding" soapVersion="1_1" anonymous="optional" definition="file:C:/Projects/NLT/tjanstekontrakt/GetListingInteraction_1.0_rivtabp20.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:C:/Projects/NLT/tjanstekontrakt/GetListingInteraction_1.0_rivtabp20.wsdl"><con:part><con:url>file:C:/Projects/NLT/tjanstekontrakt/GetListingInteraction_1.0_rivtabp20.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
@@ -643,7 +640,10 @@
 			                                     ett örebro projekt som också migrerat ifrån 13606.
 			            2009-12-21 version 1.0.2: Re-design i sammarbete med Modul1, Arkitekturledningen och Mawell.
 			            2010-01-13 version 1.0.3: Lade till supportedListingTypes på Facility.
-			            2010-01-26 version 1.0.4: Lade till köstatus och plockade bort det ifrån Listing.</xs:documentation>
+			            2010-01-26 version 1.0.4: Lade till köstatus och plockade bort det ifrån Listing.
+			            2010-02-18 version 1.0.5: Lade till namn på facility och resource 
+			            2010-03-08 version 1.0.6: Ändrat listingtype i Listing
+			            2010-03-11 version 1.0.6: Ändrat listingtype till tvingad i Facility</xs:documentation>
   </xs:annotation>
   <xs:simpleType name="HsaIdType">
     <xs:restriction base="xs:string"/>
@@ -657,8 +657,11 @@
     <xs:restriction base="xs:string"/>
   </xs:simpleType>
   <xs:simpleType name="SubjectOfCareIdType">
+    <xs:annotation>
+      <xs:documentation>Personnummer kan anges med eller utan sekelsiffror.Bindestreck är också valfritt</xs:documentation>
+    </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:pattern value="^[0-9]{6}\-[0-9pPtTfF][0-9]{3}$"/>
+      <xs:pattern value="(([1-9]\d{7})|(\d{6}))[\-]?\d{4}"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="CountyCode">
@@ -696,11 +699,7 @@
           <xs:documentation>Anger datum när listningen slutade gälla, om datum saknas så blir det implicit obestämt in i framtiden.</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="listingType" type="xs:string">
-        <xs:annotation>
-          <xs:documentation>Anger typ av listning, t.ex BVC, HLM. typerna definieras i HSA kodverket, se ref: http://www.todo.se</xs:documentation>
-        </xs:annotation>
-      </xs:element>
+      <xs:element name="listingType" type="tns:ListingType"/>
       <xs:element name="healthcare_facility" type="tns:Facility"/>
       <xs:element name="resource" type="tns:Resource" minOccurs="0">
         <xs:annotation>
@@ -723,7 +722,7 @@
 					inte har någon betydelse i kontexten.</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="supportedListingTypes" type="tns:ListingType" maxOccurs="unbounded">
+      <xs:element name="supportedListingTypes" type="tns:ListingType" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation>
           <xs:documentation>Lista med listningstyper som vårdeneheten stödjer. Kan utelämnas om information
 					saknas eller om informationen inte behövs i kontexten där entiteten är tänkt att användas i.</xs:documentation>
@@ -900,13 +899,9 @@
   </xs:complexType>
   <xs:element name="test" type="xs:string"/>
 </xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://temp.uri/</con:endpoint><con:endpoint>http://127.0.0.1:8088/mockGetListingResponderBinding</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:crm:carelisting:GetListingResponder:1:getListing" name="getListing" bindingOperationName="getListing" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.0.1:8088/mockGetListingResponderBinding</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:add="http://www.w3.org/2005/08/addressing" xmlns:urn="urn:riv:crm:carelisting:GetListingResponder:1">
-   <soapenv:Header>
-      <add:To>?</add:To>
-   </soapenv:Header>
    <soapenv:Body>
       <urn:getListing>
-         <urn:personId>?</urn:personId>
-         <!--You may enter ANY elements at this point-->
+         <urn:personId>197805180531</urn:personId>
       </urn:getListing>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:crm:carelisting:GetListing:1:rivtabp20/GetListingResponderInterface/getListingRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetAvailableFacilitiesResponderBinding" type="wsdl" bindingName="{urn:riv:crm:carelisting:GetAvailableFacilities:1:rivtabp20}GetAvailableFacilitiesResponderBinding" soapVersion="1_1" anonymous="optional" definition="file:/C:/Projects/NLT/tjanstekontrakt/GetAvailableFacilitiesInteraction_1.0_rivtabp20.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/C:/Projects/NLT/tjanstekontrakt/GetAvailableFacilitiesInteraction_1.0_rivtabp20.wsdl"><con:part><con:url>file:/C:/Projects/NLT/tjanstekontrakt/GetAvailableFacilitiesInteraction_1.0_rivtabp20.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
@@ -1069,7 +1064,10 @@
 			                                     ett örebro projekt som också migrerat ifrån 13606.
 			            2009-12-21 version 1.0.2: Re-design i sammarbete med Modul1, Arkitekturledningen och Mawell.
 			            2010-01-13 version 1.0.3: Lade till supportedListingTypes på Facility.
-			            2010-01-26 version 1.0.4: Lade till köstatus och plockade bort det ifrån Listing.</xs:documentation>
+			            2010-01-26 version 1.0.4: Lade till köstatus och plockade bort det ifrån Listing.
+			            2010-02-18 version 1.0.5: Lade till namn på facility och resource 
+			            2010-03-08 version 1.0.6: Ändrat listingtype i Listing
+			            2010-03-11 version 1.0.6: Ändrat listingtype till tvingad i Facility</xs:documentation>
   </xs:annotation>
   <xs:simpleType name="HsaIdType">
     <xs:restriction base="xs:string"/>
@@ -1083,8 +1081,11 @@
     <xs:restriction base="xs:string"/>
   </xs:simpleType>
   <xs:simpleType name="SubjectOfCareIdType">
+    <xs:annotation>
+      <xs:documentation>Personnummer kan anges med eller utan sekelsiffror.Bindestreck är också valfritt</xs:documentation>
+    </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:pattern value="^[0-9]{6}-[0-9pPtTfF][0-9]{3}$"/>
+      <xs:pattern value="(([1-9]\d{7})|(\d{6}))[\-]?\d{4}"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="CountyCode">
@@ -1122,11 +1123,7 @@
           <xs:documentation>Anger datum när listningen slutade gälla, om datum saknas så blir det implicit obestämt in i framtiden.</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="listingType" type="xs:string">
-        <xs:annotation>
-          <xs:documentation>Anger typ av listning, t.ex BVC, HLM. typerna definieras i HSA kodverket, se ref: http://www.todo.se</xs:documentation>
-        </xs:annotation>
-      </xs:element>
+      <xs:element name="listingType" type="tns:ListingType"/>
       <xs:element name="healthcare_facility" type="tns:Facility"/>
       <xs:element name="resource" type="tns:Resource" minOccurs="0">
         <xs:annotation>
@@ -1149,7 +1146,7 @@
 					inte har någon betydelse i kontexten.</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="supportedListingTypes" type="tns:ListingType" maxOccurs="unbounded">
+      <xs:element name="supportedListingTypes" type="tns:ListingType" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation>
           <xs:documentation>Lista med listningstyper som vårdeneheten stödjer. Kan utelämnas om information
 					saknas eller om informationen inte behövs i kontexten där entiteten är tänkt att användas i.</xs:documentation>
@@ -1325,7 +1322,7 @@
     <xs:anyAttribute namespace="##other" processContents="lax"/>
   </xs:complexType>
   <xs:element name="test" type="xs:string"/>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://temp.uri/</con:endpoint><con:endpoint>http://127.0.0.1:8088/mockGetAvailableFacilitiesResponderBinding</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:crm:carelisting:GetAvailableFacilitiesResponder:1:getAvailableFacilities" name="getAvailableFacilities" bindingOperationName="getAvailableFacilities" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://ci-dotnet.mawell.com/NLT/serviceimplGetAvailableFacilitiesInteractionImpl.svc?wsdl</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:add="http://www.w3.org/2005/08/addressing" xmlns:urn="urn:riv:crm:carelisting:GetAvailableFacilitiesResponder:1">
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://temp.uri/</con:endpoint><con:endpoint>http://127.0.0.1:8088/mockGetAvailableFacilitiesResponderBinding</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:crm:carelisting:GetAvailableFacilitiesResponder:1:getAvailableFacilities" name="getAvailableFacilities" bindingOperationName="getAvailableFacilities" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.0.1:8088/mockGetAvailableFacilitiesResponderBinding</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:add="http://www.w3.org/2005/08/addressing" xmlns:urn="urn:riv:crm:carelisting:GetAvailableFacilitiesResponder:1">
    <soapenv:Header>
       <add:To>?</add:To>
    </soapenv:Header>
@@ -1494,7 +1491,9 @@
 			            2009-12-21 version 1.0.2: Re-design i sammarbete med Modul1, Arkitekturledningen och Mawell.
 			            2010-01-13 version 1.0.3: Lade till supportedListingTypes på Facility.
 			            2010-01-26 version 1.0.4: Lade till köstatus och plockade bort det ifrån Listing.
-			            2010-02-18 version 1.0.5: Lade till namn på facility och resource</xs:documentation>
+			            2010-02-18 version 1.0.5: Lade till namn på facility och resource 
+			            2010-03-08 version 1.0.6: Ändrat listingtype i Listing
+			            2010-03-11 version 1.0.6: Ändrat listingtype till tvingad i Facility</xs:documentation>
   </xs:annotation>
   <xs:simpleType name="HsaIdType">
     <xs:restriction base="xs:string"/>
@@ -1509,7 +1508,7 @@
   </xs:simpleType>
   <xs:simpleType name="SubjectOfCareIdType">
     <xs:annotation>
-      <xs:documentation>Personnummer ska anges med eller utan sekelsiffror.Bindestreck är också valfritt</xs:documentation>
+      <xs:documentation>Personnummer kan anges med eller utan sekelsiffror.Bindestreck är också valfritt</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:pattern value="(([1-9]\d{7})|(\d{6}))[\-]?\d{4}"/>
@@ -1550,11 +1549,7 @@
           <xs:documentation>Anger datum när listningen slutade gälla, om datum saknas så blir det implicit obestämt in i framtiden.</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="listingType" type="xs:string">
-        <xs:annotation>
-          <xs:documentation>Anger typ av listning, t.ex BVC, HLM. typerna definieras i HSA kodverket, se ref: http://www.todo.se</xs:documentation>
-        </xs:annotation>
-      </xs:element>
+      <xs:element name="listingType" type="tns:ListingType"/>
       <xs:element name="healthcare_facility" type="tns:Facility"/>
       <xs:element name="resource" type="tns:Resource" minOccurs="0">
         <xs:annotation>
@@ -1577,7 +1572,7 @@
 					inte har någon betydelse i kontexten.</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="supportedListingTypes" type="tns:ListingType" maxOccurs="unbounded">
+      <xs:element name="supportedListingTypes" type="tns:ListingType" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation>
           <xs:documentation>Lista med listningstyper som vårdeneheten stödjer. Kan utelämnas om information
 					saknas eller om informationen inte behövs i kontexten där entiteten är tänkt att användas i.</xs:documentation>
@@ -1913,7 +1908,10 @@
 			                                     ett örebro projekt som också migrerat ifrån 13606.
 			            2009-12-21 version 1.0.2: Re-design i sammarbete med Modul1, Arkitekturledningen och Mawell.
 			            2010-01-13 version 1.0.3: Lade till supportedListingTypes på Facility.
-			            2010-01-26 version 1.0.4: Lade till köstatus och plockade bort det ifrån Listing.</xs:documentation>
+			            2010-01-26 version 1.0.4: Lade till köstatus och plockade bort det ifrån Listing.
+			            2010-02-18 version 1.0.5: Lade till namn på facility och resource 
+			            2010-03-08 version 1.0.6: Ändrat listingtype i Listing
+			            2010-03-11 version 1.0.6: Ändrat listingtype till tvingad i Facility</xs:documentation>
   </xs:annotation>
   <xs:simpleType name="HsaIdType">
     <xs:restriction base="xs:string"/>
@@ -1927,8 +1925,11 @@
     <xs:restriction base="xs:string"/>
   </xs:simpleType>
   <xs:simpleType name="SubjectOfCareIdType">
+    <xs:annotation>
+      <xs:documentation>Personnummer kan anges med eller utan sekelsiffror.Bindestreck är också valfritt</xs:documentation>
+    </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:pattern value="^[0-9]{6}-[0-9pPtTfF][0-9]{3}$"/>
+      <xs:pattern value="(([1-9]\d{7})|(\d{6}))[\-]?\d{4}"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="CountyCode">
@@ -1966,11 +1967,7 @@
           <xs:documentation>Anger datum när listningen slutade gälla, om datum saknas så blir det implicit obestämt in i framtiden.</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="listingType" type="xs:string">
-        <xs:annotation>
-          <xs:documentation>Anger typ av listning, t.ex BVC, HLM. typerna definieras i HSA kodverket, se ref: http://www.todo.se</xs:documentation>
-        </xs:annotation>
-      </xs:element>
+      <xs:element name="listingType" type="tns:ListingType"/>
       <xs:element name="healthcare_facility" type="tns:Facility"/>
       <xs:element name="resource" type="tns:Resource" minOccurs="0">
         <xs:annotation>
@@ -1993,7 +1990,7 @@
 					inte har någon betydelse i kontexten.</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="supportedListingTypes" type="tns:ListingType" maxOccurs="unbounded">
+      <xs:element name="supportedListingTypes" type="tns:ListingType" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation>
           <xs:documentation>Lista med listningstyper som vårdeneheten stödjer. Kan utelämnas om information
 					saknas eller om informationen inte behövs i kontexten där entiteten är tänkt att användas i.</xs:documentation>
@@ -2169,14 +2166,13 @@
     <xs:anyAttribute namespace="##other" processContents="lax"/>
   </xs:complexType>
   <xs:element name="test" type="xs:string"/>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://temp.uri/</con:endpoint><con:endpoint>http://MAW066:8088/mockGetPersonQueueStatusResponderBinding</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:crm:carelisting:GetPersonQueueStatusResponder:1:getPersonQueueStatus" name="getPersonQueueStatus" bindingOperationName="getPersonQueueStatus" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://MAW066:8088/mockGetPersonQueueStatusResponderBinding</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:add="http://www.w3.org/2005/08/addressing" xmlns:urn="urn:riv:crm:carelisting:GetPersonQueueStatusResponder:1">
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://temp.uri/</con:endpoint><con:endpoint>http://localhost:8088/mockGetPersonQueueStatusResponderBinding</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:crm:carelisting:GetPersonQueueStatusResponder:1:getPersonQueueStatus" name="getPersonQueueStatus" bindingOperationName="getPersonQueueStatus" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8088/mockGetPersonQueueStatusResponderBinding</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:add="http://www.w3.org/2005/08/addressing" xmlns:urn="urn:riv:crm:carelisting:GetPersonQueueStatusResponder:1">
    <soapenv:Header>
       <add:To>?</add:To>
    </soapenv:Header>
    <soapenv:Body>
       <urn:getPersonQueueStatus>
-         <urn:personId>?</urn:personId>
-         <!--You may enter ANY elements at this point-->
+         <urn:personId>197805180531</urn:personId>
       </urn:getPersonQueueStatus>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:crm:carelisting:GetPersonQueueStatusResponder:1:getPersonQueueStatus"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:mockService port="8088" path="/mockCreateListingResponderBinding" name="CreateListingResponderBinding MockService" host="MAW066"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="createListing" interface="CreateListingResponderBinding" operation="createListing"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="Response 1" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:crm:carelisting:CreateListingResponder:1">
