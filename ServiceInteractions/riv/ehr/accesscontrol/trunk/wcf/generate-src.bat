@@ -26,7 +26,7 @@ SET NAMESPACE=/namespace:*,Riv.Ehr.AccessControl.Schemas.v1
 SET SCHEMADIR="schemas\interactions"
 SET SVCUTIL="svcutil.exe"
 
-SET W1=%SCHEMADIR%\AssertCareEngagementInteraction\CancelBookingInteraction_1.0_rivtabp20.wsdl
+SET W1=%SCHEMADIR%\AssertCareEngagementInteraction\AssertCareEngagementInteraction_1.0_RIVTABP20.wsdl
 SET X1=%SCHEMADIR%\AssertCareEngagementInteraction\*.xsd
 SET X2=schemas\core_components\*.xsd
 
