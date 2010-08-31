@@ -19,9 +19,12 @@
  -->		
 <xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:ehr:accesscontrol:1' targetNamespace='urn:riv:ehr:accesscontrol:1' elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'>
 
-  <xs:simpleType name="HsaIdType">
-    <xs:restriction base="xs:string" />
-  </xs:simpleType>
+   <xs:simpleType name="HsaIdType">
+       <xs:restriction base="xs:token">
+               <xs:maxLength value="64"/>
+               <xs:pattern value="[(\p{L})0-9\-]*"/>
+       </xs:restriction>
+   </xs:simpleType>
 
   <xs:simpleType name="SubjectOfCareIdType">
     <xs:restriction base="xs:string">
