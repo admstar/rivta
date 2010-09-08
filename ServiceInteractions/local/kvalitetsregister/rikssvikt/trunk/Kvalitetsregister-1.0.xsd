@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="urn:riv:Kvalitetsregister:1"
+	targetNamespace="urn:riv:Kvalitetsregister:1" elementFormDefault="qualified"
+	attributeFormDefault="unqualified" version="1.0">
+	<xs:annotation>
+		<xs:documentation>
+		A common schema for messages to quality registry services.
+
+		</xs:documentation>
+	</xs:annotation>
+
+	<xs:complexType name="HeaderData">
+		<xs:annotation>
+			<xs:documentation>
+				Holds information about metadata needed by the receiver
+      		</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="qregType" type="xs:string" minOccurs="1" maxOccurs="1" >
+				<xs:annotation>
+            		<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="qregReporterId" type="xs:string" >
+				<xs:annotation>
+            		<xs:documentation>The id of the reporter expressed as an HSA-id</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="templateId" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+            		<xs:documentation>The id of the template used for in the operation (sent or expected)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="qregTimestamp" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+            		<xs:documentation>The date and time when the record was created</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ResultOfCall">
+		<xs:annotation>
+			<xs:documentation>
+				Holds information about the outcome of the request. resultType will generally classify the possible responses.
+				There are three basic types of responses, OK, INFO and ERROR.
+				The OK type implies that the request has been handled successfully. 
+				
+				The INFO type is a "subclass" of the general OK, but is used in cases where serverside needs to inform calling 
+				client of any events on the server side. The implied state transfer of the request should be regarded as complete, i.e.
+				upon a create call, the instance was indeed created on the server, but something should be observed. Typically INFO is 
+				intended tom communicate states of warnings similar to what frequently occur in corresponding web UI:s. The associated
+				textfields are regarded as mandatory for responses of type INFO. 
+				
+				The ERROR type id used to mark the exception from a successful execution. The request has been transactionally aborted
+				and no part of the request has been performed.  
+				If return is of type ERROR, the text fields will contain information about the error.
+      			
+      		</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+      		<xs:element name="resultType" type="ResultTypeEnum">
+      			<xs:annotation>
+            		<xs:documentation>Type that tell about the outcome of the operation.</xs:documentation>
+				</xs:annotation>
+      		</xs:element>
+			<xs:element name="resultCode" type="xs:int" >
+				<xs:annotation>
+            		<xs:documentation>A status code that can be used by calling system to determine actions. Available codes will be provided by the qreg system</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="resultTextTechnical" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+            		<xs:documentation>A technical description of the info or error.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="resultTextUser" type="xs:string" minOccurs="0" maxOccurs="1" >
+				<xs:annotation>
+            		<xs:documentation>A user-friendly description of the info or error</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="ResultTypeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OK" />
+			<xs:enumeration value="ERROR" />
+			<xs:enumeration value="INFO" />
+		</xs:restriction>
+	</xs:simpleType>
+
+</xs:schema>
