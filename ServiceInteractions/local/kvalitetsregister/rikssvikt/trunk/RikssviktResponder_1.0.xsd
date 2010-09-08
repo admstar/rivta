@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. The ASF licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->
+<xs:schema 
+	xmlns="urn:riv:Kvalitetsregister:RikssviktResponder:1" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:kr="urn:riv:Kvalitetsregister:1" 
+	xmlns:oe="http://schemas.openehr.org/v1"
+	targetNamespace="urn:riv:Kvalitetsregister:RikssviktResponder:1" 
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified" 
+	version="1.0">
+	
+	<xs:import namespace="urn:riv:Kvalitetsregister:1" schemaLocation="Kvalitetsregister-1.0.xsd"/>
+	<xs:import namespace="http://schemas.openehr.org/v1" schemaLocation="Composition.xsd" />
+
+<!-- Wait with these two until clear of information needed in the communication 	
+	<xs:element name="GetDescription"                   type="GetDescriptionRequestType"/>
+	<xs:element name="GetDescriptionResponse"           type="GetDescriptionResponseType"/>
+	
+	<xs:element name="GetDefinition"         			type="GetDefinitionRequestType"/>
+	<xs:element name="GetDefinitionResponse" 			type="GetDefinitionResponseType"/>
+ -->
+ 
+	<xs:element name="CreateRegistryData"               type="CreateRegistryDataRequestType"/>
+	<xs:element name="CreateRegistryDataResponse"       type="CreateRegistryDataResponseType"/>
+	
+	<xs:element name="UpdateRegistryData"               type="UpdateRegistryDataRequestType"/>
+	<xs:element name="UpdateRegistryDataResponse"       type="UpdateRegistryDataResponseType"/>
+	
+	<xs:element name="GetRegistryData"                  type="GetRegistryDataRequestType"/>
+	<xs:element name="GetRegistryDataResponse"          type="GetRegistryDataResponseType"/>
+
+<!-- 	
+	<xs:complexType name="GetDescriptionRequestType">
+		<xs:sequence>
+			<xs:element name="header" type="kr:HeaderData"/>
+			<xs:element name="info" type="xs:string"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GetDescriptionResponseType">
+		<xs:sequence>
+			<xs:element name="info" type="xs:string"/>
+			<xs:element name="error" type="kr:ErrorInformation"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="GetDefinitionRequestType">
+		<xs:sequence>
+			<xs:element name="info" type="xs:string"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GetDefinitionResponseType">
+		<xs:sequence>
+			<xs:element name="info" type="xs:string"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+ -->
+ 
+ 	<xs:complexType name="CreateRegistryDataRequestType">
+		<xs:sequence>
+ 			<xs:element name="header" type="kr:HeaderData" />
+            <xs:element name="registration" type="oe:COMPOSITION" />
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CreateRegistryDataResponseType">
+		<xs:sequence>
+      		<xs:element name="result" type="kr:ResultOfCall" />
+            <xs:element name="qregId" type="xs:string" minOccurs="0" maxOccurs="1">
+            	<xs:annotation>
+            		<xs:documentation>The generated id from Qreg system for the sent record</xs:documentation>
+				</xs:annotation>
+            </xs:element>
+            <xs:element name="versionId" type="xs:string" minOccurs="0" maxOccurs="1">
+            	<xs:annotation>
+            		<xs:documentation>The generated version id from the Qreg system for the sent record</xs:documentation>
+				</xs:annotation>
+            </xs:element>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="UpdateRegistryDataRequestType">
+		<xs:sequence>
+ 			<xs:element name="header" type="kr:HeaderData"/>
+            <xs:element name="qregId" type="xs:string">
+            	<xs:annotation>
+            		<xs:documentation>The id for the record that should be updated</xs:documentation>
+				</xs:annotation>
+            </xs:element>
+            <xs:element name="registration" type="oe:COMPOSITION" />
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UpdateRegistryDataResponseType">
+		<xs:sequence>
+      		<xs:element name="result" type="kr:ResultOfCall" />
+            <xs:element name="qregId" type="xs:string" minOccurs="0" maxOccurs="1">
+            	<xs:annotation>
+            		<xs:documentation>The id for the record that was updated.</xs:documentation>
+				</xs:annotation>
+            </xs:element>
+            <xs:element name="versionId" type="xs:string" minOccurs="0" maxOccurs="1">
+            	<xs:annotation>
+            		<xs:documentation>The generated version id from the Qreg system for the sent record</xs:documentation>
+				</xs:annotation>
+            </xs:element>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="GetRegistryDataRequestType">
+		<xs:sequence>
+ 			<xs:element name="header" type="kr:HeaderData"/>
+            <xs:element name="qregId" type="xs:string" >
+            	<xs:annotation>
+            		<xs:documentation>The id for the record that should be retrieved</xs:documentation>
+				</xs:annotation>
+            </xs:element>
+            <xs:element name="versionId" type="xs:string" minOccurs="0" maxOccurs="1">
+            	<xs:annotation>
+            		<xs:documentation>The version id for the record that should be retrieved. If not set the latest version is implied</xs:documentation>
+				</xs:annotation>
+            </xs:element>
+
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GetRegistryDataResponseType">
+		<xs:sequence>
+      		<xs:element name="result" type="kr:ResultOfCall" />
+      		<xs:element name="qregId" type="xs:string" minOccurs="0" maxOccurs="1">
+            	<xs:annotation>
+            		<xs:documentation>The id for the record that was sent from the Qreg system</xs:documentation>
+				</xs:annotation>
+            </xs:element>
+            <xs:element name="versionId" type="xs:string" minOccurs="0" maxOccurs="1">
+            	<xs:annotation>
+            		<xs:documentation>The version id for the record that was sent from the Qreg system</xs:documentation>
+				</xs:annotation>
+            </xs:element>
+            <xs:element name="registration" type="oe:COMPOSITION" minOccurs="0" maxOccurs="1"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+ 
+	<xs:annotation>
+		<xs:documentation>		
+
+		</xs:documentation>
+	</xs:annotation>
+</xs:schema>
