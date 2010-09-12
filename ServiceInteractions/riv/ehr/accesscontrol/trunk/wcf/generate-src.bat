@@ -27,12 +27,10 @@ SET SCHEMADIR="schemas\interactions"
 SET SVCUTIL="svcutil.exe"
 
 SET W1=%SCHEMADIR%\AssertCareEngagementInteraction\AssertCareEngagementInteraction_1.0_RIVTABP20.wsdl
-SET W2=%SCHEMADIR%\RegisterCareEngagementInteraction\RegisterCareEngagementInteraction_1.0_RIVTABP20.wsdl
 SET X1=schemas\core_components\*.xsd
 SET X2=%SCHEMADIR%\AssertCareEngagementInteraction\*.xsd
-SET X3=%SCHEMADIR%\RegisterCareEngagementInteraction\*.xsd
 
-SET SCHEMAS=%W1% %W2% %X1% %X2% %X3%
+SET SCHEMAS=%W1% %X1% %X2%
 
 %SVCUTIL% /language:cs /wrapped %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
 
