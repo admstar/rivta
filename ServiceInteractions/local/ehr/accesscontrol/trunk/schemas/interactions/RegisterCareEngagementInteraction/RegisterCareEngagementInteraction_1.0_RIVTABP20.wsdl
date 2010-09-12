@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. The ASF licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->		
+<wsdl:definitions name='RegisterCareEngagementInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:wsa='http://www.w3.org/2005/08/addressing' xmlns:tjsr='urn:riv:ehr:accesscontrol:RegisterCareEngagementResponder:1' xmlns:tjsi='urn:riv:ehr:accesscontrol:RegisterCareEngagementInitiator:1' xmlns:tns='urn:riv:ehr:accesscontrol:RegisterCareEngagement:1:rivtabp20' targetNamespace='urn:riv:ehr:accesscontrol:RegisterCareEngagement:1:rivtabp20'>
+  <xs:annotation>
+    <xs:documentation>
+			 Tjänsteinteraktionens namn: RegisterCareEngagementInteraction
+			 Beskrivning: 
+			   Submit a record to assert care engagement for the subjectOfCare at the healthcare_facility
+			 Revisioner: 
+			 Tjänstedomän: ehr:accesscontrol
+			 Tjänsteinteraktionstyp: Fråga-Svar
+			 RIV Teknisk Anvisning: RIVTABP20
+			 Förvaltas av: xxx
+			 </xs:documentation>
+  </xs:annotation>
+  <wsdl:types>
+    <xs:schema>
+      <xs:import schemaLocation='RegisterCareEngagementResponder_1.0.xsd' namespace='urn:riv:ehr:accesscontrol:RegisterCareEngagementResponder:1' />
+    </xs:schema>
+    <xs:schema>
+      <xs:import schemaLocation='../../core_components/ws-addressing-1.0.xsd' namespace='http://www.w3.org/2005/08/addressing' />
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name='RegisterCareEngagementRequest'>
+    <wsdl:part name='LogicalAddress' element='wsa:To'>
+      <xs:annotation>
+        <xs:documentation>The HSAid of the healthcare_facility of which care engagement is reported </xs:documentation>
+      </xs:annotation>
+    </wsdl:part>
+    <wsdl:part name='parameters' element='tjsr:RegisterCareEngagement' />
+  </wsdl:message>
+  <wsdl:message name='RegisterCareEngagementResponse'>
+    <wsdl:part name='parameters' element='tjsr:RegisterCareEngagementResponse' />
+  </wsdl:message>
+  <wsdl:portType name='RegisterCareEngagementResponderInterface'>
+    <wsdl:operation name='RegisterCareEngagement'>
+      <wsdl:input message='tns:RegisterCareEngagementRequest' />
+      <wsdl:output message='tns:RegisterCareEngagementResponse' />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name='RegisterCareEngagementResponderBinding' type='tns:RegisterCareEngagementResponderInterface'>
+    <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
+    <wsdl:operation name='RegisterCareEngagement'>
+      <soap:operation soapAction='urn:riv:ehr:accesscontrol:RegisterCareEngagementResponder:1:RegisterCareEngagement' style='document' />
+      <wsdl:input>
+        <soap:header use='literal' message='tns:RegisterCareEngagementRequest' part='LogicalAddress' />
+        <soap:body use='literal' parts='parameters' />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use='literal' />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name='RegisterCareEngagementResponderService'>
+    <wsdl:port name='RegisterCareEngagementResponderPort' binding='tns:RegisterCareEngagementResponderBinding'>
+      <soap:address location='http://tempuri.org' />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
