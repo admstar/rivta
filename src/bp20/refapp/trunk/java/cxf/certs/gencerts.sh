@@ -27,33 +27,18 @@ echo "1346" > demoCA/serial
 
 # ### Consumers ###
 #   Riv13606RequestEHRExtractConsumer
-    keytool -genkey \
-    -alias Riv13606RequestEHRExtractConsumer \
-    -dname "CN=Riv13606RequestEHRExtractConsumer, OU=VardgivareA-IVK, O=SKL, ST=GBG, C=SE" \
-    -keystore consumer.jks -storetype jks -storepass password -keypass password -keyalg RSA
-
-    keytool -certreq -keystore consumer.jks -storetype jks -storepass password \
-    -alias Riv13606RequestEHRExtractConsumer \
-    -keypass password -file csrRiv13606RequestEHRExtractConsumer.pem
+    keytool -genkeypair -alias Riv13606RequestEHRExtractConsumer -dname "CN=Riv13606RequestEHRExtractConsumer, OU=VardgivareA-IVK, O=SKL, ST=GBG, C=SE" -keystore consumer.jks -storetype jks -storepass password -keypass password -keyalg RSA
+    keytool -certreq -keystore consumer.jks -storetype jks -storepass password -alias Riv13606RequestEHRExtractConsumer -keypass password -file csrRiv13606RequestEHRExtractConsumer.pem
 
 # ### Producers ###
 #   Riv13606RequestEHRExtractProducer
-    keytool -genkey \
-    -alias Riv13606RequestEHRExtractProducer \
-    -dname "CN=localhost, OU=VardgivareC-IVK, O=SKL, ST=GBG, C=SE" \
-    -keystore producer.jks -storetype jks -storepass password -keypass password -keyalg RSA
-
-    keytool -certreq -keystore producer.jks -storetype jks -storepass password \
-    -alias Riv13606RequestEHRExtractProducer \
-    -keypass password -file csrRiv13606RequestEHRExtractProducer.pem
-
+    keytool -genkeypair -alias Riv13606RequestEHRExtractProducer -dname "CN=localhost, OU=VardgivareC-IVK, O=SKL, ST=GBG, C=SE" -keystore producer.jks -storetype jks -storepass password -keypass password -keyalg RSA
+    keytool -certreq -keystore producer.jks -storetype jks -storepass password -alias Riv13606RequestEHRExtractProducer -keypass password -file csrRiv13606RequestEHRExtractProducer.pem
 # Have the CN=TheCA issue a certificate for CN=TP(localhost), Consumers and Producers via their Certificate Requests.
 #  Consumers: 
-   openssl ca -batch -days 364 -cert cacert.pem -keyfile caprivkey.pem \
-   -in csrRiv13606RequestEHRExtractConsumer.pem -out Riv13606RequestEHRExtractConsumer-ca-cert.pem
+   openssl ca -batch -days 9000 -cert cacert.pem -keyfile caprivkey.pem -in csrRiv13606RequestEHRExtractConsumer.pem -out Riv13606RequestEHRExtractConsumer-ca-cert.pem
 #  Producers:
-   openssl ca -batch -days 364 -cert cacert.pem -keyfile caprivkey.pem \
-   -in csrRiv13606RequestEHRExtractProducer.pem -out Riv13606RequestEHRExtractProducer-ca-cert.pem
+   openssl ca -batch -days 9000 -cert cacert.pem -keyfile caprivkey.pem -in csrRiv13606RequestEHRExtractProducer.pem -out Riv13606RequestEHRExtractProducer-ca-cert.pem
 
 # Rewrite the certificates in PEM only format. This allows us to concatenate them into chains.
     openssl x509 -in Riv13606RequestEHRExtractConsumer-ca-cert.pem -out Riv13606RequestEHRExtractConsumer-ca-cert.pem -outform PEM
@@ -64,21 +49,14 @@ echo "1346" > demoCA/serial
     cat Riv13606RequestEHRExtractProducer-ca-cert.pem cacert.pem > Riv13606RequestEHRExtractProducer.chain
 
 # Replace the certificates in the consumer and producer keystores with their respective full chains.    
-    keytool -import -file Riv13606RequestEHRExtractConsumer.chain -keystore consumer.jks -storetype jks \
-    -alias Riv13606RequestEHRExtractConsumer \
-    -storepass password -keypass password -noprompt
+    keytool -import -file Riv13606RequestEHRExtractConsumer.chain -keystore consumer.jks -storetype jks -alias Riv13606RequestEHRExtractConsumer -storepass password -keypass password -noprompt
 
-    keytool -import -file Riv13606RequestEHRExtractProducer.chain -keystore producer.jks -storetype jks \
-    -alias Riv13606RequestEHRExtractProducer \
-    -storepass password -keypass password -noprompt
+    keytool -import -file Riv13606RequestEHRExtractProducer.chain -keystore producer.jks -storetype jks -alias Riv13606RequestEHRExtractProducer -storepass password -keypass password -noprompt
 
 # Create the Truststore files containing the CA cert.
-    keytool -import -file cacert.pem -alias TheCA -keystore truststore.jks \
-    -storepass password -noprompt
-    keytool -import -file cacert.pem -alias TheCA -keystore consumer-truststore.jks \
-    -storepass password -noprompt
-    keytool -import -file cacert.pem -alias TheCA -keystore producer-truststore.jks \
-    -storepass password -noprompt
+    keytool -import -file cacert.pem -alias TheCA -keystore truststore.jks -storepass password -noprompt
+    keytool -import -file cacert.pem -alias TheCA -keystore consumer-truststore.jks -storepass password -noprompt
+    keytool -import -file cacert.pem -alias TheCA -keystore producer-truststore.jks -storepass password -noprompt
 
 # List keystores for manual inspection
 #    keytool -v -list -keystore tp.jks -storepass password > tp.jks.log
