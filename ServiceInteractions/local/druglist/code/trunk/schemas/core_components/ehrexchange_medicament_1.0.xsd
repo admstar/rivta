@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor 
+	license agreements. See the NOTICE file distributed with this work for additional 
+	information regarding copyright ownership. The ASF licenses this file to 
+	you under the Apache License, Version 2.0 (the "License"); you may not use 
+	this file except in compliance with the License. You may obtain a copy of 
+	the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+	by applicable law or agreed to in writing, software distributed under the 
+	License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific 
+	language governing permissions and limitations under the License. -->
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns='urn:nll:ehrexchange:medicament:1'
+	targetNamespace='urn:nll:ehrexchange:medicament:1' elementFormDefault='qualified'
+	attributeFormDefault='unqualified' version='1.0'>
+
+	<xs:simpleType name="IdType">
+		<xs:restriction base="xs:long" />
+	</xs:simpleType>
+
+	<xs:complexType name="CareUnitIdType">
+		<xs:annotation>
+			<xs:documentation>
+				Represents a compounded care unit identifier
+				consisting of
+				a combination of NLL:s institute code and clinic code
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="clinic_code" type="ClinicCodeType" />
+			<xs:element name="institution_code" type="InstitutionCodeType" />
+			<xs:element name="name_internal_clinic" type="name_internal_clinic" />
+			<xs:element name="name_internal_establishment" type="name_internal_establishment" />
+			<xs:element name="name_external_clinic" type="name_external_clinic" />
+			<xs:any namespace='##other' processContents='lax' minOccurs='0'
+				maxOccurs='unbounded' />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="ClinicCodeType">
+		<xs:annotation>
+			<xs:documentation>
+				The code of the clinic
+				Maps to NLL VAS table/column:
+				recept/klinkod (klinikkod)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+
+	<xs:simpleType name="InstitutionCodeType">
+		<xs:annotation>
+			<xs:documentation>
+				The code of a institution at a clinic
+				Maps to NLL
+				VAS table/column: recept/inrkod (inrättningskod)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+
+	<xs:simpleType name="name_internal_clinic">
+		<xs:annotation>
+			<xs:documentation>Kliniknamn i klartext.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="name_internal_establishment">
+		<xs:annotation>
+			<xs:documentation>Inrättningsnamn i klartext.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="name_external_clinic">
+		<xs:annotation>
+			<xs:documentation>Extern klink i klartext.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+
+	<!-- TODO: Decide if HSA this is going to be used for identification -->
+	<xs:simpleType name="HsaIdType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+
+	<xs:element name="HsaId" type="HsaIdType" />
+
+	<xs:simpleType name="SubjectOfCareIdType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="^[0-9]{6}[0-9pPtTfF][0-9]{3}$" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="KnowPrescriptionType">
+		<xs:sequence>
+			<xs:element name="ordination_serial_no" type="xs:long"/>
+			<xs:element name="drug_prescription_serial_no" type="xs:long"/>
+			<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded"
+				namespace="##other"></xs:any>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:simpleType name='DrugPrescriptionEnum'>
+		<xs:restriction base='xs:string'>
+			<xs:enumeration value='CURRENT' />
+			<xs:enumeration value='ALL' />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="DrugPrescriptionIdType">
+		<xs:annotation>
+			<xs:documentation>
+				Represents a compounded drug prescription
+				identifier consisting of
+				a combination of NLL:s patient-id,
+				ordination-id and recept-id
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="subject_of_care_application_id" type="IdType"
+				minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						Maps to NLL VAS table/column: ordination/idnr and
+						recept/idnr
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ordination_serial_no" type="IdType"
+				minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						Maps to NLL VAS table/column: ordination/ordlopnr
+						and recept/ordlopnr
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="drug_prescription_serial_no" type="IdType"
+				minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						Maps to NLL VAS table/column: recept/lpnr
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="DrugPrescriptionType">
+		<xs:annotation>
+			<xs:documentation>
+				Prescription of a drug
+			</xs:documentation>
+		</xs:annotation>
+
+		<xs:sequence>
+			<xs:element name="drug_prescription_id" type="DrugPrescriptionIdType">
+				<xs:annotation>
+					<xs:documentation>
+						Unique identifier for the drug prescription.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="care_unit_id" type="CareUnitIdType">
+				<xs:annotation>
+					<xs:documentation>
+						Unique identifier for the care unit
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="bats" type="bats" />
+			<xs:element name="dosage_code" type="dosage_code" />
+			<xs:element name="dosage_type" type="dosage_type" />
+			<xs:element name="drug_name" type="drug_name" />
+			<xs:element name="prescription_text" type="prescription_text" />
+			<xs:element name="responsible_health_care_personnel" type="responsible_health_care_personnel" />
+			<xs:element name="strength" type="strength" />
+			<xs:element name="strength_unit" type="strength_unit" />
+			<xs:element name="strength_text" type="strength_text" />
+			<xs:element name="secrecy" type="secrecy" />
+			<xs:element name="treatment_time_days" type="treatment_time_days" />
+			<xs:element name="quantity" type="quantity" />
+			<xs:element name="quantity_unit" type="quantity_unit" />
+			<xs:element name="vendor_part_no" type="vendor_part_no" />
+
+			<xs:element name="prescription_instructions" type="prescription_instructions" />
+			<xs:element name="name_signing_carer" type="name_signing_carer" />
+			<xs:element name="name_of_substance" type="name_of_substance" />
+			<xs:element name="atc_code" type="atc_code" />
+			<xs:element name="name_registering_carer" type="name_registering_carer" />
+			<xs:element name="signing_date" type="signing_date" />
+			<xs:element name="registration_date" type="registration_date" />
+			<xs:element name="registration_time" type="registration_time" />
+			<xs:element name="execution_start_date" type="execution_start_date" />
+			<xs:element name="execution_end_date" type="execution_end_date" />
+			<xs:element name="hist_login" type="histlogin" />
+			<xs:element name="hist_date" type="histdat" />
+			<xs:element name="exchangeability" type="exchangeability" />
+			<xs:element name="secrecy_date" type="secrecy_date" />
+			<xs:element name="changed" type="changed" />
+			<xs:element name="dos_carer" type="dos_carer" />
+			<xs:element name="dos_healthcare_organisation" type="dos_healthcare_organisation" />
+			<xs:element name="dos_healthcare_provider" type="dos_healthcare_provider" />
+			<xs:element name="code_registering_carer" type="code_registering_carer" />
+			<xs:any namespace="##other" processContents="lax" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="bats">
+		<xs:annotation>
+			<xs:documentation>
+				Maps to NLL VAS table/column: recept/bats
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="dosage_code">
+		<xs:annotation>
+			<xs:documentation>
+				Maps to NLL VAS table/column: recept/kdos
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="dosage_type">
+		<xs:annotation>
+			<xs:documentation>
+				Maps to NLL VAS table/column: recept/kur
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="drug_name">
+		<xs:annotation>
+			<xs:documentation>
+				Maps to NLL VAS table/column: recept/preparat
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="prescription_text">
+		<xs:annotation>
+			<xs:documentation>
+				Maps to NLL VAS table/column: recept/rectxt
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="responsible_health_care_personnel">
+		<xs:annotation>
+			<xs:documentation>
+				The username of the health care personnel that
+				has
+				signed the
+				prescription.
+				Maps to NLL VAS table/column:
+				recept/sign
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="strength">
+		<xs:annotation>
+			<xs:documentation>
+				Numerical strength
+				Maps to NLL VAS table/column:
+				recept/strnum
+                    </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="strength_unit">
+		<xs:annotation>
+			<xs:documentation>
+				The unit for the strength field
+				Maps to NLL VAS
+				table/column:
+				recept/strenh
+                    </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="strength_text">
+		<xs:annotation>
+			<xs:documentation>
+				Maps to NLL VAS table/column: recept/strnumtxt
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="secrecy">
+		<xs:annotation>
+			<xs:documentation>
+				Maps to NLL VAS table/column: recept/sekretess
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean"></xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="treatment_time_days">
+		<xs:annotation>
+			<xs:documentation>
+				Maps to NLL VAS table/column: recept/behtid
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:int"></xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="quantity">
+		<xs:annotation>
+			<xs:documentation>
+				Maps to NLL VAS table/column: recept/mgd
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="quantity_unit">
+		<xs:annotation>
+			<xs:documentation>
+				Maps to NLL VAS table/column: recept/mgdenh
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="vendor_part_no">
+		<xs:annotation>
+			<xs:documentation>
+				Maps to NLL VAS table/column: recept/varuid
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+
+
+	<xs:simpleType name="name_signing_carer">
+		<xs:annotation>
+			<xs:documentation>
+				Signerande vårdgivare i klartext.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="name_of_substance">
+		<xs:annotation>
+			<xs:documentation>
+				ordination.atc Här är vi intresserade av
+				ämnen/substanser i klartext ej atc-koden i sig.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="atc_code">
+		<xs:annotation>
+			<xs:documentation>
+				Motsvarar VAS recept.atc
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="name_registering_carer">
+		<xs:annotation>
+			<xs:documentation>
+				Namn på den registrerande vårdgivaren i
+				klartext.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="signing_date">
+		<xs:annotation>
+			<xs:documentation>
+				Motsvarar VAS recept.signdat
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:date"></xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="registration_date">
+		<xs:annotation>
+			<xs:documentation>
+				Motsvarar VAS recept.regdat
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:date"></xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="registration_time">
+		<xs:annotation>
+			<xs:documentation>
+				Motsvarar VAS recept.kl
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:time"></xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="execution_start_date">
+		<xs:annotation>
+			<xs:documentation>
+				recept.datum
+				Insättningsdatum
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:date"></xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="execution_end_date">
+		<xs:annotation>
+			<xs:documentation>
+				Motsvarar recept.utsatt.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:date"></xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="prescription_instructions">
+		<xs:annotation>
+			<xs:documentation>
+				Motsvarar VAS recept.notat
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="histlogin">
+		<xs:annotation>
+			<xs:documentation>
+				Motsvarar VAS recept.histlogin
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="histdat">
+		<xs:annotation>
+			<xs:documentation>
+				Motsvarar VAS recept.histdat
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:date"></xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="exchangeability">
+		<xs:annotation>
+			<xs:documentation>
+				Motsvarar VAS recept.generika
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean"></xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="secrecy_date">
+		<xs:annotation>
+			<xs:documentation>
+				Motsvarar VAS recept.sekdat
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:date"></xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="changed">
+		<xs:annotation>
+			<xs:documentation>
+				Motsvarar VAS recept.andrad
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="dos_carer">
+		<xs:annotation>
+			<xs:documentation>
+				Motsvarar VAS recept.dosvgiv
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="dos_healthcare_organisation">
+		<xs:annotation>
+			<xs:documentation>
+				Motsvarar VAS recept.dosorgvgiv
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="dos_healthcare_provider">
+		<xs:annotation>
+			<xs:documentation>Motsvarar VAS.dosvardenh</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="code_registering_carer">
+		<xs:annotation>
+			<xs:documentation>Motsvarar Recept.vgivkod</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+
+</xs:schema>
