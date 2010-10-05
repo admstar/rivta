@@ -58,6 +58,15 @@
 		<xs:restriction base="xs:string" />
 	</xs:simpleType>
 
+	<xs:complexType name="SenderInfoType">
+		<xs:sequence>
+			<xs:element name="sending_system" type="xs:string" />
+			<xs:element name="sending_user" type="xs:string" />
+			<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded"
+				namespace="##other"></xs:any>
+		</xs:sequence>
+	</xs:complexType>
+
 	<xs:simpleType name="name_internal_clinic">
 		<xs:annotation>
 			<xs:documentation>Kliniknamn i klartext.</xs:documentation>
@@ -180,6 +189,7 @@
 			<xs:element name="drug_name" type="drug_name" />
 			<xs:element name="prescription_text" type="prescription_text" />
 			<xs:element name="responsible_health_care_personnel" type="responsible_health_care_personnel" />
+			<xs:element name="signing_health_care_personnel" type="signing_health_care_personnel" />
 			<xs:element name="strength" type="strength" />
 			<xs:element name="strength_unit" type="strength_unit" />
 			<xs:element name="strength_text" type="strength_text" />
@@ -190,7 +200,7 @@
 			<xs:element name="vendor_part_no" type="vendor_part_no" />
 
 			<xs:element name="prescription_instructions" type="prescription_instructions" />
-			<xs:element name="name_signing_carer" type="name_signing_carer" />
+			<xs:element name="name_responsible_health_care_personnel" type="name_responsible_health_care_personnel" />
 			<xs:element name="name_of_substance" type="name_of_substance" />
 			<xs:element name="atc_code" type="atc_code" />
 			<xs:element name="name_registering_carer" type="name_registering_carer" />
@@ -205,7 +215,7 @@
 			<xs:element name="secrecy_date" type="secrecy_date" />
 			<xs:element name="changed" type="changed" />
 			<xs:element name="dos_carer" type="dos_carer" />
-			<xs:element name="dos_healthcare_organisation" type="dos_healthcare_organisation" />
+			<xs:element name="dos_original_carer" type="dos_original_carer" />
 			<xs:element name="dos_healthcare_provider" type="dos_healthcare_provider" />
 			<xs:element name="code_registering_carer" type="code_registering_carer" />
 			<xs:any namespace="##other" processContents="lax" minOccurs="0"
@@ -243,7 +253,7 @@
 	<xs:simpleType name="drug_name">
 		<xs:annotation>
 			<xs:documentation>
-				Maps to NLL VAS table/column: recept/preparat
+				Name of the medicine.
 			</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string"></xs:restriction>
@@ -252,7 +262,7 @@
 	<xs:simpleType name="prescription_text">
 		<xs:annotation>
 			<xs:documentation>
-				Maps to NLL VAS table/column: recept/rectxt
+				Prescription text.
 			</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string"></xs:restriction>
@@ -262,11 +272,17 @@
 		<xs:annotation>
 			<xs:documentation>
 				The username of the health care personnel that
-				has
-				signed the
-				prescription.
-				Maps to NLL VAS table/column:
-				recept/sign
+				is responsible.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="signing_health_care_personnel">
+		<xs:annotation>
+			<xs:documentation>
+				The username of the health care personnel that
+				has signed the prescription.
 			</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string"></xs:restriction>
@@ -276,8 +292,6 @@
 		<xs:annotation>
 			<xs:documentation>
 				Numerical strength
-				Maps to NLL VAS table/column:
-				recept/strnum
                     </xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:decimal"></xs:restriction>
@@ -287,9 +301,6 @@
 		<xs:annotation>
 			<xs:documentation>
 				The unit for the strength field
-				Maps to NLL VAS
-				table/column:
-				recept/strenh
                     </xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string"></xs:restriction>
@@ -298,7 +309,7 @@
 	<xs:simpleType name="strength_text">
 		<xs:annotation>
 			<xs:documentation>
-				Maps to NLL VAS table/column: recept/strnumtxt
+				Strength text.
 			</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string"></xs:restriction>
@@ -307,7 +318,7 @@
 	<xs:simpleType name="secrecy">
 		<xs:annotation>
 			<xs:documentation>
-				Maps to NLL VAS table/column: recept/sekretess
+				Secrecy.
 			</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:boolean"></xs:restriction>
@@ -316,7 +327,7 @@
 	<xs:simpleType name="treatment_time_days">
 		<xs:annotation>
 			<xs:documentation>
-				Maps to NLL VAS table/column: recept/behtid
+				Treatment
 			</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:int"></xs:restriction>
@@ -325,7 +336,7 @@
 	<xs:simpleType name="quantity">
 		<xs:annotation>
 			<xs:documentation>
-				Maps to NLL VAS table/column: recept/mgd
+				Quantity in the prescriptions.
 			</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string"></xs:restriction>
@@ -334,7 +345,7 @@
 	<xs:simpleType name="quantity_unit">
 		<xs:annotation>
 			<xs:documentation>
-				Maps to NLL VAS table/column: recept/mgdenh
+				Quantity unit.
 			</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string"></xs:restriction>
@@ -350,7 +361,7 @@
 	</xs:simpleType>
 
 
-	<xs:simpleType name="name_signing_carer">
+	<xs:simpleType name="name_responsible_health_care_personnel">
 		<xs:annotation>
 			<xs:documentation>
 				Signerande vårdgivare i klartext.
@@ -362,7 +373,7 @@
 	<xs:simpleType name="name_of_substance">
 		<xs:annotation>
 			<xs:documentation>
-				ordination.atc Här är vi intresserade av
+				Här är vi intresserade av
 				ämnen/substanser i klartext ej atc-koden i sig.
 			</xs:documentation>
 		</xs:annotation>
@@ -497,7 +508,7 @@
 		<xs:restriction base="xs:string"></xs:restriction>
 	</xs:simpleType>
 	
-	<xs:simpleType name="dos_healthcare_organisation">
+	<xs:simpleType name="dos_original_carer">
 		<xs:annotation>
 			<xs:documentation>
 				Motsvarar VAS recept.dosorgvgiv
@@ -515,7 +526,7 @@
 	
 	<xs:simpleType name="code_registering_carer">
 		<xs:annotation>
-			<xs:documentation>Motsvarar Recept.vgivkod</xs:documentation>
+			<xs:documentation>Motsvarar recept.regvgiv</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string"></xs:restriction>
 	</xs:simpleType>
