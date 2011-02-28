@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+ Licensed to Inera AB under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. inera AB licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->		
+<wsdl:definitions name='GetCurrentRevisionOfProtectedIdentitiesRepositoryInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:wsa='http://www.w3.org/2005/08/addressing' xmlns:tjsr='urn:riv:ehr:accesscontrol:GetCurrentRevisionOfProtectedIdentitiesRepositoryResponder:1' xmlns:tjsi='urn:riv:ehr:accesscontrol:GetCurrentRevisionOfProtectedIdentitiesRepositoryInitiator:1' xmlns:tns='urn:riv:ehr:accesscontrol:GetCurrentRevisionOfProtectedIdentitiesRepository:1:rivtabp20' targetNamespace='urn:riv:ehr:accesscontrol:GetCurrentRevisionOfProtectedIdentitiesRepository:1:rivtabp20'>
+  <xs:annotation>
+    <xs:documentation>
+			 Tjänsteinteraktionens namn: GetCurrentRevisionOfProtectedIdentitiesRepositoryInteraction
+			 Beskrivning: 
+			   Returns the latest revision number of the repository backing up the ListProtectedIdentitiesRepositoryContent service with data. Using the returned revision number, it is possible for consumers of ListProtectedIdentitiesRepositoryContent to check whether the locally cached/stored list is in sync with the repository backing up the ListProtectedIdentitiesRepositoryContent service.
+			 Revisioner: 
+			 Tjänstedomän: ehr:accesscontrol
+			 Tjänsteinteraktionstyp: Fråga-Svar
+			 WS-profil: RIVTABP20
+			 Förvaltas av: xxx
+			 </xs:documentation>
+  </xs:annotation>
+  <wsdl:types>
+    <xs:schema targetNamespace='urn:riv:ehr:accesscontrol:GetCurrentRevisionOfProtectedIdentitiesRepository:1:rivtabp20'>
+      <xs:import schemaLocation='GetCurrentRevisionOfProtectedIdentitiesRepositoryResponder_1.0.xsd' namespace='urn:riv:ehr:accesscontrol:GetCurrentRevisionOfProtectedIdentitiesRepositoryResponder:1' />
+      <xs:import schemaLocation='../../core_components/ws-addressing-1.0.xsd' namespace='http://www.w3.org/2005/08/addressing' />
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name='GetCurrentRevisionOfProtectedIdentitiesRepositoryRequest'>
+    <wsdl:part name='LogicalAddress' element='wsa:To'>
+      <xs:annotation>
+        <xs:documentation>The HSA-id of Carelink</xs:documentation>
+      </xs:annotation>
+    </wsdl:part>
+    <wsdl:part name='parameters' element='tjsr:GetCurrentRevisionOfProtectedIdentitiesRepository' />
+  </wsdl:message>
+  <wsdl:message name='GetCurrentRevisionOfProtectedIdentitiesRepositoryResponse'>
+    <wsdl:part name='parameters' element='tjsr:GetCurrentRevisionOfProtectedIdentitiesRepositoryResponse' />
+  </wsdl:message>
+  <wsdl:portType name='GetCurrentRevisionOfProtectedIdentitiesRepositoryResponderInterface'>
+    <wsdl:operation name='GetCurrentRevisionOfProtectedIdentitiesRepository'>
+      <wsdl:input message='tns:GetCurrentRevisionOfProtectedIdentitiesRepositoryRequest' />
+      <wsdl:output message='tns:GetCurrentRevisionOfProtectedIdentitiesRepositoryResponse' />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name='GetCurrentRevisionOfProtectedIdentitiesRepositoryResponderBinding' type='tns:GetCurrentRevisionOfProtectedIdentitiesRepositoryResponderInterface'>
+    <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
+    <wsdl:operation name='GetCurrentRevisionOfProtectedIdentitiesRepository'>
+      <soap:operation soapAction='urn:riv:ehr:accesscontrol:GetCurrentRevisionOfProtectedIdentitiesRepositoryResponder:1:GetCurrentRevisionOfProtectedIdentitiesRepository' style='document' />
+      <wsdl:input>
+        <soap:header use='literal' message='tns:GetCurrentRevisionOfProtectedIdentitiesRepositoryRequest' part='LogicalAddress' />
+        <soap:body use='literal' parts='parameters' />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use='literal' />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name='GetCurrentRevisionOfProtectedIdentitiesRepositoryResponderService'>
+    <wsdl:port name='GetCurrentRevisionOfProtectedIdentitiesRepositoryResponderPort' binding='tns:GetCurrentRevisionOfProtectedIdentitiesRepositoryResponderBinding'>
+      <soap:address location='http://tempuri.org' />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

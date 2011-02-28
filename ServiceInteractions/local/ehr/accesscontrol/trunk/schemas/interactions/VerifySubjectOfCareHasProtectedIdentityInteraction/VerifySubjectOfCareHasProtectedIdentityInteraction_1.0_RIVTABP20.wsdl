@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+ Licensed to Inera AB under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. inera AB licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->		
+<wsdl:definitions name='VerifySubjectOfCareHasProtectedIdentityInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:wsa='http://www.w3.org/2005/08/addressing' xmlns:tjsr='urn:riv:ehr:accesscontrol:VerifySubjectOfCareHasProtectedIdentityResponder:1' xmlns:tjsi='urn:riv:ehr:accesscontrol:VerifySubjectOfCareHasProtectedIdentityInitiator:1' xmlns:tns='urn:riv:ehr:accesscontrol:VerifySubjectOfCareHasProtectedIdentity:1:rivtabp20' targetNamespace='urn:riv:ehr:accesscontrol:VerifySubjectOfCareHasProtectedIdentity:1:rivtabp20'>
+  <xs:annotation>
+    <xs:documentation>
+			 Tjänsteinteraktionens namn: VerifySubjectOfCareHasProtectedIdentityInteraction
+			 Beskrivning: 
+			   Asserts identity protection of the subject of care within Swedens citizens (an endpoints supports all citizens of Sweden).
+			 Revisioner: 
+			 Tjänstedomän: ehr:accesscontrol
+			 Tjänsteinteraktionstyp: Fråga-Svar
+			 WS-profil: RIVTABP20
+			 Förvaltas av: xxx
+			 </xs:documentation>
+  </xs:annotation>
+  <wsdl:types>
+    <xs:schema targetNamespace='urn:riv:ehr:accesscontrol:VerifySubjectOfCareHasProtectedIdentity:1:rivtabp20'>
+      <xs:import schemaLocation='VerifySubjectOfCareHasProtectedIdentityResponder_1.0.xsd' namespace='urn:riv:ehr:accesscontrol:VerifySubjectOfCareHasProtectedIdentityResponder:1' />
+      <xs:import schemaLocation='../../core_components/ws-addressing-1.0.xsd' namespace='http://www.w3.org/2005/08/addressing' />
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name='VerifySubjectOfCareHasProtectedIdentityRequest'>
+    <wsdl:part name='LogicalAddress' element='wsa:To'>
+      <xs:annotation>
+        <xs:documentation>The HSA-id of Carelink</xs:documentation>
+      </xs:annotation>
+    </wsdl:part>
+    <wsdl:part name='parameters' element='tjsr:VerifySubjectOfCareHasProtectedIdentity' />
+  </wsdl:message>
+  <wsdl:message name='VerifySubjectOfCareHasProtectedIdentityResponse'>
+    <wsdl:part name='parameters' element='tjsr:VerifySubjectOfCareHasProtectedIdentityResponse' />
+  </wsdl:message>
+  <wsdl:portType name='VerifySubjectOfCareHasProtectedIdentityResponderInterface'>
+    <wsdl:operation name='VerifySubjectOfCareHasProtectedIdentity'>
+      <wsdl:input message='tns:VerifySubjectOfCareHasProtectedIdentityRequest' />
+      <wsdl:output message='tns:VerifySubjectOfCareHasProtectedIdentityResponse' />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name='VerifySubjectOfCareHasProtectedIdentityResponderBinding' type='tns:VerifySubjectOfCareHasProtectedIdentityResponderInterface'>
+    <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
+    <wsdl:operation name='VerifySubjectOfCareHasProtectedIdentity'>
+      <soap:operation soapAction='urn:riv:ehr:accesscontrol:VerifySubjectOfCareHasProtectedIdentityResponder:1:VerifySubjectOfCareHasProtectedIdentity' style='document' />
+      <wsdl:input>
+        <soap:header use='literal' message='tns:VerifySubjectOfCareHasProtectedIdentityRequest' part='LogicalAddress' />
+        <soap:body use='literal' parts='parameters' />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use='literal' />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name='VerifySubjectOfCareHasProtectedIdentityResponderService'>
+    <wsdl:port name='VerifySubjectOfCareHasProtectedIdentityResponderPort' binding='tns:VerifySubjectOfCareHasProtectedIdentityResponderBinding'>
+      <soap:address location='http://tempuri.org' />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
