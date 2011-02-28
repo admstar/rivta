@@ -2,10 +2,10 @@
 @REM Generates c# WCF service contracts (interface), client proxies and wcf config 
 @REM file for ehr:accesscontrol 1.0 WSDLs + XML Schemas, using .Net WCF tool svcuti.exe
 @REM ---------------------------------------------------------------------------------
-@REM Licensed to the Apache Software Foundation (ASF) under one
+@REM Licensed to Inera AB under one
 @REM or more contributor license agreements. See the NOTICE file
 @REM distributed with this work for additional information
-@REM regarding copyright ownership. The ASF licenses this file
+@REM regarding copyright ownership. Inera AB licenses this file
 @REM to you under the Apache License, Version 2.0 (the
 @REM "License"); you may not use this file except in compliance
 @REM with the License. You may obtain a copy of the License at
@@ -26,11 +26,20 @@ SET NAMESPACE=/namespace:*,Riv.Ehr.AccessControl.Schemas.v1
 SET SCHEMADIR="schemas\interactions"
 SET SVCUTIL="svcutil.exe"
 
-SET W2=%SCHEMADIR%\RegisterCareEngagementInteraction\RegisterCareEngagementInteraction_1.0_RIVTABP20.wsdl
+SET W1=%SCHEMADIR%\AssertCareEngagementInteraction\AssertCareEngagementInteraction_1.0_RIVTABP20.wsdl
 SET X1=schemas\core_components\*.xsd
-SET X3=%SCHEMADIR%\RegisterCareEngagementInteraction\*.xsd
+SET X2=%SCHEMADIR%\AssertCareEngagementInteraction\*.xsd
 
-SET SCHEMAS=%W2% %X1% %X3%
+SET W2=%SCHEMADIR%\VerifySubjectOfCareHasProtectedIdentityInteraction\VerifySubjectOfCareHasProtectedIdentityInteraction_1.0_RIVTABP20.wsdl
+SET X3=%SCHEMADIR%\VerifySubjectOfCareHasProtectedIdentityInteraction\*.xsd
+
+SET W3=%SCHEMADIR%\GetCurrentRevisionOfProtectedIdentitiesRepositoryInteraction\GetCurrentRevisionOfProtectedIdentitiesRepositoryInteraction_1.0_RIVTABP20.wsdl
+SET X4=%SCHEMADIR%\GetCurrentRevisionOfProtectedIdentitiesRepositoryInteraction\*.xsd
+
+SET W4=%SCHEMADIR%\ListProtectedIdentitiesRepositoryContentInteraction\ListProtectedIdentitiesRepositoryContentInteraction_1.0_RIVTABP20.wsdl
+SET X5=%SCHEMADIR%\ListProtectedIdentitiesRepositoryContentInteraction\*.xsd
+
+SET SCHEMAS=%W1% %W2% %W3% %W4% %X1% %X2% %X3% %X4% %X5% 
 
 %SVCUTIL% /language:cs /wrapped %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
 
