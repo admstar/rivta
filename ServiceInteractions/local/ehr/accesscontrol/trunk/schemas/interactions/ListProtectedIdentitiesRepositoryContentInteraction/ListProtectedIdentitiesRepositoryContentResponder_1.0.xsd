@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
  Licensed to Inera AB under one
  or more contributor license agreements. See the NOTICE file
@@ -16,25 +16,27 @@
  KIND, either express or implied. See the License for the
  specific language governing permissions and limitations
  under the License.
- -->		
-<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:ehr:accesscontrol:ListProtectedIdentitiesRepositoryContentResponder:1' xmlns:core='urn:riv:ehr:accesscontrol:1' targetNamespace='urn:riv:ehr:accesscontrol:ListProtectedIdentitiesRepositoryContentResponder:1' elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'>
-  <xs:import schemaLocation='../../core_components/ehr_accesscontrol_1.0.xsd' namespace='urn:riv:ehr:accesscontrol:1' />
-  <xs:element name='ListProtectedIdentitiesRepositoryContent' type='tns:ListProtectedIdentitiesRepositoryContentType' />
-  <xs:element name='ListProtectedIdentitiesRepositoryContentResponse' type='tns:ListProtectedIdentitiesRepositoryContentResponseType' />
-  <xs:complexType name='ListProtectedIdentitiesRepositoryContentType'>
-   	 <xs:annotation>
-       <xs:documentation>This service does not have request elements</xs:documentation>
-     </xs:annotation>
-  </xs:complexType>
-  <xs:complexType name='ListProtectedIdentitiesRepositoryContentResponseType'>
-    <xs:sequence>
-	<xs:element name="subjectOfCareId" type="core:SubjectOfCareIdType" minOccurs="0" maxOccurs="unbounded">
+ -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:ehr:accesscontrol:ListProtectedIdentitiesRepositoryContentResponder:1" xmlns:core="urn:riv:ehr:accesscontrol:1" targetNamespace="urn:riv:ehr:accesscontrol:ListProtectedIdentitiesRepositoryContentResponder:1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xs:import schemaLocation="../../core_components/ehr_accesscontrol_1.0.xsd" namespace="urn:riv:ehr:accesscontrol:1"/>
+	<xs:element name="ListProtectedIdentitiesRepositoryContent" type="tns:ListProtectedIdentitiesRepositoryContentType"/>
+	<xs:element name="ListProtectedIdentitiesRepositoryContentResponse" type="tns:ListProtectedIdentitiesRepositoryContentResponseType"/>
+	<xs:complexType name="ListProtectedIdentitiesRepositoryContentType">
 		<xs:annotation>
-			<xs:documentation>Subject of care identities for all citizens with protected identity within Sweden, as known by the current revision of the repository</xs:documentation>
+			<xs:documentation>This service does not have request elements</xs:documentation>
 		</xs:annotation>
-	</xs:element>
-      <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
-    </xs:sequence>
-  </xs:complexType>
-
+		<xs:sequence>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ListProtectedIdentitiesRepositoryContentResponseType">
+		<xs:sequence>
+			<xs:element name="subjectOfCareId" type="core:SubjectOfCareIdType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Subject of care identities for all citizens with protected identity within Sweden, as known by the current revision of the repository</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
 </xs:schema>
