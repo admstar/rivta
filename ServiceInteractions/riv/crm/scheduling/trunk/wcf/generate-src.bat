@@ -71,6 +71,6 @@ SET SCHEMAS=%W1% %X1% %W2% %X2% %W3% %X3% %W4% %X4% %W5% %X5% %W6% %X6% %W7% %X7
 CD wcf
 ECHO Generating Service contract .Net Binding interfaces and classes for crm:scheduling Release 1.1
 ECHO The following Service Contracts are new for 1.1: GetAllCareTypes, GetAllHealthcareFacilities, GetAllPerformers
-ECHO The following Service Contracts have been updated with maintained producer backwards compatibility: GetAllTimeTypes, MakeBooking
-ECHO The following Service Contracts have not changed since 1.0: CancelBooking, GetAvailableDates, GetAvailableTimeslots, GetBookingDetails, GetCancelledAndRebooked, GetSubjectOfCareSchedule, UpdateBooking
+ECHO The following Service Contracts have been updated with maintained producer backwards compatibility: GetAllTimeTypes, MakeBooking, UpdateBooking
+ECHO The following Service Contracts have not changed since 1.0: CancelBooking, GetAvailableDates, GetAvailableTimeslots, GetBookingDetails, GetCancelledAndRebooked, GetSubjectOfCareSchedule
 ECHO I DotNetprojektet ska du ta lagga till referens till System.ServiceModel
