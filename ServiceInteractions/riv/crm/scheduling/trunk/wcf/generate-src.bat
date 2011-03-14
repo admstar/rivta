@@ -41,9 +41,6 @@ SET X4=%SCHEMADIR%\GetAvailableTimeslotsInteraction\*.xsd
 SET W5=%SCHEMADIR%\GetBookingDetailsInteraction\GetBookingDetailsInteraction_1.1_rivtabp20.wsdl
 SET X5=%SCHEMADIR%\GetBookingDetailsInteraction\*.xsd
 
-SET W6=%SCHEMADIR%\GetCancelledAndRebookedInteraction\GetCancelledAndRebookedInteraction_1.1_rivtabp20.wsdl
-SET X6=%SCHEMADIR%\GetCancelledAndRebookedInteraction\*.xsd
-
 SET W7=%SCHEMADIR%\GetSubjectOfCareScheduleInteraction\GetSubjectOfCareScheduleInteraction_1.1_rivtabp20.wsdl
 SET X7=%SCHEMADIR%\GetSubjectOfCareScheduleInteraction\*.xsd
 
@@ -64,7 +61,7 @@ SET X12=%SCHEMADIR%\GetAllPerformersInteraction\*.xsd
 
 SET X13=schemas\core_components\*.xsd
 
-SET SCHEMAS=%W1% %X1% %W2% %X2% %W3% %X3% %W4% %X4% %W5% %X5% %W6% %X6% %W7% %X7% %W8% %X8% %W9% %X9% %W10% %X10% %W11% %X11% %W12% %X12% %X13%
+SET SCHEMAS=%W1% %X1% %W2% %X2% %W3% %X3% %W4% %X4% %W5% %X5% %W7% %X7% %W8% %X8% %W9% %X9% %W10% %X10% %W11% %X11% %W12% %X12% %X13%
 
 %SVCUTIL% /language:cs %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
 
