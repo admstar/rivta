@@ -17,17 +17,18 @@
  specific language governing permissions and limitations
  under the License.
  -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:core="urn:riv:crm:scheduling:1" xmlns:tns="urn:riv:crm:scheduling:GetAvailableTimeslotsResponder:1" targetNamespace="urn:riv:crm:scheduling:GetAvailableTimeslotsResponder:1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:core="urn:riv:crm:scheduling:1" xmlns:tns="urn:riv:crm:scheduling:GetAvailableTimeslotsResponder:1"  xmlns:m1="urn:riv:crm:scheduling:GetAvailableTimeslotsResponder:1.1" targetNamespace="urn:riv:crm:scheduling:GetAvailableTimeslotsResponder:1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.1">
 <xs:annotation>
 	<xs:documentation>
 	  Beskrivning: Tjänsteschema för GetAvailableTimeslotsResponder.
 	  Revisioner: 
 		2010-04-21: Release version 1.0 johan.eltes@callistaenterprise.se.
 		2011-03-XX: Release version 1.1 johan.eltes@callistaenterprise.se.
-			- ingen förändring sedan 1.0 
+			- Nytt, obligatoriskt request-element: subject_of_care
   </xs:documentation>
 </xs:annotation>
   <xs:import namespace="urn:riv:crm:scheduling:1" schemaLocation="../../core_components/crm_scheduling_1.1.xsd" />
+  <xs:import namespace="urn:riv:crm:scheduling:GetAvailableTimeslotsResponder:1.1" schemaLocation="GetAvailableTimeslotsResponder_1.1_ext.xsd" />
   <xs:element name="GetAvailableTimeslots" type="tns:GetAvailableTimeslotsType" />
   <xs:element name="GetAvailableTimeslotsResponse" type="tns:GetAvailableTimeslotsResponseType" />
   <xs:complexType name="GetAvailableTimeslotsType">
@@ -41,6 +42,7 @@
       <xs:element name="timeTypeID" type="core:TimeTypeIDType" minOccurs="0" maxOccurs="1" />
       <xs:element name="careTypeName" type="xs:string" maxOccurs="1" minOccurs="0" />
       <xs:element name="careTypeID" type="core:CareTypeIDType" minOccurs="0" maxOccurs="1" />
+      <xs:element ref="m1:subject_of_care" minOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
