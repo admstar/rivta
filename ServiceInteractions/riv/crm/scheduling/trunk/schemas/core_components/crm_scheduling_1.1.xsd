@@ -24,7 +24,7 @@
 	  Revisioner: 
 		2010-04-21: Release version 1.0 johan.eltes@callistaenterprise.se.
 		2011-03-XX: Release version 1.1 johan.eltes@callistaenterprise.se.
-			- SubjectOfCareType: New elements: firstName, lastName. Osor change request:15075
+			- SubjectOfCareType: New elements: firstName, middleName, lastName. Osor change request:15075
 			- New structure declared: CareTypeType. Osor change request:15087	
 			- New reusable type: PerformerInfoType. 
 			- New reusable type: HealthcareFacilityInfoType		
@@ -80,6 +80,7 @@
 			<xs:element name="address" type="xs:string" minOccurs="0"/>
 			<xs:element name="coaddress" type="xs:string" minOccurs="0"/>
 			<xs:element ref="m1:firstName" minOccurs="1"/>
+			<xs:element ref="m1:middleName" minOccurs="1"/>
 			<xs:element ref="m1:lastName" minOccurs="1"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
@@ -121,7 +122,9 @@
 	<xs:complexType name="PerformerInfoType">
 		<xs:sequence>
 			<xs:element name="perfomer" type="tns:HsaIdType" minOccurs="1"/>
-			<xs:element name="performerName" type="xs:string" minOccurs="0"/>
+			<xs:element name="firstName" type="xs:string" minOccurs="1"/>
+			<xs:element name="lastName" type="xs:string" minOccurs="1"/>
+			<xs:element name="title" type="xs:string" minOccurs="0" />
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
