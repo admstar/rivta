@@ -38,7 +38,7 @@ import se.skl.rivta.itintegration.registry.v1.LogicalAddressType;
 	endpointInterface="se.skl.riv.eservicesupply.eoffering.v1.rivtabp21.GetAvailableEServicesResponderInterface", 
 	portName = "GetAvailableEServicesResponderPort", 
 	targetNamespace = "urn:riv:eservicesupply:eoffering:GetAvailableEServices:1:rivtabp21",
-	wsdlLocation = "schemas/interactions/GetAvailableEServicesInteraction_1.0_RIVTABP21.wsdl")
+	wsdlLocation = "schemas/interactions/GetAvailableEServicesInteraction/GetAvailableEServicesInteraction_1.0_RIVTABP21.wsdl")
 public class Responder implements GetAvailableEServicesResponderInterface {
 
 	static private final Logger logger = LoggerFactory.getLogger(Util.class);
