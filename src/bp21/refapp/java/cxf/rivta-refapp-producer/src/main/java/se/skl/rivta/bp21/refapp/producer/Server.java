@@ -24,7 +24,7 @@ import javax.xml.ws.Endpoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.skl.rivta.bp21.refapp.producer.eservicessupply.eoffering.Responder;
+import se.skl.rivta.bp21.refapp.producer.crm.scheduling.Responder;
 import se.skl.rivta.bp21.refapp.util.Util;
 
 public class Server {
