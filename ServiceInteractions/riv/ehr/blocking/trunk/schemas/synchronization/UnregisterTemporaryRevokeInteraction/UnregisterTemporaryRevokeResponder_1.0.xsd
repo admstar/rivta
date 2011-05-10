@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' 
+		   xmlns:tns='urn:ehr:blocking:synchronization:UnregisterTemporaryRevokeResponder:1' 
+		   xmlns:core='urn:riv:ehr:blocking:common:1' 
+		   targetNamespace='urn:ehr:blocking:synchronization:UnregisterTemporaryRevokeResponder:1' 
+		   elementFormDefault='qualified' 
+		   attributeFormDefault='unqualified' 
+		   version='1.0'>
+		   
+  <xs:import schemaLocation='../../common/BlocksCommon_1.0.xsd' namespace='urn:riv:ehr:blocking:common:1' />
+  
+  <xs:element name='UnregisterTemporaryRevoke' type='tns:UnregisterTemporaryRevokeRequestType'/>
+  <xs:element name='UnregisterTemporaryRevokeResponse' type='tns:UnregisterTemporaryRevokeResponseType'/>
+  
+	<xs:complexType name="UnregisterTemporaryRevokeRequestType">
+		<xs:sequence>
+			<xs:element name="TemporaryRevokeId" type="core:UuidType"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="UnregisterTemporaryRevokeResponseType">
+		<xs:sequence>
+			<xs:element name="Result" type="core:ResultType"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>	
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' 
+		   xmlns:tns='urn:ehr:blocking:synchronization:RegisterBlockResponder:1' 
+		   xmlns:core='urn:riv:ehr:blocking:common:1' 
+		   targetNamespace='urn:ehr:blocking:synchronization:RegisterBlockResponder:1' 
+		   elementFormDefault='qualified' 
+		   attributeFormDefault='unqualified' 
+		   version='1.0'>
+		   
+  <xs:import schemaLocation='../../common/BlocksCommon_1.0.xsd' namespace='urn:riv:ehr:blocking:common:1' />
+  
+	<xs:element name='RegisterBlock' type='tns:RegisterBlockRequestType'/>
+	<xs:element name='RegisterBlockResponse' type='tns:RegisterBlockResponseType'/>
+	
+	<xs:complexType name='RegisterBlockRequestType'>
+		<xs:annotation>
+			<xs:documentation xml:lang='en'> A block registration that adds a new, basic block.
+				Note that optional TemporaryRevokeRegistration(s) can be sent as well, if the
+				sender wishes to register a block grouped with its temporary revokes, all at once.
+				
+				CURRENTLY VALID INFORMATIONTYPE CODES:
+				    dia
+   					pad
+    				fun
+				    vot
+				    vko
+				    lko
+				    lkf
+				    lkm
+				    upp
+				    und
+				    vbe
+				    vpo
+				    voo
+				    pat
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name='BlockId' type='core:UuidType'/>
+			<xs:element name='BlockType' type='core:BlockTypeType'/>
+			<xs:element name='SocialSecurityNumber' type='core:SocialSecurityNumberType'/>
+			<xs:element name='InformationStartDate' type='xs:dateTime' minOccurs='0'/>
+			<xs:element name='InformationEndDate' type='xs:dateTime' minOccurs='0'/>
+			<xs:element name='InformationCareUnitHsaId' type='xs:string' minOccurs='0'/>
+			<xs:element name='InformationCareProviderHsaId' type='xs:string'/>
+			<xs:element name='InformationTypes' type='xs:string' minOccurs='0' maxOccurs='unbounded'/>
+			<xs:element name='TemporaryRevokeRegistration' type='core:TemporaryRevokeRegistrationType' minOccurs='0' 
+				maxOccurs='unbounded'/>
+			<xs:any maxOccurs='unbounded' minOccurs='0' namespace='##other' processContents='lax'/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name='RegisterBlockResponseType'>
+		<xs:sequence>
+			<xs:element name="Result" type="core:ResultType"/>
+			<xs:any maxOccurs='unbounded' minOccurs='0' namespace='##other' processContents='lax'/>
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

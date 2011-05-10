@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' 
+		   xmlns:tns='urn:ehr:blocking:administration:GetExtendedBlocksForPatientResponder:1' 
+		   xmlns:core='urn:riv:ehr:blocking:common:1' 
+		   targetNamespace='urn:ehr:blocking:administration:GetExtendedBlocksForPatientResponder:1' 
+		   elementFormDefault='qualified' 
+		   attributeFormDefault='unqualified' 
+		   version='1.0'>
+		   
+  <xs:import schemaLocation='../../common/BlocksCommon_1.0.xsd' namespace='urn:riv:ehr:blocking:common:1' />
+
+  <xs:element name='GetExtendedBlocksForPatient' type='tns:GetExtendedBlocksForPatientRequestType'/>
+  <xs:element name='GetExtendedBlocksForPatientResponse' type='tns:GetExtendedBlocksForPatientResponseType'/>
+	
+  <xs:complexType name="GetExtendedBlocksForPatientRequestType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en"> Get all blocks for a given patient, including inactive ones.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SocialSecurityNumber" type="core:SocialSecurityNumberType"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="GetExtendedBlocksForPatientResponseType">
+		<xs:sequence>
+			<xs:element name="Blocks" type="tns:BlockType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="BlockType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en"> The local representation of a block.
+				The block may be a deleted one, revoked one or have temp. revokes attached to it.
+				If LocallyCreated is false, the block origins from the national block service.
+				A national wide block lacks details regarding the actors and registration dates.
+				</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="BlockId" type="core:UuidType"/>
+			<xs:element name="BlockType" type="core:BlockTypeType"/>
+			<xs:element name="SocialSecurityNumber" type="core:SocialSecurityNumberType"/>
+			<xs:element name="InformationStartDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="InformationEndDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="InformationCareUnitHsaId" type="xs:string" minOccurs="0"/>
+			<xs:element name="InformationCareProviderHsaId" type="xs:string"/>
+			<xs:element name="OwnerId" type="xs:string"/>
+			<xs:element name="InformationTypes" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="LocallyCreated" type="xs:boolean"/>
+			<xs:element name="RequestedBy" type="core:ActorType" minOccurs="0"/>
+			<xs:element name="RequestDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="RegisteredBy" type="core:ActorType" minOccurs="0"/>
+			<xs:element name="RegistrationDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Revoked" type="tns:RevokeType" minOccurs="0"/>
+			<xs:element name="Deleted" type="tns:DeleteType" minOccurs="0"/>
+			<xs:element name="TempRevokes" type="tns:TemporaryRevokeType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+  </xs:complexType>
+	
+  <xs:complexType name="TemporaryRevokeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en"> The local representation of a temporarily
+				revoked block. The revoke always applies for an existing block. The block becomes
+				active again when the end date expires. A temporary revoke applies for a given
+				employee on a care unit, or all employees within a care unit. If care unit alone is given,
+				the revoke applies unit wide. If employee is given, it becomes personal for that
+				employee on that unit. The revocation reason info is an optional, extra free-text
+				describing details regarding the revoke.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TemporaryRevokeId" type="core:UuidType"/>
+			<xs:element name="EndDate" type="xs:dateTime"/>
+			<xs:element name="RevokedForCareUnitHsaId" type="xs:string"/>
+			<xs:element name="RevokedForEmployeeHsaId" type="xs:string" minOccurs="0"/>
+			<xs:element name="OwnerId" type="xs:string"/>
+			<xs:element name="RequestedBy" type="core:ActorType" minOccurs="0"/>
+			<xs:element name="RevokedBy" type="core:ActorType" minOccurs="0"/>
+			<xs:element name="RevocationDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="RevocationReason" type="core:TemporaryRevocationReasonType" minOccurs="0"/>
+			<xs:element name="RevocationReasonInfo" type="xs:string" minOccurs="0"/>
+			<xs:element name="Cancelled" type="tns:CancellationType" minOccurs="0"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="RevokeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en"> Information describing a permanently revoked block.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RequestedBy" type="core:ActorType" minOccurs="0"/>
+			<xs:element name="RevokedBy" type="core:ActorType" minOccurs="0"/>
+			<xs:element name="RevocationDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="DeleteType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en"> Information describing a permanently deleted block.
+			    A deletion marks that a block is deleted due to the fact that it was never intended to
+				exist in the first place. This typically origins from an erroneous registration.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RequestedBy" type="core:ActorType" minOccurs="0"/>
+			<xs:element name="DeletedBy" type="core:ActorType" minOccurs="0"/>
+			<xs:element name="DeletionDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="CancellationType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en"> Information describing a permanently cancelled temporary revoke.
+			    A revoke cancellation makes the former temporary revoke to become obsolete.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RequestedBy" type="core:ActorType" minOccurs="0"/>
+			<xs:element name="CancelledBy" type="core:ActorType" minOccurs="0"/>
+			<xs:element name="CancellationDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+  </xs:complexType>
+  
+</xs:schema>

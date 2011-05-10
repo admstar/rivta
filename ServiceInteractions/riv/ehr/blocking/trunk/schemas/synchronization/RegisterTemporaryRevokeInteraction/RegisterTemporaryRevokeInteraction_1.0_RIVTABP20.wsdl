@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>	
+<wsdl:definitions name='RegisterTemporaryRevokeInteraction' 
+	  xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' 
+	  xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' 
+	  xmlns:xs='http://www.w3.org/2001/XMLSchema' 
+	  xmlns:wsa='http://www.w3.org/2005/08/addressing' 
+	  xmlns:tjsr='urn:ehr:blocking:synchronization:RegisterTemporaryRevokeResponder:1' 
+	  xmlns:tjsi='urn:ehr:blocking:synchronization:RegisterTemporaryRevokeInitiator:1' 
+	  xmlns:tns='urn:ehr:blocking:synchronization:RegisterTemporaryRevoke:1:rivtabp20' 
+	  targetNamespace='urn:ehr:blocking:synchronization:RegisterTemporaryRevoke:1:rivtabp20'>
+	  
+  <xs:annotation>
+    <xs:documentation>
+			 Tjänsteinteraktionens namn: RegisterTemporaryRevokeInteraction
+			 Beskrivning: Registrera grundläggande tillfällig hävning av spärr.
+			 Revisioner: 2011-05-06: 1.0-beta
+			 Tjänstedomän: blocking:synchronization
+			 Tjänsteinteraktionstyp: Fråga-Svar
+			 WS-profil: RIVTABP20
+			 Förvaltas av: Inera AB
+	</xs:documentation>
+  </xs:annotation>
+  
+  <wsdl:types>
+    <xs:schema targetNamespace='urn:ehr:blocking:synchronization:RegisterTemporaryRevoke:1:rivtabp20'>
+      <xs:import schemaLocation='RegisterTemporaryRevokeResponder_1.0.xsd' namespace='urn:ehr:blocking:synchronization:RegisterTemporaryRevokeResponder:1' />
+      <xs:import schemaLocation='../../common/ws-addressing-1.0.xsd' namespace='http://www.w3.org/2005/08/addressing' />
+    </xs:schema>
+  </wsdl:types>
+  
+  <wsdl:message name='RegisterTemporaryRevokeRequest'>
+    <wsdl:part name='LogicalAddress' element='wsa:To'>
+      <xs:annotation>
+        <xs:documentation> Se tjänstedokumentationen för mer information om detta </xs:documentation>
+      </xs:annotation>
+    </wsdl:part>
+    <wsdl:part name='parameters' element='tjsr:RegisterTemporaryRevoke' />
+  </wsdl:message>
+  
+  <wsdl:message name='RegisterTemporaryRevokeResponse'>
+    <wsdl:part name='parameters' element='tjsr:RegisterTemporaryRevokeResponse' />
+  </wsdl:message>
+  
+  <wsdl:portType name='RegisterTemporaryRevokeResponderInterface'>
+    <wsdl:operation name='RegisterTemporaryRevoke'>
+      <wsdl:input message='tns:RegisterTemporaryRevokeRequest' />
+      <wsdl:output message='tns:RegisterTemporaryRevokeResponse' />
+    </wsdl:operation>
+  </wsdl:portType>
+  
+  <wsdl:binding name='RegisterTemporaryRevokeResponderBinding' type='tns:RegisterTemporaryRevokeResponderInterface'>
+    <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
+    <wsdl:operation name='RegisterTemporaryRevoke'>
+      <soap:operation soapAction='urn:ehr:blocking:synchronization:RegisterTemporaryRevokeResponder:1:RegisterTemporaryRevoke' style='document' />
+      <wsdl:input>
+        <soap:header use='literal' message='tns:RegisterTemporaryRevokeRequest' part='LogicalAddress' />
+        <soap:body use='literal' parts='parameters' />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use='literal' />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name='RegisterTemporaryRevokeResponderService'>
+    <wsdl:port name='RegisterTemporaryRevokeResponderPort' binding='tns:RegisterTemporaryRevokeResponderBinding'>
+      <soap:address location='http://tempuri.org' />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
