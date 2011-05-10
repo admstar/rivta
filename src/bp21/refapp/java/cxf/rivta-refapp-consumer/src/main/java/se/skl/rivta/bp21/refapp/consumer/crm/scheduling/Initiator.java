@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package se.skl.rivta.bp21.refapp.consumer.eservicessupply.eoffering;
+package se.skl.rivta.bp21.refapp.consumer.crm.scheduling;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -25,20 +25,18 @@ import java.net.URL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.skl.riv.eservicesupply.eoffering.v1.AvailableEServicesType;
-import se.skl.riv.eservicesupply.eoffering.v1.GetAvailableEServicesResponseType;
-import se.skl.riv.eservicesupply.eoffering.v1.GetAvailableEServicesType;
-import se.skl.riv.eservicesupply.eoffering.v1.rivtabp21.GetAvailableEServicesResponderInterface;
-import se.skl.riv.eservicesupply.eoffering.v1.rivtabp21.GetAvailableEServicesResponderService;
+import se.skl.riv.crm.scheduling.v1.MakeBookingResponseType;
+import se.skl.riv.crm.scheduling.v1.MakeBookingType;
+import se.skl.riv.crm.scheduling.v1.rivtabp21.MakeBookingResponderInterface;
+import se.skl.riv.crm.scheduling.v1.rivtabp21.MakeBookingResponderService;
 import se.skl.rivta.bp21.refapp.util.Util;
-import se.skl.rivta.itintegration.registry.v1.LogicalAddressType;
 
 public class Initiator {
 
 	static private final Logger logger = LoggerFactory.getLogger(Util.class);
 	static private final String LOGICAL_ADDRESS = "SE2321000016-3MKB"; // alternative hsaid: "cn=server3,ou=Division 1,ou=Lasarettet i Ystad,o=Region Skåne,l=Skåne län c=SE"		
 	
-	private GetAvailableEServicesResponderInterface service = null;
+	private MakeBookingResponderInterface service = null;
 
 	public static void main(final String[] args) {
 		
@@ -58,26 +56,19 @@ public class Initiator {
 		logger.info("Calling producer at address: " + address);
 		
 		final Initiator initiator = new Initiator(address);
-		final GetAvailableEServicesResponseType responseType = initiator.callGetAvailableEServices(LOGICAL_ADDRESS);
+		final MakeBookingResponseType responseType = initiator.callGetAvailableEServices(LOGICAL_ADDRESS);
 		
 		logger.info("Producer answered.");
-		
-		final AvailableEServicesType eService = responseType.getAvailableEServices().get(0);
-		logger.info("Healthcare facility id: " + eService.getHealthcareFacility().getHealthcareFacility());
-		logger.info("Healthcare facility: " + eService.getHealthcareFacility().getHealthcareFacilityName());
-		
-		logger.info("---");
-		
-		logger.info("E-tjänst namn: " + eService.getEservice().get(0).getCommonName());
-		logger.info("E-tjänst beskrivning: " + eService.getEservice().get(0).getDescription());
-		logger.info("E-tjänst url: " + eService.getEservice().get(0).getUrl());
+		logger.info("Booking id: " + responseType.getBookingId());
+		logger.info("Result code: " + responseType.getResultCode());
+		logger.info("Result text: " + responseType.getResultText());
 	}
 
 	public Initiator(String address) {
 		// Setup ssl info for the initial ?wsdl lookup...
 		setupSsl();
 
-		service = new GetAvailableEServicesResponderService(createEndpointUrlFromServiceAddress(address)).getGetAvailableEServicesResponderPort();
+		service = new MakeBookingResponderService(createEndpointUrlFromServiceAddress(address)).getMakeBookingResponderPort();
 	}
 
 	/**
@@ -90,10 +81,8 @@ public class Initiator {
 		System.setProperty("javax.net.ssl.trustStorePassword", "password");
 	}
 
-	public GetAvailableEServicesResponseType callGetAvailableEServices(String logicalAddresss) {
-		
-		final LogicalAddressType logicalAddressHeader = createLogicalAddressHeader(logicalAddresss);
-		final GetAvailableEServicesResponseType response = service.getAvailableEServices(logicalAddressHeader, new GetAvailableEServicesType());
+	public MakeBookingResponseType callGetAvailableEServices(String logicalAddresss) {
+		final MakeBookingResponseType response = service.makeBooking("1234561234", new MakeBookingType());
 		return response;
 	}
 
@@ -103,11 +92,5 @@ public class Initiator {
 		} catch (MalformedURLException e) {
 			throw new RuntimeException("Malformed URL Exception: " + e.getMessage());
 		}
-	}
-
-	private LogicalAddressType createLogicalAddressHeader(String logicalAddresss) {
-		LogicalAddressType logicalAddressHeader = new LogicalAddressType();
-		logicalAddressHeader.setTo(logicalAddresss);
-		return logicalAddressHeader;
 	}
 }
