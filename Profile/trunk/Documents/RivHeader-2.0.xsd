@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="urn:riv:header:v2" 
+	targetNamespace="urn:riv:header:v2" 
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified" 
+	version="2.0">
+
+	<xs:annotation>
+		<xs:documentation>
+		
+			RivHeader v2.0
+			
+			Description: 
+				The main purpose of the RivHeader v2.0 is to support:
+			    - The Service Platform (Tjänsteplattformen)
+			    - RIV TA Basic Profile v2.0
+
+				For more details see http://rivta.forge.osor.eu		
+			 
+			 
+			Sample usage of RivHeader in a sample WSDL service description:
+
+				<![CDATA[
+				<wsdl:definitions ... 
+					targetNamespace="urn:sampleService:v1" 
+					xmlns:tns="urn:sampleService:v1" 
+					xmlns:rivh="urn:riv:header:v2">
+				
+					<wsdl:types>
+						<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified">
+							...
+							<xsd:import schemaLocation="http://rivta.forge.osor.eu/schemas/RivHeader-2.0.xsd" namespace="urn:riv:header:v2"/>
+						</xsd:schema>
+					</wsdl:types>
+				
+					<wsdl:message name="sampleOperation">
+						<wsdl:part element="rivh:RivHeader" name="header"/>
+						<wsdl:part element="tns:sampleOperationRequest" name="parameters"/>
+					</wsdl:message>
+					<wsdl:message name="sampleOperationResponse">
+						<wsdl:part element="tns:sampleOperationResponse" name="parameters"/>
+					</wsdl:message>
+									
+					<wsdl:portType name="SampleInterface">
+						<wsdl:operation name="sampleOperation">
+							<wsdl:input message="tns:sampleOperation"/>
+							<wsdl:output message="tns:sampleOperationResponse"/>
+						</wsdl:operation>
+					</wsdl:portType>
+					
+					<wsdl:binding name="SampleBinding" type="tns:SampleInterface">
+						<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+				
+						<wsdl:operation name="sampleOperation">
+							<soap:operation soapAction="urn:sampleService:v1:sampleOperation" style="document" />
+							<wsdl:input>
+						        <soap:header message="tns:sampleOperation" part="header" use="literal"/>				
+								<soap:body parts="parameters" use="literal" />
+							</wsdl:input>
+							<wsdl:output>
+								<soap:body use="literal" />
+							</wsdl:output>
+						</wsdl:operation>
+				
+					</wsdl:binding>
+				
+				</wsdl:definitions>
+				]]>
+
+
+			Sample XML payload based on the above WSDL:
+					
+				<![CDATA[
+				<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+					<soap:Header>
+						<ns1:RivHeader xmlns:ns1="urn:riv:header:v2" id="Sample Security Id">
+							<ns1:SenderId>Sample Sender HSAID</ns1:SenderId>
+							<ns1:ReceiverId>Sample Receiver HSAID</ns1:ReceiverId>
+						</ns1:RivHeader>
+					</soap:Header>
+					<soap:Body>
+						...
+					</soap:Body>
+				</soap:Envelope>
+				]]>
+		
+		</xs:documentation>
+	</xs:annotation>
+	<xs:element name="RivHeader" type="tns:RivHeaderType"/>
+	<xs:complexType name="RivHeaderType">
+		<xs:sequence>
+			<xs:element name="SenderId"   type="tns:SenderIdType" minOccurs="0"/>
+			<xs:element name="ReceiverId" type="tns:ReceiverIdType"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="tns:SecurityIdType" use="optional"/>
+	</xs:complexType>
+
+	<xs:annotation>
+		<xs:documentation>	
+			SenderIdType: HSA-id that identifies the Service Consumer to the ServiceProvider. May be used by an intermediary to verify invocation privilege of the logically addressed endpoint (see ReceiverIdType).
+			A SenderId usually refers to the deployment of a service consumer instance, which is usually a server identified by a dns. This field is optional when the service provider will obtain this value through a security token (like a client certificate).		
+		</xs:documentation>
+	</xs:annotation>	
+	<xs:complexType name="SenderIdType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string"/>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:annotation>
+		<xs:documentation>
+			ReceiverIdType - Indentifies the organization for which the payload is intended. This is the business address of the message.
+			A ReceiverId and the QN of the payload element of a message form the logical identify of the ultimate endpoint. 		.
+		</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="ReceiverIdType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	
+	<xs:annotation>
+		<xs:documentation>
+			SecurityIdType - Id for Digital Signing
+		</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="SecurityIdType">
+ 		<xs:restriction base="xs:ID"/>
+	</xs:simpleType>
+</xs:schema>
