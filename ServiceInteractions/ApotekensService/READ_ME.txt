@@ -1,0 +1,5 @@
+I denna katalog ligger zip-arkiv med original-kontrakt från Apotekens Service AB. Dessa följer endast delvis RIVTA. Därför ska de inte användas av vårdens aktörer. Istället förvaltar Inera en egen version som är anpassade för RIVTA. Det är dessa som publiceras på nationella tjänsteplattformen. 
+
+Eftersom gränssnittet som publiceras på NTjP därmed skiljer sig från gränssnittet som Apotekens Service publicerar (payload skiljer sig inte - bara kuverteringsinformation / headers), sker en tjänsteväxling mellan vårdens version och Apotekens Service version i nationella tjänsteplattformen. Det betyder att frågemeddelanden paketeras om på vägen mellan journalsystemet till Apotekens Service. Svarsmeddelandet transporteras däremot i original tillbaka till från Apotekens Service tjänst till anropande system.
+
+För att få konveteringen av själva kontraktsfilerna hanterbar, har ett Groovy-skript utvecklats. Detta skript finns också i denna katalogen. De färdiga RIVTA-kontrakten (som skapats genom att köra groovy-skriptet) finns katalogen ../riv/se_apotekensservice/
