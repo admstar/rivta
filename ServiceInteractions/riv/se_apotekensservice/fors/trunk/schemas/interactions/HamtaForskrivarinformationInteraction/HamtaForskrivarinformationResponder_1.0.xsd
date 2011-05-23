@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="urn:riv:se.apotekensservice:fors:HamtaForskrivarinformationResponder:1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fors="urn:riv:se.apotekensservice:fors:1" targetNamespace="urn:riv:se.apotekensservice:fors:HamtaForskrivarinformationResponder:1" attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0">
+  <xs:import schemaLocation="../../core_components/se.apotekensservice_fors_1.0.xsd" namespace="urn:riv:se.apotekensservice:fors:1"/>
+  <xs:element name="HamtaForskrivarinformation" type="HamtaForskrivarinformationRequestType"/>
+  <xs:element name="HamtaForskrivarinformationResponse" type="HamtaForskrivarinformationResponseType"/>
+  <xs:element name="ApplicationException" type="fors:ApplicationException"/>
+  <xs:element name="SystemException" type="fors:SystemException"/>
+  <xs:complexType name="HamtaForskrivarinformationRequestType">
+    <xs:sequence>
+      <xs:element nillable="false" name="forskrivarIdLista" maxOccurs="unbounded" type="fors:ForskrivarIdRequest">
+        <xs:annotation>
+          <xs:documentation>Lista av forskrivarId'n</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HamtaForskrivarinformationResponseType">
+    <xs:sequence>
+      <xs:element name="forskrivarinformationLista" maxOccurs="unbounded" type="fors:ForskrivarInformationResponse" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Lista av forskrivarinfo</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

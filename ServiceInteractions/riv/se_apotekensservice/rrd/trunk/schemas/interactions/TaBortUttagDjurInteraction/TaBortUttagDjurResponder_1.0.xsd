@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:rrd="urn:riv:se.apotekensservice:rrd:1" xmlns="urn:riv:se.apotekensservice:rrd:TaBortUttagDjurResponder:1" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:riv:se.apotekensservice:rrd:TaBortUttagDjurResponder:1" attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0">
+  <xs:import schemaLocation="../../core_components/se.apotekensservice_rrd_1.0.xsd" namespace="urn:riv:se.apotekensservice:rrd:1"/>
+  <xs:element name="TaBortUttagDjur" type="TaBortUttagDjurRequestType"/>
+  <xs:element name="TaBortUttagDjurResponse" type="TaBortUttagDjurResponseType"/>
+  <xs:element name="ApplicationException" type="rrd:ApplicationException"/>
+  <xs:element name="SystemException" type="rrd:SystemException"/>
+  <xs:complexType name="TaBortUttagDjurRequestType">
+    <xs:sequence>
+      <xs:element nillable="false" name="expeditionsid" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Expeditionens unika id för spårbarhet.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="klientinformation" type="rrd:KlientinformationRequest">
+        <xs:annotation>
+          <xs:documentation>Objekt innehållande information om anropande klientsystem.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ursprungligtExpeditionsid" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Expeditionens ursprungliga unika id för spårbarhet.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="uttagIds" maxOccurs="unbounded" type="xs:long">
+        <xs:annotation>
+          <xs:documentation>Lista med UttagsIdn.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TaBortUttagDjurResponseType">
+    <xs:sequence>
+      <xs:element nillable="false" name="accepterat" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Resultat, dvs ifall backningen av uttaget har skett</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="receptsamlingar" maxOccurs="unbounded" type="rrd:ReceptsamlingResponse">
+        <xs:annotation>
+          <xs:documentation>Lista med de receptsamlingar som de påverkade receptvalen tillhör.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

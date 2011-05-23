@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="urn:riv:se.apotekensservice:gt:1"
+           targetNamespace="urn:riv:se.apotekensservice:gt:1"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="1.0">
+
+            
+    <xs:annotation>
+        <xs:documentation>
+            Beskrivning: Meddelandetyper som är gemensamma för gt.
+            Revisioner: 2011-04-05, version 1.0
+        </xs:documentation>
+    </xs:annotation>
+
+    
+                
+        <xs:complexType name="AttributRequest">
+            <xs:sequence>                
+                <xs:element name="nyckel" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Nyckel.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="varde" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Värde.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+                
+        <xs:complexType name="AttributResponse">
+            <xs:sequence>                
+                <xs:element name="nyckel" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Nyckel.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="varde" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Värde.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+    
+                
+        <xs:complexType name="KlientinformationRequest">
+            <xs:sequence>                
+                <xs:element name="anvandare" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Unikt användarid i anropande system.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="session" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Sessionens id i anropande system.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="system" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>GLN-kod för anropande system.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+                
+        <xs:complexType name="KlientinformationResponse">
+            <xs:sequence>                
+                <xs:element name="anvandare" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Unikt användarid i anropande system.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="session" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Sessionens id i anropande system.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="system" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>GLN-kod för anropande system.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+    
+    <xs:complexType name="ApplicationException">
+        <xs:annotation>
+            <xs:documentation>Applikationsfel</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="code" type="xs:string"/>
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SystemException">
+        <xs:annotation>
+            <xs:documentation>Systemfel</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="code" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="char">
+        <xs:restriction base="xs:string">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

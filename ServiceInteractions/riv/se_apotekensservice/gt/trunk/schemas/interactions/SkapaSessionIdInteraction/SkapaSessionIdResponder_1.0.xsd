@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="urn:riv:se.apotekensservice:gt:SkapaSessionIdResponder:1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:gt="urn:riv:se.apotekensservice:gt:1" targetNamespace="urn:riv:se.apotekensservice:gt:SkapaSessionIdResponder:1" attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0">
+  <xs:import schemaLocation="../../core_components/se.apotekensservice_gt_1.0.xsd" namespace="urn:riv:se.apotekensservice:gt:1"/>
+  <xs:element name="SkapaSessionId" type="SkapaSessionIdRequestType"/>
+  <xs:element name="SkapaSessionIdResponse" type="SkapaSessionIdResponseType"/>
+  <xs:element name="ApplicationException" type="gt:ApplicationException"/>
+  <xs:element name="SystemException" type="gt:SystemException"/>
+  <xs:complexType name="SkapaSessionIdRequestType">
+    <xs:sequence>
+      <xs:element name="attributLista" maxOccurs="unbounded" type="gt:AttributRequest" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Attribut att spara utöver klientinformation med sessionsId.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="klientinformation" type="gt:KlientinformationRequest">
+        <xs:annotation>
+          <xs:documentation>Information om klienten som anropar tjänsten.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SkapaSessionIdResponseType">
+    <xs:sequence>
+      <xs:element nillable="false" name="sessionId" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>SessionId.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

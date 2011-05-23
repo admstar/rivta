@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:rrd="urn:riv:se.apotekensservice:rrd:1" xmlns="urn:riv:se.apotekensservice:rrd:HamtaReceptFodDatDjurResponder:1" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:riv:se.apotekensservice:rrd:HamtaReceptFodDatDjurResponder:1" attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0">
+  <xs:import schemaLocation="../../core_components/se.apotekensservice_rrd_1.0.xsd" namespace="urn:riv:se.apotekensservice:rrd:1"/>
+  <xs:element name="HamtaReceptFodDatDjur" type="HamtaReceptFodDatDjurRequestType"/>
+  <xs:element name="HamtaReceptFodDatDjurResponse" type="HamtaReceptFodDatDjurResponseType"/>
+  <xs:element name="ApplicationException" type="rrd:ApplicationException"/>
+  <xs:element name="SystemException" type="rrd:SystemException"/>
+  <xs:complexType name="HamtaReceptFodDatDjurRequestType">
+    <xs:sequence>
+      <xs:element nillable="false" name="fodelsedatum" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Födelsedatum för den person vars recept ska läsas.
+
+Formatet är: YYYYMMDD</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="klientinformation" type="rrd:KlientinformationRequest">
+        <xs:annotation>
+          <xs:documentation>Objekt innehållande information om anropande klientsystem.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="receptvalIdLista" maxOccurs="unbounded" type="xs:long">
+        <xs:annotation>
+          <xs:documentation>Lista med receptvalidn för de recept som skall hämtas. Om något receptval
+i listan tillhör en annan kund eller är adresserade till ett annat system
+än anropande system så returneras inte dessa recept.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HamtaReceptFodDatDjurResponseType">
+    <xs:sequence>
+      <xs:element nillable="false" name="receptInformationLista" maxOccurs="unbounded" type="rrd:ReceptInformationResponse">
+        <xs:annotation>
+          <xs:documentation>Lista med receptinformation. Varje objekt innehåller en receptsamling
+samt eventuell information om förskriven vara, arbetsplats och
+förskrivare. Tillhör flera efterfrågade receptval samma receptsamling så
+returneras de i ett objekt i listan.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

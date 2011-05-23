@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:fota="urn:riv:se.apotekensservice:fota:1" xmlns="urn:riv:se.apotekensservice:fota:HamtaDagAvstamningResponder:1" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:riv:se.apotekensservice:fota:HamtaDagAvstamningResponder:1" attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0">
+  <xs:import schemaLocation="../../core_components/se.apotekensservice_fota_1.0.xsd" namespace="urn:riv:se.apotekensservice:fota:1"/>
+  <xs:element name="HamtaDagAvstamning" type="HamtaDagAvstamningRequestType"/>
+  <xs:element name="HamtaDagAvstamningResponse" type="HamtaDagAvstamningResponseType"/>
+  <xs:element name="ApplicationException" type="fota:ApplicationException"/>
+  <xs:element name="SystemException" type="fota:SystemException"/>
+  <xs:complexType name="HamtaDagAvstamningRequestType">
+    <xs:sequence>
+      <xs:element nillable="false" name="fakturaPeriod" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Fakturaperiod, anges på formen ÅÅÅÅMM.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="orgNr" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Aktörens organisationsnummer.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HamtaDagAvstamningResponseType">
+    <xs:sequence>
+      <xs:element nillable="false" name="ackAntalReceptOrderRader" type="xs:double">
+        <xs:annotation>
+          <xs:documentation>Det ackumulerade antalet receptorderrader under perioden.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="ackFormansBelopp" type="xs:double">
+        <xs:annotation>
+          <xs:documentation>Det ackumulerade förmånsbeloppet under perioden.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="ackMomsBelopp" type="xs:double">
+        <xs:annotation>
+          <xs:documentation>Det ackumulerade momsbeloppet under perioden.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="aktorsGrupp" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Aktörsgruppidentitet.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="dagar" maxOccurs="unbounded" type="fota:DagAvstamningSummaResponse">
+        <xs:annotation>
+          <xs:documentation>Lista med dagavstämningar under perioden.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="fakturaPeriod" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Fakturaperiod, anges på formen ÅÅÅÅMM.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="orgNr" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Aktörens organisationsnummer.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="stangd" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Anger om fakturaperioden är stängd</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

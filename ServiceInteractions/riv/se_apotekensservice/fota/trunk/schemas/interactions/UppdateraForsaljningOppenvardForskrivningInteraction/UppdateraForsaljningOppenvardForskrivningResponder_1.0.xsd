@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:fota="urn:riv:se.apotekensservice:fota:1" xmlns="urn:riv:se.apotekensservice:fota:UppdateraForsaljningOppenvardForskrivningResponder:1" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:riv:se.apotekensservice:fota:UppdateraForsaljningOppenvardForskrivningResponder:1" attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0">
+  <xs:import schemaLocation="../../core_components/se.apotekensservice_fota_1.0.xsd" namespace="urn:riv:se.apotekensservice:fota:1"/>
+  <xs:element name="UppdateraForsaljningOppenvardForskrivning" type="UppdateraForsaljningOppenvardForskrivningRequestType"/>
+  <xs:element name="UppdateraForsaljningOppenvardForskrivningResponse" type="UppdateraForsaljningOppenvardForskrivningResponseType"/>
+  <xs:element name="ApplicationException" type="fota:ApplicationException"/>
+  <xs:element name="SystemException" type="fota:SystemException"/>
+  <xs:complexType name="UppdateraForsaljningOppenvardForskrivningRequestType">
+    <xs:sequence>
+      <xs:element name="aktorExpeditionsId" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Apoteksaktörs expeditions-id, för spårbarhet
+Parametern är obligatorisk utom för förmånstyp Z.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="expeditionsId" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Internt expeditions-id, för spårbarhet</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="expoButiksId" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>För bakåtkompabilitet till import från fil. Onlinetjänsten använder inte denna
+parameter.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="expoOrgNr" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Organisationsnummer för apoteksaktör</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="forsamling" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Församling där kunden är folkbokförd.
+Parametern är obligatorisk med personnummer.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ingaendeEgenavgift" type="xs:double" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ingående ackumulerad egenavgift för patienten inför  aktuell receptexpedition</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="klientinformation" type="fota:KlientinformationRequest">
+        <xs:annotation>
+          <xs:documentation>Objekt innehållande information om anropande klientsystem.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="kommun" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Kommun där kunden är folkbokförd
+Parametern är obligatorisk med personnummer.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="lan" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Län där kunden är folkbokförd
+Parametern är obligatorisk med personnummer.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="omradesKod" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Extra geografisk indelning som nyttjas av flera landsting</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="periodStartDatum" type="xs:dateTime" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Startdatum för innevarande högkostnadsperiod
+Obligatorisk parameter för förmånstyp R.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="personNummer" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Personnummer för kunden</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="rader" maxOccurs="unbounded" type="fota:OppenvardForskrivningRadRequest">
+        <xs:annotation>
+          <xs:documentation>Lista med rader.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ursprungExpeditionsId" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ursprungligt internt expeditions-id, för spårbarhet vid återköp/kreditering
+Parametern är obligatorisk för förmånstyp Z.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="useVaruId" type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>För bakåtkompabilitet till import från fil. Onlinetjänsten använder och validerar
+varuNr om inte annat anges.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UppdateraForsaljningOppenvardForskrivningResponseType">
+    <xs:sequence>
+      <xs:element name="fel" maxOccurs="unbounded" type="fota:ValideringsResultatResponse" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Lista med fel från valideringen.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="varningar" maxOccurs="unbounded" type="fota:ValideringsResultatResponse" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Lista med varningar från valideringen.
+För bakåtkompabilitet till import från fil. Onlinetjänsten använder inte denna
+parameter.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

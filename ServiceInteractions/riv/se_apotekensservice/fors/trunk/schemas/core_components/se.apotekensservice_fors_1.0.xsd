@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="urn:riv:se.apotekensservice:fors:1"
+           targetNamespace="urn:riv:se.apotekensservice:fors:1"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="1.0">
+
+            
+    <xs:annotation>
+        <xs:documentation>
+            Beskrivning: Meddelandetyper som är gemensamma för fors.
+            Revisioner: 2011-04-05, version 1.0
+        </xs:documentation>
+    </xs:annotation>
+
+    
+                
+        <xs:complexType name="ForskrivarIdRequest">
+            <xs:sequence>                
+                <xs:element name="forskrivarkod" type="xs:long" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Förskrivarkod.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+        
+    
+                
+        <xs:complexType name="ForskrivarInfoDjurRequest">
+            <xs:sequence>                
+                <xs:element name="forskrivarkod" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Förskrivarkod, Giltig förskrivarkod för veterinär alternativt veterinärkandidat</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+                
+        <xs:complexType name="ForskrivarInfoDjurResponse">
+            <xs:sequence>                
+                <xs:element name="avliden" type="xs:dateTime" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Datum avliden veterinär. Datum då veterinär avlidit</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="deslegitimering" type="xs:dateTime" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Datum deslegitimering. Startdatum för deslegitimering, gäller tillsvidare</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="efternamn" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Efternamn. Förskrivares efternamn</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="fornamn" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Förnamn. Förskrivares förnamn</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forskrivarkod" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Förskrivarkod, Giltig förskrivarkod för veterinär alternativt veterinärkandidat</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forskrivningrattUtgar" type="xs:dateTime" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Datum tillfällig förskrivningsrätt. Slutdatum för tillfällig förskrivningsrätt för veterinärkandidat</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="inskranktNarkotika" type="xs:dateTime" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Datum inskränkt förskrivningsrätt narkotika. Startdatum för inskränkt förskrivningsrätt avseende narkotika, gäller tillsvidare</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="inskranktSprit" type="xs:dateTime" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Datum inskränkt förskrivningsrätt teknisk sprit. Startdatum för inskränkt förskrivningsrätt avseende teknisk sprit, gäller tillsvidare</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="yrkeskod" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Yrkeskod. Förskrivares yrkeskod.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+    
+        
+                
+        <xs:complexType name="ForskrivarInformationResponse">
+            <xs:sequence>                
+                <xs:element name="begransningsDatum" type="xs:dateTime" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Datum då förskrivaren fick begränsning i förskrivningsrätten.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="begransningsKod" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Kod för begränsad förskrivningsrätt.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="begransningsKodKlartext" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Begränsningskoden i klartext</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="efternamn" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Efternamn</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="fornamn" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Förnamn</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forskrivarkod" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Förskrivarkod.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="giltig" type="xs:boolean" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Sann om förskrivaren är giltig.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="gruppForskrivarkodKlartext" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Gruppförskrivarkod klartext.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="gruppforskrivare" type="xs:boolean" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Sann om förskrivaren är en gruppförskrivare.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="inskrankt" type="xs:boolean" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Sann om förskrivaren har inskränkt förskrivningsrätt.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="yrkesInformationLista" type="YrkesInformationResponse" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>Lista med förskrivarens yrkeskoder</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+    
+                
+        <xs:complexType name="KlientinformationRequest">
+            <xs:sequence>                
+                <xs:element name="anvandare" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Unikt användarid i anropande system.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="session" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Sessionens id i anropande system.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="system" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>GLN-kod för anropande system.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+        
+    
+                
+        <xs:complexType name="SpecialistInformationRequest">
+            <xs:sequence>                
+                <xs:element name="specialistkod" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Specialistkod</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+                
+        <xs:complexType name="SpecialistInformationResponse">
+            <xs:sequence>                
+                <xs:element name="specialistkod" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Specialistkod</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="specialistkodKlartext" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Specialistkod i klartext</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+    
+        
+                
+        <xs:complexType name="UtfardareKategoriResponse">
+            <xs:sequence>                
+                <xs:element name="utfardarkategoriKlartext" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Utfärdarkategorikod för utfärdarkategori, klartext.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="utfardarkategoriKod" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Utfärdarkategorikod för utfärdarkategori.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+    
+        
+                
+        <xs:complexType name="YrkesInformationResponse">
+            <xs:sequence>                
+                <xs:element name="specialistInformationLista" type="SpecialistInformationResponse" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>Lista av specialistInfo</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="utfardareKategori" type="UtfardareKategoriResponse" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Utfärdarkategori-fältet innehåller den bästa översättningen till utfärdarkategori utifrån innehållet i FORS.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="yrkesKod" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Yrkeskod för utfärdarkategori.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="yrkesKodKlartext" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Yrkeskod för utfärdarkategori, klartext.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+    
+    <xs:complexType name="ApplicationException">
+        <xs:annotation>
+            <xs:documentation>Applikationsfel</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="code" type="xs:string"/>
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SystemException">
+        <xs:annotation>
+            <xs:documentation>Systemfel</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="code" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="char">
+        <xs:restriction base="xs:string">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

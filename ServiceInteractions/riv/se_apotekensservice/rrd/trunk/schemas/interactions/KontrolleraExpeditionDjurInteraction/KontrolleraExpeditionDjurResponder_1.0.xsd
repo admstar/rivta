@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:rrd="urn:riv:se.apotekensservice:rrd:1" xmlns="urn:riv:se.apotekensservice:rrd:KontrolleraExpeditionDjurResponder:1" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:riv:se.apotekensservice:rrd:KontrolleraExpeditionDjurResponder:1" attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0">
+  <xs:import schemaLocation="../../core_components/se.apotekensservice_rrd_1.0.xsd" namespace="urn:riv:se.apotekensservice:rrd:1"/>
+  <xs:element name="KontrolleraExpeditionDjur" type="KontrolleraExpeditionDjurRequestType"/>
+  <xs:element name="KontrolleraExpeditionDjurResponse" type="KontrolleraExpeditionDjurResponseType"/>
+  <xs:element name="ApplicationException" type="rrd:ApplicationException"/>
+  <xs:element name="SystemException" type="rrd:SystemException"/>
+  <xs:complexType name="KontrolleraExpeditionDjurRequestType">
+    <xs:sequence>
+      <xs:element nillable="false" name="expeditionKontrollLista" maxOccurs="unbounded" type="rrd:ExpeditionsunderlagKontrollRequest">
+        <xs:annotation>
+          <xs:documentation>Underlag som skall kontrolleras för expeditionen.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="expeditionsid" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Expeditionens unika id för spårbarhet.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="klientinformation" type="rrd:KlientinformationRequest">
+        <xs:annotation>
+          <xs:documentation>Objekt innehållande information om anropande klientsystem.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="KontrolleraExpeditionDjurResponseType">
+    <xs:sequence>
+      <xs:element nillable="false" name="accepterat" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Sann om expeditionen accepterats. Observera att det kan finnas varningar
+för expeditionen.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="kontrollResultatLista" maxOccurs="unbounded" type="rrd:KontrollResultatResponse" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Lista med kontrollresultatet för de expeditionsunderlag som har varning
+eller fel. Endast de expeditionsunderlag som har fel eller varningar
+finns med i listan.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
