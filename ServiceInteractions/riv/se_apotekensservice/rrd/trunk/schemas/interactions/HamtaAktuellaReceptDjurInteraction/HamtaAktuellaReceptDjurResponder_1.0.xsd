@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:rrd="urn:riv:se.apotekensservice:rrd:1" xmlns="urn:riv:se.apotekensservice:rrd:HamtaAktuellaReceptDjurResponder:1" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:riv:se.apotekensservice:rrd:HamtaAktuellaReceptDjurResponder:1" attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0">
+  <xs:import schemaLocation="../../core_components/se.apotekensservice_rrd_1.0.xsd" namespace="urn:riv:se.apotekensservice:rrd:1"/>
+  <xs:element name="HamtaAktuellaReceptDjur" type="HamtaAktuellaReceptDjurRequestType"/>
+  <xs:element name="HamtaAktuellaReceptDjurResponse" type="HamtaAktuellaReceptDjurResponseType"/>
+  <xs:element name="ApplicationException" type="rrd:ApplicationException"/>
+  <xs:element name="SystemException" type="rrd:SystemException"/>
+  <xs:complexType name="HamtaAktuellaReceptDjurRequestType">
+    <xs:sequence>
+      <xs:element nillable="false" name="klientinformation" type="rrd:KlientinformationRequest">
+        <xs:annotation>
+          <xs:documentation>Information om klienten som anropar tjänsten.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="orgnr" type="xs:long" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Kundens organisationsnummer. Personnummer eller organisationsnummer måste anges.
+Gäller ej enskild firma.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="personnummer" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Personnummer för kund vars aktuella recept man vill hämta. 
+Personnummer eller organisationsnummer måste anges.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HamtaAktuellaReceptDjurResponseType">
+    <xs:sequence>
+      <xs:element nillable="false" name="receptInformationLista" maxOccurs="unbounded" type="rrd:ReceptInformationResponse">
+        <xs:annotation>
+          <xs:documentation>Lista med receptinformation. Varje objekt innehåller en receptsamling
+samt eventuell information om förskriven vara, arbetsplats och
+förskrivare. Tillhör flera efterfrågade receptval samma receptsamling så
+returneras de i ett objekt i listan.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

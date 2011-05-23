@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="urn:riv:se.apotekensservice:fors:HamtaForskrivarInfoDjurResponder:1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fors="urn:riv:se.apotekensservice:fors:1" targetNamespace="urn:riv:se.apotekensservice:fors:HamtaForskrivarInfoDjurResponder:1" attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0">
+  <xs:import schemaLocation="../../core_components/se.apotekensservice_fors_1.0.xsd" namespace="urn:riv:se.apotekensservice:fors:1"/>
+  <xs:element name="HamtaForskrivarInfoDjur" type="HamtaForskrivarInfoDjurRequestType"/>
+  <xs:element name="HamtaForskrivarInfoDjurResponse" type="HamtaForskrivarInfoDjurResponseType"/>
+  <xs:element name="ApplicationException" type="fors:ApplicationException"/>
+  <xs:element name="SystemException" type="fors:SystemException"/>
+  <xs:complexType name="HamtaForskrivarInfoDjurRequestType">
+    <xs:sequence>
+      <xs:element nillable="false" name="forskrivarkodLista" maxOccurs="unbounded" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Lista med Förskrivarkoder, Giltig förskrivarkod för veterinär alternativt veterinärkandidat.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="klientinformation" type="fors:KlientinformationRequest">
+        <xs:annotation>
+          <xs:documentation>KlientInformation - innehåller information om anropande klient.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HamtaForskrivarInfoDjurResponseType">
+    <xs:sequence>
+      <xs:element name="forskrivarinfoLista" maxOccurs="unbounded" type="fors:ForskrivarInfoDjurResponse" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Lista av forskrivarinfo</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

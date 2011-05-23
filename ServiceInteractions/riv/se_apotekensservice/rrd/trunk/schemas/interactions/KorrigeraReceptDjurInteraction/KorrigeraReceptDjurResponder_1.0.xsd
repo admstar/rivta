@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:rrd="urn:riv:se.apotekensservice:rrd:1" xmlns="urn:riv:se.apotekensservice:rrd:KorrigeraReceptDjurResponder:1" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:riv:se.apotekensservice:rrd:KorrigeraReceptDjurResponder:1" attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0">
+  <xs:import schemaLocation="../../core_components/se.apotekensservice_rrd_1.0.xsd" namespace="urn:riv:se.apotekensservice:rrd:1"/>
+  <xs:element name="KorrigeraReceptDjur" type="KorrigeraReceptDjurRequestType"/>
+  <xs:element name="KorrigeraReceptDjurResponse" type="KorrigeraReceptDjurResponseType"/>
+  <xs:element name="ApplicationException" type="rrd:ApplicationException"/>
+  <xs:element name="SystemException" type="rrd:SystemException"/>
+  <xs:complexType name="KorrigeraReceptDjurRequestType">
+    <xs:sequence>
+      <xs:element nillable="false" name="klientinformation" type="rrd:KlientinformationRequest">
+        <xs:annotation>
+          <xs:documentation>Information om klienten som anropar tjänsten.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="korrigeradReceptsamling" type="rrd:ReceptsamlingKorrigerbarRequest">
+        <xs:annotation>
+          <xs:documentation>Den korrigerade receptsamlingen som skall sparas.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="KorrigeraReceptDjurResponseType">
+    <xs:sequence>
+      <xs:element nillable="false" name="accepterat" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Sann om korrigeringen accepterats och tjänsten läste in den korrigerade
+receptsamlingen och dess receptrader i RRD.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="resulterandeReceptsamling" type="rrd:ReceptsamlingResponse">
+        <xs:annotation>
+          <xs:documentation>Den resulterande receptsamlingen efter korrigering. Eventuella AFF-fel
+och varningar finns kopplade direkt till receptsamlingen respektive
+receptvalen.
+
+Om korrigeringen inte accepterats så har den resulterande receptsamlingen
+inte lagrats i databasen.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

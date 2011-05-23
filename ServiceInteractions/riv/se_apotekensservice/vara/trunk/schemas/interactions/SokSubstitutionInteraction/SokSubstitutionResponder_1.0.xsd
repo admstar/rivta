@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:vara="urn:riv:se.apotekensservice:vara:1" xmlns="urn:riv:se.apotekensservice:vara:SokSubstitutionResponder:1" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:riv:se.apotekensservice:vara:SokSubstitutionResponder:1" attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0">
+  <xs:import schemaLocation="../../core_components/se.apotekensservice_vara_1.0.xsd" namespace="urn:riv:se.apotekensservice:vara:1"/>
+  <xs:element name="SokSubstitution" type="SokSubstitutionRequestType"/>
+  <xs:element name="SokSubstitutionResponse" type="SokSubstitutionResponseType"/>
+  <xs:element name="ApplicationException" type="vara:ApplicationException"/>
+  <xs:element name="SystemException" type="vara:SystemException"/>
+  <xs:complexType name="SokSubstitutionRequestType">
+    <xs:sequence>
+      <xs:element nillable="false" name="artikelIdentitet" type="vara:ArtikelIdentiteterRequest">
+        <xs:annotation>
+          <xs:documentation>Artikelidentitet för att identifiera en artikel. Endast ett id får sättas per anrop.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="forhinderUtbyte" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Markering om det föreligger hinder för utbyte för förskriven vara. Kan anges av förskrivare eller
+apotekspersonal.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SokSubstitutionResponseType">
+    <xs:sequence>
+      <xs:element nillable="false" name="utbytesgruppArtiklar" maxOccurs="unbounded" type="vara:UtbytesArtikelResponse">
+        <xs:annotation>
+          <xs:documentation>Lista med alla ingående artiklar i aktuell utbytesgrupp. Utbytesgruppen returneras med förskriven vara om
+förskriven vara inte ingår i någon utbytesgrupp.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

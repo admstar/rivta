@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="urn:riv:se.apotekensservice:vara:1"
+           targetNamespace="urn:riv:se.apotekensservice:vara:1"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="1.0">
+
+            
+    <xs:annotation>
+        <xs:documentation>
+            Beskrivning: Meddelandetyper som är gemensamma för vara.
+            Revisioner: 2011-04-05, version 1.0
+        </xs:documentation>
+    </xs:annotation>
+
+    
+                
+        <xs:complexType name="ArtikelIdentiteterRequest">
+            <xs:sequence>                
+                <xs:element name="gtin" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>GTIN-kod</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="nplPackageId" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Förpackningsid från Nationellt Produktregister för Läkemedel Unikt id för LM-artikel</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="varunr" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Nordiskt varunummer Unik för handelsvaror. För läkemedel kan dubletter förekomma vid parallellimport</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+        
+    
+        
+                
+        <xs:complexType name="ForskrivningsrattResponse">
+            <xs:sequence>                
+                <xs:element name="forskrivningsrattKod" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Koden enligt NPL
+
+-, Ospecificerad
+1, Läkare
+2, Tandläkare
+3, Veterinär
+4, Tandhygienist
+5, Barnmorska
+6, Sjuksköterska
+101, Sjuksköterska utsedd av verksamhetschef</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="utfardareKategoriLista" type="UtfardareKategoriResponse" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>Lista av utfärdarekategorier</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+    
+        
+                
+        <xs:complexType name="UtbytesArtikelResponse">
+            <xs:sequence>                
+                <xs:element name="aip" type="xs:double" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Inköpspris.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="aktiv" type="xs:boolean" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Markering som anger om artikeln är aktiv, dvs ej försäljningsstoppad, ej avregistrerad samt marknadsförs i
+Sverige.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="alternativAntalEnhet" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Alternativ storleksenhet, anges då olika enheter är angivna för varor som ingår i samma utbytesgrupp. 
+Används vid mängdberäkning. Om värde saknas används fältet "antalEnhet".</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="alternativAntalNumerisk" type="xs:double" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Alternativt antal förpackningar som varan har, anges då olika enheter är angivna för varor som ingår i samma utbytesgrupp.
+Används vid mängdberäkning. Om värde saknas används fältet "antalNumerisk".</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="alternativForpMultipel1" type="xs:int" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Alternativ förpackningsmultipel 1, anges då olika enheter är angivna för varor som ingår i samma utbytesgrupp. 
+Används vid mängdberäkning. Om värde saknas används fältet "forpMultipel1".</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="alternativForpMultipel2" type="xs:int" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Alternativ förpackningsmultipel 2, anges då olika enheter är angivna för varor som ingår i samma utbytesgrupp. 
+Används vid mängdberäkning. Om värde saknas används fältet "forpMultipel2".</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="antalEnhet" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Enhet för den numeriska antalsangivelsen. 
+Används vid mängdberäkning. Om värde finns i fältet "alternativAntalEnhet" så ska det användas i stället.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="antalNumerisk" type="xs:double" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Antal enheter i en förpackning. 
+Används vid mängdberäkning. Om värde finns i fältet "alternativAntalNumerisk" så ska det användas i stället.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="atcKod" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>ATC-kod</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="atcText" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>ATC-text</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="aup" type="xs:double" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Försäljningspris.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="avregistreringsDatum" type="xs:dateTime" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>AvregistreringsDatum för varan.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="benamning" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Manuellt inmatad varubenämning med förpackningsstorlek och styrka</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="bestallningsStoppad" type="xs:boolean" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Markering om artikel enligt TLV är beställningsstoppad.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="endos" type="xs:boolean" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Endos, om varan har endosförpackning.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forbrukningsartikel" type="xs:boolean" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Förbrukningsartikel, sant om varan är en förbrukningsartikel (enl. produkttyp)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="formGruppUtbyte" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Id för gruppering av läkemedelsform. Används för att identifiera utbytesgrupper.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forman" type="xs:boolean" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Markering som visar om artikeln ingår i förmånen.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="formanTLV" type="xs:boolean" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Markering om artikeln ingår i förmånen enligt regelverk för utbyte av substitution från TLV.
+Anges enbart för artiklar i TLV:s generikagrupper.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forpMultipel1" type="xs:int" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Anger yttre förpackningen ex (5*4*100 st), där 4 visar antalet i yttre förpackningen. 
+Används vid mängdberäkning. Om värde finns i fältet "alternativForpMultipel1" så ska det användas i stället.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forpMultipel2" type="xs:int" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Anger yttersta förpackningen ex (5*4*100 st), där 5 visar antalet i yttre förpackningen. 
+Används vid mängdberäkning. Om värde finns i fältet "alternativForpMultipel2" så ska det användas i stället.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forpackningKlartext" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Sammanslagning av fälten forpMultipel2 + forpMultipel1 + antalNumerisk + antalEnhet</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forpackningstypText" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Beskrivning av förpackningstyp.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forsaljningsStoppad" type="xs:boolean" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Markering som anger om artikeln inte längre får försäljas.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forsaljningspris" type="xs:double" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Artikelns försäljningspris enligt regelverk från TLV.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forskrivningsrattList" type="ForskrivningsrattResponse" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>Lista med forskrivningsratter för denna artikel.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="gtin" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>GTIN Unikt id för LM-artikel</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="historisktVarunr" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Historiskt varunummer</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="intressent" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Ansvarig intressent för artikeln.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="intressentKort" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Intressent (kort form) för varan.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="itererbar" type="xs:boolean" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Itererbar, sant om artikeln får förskrivas på ett itererbart recept. (artikeln hör ej till kategori i
+särskildaläkemedel som begränsar detta)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="klusterId" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Id för gruppering av storlekskluster från TLV.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="lakemedel" type="xs:boolean" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Lakemedel, sant om varan är ett läkemedel</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="lakemedelsformKod" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Kod för beredningsformen</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="lakemedelsformKort" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Beredningsform (kort form) för varan.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="lakemedelsformText" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Beskrivning av läkemedelsformen</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="licenslakemedel" type="xs:boolean" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Licenslakemedel, sant om varan är ett licensläkemedel (enl. produkttyp)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="livsmedel" type="xs:boolean" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Livsmedel, sant om varan är ett livsmedel (enl. produkttyp)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="narkotika" type="xs:boolean" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Narkotika, sant om varan är ett narkotika (Har en narkotikaklass)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="nplId" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Alla förpackningar med samma styrka/form/tillverkare grupperas i samma id, från NPL (Nationellt Produktregister
+för Läkemedel) Unikt id för LM-produkt</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="nplPackageId" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Förpackningsid från Nationellt Produktregister för Läkemedel Unikt id för LM-artikel</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="prisperiodensVara" type="xs:boolean" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Markering som anger om artikeln är definierad som prisperiodens vara.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="pristillaggsgrundande" type="xs:boolean" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Markering om artikeln är pristilläggsgrundande vid val av förskriven vara.
+Flera varor kan bli markerade som pristilläggsgrundande.
+För gruppen Generika kan prisperiodens vara och eventuell TLV Beställningsstoppad vara bli pristilläggsgrundande.
+För gruppen Ej generika kan alla artiklar som är billigare än förskriven vara bli pristilläggsgrundande.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="produktTypText" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Beskrivning av varans produkttyp</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="produktnamn" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Produktens namn.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="sarskiltLakemedel" type="xs:boolean" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>SarskiltLakemedel, sant om varan är ett särskilt läkemedel</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="sarskiltLakemedelKod" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Kod för särskilt lakemedel.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="sprit" type="xs:boolean" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Sprit, sant om varan är teknisk sprit (enl. produkttyp)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="styrka" type="xs:double" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Styrka, numerisk styrka.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="styrkaEnhet" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Enhet för den numeriska styrkan.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="styrkaGruppUtbyte" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Id för gruppering av styrka. Används för att identifiera utbytesgrupper.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="styrkaKlartext" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Produktens styrka i klartext inklusive numerisk värde och enhet.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="substansGruppUtbyte" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Id för gruppering av substans. Används för att identifiera utbytesgrupper.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="tillhandahalls" type="xs:boolean" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Markering som visar om varan finns tillgänglig på den svenska marknaden.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="tillverkare" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Tillverkare av varan.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="utbytbar" type="xs:boolean" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Markering som anger om artikeln är utbytbar enligt VARA.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="utgangen" type="xs:boolean" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Utgangen, sant om varan är utången</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="varugruppKod" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Varugrupp-kod</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="varugruppText" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Varugrupp-text</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="varunr" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Nordiskt varunummer Unik för handelsvaror. För läkemedel kan dubletter förekomma vid parallellimport</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+    
+        
+                
+        <xs:complexType name="UtfardareKategoriResponse">
+            <xs:sequence>                
+                <xs:element name="utfardarkategoriKlartext" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Utfärdarkategorikod för utfärdarkategori, klartext.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="utfardarkategoriKod" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Utfärdarkategorikod för utfärdarkategori.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+    
+    <xs:complexType name="ApplicationException">
+        <xs:annotation>
+            <xs:documentation>Applikationsfel</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="code" type="xs:string"/>
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SystemException">
+        <xs:annotation>
+            <xs:documentation>Systemfel</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="code" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="char">
+        <xs:restriction base="xs:string">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

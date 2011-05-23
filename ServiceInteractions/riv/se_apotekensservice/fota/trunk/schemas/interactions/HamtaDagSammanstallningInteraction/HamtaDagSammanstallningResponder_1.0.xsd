@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:fota="urn:riv:se.apotekensservice:fota:1" xmlns="urn:riv:se.apotekensservice:fota:HamtaDagSammanstallningResponder:1" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:riv:se.apotekensservice:fota:HamtaDagSammanstallningResponder:1" attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0">
+  <xs:import schemaLocation="../../core_components/se.apotekensservice_fota_1.0.xsd" namespace="urn:riv:se.apotekensservice:fota:1"/>
+  <xs:element name="HamtaDagSammanstallning" type="HamtaDagSammanstallningRequestType"/>
+  <xs:element name="HamtaDagSammanstallningResponse" type="HamtaDagSammanstallningResponseType"/>
+  <xs:element name="ApplicationException" type="fota:ApplicationException"/>
+  <xs:element name="SystemException" type="fota:SystemException"/>
+  <xs:complexType name="HamtaDagSammanstallningRequestType">
+    <xs:sequence>
+      <xs:element nillable="false" name="fakturaPeriod" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Fakturaperiod, anges på formen ÅÅÅÅMM.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HamtaDagSammanstallningResponseType">
+    <xs:sequence>
+      <xs:element nillable="false" name="fakturaPeriod" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Fakturaperiod, anges på formen ÅÅÅÅMM.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="sammanstallningar" maxOccurs="unbounded" type="fota:DagSammanstallningAktorResponse">
+        <xs:annotation>
+          <xs:documentation>Lista med sammanställningar, en för varje aktör, under perioden.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="stangd" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Anger om fakturaperioden är stängd</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,744 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="urn:riv:se.apotekensservice:fota:1"
+           targetNamespace="urn:riv:se.apotekensservice:fota:1"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="1.0">
+
+            
+    <xs:annotation>
+        <xs:documentation>
+            Beskrivning: Meddelandetyper som är gemensamma för fota.
+            Revisioner: 2011-04-05, version 1.0
+        </xs:documentation>
+    </xs:annotation>
+
+    
+        
+                
+        <xs:complexType name="DagAvstamningRadResponse">
+            <xs:sequence>                
+                <xs:element name="antalReceptOrderRader" type="xs:double" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Det summerade antalet receptorderrader för momssatsen.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="formansBelopp" type="xs:double" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Det summerade förmånsbeloppet för momssatsen.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="momsBelopp" type="xs:double" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Det summerade momsbeloppet för momssatsen.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="momsSats" type="xs:double" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Radens momssats.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+    
+        
+                
+        <xs:complexType name="DagAvstamningSummaResponse">
+            <xs:sequence>                
+                <xs:element name="datum" type="xs:dateTime" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Datum för dagavstämning.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="rader" type="DagAvstamningRadResponse" nillable="false" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>Rader med dagavstämningar för respektive momssats.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="sumAntalReceptOrderRader" type="xs:double" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Det summerade antalet receptorderrader under dagen.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="sumFormansBelopp" type="xs:double" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Det summerade förmånsbeloppet under dagen.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="sumMomsBelopp" type="xs:double" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Det summerade momsbeloppet under dagen.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+    
+        
+                
+        <xs:complexType name="DagSammanstallningAktorResponse">
+            <xs:sequence>                
+                <xs:element name="ackAntalReceptOrderRader" type="xs:double" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Det ackumulerade antalet receptorderrader under perioden.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="ackFormansBelopp" type="xs:double" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Det ackumulerade förmånsbeloppet under perioden.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="ackMomsBelopp" type="xs:double" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Det ackumulerade momsbeloppet under perioden.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="aktorsGrupp" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Aktörsgruppidentitet.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="namn" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Aktörens företagsnamn. Kan vara tomt ifall namnet inte fanns i EXPO.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="orgNr" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Aktörens organisationsnummer.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+    
+                
+        <xs:complexType name="EgenvardRadRequest">
+            <xs:sequence>                
+                <xs:element name="aktorTransId" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Apoteksaktörs unika transaktions-id.
+Värdet måste vara unikt tillsammans med aktörens org. nummer</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="antalEnheter" type="xs:double" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Antal enheter av vara
+Parametern är obligatorisk.
+Skall vara negativ vi kreditering/återköp.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="aupExMomsAktor" type="xs:double" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Försäljningspris för vara exklusive moms
+Parametern är obligatorisk.
+Skall vara negativ vi kreditering/återköp.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="avhamtadDatum" type="xs:dateTime" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Datum för kassatransaktion
+Parametern är obligatorisk.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forsaljningsSatt" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Försäljningssätt
+Parametern är obligatorisk.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="gtin" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Framtida identitet på expedierad vara</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="momsSats" type="xs:double" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Momssats för aktuell expeditionsrad
+Parametern är obligatorisk.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="nplPackid" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>NPL-packid för expedierad vara
+Obligatorisk parameter för läkemedel</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="varuId" type="xs:long" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Identitet på expedierad vara
+För bakåtkompabilitet till import från fil. Onlinetjänsten använder inte denna
+parameter.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="varuNr" type="xs:long" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Identitet på expedierad vara
+Parametern är obligatorisk.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="varuTyp" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Varutyp för expedierad vara
+Parametern är obligatorisk.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+        
+    
+                
+        <xs:complexType name="KlientinformationRequest">
+            <xs:sequence>                
+                <xs:element name="anvandare" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Unikt användarid i anropande system.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="session" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Sessionens id i anropande system.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="system" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Kod (butikskod) för anropande system. Koden ska finnas registrerad i Expo.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+        
+    
+                
+        <xs:complexType name="OppenvardForskrivningRadRequest">
+            <xs:sequence>                
+                <xs:element name="aktorReceptId" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Radid inom expeditionen.
+Parametern är obligatorisk utom för förmånstyp Z.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="aktorTransId" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Apoteksaktörs unika transaktions-id.
+Värdet måste vara unikt tillsammans med aktörens org. nummer</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="aktorUrsprungTransId" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Apoteksaktörs ursprungliga transaktions-id
+Parametern är obligatorisk för förmånstyp Z.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="antalEnheter" type="xs:double" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Antal enheter av expedierad vara
+Parametern är obligatorisk utom för förmånstyp Z.
+Skall vara negativ vi kreditering/återköp.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="arbetsplatsKod" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Kod för förskrivares arbetsplats
+Obligatorisk parameter för förmånstyp R och F</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="aupExMomsAktor" type="xs:double" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Försäljningspris för expedierad vara exklusive moms
+Parametern är obligatorisk utom för förmånstyp Z.
+Skall vara negativ vi kreditering/återköp.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="avhamtadDatum" type="xs:dateTime" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Datum för kassatransaktion
+Obligatorisk parameter.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="byteTillatet" type="xs:int" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Markering om byte tillåtet
+Ska ej anges vid förmånstyp Z.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="djurSlag" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Ange djurslag
+
+Används bara vid förmånstyp U.
+Ej obligatorisk.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="dosText" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Doseringstext
+Ska ej anges vid förmånstyp Z.
+Ej obligatorisk.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="egenavgiftExMoms" type="xs:double" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Egenavgift exklusive moms
+Obligatorisk för förmånstyp R, L, Z
+Skall vara negativ vid kreditering/återköp och förmånstyp Z.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="formanExMoms" type="xs:double" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Läkemedelsförmån exklusive moms
+Obligatorisk för förmånstyp R, F, L, Z
+Skall vara negativ vid kreditering/återköp.
+Skall vara positiv för förmånstyp Z</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="formansTyp" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Expedierande farmacevts förmånsval</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forsaljningsSatt" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Försäljningssätt
+Parametern är obligatorisk.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forskrivarKod" type="xs:int" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Förskrivarkod på förskrivning
+Obligatorisk parameter för e-recept.
+Obligatorisk parameter för pappers-recept om särskilda läkemedel eller teknisk sprit.
+Ska ej anges vid förmånstyp Z.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forskrivarNamn" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Förskrivares namn på förskrivning
+Ska ej anges vid förmånstyp Z.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forskrivetGtin" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Framtida identitet på expedierad vara i samband med byte</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forskrivetNplPackid" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>NPL-packid för expedierad vara i samband med byte
+Obligatorisk parameter vid generikabyte – enbart läkemedel
+Skall ej anges för förmånstyp Z</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forskrivetVaruId" type="xs:long" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Identitet på förskriven vara i samband med byte
+För bakåtkompabilitet till import från fil. Onlinetjänsten använder inte denna
+parameter.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forskrivetVaruNr" type="xs:long" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Identitet på förskriven vara i samband med byte</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="gtin" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Framtida identitet på expedierad vara.
+Önskad uppgift när GTIN är implementerat</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="merkostnadExMoms" type="xs:double" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Pristillägg exklusive moms
+Obligatorisk för förmånstyp R.
+Skall vara negativ vi kreditering/återköp.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="momsSats" type="xs:double" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Momssats för aktuell expeditionsrad
+Obligatorisk parameter för förmånstyp R, U, F, L</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="nplPackid" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>NPL-packid för expedierad vara
+Obligatorisk parameter för läkemedel
+Skall ej anges för förmånstyp Z</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="startForpackning" type="xs:int" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Markering för startförpackning
+Skall vara 1 eller 0
+Ska ej anges vid förmånstyp Z.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="ursprung" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Receptets ursprung
+Obligatorisk parameter utom för förmånstyp Z</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="utfardarDatum" type="xs:dateTime" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Datum för utfärdande av förskrivning
+Obligatorisk parameter utom för förmånstyp Z</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="utfardarKategori" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Förskrivares utfärdarkategori
+Obligatorisk parameter utom för förmånstyp Z</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="varuId" type="xs:long" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Identitet på expedierad vara
+För bakåtkompabilitet till import från fil. Onlinetjänsten använder inte denna
+parameter.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="varuNr" type="xs:long" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Identitet på expedierad vara
+Obligatorisk parameter utom för förmånstyp Z</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="varuTyp" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Varutyp för expedierad vara
+Obligatorisk parameter utom för förmånstyp Z</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+        
+    
+                
+        <xs:complexType name="OppenvardRekvisitionRadRequest">
+            <xs:sequence>                
+                <xs:element name="aktorTransId" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Apoteksaktörs unika transaktions-id.
+Värdet måste vara unikt tillsammans med aktörens org. nummer</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="antalEnheter" type="xs:double" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Antal enheter av vara
+Parametern är obligatorisk.
+Skall vara negativ vi kreditering/återköp.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="aupExMomsAktor" type="xs:double" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Försäljningspris för vara exklusive moms
+Parametern är obligatorisk.
+Skall vara negativ vi kreditering/återköp.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="avhamtadDatum" type="xs:dateTime" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Datum för kassatransaktion
+Parametern är obligatorisk.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forsaljningsSatt" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Försäljningssätt
+Parametern är obligatorisk.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="gtin" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Framtida identitet på expedierad vara</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="momsSats" type="xs:double" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Momssats för aktuell expeditionsrad
+Parametern är obligatorisk.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="nplPackid" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>NPL-packid för expedierad vara
+Obligatorisk parameter för läkemedel</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="utfardarKategori" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Förskrivares utfärdarkategori</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="varuId" type="xs:long" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Identitet på expedierad vara
+För bakåtkompabilitet till import från fil. Onlinetjänsten använder inte denna
+parameter.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="varuNr" type="xs:long" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Identitet på expedierad vara
+Parametern är obligatorisk.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="varuTyp" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Varutyp för expedierad vara
+Parametern är obligatorisk.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+        
+    
+                
+        <xs:complexType name="SlutenvardRadRequest">
+            <xs:sequence>                
+                <xs:element name="aktorTransId" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Apoteksaktörs unika transaktions-id.
+Värdet måste vara unikt tillsammans med aktörens org. nummer</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="antalEnheter" type="xs:double" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Antal enheter av vara
+Parametern är obligatorisk.
+Skall vara negativ vi kreditering/återköp.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="aupExMomsAktor" type="xs:double" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Försäljningspris för vara exklusive moms
+Parametern är obligatorisk.
+Skall vara negativ vi kreditering/återköp.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="avhamtadDatum" type="xs:dateTime" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Datum för kassatransaktion
+Parametern är obligatorisk.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forsaljningsSatt" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Försäljningssätt
+Parametern är obligatorisk.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="gtin" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Framtida identitet på expedierad vara</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="momsSats" type="xs:double" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Momssats för aktuell expeditionsrad
+Parametern är obligatorisk.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="nplPackid" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>NPL-packid för expedierad vara
+Obligatorisk parameter för läkemedel</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="varuId" type="xs:long" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Identitet på expedierad vara
+För bakåtkompabilitet till import från fil. Onlinetjänsten använder inte denna
+parameter.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="varuNr" type="xs:long" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Identitet på expedierad vara
+Parametern är obligatorisk.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="varuTyp" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Varutyp för expedierad vara
+Parametern är obligatorisk.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+        
+    
+        
+                
+        <xs:complexType name="ValideringsResultatResponse">
+            <xs:sequence>                
+                <xs:element name="aktorTransId" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Apoteksaktörs transaktions-id.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="expoButiksId" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>ButiksID i Expo</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="expoOrgNr" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Organisationsnummer i Expo</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="falt" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Namnet på det fält som inte är korrekt.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="kod" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Kod som indikerat vad som inte är korrekt.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="radId" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Radid inom expeditionen.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="text" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Förklarande text till kod.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="varde" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Det felaktiga värdet.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+    
+    <xs:complexType name="ApplicationException">
+        <xs:annotation>
+            <xs:documentation>Applikationsfel</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="code" type="xs:string"/>
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SystemException">
+        <xs:annotation>
+            <xs:documentation>Systemfel</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="code" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="char">
+        <xs:restriction base="xs:string">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>
