@@ -1,7 +1,7 @@
 import groovy.xml.StreamingMarkupBuilder
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Script to update Apotekens Service RIVTA-based WSDL-files to full RIVTA (they lack logiocal address header)
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Script to update Apotekens Service RIVTA-based WSDL-files to full RIVTA (they lack logiocal address header) plus Argos Header
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import groovy.xml.XmlUtil
 import javax.xml.parsers.SAXParserFactory
@@ -10,11 +10,14 @@ import javax.xml.parsers.SAXParserFactory
 new File('.').eachFileRecurse {
 	file -> 
 		if (file.path.endsWith('rivtabp20.wsdl')) {
-			processFile file
+			processWsdlFile file
+		} else if (file.path.contains('Responder')) {
+			processServiceSchemaFile file
 		}
 }
 
-def processFile(File file) {
+def processWsdlFile(File file) {
+	def argosNS = "urn:riv:inera.se.apotekensservice:argos:1"
 	
 	def definitions = new XmlSlurper().parse(file).declareNamespace(xs: "http://www.w3.org/2001/XMLSchema", wsdl: "http://schemas.xmlsoap.org/wsdl/", soap: "http://schemas.xmlsoap.org/wsdl/soap/")
 
@@ -26,12 +29,16 @@ def processFile(File file) {
 	// Change WSDL target namespace, since we produce a different wsdl than the original one	
 	definitions.'@targetNamespace' = "urn:riv:inera" + ("${definitions.'@targetNamespace'}" - "urn:riv")
 	
-	// Add import for logical address header element
+	// Add target  namespace to schema tag (required by BizTalk)
+	definitions.'wsdl:types'.'xs:schema'.'@targetNamespace' = "${definitions.'@targetNamespace'}"
+	
+	// Add import for logical address header and argos header elements
 	definitions.'wsdl:types'.'xs:schema'.appendNode {
-		'xs:import' (schemaLocation : "../../rivta20/ws-addressing-1.0.xsd", namespace : "http://www.w3.org/2005/08/addressing")
+		'xs:import' (schemaLocation : "../../core_components/ws-addressing-1.0.xsd", namespace : "http://www.w3.org/2005/08/addressing")
+		'xs:import' (schemaLocation : "../../core_components/ArgosHeader_1.0.xsd", namespace : argosNS)
 	}
 
-	// Add LogicalAddress part to request messages
+	// Add LogicalAddress and argos header parts to request messages
 	definitions.'wsdl:message'.findAll {it.@name.toString().endsWith("Request")}.each {
 		it.appendNode {
 			'wsdl:part'(name : 'LogicalAddress', element : "wsa:To") {
@@ -40,14 +47,24 @@ def processFile(File file) {
 				}
 			}
 		}
+		it.appendNode {
+			'wsdl:part'(name : 'ArgosHeader', element : "argos:ArgosHeader") {
+				'xs:annotation' {
+					'xs:documentation' ("Argos header of Apotekens Service AB. Check documentation regarding mandatory for this specific service interaction")
+				}
+			}
+		}		
 	}
 	
-	// Add soap header binding to all input operation bindings
+	// Add soap header bindings to all input operation bindings
 	definitions.'wsdl:binding'.'wsdl:operation'.each {
 		def messageName = "" + it.'@name' + "Request"
 		it.'wsdl:input'.appendNode {
 			'soap:header'(use: 'literal', message: messageName, part: 'LogicalAddress' )
 		}
+		it.'wsdl:input'.appendNode {
+			'soap:header'(use: 'literal', message: messageName, part: 'ArgosHeader' )
+		}		
 	}	
 	
 	// Re-define namespace declarations and over-write the wsdl file with the modifed content
@@ -59,7 +76,8 @@ def processFile(File file) {
 	                  	http: "http://schemas.xmlsoap.org/wsdl/http/",
 						spdr: serviceSchemaNS,
 						wsa: "http://www.w3.org/2005/08/addressing",
-						'': serviceSchemaNS
+						argos: argosNS,
+						'': "${definitions.'@targetNamespace'}"
 					)
 	                mkp.yield definitions
 	              }
@@ -67,5 +85,44 @@ def processFile(File file) {
 	String newWsdl = XmlUtil.serialize(smb)
 	
 	new File(file.path).write(newWsdl, "UTF-8");
+}
+
+def processServiceSchemaFile(File file) {
+	
+	def parentFile = file
+	5.times {
+		parentFile = new File(parentFile.getParent())
+	}
+	def subDomainName = parentFile.name
+	def domainName =  "se.apotekensservice"
+	def versionStringEndIdex = file.name.indexOf(".xsd")
+	def versionStringBeginIdex = file.name.indexOf("_") + 1
+	def versionString = file.name.substring(versionStringBeginIdex,versionStringEndIdex)
+	def majorVersion = versionString.substring(0, versionString.indexOf("."))
+	
+	def domainSchemaFileName = "${domainName}_${subDomainName}_${versionString}.xsd"
+	
+	def schema = new XmlSlurper().parse(file).declareNamespace(xs: "http://www.w3.org/2001/XMLSchema")
+
+	def serviceSchemaNS = schema.'@targetNamespace'
+	
+	// Update schemaLocation for existing import of the domain schema, since domain schema location has changed
+	def domainSchemaOldLocation = schema.'xs:import'.'@schemaLocation'
+	def domainSchemaNewLocation = "../../core_components/" + domainSchemaOldLocation.toString()
+	schema.'xs:import'.'@schemaLocation' = domainSchemaNewLocation
+	
+	// Re-define namespace declarations and over-write the wsdl file with the modifed content
+	def smb = new StreamingMarkupBuilder().bind {
+					mkp.declareNamespace(
+						xs: "http://www.w3.org/2001/XMLSchema", 
+						(subDomainName) : "urn:riv:${domainName}:${subDomainName}:${majorVersion}",
+						'': serviceSchemaNS
+					)
+	                mkp.yield schema
+	              }
+	
+	String newServiceSchema = XmlUtil.serialize(smb)
+	
+	new File(file.path).write(newServiceSchema, "UTF-8");
 }
 	
