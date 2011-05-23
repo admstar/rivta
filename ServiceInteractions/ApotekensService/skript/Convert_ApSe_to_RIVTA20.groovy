@@ -1,4 +1,6 @@
 import groovy.xml.StreamingMarkupBuilder
+import groovy.io.FileType
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Script to update Apotekens Service RIVTA-based WSDL-files to full RIVTA (they lack logiocal address header) plus Argos Header
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -7,16 +9,18 @@ import groovy.xml.XmlUtil
 import javax.xml.parsers.SAXParserFactory
 
 // Process all wsdl files recursively found bellow current directory
-new File('.').eachFileRecurse {
+new File('.').eachFileRecurse(FileType.FILES) {
 	file -> 
-		if (file.path.endsWith('rivtabp20.wsdl')) {
+		if (file.path.contains('rivtabp') && !file.path.contains('.svn')) {
 			processWsdlFile file
-		} else if (file.path.contains('Responder')) {
+		} else if (file.path.contains('Responder') && !file.path.contains('.svn')) {
 			processServiceSchemaFile file
 		}
 }
 
 def processWsdlFile(File file) {
+	
+	println "Processing " + file.path
 	def argosNS = "urn:riv:inera.se.apotekensservice:argos:1"
 	
 	def definitions = new XmlSlurper().parse(file).declareNamespace(xs: "http://www.w3.org/2001/XMLSchema", wsdl: "http://schemas.xmlsoap.org/wsdl/", soap: "http://schemas.xmlsoap.org/wsdl/soap/")
@@ -42,16 +46,12 @@ def processWsdlFile(File file) {
 	definitions.'wsdl:message'.findAll {it.@name.toString().endsWith("Request")}.each {
 		it.appendNode {
 			'wsdl:part'(name : 'LogicalAddress', element : "wsa:To") {
-				'xs:annotation' {
-					'xs:documentation' ("Orgnr of Apotekens Service AB")
-				}
+				'wsdl:documentation' ("Orgnr of Apotekens Service AB")
 			}
 		}
 		it.appendNode {
 			'wsdl:part'(name : 'ArgosHeader', element : "argos:ArgosHeader") {
-				'xs:annotation' {
-					'xs:documentation' ("Argos header of Apotekens Service AB. Check documentation regarding mandatory for this specific service interaction")
-				}
+					'wsdl:documentation' ("Argos header of Apotekens Service AB. Check documentation regarding mandatory for this specific service interaction")
 			}
 		}		
 	}
@@ -88,6 +88,7 @@ def processWsdlFile(File file) {
 }
 
 def processServiceSchemaFile(File file) {
+	println "Processing " + file.path
 	
 	def parentFile = file
 	5.times {

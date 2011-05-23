@@ -1,3 +1,5 @@
+import groovy.io.FileType
+
 // Skriptet startas i rot-mappen i den uppackade zip-filen
 // Uppdatera TARGET_ROOT_DIR och SOURCE_CORE_COMPONENTS_DIR med dina lokala sökvägar
 class Constants {
@@ -43,7 +45,8 @@ def createSubDomainStructureAndContent(def subDomainSourceDir, Constants c) {
 	println "Created core_components directory: " + coreComponentDirPath
 	
 	// Copy all common component files from source dir to target dir
-	new File(c.SOURCE_CORE_COMPONENTS_DIR).eachFile {core_component ->
+	new File(c.SOURCE_CORE_COMPONENTS_DIR).eachFile(FileType.FILES) {core_component ->
+		
 		new File("${coreComponentDirPath}/${core_component.name}") << core_component.bytes
 		println "Copied " + core_component.name + " to directory " + coreComponentDirPath
 	}
@@ -59,7 +62,7 @@ def createSubDomainStructureAndContent(def subDomainSourceDir, Constants c) {
 	println "Created interaction directory for subdmomain: " + interactionsDirPath
 	
 	//Copy each pair of WSDL + service schema into a sub-directory structure
-	subDomainSourceDir.eachFile {sourceFile ->
+	subDomainSourceDir.eachFile(FileType.FILES) {sourceFile ->
 		if (sourceFile.name.endsWith("rivtabp${c.RIVTA_VERSION}.wsdl")) {
 			def serviceContractName = "${sourceFile.name}" - "Interaction_${c.MAJOR_VERSION}.${c.MINOR_VERSION}_rivtabp${c.RIVTA_VERSION}.wsdl"
 			
