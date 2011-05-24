@@ -24,9 +24,9 @@ import javax.jws.WebService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import riv.crm.scheduling._1.ResultCodeEnum;
 import se.skl.riv.crm.scheduling.v1.MakeBookingResponseType;
 import se.skl.riv.crm.scheduling.v1.MakeBookingType;
+import se.skl.riv.crm.scheduling.v1.ResultCodeEnum;
 import se.skl.riv.crm.scheduling.v1.rivtabp21.MakeBookingResponderInterface;
 import se.skl.rivta.bp21.refapp.util.Util;
 
