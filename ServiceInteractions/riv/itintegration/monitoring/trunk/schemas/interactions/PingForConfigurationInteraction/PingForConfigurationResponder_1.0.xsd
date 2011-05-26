@@ -32,6 +32,22 @@
   
   <xs:complexType name='PingForConfigurationType'>
     <xs:sequence>
+	  <xs:element name='serviceContractNamespace' type='xs:anyURI'>
+        <xs:annotation>
+          <xs:documentation>
+			The namespace qualifier of the service contract to ping (which is also the namespace of the service request element).
+			This element is primarilly of interest to a forwarding intermediary.
+		  </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+	  <xs:element name='logicalAddress' type='xs:anyURI'>
+        <xs:annotation>
+          <xs:documentation>
+			The logical address to ping.
+			This element is primarilly of interest to a forwarding intermediary.
+		  </xs:documentation>
+        </xs:annotation>
+      </xs:element>
       <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
