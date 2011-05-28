@@ -1,4 +1,4 @@
-@REM ---------------------------------------------------------------------------------
+﻿@REM ---------------------------------------------------------------------------------
 @REM Generates c# WCF service contracts (interface), client proxies and wcf config 
 @REM file for ehr:accesscontrol 1.0 WSDLs + XML Schemas, using .Net WCF tool svcuti.exe
 @REM ---------------------------------------------------------------------------------
@@ -20,20 +20,28 @@
 @REM ---------------------------------------------------------------------------------
 
 CD ..
-SET OUTFILE=/out:wcf\generated-src\ItIntegrationMonitoringInteractions.cs
-SET APPCONFIG=/config:wcf\generated-src\app.config
+SET OUTFILE20=/out:wcf\generated-src\RIVTABP20\ItIntegrationMonitoringInteractions_v1.cs
+SET OUTFILE21=/out:wcf\generated-src\RIVTABP21\ItIntegrationMonitoringInteractions_v1.cs
+SET APPCONFIG20=/config:wcf\generated-src\RIVTABP20\app.config
+SET APPCONFIG21=/config:wcf\generated-src\RIVTABP21\app.config
 SET NAMESPACE=/namespace:*,Riv.ItIntegration.Monitoring.Schemas.v1
 SET SCHEMADIR="schemas\interactions"
 SET SVCUTIL="svcutil.exe"
 
 SET W1=%SCHEMADIR%\PingForConfigurationInteraction\PingForConfigurationInteraction_1.0_RIVTABP20.wsdl
+SET W2=%SCHEMADIR%\PingForConfigurationInteraction\PingForConfigurationInteraction_1.0_RIVTABP21.wsdl
 SET X1=schemas\core_components\*.xsd
 SET X2=%SCHEMADIR%\PingForConfigurationInteraction\*.xsd
 
-SET SCHEMAS=%W1% %X1% %X2%
+SET SCHEMAS20=%W1% %X1% %X2%
+SET SCHEMAS21=%W2% %X1% %X2%
 
-%SVCUTIL% /language:cs /wrapped %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
+ECHO Kör SVCUTIL för PingForConfigurationInteraction_1.0_RIVTABP20.wsdl
+%SVCUTIL% /language:cs /wrapped %OUTFILE20% %APPCONFIG20% %NAMESPACE% %SCHEMAS20%
+
+ECHO Kör SVCUTIL för PingForConfigurationInteraction_1.0_RIVTABP21.wsdl
+%SVCUTIL% /language:cs /wrapped %OUTFILE21% %APPCONFIG21% %NAMESPACE% %SCHEMAS21%
 
 CD wcf
 
-ECHO I DotNetprojektet ska du lagga till en referens till System.ServiceModel
+ECHO I DotNetprojektet ska du lagga till en referens till System.ServiceModel för 21-interfacet (eller 20-interfacet om du har det sedan tidigare och inte vill uppgradera)
