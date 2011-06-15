@@ -39,6 +39,16 @@
           <xs:documentation>Anvandarens personid</xs:documentation>
         </xs:annotation>
       </xs:element>
+      <xs:element name="lanskod" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Anvandarens folkbokforda lanskod</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="kommunkod" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Anvandarens folkbokforda kommunkod</xs:documentation>
+        </xs:annotation>
+      </xs:element>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -284,7 +294,7 @@
       <xs:element name="dosaktor" type="xs:string" minOccurs="1"/>
       <xs:element name="dosapotek" type="xs:string" minOccurs="1"/>
       <xs:element name="dosapotekid" type="xs:string" minOccurs="1"/>
-      <xs:element name="stopptidbestallning" type="xs:dateTime" minOccurs="1"/>
+      <xs:element name="stopptidbestallning" type="xs:dateTime" minOccurs="0"/>
       <xs:element name="stopptidordination" type="xs:dateTime" minOccurs="1"/>
       <xs:element name="forstadosdag" type="xs:dateTime" minOccurs="1"/>
       <xs:element name="dosvecka" type="xs:string" minOccurs="0"/>
@@ -295,13 +305,15 @@
     </xs:sequence>
   </xs:complexType>
   
-  <xs:complexType name="SarskilltboendeinfoResponse">
+<!--  <xs:complexType name="SarskilltboendeinfoResponse"> -->
+  <xs:complexType name="LeveransadressinfoResponse">
     <xs:sequence>
       <xs:element name="boendeenhetnamn" type="xs:string" minOccurs="1"/>
       <xs:element name="boendeenhetid" type="xs:string" minOccurs="1"/>
       <xs:element name="boendeenhetadress" type="xs:string" minOccurs="1"/>
       <xs:element name="boendeenhetpostnummer" type="xs:string" minOccurs="1"/>
-      <xs:element name="boendeenhetavdelning" type="xs:string" minOccurs="1"/>
+      <xs:element name="boendeenhetpostort" type="xs:string" minOccurs="1"/>
+      <xs:element name="boendeenhetavdelning" type="xs:string" minOccurs="0"/>
       <xs:element name="arbetsplatskod" type="xs:string" minOccurs="1"/>
       <xs:element name="dosmottagareid" type="xs:string" minOccurs="1"/>
       <xs:element name="dosmottagarenamn" type="xs:string" minOccurs="1"/>
@@ -360,7 +372,6 @@
       <xs:element name="telefon" type="xs:string" minOccurs="0"/>
       <xs:element name="dosmottagareid" type="xs:string" minOccurs="1"/>
       <xs:element name="dosmottagarenamn" type="xs:string" minOccurs="1"/>    
-      <xs:element name="arbetsplatskod" type="xs:string" minOccurs="1"/>    
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -518,6 +529,9 @@
       <xs:element name="vardgivarespersonid" type="xs:string" minOccurs="0" maxOccurs="1">
       </xs:element>
 
+      <xs:element name="forskrivarkod" type="xs:string" minOccurs="0" maxOccurs="1">
+      </xs:element>
+
       <xs:element name="frantid" type="xs:dateTime" minOccurs="0" maxOccurs="1">
       </xs:element>
 
@@ -531,7 +545,7 @@
   <xs:complexType name="Vardtagarinformation">
           <xs:sequence>
   
-              <xs:element name="sarskilltboende" type="xs:boolean" minOccurs="1">
+              <xs:element name="hemmaboende" type="xs:boolean" minOccurs="1">
               </xs:element>
   
               <xs:element name="dosapoteksid" type="xs:string" minOccurs="1">
@@ -549,13 +563,13 @@
               <xs:element name="Patientinformation" type="PatientinfoResponse" minOccurs="1" maxOccurs="1">
               </xs:element>
                   
-              <xs:element name="Boendeinformation" type="BoendeinfoResponse" minOccurs="0" maxOccurs="1">
+              <xs:element name="Hemmaboendeinformation" type="BoendeinfoResponse" minOccurs="0" maxOccurs="1">
               </xs:element>
   
               <xs:element name="Tillfalligadress" type="BoendeinfoResponse" minOccurs="0" maxOccurs="1">
               </xs:element>
   
-              <xs:element name="Sarskilltboendeinformation" type="SarskilltboendeinfoResponse" minOccurs="0" maxOccurs="1">
+              <xs:element name="Leveransadressinformation" type="LeveransadressinfoResponse" minOccurs="0" maxOccurs="1">
               </xs:element>
   
               <xs:element name="Kontaktinformation" type="KontaktinfoResponse" minOccurs="1" maxOccurs="1">
@@ -597,10 +611,10 @@
           	type="VardtagarStatusEnum" minOccurs="1" maxOccurs="1">
         	</xs:element>
               
-        	<xs:element name="frantid" type="xs:dateTime" minOccurs="1">
+        	<xs:element name="frantid" type="xs:dateTime" minOccurs="0">
         	</xs:element>
   
-        	<xs:element name="tilltid" type="xs:dateTime" minOccurs="1">
+        	<xs:element name="tilltid" type="xs:dateTime" minOccurs="0">
         	</xs:element>            
   
           </xs:sequence>
