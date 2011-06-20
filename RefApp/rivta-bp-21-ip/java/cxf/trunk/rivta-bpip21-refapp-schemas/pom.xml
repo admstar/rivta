@@ -1,0 +1,93 @@
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. The ASF licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>rivta-bpip21-refapp-schemas</artifactId>
+  <packaging>jar</packaging>	
+	<name>${pom.artifactId}</name>
+  <url>http://rivta.forge.osor.eu</url>
+
+	<parent>
+		<groupId>se.skl.rivta.bpip21.refapp</groupId>
+		<artifactId>rivta-bpip21-refapp</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	
+	<properties>
+		<schema.path>${basedir}/src/main/resources/schemas</schema.path>
+	</properties>
+
+	<dependencies>
+	</dependencies>
+
+	<build>
+		<plugins>
+            <plugin>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-codegen-plugin</artifactId>
+				<version>${cxf.version}</version>
+				<executions>
+					<execution>
+						<id>generate-sources</id>
+						<phase>generate-sources</phase>
+						<configuration>
+							<sourceRoot>${basedir}/target/generated/src/main/java</sourceRoot>
+							<wsdlOptions>
+								
+								<wsdlOption>
+									<extraargs>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:riv:itintegration:registry:1=se.skl.riv.itintegration.registry.v1
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<!--
+										  Note: be careful when changing this - must be in sync for all schemas generations in this namespace!
+										-->
+										<extraarg>
+											urn:riv:crm:scheduling:1=se.skl.crm.scheduling.v1
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:riv:crm:scheduling:1.1=se.skl.crm.scheduling.v1
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:riv:crm:scheduling:MakeBookingResponder:1=se.skl.riv.crm.scheduling.makebookingresponder.v1
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:riv:crm:scheduling:MakeBooking:1:rivtabpip21=se.skl.riv.crm.scheduling.makebooking.v1.rivtabpip21
+										</extraarg>
+									</extraargs>
+									<wsdl>${schema.path}/interactions/MakeBookingInteraction/MakeBookingInteraction_1.1_rivtabpip21.wsdl</wsdl>
+								</wsdlOption>
+							</wsdlOptions>
+						</configuration>
+						<goals>
+							<goal>wsdl2java</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+</project>
