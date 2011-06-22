@@ -1,6 +1,10 @@
 import groovy.io.FileType
 
 // Skriptet startas i rot-mappen i den uppackade zip-filen
+// Skriptet kopierar filerna i från ApSe:s distribution till den struktur som gäller för RIVTA. 
+// Kataloger som redan finns skapas inte om.
+// En fil med samma namn i destinationsstrukturen, tas filen bort innan den nya kopieras in.
+//
 // Uppdatera TARGET_ROOT_DIR och SOURCE_CORE_COMPONENTS_DIR med dina lokala sökvägar
 class Constants {
 	def DOMAIN_NAME="se.apotekensservice"
@@ -24,37 +28,30 @@ new File(c.SOURCE_ROOT_DIR).eachDir { subDomainSourceDir ->
 def createSubDomainStructureAndContent(def subDomainSourceDir, Constants c) {
 	// Create target subdomain folder
 	def targetSubDomainDirPath = "${c.TARGET_ROOT_DIR}/${subDomainSourceDir.name}"
-	new File(targetSubDomainDirPath).mkdir()
-	println "Created subdomain directory " + targetSubDomainDirPath
+	mkMissingDir(targetSubDomainDirPath)
 	
 	// Create trunk/branches/tags folders
-	def domainDir = new File(targetSubDomainDirPath)
-	new File("${targetSubDomainDirPath}/trunk").mkdir()
-	new File("${targetSubDomainDirPath}/tags").mkdir()
-	new File("${targetSubDomainDirPath}/branches").mkdir()
-	println "Created trunk, tags and branches in " + targetSubDomainDirPath
+	// def domainDir = new File(targetSubDomainDirPath)
+	mkMissingDir("${targetSubDomainDirPath}/trunk")
+	mkMissingDir("${targetSubDomainDirPath}/tags")
+	mkMissingDir("${targetSubDomainDirPath}/branches")
 	
 	// Create Schemas folder
-	def schemasDirPath = "${domainDir.path}/trunk/schemas"
-	new File(schemasDirPath).mkdir()
-	println "Created schema directory: " + schemasDirPath
+	def schemasDirPath = "${targetSubDomainDirPath}/trunk/schemas"
+	mkMissingDir(schemasDirPath)
 	
 	// Create core_components folder
 	def coreComponentDirPath = "${schemasDirPath}/core_components"
-	new File(coreComponentDirPath).mkdir()
-	println "Created core_components directory: " + coreComponentDirPath
+	mkMissingDir(coreComponentDirPath)
 	
 	// Copy all common component files from source dir to target dir
 	new File(c.SOURCE_CORE_COMPONENTS_DIR).eachFile(FileType.FILES) {core_component ->
-		
-		new File("${coreComponentDirPath}/${core_component.name}") << core_component.bytes
-		println "Copied " + core_component.name + " to directory " + coreComponentDirPath
+		copyFileWithOverwright(core_component, "${coreComponentDirPath}/${core_component.name}")		
 	}
 	
 	// Copy the service domain common schema into the target common components folder
 	def domain_core_components_schema_file_name = "${c.DOMAIN_NAME}_${subDomainSourceDir.name}_${c.MAJOR_VERSION}.${c.MINOR_VERSION}.xsd"
-	new File("${coreComponentDirPath}/${domain_core_components_schema_file_name}") << new File("${subDomainSourceDir.path}/${domain_core_components_schema_file_name}").bytes
-	println "Copied service schema into file " + "${coreComponentDirPath}/${domain_core_components_schema_file_name}"
+	copyFileWithOverwright("${subDomainSourceDir.path}/${domain_core_components_schema_file_name}", "${coreComponentDirPath}/${domain_core_components_schema_file_name}")
 	
 	// Create interaction directory
 	def interactionsDirPath = "${schemasDirPath}/interactions"
@@ -72,13 +69,34 @@ def createSubDomainStructureAndContent(def subDomainSourceDir, Constants c) {
 			println "Created service interaction directory: " + serviceInteractionDirPath
 			
 			// Copy wsdl into service interaction directory
-			new File("${serviceInteractionDirPath}/${sourceFile.name}") << sourceFile.bytes
-			println "Created target wsdl: " + "${serviceInteractionDirPath}/${sourceFile.name}"
+			copyFileWithOverwright(sourceFile ,"${serviceInteractionDirPath}/${sourceFile.name}")
 			
 			// Copy service schema file
 			def serviceSchemaFileName = "${serviceContractName}Responder_${c.MAJOR_VERSION}.${c.MINOR_VERSION}.xsd"
-			new File("${serviceInteractionDirPath}/${serviceSchemaFileName}") << new File("${subDomainSourceDir.path}/${serviceSchemaFileName}").bytes		
-			println "Created target service schema: " + "${serviceInteractionDirPath}/${serviceSchemaFileName}"	
+			copyFileWithOverwright("${subDomainSourceDir.path}/${serviceSchemaFileName}", "${serviceInteractionDirPath}/${serviceSchemaFileName}")
 		}
+	}
+}
+
+def copyFileWithOverwright(String sourcePath, String targetPath) {
+		File sourceFile = new File(sourcePath)
+		copyFileWithOverwright(sourceFile,targetPath)
+}
+
+def copyFileWithOverwright(File sourceFile, String targetPath) {
+		def newFile = new File(targetPath)
+		if (newFile.delete()) {		
+			println "Existing file deleted: " + targetPath
+		}
+		// newFile.createNewFile()
+		newFile << sourceFile.bytes
+		println "Created file: ${targetPath}"
+}
+
+def mkMissingDir(String path) {
+	def dir = new File(path)
+	if (!dir.exists()) {
+		dir.mkdir()
+		println "Created directory: ${path}"	
 	}
 }
