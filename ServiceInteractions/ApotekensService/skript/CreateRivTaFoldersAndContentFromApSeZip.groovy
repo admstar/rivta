@@ -31,7 +31,6 @@ def createSubDomainStructureAndContent(def subDomainSourceDir, Constants c) {
 	mkMissingDir(targetSubDomainDirPath)
 	
 	// Create trunk/branches/tags folders
-	// def domainDir = new File(targetSubDomainDirPath)
 	mkMissingDir("${targetSubDomainDirPath}/trunk")
 	mkMissingDir("${targetSubDomainDirPath}/tags")
 	mkMissingDir("${targetSubDomainDirPath}/branches")
@@ -88,7 +87,6 @@ def copyFileWithOverwright(File sourceFile, String targetPath) {
 		if (newFile.delete()) {		
 			println "Existing file deleted: " + targetPath
 		}
-		// newFile.createNewFile()
 		newFile << sourceFile.bytes
 		println "Created file: ${targetPath}"
 }
