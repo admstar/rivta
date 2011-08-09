@@ -45,5 +45,5 @@ SET SCHEMAS=%W1% %X1% %W2% %X2% %W3% %X3% %W4% %X4% %W5% %X5% %W6% %X6% %W7% %X7
 
 
 REM CD wcf
-ECHO Generating Service contract .Net Binding interfaces and classes for inera:ior Release 1.0
+ECHO Generating Service contract .Net Binding interfaces and classes for druglogistics.dosedispensing Release 1.0
 ECHO I DotNetprojektet ska du ta lagga till referens till System.ServiceModel
