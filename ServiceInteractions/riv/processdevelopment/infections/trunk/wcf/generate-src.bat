@@ -22,8 +22,8 @@
 CD ..
 SET OUTFILE=/out:wcf\generated-src\InfektionsverktygetRegistrationServicesInteractions.cs
 SET APPCONFIG=/config:wcf\generated-src\app.config
-SET NAMESPACE=/namespace:*,Riv.Infektionsverktyget.ReportingServices.Schemas.v1
-SET SCHEMADIR=..\schemas\interactions
+SET NAMESPACE=/namespace:*,Riv.Infektionsverktyget.RegistrationServices.Schemas.v1
+SET SCHEMADIR=schemas\interactions
 
 SET W1=%SCHEMADIR%\DeleteActivityInteraction\DeleteActivityInteraction_1.0_rivtabp20.wsdl 
 SET X1=%SCHEMADIR%\DeleteActivityInteraction\*.xsd 
@@ -55,7 +55,9 @@ SET X9=%SCHEMADIR%\ProcessLaboratoryReportInteraction\*.xsd
 SET W10=%SCHEMADIR%\ProcessPrescriptionReasonInteraction\ProcessPrescriptionReasonInteraction_1.0_rivtabp20.wsdl 
 SET X10=%SCHEMADIR%\ProcessPrescriptionReasonInteraction\*.xsd 
 
-SET X11=..\schemas\core_components\*.xsd
+SET X11=schemas\core_components\*.xsd
+
+ECHO %W1%
 
 SET SCHEMAS=%W1% %X1% %W2% %X2% %W3% %X3% %W4% %X4% %W5% %X5% %W6% %X6% %W7% %X7% %W8% %X8% %W9% %X9% %W10% %X10% %X11%
 
