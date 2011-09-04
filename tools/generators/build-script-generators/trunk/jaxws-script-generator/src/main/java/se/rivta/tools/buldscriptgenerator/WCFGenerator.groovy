@@ -1,9 +1,8 @@
 #!/usr/bin/env groovy
 
-package se.skl.tp.rivtatools
+package se.rivta.tools.buldscriptgenerator
 
 import groovy.io.FileType
-
 
 /**
  *Script to generate valid jaxws scripts (pom.xml and wcf bat) to be able to generate JAX-WS services. Run the script to get information on input arguments.
@@ -17,11 +16,37 @@ def getAllFilesMathcing(direcory, pattern){
 }
 
 def getTemplateWzf(baseDir, rivtaProfile){
+	
+	def template = '''
+	@REM ---------------------------------------------------------------------------------
+	@REM Generates c# WCF service contracts (interface), client proxies and wcf config
+	@REM file for crm:scheduling 1.0 WSDLs + XML Schemas, using .Net WCF tool svcuti.exe
+	@REM ---------------------------------------------------------------------------------
+	@REM Licensed to the Apache Software Foundation (ASF) under one
+	@REM or more contributor license agreements. See the NOTICE file
+	@REM distributed with this work for additional information
+	@REM regarding copyright ownership. Inera AB licenses this file
+	@REM to you under the Apache License, Version 2.0 (the
+	@REM "License"); you may not use this file except in compliance
+	@REM with the License. You may obtain a copy of the License at
+	@REM
+	@REM http://www.apache.org/licenses/LICENSE-2.0
+	@REM Unless required by applicable law or agreed to in writing,
+	@REM software distributed under the License is distributed on an
+	@REM "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+	@REM KIND, either express or implied. See the License for the
+	@REM specific language governing permissions and limitations
+	@REM under the License.
+	@REM ---------------------------------------------------------------------------------
+	CD ..
+	
+	'''
+	
 	def wcfDir = "${baseDir}/generated-scripts/wcf"
 	new File(wcfDir).deleteDir()
 	new File(wcfDir).mkdirs()
 
-	def wcfTemplate = new File("${wcfDir}/generate-src-${rivtaProfile}.bat") << new File("src/main/resources/wcf-generate-src-template.bat").asWritable()
+	def wcfTemplate = new File("${wcfDir}/generate-src-${rivtaProfile}.bat") << template
 	return wcfTemplate
 }
 
@@ -116,12 +141,6 @@ def baseDir = new File(args[0])
 def domain = args[1]
 def rivtaProfile = args[2]
 def version = args[3]
-
-///*TEST SETUP*/
-//def baseDir = new File('/Users/hansthunberg/svn-views/rivta/ServiceInteractions/riv/crm/scheduling/trunk')
-//def rivtaProfile = "rivtabp20"
-//def version = "1"
-//def domain = "crm.scheduling"
 
 def pattern = getFilePattern(rivtaProfile, version)
 def wsdlFiles = getAllFilesMathcing(baseDir, pattern)
