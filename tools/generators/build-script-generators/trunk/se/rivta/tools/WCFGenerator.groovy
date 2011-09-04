@@ -11,7 +11,7 @@ import groovy.io.FileType
 def getAllFilesMathcing(direcory, pattern){
 	def filesFound = []
 	direcory.traverse(type:FileType.FILES, nameFilter: ~pattern){ fileFound -> filesFound << fileFound }
-	filesFound.each { fileFound -> println "Files to process: ${fileFound.name}" }
+	filesFound.each { fileFound -> println "File to process: ${fileFound.name}" }
 	return filesFound
 }
 
@@ -143,7 +143,13 @@ def rivtaProfile = args[2]
 def version = args[3]
 
 def pattern = getFilePattern(rivtaProfile, version)
+
 def wsdlFiles = getAllFilesMathcing(baseDir, pattern)
+if (wsdlFiles.isEmpty()){
+	println "NOTE! No wsdl files found under dir ${baseDir}"
+	return
+}
+
 def wcf = getTemplateWzf(baseDir, rivtaProfile)
 
 addJaxWsInformation(wcf, wsdlFiles)
