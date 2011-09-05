@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:ees="urn:riv:se.apotekensservice:ees:1" xmlns="urn:riv:se.apotekensservice:ees:HamtaSignalResponder:1" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:riv:se.apotekensservice:ees:HamtaSignalResponder:1" attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0">
+  <xs:import schemaLocation="../../core_components/se.apotekensservice_ees_1.0.xsd" namespace="urn:riv:se.apotekensservice:ees:1"/>
+  <xs:element name="HamtaSignal" type="HamtaSignalRequestType"/>
+  <xs:element name="HamtaSignalResponse" type="HamtaSignalResponseType"/>
+  <xs:element name="ApplicationException" type="ees:ApplicationException"/>
+  <xs:element name="SystemException" type="ees:SystemException"/>
+  <xs:complexType name="HamtaSignalRequestType">
+    <xs:sequence>
+      <xs:element name="anvandarTyp" type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Anropande användare.
+Apotek = false;
+Förskrivare = true;</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="klientinformation" type="ees:KlientinformationRequest">
+        <xs:annotation>
+          <xs:documentation>Objekt innehållande information om anropande klientsystem.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="personnummer" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Kundens personnummer.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="signalListaTyp" type="xs:int">
+        <xs:annotation>
+          <xs:documentation>
+            <para> Vilken typ av signal lista som skall returneras. Möjliga värden är:
+<itemizedlist>
+                <listitem>0 = Både aktuella och historiska signaler
+returneras</listitem>
+                <listitem>1 = Endast aktuella signaler
+returneras</listitem>
+                <listitem>2 = Endast historiska signaler
+returneras</listitem>
+              </itemizedlist>
+            </para>
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HamtaSignalResponseType">
+    <xs:sequence>
+      <xs:element name="aktuellaSignalerInformationLista" maxOccurs="unbounded" type="ees:SignalInformationResponse" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Lista av aktuella signaler.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="antalAktuellaSignaler" type="xs:int">
+        <xs:annotation>
+          <xs:documentation>Antalet aktuella signaler för kunden.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="antalEjGranskadeLakemedel" type="xs:int">
+        <xs:annotation>
+          <xs:documentation>Antal unika NPL id som resulterat i Ej Granskade Läkemedel.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="antalHistoriskaSignaler" type="xs:int">
+        <xs:annotation>
+          <xs:documentation>Antalen historiska signaler för kunden.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="antalReceptAktuellaSignaler" type="xs:int" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Antalet recept i aktuella signaler.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="antalReceptHistoriskaSignaler" type="xs:int" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Antalet recept i historiska signaler.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="dosKund" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>DosKund.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ejGranskadeLakemedelLista" maxOccurs="unbounded" type="ees:EjGranskadeLakemedelResponse" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Lista av ej granskade läkemedel.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="handlaggareLista" maxOccurs="unbounded" type="ees:HandlaggareResponse" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Lista av handläggare som jobbar med kunden</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="historiskaSignalerInformationLista" maxOccurs="unbounded" type="ees:SignalInformationResponse" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Lista av historiska signaler.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="kundAlder" type="xs:int">
+        <xs:annotation>
+          <xs:documentation>Kundens ålder.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="kundEfternamn" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Kundens efternamn.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="kundFornamn" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Kundens förnamn.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="kundKon" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Kundens kön.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="personnummer" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Kundens personnummer.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="typInformation" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Anger vilken typ av information som ska returneras: Aktuell, historisk eller både och..</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
