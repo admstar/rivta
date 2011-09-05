@@ -1,11 +1,9 @@
 #!/usr/bin/env groovy
 
-package se.rivta.tools
-
 import groovy.io.FileType
 
 /**
- *Script to generate valid jaxws scripts (pom.xml and wcf bat) to be able to generate JAX-WS services. Run the script to get information on input arguments.
+ *Script to generate a scvutil bat file for .Net WCF WSDL-first. Run the script to get information on input arguments.
  */
 
 def getAllFilesMathcing(direcory, pattern){
