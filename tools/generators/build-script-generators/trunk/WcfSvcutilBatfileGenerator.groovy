@@ -18,7 +18,7 @@ def getTemplateWzf(baseDir, rivtaProfile){
 	def template = '''
 	@REM ---------------------------------------------------------------------------------
 	@REM Generates c# WCF service contracts (interface), client proxies and wcf config
-	@REM file for crm:scheduling 1.0 WSDLs + XML Schemas, using .Net WCF tool svcuti.exe
+	@REM file for the WSDLs + XML Schemas of the service domain, using .Net WCF tool svcuti.exe
 	@REM ---------------------------------------------------------------------------------
 	@REM Licensed to the Apache Software Foundation (ASF) under one
 	@REM or more contributor license agreements. See the NOTICE file
@@ -63,14 +63,14 @@ def getRelativeSchemaPath(absoluteSchemaPath){
 
 def buildOutFileNameForWcf(domain){
 	domain += '.Interactions'
-	domain = domain.replaceAll(/\.(\w)/) { fullMatch, firstCharacter -> firstCharacter.toUpperCase() }
+	domain = domain.replaceAll(/\:(\w)/) { fullMatch, firstCharacter -> firstCharacter.toUpperCase() }
 	domain = domain[0].toUpperCase() + domain[1..-1]
 	return "${domain}.cs"
 }
 
 def buildCorrectNamespace(domain,version){
 	namespace = "Riv.${domain}.Schemas"
-	namespace = namespace.replaceAll(/\.(\w)/) { fullMatch, firstCharacter -> "." + firstCharacter.toUpperCase() }
+	namespace = namespace.replaceAll(/\:(\w)/) { fullMatch, firstCharacter -> "." + firstCharacter.toUpperCase() }
 	return namespace += ".v${version}"
 }
 
@@ -118,20 +118,21 @@ def addWcfScriptInformation(wcf, wsdlFiles, domain, version){
 
 
 if( args.size() < 4){
-	println "This is a tool that will generate wcf sources bat. Before running this tool it is important to make sure that the directory "
-	println "structure is correct. This script will assume under the [domainDir] following:"
-	println "/schemas/interaction/<all interaction schemas>"
-	println "/schemas/core_components/<all core schemas>"
+	println "This is a tool that will generate a bat file with a svcutil command. The script requires the directory"
+	println "structure to follow the RIVTA standard: "
+	println "schemas/..."
+	println "    ...interactions/<a folder per service interaction>/<service schemas and wsdl file>"
+	println "    ...core_components/<all core schemas>"
 	println ""
-	println "Required parameters: domain directory [domainDir], domain [domain], RIV TA Profile [rivtaProfile], Version [version] \n"
+	println "Required parameters: domain directory [domainDir], service domain [domain], RIV TA Profile [rivtaProfile], Major version [version] \n"
 	println "PARAMETERS DESCRIPTION:"
 	println "[domainDir] is the base direcory where this script will start working, e.g /repository/rivta/ServiceInteractions/riv/crm/scheduling/trunk "
-	println "[domain] is the name of the domain to process, e.g crm.scheduling"
+	println "[domain] is the name of the service domain to process, e.g crm:scheduling"
 	println "[rivtaprofile], e.g rivtabp20"
-	println "[version], e.g 1 or 2 or 3 etc"
+	println "[version], Major version, e.g 1 or 2 or 3 etc"
 	println ""
 	println "OUTPUT:"
-	println "directory /generated-scripts/jaxws including pom.xml"
+	println "	generated-scripts/wcf/generate-src-<rivtaProfile>.bat"
 	return
 }
 
@@ -153,7 +154,7 @@ def wcf = getTemplateWzf(baseDir, rivtaProfile)
 addJaxWsInformation(wcf, wsdlFiles)
 addWcfScriptInformation(wcf, wsdlFiles, domain, version)
 
-assert "CrmSchedulingInteractions.cs" == buildOutFileNameForWcf("crm.scheduling")
-assert "Riv.Crm.Scheduling.Schemas.v1" == buildCorrectNamespace("crm.scheduling","1")
+assert "CrmSchedulingInteractions.cs" == buildOutFileNameForWcf("crm:scheduling")
+assert "Riv.Crm.Scheduling.Schemas.v1" == buildCorrectNamespace("crm:scheduling","1")
 assert '%SCHEMADIR%/subdomain/Service/Service_1.1_RIVTABP20.wsdl' == getRelativeSchemaPath("/absolute/path/to/a/service/trunk/schemas/subdomain/Service/Service_1.1_RIVTABP20.wsdl")
 assert ".*_1.*(?i)rivtabp21/.wsdl" == getFilePattern("rivtabp21", "1").replaceAll("\\\\","/")

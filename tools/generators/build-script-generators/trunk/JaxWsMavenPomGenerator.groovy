@@ -12,7 +12,7 @@ import org.dom4j.io.SAXReader
  *Script to generate a jaxws pom.xml from a rivta-structured service domain. Run the script to get information on input arguments.
  */
 
-def getAllFilesMathcing(direcory, pattern){
+def getAllFilesMatching(direcory, pattern){
 	def filesFound = []
 	direcory.traverse(type:FileType.FILES, nameFilter: ~pattern){ fileFound -> filesFound << fileFound }
 	filesFound.each { fileFound -> println "File to process: ${fileFound.name}" }
@@ -104,7 +104,7 @@ def getTemplatePom(){
 		</build>
 	</project>'''
 	
-	def pomTemplate = new XmlSlurper().parseText(template).asWritable()
+	def pomTemplate = new XmlSlurper().parseText(template) //.asWritable()
 	return pomTemplate
 }
 
@@ -114,8 +114,8 @@ def getFilePattern(rivtaProfile, version){
 }
 
 def updateArtifactInformation(pom, domain, version){
-	pom.artifactId = domain.replace(/./,"-") + "-schemas"
-	pom.name = domain.replace(/./,"-") + "-schemas"
+	pom.artifactId = domain.replace(/:/,"-") + "-schemas"
+	pom.name = domain.replace(/:/,"-") + "-schemas"
 	pom.version = version
 }
 
@@ -181,24 +181,28 @@ def printPom(baseDir, pom, rivtaProfile){
 	}
 
 	String newPom = XmlUtil.serialize(smb)
-	new File("${jaxwsDir}/pom_${rivtaProfile}.xml").write(newPom, "UTF-8");
+	new File("${jaxwsDir}/pom.xml").write(newPom, "UTF-8");
 }
 
 if( args.size() < 4){
-	println "This is a tool that will generate pom.xml. Before running this tool it is important to make sure that the directory "
-	println "structure is correct. This script will assume under the [domainDir] following:"
-	println "/schemas/interaction/<all interaction schemas>"
-	println "/schemas/core_components/<all core schemas>"
+	println "For this script to work, you need Groovy version 1.8.1 or higher."
+	println "This is a script that will generate a pom.xml. The script requires the directory"
+	println "structure to follow the RIVTA standard: "
+	println "schemas/..."
+	println "    ...interactions/<a folder per service interaction>/<service schemas and wsdl file>"
+	println "    ...core_components/<all core schemas>"
 	println ""
-	println "Required parameters: domain directory [domainDir], domain [domain], RIV TA Profile [rivtaProfile], Version [version] \n"
+	println "Required parameters: service domain root directory [domainDir], service domain [domain], RIV TA Profile [rivtaprofile], Major version [version] \n"
 	println "PARAMETERS DESCRIPTION:"
-	println "[domainDir] is the base direcory where this script will start working, e.g /repository/rivta/ServiceInteractions/riv/crm/scheduling/trunk "
-	println "[domain] is the name of the domain to process, e.g crm.scheduling"
-	println "[rivtaprofile], e.g rivtabp20"
-	println "[version], e.g 1 or 2 or 3 etc"
+	println "[domainDir] is the base direcory where this script will start working, i.e. the parent directory of the 'schemas' directory "
+	println "[domain] is the name of the service domain to process, e.g crm:scheduling"
+	println "[rivtaprofile], the short-name of the RIVTA profile e.g rivtabp20"
+	println "[version], the major version of the service domain e.g 1, 2 or 3 etc"
+	println "example invocation:"
+	println "	groovy JaxWsMavenPomGenerator . ehr:scheduling rivtabp20 1"
 	println ""
 	println "OUTPUT:"
-	println "directory /generated-scripts/jaxws including pom.xml"
+	println "generated-scripts/jaxws/pom.xml"
 	return
 }
 
@@ -209,7 +213,7 @@ def version = args[3]
 
 def pattern = getFilePattern(rivtaProfile, version)
 
-def wsdlFiles = getAllFilesMathcing(baseDir, pattern)
+def wsdlFiles = getAllFilesMatching(baseDir, pattern)
 if (wsdlFiles.isEmpty()){
 	println "NOTE! No wsdl files found under dir ${baseDir}"
 	return
