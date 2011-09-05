@@ -1,8 +1,5 @@
 #!/usr/bin/env groovy
 
-package se.rivta.tools
-
-
 import groovy.io.FileType
 import groovy.xml.StreamingMarkupBuilder
 import groovy.xml.XmlUtil
@@ -12,7 +9,7 @@ import org.dom4j.io.SAXReader
 
 
 /**
- *Script to generate valid jaxws scripts (pom.xml and wcf bat) to be able to generate JAX-WS services. Run the script to get information on input arguments.
+ *Script to generate a jaxws pom.xml from a rivta-structured service domain. Run the script to get information on input arguments.
  */
 
 def getAllFilesMathcing(direcory, pattern){
