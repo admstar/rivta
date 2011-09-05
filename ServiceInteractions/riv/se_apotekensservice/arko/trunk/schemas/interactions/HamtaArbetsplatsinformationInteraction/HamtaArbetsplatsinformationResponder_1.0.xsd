@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:arko="urn:riv:se.apotekensservice:arko:1" xmlns="urn:riv:se.apotekensservice:arko:HamtaArbetsplatsinformationResponder:1" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:riv:se.apotekensservice:arko:HamtaArbetsplatsinformationResponder:1" attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0">
+  <xs:import schemaLocation="../../core_components/se.apotekensservice_arko_1.0.xsd" namespace="urn:riv:se.apotekensservice:arko:1"/>
+  <xs:element name="HamtaArbetsplatsinformation" type="HamtaArbetsplatsinformationRequestType"/>
+  <xs:element name="HamtaArbetsplatsinformationResponse" type="HamtaArbetsplatsinformationResponseType"/>
+  <xs:element name="ApplicationException" type="arko:ApplicationException"/>
+  <xs:element name="SystemException" type="arko:SystemException"/>
+  <xs:complexType name="HamtaArbetsplatsinformationRequestType">
+    <xs:sequence>
+      <xs:element nillable="false" name="arbetsplatskodLista" maxOccurs="unbounded" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Arbetsplatskoder för de arbetsplatser som ska 
+kontrolleras och vars information ska returneras.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HamtaArbetsplatsinformationResponseType">
+    <xs:sequence>
+      <xs:element name="arbetsplatsInfoLista" maxOccurs="unbounded" type="arko:ArbetsplatsInfoResponse" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Lista innehållande ett eller flera ArbetsplatsInfo, d.v.s. 
+information om de efterfrågade förskrivarna.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

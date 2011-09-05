@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:ees="urn:riv:se.apotekensservice:ees:1" xmlns="urn:riv:se.apotekensservice:ees:HanteraKundResponder:1" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:riv:se.apotekensservice:ees:HanteraKundResponder:1" attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0">
+  <xs:import schemaLocation="../../core_components/se.apotekensservice_ees_1.0.xsd" namespace="urn:riv:se.apotekensservice:ees:1"/>
+  <xs:element name="HanteraKund" type="HanteraKundRequestType"/>
+  <xs:element name="HanteraKundResponse" type="HanteraKundResponseType"/>
+  <xs:element name="ApplicationException" type="ees:ApplicationException"/>
+  <xs:element name="SystemException" type="ees:SystemException"/>
+  <xs:complexType name="HanteraKundRequestType">
+    <xs:sequence>
+      <xs:element nillable="false" name="hanteringsStatus" type="xs:int">
+        <xs:annotation>
+          <xs:documentation>Om hanteringsStatus är satt till 1 så kommer handläggaren läggas till i kundens
+lista av handläggare. Om 0 så kommer handläggaren tas bort från
+kundens lista av handläggare.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="klientinformation" type="ees:KlientinformationRequest">
+        <xs:annotation>
+          <xs:documentation>Objekt innehållande information om anropande klientsystem.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="personnummer" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Kundens personnummer.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HanteraKundResponseType">
+    <xs:sequence>
+      <xs:element name="handlaggareLista" maxOccurs="unbounded" type="ees:HandlaggareResponse" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Om hanteringsStatus är satt till 1 returneras en lista av handläggare som
+jobbar med kunden.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element nillable="false" name="personnummer" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Kundens personnummer.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any processContents="lax" maxOccurs="unbounded" namespace="##other" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="urn:riv:se.apotekensservice:arko:1"
+           targetNamespace="urn:riv:se.apotekensservice:arko:1"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="1.0">
+
+            
+    <xs:annotation>
+        <xs:documentation>
+            Beskrivning: Meddelandetyper som är gemensamma för arko.
+            Revisioner: 2011-04-05, version 1.0
+        </xs:documentation>
+    </xs:annotation>
+
+    
+        
+                
+        <xs:complexType name="ArbetsplatsInfoResponse">
+            <xs:sequence>                
+                <xs:element name="arbetsplatsNamn" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>ArbetsplatsNamn</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="arbetsplatsOrt" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>ArbetsplatsOrt</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="arbetsplatskod" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Arbetsplatskod</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="faxnummer" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Faxnummer</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="giltigSlut" type="xs:dateTime" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Slutdatum för arbetsplatsens giltighetsperiod.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="giltigStart" type="xs:dateTime" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Startdatum för arbetsplatsens giltighetsperiod.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="postadress" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Postadress</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="postnummer" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Postnummer</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="telefonnummer1" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Telefonnummer 1</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="telefonnummer2" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Telefonnummer 2</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+    
+    <xs:complexType name="ApplicationException">
+        <xs:annotation>
+            <xs:documentation>Applikationsfel</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="code" type="xs:string"/>
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SystemException">
+        <xs:annotation>
+            <xs:documentation>Systemfel</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="code" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="char">
+        <xs:restriction base="xs:string">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

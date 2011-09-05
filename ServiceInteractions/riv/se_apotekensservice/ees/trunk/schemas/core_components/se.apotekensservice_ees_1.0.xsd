@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="urn:riv:se.apotekensservice:ees:1"
+           targetNamespace="urn:riv:se.apotekensservice:ees:1"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="1.0">
+
+            
+    <xs:annotation>
+        <xs:documentation>
+            Beskrivning: Meddelandetyper som är gemensamma för ees.
+            Revisioner: 2011-04-05, version 1.0
+        </xs:documentation>
+    </xs:annotation>
+
+    
+        
+                
+        <xs:complexType name="BidragandeLakemedelResponse">
+            <xs:sequence>                
+                <xs:element name="bidragandeNplId" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Bidragande NplId</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="lakemedelsMappningsKod" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation><para> Läkemedels mappnings kod i DUR-Engine. <itemizedlist>
+<listitem>'EX' = Exakt mappning (exact match)</listitem> <listitem>'SU' =
+Surrogat mappning (surugate)</listitem> <listitem>'NO' = Ingen mappning
+kunde göras (no match)</listitem> </itemizedlist> </para></xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+    
+        
+                
+        <xs:complexType name="EjGranskadeLakemedelResponse">
+            <xs:sequence>                
+                <xs:element name="atcKod" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>ATC-kod för Läkemedlet.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="atcKodBeskrivning" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>ATC-kod beskrivning för Läkemedlet.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="lakemedelsForm" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Läkemedlet beredningsform.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="lakemedelsNamn" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Namn på Läkemedlet.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="lakemedelsStyrka" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Styrka på Läkemedlet.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="orsak" type="xs:int" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation><para> Anlednig till att läkedlet inte har kunnat granskats av
+EES.<itemizedlist> <listitem>1 = Läkemedlet har ej kunnats
+mappats</listitem> <listitem>2 = Doskontroll ej utförd</listitem>
+</itemizedlist> </para></xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="senastUtfardardatum" type="xs:dateTime" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Datum då denna Läkemedlet senast förskrevs för kunden</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+    
+                
+        <xs:complexType name="HamtaEjGranskadeLakemedelRequest">
+            <xs:sequence>                
+                <xs:element name="klientinformation" type="KlientinformationRequest" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Objekt innehållande information om anropande klientsystem.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="personnummer" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Kundens personnummer.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+                
+        <xs:complexType name="HamtaEjGranskadeLakemedelResponse">
+            <xs:sequence>                
+                <xs:element name="ejGranskadeLakemedelLista" type="EjGranskadeLakemedelResponse" nillable="false" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>Lista av ej granskade läkemedel.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="personnummer" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Kundens personnummer.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+    
+        
+                
+        <xs:complexType name="HandlaggareResponse">
+            <xs:sequence>                
+                <xs:element name="handlaggareId" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Handläggare identifikation</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="klientSystem" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Klient system som handläggaren använder.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+    
+        
+                
+        <xs:complexType name="InteraktionDetaljerResponse">
+            <xs:sequence>                
+                <xs:element name="allvarlighetsgrad" type="xs:int" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Allvarlighetsgrad</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="allvarlighetsgradKlartext" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Allvarlighetsgrad i klartext</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="bidragandeLakemedelLista" type="BidragandeLakemedelResponse" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>Lista med lakemedel som bidrog till interaktionen.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="fdbId" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>FDB-id</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="interaktionsTypBeskrivning" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Interaktions typ beskrivning</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="signalBeskrivningLang" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Signalbeskrivning i lång form</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+    
+        
+                
+        <xs:complexType name="InteraktionResponse">
+            <xs:sequence>                
+                <xs:element name="interaktionDetaljerLista" type="InteraktionDetaljerResponse" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>Lista med interaktionsdetaljer</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="lakemedelsMappningsKod" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation><para> Läkemedels mappnings kod i DUR-Engine. <itemizedlist>
+<listitem>'EX' = Exakt mappning (exact match)</listitem> <listitem>'SU' =
+Surrogat mappning (surugate)</listitem> <listitem>'NO' = Ingen mappning
+kunde göras (no match)</listitem> </itemizedlist> </para></xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="nplId" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Unikt NPL-id</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="status" type="xs:int" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Status för körning i DUR-Engine. 0 = Larm, 1 = Ej larm, 2 = Error</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+    
+                
+        <xs:complexType name="KlientinformationRequest">
+            <xs:sequence>                
+                <xs:element name="anvandare" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Unikt användarid i anropande system.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="session" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Sessionens id i anropande system.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="system" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>GLN-kod för anropande system.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+        
+    
+        
+                
+        <xs:complexType name="ReceptInformationResponse">
+            <xs:sequence>                
+                <xs:element name="atcKod" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>ATC-kod för Läkemedlet.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="atcKodBeskrivning" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>ATC-kod beskrivning för Läkemedlet.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="dagligMangd" type="xs:double" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Förskriven daglig mängd.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="dagligMangdBeraknad" type="xs:boolean" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Flagga som indikerar om daglig mängd är beräknad av EES-systemet eller
+hämtad från RR.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="lakemedelsForm" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Läkemedlets beredningsform.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="lakemedelsMappningsKod" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation><para> Läkemedels mappnings kod i DUR-Engine. <itemizedlist>
+<listitem>'EX' = Exakt mappning (exact match)</listitem> <listitem>'SU' =
+Surrogat mappning (surugate)</listitem> <listitem>'NO' = Ingen mappning
+kunde göras (no match)</listitem> </itemizedlist> </para></xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="lakemedelsNamn" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Namn på Läkemedlet.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="lakemedelsStyrka" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Styrka och enhet på Läkemedlet.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="receptId" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Recept Id (RR)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="senastExpeditionsDatum" type="xs:dateTime" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Datum för den senaste expeditionen.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="signalensHuvudrecept" type="xs:boolean" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Flagga som indikerar huruvida detta var det recept som utlöste
+EES-körningen.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="utfardardatum" type="xs:dateTime" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Receptets utfärdardatum</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="uttag" type="xs:boolean" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Flagga som indikerar om detta avser ett faktiskt uttag.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="uttagsMangd" type="xs:float" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Mängden i ett uttag.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="uttagsMangdBeraknad" type="xs:boolean" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Flagga som anger om uttagsmängden är beräknad av EES, eller kommer från
+RR.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="uttagsMangdEnhet" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Enhet för uttagsmängden.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+    
+        
+                
+        <xs:complexType name="SignalInformationResponse">
+            <xs:sequence>                
+                <xs:element name="fdbMonografiId" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>FDB monografi id</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="handlaggareId" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Handläggare ID som stängde signal.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="handlaggareKommentar" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Kommentar från handläggare när signal stängdes.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="kategoriText" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Kategori text som användes när signal stängdes.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="klientSystem" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Klient system som stängde signal.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="kortSignalBeskrivning" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Kort signal beskrivning</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="langSignalBeskrivning" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Lång signal beskrivning</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="monografiText" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Monografi texten på svenska. Om svensk text inte finns används engelsk
+text.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="receptInformationLista" type="ReceptInformationResponse" nillable="false" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>Lista av receptinformation.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="regelBeskrivning" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Beskrivning av regeln som orsakade signalen.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="regelIdentifierare" type="xs:int" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Identifierare för regeln som orsakade signalen.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="riskNiva" type="xs:int" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Beräknad risk poäng för denna signal.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="signalId" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Signal ID.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="signalKategori" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation><para> Signal kategorier. <itemizedlist> <listitem>'DD1' = Allvarlig
+läkemedelsinteraktion (Drug-Drug Interaction)</listitem> <listitem>'DD2'
+= Läkemedelsinteraktion (Drug-Drug Interaction)</listitem>
+<listitem>'DD3' = Läkemedelsinteraktion (Drug-Drug
+Interaction)</listitem> <listitem>'DDS' = Läkemedelsinteraktion hos äldre
+(Senior Drug-Drug Interactions)</listitem> <listitem>'HD2' = Hög dos
+(Maximum Daily Dose)</listitem> <listitem>'HDS' = Hög dos för äldre
+(Senior Maximum Daily Dose)</listitem> <listitem>'HDP' = Hög dos för barn
+(Pediatric Maximum Daily Dose)</listitem> <listitem>'TD1' =
+Dubbelmedicinering (Duplicate Therapy)</listitem> <listitem>'ER1' =
+Dubbelmedicinering (Early Fill)</listitem> <listitem>'DXI' = Påverkar
+annan sjukdom (Drug-Disease Inferred)</listitem> <listitem>'PAS' =
+Åldersvarning, äldre (Senior Drug Age)</listitem> <listitem>'PAP' =
+Åldersvarning, barn (Pediatric Drug Age, up to age 18)</listitem>
+<listitem>'GSX' = Könsspecifik läkemedelsbehandling
+(Drug-Gender)</listitem> </itemizedlist> </para></xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="signalKategoriBeskrivning" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Signal kategorier beskrivning.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="signalSkapandeDatum" type="xs:dateTime" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Datum då signalen skapades.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="signalStatus" type="xs:int" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation><para> Signal status. <itemizedlist> <listitem>0 = Aktuellt signal</listitem>
+<listitem>1 = Historiskt signal</listitem> </itemizedlist> </para></xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="stangdDatum" type="xs:dateTime" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Datum när signal stängdes.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+    
+        
+                
+        <xs:complexType name="SignalStangningsKategoriResponse">
+            <xs:sequence>                
+                <xs:element name="kategoriId" type="xs:int" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Kategori ID.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="kategoriText" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Kategori Text.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+            </xs:sequence>
+        </xs:complexType>
+    
+    
+    <xs:complexType name="ApplicationException">
+        <xs:annotation>
+            <xs:documentation>Applikationsfel</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="code" type="xs:string"/>
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SystemException">
+        <xs:annotation>
+            <xs:documentation>Systemfel</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="code" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="char">
+        <xs:restriction base="xs:string">
+            <xs:length value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>
