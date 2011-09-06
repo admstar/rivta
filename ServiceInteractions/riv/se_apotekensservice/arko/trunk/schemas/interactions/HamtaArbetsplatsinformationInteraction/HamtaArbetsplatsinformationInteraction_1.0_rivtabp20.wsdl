@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions xmlns:argos="urn:riv:inera.se.apotekensservice:argos:1" xmlns:spdr="urn:riv:inera:se.apotekensservice:arko:HamtaArbetsplatsinformationResponder:1" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="urn:riv:inera:inera:se.apotekensservice:arko:HamtaArbetsplatsinformation:1:rivtabp20" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="urn:riv:inera:inera:se.apotekensservice:arko:HamtaArbetsplatsinformation:1:rivtabp20" name="HamtaArbetsplatsinformationInteraction">
+<wsdl:definitions xmlns:argos="urn:riv:inera.se.apotekensservice:argos:1" xmlns:spdr="urn:riv:se.apotekensservice:arko:HamtaArbetsplatsinformationResponder:1" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="urn:riv:inera:se.apotekensservice:arko:HamtaArbetsplatsinformation:1:rivtabp20" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="urn:riv:inera:se.apotekensservice:arko:HamtaArbetsplatsinformation:1:rivtabp20" name="HamtaArbetsplatsinformationInteraction">
   <xs:annotation>
     <xs:documentation>
             Beskrivning: Tjänstekontraktet som avser att konkretisera tillämpningen av RIV.
@@ -11,22 +11,14 @@
         </xs:documentation>
   </xs:annotation>
   <wsdl:types>
-    <xs:schema targetNamespace="urn:riv:inera:inera:se.apotekensservice:arko:HamtaArbetsplatsinformation:1:rivtabp20">
+    <xs:schema targetNamespace="urn:riv:inera:se.apotekensservice:arko:HamtaArbetsplatsinformation:1:rivtabp20">
       <xs:import schemaLocation="HamtaArbetsplatsinformationResponder_1.0.xsd" namespace="urn:riv:se.apotekensservice:arko:HamtaArbetsplatsinformationResponder:1"/>
-      <xs:import schemaLocation="../../core_components/ws-addressing-1.0.xsd" namespace="http://www.w3.org/2005/08/addressing"/>
-      <xs:import schemaLocation="../../core_components/ArgosHeader_1.0.xsd" namespace="urn:riv:inera.se.apotekensservice:argos:1"/>
       <xs:import schemaLocation="../../core_components/ws-addressing-1.0.xsd" namespace="http://www.w3.org/2005/08/addressing"/>
       <xs:import schemaLocation="../../core_components/ArgosHeader_1.0.xsd" namespace="urn:riv:inera.se.apotekensservice:argos:1"/>
     </xs:schema>
   </wsdl:types>
   <wsdl:message name="HamtaArbetsplatsinformationRequest">
     <wsdl:part element="spdr:HamtaArbetsplatsinformation" name="parameters"/>
-    <wsdl:part element="wsa:To" name="LogicalAddress">
-      <wsdl:documentation>Orgnr of Apotekens Service AB</wsdl:documentation>
-    </wsdl:part>
-    <wsdl:part element="argos:ArgosHeader" name="ArgosHeader">
-      <wsdl:documentation>Argos header of Apotekens Service AB. Check documentation regarding mandatory for this specific service interaction</wsdl:documentation>
-    </wsdl:part>
     <wsdl:part name="LogicalAddress" element="wsa:To">
       <wsdl:documentation>Orgnr of Apotekens Service AB</wsdl:documentation>
     </wsdl:part>
@@ -57,8 +49,6 @@
       <soap:operation soapAction="urn:riv:se.apotekensservice:arko:HamtaArbetsplatsinformationResponder:1:HamtaArbetsplatsinformation"/>
       <wsdl:input>
         <soap:body use="literal" parts="parameters"/>
-        <soap:header message="HamtaArbetsplatsinformationRequest" use="literal" part="LogicalAddress"/>
-        <soap:header message="HamtaArbetsplatsinformationRequest" use="literal" part="ArgosHeader"/>
         <soap:header use="literal" message="HamtaArbetsplatsinformationRequest" part="LogicalAddress"/>
         <soap:header use="literal" message="HamtaArbetsplatsinformationRequest" part="ArgosHeader"/>
       </wsdl:input>
