@@ -13,7 +13,7 @@ def getAllFilesMathcing(direcory, pattern){
 	return filesFound
 }
 
-def getTemplateWzf(baseDir, rivtaProfile){
+def getTemplateWcf(baseDir, rivtaProfile){
 	
 	def template = '''
 	@REM ---------------------------------------------------------------------------------
@@ -74,7 +74,7 @@ def buildCorrectNamespace(domain,version){
 	return namespace += ".v${version}"
 }
 
-def addJaxWsInformation(wcf, wsdlFiles){
+def addSchemaAndWsdlVariableAssignments(wcf, wsdlFiles){
 
 	def newLine = System.getProperty("line.separator")
 	
@@ -83,6 +83,7 @@ def addJaxWsInformation(wcf, wsdlFiles){
 	wsdlFiles.eachWithIndex { wsdlFile, pos ->
 		println "WSDL Schema to process for wcf: ${wsdlFile.name}"
 		def slashyPath = getRelativeSchemaPath(wsdlFile.absolutePath).replaceAll("/","\\\\")
+		wcf.append("SET SCHEMADIR=schemas" + newLine)
 		wcf.append("SET W${pos}=%SCHEMADIR%" + slashyPath + newLine)
 		wcf.append("SET X${pos}=%SCHEMADIR%\\interactions\\" + new File(wsdlFile.parent).name + "\\*.xsd" + newLine)
 		wcf.append(newLine)
@@ -106,7 +107,6 @@ def addWcfScriptInformation(wcf, wsdlFiles, domain, version){
 	wcf.append('SET OUTFILE=/out:wcf\\generated-src\\' + buildOutFileNameForWcf(domain) + newLine)
 	wcf.append('SET APPCONFIG=/config:wcf\\generated-src\\app.config' + newLine)
 	wcf.append('SET NAMESPACE=/namespace:*,' + buildCorrectNamespace(domain, version) + newLine)
-	wcf.append('SET SCHEMADIR="schemas\\interactions' + newLine)
 	wcf.append('SET SVCUTIL="svcutil.exe"' + newLine)
 	wcf.append('SET XCORE=%SCHEMADIR%\\core_components\\*.xsd' + newLine)
 	wcf.append('%SVCUTIL% /language:cs %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%'+ newLine)
@@ -130,6 +130,8 @@ if( args.size() < 4){
 	println "[domain] is the name of the service domain to process, e.g crm:scheduling"
 	println "[rivtaprofile], e.g rivtabp20"
 	println "[version], Major version, e.g 1 or 2 or 3 etc"
+	println "example invocation:"
+	println "	groovy WcfSvcutilBatfileGenerator . ehr:scheduling rivtabp20 1"	
 	println ""
 	println "OUTPUT:"
 	println "	generated-scripts/wcf/generate-src-<rivtaProfile>.bat"
@@ -149,9 +151,9 @@ if (wsdlFiles.isEmpty()){
 	return
 }
 
-def wcf = getTemplateWzf(baseDir, rivtaProfile)
+def wcf = getTemplateWcf(baseDir, rivtaProfile)
 
-addJaxWsInformation(wcf, wsdlFiles)
+addSchemaAndWsdlVariableAssignments(wcf, wsdlFiles)
 addWcfScriptInformation(wcf, wsdlFiles, domain, version)
 
 assert "CrmSchedulingInteractions.cs" == buildOutFileNameForWcf("crm:scheduling")
