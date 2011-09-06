@@ -62,14 +62,14 @@ def getRelativeSchemaPath(absoluteSchemaPath){
 }
 
 def buildOutFileNameForWcf(domain){
-	domain += '.Interactions'
+	domain += ':Interactions'
 	domain = domain.replaceAll(/\:(\w)/) { fullMatch, firstCharacter -> firstCharacter.toUpperCase() }
 	domain = domain[0].toUpperCase() + domain[1..-1]
 	return "${domain}.cs"
 }
 
 def buildCorrectNamespace(domain,version){
-	namespace = "Riv.${domain}.Schemas"
+	namespace = "Riv:${domain}:Schemas"
 	namespace = namespace.replaceAll(/\:(\w)/) { fullMatch, firstCharacter -> "." + firstCharacter.toUpperCase() }
 	return namespace += ".v${version}"
 }
