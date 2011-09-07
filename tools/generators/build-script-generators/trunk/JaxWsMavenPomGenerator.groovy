@@ -14,13 +14,20 @@ import org.dom4j.io.SAXReader
 
 def getAllFilesMatching(direcory, pattern){
 	def filesFound = []
-	direcory.traverse(type:FileType.FILES, nameFilter: ~pattern){ fileFound -> filesFound << fileFound }
+	direcory?.traverse(type:FileType.FILES, nameFilter: ~pattern){ fileFound -> filesFound << fileFound }
 	filesFound.each { fileFound -> println "File to process: ${fileFound.name}" }
 	return filesFound
 }
 
+def getAllDirectoriesMatching(direcory, pattern){
+	def dirsFound = []
+	direcory?.traverse(type:FileType.DIRECTORIES, nameFilter: ~pattern){ dirFound -> dirsFound << dirFound }
+	dirsFound.each { dirFound -> println "Directory to process: ${dirFound}" }
+	return dirsFound
+}
+
 def getTemplatePom(){
-	
+
 	def template = '''<?xml version="1.0" encoding="UTF-8"?>
 	<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor
 		license agreements. See the NOTICE file distributed with this work for additional
@@ -103,7 +110,7 @@ def getTemplatePom(){
 			</plugins>
 		</build>
 	</project>'''
-	
+
 	def pomTemplate = new XmlSlurper().parseText(template) //.asWritable()
 	return pomTemplate
 }
@@ -138,13 +145,29 @@ def makePackageNameStartWithSE(orig){
 	orig.replace('urn','se')
 }
 
-def addJaxWsInformation(pom, wsdlFiles){
+def getAllUniqueRivNameSpaces(wsdlFile, coreSchemasFiles){
+	def rivNameSpaces = []
+
+	new SAXReader().read(wsdlFile).getRootElement().declaredNamespaces().grep(~/.*urn:riv.*/).each{ namespace ->
+		rivNameSpaces << namespace.text
+	}
+
+	coreSchemasFiles.each { coreSchemasFile ->
+		new SAXReader().read(coreSchemasFile).getRootElement().declaredNamespaces().grep(~/.*urn:riv.*/).each{ namespace ->
+			rivNameSpaces << namespace.text
+		}
+	}
+
+	return rivNameSpaces.unique()
+}
+
+def addJaxWsInformation(pom, wsdlFiles, coreSchemasFiles){
 
 	def pluginConfiguration = pom.build.plugins.plugin[0].executions.execution[0].configuration
 
 	wsdlFiles.each { wsdlFile ->
 
-		def rivNameSpaces = new SAXReader().read(wsdlFile).getRootElement().declaredNamespaces().grep{it.getText().contains("urn:riv")}
+		def rivNameSpaces = getAllUniqueRivNameSpaces(wsdlFile, coreSchemasFiles)
 
 		pluginConfiguration.wsdlOptions.appendNode {
 			wsdloption {
@@ -154,7 +177,7 @@ def addJaxWsInformation(pom, wsdlFiles){
 					extraarg("http://www.w3.org/2005/08/addressing=org.w3c.addressing.v1")
 
 					rivNameSpaces.each {rivNamespace ->
-						def urn = rivNamespace.getText()
+						def urn = rivNamespace
 						def packageName = makeValidJavaPackageName(urn)
 						packageName = updateMajorVersionToFitJavaPackageConvention(packageName)
 						packageName = makePackageNameStartWithSE(packageName)
@@ -211,6 +234,9 @@ def domain = args[1]
 def rivtaProfile = args[2]
 def version = args[3]
 
+def coreSchemaDirectories = getAllDirectoriesMatching(baseDir, /core_components/)
+def coreSchemasFiles = getAllFilesMatching(coreSchemaDirectories[0], ".*\\.xsd")
+
 def pattern = getFilePattern(rivtaProfile, version)
 
 def wsdlFiles = getAllFilesMatching(baseDir, pattern)
@@ -218,11 +244,11 @@ if (wsdlFiles.isEmpty()){
 	println "NOTE! No wsdl files found under dir ${baseDir}"
 	return
 }
-	
+
 def pom = getTemplatePom()
 
 updateArtifactInformation(pom, domain, version)
-addJaxWsInformation(pom, wsdlFiles)
+addJaxWsInformation(pom, wsdlFiles, coreSchemasFiles)
 printPom(baseDir, pom, rivtaProfile)
 
 assert '${schema.path}/subdomain/Service/Service_1.1_RIVTABP20.wsdl' == getRelativeSchemaPath("/absolute/path/to/a/service/trunk/schemas/subdomain/Service/Service_1.1_RIVTABP20.wsdl")
