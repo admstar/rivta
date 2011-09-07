@@ -2,7 +2,10 @@
 <xs:schema targetNamespace="urn:riv:druglogistics:dosedispensing:1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="urn:riv:druglogistics:dosedispensing:1">
   <xs:annotation>
     <xs:documentation>Beskrivning: Meddelandetyper som ar gemensamma for ior.
-            Revisioner: 2011-04-05, version 1.0</xs:documentation>
+            Revisioner: 2011-04-05, version 1.0.1
+            Revisioner: 2011-05-15, version 1.0.2
+            Revisioner: 2011-06-02, version 1.0.3
+            Revisioner: 2011-09-05, version 1.0.4</xs:documentation>
   </xs:annotation>
  
   <xs:complexType name='SomeElementType'>
@@ -61,6 +64,7 @@
       <xs:element name="anhorigkontaktnamn" type="xs:string" minOccurs="0"/>
       <xs:element name="anhorigkontaktemail" type="xs:string" minOccurs="0"/>
       <xs:element name="ansvarigkontaktnamn" type="xs:string" minOccurs="0"/>
+      <xs:element name="ansvarigkontakttelefon" type="xs:string" minOccurs="0"/>
       <xs:element name="ansvarigkontaktemail" type="xs:string" minOccurs="0"/>
       <xs:element name="anhorigkontakttelefon1" type="xs:string" minOccurs="0"/>
       <xs:element name="anhorigkontakttelefon2" type="xs:string" minOccurs="0"/>
@@ -77,7 +81,7 @@
            <xs:element name="bestallningsid" type="xs:string" minOccurs="1">
             </xs:element>
 
-            <xs:element name="radid" type="xs:string" minOccurs="1">
+            <xs:element name="radid" type="xs:string" minOccurs="0">
             </xs:element>
 
             <xs:element name="Patientinformation" type="PatientinfoResponse" minOccurs="1" maxOccurs="1">
@@ -95,7 +99,7 @@
             <xs:element name="ordinationsid" type="xs:string" minOccurs="1">
             </xs:element>
 
-            <xs:element name="dosunderlagsversion" type="xs:string" minOccurs="1">
+            <xs:element name="dosunderlagsversion" type="xs:string" minOccurs="0">
             </xs:element>
 
             <xs:element name="bestallningsresultat" type="xs:int" minOccurs="0">
@@ -149,9 +153,9 @@
       <xs:element name="fornamn" type="xs:string" minOccurs="1"/>
       <xs:element name="efternamn" type="xs:string" minOccurs="1"/>
       <xs:element name="forskrivarkod" type="xs:string" minOccurs="0"/>
-      <xs:element name="yrkeskod" type="YrkesKodEnum" minOccurs="1"/>
+      <xs:element name="yrkeskod" type="YrkesKodEnum" minOccurs="0"/>
       <xs:element name="arbetsplatskod" type="xs:string" minOccurs="1"/>
-      <xs:element name="hsaidforskrivare" type="xs:string" minOccurs="0"/>
+      <xs:element name="hsaid" type="xs:string" minOccurs="0"/>
       <xs:element name="personnummer" type="xs:string" minOccurs="0"/>
       <xs:element name="organisationsnummer" type="xs:string" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
@@ -207,7 +211,7 @@
             <xs:element name="bestallningsid" type="xs:string" minOccurs="1">
             </xs:element>
 
-            <xs:element name="radid" type="xs:string" minOccurs="1">
+            <xs:element name="radid" type="xs:string" minOccurs="0">
             </xs:element>
 
             <xs:element name="NPLpackid" type="xs:string" minOccurs="0">
@@ -222,13 +226,13 @@
             <xs:element name="ordinationsid" type="xs:string" minOccurs="1">
             </xs:element>
 
-            <xs:element name="dosunderlagsversion" type="xs:string" minOccurs="1">
+            <xs:element name="dosunderlagsversion" type="xs:string" minOccurs="0">
             </xs:element>
 
             <xs:element name="meddelandetillapotek" type="xs:string" minOccurs="0">
             </xs:element>
             
-            <xs:element name="onskadleveranstid" type="xs:dateTime" minOccurs="1">
+            <xs:element name="onskadleveranstid" type="xs:dateTime" minOccurs="0">
             </xs:element>
             
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
@@ -244,7 +248,7 @@
             <xs:element name="bestallningsid" type="xs:string" minOccurs="1">
             </xs:element>
 
-            <xs:element name="radid" type="xs:string" minOccurs="1">
+            <xs:element name="radid" type="xs:string" minOccurs="0">
             </xs:element>
 
             <xs:element name="NPLpackid" type="xs:string" minOccurs="0">
@@ -274,10 +278,10 @@
             <xs:element name="maxdygnsdos" type="xs:string" minOccurs="0">
             </xs:element>
 
-            <xs:element name="dosmottagareid" type="xs:string" minOccurs="1">
+            <xs:element name="dosmottagareid" type="xs:string" minOccurs="0">
             </xs:element>
 
-            <xs:element name="dosmottagarenamn" type="xs:string" minOccurs="1">
+            <xs:element name="dosmottagarenamn" type="xs:string" minOccurs="0">
             </xs:element>
 
             <xs:element name="meddelandetillapotek" type="xs:string" minOccurs="0">
@@ -291,7 +295,7 @@
 
   <xs:complexType name="ProduktionsinfoResponse">
     <xs:sequence>
-      <xs:element name="dosaktor" type="xs:string" minOccurs="1"/>
+      <xs:element name="dosaktor" type="xs:string" minOccurs="0"/>
       <xs:element name="dosapotek" type="xs:string" minOccurs="1"/>
       <xs:element name="dosapotekid" type="xs:string" minOccurs="1"/>
       <xs:element name="stopptidbestallning" type="xs:dateTime" minOccurs="0"/>
@@ -299,8 +303,8 @@
       <xs:element name="forstadosdag" type="xs:dateTime" minOccurs="1"/>
       <xs:element name="dosvecka" type="xs:string" minOccurs="0"/>
       <xs:element name="doseringsschema" type="DoseringsschemaResponse" minOccurs="1"/>
-      <xs:element name="dosmottagareid" type="xs:string" minOccurs="1"/>
-      <xs:element name="dosmottagarenamn" type="xs:string" minOccurs="1"/>
+      <xs:element name="dosmottagareid" type="xs:string" minOccurs="0"/>
+      <xs:element name="dosmottagarenamn" type="xs:string" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -315,8 +319,8 @@
       <xs:element name="boendeenhetpostort" type="xs:string" minOccurs="1"/>
       <xs:element name="boendeenhetavdelning" type="xs:string" minOccurs="0"/>
       <xs:element name="arbetsplatskod" type="xs:string" minOccurs="1"/>
-      <xs:element name="dosmottagareid" type="xs:string" minOccurs="1"/>
-      <xs:element name="dosmottagarenamn" type="xs:string" minOccurs="1"/>
+      <xs:element name="dosmottagareid" type="xs:string" minOccurs="0"/>
+      <xs:element name="dosmottagarenamn" type="xs:string" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -370,8 +374,8 @@
       <xs:element name="postnummer" type="xs:string" minOccurs="0"/>
       <xs:element name="ort" type="xs:string" minOccurs="0"/>
       <xs:element name="telefon" type="xs:string" minOccurs="0"/>
-      <xs:element name="dosmottagareid" type="xs:string" minOccurs="1"/>
-      <xs:element name="dosmottagarenamn" type="xs:string" minOccurs="1"/>    
+      <xs:element name="dosmottagareid" type="xs:string" minOccurs="0"/>
+      <xs:element name="dosmottagarenamn" type="xs:string" minOccurs="0"/>    
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -584,7 +588,10 @@
               <xs:element name="Vardtagarstatus" type="Vardtagarstatusinfo" minOccurs="0" maxOccurs="unbounded">
               </xs:element>
   
-              <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+              <xs:element name="vilandestatusorsak" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+              </xs:element>
+  
+  <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
   
           </xs:sequence>
     </xs:complexType>
@@ -640,7 +647,7 @@
   </xs:complexType>
 
   <xs:annotation>
-      <xs:documentation>Bestallningsstatus 1=Mottagen, 2=Avvisad 3=Expedierad, 4=Avbestalld</xs:documentation>
+      <xs:documentation>Bestallningsstatus 1=Mottagen, 2=Avvisad 3=Expedierad, 4=Avbestalld 5=Samtliga status</xs:documentation>
   </xs:annotation>
   <xs:simpleType name="BestallningsStatusEnum">
     <xs:restriction base="xs:int">
@@ -648,6 +655,7 @@
       <xs:enumeration value="2"/>
       <xs:enumeration value="3"/>
       <xs:enumeration value="4"/>
+      <xs:enumeration value="5"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -672,6 +680,7 @@
         <xs:enumeration value='PB' />
         <xs:enumeration value='FR' />
         <xs:enumeration value='MB' />    
+        <xs:enumeration value='VG' />    
       </xs:restriction>
     </xs:simpleType>
 
@@ -694,11 +703,14 @@
       <xs:enumeration value="L"/>
       <xs:enumeration value="O"/>
       <xs:enumeration value="B"/>
+      <xs:enumeration value="BLO"/>
+      <xs:enumeration value="LO"/>
+      <xs:enumeration value="BL"/>
     </xs:restriction>
   </xs:simpleType>
   
     <xs:annotation>
-      <xs:documentation>Vardtagarstatus 1=Aktiv, 2=Vilande, 3=Tillfallig adressandring, 4=Avford, 5=Avliden</xs:documentation>
+      <xs:documentation>Vardtagarstatus 1=Aktiv, 2=Vilande, 3=Tillfallig adressandring, 4=Avford, 5=Avliden 6=Ej Registrerad</xs:documentation>
   </xs:annotation>
   <xs:simpleType name="VardtagarStatusEnum">
     <xs:restriction base="xs:string">
@@ -707,6 +719,7 @@
       <xs:enumeration value="3"/>
       <xs:enumeration value="4"/>
       <xs:enumeration value="5"/>
+      <xs:enumeration value="6"/>
     </xs:restriction>
   </xs:simpleType>
   
@@ -736,7 +749,7 @@
   </xs:simpleType>
 
   <xs:annotation>
-      <xs:documentation>Kommunikationsriktning 1=Information, 2=Varning 3=Fel</xs:documentation>
+      <xs:documentation>Kommunikationsriktning 1=Till Dosapotek, 2=Från Dosapotek</xs:documentation>
   </xs:annotation>
   <xs:simpleType name="KommunikationsriktningEnum">
     <xs:restriction base="xs:int">
