@@ -34,7 +34,7 @@ import se.skl.rivta.bp21.refapp.util.Util;
 public class Initiator {
 
 	static private final Logger logger = LoggerFactory.getLogger(Util.class);
-	static private final String LOGICAL_ADDRESS = "SE2321000016-3MKB"; // alternative hsaid: "cn=server3,ou=Division 1,ou=Lasarettet i Ystad,o=Region Skåne,l=Skåne län c=SE"		
+	static private final String LOGICAL_ADDRESS = "SE2321000016-3MKB"; // alternative hsaid: "cn=server3,ou=Division 1,ou=Lasarettet i Ystad,o=Region Sk√•ne,l=Sk√•ne l√§n c=SE"		
 	
 	private MakeBookingResponderInterface service = null;
 
