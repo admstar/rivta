@@ -26,9 +26,7 @@ SET NAMESPACE=/namespace:*,Riv.Ehr.AccessControl.Schemas.v1
 SET SCHEMADIR="schemas\interactions"
 SET SVCUTIL="svcutil.exe"
 
-SET W1=%SCHEMADIR%\AssertCareEngagementInteraction\AssertCareEngagementInteraction_1.0_RIVTABP20.wsdl
 SET X1=schemas\core_components\*.xsd
-SET X2=%SCHEMADIR%\AssertCareEngagementInteraction\*.xsd
 
 SET W2=%SCHEMADIR%\VerifySubjectOfCareHasProtectedIdentityInteraction\VerifySubjectOfCareHasProtectedIdentityInteraction_1.0_RIVTABP20.wsdl
 SET X3=%SCHEMADIR%\VerifySubjectOfCareHasProtectedIdentityInteraction\*.xsd
@@ -39,7 +37,7 @@ SET X4=%SCHEMADIR%\GetCurrentRevisionOfProtectedIdentitiesRepositoryInteraction\
 SET W4=%SCHEMADIR%\ListProtectedIdentitiesRepositoryContentInteraction\ListProtectedIdentitiesRepositoryContentInteraction_1.0_RIVTABP20.wsdl
 SET X5=%SCHEMADIR%\ListProtectedIdentitiesRepositoryContentInteraction\*.xsd
 
-SET SCHEMAS=%W1% %W2% %W3% %W4% %X1% %X2% %X3% %X4% %X5% 
+SET SCHEMAS=%W2% %W3% %W4% %X1% %X3% %X4% %X5% 
 
 %SVCUTIL% /language:cs /wrapped %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
 
