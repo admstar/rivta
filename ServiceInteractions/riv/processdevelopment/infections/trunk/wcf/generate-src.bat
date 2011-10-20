@@ -1,6 +1,6 @@
 @REM ---------------------------------------------------------------------------------
 @REM Generates c# WCF service contracts (interface), client proxies and wcf config 
-@REM file for insuranceprocess:helathreporting WSDLs + XML Schemas, using .Net WCF tool svcutil.exe
+@REM file for processdevelopment-infections WSDLs + XML Schemas, using .Net WCF tool svcutil.exe
 @REM ---------------------------------------------------------------------------------
 @REM Licensed to the Apache Software Foundation (ASF) under one
 @REM or more contributor license agreements. See the NOTICE file
