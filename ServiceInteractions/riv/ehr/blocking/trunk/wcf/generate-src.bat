@@ -38,9 +38,6 @@ SET X3=%SCHEMADIR%\administration\DeleteExtendedBlockInteraction\*.xsd
 SET W4=%SCHEMADIR%\administration\GetExtendedBlocksForPatientInteraction\GetExtendedBlocksForPatientInteraction_1.0_RIVTABP20.wsdl
 SET X4=%SCHEMADIR%\administration\GetExtendedBlocksForPatientInteraction\*.xsd
 
-SET W5=%SCHEMADIR%\administration\GetOrganizationsInteraction\GetOrganizationsInteraction_1.0_RIVTABP20.wsdl
-SET X5=%SCHEMADIR%\administration\GetOrganizationsInteraction\*.xsd
-
 SET W6=%SCHEMADIR%\administration\RegisterExtendedBlockInteraction\RegisterExtendedBlockInteraction_1.0_RIVTABP20.wsdl
 SET X6=%SCHEMADIR%\administration\RegisterExtendedBlockInteraction\*.xsd
 
@@ -70,7 +67,7 @@ SET X14=%SCHEMADIR%\synchronization\UnregisterTemporaryRevokeInteraction\*.xsd
 
 SET X15=%SCHEMADIR%\common\*.xsd
 
-SET SCHEMAS=%W1% %X1% %W2% %X2% %W3% %X3% %W4% %X4% %W5% %X5% %W6% %X6% %W7% %X7% %W8% %X8% %W9% %X9% %W10% %X10% %W11% %X11% %W12% %X12% %W13% %X13% %W14% %X14% %X15%
+SET SCHEMAS=%W1% %X1% %W2% %X2% %W3% %X3% %W4% %X4% %W6% %X6% %W7% %X7% %W8% %X8% %W9% %X9% %W10% %X10% %W11% %X11% %W12% %X12% %W13% %X13% %W14% %X14% %X15%
 
 %SVCUTIL% /language:cs /wrapped %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
 
