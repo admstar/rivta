@@ -35,10 +35,13 @@ SET X9=%SCHEMADIR%\UppdateraMeddelandeStatusInteraction\*.xsd
 SET W10=%SCHEMADIR%\UppdateraVardtagareinformationInteraction\UppdateraVardtagareinformationInteraction_1.0_rivtabp20.wsdl
 SET X10=%SCHEMADIR%\UppdateraVardtagareinformationInteraction\*.xsd
 
-SET X11=schemas\core_components\*.xsd
+SET W11=%SCHEMADIR%\SokVardandeEnhetInteraction\SokVardandeEnhetInteraction_1.0_rivtabp20.wsdl
+SET X11=%SCHEMADIR%\SokVardandeEnhetInteraction\*.xsd
+
+SET X12=schemas\core_components\*.xsd
 
 
-SET SCHEMAS=%W1% %X1% %W2% %X2% %W3% %X3% %W4% %X4% %W5% %X5% %W6% %X6% %W7% %X7% %W8% %X8% %W9% %X9% %W10% %X10% %X11% 
+SET SCHEMAS=%W1% %X1% %W2% %X2% %W3% %X3% %W4% %X4% %W5% %X5% %W6% %X6% %W7% %X7% %W8% %X8% %W9% %X9% %W10% %X10% %X11% %X12% 
 
 
 %SVCUTIL% /language:cs /messageContract /a %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS% 
