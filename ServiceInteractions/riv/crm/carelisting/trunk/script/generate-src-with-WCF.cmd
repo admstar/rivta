@@ -1,6 +1,6 @@
 @REM --------------------------------------------------------------------------
 @REM 
-@REM Generates WCF Proxy and config code for RIV13606 EhrExtraction Interaction
+@REM Generates WCF Proxy and config code for RIV13606 EhrExtraction Interaction 
 @REM 
 @REM --------------------------------------------------------------------------
 @REM 
