@@ -10,9 +10,9 @@ top=$( expr $( pwd ) : '.*/\(.*\)' )
 pkg=${top//_/.}
 
 # get version from user
-read -s -p "Version (ex: 1.0-beta): " ver
+read -p "Version (ex: 1.0-beta): " ver
 echo ""
-[ -z "$ver" ] && echo "Error: Version must be specified"; exit 1
+[ -z "$ver" ] && echo "Error: Version must be specified" && exit 1
 
 echo "Runs a subverison update"
 
