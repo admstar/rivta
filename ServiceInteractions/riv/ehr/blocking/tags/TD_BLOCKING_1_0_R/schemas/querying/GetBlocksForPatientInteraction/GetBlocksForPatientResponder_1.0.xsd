@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>		
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' 
+		   xmlns:tns='urn:ehr:blocking:querying:GetBlocksForPatientResponder:1' 
+		   xmlns:core='urn:riv:ehr:blocking:common:1' 
+		   targetNamespace='urn:ehr:blocking:querying:GetBlocksForPatientResponder:1' 
+		   elementFormDefault='qualified' 
+		   attributeFormDefault='unqualified' 
+		   version='1.0'>
+
+    <xs:import schemaLocation='../../common/BlocksCommon_1.0.xsd' namespace='urn:riv:ehr:blocking:common:1' />
+  
+	<xs:element name='GetBlocksForPatient' type='tns:GetBlocksForPatientRequestType'/>
+	<xs:element name='GetBlocksForPatientResponse' type='tns:GetBlocksForPatientResponseType'/>
+	
+	<xs:complexType name='GetBlocksForPatientRequestType'>
+		<xs:annotation>
+			<xs:documentation xml:lang='en'> Get all active blocks for a given patient, potentially from all care providers,
+				depending on the filter:
+				If CareProviderHsaIds are given, only blocks owned by those care providers are returned.
+				If GetSocialSecurityNumbersOnly, only patient numbers are returned.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name='SocialSecurityNumber' type='core:SocialSecurityNumberType'/>
+			<xs:element name='CareProviderHsaIds' type='xs:string' minOccurs='0' maxOccurs='unbounded'/>
+			<xs:element name='GetSocialSecurityNumbersOnly' type='xs:boolean'/>
+			<xs:any maxOccurs='unbounded' minOccurs='0' namespace='##other' processContents='lax'/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name='GetBlocksForPatientResponseType'>
+		<xs:sequence>
+			<xs:element name='Blocks' type='core:BlockHeaderType' minOccurs='0' maxOccurs='unbounded'/>
+			<xs:any maxOccurs='unbounded' minOccurs='0' namespace='##other' processContents='lax'/>
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

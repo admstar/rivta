@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<wsdl:definitions name='RevokeExtendedBlockInteraction' 
+	  xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' 
+	  xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' 
+	  xmlns:xs='http://www.w3.org/2001/XMLSchema' 
+	  xmlns:wsa='http://www.w3.org/2005/08/addressing' 
+	  xmlns:tjsr='urn:ehr:blocking:administration:RevokeExtendedBlockResponder:1' 
+	  xmlns:tjsi='urn:ehr:blocking:administration:RevokeExtendedBlockInitiator:1' 
+	  xmlns:tns='urn:ehr:blocking:administration:RevokeExtendedBlock:1:rivtabp20' 
+	  targetNamespace='urn:ehr:blocking:administration:RevokeExtendedBlock:1:rivtabp20'>
+	  
+  <xs:annotation>
+    <xs:documentation>
+			 Tjänsteinteraktionens namn: RevokeExtendedBlockInteraction
+			 Beskrivning: Permanent återkallning av utökad spärr.
+			 Revisioner: 2011-08-23: 1.0
+			 Tjänstedomän: blocking:administration
+			 Tjänsteinteraktionstyp: Fråga-Svar
+			 WS-profil: RIVTABP20
+			 Förvaltas av: Inera AB
+	</xs:documentation>
+  </xs:annotation>
+  
+  <wsdl:types>
+    <xs:schema targetNamespace='urn:ehr:blocking:administration:RevokeExtendedBlock:1:rivtabp20'>
+      <xs:import schemaLocation='RevokeExtendedBlockResponder_1.0.xsd' namespace='urn:ehr:blocking:administration:RevokeExtendedBlockResponder:1' />
+      <xs:import schemaLocation='../../common/ws-addressing-1.0.xsd' namespace='http://www.w3.org/2005/08/addressing' />
+    </xs:schema>
+  </wsdl:types>
+  
+  <wsdl:message name='RevokeExtendedBlockRequest'>
+    <wsdl:part name='LogicalAddress' element='wsa:To'>
+      <xs:annotation>
+        <xs:documentation> Se tjänstedokumentationen för mer information om detta </xs:documentation>
+      </xs:annotation>
+    </wsdl:part>
+    <wsdl:part name='parameters' element='tjsr:RevokeExtendedBlock' />
+  </wsdl:message>
+  
+  <wsdl:message name='RevokeExtendedBlockResponse'>
+    <wsdl:part name='parameters' element='tjsr:RevokeExtendedBlockResponse' />
+  </wsdl:message>
+  
+  <wsdl:portType name='RevokeExtendedBlockResponderInterface'>
+    <wsdl:operation name='RevokeExtendedBlock'>
+      <wsdl:input message='tns:RevokeExtendedBlockRequest' />
+      <wsdl:output message='tns:RevokeExtendedBlockResponse' />
+    </wsdl:operation>
+  </wsdl:portType>
+  
+  <wsdl:binding name='RevokeExtendedBlockResponderBinding' type='tns:RevokeExtendedBlockResponderInterface'>
+    <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
+    <wsdl:operation name='RevokeExtendedBlock'>
+      <soap:operation soapAction='urn:ehr:blocking:administration:RevokeExtendedBlockResponder:1:RevokeExtendedBlock' style='document' />
+      <wsdl:input>
+        <soap:header use='literal' message='tns:RevokeExtendedBlockRequest' part='LogicalAddress' />
+        <soap:body use='literal' parts='parameters' />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use='literal' />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name='RevokeExtendedBlockResponderService'>
+    <wsdl:port name='RevokeExtendedBlockResponderPort' binding='tns:RevokeExtendedBlockResponderBinding'>
+      <soap:address location='http://tempuri.org' />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

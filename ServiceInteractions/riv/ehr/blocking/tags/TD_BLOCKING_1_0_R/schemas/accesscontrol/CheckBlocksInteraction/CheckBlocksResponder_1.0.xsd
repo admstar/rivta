@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>		
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' 
+		   xmlns:tns='urn:ehr:blocking:accesscontrol:CheckBlocksResponder:1' 
+		   xmlns:core='urn:riv:ehr:blocking:common:1' 
+		   targetNamespace='urn:ehr:blocking:accesscontrol:CheckBlocksResponder:1' 
+		   elementFormDefault='qualified' 
+		   attributeFormDefault='unqualified' 
+		   version='1.0'>
+		    
+  <xs:import schemaLocation='../../common/BlocksCommon_1.0.xsd' namespace='urn:riv:ehr:blocking:common:1' />
+  
+  <xs:element name="CheckBlocks" type="tns:CheckBlocksRequestType"/>
+  <xs:element name="CheckBlocksResponse" type="tns:CheckBlocksResponseType"/>
+  
+  <xs:complexType name="CheckBlocksRequestType">
+  		<xs:annotation>
+			<xs:documentation xml:lang="en">Checks if the provided information is blocked for the provided
+			actor that wants to access the information. Each information row is checked individually.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AccessingActor" type="tns:AccessingActorType"/>
+			<xs:element name="SocialSecurityNumber" type="core:SocialSecurityNumberType"/>
+			<xs:element name="InformationEntities" type="tns:InformationEntityType" minOccurs="1"
+				maxOccurs="unbounded"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CheckBlocksResponseType">
+		<xs:sequence>
+			<xs:element name="CheckBlockResults" type="tns:CheckBlocksResultType" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="CheckBlocksResultType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en"> Represents a check block response for an information entity,
+				whether information is blocked or not.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Blocked" type="xs:boolean"/>
+			<xs:element name="RowNumber" type="xs:int"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="InformationEntityType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en"> Represents a patient information entity - which may be blocked or not.
+			    One patient may have many information entities. If the information does not have a date span, 
+			    use the same start date as end date. The RowNumber is populated by the caller and can be used to 
+			    map the response since the response contains the same row number.
+			    See documentation for details regarding the InformationType field.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="InformationStartDate" type="xs:dateTime"/>
+			<xs:element name="InformationEndDate" type="xs:dateTime"/>
+			<xs:element name="InformationCareUnitHsaId" type="xs:string"/>
+			<xs:element name="InformationCareProviderHsaId" type="xs:string"/>
+			<xs:element name="InformationType" type="xs:string"/>
+			<xs:element name="RowNumber" type="xs:int"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+  </xs:complexType>
+	
+  <xs:complexType name="AccessingActorType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en"> Represents an actor that wants access to certain information.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="EmployeeHsaId" type="xs:string"/>
+			<xs:element name="CareProviderHsaId" type="xs:string"/>
+			<xs:element name="CareUnitHsaId" type="xs:string"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+  </xs:complexType>
+	
+</xs:schema>

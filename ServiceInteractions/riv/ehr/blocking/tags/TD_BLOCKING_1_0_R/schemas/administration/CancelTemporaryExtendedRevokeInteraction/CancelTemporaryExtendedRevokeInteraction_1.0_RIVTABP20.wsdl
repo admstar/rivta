@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<wsdl:definitions name='CancelTemporaryExtendedRevokeInteraction' 
+	  xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' 
+	  xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' 
+	  xmlns:xs='http://www.w3.org/2001/XMLSchema' 
+	  xmlns:wsa='http://www.w3.org/2005/08/addressing' 
+	  xmlns:tjsr='urn:ehr:blocking:administration:CancelTemporaryExtendedRevokeResponder:1' 
+	  xmlns:tjsi='urn:ehr:blocking:administration:CancelTemporaryExtendedRevokeInitiator:1' 
+	  xmlns:tns='urn:ehr:blocking:administration:CancelTemporaryExtendedRevoke:1:rivtabp20' 
+	  targetNamespace='urn:ehr:blocking:administration:CancelTemporaryExtendedRevoke:1:rivtabp20'>
+	  
+  <xs:annotation>
+    <xs:documentation>
+			 Tjänsteinteraktionens namn: CancelTemporaryExtendedRevokeInteraction
+			 Beskrivning: Återkalla/cancellera tillfällig (utökad) hävning av spärr.
+			 Revisioner: 2011-08-23: 1.0
+			 Tjänstedomän: blocking:administration
+			 Tjänsteinteraktionstyp: Fråga-Svar
+			 WS-profil: RIVTABP20
+			 Förvaltas av: Inera AB
+			 </xs:documentation>
+  </xs:annotation>
+  
+  <wsdl:types>
+    <xs:schema targetNamespace='urn:ehr:blocking:administration:CancelTemporaryExtendedRevoke:1:rivtabp20'>
+      <xs:import schemaLocation='CancelTemporaryExtendedRevokeResponder_1.0.xsd' namespace='urn:ehr:blocking:administration:CancelTemporaryExtendedRevokeResponder:1' />
+      <xs:import schemaLocation='../../common/ws-addressing-1.0.xsd' namespace='http://www.w3.org/2005/08/addressing' />
+    </xs:schema>
+  </wsdl:types>
+  
+  <wsdl:message name='CancelTemporaryExtendedRevokeRequest'>
+    <wsdl:part name='LogicalAddress' element='wsa:To'>
+      <xs:annotation>
+        <xs:documentation> Se tjänstedokumentationen för mer information om detta </xs:documentation>
+      </xs:annotation>
+    </wsdl:part>
+    <wsdl:part name='parameters' element='tjsr:CancelTemporaryExtendedRevoke' />
+  </wsdl:message>
+  
+  <wsdl:message name='CancelTemporaryExtendedRevokeResponse'>
+    <wsdl:part name='parameters' element='tjsr:CancelTemporaryExtendedRevokeResponse' />
+  </wsdl:message>
+  
+  <wsdl:portType name='CancelTemporaryExtendedRevokeResponderInterface'>
+    <wsdl:operation name='CancelTemporaryExtendedRevoke'>
+      <wsdl:input message='tns:CancelTemporaryExtendedRevokeRequest' />
+      <wsdl:output message='tns:CancelTemporaryExtendedRevokeResponse' />
+    </wsdl:operation>
+  </wsdl:portType>
+  
+  <wsdl:binding name='CancelTemporaryExtendedRevokeResponderBinding' type='tns:CancelTemporaryExtendedRevokeResponderInterface'>
+    <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
+    <wsdl:operation name='CancelTemporaryExtendedRevoke'>
+      <soap:operation soapAction='urn:ehr:blocking:administration:CancelTemporaryExtendedRevokeResponder:1:CancelTemporaryExtendedRevoke' style='document' />
+      <wsdl:input>
+        <soap:header use='literal' message='tns:CancelTemporaryExtendedRevokeRequest' part='LogicalAddress' />
+        <soap:body use='literal' parts='parameters' />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use='literal' />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name='CancelTemporaryExtendedRevokeResponderService'>
+    <wsdl:port name='CancelTemporaryExtendedRevokeResponderPort' binding='tns:CancelTemporaryExtendedRevokeResponderBinding'>
+      <soap:address location='http://tempuri.org' />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
