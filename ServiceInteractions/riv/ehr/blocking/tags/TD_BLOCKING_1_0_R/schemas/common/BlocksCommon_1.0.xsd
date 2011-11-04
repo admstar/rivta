@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'
+	xmlns='urn:riv:ehr:blocking:common:1'
+	targetNamespace='urn:riv:ehr:blocking:common:1'
+	xmlns:tns='urn:riv:ehr:blocking:common:1' 
+	elementFormDefault='qualified'
+	attributeFormDefault='unqualified' 
+	version='1.0'>
+	
+	<!--  Common schema for blocking data types in the [urn:riv:ehr:blocking] domain. -->
+	
+	<xs:complexType name='BlockHeaderType'>
+		<xs:annotation>
+			<xs:documentation xml:lang='en'> Depending on the request, this block response data
+				may contain patient social security numbers only, or the full block data.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name='Block' type='tns:BlockType'/>
+			<xs:element name='SocialSecurityNumber' type='tns:SocialSecurityNumberType'/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:choice>
+	</xs:complexType>
+	
+	<xs:complexType name='BlockType'>
+		<xs:annotation>
+			<xs:documentation xml:lang='en'> Information describing a basic block.
+				The block may have temporary revokes attached to it.
+				See documentation for details regarding the InformationTypes field.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name='BlockId' type='tns:UuidType'/>
+			<xs:element name='BlockType' type='tns:BlockTypeType'/>
+			<xs:element name='SocialSecurityNumber' type='tns:SocialSecurityNumberType'/>
+			<xs:element name='InformationStartDate' type='xs:dateTime' minOccurs='0'/>
+			<xs:element name='InformationEndDate' type='xs:dateTime' minOccurs='0'/>
+			<xs:element name='InformationCareUnitHsaId' type='xs:string' minOccurs='0'/>
+			<xs:element name='InformationCareProviderHsaId' type='xs:string'/>
+			<xs:element name='OwnerId' type='xs:string'/>
+			<xs:element name='InformationTypes' type='xs:string' minOccurs='0' maxOccurs='unbounded'/>
+			<xs:element name='Revokes' type='tns:TemporaryRevokeType' minOccurs='0' maxOccurs='unbounded'/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name='TemporaryRevokeType'>
+		<xs:annotation>
+			<xs:documentation xml:lang='en'>
+				Information describing a basic temporarily revoked block.
+				Always attached to an existing block.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name='TemporaryRevokeId' type='tns:UuidType'/>
+			<xs:element name='EndDate' type='xs:dateTime'/>
+			<xs:element name='RevokedForCareUnitHsaId' type='xs:string'/>
+			<xs:element name='RevokedForEmployeeHsaId' type='xs:string' minOccurs='0'/>
+      		<xs:element name='OwnerId' type='xs:string'/>
+      		<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name='TemporaryRevokeRegistrationType'>
+		<xs:annotation>
+			<xs:documentation xml:lang='en'>
+				Information describing a basic, temporarily revoke registration.
+				Always points to an existing block.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name='TemporaryRevokeId' type='tns:UuidType'/>
+			<xs:element name='BlockId' type='tns:UuidType'/>
+			<xs:element name='EndDate' type='xs:dateTime'/>
+			<xs:element name='RevokedForCareUnitHsaId' type='xs:string'/>
+			<xs:element name='RevokedForEmployeeHsaId' type='xs:string' minOccurs='0'/>
+			<xs:any maxOccurs='unbounded' minOccurs='0' namespace='##other' processContents='lax'/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:simpleType name="TemporaryRevocationReasonType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PatientsConsent"/>
+			<xs:enumeration value="Emergency"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name='BlockTypeType'>
+		<xs:annotation>
+			<xs:documentation xml:lang='en'> If the block is an inner or outer one. The inner type
+				protects/blocks information on a given care unit from anyone outside the unit. The
+				outer type protects/blocks information on a given care provider from anyone outside
+				the provider. </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base='xs:string'>
+			<xs:enumeration value='Inner'/>
+			<xs:enumeration value='Outer'/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+    <xs:complexType name="ActorType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en"> Describes an actor/user in a given assignment.
+			    This is a so called Medarbetare i Uppdrag.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="EmployeeHsaId" type="xs:string"/>
+			<xs:element name="UserAssignmentHsaId" type="xs:string"/>
+			<xs:element name="UserAssignmentName" type="xs:string"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+    </xs:complexType>
+  
+	<xs:simpleType name='UuidType'>
+		<xs:annotation>
+			<xs:documentation xml:lang='en'> A universally unique identifier, UUID. See more:
+				http://en.wikipedia.org/wiki/Universally_unique_identifier </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base='xs:string'>
+			<xs:pattern
+				value='[0-9a-zA-Z]{8}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{12}'
+			/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name='SocialSecurityNumberType'>
+		<xs:annotation>
+			<xs:documentation xml:lang='en'> A patients social security number, supports reservnummer as well. </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base='xs:string'>
+			<xs:length value='12'/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:complexType name="ResultType">
+    	<xs:annotation>
+			<xs:documentation xml:lang='en'> Generic response message. If this response message
+			  holds an Error code, the ResultText is present with a detailed error message.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ResultCode" type="tns:ResultCodeType"/>
+			<xs:element name="ResultText" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+    </xs:complexType>
+	
+    <xs:simpleType name="ResultCodeType">
+    	<xs:annotation>
+			<xs:documentation xml:lang='en'> Generic response codes. The ErrorExists code means that a certain
+			  entity already exists, or that the item in question is already in the requested state.
+			  The ErrorUnexisting code means that a referred entity does not exist.
+			  Plain Error means that an unforeseen technical error has occured. </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+      		<xs:enumeration value="OK"/>
+      		<xs:enumeration value="ErrorExists"/>
+      		<xs:enumeration value="ErrorUnexisting"/>
+      		<xs:enumeration value="Error"/>
+			</xs:restriction>
+    </xs:simpleType>
+  
+</xs:schema>
