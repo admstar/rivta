@@ -3,7 +3,7 @@
  Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
- regarding copyright ownership. Inera AB licenses this file
+ regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
  to you under the Apache License, Version 2.0 (the
  "License"); you may not use this file except in compliance
  with the License. You may obtain a copy of the License at
@@ -17,31 +17,28 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<wsdl:definitions name='GetAllCareTypesInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:wsa='http://www.w3.org/2005/08/addressing' xmlns:tjsr='urn:riv:crm:scheduling:GetAllCareTypesResponder:1' xmlns:tjsi='urn:riv:crm:scheduling:GetAllCareTypesInitiator:1' xmlns:tns='urn:riv:crm:scheduling:GetAllCareTypes:1:rivtabp20' targetNamespace='urn:riv:crm:scheduling:GetAllCareTypes:1:rivtabp20'>
+<wsdl:definitions name='GetAllCareTypesInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tjsr='urn:riv:crm:scheduling:GetAllCareTypesResponder:1' xmlns:tjsi='urn:riv:crm:scheduling:GetAllCareTypesInitiator:1' xmlns:tns='urn:riv:crm:scheduling:GetAllCareTypes:1:rivtabp21' targetNamespace='urn:riv:crm:scheduling:GetAllCareTypes:1:rivtabp21' xmlns:itr='urn:riv:itintegration:registry:1'>
   <xs:annotation>
     <xs:documentation>
 			 Tjänsteinteraktionens namn: GetAllCareTypesInteraction
 			 Beskrivning: 
 			   Interaction to retrieve care types supported by the healthcare_facility. Semantics and value set of care types is defined by the healthcare_facility. The consumer may not bind any processing rules to specific care types.
 			 Revisioner: 
-				2011-03-XX: Revision 1.1, johan.eltes@callistaenterprise.se
 			 Tjänstedomän: crm:scheduling
 			 Tjänsteinteraktionstyp: Fråga-Svar
-			 WS-profil: RIVTABP20
-			 Förvaltas av: Mina Vårdkontakter inom Inera AB
+			 WS-profil: RIVTABP21
+			 Förvaltas av: Sveriges Kommuner och Landsting
 			 </xs:documentation>
   </xs:annotation>
   <wsdl:types>
-    <xs:schema targetNamespace='urn:riv:crm:scheduling:GetAllCareTypes:1:rivtabp20'>
+    <xs:schema targetNamespace='urn:riv:crm:scheduling:GetAllCareTypes:1:rivtabp21'>
       <xs:import schemaLocation='GetAllCareTypesResponder_1.1.xsd' namespace='urn:riv:crm:scheduling:GetAllCareTypesResponder:1' />
-      <xs:import schemaLocation='../../core_components/ws-addressing-1.0.xsd' namespace='http://www.w3.org/2005/08/addressing' />
+      <xs:import schemaLocation='../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
     </xs:schema>
   </wsdl:types>
   <wsdl:message name='GetAllCareTypesRequest'>
-    <wsdl:part name='LogicalAddress' element='wsa:To'>
-      <xs:annotation>
-        <xs:documentation>LogicalAddress is the hsaid of the healthcare_facility that should show supported care types</xs:documentation>
-      </xs:annotation>
+    <wsdl:part name='LogicalAddress' element='itr:LogicalAddress'>
+      <wsdl:documentation>A 3-level hierarchical logical according to the following pattern: &lt;Länskod för landstinget&gt;#&lt;HSA-id of the care-giver&gt;#&lt;hsaid of the healthcare_facility owning he schedule within which the booking is to be cancelled&gt;</wsdl:documentation>
     </wsdl:part>
     <wsdl:part name='parameters' element='tjsr:GetAllCareTypes' />
   </wsdl:message>
