@@ -22,15 +22,15 @@
 	CD ..
 	
 	SET SCHEMADIR=schemas
-SET W0=%SCHEMADIR%%SCHEMADIR%\.\interactions\FindContentInteraction\FindContentInteraction_1.0_RIVTABP21.wsdl
+SET W0=%SCHEMADIR%\interactions\FindContentInteraction\FindContentInteraction_1.0_RIVTABP21.wsdl
 SET X0=%SCHEMADIR%\interactions\FindContentInteraction\*.xsd
 
 SET SCHEMADIR=schemas
-SET W1=%SCHEMADIR%%SCHEMADIR%\.\interactions\ProcessNotificationInteraction\ProcessNotificationInteraction_1.0_RIVTABP21.wsdl
+SET W1=%SCHEMADIR%\interactions\ProcessNotificationInteraction\ProcessNotificationInteraction_1.0_RIVTABP21.wsdl
 SET X1=%SCHEMADIR%\interactions\ProcessNotificationInteraction\*.xsd
 
 SET SCHEMADIR=schemas
-SET W2=%SCHEMADIR%%SCHEMADIR%\.\interactions\UpdateInteraction\UpdateInteraction_1.0_RIVTABP21.wsdl
+SET W2=%SCHEMADIR%\interactions\UpdateInteraction\UpdateInteraction_1.0_RIVTABP21.wsdl
 SET X2=%SCHEMADIR%\interactions\UpdateInteraction\*.xsd
 
 SET XCORE=%SCHEMADIR%\core_components\*.xsd
