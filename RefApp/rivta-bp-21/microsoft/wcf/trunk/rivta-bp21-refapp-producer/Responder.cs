@@ -12,7 +12,7 @@ namespace rivta_bp21_refapp_producer
  	            Console.WriteLine("Calling MakeBooking operation");
 
                MakeBookingResponse response = new MakeBookingResponse();
-               response.bookingId = request.LogicalAddress;
+               response.bookingId = "unique id of created booking";
                response.resultCode = ResultCodeEnum.OK;
                response.resultText = "Booking was made successfully";
 
