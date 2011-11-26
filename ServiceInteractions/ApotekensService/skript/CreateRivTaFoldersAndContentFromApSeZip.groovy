@@ -12,7 +12,7 @@ class Constants {
 	def MINOR_VERSION="0"
 	def RIVTA_VERSION="20"
 	def SOURCE_ROOT_DIR = new File(".").name
-	def TARGET_ROOT_DIR = "/Users/johan/Documents/Development/Projects/SKL/rivta/ServiceInteractions/riv/se_apotekensservice"
+	def TARGET_ROOT_DIR = "/Users/johan/Documents/Development/Projects/SKL/rivta/ServiceInteractions/temp"
 	def SOURCE_CORE_COMPONENTS_DIR = "/Users/johan/Documents/Development/Projects/SKL/rivta/ServiceInteractions/ApotekensService/common_components"
 }
 

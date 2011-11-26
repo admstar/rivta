@@ -44,7 +44,7 @@
 	<http:destination
 		name="{urn:riv:ehr:ehrexchange:EhrExtraction:1:rivtabp20}EhrExtractionResponderPort.http-destination">
 	</http:destination>
-
+<!--
 	<httpj:engine-factory>
 		<httpj:engine port="11000">
 			<httpj:tlsServerParameters>
@@ -57,11 +57,6 @@
 						file="../certs/producer-truststore.jks" />
 				</sec:trustManagers>
 				<sec:cipherSuitesFilter>
-					<!--
-						these filters ensure that a ciphersuite with export-suitable or
-						null encryption is used, but exclude anonymous Diffie-Hellman key
-						change as this is vulnerable to man-in-the-middle attacks
-					-->
 					<sec:include>.*_EXPORT_.*</sec:include>
 					<sec:include>.*_EXPORT1024_.*</sec:include>
 					<sec:include>.*_WITH_DES_.*</sec:include>
@@ -73,7 +68,7 @@
 			</httpj:tlsServerParameters>
 		</httpj:engine>
 	</httpj:engine-factory>
-
+-->
 	<cxf:bus>
 		<cxf:features>
 <!-- 
