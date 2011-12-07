@@ -1,0 +1,87 @@
+#summary RIV Tekniska anvisningar - termer och symboler
+
+ARBETE PÅGÅR
+
+<wiki:toc max_depth="3" />
+
+=RIV Tekniska anvisningar - termer och symboler=
+
+RIV Tekniska anvisningar är baserad på nedanstående termdefinitioner och i förekommande fall grafisk representation:
+
+==Termer och symboler för utbyte av meddelande==
+
+Följande termer används för att beskriva gundläggande utbyte av meddelanden, oberoende av typ av operation eller tjänsteinteraktion:
+
+ * Meddelande - Informationsmängd som förpackats av en avsändare i syfte att överföra strukturerad information till en mottagare 
+ * Avsändare - Tjänstekomponent som sänder ett meddelande till en mottagare 
+ * Mottagare - Tjänstekomponent som tar emot ett meddelande från en avsändare 
+
+*Anm.* Förutom vanligt data består meddelandet av så kallat metadata som avsändaren tillfogar för att underlätta för mottagaren att göra en korrekt tolkning av meddelandet
+
+Avsändare, mottagare och meddelande visualiseras med enligt:
+
+*BILD SAKNAS*
+
+==Termer och symboler för tjänsteinteraktioner==
+
+Följande termer definierar tjänsteinteraktioner och deras byggstenar.
+
+ * Tjänsteinteraktion
+    Ett eller ett par tjänstekontrakt som tillsammans beskriver en abstrakt konversation mellan två parter.
+
+    Samverkan mellan två parter enligt någon av interaktionstyperna Fråga-Svar, Informationsspridning och Uppdrag-Resultat. Parterna är abstrakta och benämns generellt "Initiativtagare" och "Utförare" (jmfr WS-BPEL "Initiator", "Responder"). En tjänsteinteraktion beskriver de tjänstekontrakt som uttrycker meddelandeutbytet mellan parterna. För interaktionstyperna Fråga-Svar och Informationsspridning beskrivs meddelandeutbytet av det tjänstekontrakt som realiseras av Utföraren. Interaktionstypen Uppdrag-Resultat definierar ett bilateralt utbyte mellan parterna. Initiavitagaren ger utföraren ett uppdrag genom att anropa operationer i dess tjänstekontrakt. Utföraren avslutar interaktionen genom att anropa operation i initiativtagarens tjänstekontrakt i syfte att delge resultatet.
+
+    Tekniskt sett realiseras en tjänsteinteraktion som en WSDL med beroende till ett eller ett par tjänstescheman. 
+
+    Tjänstekontrakt
+    Kontrakt som beskriver ett nationellt standardiserat gränssnitt som förekommer mellan tjänstekomponenter i en tjänsteorienterad arkitektur. Tjänstekontraktet är oberoende av transport och kuverteringsprofil.
+
+    Tekniskt sett realiseras detta i form av ett tjänsteschema samt en porttyp i en WSDL. Ett tjänstekontrakt beskriver en Utförare (Responder) eller en Initiativtagare (Initiator) i en Tjänsteinteraktion. Ex: Tjänstekontraktet för utförar-rollen i tjänsteinteraktionen EhrExtraction heter "EhrExtractionResponder". 
+
+ * Tjänsteschema
+    Ett XML-Schema (tjänsteschema) med ett element för in- och ut meddelanden per operation i ett tjänstekontrakt. Ett tjänstekontrakt identifieras i runtime av tjänsteschemats namnrymnd, dvs schemats target namespace. T.ex. "urn:riv:ehr:ehrexchange:EhrExtractionResponder:1". 
+
+ * Tjänstedomän
+    En övergripande, verksamhetsbaserad indelningsgrund för nationellt standardsierade tjänsteinteraktioner och VTIM-meddelanden. I Riv Tekniska Anvisningar ingår tjänstedomän som en del i uppbyggnaden av namnrymder. 
+
+ * Tjänstekomponent
+    Avgränsad mängd programvara som kan utvecklas, integreras, testas, driftsättas och förvaltas fristående. Tjänstekomponenter kan vara såväl tjänstekonsumenter som tjänsteproducenter. 
+
+ * Initiativtagare
+    Tjänstekomponent som initierar en tjänsteinteraktion. Om tjänsteinteraktionen är av typen Uppdrag-Resultat exponerar initiativtagaren ett tjänstekontrakt för att möjliggöra mottagandet av resultat som sänds av Utföraren i tjänsteinteraktionen. 
+
+ * Utförare
+    Tjänstekomponent som en initiativtagare interagerar med i en tjänsteinteraktion 
+
+ * InUt-operation
+    Ett synkront anrop med ett inmeddelande som resulterar i ett svarsmeddelande eller ett av tjänsteimplementationen producerat felmeddelande
+
+    En InUt-operation visualiseras med en heldragen pil:
+
+ * In-operation
+    Ett asynkront meddelande med robust leverans. Operationen har ett inmeddelande men inget returmeddelande.
+
+    En In-operation visualiseras med en streckad pil:
+
+*BILD SAKNAS*
+
+
+En tjänsteinteraktion av typen fråga-svar visualiseras enligt:
+
+*BILD SAKNAS*
+
+En tjänsteinteraktion av typen informationsspridning visualiseras enligt:
+
+*BILD SAKNAS*
+
+En tjänsteinteraktion av typen uppdrag-resultat visualiseras enligt:
+
+*BILD SAKNAS*
+
+
+==Terminologi för säkerhet==
+
+Följande termer definierar vård-specifika termer som är centrala för att uttrycka regler relaterade till säkerhet.
+
+ * HCC Funktion för autentisering och kryptering
+    Certifikatstyp för autentisering av tjänstekomponenter och för kryptering i syfte att åstadkomma insynsskydd vid meddelandeöverföring mellan tjänsteproducent och tjänstekonsument. Används t.ex. för autentisering och kryptering i samband med HTTPS mutual authentication. Se [http://www.carelink.se/dokument/forvaltning_och_tjanster/SITHS/HCC_Version_2_34.pdf HCC v2.34] för referens. 
