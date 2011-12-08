@@ -1,0 +1,59 @@
+#summary Strategier för följsamhet mot principer för utveckling av RIV Tekniska anvisningar
+
+=Strategier för följsamhet mot principer för utveckling av RIV Tekniska anvisningar=
+
+Principerna finns beskrivna [http://code.google.com/p/rivta/wiki/PrinciplesDevelopingRivta här].
+
+  # Terminologi
+    Anvisningarna baseras på terminologi från T-boken.
+
+  # Kvalitetssäkring
+    Varje version åtföljs av automatiserade testfall som verifierar att anvisningen kan följas. Testfallen beskriver tester för verifiering av specifikationen som sådan. De utgör därmed förvaltningens tolkning av hur specifikationen ska tillämpas. Automatiseringen av testfallen syftar till att verifiera specifikationens tekniska riktighet med avseende på koncistens samt krav rörande introperabilitet, versionering och förljsamhet mot t-bokens referensarkitektur. Dessa automatiserade tester är inte avsedda att verifiera tjänsters följsamhet mot anvisningen, utan att verifiera anvisningen som sådan. Detta är en förutsättning för ge specifikationen färdig-status. Tester som syftar till att verifiera tjänsters följsamhet mot den färdiga anvisningen, faller under rubriken Enkelhet.
+
+  # Enkelhet
+    Varje version åtföljs av exempelkod för aktuella plattformar, samt ev. andra hjälpmedel för att underlätta användningen. Idéer finns om verktyg för generering av korrekt WSDL, samt om valideringsverktyg. Utbildningsmaterial (kurs i RIV Tekniska Anvisningar).
+
+  # Lättviktighet
+    Anvisningarna byggs som tillägg till WS-I-profiler. De hålls kortfattade och fria från beskrivningar av allmänna sammanhang så som WS-I, SOA, tjänsteplattform, T-bok.
+
+  # Breda lösningar
+    Genom att basera anvisningarna på WS-I-profiler och profilering gjord hos andra länder minskas risker och vi kan då också återanvända annat arbete.
+
+    Exempel: Daska IT&Telestyrelsens riktlinjer för användande av Web Services:
+        Standarder for webservices
+        OWSA Model T - sikker direkte transport
+
+  # Målgruppsanpassning
+    Genom att dela upp profilerna efter WS-I:s uppdelning (Basic, Basic Security, Reliable Conversation etc) får vi en uppställning som är anpassad efter olika målgruppers behov av funktionalitet.
+
+  # Återanvändning
+    Vi delar upp anvisningarna enligt vad som beskrivs för målgruppsanpassning. Dessa fokuserar på teknisk kuverteringen och transportprotokoll. Regler rörande tekniska aspekter på payload läggs i separat anvisning (versionering, namnrymdsättning, namnstandards m.m.) för Tjänstekontrakt.
+    Följande skiss illustrerar sambandet mellan logiska begrepp i T-bokens referensarkitektur och deras tekniska representation i RIV Tekniska Anvisningar:
+
+    Enligt referensarkitekturen ska tjänsteinteraktioner klassificeras i tjänstedomäner. Tjänstedomäner har ännu inte normerats i VIT-boken. Tjänsteinteraktionen EHRExtractionInteraction är hämtad ur verkligheten. Tjänstedomänen SammanhållenJournal är dock fiktiv.
+
+    Tekniska anvisningar för profiler byggs upp stegvis med bas i WS I Basic Profile. Påbyggnadsprofil följer, baserat på WS-I Basic Security Profile och i efterföljande steg på WS-I Secure Reliable Conversation Profile.
+
+    Anvisning för Tjänsteschema definierar regler för uppbyggnad av meddelanden för tjänsternas operationer med syfte att styra in mot utbyggbarhet och interoperabilitet. Detta innebär design och namnrymdshantering för att klara krav på framåt- och bakåtkompatibilitet med utgångs punkt i hur XML hanteras i moderna utvecklingsverktyg (Java och .Net). Namnrymder ska också utgöra tydliggöra när ett nytt schema definierar en ny version (utan bakåtkompatibilitet) i förhållande till en tidigare version. Utgångspunkten är att det behövs strategier för att minska behovet av nya versioner (genom bakåt/framåt-kompatibilitet), men samtidigt och tydliggöra regler för uttag av nya versioner då det inte är möjligt eller ändamålsenligt med bevarad kompatibilitet.
+
+    Anvisningen ska förklara vad som menas med framåt- och bakåtkompatibilitet samt tydliggöra motivet till detta krav.
+
+    Följande dokument kan användas som utgångsmaterial för att beskriva behovet:
+        Designing and versioning compatible Web services 
+
+  # Spårbarhet
+    För varje regel i en anvisning dokumenteras bakomliggande krav.
+
+  # Öppenhet
+    Det förs diskussioner om att öppna RIV tekniska anvisningar under öppen-källkodslicens. Förvaltningsprocessen ska bedrivas på publik infrastruktur för öppen källkod. Ett alternativ kan vara EUs plattform http://forge.osor.eu/. Processen bör vara uppbyggd kring förankring hos intressentgrupper.
+
+    Följande möjligheter bör finns för alla intressenter. Intressenter bör kunna tillgängliggöra sig dessa möjligheter utan administrativ börda på förvaltningsorganisationen för RIV Tekniska Anvisningar:
+        Läsa fastställda releaseplaner
+        Lämna förslag på förändringar
+        Läsa inkomna förändringar och deras status i beslutsprocessen
+        Läsa mötesplanen för den grupp som beslutar om förändringar (påverkar status på inkomna förslag)
+        Läsa eller hämta anvisningar
+        Hämta och / eller interaktivt använda hjälpmedel i form av kodexempel, generatorer m.m.
+
+  # Konsolidering
+    Genom att ha så få vårdspecifika detaljer i RIV Tekniska anvisningar som möjligt, understöds en framtida övergång till en förvaltningsövergripande interoperabilitetsstandard. Genom strategin som föreslagits för principen om breda lösningar, skapas förutsättningar för såväl kanonisering av RIV TA som för att ersätta RIV TA med en externt utvecklad motsvarighet. 
