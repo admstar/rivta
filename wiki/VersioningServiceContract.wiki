@@ -57,9 +57,9 @@ I praktiken finns det i huvudsak en typ av förändring som uppfyller såväl ba
 
 Tekniskt sett handlar det om att säkerställa att ett meddelande alltid kan valideras mot den version av XML Schemat som befintliga avsändare och mottagare byggdes för (t ex genereras C#/Java-källkod för att tolka tjänstekontraktets in- och ut-meddelanden. Över tiden kommer olika avsändare och mottagare ha källkld som är genererad utgående från olika minor-versioner av tjänstekontraktet).
 
-En försvårande omständighet är i detta sammanhang att många verktyg för tolkning och validering av XML tagit fasta på ett krav i XML Schema-specifikationen som benämns "Unique Particle Attribution", se Wiki för referensmaterial.
+En försvårande omständighet är i detta sammanhang att många verktyg för tolkning och validering av XML tagit fasta på ett krav i XML Schema-specifikationen som benämns "Unique Particle Attribution", se [http://code.google.com/p/rivta/w/edit/FrontPage Wiki] för referensmaterial.
 
-W3C beskriver ett antal strategier för versionering som tar hänsyn till "Unique Particle Attribution". RIV Tekniska anvisningar tillämpar den strategi som benämns "2.5". Det är en erfarenhetsmässigt påvisad metod för att tekniskt realisera krav på bakåt- och framåtkompatibilitet som bl.a. tillämpas inom OASIS (WS-Policy, WS-Topic m.fl). Metoden ställer följande krav på ett tjänsteschema:
+W3C beskriver ett antal [http://www.w3.org/2001/tag/doc/versioning-xml strategier för versionering] som tar hänsyn till "Unique Particle Attribution". RIV Tekniska anvisningar tillämpar den strategi som benämns [http://www.w3.org/2001/tag/doc/versioning-xml#versionid25 "2.5"]. Det är en erfarenhetsmässigt påvisad metod för att tekniskt realisera krav på bakåt- och framåtkompatibilitet som bl.a. tillämpas inom OASIS (WS-Policy, WS-Topic m.fl). Metoden ställer följande krav på ett tjänsteschema:
 
    * Versionsdeklaration: Target-namespace skall innehålla major-versionen.
    * Namespaces i instans-dokument: Schema-attributet elementFormDefault skall vara satt till 'qualified' i alla scheman.
@@ -70,8 +70,8 @@ W3C beskriver ett antal strategier för versionering som tar hänsyn till "Uniqu
    * Element som introduceras i en ny minor-version läggs i ett separat XML Schema med target-namespace som skiljer sig från major-versionens. Detta är en konsekvens av any-elements deklaration enligt ovan.
    * Utöka nya framåt och bakåtkompatibla versioner av XML Schemat endast med optional element, dvs element som har minOccurs satt till "0". 
 
-Se RIV Teknisk anvisning - Tjänsteschema för detaljerade riktlinjer.
-Se RIV Teknisk anvisning - Basic Profile v2.0: Referensapplikation för källkodsexempel.
+Se [http://code.google.com/p/rivta/wiki/RivTaServiceContract RIV Teknisk anvisning - Tjänsteschema] för detaljerade riktlinjer.
+Se [http://code.google.com/p/rivta/wiki/Bp20ReferenceApplication RIV Teknisk anvisning - Basic Profile v2.0: Referensapplikation] för källkodsexempel.
 
 ==Icke kompatibla ändringar==
 
