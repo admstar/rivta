@@ -26,30 +26,30 @@ Versionsnummer sätts på ett tjänsteschema enligt formatet: *major.minor*
 Vill man beskriva att meddelandet innehåller element från en viss version av ett tjänsteschema (v1.0 i exemplet nedan) visualiseras det enligt:
 Anm. "e1.0" anger element från v1.0 av tjänsteschemat
 
-*legend-meddelande-versioned.png*
+http://rivta.googlecode.com/svn/wiki/images/legend-meddelande-versioned.png
 
 Vill man beskriva att meddelandet innehåller element från flera olika versioner av ett tjänsteschema (v1.0 och v1.1 i exemplet nedan) visualiseras det enligt:
 Anm. I bilden försärks att element från v1.1 har tillförts meddelandet
 
-*legend-meddelande-multi-versions.png*
+http://rivta.googlecode.com/svn/wiki/images/legend-meddelande-multi-versions.png
 
 En initiativtagare byggd för v1.0 av ett tjänsteschema visualiseras enligt:
 
-*legend-initiativtagare-versioned.png*
+http://rivta.googlecode.com/svn/wiki/images/legend-initiativtagare-versioned.png
 
 En utförare byggd för v1.0 av ett tjänsteschema visualiseras enligt:
 
-*legend-utforare-versioned.png*
+http://rivta.googlecode.com/svn/wiki/images/legend-utforare-versioned.png
 
 ==Bakåt och framåtkompatibilitet==
 
    * Bakåtkompatiblitet innebär att en avsändare kan skicka meddelande till en mottagare där meddelandet följer en äldre version av tjänstekontraktet än vad mottagare är baserad på. Detta kräver att mottagaren kan behandla meddelanden av den äldre versionen trots att dessa saknar de nya elementen. Bakåtkompatiblitet illustreras med hjälp av följande bild: 
 
-*Versioning_10_to_11.png*
+http://rivta.googlecode.com/svn/wiki/images/Versioning_10_to_11.png
 
    * Framåtkompatibilitet innebär att en avsändare kan skicka meddelande till en mottagare där meddelandet följer en nyare version av tjänstekontraktet än vad mottagaren är baserad på. Detta kräver att mottagaren kan bortse från informationen som tillförts i den nyare versionen av meddelandet. 
 
-*Versioning_11_to_10.png*
+http://rivta.googlecode.com/svn/wiki/images/Versioning_11_to_10.png
 
 ==Teknisk realisation av framåt och bakåtkompatibilitet==
 
@@ -81,11 +81,11 @@ Anm. Vad som är en rimlig tidsperiod för avsändare att gå över till en ny i
 
 Följande bild illustrerar behov av två endpunkter hos mottagaren vid införande av en ny icke kompatibel version, v2.0, av ett tjänstekontrakt:
 
-*Versioning_10_and_20.png*
+http://rivta.googlecode.com/svn/wiki/images/Versioning_10_and_20.png
 
 Avsändare A använder initialt den gamla versionen, v1.0, och avsändare B använder den nya versionen, v2.0. När avsändare A uppdaterat till den nya versionen kan mottagaren ta bort endpunkten för den gamla versionen. Slutresultatet ser då ut enligt följande:
 
-*Versioning_20.png*
+http://rivta.googlecode.com/svn/wiki/images/Versioning_20.png
 
 ==Versionering och tjänsteinteraktionstyper==
 
@@ -93,7 +93,7 @@ När det gäller tjänsteinteraktionstyperna informatonsspridning och uppdrag-re
 
 För tjänsteinteraktionstypen informatonsspridning kan man i samtliga resonemang ovan ersätta avsändare med initiativtagare och mottagare med utförare samt ersätta anropspilen med en in-operation, t ex för bakåtkompatibilitet:
 
-*Versioning_inOperation_10_to_11.png*
+http://rivta.googlecode.com/svn/wiki/images/Versioning_inOperation_10_to_11.png
 
 För tjänsteinteraktionstypen uppdrag-resultat så byter initiativtagare och utförare avsändare/mottagare-roll då svarsmeddelandet skickas men i övrigt är resonemanget samma som ovanstående.
 
@@ -105,12 +105,12 @@ För tjänsteinteraktiontypen Fråga-svar uppträder en initiativtagare som avs�
 
 Följande bild illustrerar behov av bakåt och framåtkompatiblitet i fallet med en gammal initiativtagare och en ny utförare:
 
-*Versioning_FragaSvar_10_to_11.png*
+http://rivta.googlecode.com/svn/wiki/images/Versioning_FragaSvar_10_to_11.png
 
 I detta exempel måste utföraren (v1.1) kunna behandla request-meddelanden av den äldre versionen (v1.0) trots att dessa saknar de nya elementen samt initiativtagaren (v1.0) måste ignorera nya element som kommer i v1.1-response-meddelanden.
 
 Följande bild illustrerar behov av bakåt och framåtkompatiblitet i fallet med en ny initiativtagare och en gammal utförare:
 
-*Versioning_FragaSvar_11_to_10.png*
+http://rivta.googlecode.com/svn/wiki/images/Versioning_FragaSvar_11_to_10.png
 
 I detta exempel måste utföraren (v1.0) ignorera nya element som kommer i v1.1-request-meddelanden samt initiativtagaren (v1.1) måste kunna behandla response-meddelanden av den äldre versionen (v1.0) trots att dessa saknar de nya elementen. 
