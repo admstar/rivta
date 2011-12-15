@@ -38,6 +38,8 @@ def getTemplateWcf(baseDir, rivtaProfile){
 	@REM ---------------------------------------------------------------------------------
 	CD ..
 	
+	SET SCHEMADIR=schemas
+	
 	'''
 	
 	def wcfDir = "${baseDir}/generated-scripts/wcf"
@@ -78,13 +80,10 @@ def addSchemaAndWsdlVariableAssignments(wcf, wsdlFiles){
 
 	def newLine = System.getProperty("line.separator")
 	
-	
-
 	wsdlFiles.eachWithIndex { wsdlFile, pos ->
 		println "WSDL Schema to process for wcf: ${wsdlFile.name}"
 		def slashyPath = getRelativeSchemaPath(wsdlFile.absolutePath).replaceAll("/","\\\\")
-		wcf.append("SET SCHEMADIR=schemas" + newLine)
-		wcf.append("SET W${pos}=%SCHEMADIR%" + slashyPath + newLine)
+		wcf.append("SET W${pos}=" + slashyPath + newLine)
 		wcf.append("SET X${pos}=%SCHEMADIR%\\interactions\\" + new File(wsdlFile.parent).name + "\\*.xsd" + newLine)
 		wcf.append(newLine)
 	}
@@ -108,7 +107,7 @@ def addWcfScriptInformation(wcf, wsdlFiles, domain, version){
 	wcf.append('SET APPCONFIG=/config:wcf\\generated-src\\app.config' + newLine)
 	wcf.append('SET NAMESPACE=/namespace:*,' + buildCorrectNamespace(domain, version) + newLine)
 	wcf.append('SET SVCUTIL="svcutil.exe"' + newLine)
-	wcf.append('SET XCORE=%SCHEMADIR%\\core_components\\*.xsd' + newLine)
+	//wcf.append('SET XCORE=%SCHEMADIR%\\core_components\\*.xsd' + newLine)
 	wcf.append('%SVCUTIL% /language:cs %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%'+ newLine)
 	wcf.append(newLine)
 	wcf.append('CD wcf' + newLine)
