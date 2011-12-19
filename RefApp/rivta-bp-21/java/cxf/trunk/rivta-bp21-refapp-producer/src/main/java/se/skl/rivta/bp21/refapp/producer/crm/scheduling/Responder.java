@@ -35,11 +35,11 @@ import se.skl.rivta.bp21.refapp.util.Util;
 	endpointInterface="se.skl.riv.crm.scheduling.v1.rivtabp21.MakeBookingResponderInterface", 
 	portName = "MakeBookingResponderPort", 
 	targetNamespace = "urn:riv:crm:scheduling:MakeBooking:1:rivtabp21",
-	wsdlLocation = "schemas/interactions/MakeBookingInteraction/MakeBookingInteraction_1.1_RIVTABP21.wsdl")
+	wsdlLocation = "schemas/interactions/MakeBookingInteraction/MakeBookingInteraction_1.1_rivtabp21.wsdl")
 public class Responder implements MakeBookingResponderInterface {
 
 	static private final Logger logger = LoggerFactory.getLogger(Util.class);
-
+	
 	@Override
 	public MakeBookingResponseType makeBooking(String logicalAddress,
 			MakeBookingType parameters) {
