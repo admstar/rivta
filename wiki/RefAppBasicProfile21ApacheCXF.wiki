@@ -1,0 +1,65 @@
+#summary RIV Teknisk anvisning - Basic Profile v2.1 - Referensapplikation - Apache CXF Environment
+
+=RIV Teknisk anvisning - Basic Profile v2.1 - Referensapplikation - Apache CXF Environment=
+
+<wiki:toc max_depth="3" />
+
+==Environment==
+
+The reference application requires the following to be pre installed:
+
+  * Java SE Development Kit v5.0 or later
+    * [http://java.sun.com/javase/downloads/index.jsp download] 
+  * Maven v2.0.9 or later
+    * [http://maven.apache.org/download.html download] 
+  * Any Subversion client
+    * [http://subversion.tigris.org/ download] 
+
+==Checkout and build the reference application==
+
+  # [http://code.google.com/p/rivta/source/checkout Checkout the source code]
+  # mvn install
+
+==Running the reference application==
+
+===Producer===
+
+  # `cd rivta-bp21-refapp-producer`
+  # `mvn -e exec:java -Dexec.mainClass="se.skl.rivta.bp21.refapp.producer.Server"
+
+This should produce output after running the consumer once similar to the following:
+
+*Skärmdump*
+
+===Consumer===
+
+  # `cd rivta-bp20-refapp-consumer`
+  # `mvn -e exec:java -Dexec.mainClass="se.skl.rivta.bp21.refapp.consumer.crm.scheduling.Initiator"
+
+This should produce output similar to the following:
+
+*Skärmdump*
+
+
+==Sample soap/http-request==
+
+*TODO fixa exempel*
+
+==Prepare for development in Eclipse==
+
+`mvn eclipse:eclipse`
+
+==Overview of Maven modules==
+
+  * schemas
+    Contains XML Schemas and WSDL artefacts.
+    Also responsible for generating JAXB and JAX-WS binding code. 
+
+  * util
+    Contains reusable code, log-settings and so on. 
+
+  * producer
+    Service producer. 
+
+  * consumer
+    Service consumer. 
