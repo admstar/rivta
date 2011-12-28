@@ -17,7 +17,7 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<wsdl:definitions name='GetAllHealthcareFacilitiesInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tjsr='urn:riv:crm:scheduling:GetAllHealthcareFacilitiesResponder:1' xmlns:tjsi='urn:riv:crm:scheduling:GetAllHealthcareFacilitiesInitiator:1' xmlns:tns='urn:riv:crm:scheduling:GetAllHealthcareFacilities:1:rivtabp21' targetNamespace='urn:riv:crm:scheduling:GetAllHealthcareFacilities:1:rivtabp21' xmlns:itr='urn:riv:itintegration:registry:1'>
+<wsdl:definitions name='GetAllHealthcareFacilitiesInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tjsr='urn:riv:crm:scheduling:GetAllHealthcareFacilitiesResponder:1' xmlns:ih='urn:riv:interoperability:headers:1' xmlns:tns='urn:riv:crm:scheduling:GetAllHealthcareFacilities:1:rivtabp21' targetNamespace='urn:riv:crm:scheduling:GetAllHealthcareFacilities:1:rivtabp21' xmlns:itr='urn:riv:itintegration:registry:1'>
   <xs:annotation>
     <xs:documentation>
 			 Tjänsteinteraktionens namn: GetAllHealthcareFacilitiesInteraction
@@ -34,12 +34,14 @@
     <xs:schema targetNamespace='urn:riv:crm:scheduling:GetAllHealthcareFacilities:1:rivtabp21'>
       <xs:import schemaLocation='GetAllHealthcareFacilitiesResponder_1.1.xsd' namespace='urn:riv:crm:scheduling:GetAllHealthcareFacilitiesResponder:1' />
       <xs:import schemaLocation='../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
+      <xs:import schemaLocation='../../core_components/interoperability_headers_1.0.xsd' namespace='urn:riv:interoperability:headers:1' />
     </xs:schema>
   </wsdl:types>
   <wsdl:message name='GetAllHealthcareFacilitiesRequest'>
     <wsdl:part name='LogicalAddress' element='itr:LogicalAddress'>
-      <wsdl:documentation>A 3-level hierarchical logical according to the following pattern: &lt;Länskod för landstinget&gt;#&lt;HSA-id of the care-giver&gt;#&lt;hsaid of the healthcare_facility owning he schedule within which the booking is to be cancelled&gt;</wsdl:documentation>
+      <wsdl:documentation>hsaid of the healthcare_facility owning the schedule</wsdl:documentation>
     </wsdl:part>
+  <wsdl:part name='actor' element="ih:Actor" />
     <wsdl:part name='parameters' element='tjsr:GetAllHealthcareFacilities' />
   </wsdl:message>
   <wsdl:message name='GetAllHealthcareFacilitiesResponse'>
@@ -57,6 +59,7 @@
       <soap:operation soapAction='urn:riv:crm:scheduling:GetAllHealthcareFacilitiesResponder:1:GetAllHealthcareFacilities' style='document' />
       <wsdl:input>
         <soap:header use='literal' message='tns:GetAllHealthcareFacilitiesRequest' part='LogicalAddress' />
+	    <soap:header use='literal' message='tns:CancelBookingRequest' part='actor' />
         <soap:body use='literal' parts='parameters' />
       </wsdl:input>
       <wsdl:output>
