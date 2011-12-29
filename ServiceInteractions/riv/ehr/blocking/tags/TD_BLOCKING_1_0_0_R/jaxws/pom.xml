@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. The ASF licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>se.riv.ehr.blocking</groupId>
+  <artifactId>ehr-blocking-schemas</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0</version>
+  <name>ehr-blocking-schemas</name>
+  <url>http://maven.apache.org</url>
+	
+	<properties>
+		<schema.path>${basedir}/../schemas</schema.path>
+		<cxf.version>2.2.2</cxf.version>
+	</properties>
+
+	<dependencies>
+
+	</dependencies>
+	<repositories>
+		<!-- for jaxb-impl -->
+		<repository>
+			<id>java.net</id>
+			<url>http://download.java.net/maven/1/</url>
+			<layout>legacy</layout>
+		</repository>
+		<repository>
+			<id>m2.java.net</id>
+			<name>Java.net Repository for Maven2</name>
+			<url>http://download.java.net/maven/2/</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>repository.codehaus.org</id>
+			<url>http://repository.codehaus.org/</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<build>
+		<plugins>
+
+		<plugin>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-codegen-plugin</artifactId>
+				<version>${cxf.version}</version>
+				<executions>
+					<execution>
+						<id>generate-sources</id>
+						<phase>generate-sources</phase>
+						<configuration>
+							<sourceRoot>${basedir}/target/generated/src/main/java</sourceRoot>
+							<wsdlOptions>
+
+								<wsdlOption>
+									<extraargs>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:accesscontrol:CheckBlocksInteraction:1:RIVTABP20=se.riv.ehr.blocking.accesscontrol
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:accesscontrol:CheckBlocksResponder:1=se.riv.ehr.blocking.accesscontrol
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:accesscontrol:1=se.riv.ehr.blocking.accesscontrol
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											http://www.w3.org/2005/08/addressing=org.w3c.addressing_1_0
+										</extraarg>
+									</extraargs>
+									<wsdl>${schema.path}/accesscontrol/CheckBlocksInteraction/CheckBlocksInteraction_1.0_RIVTABP20.wsdl</wsdl>
+								</wsdlOption>
+								
+								<wsdlOption>
+									<extraargs>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:administration:CancelTemporaryExtendedRevokeInteraction:1:RIVTABP20=se.riv.ehr.blocking.administration
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:administration:CancelTemporaryExtendedRevokeResponder:1=se.riv.ehr.blocking.administration
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:administration:1=se.riv.ehr.blocking.administration
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											http://www.w3.org/2005/08/addressing=org.w3c.addressing_1_0
+										</extraarg>
+									</extraargs>
+									<wsdl>${schema.path}/administration/CancelTemporaryExtendedRevokeInteraction/CancelTemporaryExtendedRevokeInteraction_1.0_RIVTABP20.wsdl</wsdl>
+								</wsdlOption>
+								
+								<wsdlOption>
+									<extraargs>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:administration:DeleteExtendedBlockInteraction:1:RIVTABP20=se.riv.ehr.blocking.administration
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:administration:DeleteExtendedBlockResponder:1=se.riv.ehr.blocking.administration
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:administration:1=se.riv.ehr.blocking.administration
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											http://www.w3.org/2005/08/addressing=org.w3c.addressing_1_0
+										</extraarg>
+									</extraargs>
+									<wsdl>${schema.path}/administration/DeleteExtendedBlockInteraction/DeleteExtendedBlockInteraction_1.0_RIVTABP20.wsdl</wsdl>
+								</wsdlOption>
+								
+								<wsdlOption>
+									<extraargs>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:administration:GetExtendedBlocksForPatientInteraction:1:RIVTABP20=se.riv.ehr.blocking.administration
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:administration:GetExtendedBlocksForPatientResponder:1=se.riv.ehr.blocking.administration
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:administration:1=se.riv.ehr.blocking.administration
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											http://www.w3.org/2005/08/addressing=org.w3c.addressing_1_0
+										</extraarg>
+									</extraargs>
+									<wsdl>${schema.path}/administration/GetExtendedBlocksForPatientInteraction/GetExtendedBlocksForPatientInteraction_1.0_RIVTABP20.wsdl</wsdl>
+								</wsdlOption>
+								
+								<wsdlOption>
+									<extraargs>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:administration:RegisterExtendedBlockInteraction:1:RIVTABP20=se.riv.ehr.blocking.administration
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:administration:RegisterExtendedBlockResponder:1=se.riv.ehr.blocking.administration
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:administration:1=se.riv.ehr.blocking.administration
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											http://www.w3.org/2005/08/addressing=org.w3c.addressing_1_0
+										</extraarg>
+									</extraargs>
+									<wsdl>${schema.path}/administration/RegisterExtendedBlockInteraction/RegisterExtendedBlockInteraction_1.0_RIVTABP20.wsdl</wsdl>
+								</wsdlOption>
+								
+								<wsdlOption>
+									<extraargs>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:administration:RegisterTemporaryExtendedRevokeInteraction:1:RIVTABP20=se.riv.ehr.blocking.administration
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:administration:RegisterTemporaryExtendedRevokeResponder:1=se.riv.ehr.blocking.administration
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:administration:1=se.riv.ehr.blocking.administration
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											http://www.w3.org/2005/08/addressing=org.w3c.addressing_1_0
+										</extraarg>
+									</extraargs>
+									<wsdl>${schema.path}/administration/RegisterTemporaryExtendedRevokeInteraction/RegisterTemporaryExtendedRevokeInteraction_1.0_RIVTABP20.wsdl</wsdl>
+								</wsdlOption>
+								
+								<wsdlOption>
+									<extraargs>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:administration:RevokeExtendedBlockInteraction:1:RIVTABP20=se.riv.ehr.blocking.administration
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:administration:RevokeExtendedBlockResponder:1=se.riv.ehr.blocking.administration
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:administration:1=se.riv.ehr.blocking.administration
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											http://www.w3.org/2005/08/addressing=org.w3c.addressing_1_0
+										</extraarg>
+									</extraargs>
+									<wsdl>${schema.path}/administration/RevokeExtendedBlockInteraction/RevokeExtendedBlockInteraction_1.0_RIVTABP20.wsdl</wsdl>
+								</wsdlOption>
+								
+								<wsdlOption>
+									<extraargs>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:querying:GetAllBlocksInteraction:1:RIVTABP20=se.riv.ehr.blocking.querying
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:querying:GetAllBlocksResponder:1=se.riv.ehr.blocking.querying
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:querying:1=se.riv.ehr.blocking.querying
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											http://www.w3.org/2005/08/addressing=org.w3c.addressing_1_0
+										</extraarg>
+									</extraargs>
+									<wsdl>${schema.path}/querying/GetAllBlocksInteraction/GetAllBlocksInteraction_1.0_RIVTABP20.wsdl</wsdl>
+								</wsdlOption>
+								
+								<wsdlOption>
+									<extraargs>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:querying:GetBlocksForPatientInteraction:1:RIVTABP20=se.riv.ehr.blocking.querying
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:querying:GetBlocksForPatientResponder:1=se.riv.ehr.blocking.querying
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:querying:1=se.riv.ehr.blocking.querying
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											http://www.w3.org/2005/08/addressing=org.w3c.addressing_1_0
+										</extraarg>
+									</extraargs>
+									<wsdl>${schema.path}/querying/GetBlocksForPatientInteraction/GetBlocksForPatientInteraction_1.0_RIVTABP20.wsdl</wsdl>
+								</wsdlOption>
+								
+								<wsdlOption>
+									<extraargs>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:synchronization:RegisterBlockInteraction:1:RIVTABP20=se.riv.ehr.blocking.synchronization
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:synchronization:RegisterBlockResponder:1=se.riv.ehr.blocking.synchronization
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:synchronization:1=se.riv.ehr.blocking.synchronization
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											http://www.w3.org/2005/08/addressing=org.w3c.addressing_1_0
+										</extraarg>
+									</extraargs>
+									<wsdl>${schema.path}/synchronization/RegisterBlockInteraction/RegisterBlockInteraction_1.0_RIVTABP20.wsdl</wsdl>
+								</wsdlOption>
+								
+								<wsdlOption>
+									<extraargs>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:synchronization:RegisterTemporaryRevokeInteraction:1:RIVTABP20=se.riv.ehr.blocking.synchronization
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:synchronization:RegisterTemporaryRevokeResponder:1=se.riv.ehr.blocking.synchronization
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:synchronization:1=se.riv.ehr.blocking.synchronization
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											http://www.w3.org/2005/08/addressing=org.w3c.addressing_1_0
+										</extraarg>
+									</extraargs>
+									<wsdl>${schema.path}/synchronization/RegisterTemporaryRevokeInteraction/RegisterTemporaryRevokeInteraction_1.0_RIVTABP20.wsdl</wsdl>
+								</wsdlOption>
+								
+								<wsdlOption>
+									<extraargs>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:synchronization:UnregisterBlockInteraction:1:RIVTABP20=se.riv.ehr.blocking.synchronization
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:synchronization:UnregisterBlockResponder:1=se.riv.ehr.blocking.synchronization
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:synchronization:1=se.riv.ehr.blocking.synchronization
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											http://www.w3.org/2005/08/addressing=org.w3c.addressing_1_0
+										</extraarg>
+									</extraargs>
+									<wsdl>${schema.path}/synchronization/UnregisterBlockInteraction/UnregisterBlockInteraction_1.0_RIVTABP20.wsdl</wsdl>
+								</wsdlOption>
+								
+								<wsdlOption>
+									<extraargs>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:synchronization:UnregisterTemporaryRevokeInteraction:1:RIVTABP20=se.riv.ehr.blocking.synchronization
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:synchronization:UnregisterTemporaryRevokeResponder:1=se.riv.ehr.blocking.synchronization
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											urn:ehr:blocking:synchronization:1=se.riv.ehr.blocking.synchronization
+										</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>
+											http://www.w3.org/2005/08/addressing=org.w3c.addressing_1_0
+										</extraarg>
+									</extraargs>
+									<wsdl>${schema.path}/synchronization/UnregisterTemporaryRevokeInteraction/UnregisterTemporaryRevokeInteraction_1.0_RIVTABP20.wsdl</wsdl>
+								</wsdlOption>
+								
+							</wsdlOptions>
+						</configuration>
+						<goals>
+							<goal>wsdl2java</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin> 
+
+<!-- When using JAX-WS RI wsimport. Not recommended. wsimport validates with none-WS-I Compliant wsdl-schema. wsimport lacks ability to manage package names for schema name spaces.
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxws-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>wsimport</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<packageName>urn:ehr:blocking_1</packageName>
+					<wsdlDirectory>${schema.path}</wsdlDirectory>
+					<destdir>${basedir}/target/generated/metro/src/main/java</destdir>
+					<xadditionalHeaders>true</xadditionalHeaders>
+					<xnoAddressingDataBinding>true</xnoAddressingDataBinding>
+					<wsdlFiles>
+						<wsdlFile>
+							/accesscontrol/CheckBlocksInteraction/CheckBlocksInteraction_1.0_RIVTABP20.wsdl
+						</wsdlFile>
+					</wsdlFiles>
+
+				</configuration>
+
+				<dependencies>
+					<dependency>
+						<groupId>com.sun.xml.ws</groupId>
+						<artifactId>jaxws-tools</artifactId>
+						<version>2.1.2</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+-->
+		</plugins>
+	</build>
+</project>
