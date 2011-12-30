@@ -10,6 +10,13 @@ import org.dom4j.io.SAXReader
 
 /**
  *Script to generate a jaxws pom.xml from a rivta-structured service domain. Run the script to get information on input arguments.
+ *
+ * Revision history:
+ *
+ * Version 1.0
+ * First version of this script.
+ * 
+ *
  */
 
 def getAllFilesMatching(direcory, pattern){

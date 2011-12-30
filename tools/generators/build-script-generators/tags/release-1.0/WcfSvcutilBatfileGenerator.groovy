@@ -4,6 +4,13 @@ import groovy.io.FileType
 
 /**
  *Script to generate a scvutil bat file for .Net WCF WSDL-first. Run the script to get information on input arguments.
+ *
+ * Revision history:
+ *
+ * Version 1.0
+ * First version of this script.
+ * 
+ *
  */
 
 def getAllFilesMathcing(direcory, pattern){
