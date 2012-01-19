@@ -20,7 +20,6 @@
 	</xs:annotation>
 	
 	<xs:element name="LogicalAddress" type="LogicalAddressType" />
-	<xs:element name="ServiceContract" type="ServiceContractType" />
 	
 	<xs:simpleType name="LogicalAddressType">
 		<xs:annotation>
@@ -32,10 +31,10 @@
 		<xs:restriction base="xs:string" />
 	</xs:simpleType>
 	
-	<xs:complexType name='ServiceContractType'>
+	<xs:complexType name='ServiceContractNamespaceType'>
 		<xs:annotation>
 			<xs:documentation>
-				Type which describes a service contract. Used in interaction GetSupportedServiceContracts.
+				Type which describes a service contract.
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
@@ -43,5 +42,9 @@
 			<xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
 		</xs:sequence>
 	</xs:complexType>
+	
+	<xs:simpleType name="HsaIdType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
 	
 </xs:schema>
