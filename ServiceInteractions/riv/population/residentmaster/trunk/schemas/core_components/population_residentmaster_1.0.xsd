@@ -32,14 +32,18 @@
 			<xs:element name="Kon" type="tns:KonTYPE"/>
 			<xs:element name="Fodelsetid" type="tns:DT"/>
 			<xs:element name="Avregistrering" type="tns:AvregistreringTYPE" minOccurs="0"/>
-			<xs:element name="Namn" type="tns:NamnTYPE" minOccurs="0"/>
+			<xs:element name="Namn" type="tns:NamnTYPE" minOccurs="0"/>		
 			<xs:element name="Folkbokforingsadress" type="tns:SvenskAdressTYPE" minOccurs="0"/>
 			<xs:element name="SarskildPostadress" type="tns:SvenskAdressTYPE" minOccurs="0"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="SvenskAdressTYPE">
-		<xs:sequence>
+			<xs:sequence>
+			<xs:element name="LanKod" type="tns:Strang2TYPE" nillable="true" minOccurs="0"/>
+			<xs:element name="KommunKod" type="tns:Strang2TYPE" nillable="true" minOccurs="0"/>
+			<xs:element name="ForsamlingKod" type="tns:Strang2TYPE" nillable="true" minOccurs="0"/>
+			<xs:element name="Fastighetsbeteckning" type="tns:Strang40TYPE" nillable="true" minOccurs="0"/>		
 			<xs:element name="CareOf" type="tns:Strang35TYPE"  minOccurs="0"/>
 			<xs:element name="Utdelningsadress1" type="tns:Strang35TYPE"  minOccurs="0"/>
 			<xs:element name="Utdelningsadress2" type="tns:Strang35TYPE"  minOccurs="0"/>
@@ -105,9 +109,17 @@
 			<xs:pattern value="^[0-9]{8}[0-9pPtTfF][0-9]{3}$"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="Strang2TYPE">
+		<xs:annotation>
+			<xs:documentation>Strängar med 2 tecken</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="2"/>
+		</xs:restriction>
+	</xs:simpleType>	
 	<xs:simpleType name="Strang35TYPE">
 		<xs:annotation>
-			<xs:documentation>StrÃ¤ngar med 35 tecken</xs:documentation>
+			<xs:documentation>Strängar med 35 tecken</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:maxLength value="35"/>
@@ -115,7 +127,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="Strang27TYPE">
 		<xs:annotation>
-			<xs:documentation>StrÃ¤ngar med 35 tecken</xs:documentation>
+			<xs:documentation>Strängar med 35 tecken</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:maxLength value="27"/>
@@ -123,7 +135,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="Strang36TYPE">
 		<xs:annotation>
-			<xs:documentation>StrÃ¤ngar med 35 tecken</xs:documentation>
+			<xs:documentation>Strängar med 35 tecken</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:maxLength value="36"/>
@@ -131,7 +143,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="Strang40TYPE">
 		<xs:annotation>
-			<xs:documentation>StrÃ¤ngar med 40 tecken</xs:documentation>
+			<xs:documentation>Strängar med 40 tecken</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:maxLength value="40"/>
@@ -139,7 +151,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="Strang60TYPE">
 		<xs:annotation>
-			<xs:documentation>StrÃ¤ngar med 60 tecken</xs:documentation>
+			<xs:documentation>Strängar med 60 tecken</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:maxLength value="60"/>
@@ -147,7 +159,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="Strang80TYPE">
 		<xs:annotation>
-			<xs:documentation>StrÃ¤ngar med 80 tecken</xs:documentation>
+			<xs:documentation>Strängar med 80 tecken</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:maxLength value="80"/>
