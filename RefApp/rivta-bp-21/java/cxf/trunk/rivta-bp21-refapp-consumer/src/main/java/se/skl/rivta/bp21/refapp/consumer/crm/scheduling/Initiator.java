@@ -25,6 +25,7 @@ import java.net.URL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import riv.interoperability.headers._1.ActorType;
 import se.skl.riv.crm.scheduling.v1.MakeBookingResponseType;
 import se.skl.riv.crm.scheduling.v1.MakeBookingType;
 import se.skl.riv.crm.scheduling.v1.rivtabp21.MakeBookingResponderInterface;
@@ -34,14 +35,18 @@ import se.skl.rivta.bp21.refapp.util.Util;
 public class Initiator {
 
 	static private final Logger logger = LoggerFactory.getLogger(Util.class);
-	static private final String LOGICAL_ADDRESS = "SE2321000016-3MKB"; // alternative hsaid: "cn=server3,ou=Division 1,ou=Lasarettet i Ystad,o=Region Skåne,l=Skåne län c=SE"		
-	
+	static private final String LOGICAL_ADDRESS = "SE2321000016-3MKB"; // alternative
+																		// hsaid:
+																		// "cn=server3,ou=Division 1,ou=Lasarettet i Ystad,o=Region Skåne,l=Skåne län c=SE"
+
 	private MakeBookingResponderInterface service = null;
 
 	public static void main(final String[] args) {
-		
-		// Make CXF use log4j (instead of JDK-logging), currently can't use slf4j
-		System.setProperty("org.apache.cxf.Logger", "org.apache.cxf.common.logging.Log4jLogger");
+
+		// Make CXF use log4j (instead of JDK-logging), currently can't use
+		// slf4j
+		System.setProperty("org.apache.cxf.Logger",
+				"org.apache.cxf.common.logging.Log4jLogger");
 
 		// Parse main arguments
 		String address = null;
@@ -49,15 +54,18 @@ public class Initiator {
 			// Default address
 			address = Util.getProperty("cxf.url");
 		} else {
-			// Use the provided URL, note that this address has to be using the https - protocoll as defined in cxf.xml, i.e.: <http:conduit name="...">
-			address = args[0];			
+			// Use the provided URL, note that this address has to be using the
+			// https - protocoll as defined in cxf.xml, i.e.: <http:conduit
+			// name="...">
+			address = args[0];
 		}
-		
+
 		logger.info("Calling producer at address: " + address);
-		
+
 		final Initiator initiator = new Initiator(address);
-		final MakeBookingResponseType responseType = initiator.callGetAvailableEServices(LOGICAL_ADDRESS);
-		
+		final MakeBookingResponseType responseType = initiator
+				.callGetAvailableEServices(LOGICAL_ADDRESS);
+
 		logger.info("Producer answered.");
 		logger.info("Booking id: " + responseType.getBookingId());
 		logger.info("Result code: " + responseType.getResultCode());
@@ -68,21 +76,26 @@ public class Initiator {
 		// Setup ssl info for the initial ?wsdl lookup...
 		setupSsl();
 
-		service = new MakeBookingResponderService(createEndpointUrlFromServiceAddress(address)).getMakeBookingResponderPort();
+		service = new MakeBookingResponderService(
+				createEndpointUrlFromServiceAddress(address))
+				.getMakeBookingResponderPort();
 	}
 
 	/**
 	 * Setup ssl info for the initial ?wsdl lookup...
 	 */
 	private void setupSsl() {
-		System.setProperty("javax.net.ssl.keyStore","../certs/consumer.jks");
+		System.setProperty("javax.net.ssl.keyStore", "../certs/consumer.jks");
 		System.setProperty("javax.net.ssl.keyStorePassword", "password");
-		System.setProperty("javax.net.ssl.trustStore", "../certs/consumer-truststore.jks");
+		System.setProperty("javax.net.ssl.trustStore",
+				"../certs/consumer-truststore.jks");
 		System.setProperty("javax.net.ssl.trustStorePassword", "password");
 	}
 
-	public MakeBookingResponseType callGetAvailableEServices(String logicalAddresss) {
-		final MakeBookingResponseType response = service.makeBooking("1234561234", new MakeBookingType());
+	public MakeBookingResponseType callGetAvailableEServices(
+			String logicalAddresss) {
+		final MakeBookingResponseType response = service.makeBooking(
+				"1234561234", new ActorType(), new MakeBookingType());
 		return response;
 	}
 
@@ -90,7 +103,8 @@ public class Initiator {
 		try {
 			return new URL(serviceAddress + "?wsdl");
 		} catch (MalformedURLException e) {
-			throw new RuntimeException("Malformed URL Exception: " + e.getMessage());
+			throw new RuntimeException("Malformed URL Exception: "
+					+ e.getMessage());
 		}
 	}
 }
