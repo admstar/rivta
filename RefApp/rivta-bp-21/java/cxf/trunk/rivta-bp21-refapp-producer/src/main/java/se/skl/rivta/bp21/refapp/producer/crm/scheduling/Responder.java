@@ -24,33 +24,29 @@ import javax.jws.WebService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import riv.interoperability.headers._1.ActorType;
 import se.skl.riv.crm.scheduling.v1.MakeBookingResponseType;
 import se.skl.riv.crm.scheduling.v1.MakeBookingType;
 import se.skl.riv.crm.scheduling.v1.ResultCodeEnum;
 import se.skl.riv.crm.scheduling.v1.rivtabp21.MakeBookingResponderInterface;
 import se.skl.rivta.bp21.refapp.util.Util;
 
-@WebService(
-	serviceName = "MakeBookingResponderService", 
-	endpointInterface="se.skl.riv.crm.scheduling.v1.rivtabp21.MakeBookingResponderInterface", 
-	portName = "MakeBookingResponderPort", 
-	targetNamespace = "urn:riv:crm:scheduling:MakeBooking:1:rivtabp21",
-	wsdlLocation = "schemas/interactions/MakeBookingInteraction/MakeBookingInteraction_1.1_rivtabp21.wsdl")
+@WebService(serviceName = "MakeBookingResponderService", endpointInterface = "se.skl.riv.crm.scheduling.v1.rivtabp21.MakeBookingResponderInterface", portName = "MakeBookingResponderPort", targetNamespace = "urn:riv:crm:scheduling:MakeBooking:1:rivtabp21", wsdlLocation = "schemas/interactions/MakeBookingInteraction/MakeBookingInteraction_1.1_RIVTABP21.wsdl")
 public class Responder implements MakeBookingResponderInterface {
 
 	static private final Logger logger = LoggerFactory.getLogger(Util.class);
-	
+
 	@Override
 	public MakeBookingResponseType makeBooking(String logicalAddress,
-			MakeBookingType parameters) {
+			ActorType actor, MakeBookingType parameters) {
 		logger.info("Incoming client call");
 		logger.info("Logical address: " + logicalAddress);
-		
+
 		final MakeBookingResponseType response = new MakeBookingResponseType();
 		response.setBookingId("booking-" + logicalAddress);
 		response.setResultCode(ResultCodeEnum.OK);
 		response.setResultText("Booking was made successfully");
-		
+
 		return response;
 	}
 }

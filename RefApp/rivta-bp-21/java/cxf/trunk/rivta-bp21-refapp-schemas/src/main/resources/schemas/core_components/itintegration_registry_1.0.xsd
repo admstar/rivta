@@ -8,10 +8,10 @@
 	
 	<xs:annotation>
 		<xs:documentation>
-			Beskrivning: 	Typdefinition för logisk adress som skall användas i tjänstekontrakten 
-							från och med RIV-TA Basic Profile 2.1
+			Beskrivning: 	Grundläggande informationsobjekt för domänen itintegration:registry (adressering av tjänster)
 			
-			Revisionshistorik:
+			Revisionshistorik: 2011-06-27 Mats Ekhammar, Callista Enterprise AB
+				Added ServiceContractType
 			
 			Datum:			2011-05-04
 			Beskrivning:	Initial version
@@ -20,9 +20,28 @@
 	</xs:annotation>
 	
 	<xs:element name="LogicalAddress" type="LogicalAddressType" />
+	<xs:element name="ServiceContract" type="ServiceContractType" />
 	
 	<xs:simpleType name="LogicalAddressType">
+		<xs:annotation>
+			<xs:documentation>
+				Defines the type for logical address according to national reference architecture.
+				Superseeds wsa:To as type for logical address header in RIVTA 2.1. 
+			</xs:documentation>
+		</xs:annotation>
 		<xs:restriction base="xs:string" />
 	</xs:simpleType>
+	
+	<xs:complexType name='ServiceContractType'>
+		<xs:annotation>
+			<xs:documentation>
+				Type which describes a service contract. Used in interaction GetSupportedServiceContracts.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name='ServiceContractNamespace' type='xs:anyURI' />
+			<xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
+		</xs:sequence>
+	</xs:complexType>
 	
 </xs:schema>
