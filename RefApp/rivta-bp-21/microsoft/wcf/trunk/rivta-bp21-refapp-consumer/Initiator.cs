@@ -61,6 +61,7 @@ namespace rivta_bp21_refapp_consumer
             MakeBookingRequest request = new MakeBookingRequest();
             request.LogicalAddress = "1234561234";
             request.MakeBooking = new MakeBookingType();
+            request.Actor = new ActorType();
 
             MakeBookingResponse response = service.MakeBooking(request);
 
