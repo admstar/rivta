@@ -50,14 +50,28 @@ Content-Type: text/xml; charset=UTF-8
 Headers: {Content-Length=443, Host=localhost:11000, User-Agent=Apache CXF 2.2.1, connection=keep-alive, SOAPAction="urn:riv:crm:scheduling:MakeBookingResponder:1:MakeBooking", Pragma=no-cache, content-type=text/xml; charset=UTF-8, Cache-Control=no-cache, Accept=*/*}
 Payload:
 
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:add="http://www.w3.org/2005/08/addressing" xmlns:urn="urn:riv:crm:scheduling:MakeBookingResponder:1" xmlns:urn1="urn:riv:crm:scheduling:1">
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:interoperability:headers:1" xmlns:urn1="urn:riv:itintegration:registry:1" xmlns:urn2="urn:riv:crm:scheduling:MakeBookingResponder:1" xmlns:urn3="urn:riv:crm:scheduling:1" xmlns:urn4="urn:riv:crm:scheduling:1.1">
    <soapenv:Header>
-      <add:To>1234561234</add:To>
+      <urn:Actor>
+         <urn:actorId>?</urn:actorId>
+         <urn:actorType>?</urn:actorType>
+      </urn:Actor>
+      <urn1:LogicalAddress>?</urn1:LogicalAddress>
    </soapenv:Header>
    <soapenv:Body>
-      <urn:MakeBooking>
-        
-      </urn:MakeBooking>
+      <urn2:MakeBooking>
+         <urn2:healthcare_facility_med>SE123456789012-1234</urn2:healthcare_facility_med>
+         <urn2:requestedTimeslot>
+            <urn3:startTimeInclusive>20120216140000</urn3:startTimeInclusive>
+            <urn3:endTimeExclusive>20120216150000</urn3:endTimeExclusive>
+            <urn3:healthcare_facility>SE0129876543210-4321</urn3:healthcare_facility>
+            <urn3:subject_of_care>20120216-2742</urn3:subject_of_care>
+         </urn2:requestedTimeslot>
+         <urn2:subject_of_care_info>
+            <urn4:firstName>Maj-Lis</urn4:firstName>
+            <urn4:lastName>Stolt</urn4:lastName>
+         </urn2:subject_of_care_info>
+      </urn2:MakeBooking>
    </soapenv:Body>
 </soapenv:Envelope>
 }}}
