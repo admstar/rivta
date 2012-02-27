@@ -9,12 +9,12 @@ namespace rivta_bp21_refapp_producer
     class Responder : MakeBookingResponderInterface
     {
            public MakeBookingResponse  MakeBooking(MakeBookingRequest request){
- 	            Console.WriteLine("Calling MakeBooking operation");
+ 	            Console.WriteLine("MakeBooking service invoked");
 
                MakeBookingResponse response = new MakeBookingResponse();
                response.bookingId = "unique id of created booking";
                response.resultCode = ResultCodeEnum.OK;
-               response.resultText = "Booking was made successfully";
+               response.resultText = "";
 
                return response;
            }
