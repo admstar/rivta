@@ -14,8 +14,6 @@ namespace rivta_bp21_refapp_producer
                MakeBookingResponse response = new MakeBookingResponse();
                response.bookingId = "unique id of created booking";
                response.resultCode = ResultCodeEnum.OK;
-               response.resultText = "";
-
                return response;
            }
     }
