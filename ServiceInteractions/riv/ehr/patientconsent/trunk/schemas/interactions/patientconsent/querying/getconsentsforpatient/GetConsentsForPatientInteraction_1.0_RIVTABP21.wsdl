@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Inera AB licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->	
+<wsdl:definitions name='GetConsentsForPatientInteraction'
+	xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'
+	xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/'
+	xmlns:xs='http://www.w3.org/2001/XMLSchema'
+	xmlns:tjsr='urn:riv:ehr:patientconsent:querying:GetConsentsForPatientResponder:1'
+	xmlns:itr='urn:riv:itintegration:registry:1'
+	xmlns:tns='urn:riv:ehr:patientconsent:querying:GetConsentsForPatient:1:rivtabp21'
+	targetNamespace='urn:riv:ehr:patientconsent:querying:GetConsentsForPatient:1:rivtabp21'>
+
+	<wsdl:documentation>
+		 Tjänsteinteraktionens namn: GetConsentsForPatient
+		 Beskrivning: 
+		   Tjänst som läser registrerade samtyckesintyg för en viss patient och en viss vårdgivare.
+		   Utgångna intyg (giltigt t o m har passerats) returneras ej.
+		   Tjänsten kan användas i ett integrationsmönster där vårdsystemet läser in de samtycken som finns för patienten per vårdgivare, för att sedan utföra intern kontroll av samtycke.
+		 Revisioner: 
+		 Tjänstedomän: patientconsent:querying
+		 Tjänsteinteraktionstyp: Fråga-Svar
+		 WS-profil: RIVTABP21
+		 Förvaltas av: Inera AB
+	</wsdl:documentation>
+	
+	<wsdl:types>
+		<xs:schema targetNamespace='urn:riv:ehr:patientconsent:querying:GetConsentsForPatient:1:rivtabp21'>
+			<xs:import schemaLocation='GetConsentsForPatientResponder_1.0.xsd' namespace='urn:riv:ehr:patientconsent:querying:GetConsentsForPatientResponder:1' />
+			<xs:import schemaLocation='../../../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
+		</xs:schema>
+	</wsdl:types>
+	
+	<wsdl:message name="UnauthorizedFault">
+		<wsdl:documentation xml:lang="en">Undantag som kastas då behörighet saknas för att utföra begärd tjänst.
+		</wsdl:documentation>
+		<wsdl:part name="parameters" element="tjsr:UnauthorizedFault" />
+	</wsdl:message>
+
+	<wsdl:message name="ValidationErrorFault">
+		<wsdl:documentation xml:lang="en">Undantag som kastas då en eller flera inparametrar innehåller felaktiga värden.
+		</wsdl:documentation>
+		<wsdl:part name="parameters" element="tjsr:ValidationErrorFault" />
+	</wsdl:message>
+
+	<wsdl:message name="InternalErrorFault">
+		<wsdl:documentation xml:lang="en">Undantag som kastas då ett ohanterbart internt problem uppstått. Pågående tjänst kan ej utföras.
+		</wsdl:documentation>
+		<wsdl:part name="parameters" element="tjsr:InternalErrorFault" />
+	</wsdl:message>
+
+		
+	<wsdl:message name='GetConsentsForPatientRequest'>
+		<wsdl:part name='LogicalAddress' element='itr:LogicalAddress'>
+			<wsdl:documentation>http://tempuri.org</wsdl:documentation>
+		</wsdl:part>
+	
+		<wsdl:part name='parameters' element='tjsr:GetConsentsForPatientRequest' />
+	</wsdl:message>
+
+	<wsdl:message name='GetConsentsForPatientResponse'>
+		<wsdl:part name='parameters' element='tjsr:GetConsentsForPatientResponse' />
+	</wsdl:message>
+
+	<wsdl:portType name='GetConsentsForPatientResponderInterface'>
+		<wsdl:operation name='GetConsentsForPatient'>
+			<wsdl:input message='tns:GetConsentsForPatientRequest' />
+			<wsdl:output message='tns:GetConsentsForPatientResponse' />
+			<wsdl:fault name="UnauthorizedFault" message="tns:UnauthorizedFault" />
+			<wsdl:fault name="ValidationErrorFault" message="tns:ValidationErrorFault" />
+			<wsdl:fault name="InternalErrorFault" message="tns:InternalErrorFault" />
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name='GetConsentsForPatientResponderBinding' type='tns:GetConsentsForPatientResponderInterface'>
+		<soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
+		<wsdl:operation name='GetConsentsForPatient'>
+			<soap:operation soapAction='urn:riv:ehr:patientconsent:querying:GetConsentsForPatientResponder:1:GetConsentsForPatient' style='document' />
+			<wsdl:input>
+				<soap:header use='literal' message='tns:GetConsentsForPatientRequest' part='LogicalAddress' />
+				<soap:body use='literal' parts='parameters' />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use='literal' />
+			</wsdl:output>
+			<wsdl:fault name="UnauthorizedFault">
+				<soap:fault use="literal" name="UnauthorizedFault" />
+			</wsdl:fault>
+			<wsdl:fault name="ValidationErrorFault">
+				<soap:fault use="literal" name="ValidationErrorFault" />
+			</wsdl:fault>
+			<wsdl:fault name="InternalErrorFault">
+				<soap:fault use="literal" name="InternalErrorFault" />
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name='GetConsentsForPatientResponderService'>
+		<wsdl:port name='GetConsentsForPatientResponderPort' binding='tns:GetConsentsForPatientResponderBinding'>
+			<soap:address location='http://tempuri.org' />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
