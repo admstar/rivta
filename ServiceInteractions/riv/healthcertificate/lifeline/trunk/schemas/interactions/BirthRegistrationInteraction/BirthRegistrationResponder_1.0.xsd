@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. The ASF licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->
+<xs:schema  
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+    xmlns:brth="urn:riv:healthcertificate:lifeline:1:Birth"
+    xmlns:cmn="urn:riv:healthcertificate:lifeline:1:Common"
+    xmlns:tns="urn:riv:healthcertificate:lifeline:BirthRegistrationResponder:1" 
+    targetNamespace="urn:riv:healthcertificate:lifeline:BirthRegistrationResponder:1" 
+    elementFormDefault="qualified" 
+    attributeFormDefault="unqualified" 
+    version="1.0">
+
+    <xs:import namespace="urn:riv:healthcertificate:lifeline:1:Birth"  schemaLocation="../../core_components/BirthRegistrationTypes_1.0.xsd"/>
+    <xs:import namespace="urn:riv:healthcertificate:lifeline:1:Common" schemaLocation="../../core_components/HealthCertificateLifelineCommonTypes_1.0.xsd"/>
+
+    <xs:element name="BirthRegistration"           type="tns:BirthRegistrationTYPE"/>
+    <xs:element name="BirthRegistrationResponse"   type="tns:BirthRegistrationResponseTYPE"/>
+    
+    <xs:complexType name="BirthRegistrationTYPE">
+        <xs:annotation>
+            <xs:documentation>
+                Birth registration request holding info from the health care facility.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="FodelseanmalanId" type="xs:ID"/>
+            <xs:element name="Dokumentuppgifter" type="brth:DokumentuppgifterTYPE"/>
+            <xs:element name="Arendeuppgifter"   type="brth:ArendeuppgifterTYPE"/>
+            
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BirthRegistrationResponseTYPE">
+        <xs:annotation>
+            <xs:documentation>
+                The response, from Skatteverket, to a birth registration request.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="FodelsesvarId" type="xs:ID"/>
+            <xs:element name="AnmalningsId" type="brth:AnmalningsIdTYPE"/>
+            <xs:choice>
+                <xs:annotation>
+                    <xs:documentation>Svar med personnummer eller med information om orsak till att personnummer ej tilldelats</xs:documentation>
+                </xs:annotation>
+                <xs:element name="PersonNummer" type="brth:PersonNummerTYPE">
+                    <xs:annotation>
+                        <xs:documentation>Tilldelat personnummer </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="Meddelande" type="brth:MeddelandeTYPE">
+                    <xs:annotation>
+                        <xs:documentation>Indikerar orsaken till att personnummer ej tilldelats.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+            <xs:element name="result" type="cmn:ResultOfCallType" minOccurs="0" maxOccurs="1" />
+
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+        
+</xs:schema>

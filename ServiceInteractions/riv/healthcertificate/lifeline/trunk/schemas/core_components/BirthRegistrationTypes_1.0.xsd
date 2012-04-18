@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+	Based on Skatteverkets schema Fodelse.xsd version 2 by Torbjörn Blomkvist (Riksskatteverket)
+	Changed by:
+	- Magnus Ekstrand, Callista Enterprise AB, 2011-11-02
+	     - Made adjustments to schema to adhere to RIV TA 2.1 BP
+	     - Changed namespace to target the healthcertificate:lifeline domain
+	     - Removed the definition of elements from schema so that only the types are defined
+	     - Added all definitions from Skatteverkets Fodelse.xsd to this schema 
+-->
+<xs:schema 
+		xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+		xmlns:tns="urn:riv:healthcertificate:lifeline:1:Birth" 
+		targetNamespace="urn:riv:healthcertificate:lifeline:1:Birth" 
+		elementFormDefault="qualified" 
+		attributeFormDefault="unqualified"
+		version="1.0">
+
+    <xs:complexType name="DokumentuppgifterTYPE">
+        <xs:sequence>
+            <xs:element name="Ingivarnamn" type="tns:string100TYPE"/>
+            <xs:element name="AnmalningsTyp">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="NYANMALD"/>
+                        <xs:enumeration value="RATTAD"/>
+                        <xs:enumeration value="MAKULERAD"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="AnmalningsId"   type="tns:AnmalningsIdTYPE"/>
+            <xs:element name="Ingivartelefon" type="tns:string15TYPE" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="ArendeuppgifterTYPE">
+        <xs:sequence>
+            <xs:element name="Moder"           type="tns:PersonTYPE"/>
+            <xs:element name="ModersMake"      type="tns:PersonTYPE" minOccurs="0"/>
+            <xs:element name="Barn"            type="tns:BarnTYPE"/>
+            <xs:element name="Vistelseadress"  type="tns:AdressTYPE" minOccurs="0"/>
+            <xs:element name="Bostadsadress"   type="tns:AdressTYPE" minOccurs="0"/>
+            <xs:element name="KontaktTelefon"  type="tns:string20TYPE" minOccurs="0"/>
+            <xs:element name="KontaktTelefon2" type="tns:string20TYPE" minOccurs="0"/>
+            <xs:element name="KontaktTelefon3" type="tns:string20TYPE" minOccurs="0"/>
+            <xs:element name="KontaktTelefon4" type="tns:string20TYPE" minOccurs="0"/>
+            <xs:element name="KontaktTelefon5" type="tns:string20TYPE" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+	
+	<xs:complexType name="PersonTYPE">
+		<xs:sequence>
+			<xs:element name="Namn" type="tns:NamnTYPE" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="Fodelsedatum" type="tns:DatumTYPE"/>
+				<xs:element name="PersonNummer" type="tns:PersonNummerTYPE"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="BarnTYPE">
+		<xs:sequence>
+			<xs:element name="DatumFodelse" type="xs:date"/>
+			<xs:element name="Kon" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="FLICKA"/>
+						<xs:enumeration value="POJKE"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="OrdningsNr">
+				<xs:simpleType>
+					<xs:restriction base="xs:int">
+						<xs:minInclusive value="1"/>
+						<xs:maxInclusive value="9"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AntalBarn">
+				<xs:simpleType>
+					<xs:restriction base="xs:int">
+						<xs:minInclusive value="1"/>
+						<xs:maxInclusive value="9"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="FodelseKommun">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="30"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Levande">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="JA"/>
+						<xs:enumeration value="NEJ"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="AdressTYPE">
+		<xs:sequence>
+			<xs:element name="AdressRad1" type="tns:AdressRadTYPE"/>
+			<xs:element name="AdressRad2" type="tns:AdressRadTYPE" minOccurs="0"/>
+			<xs:element name="AdressRad3" type="tns:AdressRadTYPE" minOccurs="0"/>
+			<xs:element name="AdressRad4" type="tns:AdressRadTYPE" minOccurs="0"/>
+			<xs:element name="AdressRad5" type="tns:AdressRadTYPE" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+    <xs:simpleType name="AdressRadTYPE">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="35"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+	<xs:complexType name="DatumTYPE">
+		<xs:sequence>
+			<xs:element name="FodelseAr" type="xs:string"/>
+			<xs:element name="FodelseManad" type="xs:string"/>
+			<xs:element name="FodelseDag" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:simpleType name="string15TYPE">
+		<xs:annotation>
+			<xs:documentation>string med max 15tkn</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="15"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="string20TYPE">
+		<xs:annotation>
+			<xs:documentation>string med max 20tkn</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="string100TYPE">
+		<xs:annotation>
+			<xs:documentation>string med max 100tkn</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:complexType name="NamnTYPE">
+		<xs:sequence>
+			<xs:element name="Fornamn" type="tns:string100TYPE" minOccurs="0"/>
+			<xs:element name="Mellannamn" type="tns:string100TYPE" minOccurs="0"/>
+			<xs:element name="Efternamn" type="tns:string100TYPE" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:simpleType name="PersonNummerTYPE">
+		<xs:annotation>
+			<xs:documentation>fullständigt personnummer, sekel inkluderat, 12 tkn, datatyp = number</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:long"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="AnmalningsIdTYPE">
+		<xs:annotation>
+			<xs:documentation>Riksunikt id för själva anmälan, datatyp=string. Max 80 tecken</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="80"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:complexType name="MeddelandeTYPE">
+		<xs:annotation>
+			<xs:documentation>Information om orsaken till att personnummer ej returneras.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AnmalanMottagen">
+				<xs:annotation>
+					<xs:documentation>Anger om anmälan är mottagen av Skatteverket eller ej. En mottagen anmälan SKALL EJ sändas in igen.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="JA"/>
+						<xs:enumeration value="NEJ"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MeddelandeKod" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Kod som indikerar orsaken till att personnummer ej returneras. datatyp = number </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MeddelandeText" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Text som ger ytterligare information om ev. felorsak. Endast avsedd att nyttjas vid utveckling/felsökning</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
