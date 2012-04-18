@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 
+		xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		xmlns:tns="urn:riv:healthcertificate:lifeline:1:Common" 
+		targetNamespace="urn:riv:healthcertificate:lifeline:1:Common" 
+		elementFormDefault="qualified" 
+		version="1.0">
+
+	<xs:complexType name="ResultOfCallType">
+		<xs:annotation>
+			<xs:documentation>
+				Holds information about the success of the call. If INFO is set the field infoText should contain more information.
+				If ERROR is set the fields errorId and errorText will contain information about the error.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="resultCode" type="tns:ResultCodeEnumType" minOccurs="1" />
+			<xs:element name="infoText" type="xs:string" minOccurs="0" />
+			<xs:element name="errorId" type="tns:ErrorIdEnumType" minOccurs="0" />
+			<xs:element name="errorText" type="xs:string" minOccurs="0" />
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:simpleType name="ResultCodeEnumType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OK" />
+			<xs:enumeration value="ERROR" />
+			<xs:enumeration value="INFO" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="ErrorIdEnumType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="VALIDATION_ERROR" />
+			<xs:enumeration value="TRANSFORMATION_ERROR" />
+			<xs:enumeration value="APPLICATION_ERROR" />
+			<xs:enumeration value="TECHNICAL_ERROR" />
+		</xs:restriction>
+	</xs:simpleType>
+
+</xs:schema>
+
