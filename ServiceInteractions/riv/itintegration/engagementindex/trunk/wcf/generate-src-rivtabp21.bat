@@ -33,9 +33,13 @@ SET SCHEMADIR=schemas
 SET W2=%SCHEMADIR%\interactions\UpdateInteraction\UpdateInteraction_1.0_RIVTABP21.wsdl
 SET X2=%SCHEMADIR%\interactions\UpdateInteraction\*.xsd
 
+SET SCHEMADIR=schemas
+SET W3=%SCHEMADIR%\interactions\GetUpdatesInteraction\GetUpdatesInteraction_1.0_RIVTABP21.wsdl
+SET X3=%SCHEMADIR%\interactions\GetUpdatesInteraction\*.xsd
+
 SET XCORE=%SCHEMADIR%\core_components\*.xsd
 
-SET SCHEMAS=%XCORE% %W0% %X0% %W1% %X1% %W2% %X2% 
+SET SCHEMAS=%XCORE% %W0% %X0% %W1% %X1% %W2% %X2% %W3% %X3% 
 
 SET OUTFILE=/out:wcf\generated-src\ItintegrationEngagementindexInteractions.cs
 SET APPCONFIG=/config:wcf\generated-src\app.config
