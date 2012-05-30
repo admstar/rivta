@@ -37,13 +37,14 @@
 
 	<xs:complexType name='GetExtendedConsentsForPatientRequestType'>
 		<xs:annotation>
-		    <xs:documentation xml:lang='en'>
-		        Tjänst som läser registrerade samtyckesintyg med all information för en viss patient.
-		        Det är valbart om makulerade och återkallade samtyckesintyg skall returneras. 
+		    <xs:documentation xml:lang='sv'>
+		        Tjänst som läser registrerade samtyckesintyg för en viss patient med utökad information.		
+		        Det är valbart om ogiltiga (makulerade, återkallade och utgångna) samtyckesintyg skall returneras. 
 		        Tjänsten kan användas för att söka fram och administrera patientens samtycken för en viss vårdgivare.
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="CareProviderId" type="common:HsaId"/>
 			<xs:element name="PatientId" type="common:PersonIdValue"/>
 			<xs:element name="GetCancelledFlag" type="xs:boolean"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
@@ -54,9 +55,9 @@
 
 	<xs:complexType name='GetExtendedConsentsForPatientResponseType'>
 		<xs:annotation>
-		    <xs:documentation xml:lang='en'>
-		        Tjänst som läser registrerade samtyckesintyg med all information för en viss patient.
-		        Det är valbart om makulerade och återkallade samtyckesintyg skall returneras. 
+		    <xs:documentation xml:lang='sv'>
+		        Tjänst som läser registrerade samtyckesintyg för en viss patient med utökad information.		
+		        Det är valbart om ogiltiga (makulerade, återkallade och utgångna) samtyckesintyg skall returneras. 
 		        Tjänsten kan användas för att söka fram och administrera patientens samtycken för en viss vårdgivare.
 		    </xs:documentation>
 		</xs:annotation>

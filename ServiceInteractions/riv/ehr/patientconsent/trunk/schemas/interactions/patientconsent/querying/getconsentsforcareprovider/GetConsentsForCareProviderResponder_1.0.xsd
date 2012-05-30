@@ -37,17 +37,20 @@
 
 	<xs:complexType name='GetConsentsForCareProviderRequestType'>
 		<xs:annotation>
-		    <xs:documentation xml:lang='en'>
-		        Tjänst som läser alla registrerade samtyckesintyg för en viss vårdgivare.
-		        Det är valbart om makulerade och återkallade samtyckesintyg skall returneras.         
-		        Det går även att ange en tidpunkt (CreatedOnOrAfter) från när man önskar inhämta uppgifter och på så sätt undvika att inhämta data som redan hämtats vid ett tidigare tillfälle. Här avses tidpunkten då samtycket lagrades i tjänsten. 
+		    <xs:documentation xml:lang='sv'>
+		        Tjänst som läser alla giltiga samtyckesintyg för en viss vårdgivare med grundinformation.        
+		        Med giltiga samtyckesintyg avses de samtyckesintyg, alternativt intyg om nödsituation, som används som underlag vid en kontroll av åtkomst (CheckConsents).
+		        Det är valbart om makulerade och återkallade samtyckesintyg som ej är utgångna (giltigt t o m har passerats) skall returneras. 
+		        Utgångna samtyckesintyg (giltigt t o m har passerats) returneras ej oavsett makulering eller återkallning.
+		        Det går även att ange en tidpunkt (CreatedOnOrAfter) från när man önskar inhämta uppgifter och på så sätt undvika att inhämta data som redan hämtats vid ett tidigare tillfälle. Här avses tidpunkten då samtycket lagrades i tjänsten.         
 		        Tjänsten tillåts att dela upp listan av samtyckesintyg i mindre delar för att minska på belastningen på systemet. Om detta sker kommer flaggan HasMore att vara satt. Resten av samtyckesintygen skall i så fall hämtas med ytterligare anrop till tjänsten. 
-		        Tjänsten returnerar en ny tidpunkt (CreatedOnOrAfter) som anger från och med nästa tidpunkt som samtyckesintygen ej har hämtats. Detta värde kan användas som inparameter i ytterligare anrop till tjänsten för att hämta nästa sekvens av samtyckesintyg.
-		        Tjänsten kan användas i ett integrationsmönster där vårdsystemet med visst intervall inhämtar alla samtycken det behöver utifrån de vårdgivare som systemet hanterar information från, för att sedan vid behov utföra intern kontroll mot underlaget av samtycken och nödsituationsintyg.
+		        Tjänsten returnerar en ny tidpunkt (CreatedOnOrAfter) som anger från och med nästa tidpunkt som samtyckesintygen ej har hämtats. Detta värde kan användas som inparameter i ytterligare anrop till tjänsten för att hämta nästa sekvens av samtyckesintyg.                
+		        Tjänsten kan användas i ett integrationsmönster där vårdsystemet med visst intervall inhämtar alla samtycken det behöver utifrån de vårdgivare som systemet hanterar information från, för att sedan vid behov utföra intern kontroll mot underlaget av samtycken och nödsituationsintyg.        
 		        Viktigt att kontrollera att alla samtycken är hämtade genom att kontrollera värdet på flaggan HasMore.
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="CareProviderId" type="common:HsaId"/>
 			<xs:element name="CreatedOnOrAfter" type="xs:dateTime" minOccurs="0"/>
 			<xs:element name="GetCancelledFlag" type="xs:boolean"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
@@ -58,13 +61,15 @@
 
 	<xs:complexType name='GetConsentsForCareProviderResponseType'>
 		<xs:annotation>
-		    <xs:documentation xml:lang='en'>
-		        Tjänst som läser alla registrerade samtyckesintyg för en viss vårdgivare.
-		        Det är valbart om makulerade och återkallade samtyckesintyg skall returneras.         
-		        Det går även att ange en tidpunkt (CreatedOnOrAfter) från när man önskar inhämta uppgifter och på så sätt undvika att inhämta data som redan hämtats vid ett tidigare tillfälle. Här avses tidpunkten då samtycket lagrades i tjänsten. 
+		    <xs:documentation xml:lang='sv'>
+		        Tjänst som läser alla giltiga samtyckesintyg för en viss vårdgivare med grundinformation.        
+		        Med giltiga samtyckesintyg avses de samtyckesintyg, alternativt intyg om nödsituation, som används som underlag vid en kontroll av åtkomst (CheckConsents).
+		        Det är valbart om makulerade och återkallade samtyckesintyg som ej är utgångna (giltigt t o m har passerats) skall returneras. 
+		        Utgångna samtyckesintyg (giltigt t o m har passerats) returneras ej oavsett makulering eller återkallning.
+		        Det går även att ange en tidpunkt (CreatedOnOrAfter) från när man önskar inhämta uppgifter och på så sätt undvika att inhämta data som redan hämtats vid ett tidigare tillfälle. Här avses tidpunkten då samtycket lagrades i tjänsten.         
 		        Tjänsten tillåts att dela upp listan av samtyckesintyg i mindre delar för att minska på belastningen på systemet. Om detta sker kommer flaggan HasMore att vara satt. Resten av samtyckesintygen skall i så fall hämtas med ytterligare anrop till tjänsten. 
-		        Tjänsten returnerar en ny tidpunkt (CreatedOnOrAfter) som anger från och med nästa tidpunkt som samtyckesintygen ej har hämtats. Detta värde kan användas som inparameter i ytterligare anrop till tjänsten för att hämta nästa sekvens av samtyckesintyg.
-		        Tjänsten kan användas i ett integrationsmönster där vårdsystemet med visst intervall inhämtar alla samtycken det behöver utifrån de vårdgivare som systemet hanterar information från, för att sedan vid behov utföra intern kontroll mot underlaget av samtycken och nödsituationsintyg.
+		        Tjänsten returnerar en ny tidpunkt (CreatedOnOrAfter) som anger från och med nästa tidpunkt som samtyckesintygen ej har hämtats. Detta värde kan användas som inparameter i ytterligare anrop till tjänsten för att hämta nästa sekvens av samtyckesintyg.                
+		        Tjänsten kan användas i ett integrationsmönster där vårdsystemet med visst intervall inhämtar alla samtycken det behöver utifrån de vårdgivare som systemet hanterar information från, för att sedan vid behov utföra intern kontroll mot underlaget av samtycken och nödsituationsintyg.        
 		        Viktigt att kontrollera att alla samtycken är hämtade genom att kontrollera värdet på flaggan HasMore.
 		    </xs:documentation>
 		</xs:annotation>
