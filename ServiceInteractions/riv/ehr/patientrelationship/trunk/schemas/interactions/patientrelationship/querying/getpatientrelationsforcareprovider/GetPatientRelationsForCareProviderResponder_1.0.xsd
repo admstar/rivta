@@ -37,9 +37,10 @@
 
 	<xs:complexType name='GetPatientRelationsForCareProviderRequestType'>
 		<xs:annotation>
-		    <xs:documentation xml:lang='en'>
-		        Tjänst som läser alla registrerade patientrelationer för en viss vårdgivare.       
-		        Det är valbart om makulerade och återkallade patientrelationer skall returneras.         
+		    <xs:documentation xml:lang='sv'>
+		        Tjänst som läser alla giltiga patientrelationer för en viss vårdgivare med grundinformation.       
+		        Det är valbart om makulerade och återkallade patientrelationer som ej är utgångna (giltigt t o m har passerats) skall returneras. 
+		        Utgångna patientrelationer (giltigt t o m har passerats) returneras ej oavsett makulering eller återkallning.
 		        Det går även att ange en tidpunkt (CreatedOnOrAfter) från när man önskar inhämta uppgifter och på så sätt undvika att inhämta data som redan hämtats vid ett tidigare tillfälle. Här avses tidpunkten då patientrealtioner lagrades i tjänsten. 
 		        Tjänsten tillåts att dela upp listan av patientrelationer i mindre delar för att minska på belastningen på systemet. Om detta sker kommer flaggan HasMore att vara satt. Resten av patientrelationerna skall i så fall hämtas med ytterligare anrop till tjänsten. 
 		        Tjänsten returnerar en ny tidpunkt (CreatedOnOrAfter) som anger från och med nästa tidpunkt som patientrelationer ej har hämtats. Detta värde kan användas som inparameter i ytterligare anrop till tjänsten för att hämta nästa sekvens av patientrelationer.
@@ -48,6 +49,7 @@
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="CareProviderId" type="common:HsaId"/>
 			<xs:element name="CreatedOnOrAfter" type="xs:dateTime" minOccurs="0"/>
 			<xs:element name="GetCancelledFlag" type="xs:boolean"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
@@ -58,9 +60,10 @@
 
 	<xs:complexType name='GetPatientRelationsForCareProviderResponseType'>
 		<xs:annotation>
-		    <xs:documentation xml:lang='en'>
-		        Tjänst som läser alla registrerade patientrelationer för en viss vårdgivare.       
-		        Det är valbart om makulerade och återkallade patientrelationer skall returneras.         
+		    <xs:documentation xml:lang='sv'>
+		        Tjänst som läser alla giltiga patientrelationer för en viss vårdgivare med grundinformation.       
+		        Det är valbart om makulerade och återkallade patientrelationer som ej är utgångna (giltigt t o m har passerats) skall returneras. 
+		        Utgångna patientrelationer (giltigt t o m har passerats) returneras ej oavsett makulering eller återkallning.
 		        Det går även att ange en tidpunkt (CreatedOnOrAfter) från när man önskar inhämta uppgifter och på så sätt undvika att inhämta data som redan hämtats vid ett tidigare tillfälle. Här avses tidpunkten då patientrealtioner lagrades i tjänsten. 
 		        Tjänsten tillåts att dela upp listan av patientrelationer i mindre delar för att minska på belastningen på systemet. Om detta sker kommer flaggan HasMore att vara satt. Resten av patientrelationerna skall i så fall hämtas med ytterligare anrop till tjänsten. 
 		        Tjänsten returnerar en ny tidpunkt (CreatedOnOrAfter) som anger från och med nästa tidpunkt som patientrelationer ej har hämtats. Detta värde kan användas som inparameter i ytterligare anrop till tjänsten för att hämta nästa sekvens av patientrelationer.
