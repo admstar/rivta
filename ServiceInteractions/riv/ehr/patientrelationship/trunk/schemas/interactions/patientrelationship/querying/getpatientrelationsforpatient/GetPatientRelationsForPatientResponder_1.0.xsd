@@ -37,13 +37,15 @@
 
 	<xs:complexType name='GetPatientRelationsForPatientRequestType'>
 		<xs:annotation>
-		    <xs:documentation xml:lang='en'>
-		        Tjänst som läser registrerade patientrelationer för en viss patient och en viss vårdgivare.	
-		        Utgångna patientrelationer (giltigt t o m har passerats) returneras ej.
+		    <xs:documentation xml:lang='sv'>
+		        Tjänst som läser giltiga patientrelationer för en viss patient och en viss vårdgivare med grundinformation.	    	
+		        Med giltiga patientrelationer avses de patientrelationer som används som underlag vid en kontroll gällande åtkomst (CheckPatientRelation).
+		        Ogiltiga patientrelationer (giltigt t o m har passerats, makulerade eller återkallade) returneras ej.        
 		        Tjänsten kan användas i ett integrationsmönster där vårdsystemet med visst intervall inhämtar alla patientrelationer det behöver utifrån de vårdgivare som systemet hanterar information från, för att sedan vid behov utföra intern kontroll mot underlaget för patientrelationer.
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="CareProviderId" type="common:HsaId"/>
 			<xs:element name="PatientId" type="common:PersonIdValue"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
 		</xs:sequence>
@@ -53,9 +55,10 @@
 
 	<xs:complexType name='GetPatientRelationsForPatientResponseType'>
 		<xs:annotation>
-		    <xs:documentation xml:lang='en'>
-		        Tjänst som läser registrerade patientrelationer för en viss patient och en viss vårdgivare.	
-		        Utgångna patientrelationer (giltigt t o m har passerats) returneras ej.
+		    <xs:documentation xml:lang='sv'>
+		        Tjänst som läser giltiga patientrelationer för en viss patient och en viss vårdgivare med grundinformation.	    	
+		        Med giltiga patientrelationer avses de patientrelationer som används som underlag vid en kontroll gällande åtkomst (CheckPatientRelation).
+		        Ogiltiga patientrelationer (giltigt t o m har passerats, makulerade eller återkallade) returneras ej.        
 		        Tjänsten kan användas i ett integrationsmönster där vårdsystemet med visst intervall inhämtar alla patientrelationer det behöver utifrån de vårdgivare som systemet hanterar information från, för att sedan vid behov utföra intern kontroll mot underlaget för patientrelationer.
 		    </xs:documentation>
 		</xs:annotation>

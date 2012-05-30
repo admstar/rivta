@@ -37,13 +37,14 @@
 
 	<xs:complexType name='GetExtendedPatientRelationsForPatientRequestType'>
 		<xs:annotation>
-		    <xs:documentation xml:lang='en'>
-		        Tjänst som läser registrerade patientrelationer med all information för en viss patient.
-		        Det är valbart om makulerade och återkallade patientrelationer skall returneras. 
+		    <xs:documentation xml:lang='sv'>
+		        Tjänst som läser registrerade patientrelationer med all information för en viss patient och viss vårdgivare.
+		        Det är valbart om ogiltiga (makulerade, återkallade och utgångna) patientrelationer skall returneras. 
 		        Tjänsten används för att söka fram och administrera patientens patientrelationer för en viss vårdgivare.
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="CareProviderId" type="common:HsaId"/>
 			<xs:element name="PatientId" type="common:PersonIdValue"/>
 			<xs:element name="GetCancelledFlag" type="xs:boolean"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
@@ -54,9 +55,9 @@
 
 	<xs:complexType name='GetExtendedPatientRelationsForPatientResponseType'>
 		<xs:annotation>
-		    <xs:documentation xml:lang='en'>
-		        Tjänst som läser registrerade patientrelationer med all information för en viss patient.
-		        Det är valbart om makulerade och återkallade patientrelationer skall returneras. 
+		    <xs:documentation xml:lang='sv'>
+		        Tjänst som läser registrerade patientrelationer med all information för en viss patient och viss vårdgivare.
+		        Det är valbart om ogiltiga (makulerade, återkallade och utgångna) patientrelationer skall returneras. 
 		        Tjänsten används för att söka fram och administrera patientens patientrelationer för en viss vårdgivare.
 		    </xs:documentation>
 		</xs:annotation>
