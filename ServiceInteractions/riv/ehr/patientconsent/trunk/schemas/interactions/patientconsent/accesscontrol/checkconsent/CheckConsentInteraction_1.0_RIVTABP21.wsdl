@@ -29,7 +29,8 @@
 	<wsdl:documentation>
 		 Tjänsteinteraktionens namn: CheckConsent
 		 Beskrivning: 
-		   Tjänst som kontrollerar om det finns ett registrerat samtycke, alternativt intyg om nödsituation, gällande åtkomst för viss aktör (vårdenhet eller medarbetare).
+		   Tjänst som kontrollerar om det finns ett giltigt samtycke, alternativt intyg om nödsituation, gällande åtkomst för viss aktör (vårdenhet eller medarbetare).
+		   Med giltigt samtycke avses ett samtycke som fortfarande är giltigt (giltigt t o m har ej passerats), ej makulerat eller återkallat.
 		   Om ett giltigt intyg gällande åtkomst för angiven aktör hittas, kommer tjänsten att svara OK.
 		 Revisioner: 
 		 Tjänstedomän: patientconsent:accesscontrol
@@ -46,19 +47,19 @@
 	</wsdl:types>
 	
 	<wsdl:message name="UnauthorizedFault">
-		<wsdl:documentation xml:lang="en">Undantag som kastas då behörighet saknas för att utföra begärd tjänst.
+		<wsdl:documentation xml:lang="sv">Undantag som kastas då behörighet saknas för att utföra begärd tjänst.
 		</wsdl:documentation>
 		<wsdl:part name="parameters" element="tjsr:UnauthorizedFault" />
 	</wsdl:message>
 
 	<wsdl:message name="ValidationErrorFault">
-		<wsdl:documentation xml:lang="en">Undantag som kastas då en eller flera inparametrar innehåller felaktiga värden.
+		<wsdl:documentation xml:lang="sv">Undantag som kastas då en eller flera inparametrar innehåller felaktiga värden.
 		</wsdl:documentation>
 		<wsdl:part name="parameters" element="tjsr:ValidationErrorFault" />
 	</wsdl:message>
 
 	<wsdl:message name="InternalErrorFault">
-		<wsdl:documentation xml:lang="en">Undantag som kastas då ett ohanterbart internt problem uppstått. Pågående tjänst kan ej utföras.
+		<wsdl:documentation xml:lang="sv">Undantag som kastas då ett ohanterbart internt problem uppstått. Pågående tjänst kan ej utföras.
 		</wsdl:documentation>
 		<wsdl:part name="parameters" element="tjsr:InternalErrorFault" />
 	</wsdl:message>

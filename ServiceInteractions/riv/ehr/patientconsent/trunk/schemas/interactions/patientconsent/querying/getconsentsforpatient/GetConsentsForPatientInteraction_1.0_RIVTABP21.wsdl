@@ -29,9 +29,10 @@
 	<wsdl:documentation>
 		 Tjänsteinteraktionens namn: GetConsentsForPatient
 		 Beskrivning: 
-		   Tjänst som läser registrerade samtyckesintyg för en viss patient och en viss vårdgivare.
-		   Utgångna intyg (giltigt t o m har passerats) returneras ej.
-		   Tjänsten kan användas i ett integrationsmönster där vårdsystemet läser in de samtycken som finns för patienten per vårdgivare, för att sedan utföra intern kontroll av samtycke.
+		   Tjänst som läser giltiga samtyckesintyg för en viss patient och en viss vårdgivare med grundinformation.         
+		   Med giltiga samtyckesintyg avses de samtyckesintyg, alternativt intyg om nödsituation, som används som underlag vid en kontroll gällande åtkomst (CheckConsents).
+		   Ogiltiga intyg (giltigt t o m har passerats, makulerade eller återkallade) returneras ej.        
+		   Tjänsten kan användas i ett integrationsmönster där vårdsystemet läser in de giltiga samtycken som finns för patienten per vårdgivare, för att sedan utföra intern kontroll av samtycke.
 		 Revisioner: 
 		 Tjänstedomän: patientconsent:querying
 		 Tjänsteinteraktionstyp: Fråga-Svar
@@ -47,19 +48,19 @@
 	</wsdl:types>
 	
 	<wsdl:message name="UnauthorizedFault">
-		<wsdl:documentation xml:lang="en">Undantag som kastas då behörighet saknas för att utföra begärd tjänst.
+		<wsdl:documentation xml:lang="sv">Undantag som kastas då behörighet saknas för att utföra begärd tjänst.
 		</wsdl:documentation>
 		<wsdl:part name="parameters" element="tjsr:UnauthorizedFault" />
 	</wsdl:message>
 
 	<wsdl:message name="ValidationErrorFault">
-		<wsdl:documentation xml:lang="en">Undantag som kastas då en eller flera inparametrar innehåller felaktiga värden.
+		<wsdl:documentation xml:lang="sv">Undantag som kastas då en eller flera inparametrar innehåller felaktiga värden.
 		</wsdl:documentation>
 		<wsdl:part name="parameters" element="tjsr:ValidationErrorFault" />
 	</wsdl:message>
 
 	<wsdl:message name="InternalErrorFault">
-		<wsdl:documentation xml:lang="en">Undantag som kastas då ett ohanterbart internt problem uppstått. Pågående tjänst kan ej utföras.
+		<wsdl:documentation xml:lang="sv">Undantag som kastas då ett ohanterbart internt problem uppstått. Pågående tjänst kan ej utföras.
 		</wsdl:documentation>
 		<wsdl:part name="parameters" element="tjsr:InternalErrorFault" />
 	</wsdl:message>

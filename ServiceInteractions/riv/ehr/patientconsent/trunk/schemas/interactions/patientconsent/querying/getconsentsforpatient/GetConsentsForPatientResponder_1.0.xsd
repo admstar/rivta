@@ -37,15 +37,16 @@
 
 	<xs:complexType name='GetConsentsForPatientRequestType'>
 		<xs:annotation>
-		    <xs:documentation xml:lang='en'>
-		        Tjänst som läser registrerade samtyckesintyg för en viss patient och en viss vårdgivare.
-		        Utgångna intyg (giltigt t o m har passerats) returneras ej.
-		        Tjänsten kan användas i ett integrationsmönster där vårdsystemet läser in de samtycken som finns för patienten per vårdgivare, för att sedan utföra intern kontroll av samtycke.
+		    <xs:documentation xml:lang='sv'>
+		        Tjänst som läser giltiga samtyckesintyg för en viss patient och en viss vårdgivare med grundinformation.         
+		        Med giltiga samtyckesintyg avses de samtyckesintyg, alternativt intyg om nödsituation, som används som underlag vid en kontroll gällande åtkomst (CheckConsents).
+		        Ogiltiga intyg (giltigt t o m har passerats, makulerade eller återkallade) returneras ej.        
+		        Tjänsten kan användas i ett integrationsmönster där vårdsystemet läser in de giltiga samtycken som finns för patienten per vårdgivare, för att sedan utföra intern kontroll av samtycke.
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="PatientId" type="common:PersonIdValue"/>
 			<xs:element name="CareProviderId" type="common:HsaId"/>
+			<xs:element name="PatientId" type="common:PersonIdValue"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -54,10 +55,11 @@
 
 	<xs:complexType name='GetConsentsForPatientResponseType'>
 		<xs:annotation>
-		    <xs:documentation xml:lang='en'>
-		        Tjänst som läser registrerade samtyckesintyg för en viss patient och en viss vårdgivare.
-		        Utgångna intyg (giltigt t o m har passerats) returneras ej.
-		        Tjänsten kan användas i ett integrationsmönster där vårdsystemet läser in de samtycken som finns för patienten per vårdgivare, för att sedan utföra intern kontroll av samtycke.
+		    <xs:documentation xml:lang='sv'>
+		        Tjänst som läser giltiga samtyckesintyg för en viss patient och en viss vårdgivare med grundinformation.         
+		        Med giltiga samtyckesintyg avses de samtyckesintyg, alternativt intyg om nödsituation, som används som underlag vid en kontroll gällande åtkomst (CheckConsents).
+		        Ogiltiga intyg (giltigt t o m har passerats, makulerade eller återkallade) returneras ej.        
+		        Tjänsten kan användas i ett integrationsmönster där vårdsystemet läser in de giltiga samtycken som finns för patienten per vårdgivare, för att sedan utföra intern kontroll av samtycke.
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
