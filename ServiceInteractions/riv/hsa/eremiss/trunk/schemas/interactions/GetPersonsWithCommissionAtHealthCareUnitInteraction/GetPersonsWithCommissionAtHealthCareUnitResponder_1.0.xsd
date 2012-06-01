@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->		
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:hsa:eremiss:GetPersonsWithCommissionAtHealthCareUnitResponder:1' xmlns:core='urn:riv:hsa:eremiss:1' targetNamespace='urn:riv:hsa:eremiss:GetPersonsWithCommissionAtHealthCareUnitResponder:1' elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'>
+  <xs:import schemaLocation='../../core_components/hsa_eremiss_1.0.xsd' namespace='urn:riv:hsa:eremiss:1' />
+  <xs:element name='GetPersonsWithCommissionAtHealthCareUnit' type='tns:GetPersonsWithCommissionAtHealthCareUnitType' />
+  <xs:element name='GetPersonsWithCommissionAtHealthCareUnitResponse' type='tns:GetPersonsWithCommissionAtHealthCareUnitResponseType' />
+  <xs:complexType name='GetPersonsWithCommissionAtHealthCareUnitType'>
+    <xs:sequence>
+      <xs:element name='SomeElement' type='core:SomeElementType' />
+      <xs:element name="hsaIdentity" type="tns:hsaIdentityType"/>
+      <xs:element name="searchBase" type="tns:searchBaseType" minOccurs="0"/>
+      <xs:element name="paTitleCode" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="hsaTitle" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:simpleType name="hsaIdentityType">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  
+  <xs:simpleType name="searchBaseType">
+    <xs:restriction base="xs:token">
+        <xs:maxLength value="350"/>
+        <xs:pattern value="([OUDCNLoudcnl]{1,2}=[0-9\p{L}\p{Zs}\-.]*,?)*"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name='GetPersonsWithCommissionAtHealthCareUnitResponseType'>
+    <xs:sequence>
+      <xs:element name='ResultCode' type='tns:ResultCodeEnum' />
+      <xs:element name='comment' type='xs:string' minOccurs='0' />
+      <xs:element name="PersonList" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="hsaIdentity" type="tns:hsaIdentityType" />
+            <xs:element name="givenName" type="xs:string"/>
+            <xs:element name="sn" type="xs:string" />
+            <xs:element name="personalPrescriptionCode" type="xs:string" minOccurs="0" />
+            <xs:element name="paTitleCode" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="paTitleName" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="hsaTitle" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name='ResultCodeEnum'>
+    <xs:restriction base='xs:string'>
+      <xs:enumeration value='OK' />
+      <xs:enumeration value='ERROR' />
+      <xs:enumeration value='INFO' />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
