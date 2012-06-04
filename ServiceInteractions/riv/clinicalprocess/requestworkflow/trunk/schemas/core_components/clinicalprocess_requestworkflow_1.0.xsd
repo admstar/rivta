@@ -17,7 +17,25 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:clinicalprocess:requestworkflow:1' targetNamespace='urn:riv:clinicalprocess:requestworkflow:1' elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'>
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' 
+		   xmlns:tns='urn:riv:clinicalprocess:requestworkflow:1'
+		   xmlns:request='urn:riv:clinicalprocess:requestworkflow:request'
+		   targetNamespace='urn:riv:clinicalprocess:requestworkflow:1' 
+		   elementFormDefault='qualified' 
+		   attributeFormDefault='unqualified'
+		   version='1.0'>
+
+	<xs:import schemaLocation='remiss.xsd' namespace='urn:riv:clinicalprocess:requestworkflow:request' />
+	
+	<xs:element name="request" type="request:ERemissTyp"/>
+	
+	<xs:simpleType name='ResultCodeEnum'>
+		<xs:restriction base='xs:string'>
+			<xs:enumeration value='OK' />
+			<xs:enumeration value='ERROR' />
+			<xs:enumeration value='INFO' />
+		</xs:restriction>
+	</xs:simpleType>
 
 <xs:complexType name='StatusEventType'>
 	<xs:sequence>
