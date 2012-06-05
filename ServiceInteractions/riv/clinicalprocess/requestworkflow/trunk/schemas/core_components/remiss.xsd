@@ -17,18 +17,18 @@
             <xs:element name="typeOfRequest" type="codes:kv_framstallantyp_NeR_codes"/>
             <xs:element name="versionTimeStamp" type="gcda:ts" minOccurs="0" />
             <xs:element name="versionNumber" type="xs:int"/>
-            <xs:element name="reasonForVersion" type="codes:kv_e_remiss_versionsorsak" minOccurs="0" />
+            <xs:element name="reasonForVersion" type="codes:kv_e_remiss_versionsorsak" />
             
             <xs:element name="patient" type="PatientType"/>
 
             <xs:element name="author" type="AuthorType"/>
             <xs:element name="custodian" type="CustodianType"/>
             <xs:element name="informationRecipient" type="InformationRecipientType"/>
-            <xs:element name="legalAuthenticator" type="LegalAuthenticatorType"/>
+            <xs:element name="legalAuthenticator" type="LegalAuthenticatorType" minOccurs="0"/>
             <xs:element name="participant" type="ParticipantType" minOccurs="0"/>
 
             <xs:element name="additionalInformation" type="AdditionalInformationType" />
-            <xs:element name="awarenessInformation" type="AwarenessInformationType" />
+            <xs:element name="awarenessInformation" type="AwarenessInformationType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="questionFormulation" type="QuestionFormulationType" />             
         </xs:sequence>        
     </xs:complexType>
@@ -37,7 +37,7 @@
         <xs:sequence>
             <xs:element name="personId" type="gcda:ii"/>
             <xs:element name="address" type="AddressType" minOccurs="0"/> 
-            <xs:element name="telecom" type="codes:kv_telekomtyp" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="telecom" type="codes:kv_telekomtyp" minOccurs="0" maxOccurs="2"/>
             <xs:element name="name" type="xs:string" minOccurs="0" />
             <xs:element name="gender" type="codes:kv_kon" minOccurs="0" />
             <xs:element name="dateOfBirth" type="gcda:ts" minOccurs="0" />
@@ -59,18 +59,22 @@
     <xs:complexType name="AuthorType">
         <xs:sequence>
             <xs:element name="dateOfRequest" type="gcda:ts"/>
-            <xs:element name="staffId" type="gcda:ii" minOccurs="0" />
+            <xs:element name="staffId" type="gcda:ii" />
             <xs:element name="typeOfStaff" type="codes:kv_yrkeskoder" minOccurs="0" />
             <xs:element name="staffName" type="xs:string" minOccurs="0" />
-            <xs:element name="unitId" type="gcda:ii" minOccurs="1" />
-            <xs:element name="unitName" type="xs:string" minOccurs="0" />
+            <xs:element name="careunitId" type="gcda:ii" minOccurs="0" /> <!-- Anges om HoS personal agerar ombud -->
+            <xs:element name="careunitName" type="xs:string" minOccurs="0" />
+            <xs:element name="caregiverId" type="gcda:ii" minOccurs="0" /> <!-- Anges om HoS personal agerar ombud -->
+            <xs:element name="caregivertName" type="xs:string" minOccurs="0" />
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="CustodianType">
         <xs:sequence>
-            <xs:element name="unitId" type="gcda:ii" minOccurs="1" />
-            <xs:element name="unitName" type="xs:string" minOccurs="0" />
+            <xs:element name="careunitId" type="gcda:ii"/>
+            <xs:element name="careunitName" type="xs:string" minOccurs="0" />
+            <xs:element name="caregiverId" type="gcda:ii" />
+            <xs:element name="caregivertName" type="xs:string" minOccurs="0" />
         </xs:sequence>
     </xs:complexType>
     
@@ -78,80 +82,70 @@
         <xs:sequence>
             <xs:element name="staffId" type="gcda:ii" minOccurs="0" />
             <xs:element name="staffName" type="xs:string" minOccurs="0" />
-            <xs:element name="unitId" type="gcda:ii" minOccurs="1" />
-            <xs:element name="unitName" type="xs:string" minOccurs="0" />
+            <xs:element name="careunitId" type="gcda:ii" />
+            <xs:element name="careunitName" type="xs:string" minOccurs="0" />
+            <xs:element name="caregiverId" type="gcda:ii" />
+            <xs:element name="caregiverName" type="xs:string" minOccurs="0" />
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="LegalAuthenticatorType">
         <xs:sequence>
-            <xs:element name="timeOfSigning" type="gcda:ts" minOccurs="0" />
-            <xs:element name="signed" type="xs:boolean" minOccurs="1" />
+            <xs:element name="timeOfSigning" type="gcda:ts" />
             <xs:element name="signature" type="xs:string" minOccurs="0" />
         </xs:sequence>
     </xs:complexType>
     
     <xs:complexType name="ParticipantType">
         <xs:sequence>
-            <xs:element name="id" type="gcda:ii"/>
-            <xs:element name="requestRole" type="codes:kv_remissrolltyp"/>
             <xs:element name="staffId" type="gcda:ii" minOccurs="0" />
             <xs:element name="staffName" type="xs:string" minOccurs="0" />
-            <xs:element name="unitId" type="gcda:ii" minOccurs="1" />
-            <xs:element name="unitName" type="xs:string" minOccurs="0" />
-            <xs:element name="typeOfStaff" type="codes:kv_yrkeskoder" /> <!-- Kolla match på typ! -->
+            <xs:element name="careunitId" type="gcda:ii" minOccurs="1" />
+            <xs:element name="careunitName" type="xs:string" minOccurs="0" />
+            <xs:element name="caregiverId" type="gcda:ii" minOccurs="1" />
+            <xs:element name="caregiverName" type="xs:string" minOccurs="0" />
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="AdditionalInformationType">
         <xs:sequence>
             <xs:element name="desiredDateForPerformance" type="gcda:ivlTs"/>
-            <xs:element name="desiredRequestRecipient" type="xs:string" />
-            <xs:element name="interpreterRequirement" type="xs:string" />
-            <xs:element name="administrativeInformation" type="xs:string" />
+            <xs:element name="desiredRequestRecipient" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="administrativeInformation" type="xs:string" minOccurs="0" />
+            <xs:element name="interpreterRequirement" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="AwarenessInformationType">
         <xs:sequence>
-            <xs:element name="text" type="xs:string" minOccurs="0" />
+            <xs:element name="text" type="xs:string" />
             <xs:element name="clinicalInformation" type="ClinicalInformationType" minOccurs="0" />
         </xs:sequence>
     </xs:complexType>    
         
     <xs:complexType name="QuestionFormulationType">
         <xs:sequence>
-            <xs:element name="text" type="xs:string" minOccurs="0" />
-            <xs:element name="desiredAction" type="ActionType" minOccurs="0" />
+            <xs:element name="text" type="xs:string" />
+            <xs:element name="desiredAction" type="DesiredActionType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="clinicalInformation" type="ClinicalInformationType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="ClinicalInformationType">
         <xs:sequence>
-            <xs:element name="code" type="gcda:ii"/>
-            <xs:element name="condition" type="gcda:cd" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="action" type="ActionType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="id" type="gcda:ii"/>
+            <xs:element name="code" type="gcda:ii"/> <!-- ??? -->
+            <!-- <xs:element name="condition" type="gcda:cd" minOccurs="0" maxOccurs="unbounded"/>  ???? -->
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
+            <!-- <xs:element name="action" type="ActionType" minOccurs="0" maxOccurs="unbounded"/>  ??? -->
         </xs:sequence>
     </xs:complexType>
     
-    <xs:complexType name="QuestionCauseType"> <!-- Vilket kodverk? -->
-        <xs:simpleContent>
-            <xs:extension base="xs:string">
-                <xs:attribute name="code" />
-                <xs:attribute name="displayName" />
-                <xs:attribute name="codeSystem" />
-            </xs:extension>
-        </xs:simpleContent>
-    </xs:complexType>
-
-    <xs:complexType name="ActionType"> <!-- Vilket kodverk? -->
+    <xs:complexType name="DesiredActionType"> <!-- Vilket kodverk? -->
         <xs:sequence>
             <xs:element name="id" type="gcda:ii"/>
-            <xs:element name="type" type="gcda:cd" minOccurs="0" />
+            <xs:element name="code" type="gcda:ii"/> <!-- ??? -->
             <xs:element name="description" type="xs:string" minOccurs="0" />
         </xs:sequence>
     </xs:complexType>
-
 
 </xs:schema>
