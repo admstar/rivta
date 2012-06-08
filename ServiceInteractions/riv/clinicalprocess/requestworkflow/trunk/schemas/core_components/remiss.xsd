@@ -17,7 +17,7 @@
             <xs:element name="typeOfRequest" type="codes:codeForRequestType"/>
             <xs:element name="versionTimeStamp" type="gcda:ts"/>
             <xs:element name="versionNumber" type="xs:int"/>
-            <xs:element name="reasonForVersion" type="ReasonForVersionType" />
+            <xs:element name="typeOfReason" type="ReasonForVersionType" />
             
             <xs:element name="patient" type="PatientType"/>
 
@@ -41,7 +41,7 @@
     <xs:complexType name="ReasonForVersionType">
         <xs:sequence>
             <xs:element name="reasonForVersionType" type="codes:codeVersionReason" />
-            <xs:element name="text" type="xs:string" />
+            <xs:element name="text" type="xs:string" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
     
@@ -101,17 +101,17 @@
     
     <xs:complexType name="OrganisationType">
         <xs:sequence>
-            <xs:element name="careunitId" type="gcda:ii"/>
-            <xs:element name="careunitName" type="xs:string" minOccurs="0" />
+            <xs:element name="careuUitId" type="gcda:ii"/>
+            <xs:element name="careuUitName" type="xs:string" minOccurs="0" />
             <xs:element name="caregiverId" type="gcda:ii" />
-            <xs:element name="caregivertName" type="xs:string" minOccurs="0" />
+            <xs:element name="caregiverName" type="xs:string" minOccurs="0" />
         </xs:sequence>
     </xs:complexType>
     
     <xs:complexType name="AdditionalInformationType">
         <xs:sequence>
             <xs:element name="text" type="xs:string" minOccurs="0"/> <!-- Narrative block! -->
-            <xs:element name="desiredDateForPerformance" type="gcda:ivlTs" minOccurs="0"/>
+            <xs:element name="desiredDateForPerformance" type="DesiredDateForPerformanceType" minOccurs="0"/>
             <xs:element name="desiredRequestRecipient" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="administrativeInformation" type="xs:string" minOccurs="0" />
             <xs:element name="interpreterRequirement" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
@@ -134,6 +134,23 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="DesiredDateForPerformanceType">
+        <xs:attribute name="start">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="\d+"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="end">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="\d+"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType> 
+    
     <xs:complexType name="DescriptionType">
         <xs:sequence>
             <xs:element name="id" type="gcda:ii"/>
