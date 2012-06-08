@@ -21,9 +21,9 @@
             
             <xs:element name="patient" type="PatientType"/>
 
-            <xs:element name="sender" type="RequestSenderType"/>
-            <xs:element name="receiver" type="RequestReceiverType"/>
-            <xs:element name="alternateOutcomeReceiver" type="RequestReceiverType" minOccurs="0"/>
+            <xs:element name="author" type="AuthorType"/>
+            <xs:element name="recipient" type="RecipientType"/>
+            <xs:element name="participant" type="RecipientType" minOccurs="0"/>
             
             <xs:element name="additionalInformation" type="AdditionalInformationType" />
             <xs:element name="awarenessInformation" type="AwarenessInformationType" minOccurs="0" maxOccurs="unbounded" />
@@ -63,11 +63,11 @@
             <xs:element name="streetName2" type="xs:string" minOccurs="0"/>
             <xs:element name="streetName3" type="xs:string" minOccurs="0"/>
             <xs:element name="postalCode" type="xs:string"/>
-            <xs:element name="country" type="xs:string" minOccurs="0"/>
+            <xs:element name="postalCity" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
     
-    <xs:complexType name="RequestSenderType">
+    <xs:complexType name="AuthorType">
         <xs:sequence>
             <xs:element name="dateOfRequest" type="gcda:ts"/>
             <xs:element name="staff" type="StaffType" />            
@@ -78,7 +78,7 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="RequestReceiverType">
+    <xs:complexType name="RecipientType">
         <xs:sequence>
             <xs:element name="staff" type="StaffType" minOccurs="0" />
             <xs:element name="organisation" type="OrganisationType" />            
@@ -94,17 +94,15 @@
 
     <xs:complexType name="StaffType">
         <xs:sequence>
-            <xs:element name="staffId" type="gcda:ii" />
-            <xs:element name="staffName" type="xs:string" minOccurs="0" />
+            <xs:element name="id" type="gcda:ii" />
+            <xs:element name="name" type="xs:string" minOccurs="0" />
         </xs:sequence>
     </xs:complexType>
     
     <xs:complexType name="OrganisationType">
         <xs:sequence>
-            <xs:element name="careuUitId" type="gcda:ii"/>
-            <xs:element name="careuUitName" type="xs:string" minOccurs="0" />
-            <xs:element name="caregiverId" type="gcda:ii" />
-            <xs:element name="caregiverName" type="xs:string" minOccurs="0" />
+            <xs:element name="careUnitId" type="gcda:ii"/>
+            <xs:element name="careUnitName" type="xs:string" minOccurs="0" />
         </xs:sequence>
     </xs:complexType>
     
