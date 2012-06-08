@@ -12,11 +12,31 @@
     <xs:element name="request" type="RequestType"/> <!-- Remiss -->
     <xs:element name="requestOutcome" type="RequestOutcomeType"/> <!-- Remissvar -->
     
+    <xs:complexType name="RequestType">
+        <xs:sequence>
+            <xs:element name="requestId" type="gcda:ii"/>
+            <xs:element name="typeOfRequest" type="codes:codeForRequestType"/>
+            <xs:element name="versionTimeStamp" type="gcda:ts"/>
+            <xs:element name="versionNumber" type="xs:int"/>
+            <xs:element name="typeOfReason" type="ReasonForVersionType" />
+            
+            <xs:element name="patient" type="PatientType"/>
+            
+            <xs:element name="author" type="AuthorType"/>
+            <xs:element name="recipient" type="RecipientType"/>
+            <xs:element name="participant" type="RecipientType" minOccurs="0"/>
+            
+            <xs:element name="additionalInformation" type="AdditionalInformationType" />
+            <xs:element name="awarenessInformation" type="AwarenessInformationType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="questionFormulation" type="QuestionFormulationType" />             
+        </xs:sequence>        
+    </xs:complexType>
+
     <xs:complexType name="RequestOutcomeType">
         <xs:sequence>
             <xs:element name="requestId" type="gcda:ii"/> <!-- inFulfillmentOf -->
             <xs:element name="requestOutcomeId" type="gcda:ii"/>
-            <xs:element name="typeOfRequest" type="codes:codeForRequestType"/>
+            <xs:element name="typeOfRequestOutcome" type="codes:codeRequestOutcomeType"/>
             <xs:element name="versionTimeStamp" type="gcda:ts"/>
             <xs:element name="versionNumber" type="xs:int"/>
             <xs:element name="typeOfReason" type="ReasonForVersionType" />
@@ -31,26 +51,6 @@
         </xs:sequence>        
     </xs:complexType>
     
-    <xs:complexType name="RequestType">
-        <xs:sequence>
-            <xs:element name="requestId" type="gcda:ii"/>
-            <xs:element name="typeOfRequest" type="codes:codeForRequestType"/>
-            <xs:element name="versionTimeStamp" type="gcda:ts"/>
-            <xs:element name="versionNumber" type="xs:int"/>
-            <xs:element name="typeOfReason" type="ReasonForVersionType" />
-            
-            <xs:element name="patient" type="PatientType"/>
-
-            <xs:element name="author" type="AuthorType"/>
-            <xs:element name="recipient" type="RecipientType"/>
-            <xs:element name="participant" type="RecipientType" minOccurs="0"/>
-            
-            <xs:element name="additionalInformation" type="AdditionalInformationType" />
-            <xs:element name="awarenessInformation" type="AwarenessInformationType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="questionFormulation" type="QuestionFormulationType" />             
-        </xs:sequence>        
-    </xs:complexType>
-
     <xs:complexType name="TelecomType">
         <xs:sequence>
             <xs:element name="telecomType" type="codes:codeForTelecomType" />
