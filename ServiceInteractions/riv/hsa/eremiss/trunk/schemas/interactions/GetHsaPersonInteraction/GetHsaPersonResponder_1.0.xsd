@@ -25,7 +25,7 @@
   <xs:complexType name='GetHsaPersonType'>
     <xs:sequence>
       <xs:choice>
-        <xs:element name="hsaIdentity" type="xs:string" />
+        <xs:element name="hsaIdentity" type="tns:hsaIdentityType" />
         <xs:element name="personalIdentityNumber" type="xs:string" />
       </xs:choice>
       <xs:element name='searchBase' type='tns:searchBaseType' minOccurs="0"/>
@@ -33,7 +33,11 @@
     </xs:sequence>
   </xs:complexType>
 
- <xs:simpleType name="searchBaseType">
+  <xs:simpleType name="hsaIdentityType">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="searchBaseType">
     <xs:restriction base="xs:token">
         <xs:maxLength value="350"/>
         <xs:pattern value="([OUDCNLoudcnl]{1,2}=[0-9\p{L}\p{Zs}\-.]*,?)*"/>
@@ -52,13 +56,6 @@
       <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name='ResultCodeEnum'>
-    <xs:restriction base='xs:string'>
-      <xs:enumeration value='OK' />
-      <xs:enumeration value='ERROR' />
-      <xs:enumeration value='INFO' />
-    </xs:restriction>
-  </xs:simpleType>
 
   <xs:complexType name="AddressType">
     <xs:sequence>
@@ -86,7 +83,7 @@
       <xs:element name="description" type="xs:string" minOccurs="0" />
       <xs:element name="mail" type="xs:string" minOccurs="0" />
       <xs:element name="givenName" type="xs:string" />
-      <xs:element name="hsaIdentity" type="xs:string" />
+      <xs:element name="hsaIdentity" type="tns:hsaIdentityType" />
       <xs:element name="hsaSwitchboardNumber" type="xs:string" minOccurs="0" />
       <xs:element name="hsaTelephoneNumbers" minOccurs="0">
         <xs:complexType>
