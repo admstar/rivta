@@ -25,7 +25,7 @@
             <xs:element name="author" type="AuthorType"/>
             <xs:element name="recipient" type="RecipientType"/>
             <xs:element name="participant" type="RecipientType" minOccurs="0"/>
-            <xs:element name="intermediary" type="RecipientType" minOccurs="0"/> <!-- Den som skickar vidare en remiss -->
+            <xs:element name="intermediary" type="IntermediaryType" minOccurs="0"/>
             
             <xs:element name="additionalInformation" type="AdditionalInformationType" />
             <xs:element name="awarenessInformation" type="AwarenessInformationType" minOccurs="0" maxOccurs="unbounded" />
@@ -39,15 +39,10 @@
             <xs:element name="requestOutcomeId" type="gcda:ii"/>
             <xs:element name="typeOfRequestOutcome" type="codes:codeRequestOutcomeType"/>
             <xs:element name="versionTimeStamp" type="gcda:ts"/>
-            <xs:element name="versionNumber" type="xs:int"/>
-            <xs:element name="reasonForVersion" type="ReasonForVersionType" />
-            
-            <xs:element name="patient" type="PatientType"/>
-            
+            <xs:element name="versionNumber" type="xs:int"/>            
             <xs:element name="author" type="AuthorType"/>
             <xs:element name="recipient" type="RecipientType"/>
-            <xs:element name="participant" type="RecipientType" minOccurs="0"/>
-            
+            <xs:element name="participant" type="RecipientType" minOccurs="0"/>          
             <xs:element name="outcome" type="OutcomeType" />
         </xs:sequence>        
     </xs:complexType>
@@ -95,13 +90,23 @@
             <xs:element name="typeOfStaff" type="codes:codeForProfession" minOccurs="0" />
             <xs:element name="staffOrganisation" type="OrganisationType" /> <!-- custodian -->            
             <xs:element name="staffOriginOrganisation" type="OrganisationType" minOccurs="0" /> <!-- representedOrganisation -->
-            <xs:element name="legalAuthenticator" type="LegalAuthenticatorType" minOccurs="0" /> <!-- legalAuthenticator -->
+            <xs:element name="legalAuthenticator" type="LegalAuthenticatorType" /> <!-- legalAuthenticator -->
         </xs:sequence>
     </xs:complexType>
+    
+    <xs:complexType name="IntermediaryType">
+        <xs:sequence>
+            <xs:element name="staff" type="StaffType" />            
+            <xs:element name="typeOfStaff" type="codes:codeForProfession" minOccurs="0" />
+            <xs:element name="staffOrganisation" type="OrganisationType" /> <!-- custodian -->            
+        </xs:sequence>
+    </xs:complexType>
+
 
     <xs:complexType name="RecipientType">
         <xs:sequence>
             <xs:element name="staff" type="StaffType" minOccurs="0" />
+            <xs:element name="typeOfStaff" type="codes:codeForProfession" minOccurs="0" />
             <xs:element name="organisation" type="OrganisationType" />            
         </xs:sequence>
     </xs:complexType>
@@ -181,6 +186,7 @@
     <xs:complexType name="DescriptionType">
         <xs:sequence>
             <xs:element name="id" type="gcda:ii"/>
+            <xs:element name="condition" type="gcda:ii" minOccurs="0"/>
             <xs:element name="description" type="xs:string" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
