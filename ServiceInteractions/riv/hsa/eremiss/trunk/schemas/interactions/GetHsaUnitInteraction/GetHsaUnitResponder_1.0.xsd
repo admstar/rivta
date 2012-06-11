@@ -29,11 +29,11 @@
       <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
-  
+
   <xs:simpleType name="hsaIdentityType">
     <xs:restriction base="xs:string"/>
   </xs:simpleType>
-  
+
   <xs:simpleType name="searchBaseType">
     <xs:restriction base="xs:token">
         <xs:maxLength value="350"/>
@@ -43,10 +43,8 @@
 
   <xs:complexType name='GetHsaUnitResponseType'>
     <xs:sequence>
-      <xs:element name='ResultCode' type='tns:ResultCodeEnum' />
-      <xs:element name='comment' type='xs:string' minOccurs='0' />
       <xs:element name="careGiver" type="xs:string" minOccurs="0"/>
-      <xs:element name="parentHsaIdentity" type="xs:string" minOccurs="0"/>
+      <xs:element name="parentHsaIdentity" type="tns:hsaIdentityType" minOccurs="0"/>
       <xs:element name="unitPrescriptionCodes" type="xs:string"/>
       <xs:element name="alternateNames" minOccurs="0">
         <xs:complexType>
@@ -113,7 +111,7 @@
             </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:element name="hsaIdentity" type="xs:string"/>
+      <xs:element name="hsaIdentity" type="tns:hsaIdentityType"/>
       <xs:element name="hsaJpegLogotype" type="xs:string" minOccurs="0"/>
       <xs:element name="invoiceAddress" type="tns:AddressType" minOccurs="0"/>
       <xs:element name="jpegPhoto" type="xs:string" minOccurs="0"/>
@@ -197,14 +195,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:simpleType name='ResultCodeEnum'>
-    <xs:restriction base='xs:string'>
-      <xs:enumeration value='OK' />
-      <xs:enumeration value='ERROR' />
-      <xs:enumeration value='INFO' />
-    </xs:restriction>
-  </xs:simpleType>
-  
   <xs:complexType name="AddressType">
     <xs:sequence>
       <xs:element name="addressLine" type="xs:string" maxOccurs="unbounded"/>

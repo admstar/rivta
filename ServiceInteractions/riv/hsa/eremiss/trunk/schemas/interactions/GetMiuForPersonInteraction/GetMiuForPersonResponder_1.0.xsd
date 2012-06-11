@@ -31,34 +31,25 @@
       <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
-  
+
   <xs:simpleType name="hsaIdentityType">
     <xs:restriction base="xs:string"/>
   </xs:simpleType>
-  
+
   <xs:simpleType name="searchBaseType">
     <xs:restriction base="xs:token">
         <xs:maxLength value="350"/>
         <xs:pattern value="([OUDCNLoudcnl]{1,2}=[0-9\p{L}\p{Zs}\-.]*,?)*"/>
     </xs:restriction>
   </xs:simpleType>
-  
+
   <xs:complexType name='GetMiuForPersonResponseType'>
     <xs:sequence>
-      <xs:element name='ResultCode' type='tns:ResultCodeEnum' />
-      <xs:element name='comment' type='xs:string' minOccurs='0' />
       <xs:element name="MiuInformation" type="tns:MiuInformationType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name='ResultCodeEnum'>
-    <xs:restriction base='xs:string'>
-      <xs:enumeration value='OK' />
-      <xs:enumeration value='ERROR' />
-      <xs:enumeration value='INFO' />
-    </xs:restriction>
-  </xs:simpleType>
-  
+
   <xs:complexType name="MiuInformationType">
     <xs:sequence>
       <xs:element name="miuName" type="xs:string"/>
@@ -73,7 +64,7 @@
       <xs:element name="hsaTitles" type="tns:HsaTitlesType"/>
       <xs:element name="miuRights" type="tns:MiuRightsType"/>
       <xs:element name="hsaSystemRoles" type="tns:HsaSystemRolesType"/>
-      <xs:element name="hsaIdentityPerson" type="xs:string"/>
+      <xs:element name="hsaIdentityPerson" type="tns:hsaIdentityType"/>
       <xs:element name="paTitleCode" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="givenName" type="xs:string"/>
       <xs:element name="middleAndSurName" type="xs:string"/>

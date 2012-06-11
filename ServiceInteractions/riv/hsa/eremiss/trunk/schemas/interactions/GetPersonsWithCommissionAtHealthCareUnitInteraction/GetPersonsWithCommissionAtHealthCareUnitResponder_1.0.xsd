@@ -23,7 +23,6 @@
   <xs:element name='GetPersonsWithCommissionAtHealthCareUnitResponse' type='tns:GetPersonsWithCommissionAtHealthCareUnitResponseType' />
   <xs:complexType name='GetPersonsWithCommissionAtHealthCareUnitType'>
     <xs:sequence>
-      <xs:element name='SomeElement' type='core:SomeElementType' />
       <xs:element name="hsaIdentity" type="tns:hsaIdentityType"/>
       <xs:element name="searchBase" type="tns:searchBaseType" minOccurs="0"/>
       <xs:element name="paTitleCode" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
@@ -31,11 +30,11 @@
       <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
-  
+
   <xs:simpleType name="hsaIdentityType">
     <xs:restriction base="xs:string"/>
   </xs:simpleType>
-  
+
   <xs:simpleType name="searchBaseType">
     <xs:restriction base="xs:token">
         <xs:maxLength value="350"/>
@@ -45,8 +44,6 @@
 
   <xs:complexType name='GetPersonsWithCommissionAtHealthCareUnitResponseType'>
     <xs:sequence>
-      <xs:element name='ResultCode' type='tns:ResultCodeEnum' />
-      <xs:element name='comment' type='xs:string' minOccurs='0' />
       <xs:element name="PersonList" minOccurs="0">
         <xs:complexType>
           <xs:sequence>
@@ -63,11 +60,4 @@
       <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name='ResultCodeEnum'>
-    <xs:restriction base='xs:string'>
-      <xs:enumeration value='OK' />
-      <xs:enumeration value='ERROR' />
-      <xs:enumeration value='INFO' />
-    </xs:restriction>
-  </xs:simpleType>
 </xs:schema>
