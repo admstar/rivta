@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:ehr:patientsummary:GetEhrExtractResponder:1" xmlns:urn2="urn:riv:datatypes:iso21090v2:1">
+
+  <soapenv:Header>
+    <urn:LogicalAddress>HSA-id för den anslutningspunkt som producerar detaljerad patientinformation. I NPÖ-fallet är det HSA-id för anslutningspunkten</urn:LogicalAddress>
+  </soapenv:Header>
+
+  <soapenv:Body>
+    <urn1:GetEhrExtract>
+    
+      <!-- Id för den patient som efterfrågas -->
+      <urn1:subject_of_care_id extension="191212121212"/>
+
+      <!-- Tidsperiod kan anges i frågan och då ska tjänsteproducenten svara med detaljerad patientinformation inom angivet intervall -->
+      <urn:time_period lowClosed="true" highClosed="false">
+        <urn:low value="20160909"/>
+        <urn:high nullFlavor="NI"/>
+      </urn:time_period>
+
+      <!-- Den huvudinformationstyp som efterfrågas -->
+      <urn1:meanings code="dia"/>
+      <urn1:parameters>
+
+        <!-- Konstant som anger att detta är transaktions-id -->
+        <urn1:name value="transaction_id"/>
+        <urn1:value value="globalt-unikt-id-för-denna-transaktion"/>
+      </urn1:parameters>
+
+    </urn1:GetEhrExtract>
+  </soapenv:Body>
+</soapenv:Envelope>
