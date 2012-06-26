@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. IPR holder licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->		
+<wsdl:definitions name='GetFormTempatesInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tjsr='urn:riv:eservicesupply:forminteractions:GetFormTempatesResponder:1' xmlns:tjsi='urn:riv:eservicesupply:forminteractions:GetFormTempatesInitiator:1' xmlns:tns='urn:riv:eservicesupply:forminteractions:GetFormTempates:1:rivtabp21' targetNamespace='urn:riv:eservicesupply:forminteractions:GetFormTempates:1:rivtabp21' xmlns:itr='urn:riv:itintegration:registry:1'>
+  <wsdl:documentation>			 Tjänsteinteraktionens namn: GetFormTempatesInteraction
+			 Beskrivning: 
+			   Hämta valbara formulärmallar. Tjänsten används för att lista valbara formulär för en användare.
+			 Revisioner: 
+			 Tjänstedomän: eservicesupply:forminteractions
+			 Tjänsteinteraktionstyp: Fråga-Svar
+			 WS-profil: RIVTABP21
+			 Förvaltas av: Sveriges Kommuner och Landsting
+			 Författare: Marco de Luca</wsdl:documentation>
+  <xs:annotation>
+    <xs:documentation>
+			 Tjänsteinteraktionens namn: GetFormTempatesInteraction
+			 Beskrivning: 
+			   Hämta valbara formulärmallar. Tjänsten används för att lista valbara formulär för en användare.
+			 Revisioner: 
+			 Tjänstedomän: eservicesupply:forminteractions
+			 Tjänsteinteraktionstyp: Fråga-Svar
+			 WS-profil: RIVTABP21
+			 Förvaltas av: Sveriges Kommuner och Landsting
+			 Författare: Marco de Luca
+			 </xs:documentation>
+  </xs:annotation>
+  <wsdl:types>
+    <xs:schema targetNamespace='urn:riv:eservicesupply:forminteractions:GetFormTempates:1:rivtabp21'>
+      <xs:import schemaLocation='GetFormTempatesResponder_1.0.xsd' namespace='urn:riv:eservicesupply:forminteractions:GetFormTempatesResponder:1' />
+      <xs:import schemaLocation='../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name='GetFormTempatesRequest'>
+    <wsdl:part name='LogicalAddress' element='itr:LogicalAddress'>
+      <wsdl:documentation>Logical address description</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name='parameters' element='tjsr:GetFormTempates' />
+  </wsdl:message>
+  <wsdl:message name='GetFormTempatesResponse'>
+    <wsdl:part name='parameters' element='tjsr:GetFormTempatesResponse' />
+  </wsdl:message>
+  <wsdl:portType name='GetFormTempatesResponderInterface'>
+    <wsdl:operation name='GetFormTempates'>
+      <wsdl:input message='tns:GetFormTempatesRequest' />
+      <wsdl:output message='tns:GetFormTempatesResponse' />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name='GetFormTempatesResponderBinding' type='tns:GetFormTempatesResponderInterface'>
+    <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
+    <wsdl:operation name='GetFormTempates'>
+      <soap:operation soapAction='urn:riv:eservicesupply:forminteractions:GetFormTempatesResponder:1:GetFormTempates' style='document' />
+      <wsdl:input>
+        <soap:header use='literal' message='tns:GetFormTempatesRequest' part='LogicalAddress' />
+        <soap:body use='literal' parts='parameters' />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use='literal' />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name='GetFormTempatesResponderService'>
+    <wsdl:port name='GetFormTempatesResponderPort' binding='tns:GetFormTempatesResponderBinding'>
+      <soap:address location='http://tempuri.org' />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
