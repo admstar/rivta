@@ -46,25 +46,31 @@
 	</wsdl:types>
 	
 	<wsdl:message name="UnauthorizedFault">
-		<wsdl:documentation xml:lang="sv">Undantag som kastas då behörighet saknas för att utföra begärd tjänst.
+		<wsdl:documentation>Undantag som kastas då behörighet saknas för att utföra begärd tjänst.
 		</wsdl:documentation>
 		<wsdl:part name="parameters" element="tjsr:UnauthorizedFault" />
 	</wsdl:message>
 
 	<wsdl:message name="ValidationErrorFault">
-		<wsdl:documentation xml:lang="sv">Undantag som kastas då en eller flera inparametrar innehåller felaktiga värden.
+		<wsdl:documentation>Undantag som kastas då en eller flera inparametrar innehåller felaktiga värden. Angiven tjänst utfördes ej.
 		</wsdl:documentation>
 		<wsdl:part name="parameters" element="tjsr:ValidationErrorFault" />
 	</wsdl:message>
 
 	<wsdl:message name="ItemDoesNotExistFault">
-		<wsdl:documentation xml:lang="sv">Undantag som kastas då refererad artifakt inte finns.
+		<wsdl:documentation>Undantag som kastas då refererad artifakt inte finns.
 		</wsdl:documentation>
 		<wsdl:part name="parameters" element="tjsr:ItemDoesNotExistFault" />
 	</wsdl:message>
 
+	<wsdl:message name="ItemInactiveFault">
+		<wsdl:documentation>Undantag som kastas då refererad artifakt länkar till/använder en artifact som ej längre är giltig.
+		</wsdl:documentation>
+		<wsdl:part name="parameters" element="tjsr:ItemInactiveFault" />
+	</wsdl:message>
+
 	<wsdl:message name="InternalErrorFault">
-		<wsdl:documentation xml:lang="sv">Undantag som kastas då ett ohanterbart internt problem uppstått. Pågående tjänst kan ej utföras.
+		<wsdl:documentation>Undantag som kastas då ett ohanterbart internt problem uppstått. Angiven tjänst utfördes ej.
 		</wsdl:documentation>
 		<wsdl:part name="parameters" element="tjsr:InternalErrorFault" />
 	</wsdl:message>
@@ -89,6 +95,7 @@
 			<wsdl:fault name="UnauthorizedFault" message="tns:UnauthorizedFault" />
 			<wsdl:fault name="ValidationErrorFault" message="tns:ValidationErrorFault" />
 			<wsdl:fault name="ItemDoesNotExistFault" message="tns:ItemDoesNotExistFault" />
+			<wsdl:fault name="ItemInactiveFault" message="tns:ItemInactiveFault" />
 			<wsdl:fault name="InternalErrorFault" message="tns:InternalErrorFault" />
 		</wsdl:operation>
 	</wsdl:portType>
@@ -112,6 +119,9 @@
 			</wsdl:fault>
 			<wsdl:fault name="ItemDoesNotExistFault">
 				<soap:fault use="literal" name="ItemDoesNotExistFault" />
+			</wsdl:fault>
+			<wsdl:fault name="ItemInactiveFault">
+				<soap:fault use="literal" name="ItemInactiveFault" />
 			</wsdl:fault>
 			<wsdl:fault name="InternalErrorFault">
 				<soap:fault use="literal" name="InternalErrorFault" />
