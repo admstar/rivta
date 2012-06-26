@@ -3064,6 +3064,7 @@ ch ställningstagande till artroskopi.
       <xs:element name="typeOfRequestOutcome" type="codes:codeRequestOutcomeType"/>
       <xs:element name="versionTimeStamp" type="gcda:ts"/>
       <xs:element name="versionNumber" type="xs:int"/>
+      <xs:element name="patient" type="PatientTypeOutcome"/>
       <xs:element name="author" type="AuthorType"/>
       <xs:element name="recipient" type="RecipientType"/>
       <xs:element name="outcome" type="OutcomeType"/>
@@ -3089,6 +3090,12 @@ ch ställningstagande till artroskopi.
       <xs:element name="name" type="xs:string" minOccurs="0"/>
       <xs:element name="gender" type="codes:codeForGenderType" minOccurs="0"/>
       <xs:element name="dateOfBirth" type="gcda:ts" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PatientTypeOutcome">
+    <xs:sequence>
+      <xs:element name="personId" type="gcda:ii"/>
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="AddressType">
@@ -5164,7 +5171,7 @@ ch ställningstagande till artroskopi.
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://tempuri.org</con:endpoint><con:endpoint>http://localhost:8088/mockProcessRequestOutcomeResponderBinding</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:clinicalprocess:requestworkflow:ProcessRequestOutcomeResponder:1:ProcessRequestOutcome" name="ProcessRequestOutcome" bindingOperationName="ProcessRequestOutcome" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="test case 3"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://tempuri.org</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:requestworkflow:ProcessRequestOutcomeResponder:1" xmlns:urn2="urn:riv:clinicalprocess:requestworkflow:1" xmlns="urn:riv:clinicalprocess:requestworkflow:request">
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://tempuri.org</con:endpoint><con:endpoint>http://localhost:8088/mockProcessRequestOutcomeResponderBinding</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:clinicalprocess:requestworkflow:ProcessRequestOutcomeResponder:1:ProcessRequestOutcome" name="ProcessRequestOutcome" bindingOperationName="ProcessRequestOutcome" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="test case 3"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8088/mockProcessRequestOutcomeResponderBinding</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:requestworkflow:ProcessRequestOutcomeResponder:1" xmlns:urn2="urn:riv:clinicalprocess:requestworkflow:1" xmlns="urn:riv:clinicalprocess:requestworkflow:request">
    <soapenv:Header>
       <urn:LogicalAddress>?</urn:LogicalAddress>
    </soapenv:Header>
@@ -5177,6 +5184,10 @@ ch ställningstagande till artroskopi.
             <typeOfRequestOutcome code="SS" codeSystem="1.2.752.97.3.2.8.6"/>
             <versionTimeStamp value="201203011636"/>
             <versionNumber>1</versionNumber>
+            <patient>
+               <personId root="1.2.752.97.3.1.2" extension="197907179191"/>
+               <name>Testsson//Vårdtest</name>
+            </patient>
             <!--RB-->
             <author>
                <dateOfRequest value="20120315"/>
@@ -5230,6 +5241,10 @@ ch ställningstagande till artroskopi.
             <typeOfRequestOutcome code="SS" codeSystem="1.2.752.97.3.2.8.6"/>
             <versionTimeStamp value="201203011636"/>
             <versionNumber>1</versionNumber>
+            <patient>
+               <personId root="1.2.752.97.3.1.2" extension="197907179191"/>
+               <name>Testsson/Anders/Vårdtest/Vårdtest</name>
+            </patient>
             <!--<requestrolltyp code="RB" displayName="Remissbesvarare" codeSystem="1.2.752.97.3.2.8.4"/>-->
             <author>
                <dateOfRequest value="20120418"/>
@@ -5300,4 +5315,4 @@ ch ställningstagande till artroskopi.
          <urn:ResultCode>OK</urn:ResultCode>
       </urn:ProcessRequestOutcomeResponse>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:requestworkflow:ProcessRequestOutcomeResponder:1:ProcessRequestOutcome"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:properties/><con:sensitiveInformation/></con:soapui-project>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:requestworkflow:ProcessRequestOutcomeResponder:1:ProcessRequestOutcome"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:properties/><con:wssContainer/><con:sensitiveInformation/></con:soapui-project>
