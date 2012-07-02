@@ -19,12 +19,14 @@
  -->	
 <xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' 
 	xmlns:tns='urn:riv:ehr:patientconsent:accesscontrol:CheckConsentResponder:1'				
+	xmlns:patientconsent='urn:riv:ehr:patientconsent:1'
 	xmlns:common='urn:riv:ehr:common:1'
 	targetNamespace='urn:riv:ehr:patientconsent:accesscontrol:CheckConsentResponder:1'
 	elementFormDefault='qualified'
 	attributeFormDefault='unqualified'
 	version='1.0'>
 
+	<xs:import schemaLocation='../../Patientconsent_1.0.xsd' namespace='urn:riv:ehr:patientconsent:1' />
 	<xs:import schemaLocation='../../../common/Common_1.0.xsd' namespace='urn:riv:ehr:common:1' />
 
 	<xs:element name="UnauthorizedFault" type="common:UnauthorizedFaultType"/>
@@ -59,7 +61,7 @@
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Result" type="xs:boolean"/>
+			<xs:element name="CheckResultType" type="patientconsent:CheckResultType"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
 		</xs:sequence>
 	</xs:complexType>
