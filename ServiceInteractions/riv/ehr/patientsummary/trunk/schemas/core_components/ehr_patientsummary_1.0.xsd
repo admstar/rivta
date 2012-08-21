@@ -17,7 +17,7 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:ehr:patientsummary:1' xmlns:iso='urn:riv:datatypes:iso21090v2:1' targetNamespace='urn:riv:ehr:patientsummary:1' elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'>
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:ehr:patientsummary:1' targetNamespace='urn:riv:ehr:patientsummary:1' elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'>
 	<xs:annotation>
 		<xs:documentation>
 		--------------- original copyright -------------------------
@@ -78,7 +78,7 @@
 
     </xs:documentation>
 	</xs:annotation>
-  <xs:import schemaLocation='ISO_dt.xsd' namespace='urn:riv:datatypes:iso21090v2:1' />
+  <xs:include schemaLocation='ISO_dt.xsd' />
 	<xs:complexType name="EHR_EXTRACT">
 		<xs:annotation>
 			<xs:documentation>
@@ -86,12 +86,12 @@
       </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="authorising_party" type="iso:II" minOccurs="0"/>
-			<xs:element name="ehr_id" type="iso:II"/>
-			<xs:element name="ehr_system" type="iso:II"/>
+			<xs:element name="authorising_party" type="tns:II" minOccurs="0"/>
+			<xs:element name="ehr_id" type="tns:II"/>
+			<xs:element name="ehr_system" type="tns:II"/>
 			<xs:element name="rm_id" fixed="EN 13606"/>
-			<xs:element name="subject_of_care" type="iso:II"/>
-			<xs:element name="time_created" type="iso:TS"/>
+			<xs:element name="subject_of_care" type="tns:II"/>
+			<xs:element name="time_created" type="tns:TS"/>
 			<xs:element name="all_compositions" type="tns:COMPOSITION" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="criteria" type="tns:EXTRACT_CRITERIA" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="folders" type="tns:FOLDER" minOccurs="0" maxOccurs="unbounded"/>
@@ -109,12 +109,12 @@
       </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="all_versions" type="iso:BL" minOccurs="0"/>
-			<xs:element name="archetype_ids" type="iso:II" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="max_sensitivity" type="iso:INT" minOccurs="0"/>
-			<xs:element name="multimedia_included" type="iso:BL" minOccurs="0"/>
-			<xs:element name="other_constraints" type="iso:ST" minOccurs="0"/>
-			<xs:element name="time_period" type="iso:IVL_TS" minOccurs="0"/>
+			<xs:element name="all_versions" type="tns:BL" minOccurs="0"/>
+			<xs:element name="archetype_ids" type="tns:II" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="max_sensitivity" type="tns:INT" minOccurs="0"/>
+			<xs:element name="multimedia_included" type="tns:BL" minOccurs="0"/>
+			<xs:element name="other_constraints" type="tns:ST" minOccurs="0"/>
+			<xs:element name="time_period" type="tns:IVL_TS" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="RECORD_COMPONENT" abstract="true">
@@ -125,14 +125,14 @@
       </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="archetype_id" type="iso:ST" minOccurs="0"/>
-			<xs:element name="meaning" type="iso:CD" minOccurs="0"/>
-			<xs:element name="name" type="iso:ST"/>
-			<xs:element name="orig_parent_ref" type="iso:II" minOccurs="0"/>
-			<xs:element name="policy_ids" type="iso:II" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="rc_id" type="iso:II"/>
-			<xs:element name="sensitivity" type="iso:INT" minOccurs="0"/>
-			<xs:element name="synthesised" type="iso:BL"/>
+			<xs:element name="archetype_id" type="tns:ST" minOccurs="0"/>
+			<xs:element name="meaning" type="tns:CD" minOccurs="0"/>
+			<xs:element name="name" type="tns:ST"/>
+			<xs:element name="orig_parent_ref" type="tns:II" minOccurs="0"/>
+			<xs:element name="policy_ids" type="tns:II" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="rc_id" type="tns:II"/>
+			<xs:element name="sensitivity" type="tns:INT" minOccurs="0"/>
+			<xs:element name="synthesised" type="tns:BL"/>
 			<xs:element name="links" type="tns:LINK" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="feeder_audit" type="tns:AUDIT_INFO" minOccurs="0"/>
 		</xs:sequence>
@@ -148,7 +148,7 @@
 				<xs:sequence>
 					<xs:element name="sub_folders" type="tns:FOLDER" minOccurs="0" maxOccurs="unbounded"/>
 					<xs:element name="attestations" type="tns:ATTESTATION_INFO" minOccurs="0" maxOccurs="unbounded"/>
-					<xs:element name="composition_rc_ids" type="iso:ST" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="composition_rc_ids" type="tns:ST" minOccurs="0" maxOccurs="unbounded"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -169,9 +169,9 @@
 		<xs:complexContent>
 			<xs:extension base="tns:RECORD_COMPONENT">
 				<xs:sequence>
-					<xs:element name="contribution_id" type="iso:II" minOccurs="0"/>
-					<xs:element name="session_time" type="iso:IVL_TS" minOccurs="0"/>
-					<xs:element name="territory" type="iso:CS" minOccurs="0"/>
+					<xs:element name="contribution_id" type="tns:II" minOccurs="0"/>
+					<xs:element name="session_time" type="tns:IVL_TS" minOccurs="0"/>
+					<xs:element name="territory" type="tns:CS" minOccurs="0"/>
 					<xs:element name="attestations" type="tns:ATTESTATION_INFO" minOccurs="0" maxOccurs="unbounded"/>
 					<xs:element name="other_participations" type="tns:FUNCTIONAL_ROLE" minOccurs="0" maxOccurs="unbounded"/>
 					<xs:element name="committal" type="tns:AUDIT_INFO"/>
@@ -218,10 +218,10 @@
 		<xs:complexContent>
 			<xs:extension base="tns:CONTENT">
 				<xs:sequence>
-					<xs:element name="act_id" type="iso:ST" minOccurs="0"/>
-					<xs:element name="act_status" type="iso:CS" minOccurs="0"/>
-					<xs:element name="subject_of_information_category" type="iso:CS" minOccurs="0"/>
-					<xs:element name="uncertainty_expressed" type="iso:BL"/>
+					<xs:element name="act_id" type="tns:ST" minOccurs="0"/>
+					<xs:element name="act_status" type="tns:CS" minOccurs="0"/>
+					<xs:element name="subject_of_information_category" type="tns:CS" minOccurs="0"/>
+					<xs:element name="uncertainty_expressed" type="tns:BL"/>
 					<xs:element name="items" type="tns:ITEM" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
 					<xs:element name="info_provider" type="tns:FUNCTIONAL_ROLE" minOccurs="0"/>
 					<xs:element name="other_participations" type="tns:FUNCTIONAL_ROLE" minOccurs="0" maxOccurs="unbounded"/>
@@ -244,9 +244,9 @@
 		<xs:complexContent>
 			<xs:extension base="tns:RECORD_COMPONENT">
 				<xs:sequence>
-					<xs:element name="emphasis" type="iso:CD" minOccurs="0"/>
-					<xs:element name="item_category" type="iso:CS" minOccurs="0"/>
-					<xs:element name="obs_time" type="iso:IVL_TS" minOccurs="0"/>
+					<xs:element name="emphasis" type="tns:CD" minOccurs="0"/>
+					<xs:element name="item_category" type="tns:CS" minOccurs="0"/>
+					<xs:element name="obs_time" type="tns:IVL_TS" minOccurs="0"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -260,7 +260,7 @@
 		<xs:complexContent>
 			<xs:extension base="tns:ITEM">
 				<xs:sequence>
-					<xs:element name="structure_type" type="iso:CS"/>
+					<xs:element name="structure_type" type="tns:CS"/>
 					<xs:element name="parts" type="tns:ITEM" minOccurs="0" maxOccurs="unbounded"/>
 				</xs:sequence>
 			</xs:extension>
@@ -275,7 +275,7 @@
 		<xs:complexContent>
 			<xs:extension base="tns:ITEM">
 				<xs:sequence>
-					<xs:element name="value" type="iso:ANY" minOccurs="0"/>
+					<xs:element name="value" type="tns:ANY" minOccurs="0"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -290,13 +290,13 @@
       </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="committer" type="iso:II"/>
-			<xs:element name="ehr_system" type="iso:II"/>
-			<xs:element name="previous_version" type="iso:II" minOccurs="0"/>
-			<xs:element name="reason_for_revision" type="iso:CD" minOccurs="0"/>
-			<xs:element name="time_committed" type="iso:TS"/>
-			<xs:element name="version_set_id" type="iso:II" minOccurs="0"/>
-			<xs:element name="version_status" type="iso:CS" minOccurs="0"/>
+			<xs:element name="committer" type="tns:II"/>
+			<xs:element name="ehr_system" type="tns:II"/>
+			<xs:element name="previous_version" type="tns:II" minOccurs="0"/>
+			<xs:element name="reason_for_revision" type="tns:CD" minOccurs="0"/>
+			<xs:element name="time_committed" type="tns:TS"/>
+			<xs:element name="version_set_id" type="tns:II" minOccurs="0"/>
+			<xs:element name="version_status" type="tns:CS" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ATTESTATION_INFO">
@@ -311,11 +311,11 @@
       </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="attested_view" type="iso:ED" minOccurs="0"/>
-			<xs:element name="proof" type="iso:ED" minOccurs="0"/>
-			<xs:element name="reason_for_attestation" type="iso:CD"/>
-			<xs:element name="time" type="iso:TS"/>
-			<xs:element name="target_rc_id" type="iso:II" maxOccurs="unbounded"/>
+			<xs:element name="attested_view" type="tns:ED" minOccurs="0"/>
+			<xs:element name="proof" type="tns:ED" minOccurs="0"/>
+			<xs:element name="reason_for_attestation" type="tns:CD"/>
+			<xs:element name="time" type="tns:TS"/>
+			<xs:element name="target_rc_id" type="tns:II" maxOccurs="unbounded"/>
 			<xs:element name="attester" type="tns:FUNCTIONAL_ROLE"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -326,11 +326,11 @@
       </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="function" type="iso:CD" minOccurs="0"/>
-			<xs:element name="healthcare_facility" type="iso:II" minOccurs="0"/>
-			<xs:element name="mode" type="iso:CS" minOccurs="0"/>
-			<xs:element name="performer" type="iso:II"/>
-			<xs:element name="service_setting" type="iso:CD" minOccurs="0"/>
+			<xs:element name="function" type="tns:CD" minOccurs="0"/>
+			<xs:element name="healthcare_facility" type="tns:II" minOccurs="0"/>
+			<xs:element name="mode" type="tns:CS" minOccurs="0"/>
+			<xs:element name="performer" type="tns:II"/>
+			<xs:element name="service_setting" type="tns:CD" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="RELATED_PARTY">
@@ -341,8 +341,8 @@
       </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="party" type="iso:II" minOccurs="0"/>
-			<xs:element name="relationship" type="iso:ED"/>
+			<xs:element name="party" type="tns:II" minOccurs="0"/>
+			<xs:element name="relationship" type="tns:ED"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="LINK">
@@ -358,11 +358,11 @@
       </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="follow_link" type="iso:BL"/>
-			<xs:element name="nature" type="iso:CS"/>
-			<xs:element name="role" type="iso:CD" minOccurs="0"/>
-			<xs:element name="target_type" type="iso:CD" minOccurs="0"/>
-			<xs:element name="target_id" type="iso:II" maxOccurs="unbounded"/>
+			<xs:element name="follow_link" type="tns:BL"/>
+			<xs:element name="nature" type="tns:CS"/>
+			<xs:element name="role" type="tns:CD" minOccurs="0"/>
+			<xs:element name="target_type" type="tns:CD" minOccurs="0"/>
+			<xs:element name="target_id" type="tns:II" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	
@@ -380,9 +380,9 @@
       </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="extract_id" type="iso:II"/>
-			<xs:element name="id" type="iso:II" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="telecom" type="iso:TEL" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="extract_id" type="tns:II"/>
+			<xs:element name="id" type="tns:II" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="telecom" type="tns:TEL" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="SOFTWARE_OR_DEVICE">
@@ -394,11 +394,11 @@
 		<xs:complexContent>
 			<xs:extension base="tns:IDENTIFIED_ENTITY">
 				<xs:sequence>
-					<xs:element name="code" type="iso:CD"/>
-					<xs:element name="desc" type="iso:ST"/>
-					<xs:element name="manufacturerModelName" type="iso:ST"/>
-					<xs:element name="version" type="iso:ST" minOccurs="0"/>
-					<xs:element name="owningOrganisation_id" type="iso:ST" minOccurs="0"/>
+					<xs:element name="code" type="tns:CD"/>
+					<xs:element name="desc" type="tns:ST"/>
+					<xs:element name="manufacturerModelName" type="tns:ST"/>
+					<xs:element name="version" type="tns:ST" minOccurs="0"/>
+					<xs:element name="owningOrganisation_id" type="tns:ST" minOccurs="0"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -413,10 +413,10 @@
 		<xs:complexContent>
 			<xs:extension base="tns:IDENTIFIED_ENTITY">
 				<xs:sequence>
-					<xs:element name="code" type="iso:CD"/>
-					<xs:element name="desc" type="iso:ST"/>
-					<xs:element name="name" type="iso:ST"/>
-					<xs:element name="addr" type="iso:AD" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="code" type="tns:CD"/>
+					<xs:element name="desc" type="tns:ST"/>
+					<xs:element name="name" type="tns:ST"/>
+					<xs:element name="addr" type="tns:AD" minOccurs="0" maxOccurs="unbounded"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -431,8 +431,8 @@
 		<xs:complexContent>
 			<xs:extension base="tns:IDENTIFIED_ENTITY">
 				<xs:sequence>
-					<xs:element name="name" type="iso:EN" minOccurs="0" maxOccurs="unbounded"/>
-					<xs:element name="addr" type="iso:AD" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="name" type="tns:EN" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="addr" type="tns:AD" minOccurs="0" maxOccurs="unbounded"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -463,11 +463,11 @@
       </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="id" type="iso:II" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="position_or_grade" type="iso:CD" minOccurs="0"/>
-			<xs:element name="profession" type="iso:CD" minOccurs="0"/>
-			<xs:element name="specialty" type="iso:CD" minOccurs="0"/>
-			<xs:element name="scopingOrganisation_id" type="iso:II" minOccurs="0"/>
+			<xs:element name="id" type="tns:II" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="position_or_grade" type="tns:CD" minOccurs="0"/>
+			<xs:element name="profession" type="tns:CD" minOccurs="0"/>
+			<xs:element name="specialty" type="tns:CD" minOccurs="0"/>
+			<xs:element name="scopingOrganisation_id" type="tns:II" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="SUBJECT_OF_CARE_PERSON_IDENTIFICATION">
@@ -480,10 +480,10 @@
 		<xs:complexContent>
 			<xs:extension base="tns:PERSON">
 				<xs:sequence>
-					<xs:element name="administrativeGenderCode" type="iso:CS"/>
-					<xs:element name="birthOrderNumber" type="iso:INT" minOccurs="0"/>
-					<xs:element name="birthTime" type="iso:TS"/>
-					<xs:element name="deceasedTime" type="iso:TS" minOccurs="0"/>
+					<xs:element name="administrativeGenderCode" type="tns:CS"/>
+					<xs:element name="birthOrderNumber" type="tns:INT" minOccurs="0"/>
+					<xs:element name="birthTime" type="tns:TS"/>
+					<xs:element name="deceasedTime" type="tns:TS" minOccurs="0"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
