@@ -17,42 +17,22 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:ehr:patientsummary:GetEhrExtractResponder:1' xmlns:core='urn:riv:ehr:patientsummary:1' targetNamespace='urn:riv:ehr:patientsummary:GetEhrExtractResponder:1' elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'>
-	<xs:annotation>
-		<xs:documentation>
-		-----------------------------------------------------------------------------
-		2012-06-18 Hjalmar Jacobson (Tieto) har skapat detta schema. Innehållet i
-		detta schema kommer från schemafilen ”SE13606RequestEHRExtract.xsd".
-		-----------------------------------------------------------------------------
-    </xs:documentation>
-  </xs:annotation>
-
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:ehr:patientsummary:ReceiveEhrExtractInitiator:1' xmlns:core='urn:riv:ehr:patientsummary:1' targetNamespace='urn:riv:ehr:patientsummary:ReceiveEhrExtractInitiator:1' elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'>
   <xs:import schemaLocation='../../core_components/ehr_patientsummary_1.0.xsd' namespace='urn:riv:ehr:patientsummary:1' />
 
-  <xs:element name='GetEhrExtract' type='tns:GetEhrExtractType' />
-  <xs:element name='GetEhrExtractResponse' type='tns:GetEhrExtractResponseType' />
+  <xs:element name='ReceiveEhrExtractStatus' type='tns:ReceiveEhrExtractStatusType' />
+  <xs:element name='ReceiveEhrExtractStatusResponse' type='tns:ReceiveEhrExtractStatusResponseType' />
 
-  <xs:complexType name='GetEhrExtractType'>
+  <xs:complexType name='ReceiveEhrExtractStatusType'>
     <xs:sequence>
-			<xs:element name="subject_of_care_id" type="core:II"/>
-			<xs:element name="purpose" type="core:CD" minOccurs="0"/>
-			<xs:element name="rc_ids" type="core:II" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="time_period" type="core:IVL_TS" minOccurs="0"/>
-			<xs:element name="max_sensitivity" type="core:INT" minOccurs="0"/>
-			<xs:element name="all_versions" type="core:BL" minOccurs="0"/>
-			<xs:element name="multimedia_included" type="core:BL" minOccurs="0"/>
-			<xs:element name="archetype_ids" type="core:II" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="meanings" type="core:CD" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="max_records" type="core:INT" minOccurs="0"/>
 			<xs:element name="parameters" type="tns:ParameterType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="response_detail" type="tns:ResponseDetailType" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name='GetEhrExtractResponseType'>
+  <xs:complexType name='ReceiveEhrExtractStatusResponseType'>
     <xs:sequence>
-			<xs:element name="ehr_extract" type="core:EHR_EXTRACT" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="continuation_token" type="core:ST" minOccurs="0"/>
-			<xs:element name="response_detail" type="tns:ResponseDetailType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="success" type="xs:boolean"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -71,7 +51,6 @@
 		</xs:sequence>
 		<xs:attribute name="type_code" type="tns:ResponseDetailTypeCodes"/>
 	</xs:complexType>
-
 	<xs:simpleType name="ResponseDetailTypeCodes">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="E"/>
