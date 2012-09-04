@@ -38,7 +38,7 @@
             <xs:element name="requestId" type="gcda:ii"/> <!-- inFulfillmentOf -->
             <xs:element name="requestOutcomeId" type="gcda:ii"/>
             <xs:element name="typeOfRequestOutcome" type="codes:codeRequestOutcomeType"/>
-            <xs:element name="versionTimeStamp" type="gcda:ts"/>
+            <xs:element name="versionTimeStamp" type="TimeStampType"/>
             <xs:element name="versionNumber" type="xs:int"/>
             <xs:element name="patient" type="PatientTypeOutcome"/>           
             <xs:element name="author" type="AuthorType"/>
@@ -63,7 +63,7 @@
     
     <xs:complexType name="PatientType">
         <xs:sequence>
-            <xs:element name="personId" type="gcda:ii"/>
+            <xs:element name="personId" type="PersonIdType"/>
             <xs:element name="address" type="AddressType" minOccurs="0"/> 
             <xs:element name="telecom" type="TelecomType" minOccurs="0" maxOccurs="2"/>
             <xs:element name="name" type="xs:string" minOccurs="0" />
@@ -74,9 +74,45 @@
     
     <xs:complexType name="PatientTypeOutcome">
         <xs:sequence>
-            <xs:element name="personId" type="gcda:ii"/>
+            <xs:element name="personId" type="PersonIdType"/>
             <xs:element name="name" type="xs:string" minOccurs="0" />
         </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="DateType">
+        <xs:attribute name="value">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+    
+    <xs:complexType name="TimeStampType">
+        <xs:attribute name="value">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])\d+"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+    
+    <xs:complexType name="PersonIdType">
+        <xs:attribute name="extension">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="[0-9]{8}[0-9pPtTfF][0-9]{3}"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="root">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
     </xs:complexType>
     
     <xs:complexType name="AddressType">
@@ -92,7 +128,7 @@
     
     <xs:complexType name="AuthorType">
         <xs:sequence>
-            <xs:element name="dateOfRequest" type="gcda:ts"/>
+            <xs:element name="dateOfRequest" type="DateType"/>
             <xs:element name="staff" type="StaffType" />            
             <xs:element name="typeOfStaff" type="codes:codeForProfession" minOccurs="0" />
             <xs:element name="staffOrganisation" type="OrganisationType" /> <!-- custodian -->            
@@ -120,7 +156,7 @@
         
     <xs:complexType name="LegalAuthenticatorType">
         <xs:sequence>
-            <xs:element name="timeOfSigning" type="gcda:ts" />
+            <xs:element name="timeOfSigning" type="TimeStampType" />
             <xs:element name="signature" type="StaffType" minOccurs="0"/> <!-- Tolkning att denna är frivillig... -->
         </xs:sequence>
     </xs:complexType>
@@ -177,14 +213,14 @@
         <xs:attribute name="start">
             <xs:simpleType>
                 <xs:restriction base="xs:string">
-                    <xs:pattern value="\d+"/>
+                    <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"/>
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>
         <xs:attribute name="end">
             <xs:simpleType>
                 <xs:restriction base="xs:string">
-                    <xs:pattern value="\d+"/>
+                    <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"/>
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>
