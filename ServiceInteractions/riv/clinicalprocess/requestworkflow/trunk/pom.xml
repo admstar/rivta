@@ -2,10 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 <modelVersion>4.0.0</modelVersion>
 <groupId>se.rivta.tools</groupId>
-<artifactId>clinicalprocess-requestworkflow-schemas</artifactId>
+<artifactId>clinicalprocess-requestworkflow</artifactId>
 <packaging>pom</packaging>
 <version>2</version>
-<name>clinicalprocess-requestworkflow-schemas</name>
+<name>clinicalprocess-requestworkflow</name>
 <url>http://maven.apache.org</url>
 <properties>
   <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -35,6 +35,34 @@
 		</execution>
 	  </executions>
 	</plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>xml-maven-plugin</artifactId>
+		<version>1.0</version>
+		<inherited>false</inherited>
+        <executions>
+          <execution>
+			<phase>test</phase>
+            <goals>
+              <goal>validate</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <validationSets>
+            <validationSet>
+              <dir>samples</dir>
+
+              <includes>
+                <include>**/*.xml</include>
+              </includes>
+
+            </validationSet>
+          </validationSets>
+        </configuration>
+      </plugin>
+
   </plugins>
 </build>
 </project>
