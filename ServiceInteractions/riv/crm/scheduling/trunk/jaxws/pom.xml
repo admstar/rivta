@@ -253,6 +253,25 @@
                     <extraarg>urn:riv:crm:scheduling:1.1=se.riv.crm.scheduling.v1_1</extraarg>
                   </extraargs>
                 </wsdloption>
+                <wsdloption>
+                  <wsdl>${schema.path}/./interactions/GetSubjectOfCareScheduleInteraction/GetAggregatedSubjectOfCareScheduleInteraction_1.1_RIVTABP21.wsdl</wsdl>
+                  <extraargs>
+                    <extraarg>-p</extraarg>
+                    <extraarg>http://www.w3.org/2005/08/addressing=org.w3c.addressing.v1</extraarg>
+                    <extraarg>-p</extraarg>
+                    <extraarg>urn:riv:crm:scheduling:GetSubjectOfCareScheduleResponder:1=se.riv.crm.scheduling.getsubjectofcarescheduleresponder.v1</extraarg>
+                    <extraarg>-p</extraarg>
+                    <extraarg>urn:riv:crm:scheduling:GetSubjectOfCareScheduleInitiator:1=se.riv.crm.scheduling.getsubjectofcarescheduleinitiator.v1</extraarg>
+                    <extraarg>-p</extraarg>
+                    <extraarg>urn:riv:crm:scheduling:GetAggregatedSubjectOfCareSchedule:1:rivtabp21=se.riv.crm.scheduling.getaggregatedsubjectofcareschedule.v1.rivtabp21</extraarg>
+                    <extraarg>-p</extraarg>
+                    <extraarg>urn:riv:itintegration:registry:1=se.riv.itintegration.registry.v1</extraarg>
+                    <extraarg>-p</extraarg>
+                    <extraarg>urn:riv:crm:scheduling:1=se.riv.crm.scheduling.v1</extraarg>
+                    <extraarg>-p</extraarg>
+                    <extraarg>urn:riv:crm:scheduling:1.1=se.riv.crm.scheduling.v1_1</extraarg>
+                  </extraargs>
+                </wsdloption>
               </wsdlOptions>
             </configuration>
             <goals>
@@ -269,5 +288,45 @@
         </configuration>
       </plugin>
     </plugins>
+
+    <resources>
+      <resource>
+        <directory>${schema.path}</directory>
+      </resource>
+    </resources>
+    
+    <pluginManagement>
+    	<plugins>
+    		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+    		<plugin>
+    			<groupId>org.eclipse.m2e</groupId>
+    			<artifactId>lifecycle-mapping</artifactId>
+    			<version>1.0.0</version>
+    			<configuration>
+    				<lifecycleMappingMetadata>
+    					<pluginExecutions>
+    						<pluginExecution>
+    							<pluginExecutionFilter>
+    								<groupId>org.apache.cxf</groupId>
+    								<artifactId>
+    									cxf-codegen-plugin
+    								</artifactId>
+    								<versionRange>
+    									[2.2.2,)
+    								</versionRange>
+    								<goals>
+    									<goal>wsdl2java</goal>
+    								</goals>
+    							</pluginExecutionFilter>
+    							<action>
+    								<ignore></ignore>
+    							</action>
+    						</pluginExecution>
+    					</pluginExecutions>
+    				</lifecycleMappingMetadata>
+    			</configuration>
+    		</plugin>
+    	</plugins>
+    </pluginManagement>
   </build>
 </project>
