@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<!--
+Build file to create a .zip-file ready for distribution.
+
+To build a distribution package for SLL eRemiss-Pilot use the profile SLL_Pilot
+$ mvn -Psll_pilot clean package
+
+To build a distribution package for the combined eRemiss and status service use the profile Combined
+$ mvn -Pcombined clean package
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<modelVersion>4.0.0</modelVersion>
+<groupId>se.rivta.tools</groupId>
+<artifactId>clinicalprocess-requestworkflow</artifactId>
+<packaging>pom</packaging>
+<version>2</version>
+<name>clinicalprocess-requestworkflow</name>
+<url>http://maven.apache.org</url>
+<properties>
+  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+</properties>
+<modules>
+	<module>../jaxws</module>
+</modules>
+<!--
+<settings>
+  <activeProfiles>
+    <activeProfile>Combined</activeProfile>
+  </activeProfiles>
+</settings>
+-->
+
+<profiles>
+<!-- Profile for assembling a zip file for both eremiss and status -->
+  <profile>
+	<id>combined</id>
+	<properties>
+		<assembly.file>src/main/assembly/assembly_combined.xml</assembly.file>
+	</properties>
+  </profile>
+<!-- Profile for assembling a zip file for the SLL eRemiss pilot project -->
+  <profile>
+	<id>sll_pilot</id>
+	<properties>
+		<assembly.file>src/main/assembly/assembly_sll_pilot.xml</assembly.file>
+	</properties>
+  </profile>
+</profiles>
+
+<build>
+  <plugins>
+	<plugin>
+	  <artifactId>maven-assembly-plugin</artifactId>
+	  <version>2.3</version>
+	  <configuration>
+		<descriptors>
+		  <descriptor>${assembly.file}</descriptor>
+		</descriptors>
+	  </configuration>
+	  <executions>
+		<execution>
+		  <id>make-assembly</id>
+		  <!-- this is used for inheritance merges -->
+		  <phase>package</phase>
+		  <!-- bind to the packaging phase -->
+		  <goals>
+			<goal>single</goal>
+		  </goals>
+		</execution>
+	  </executions>
+	</plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>xml-maven-plugin</artifactId>
+		<version>1.0</version>
+		<inherited>false</inherited>
+        <executions>
+          <execution>
+			<phase>test</phase>
+            <goals>
+              <goal>validate</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <validationSets>
+            <validationSet>
+              <dir>samples</dir>
+
+              <includes>
+                <include>**/*.xml</include>
+              </includes>
+
+            </validationSet>
+          </validationSets>
+        </configuration>
+      </plugin>
+
+  </plugins>
+</build>
+</project>
