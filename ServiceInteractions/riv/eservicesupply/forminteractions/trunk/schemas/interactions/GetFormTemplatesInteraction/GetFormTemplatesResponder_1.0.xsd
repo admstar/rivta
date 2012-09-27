@@ -17,22 +17,22 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:eservicesupply:forminteractions:GetFormTempatesResponder:1' xmlns:core='urn:riv:eservicesupply:forminteractions:1' targetNamespace='urn:riv:eservicesupply:forminteractions:GetFormTempatesResponder:1' elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'>
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:eservicesupply:forminteractions:GetFormTemplatesResponder:1' xmlns:core='urn:riv:eservicesupply:forminteractions:1' targetNamespace='urn:riv:eservicesupply:forminteractions:GetFormTemplatesResponder:1' elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'>
   <xs:import schemaLocation='../../core_components/eservicesupply_forminteractions_1.0.xsd' namespace='urn:riv:eservicesupply:forminteractions:1' />
-  <xs:element name='GetFormTempates' type='tns:GetFormTempatesType' />
-  <xs:element name='GetFormTempatesResponse' type='tns:GetFormTempatesResponseType' />
-  <xs:complexType name='GetFormTempatesType'>
+  <xs:element name='GetFormTemplates' type='tns:GetFormTemplatesType' />
+  <xs:element name='GetFormTemplatesResponse' type='tns:GetFormTemplatesResponseType' />
+  <xs:complexType name='GetFormTemplatesType'>
     <xs:sequence>
             <xs:element ref="core:healthcare_facility_CareUnit" maxOccurs="1">
     	</xs:element>
-            <xs:element ref="core:subjectOfCare" minOccurs="0"></xs:element>
+            <xs:element ref="core:clinicalProcessInterestId" minOccurs="0" maxOccurs="unbounded"></xs:element>
+            <xs:element ref="core:subjectOfCare" minOccurs="1"></xs:element>
             <xs:element ref="core:templateId" minOccurs="0" maxOccurs="unbounded"></xs:element>
-            <xs:element ref="core:healthIssueThreadId" minOccurs="0" maxOccurs="unbounded"></xs:element>
             <xs:any namespace='##other' processContents='lax' minOccurs='0'
     		maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name='GetFormTempatesResponseType'>
+  <xs:complexType name='GetFormTemplatesResponseType'>
     <xs:sequence>
             <xs:element name="formTemplates" type="core:FormsTempateType" minOccurs="0" maxOccurs="unbounded"></xs:element>
             <xs:any namespace='##other' processContents='lax' minOccurs='0'

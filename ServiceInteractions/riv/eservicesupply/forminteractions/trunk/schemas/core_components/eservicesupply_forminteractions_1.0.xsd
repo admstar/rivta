@@ -49,7 +49,7 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
         <xs:restriction base="xs:string"></xs:restriction>
   </xs:simpleType>
 
-  <xs:simpleType name="HealthCaseType">
+  <xs:simpleType name="clinicalProcessInterestIdType">
         <xs:annotation>
         	<xs:documentation>HSA-id för framställarens enhet/process + unik identifierare.Globalt/nationellt hälsoärende ID. Hälsoärende är ett begrepp för det som håller samman information i en kärnprocess för en vård- och omsorgstagare, tvärs över organisatoriska enhetsgränser.</xs:documentation>
         </xs:annotation>
@@ -106,7 +106,7 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
     		<xs:documentation>Hsa-Id för att identifiera mottagande system.</xs:documentation>
     	</xs:annotation></xs:element>
 
-    <xs:element name="healthIssueThreadId" type="tns:HealthCaseType">
+    <xs:element name="clinicalProcessInterestId" type="tns:clinicalProcessInterestIdType">
     	<xs:annotation>
     		<xs:documentation>Hsa-id för framställarens enhet/process + unik identifierare.Globalt/nationellt hälsoärende ID. Hälsoärende är ett begrepp för det som håller samman information i en kärnprocess för en vård- och omsorgstagare, tvärs över organisatoriska enhetsgränser.</xs:documentation>
     	</xs:annotation></xs:element>
@@ -118,7 +118,23 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
 
     <xs:complexType name="FormType">
     	<xs:sequence>
-    		<xs:element ref="tns:healthcare_CareGiver" minOccurs="0">
+            <xs:element ref="tns:createdDateTime" maxOccurs="1"></xs:element>
+            <xs:element ref="tns:expireDate" minOccurs="0"></xs:element>
+            <xs:element ref="tns:formStatus" maxOccurs="1"></xs:element>
+            <xs:element name="formTemplate" type="tns:FormTemplateType" maxOccurs="1">
+    		</xs:element>
+            <xs:element ref="tns:formId" minOccurs="1">
+    			<xs:annotation>
+    				<xs:documentation>
+    					Formulärets unika ID (källsystemets unika
+    					id/GUID). T.ex. MHV1 har FormID =
+    					3B2DF0C0-BC22-11DE-823D-00155D316606
+
+    					Måste genereras slumpmässigt för att vara unikt.
+    				</xs:documentation>
+    			</xs:annotation>
+    		</xs:element>
+            <xs:element ref="tns:healthcare_CareGiver" minOccurs="0">
     			<xs:annotation>
     				<xs:documentation>
     					Ansvarig vårdgivare (huvudman). T.ex. Landsting
@@ -161,7 +177,7 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
-    		<xs:element ref="tns:healthIssueThreadId" minOccurs="0">
+    		<xs:element ref="tns:clinicalProcessInterestId" minOccurs="0">
     			<xs:annotation>
     				<xs:documentation>
     					Hsa-id för framställarens enhet/process + unik
@@ -173,32 +189,15 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
-            <xs:element ref="tns:formStatus" maxOccurs="1"></xs:element>
-            <xs:element ref="tns:formId" minOccurs="1">
-    			<xs:annotation>
-    				<xs:documentation>
-    					Formulärets unika ID (källsystemets unika
-    					id/GUID). T.ex. MHV1 har FormID =
-    					3B2DF0C0-BC22-11DE-823D-00155D316606
-
-    					Måste genereras slumpmässigt för att vara unikt.
-    				</xs:documentation>
-    			</xs:annotation>
-    		</xs:element>
-    		<xs:element ref="tns:subjectOfCare" maxOccurs="1">
+            <xs:element ref="tns:keepUntil" maxOccurs="1"></xs:element>
+            <xs:element ref="tns:lastSavedDate" minOccurs="0"></xs:element>
+            <xs:element ref="tns:subjectOfCare" maxOccurs="1">
     			<xs:annotation>
     				<xs:documentation>
     					Patienten formuläret avser. Personnummer format
     					yyyymmddnnnn. T.ex. 191212121212.
     				</xs:documentation>
     			</xs:annotation>
-    		</xs:element>
-    		<xs:element ref="tns:expireDate" minOccurs="0"></xs:element>
-    		<xs:element ref="tns:createdDateTime" maxOccurs="1"></xs:element>
-    		<xs:element ref="tns:lastSavedDate" minOccurs="0"></xs:element>
-    		<xs:element ref="tns:keepUntil" maxOccurs="1"></xs:element>
-    		<xs:element name="formTemplateId"
-    			type="tns:FormTemplateType" maxOccurs="1">
     		</xs:element>
     		<xs:any namespace='##other' processContents='lax'
     			minOccurs='0' maxOccurs='unbounded' />
@@ -215,16 +214,53 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
-    		<xs:element ref="tns:templateId" maxOccurs="1">
+            <xs:element minOccurs="0" ref="tns:description">
     			<xs:annotation>
     				<xs:documentation>
-    					Typ av formulär. Kodverk för standardiserade id
-    					för formulärtyper. T.ex. Mödrahälsovårdsjournal
-    					1 - MHV1. Kodverk!
+    					Formulärets beskrivning och instruktioner. T.ex.
+    					Formuläret skall besvaras innan du besöker
+    					mottageningen.
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
-    		<xs:element maxOccurs="1" ref="tns:mandatory">
+            <xs:element maxOccurs="1" ref="tns:formName">
+    			<xs:annotation>
+    				<xs:documentation>
+    					Formulärets namn. T.ex. Hälsodeklaration
+    					Mödravård
+    				</xs:documentation>
+    			</xs:annotation>
+    		</xs:element>
+            <xs:element minOccurs="0" ref="tns:informationURL">
+    			<xs:annotation>
+    				<xs:documentation>
+    					URL till ytterligare/relevant information. Länk
+    					till publik information utan krav på
+    					autentisering.
+    				</xs:documentation>
+    			</xs:annotation>
+    		</xs:element>
+            <xs:element maxOccurs="1" ref="tns:language">
+    			<xs:annotation>
+    				<xs:documentation>
+    					Kodverk för språk Innehåller språkkoder som
+    					utgår från SS-ISO 639-1:2005.
+    				</xs:documentation>
+    			</xs:annotation>
+    		</xs:element>
+            <xs:element ref="tns:minNumberOfBlocks" maxOccurs="1"></xs:element>
+            <xs:element ref="tns:maxNumberOfBlocks" maxOccurs="1"></xs:element>
+            <xs:element minOccurs="1" ref="tns:maxNumberOfQuestion" maxOccurs="1">
+    			<xs:annotation>
+    				<xs:documentation>
+    					Beskriver hur många frågor formuläret maximalt
+    					kan innehåller. T.ex. 10
+    				</xs:documentation>
+    			</xs:annotation>
+    		</xs:element>
+            <xs:element minOccurs="1" ref="tns:minNumberOfQuestion" maxOccurs="1">
+    		</xs:element>
+            <xs:element maxOccurs="1" ref="tns:mandatory">
     			<xs:annotation>
     				<xs:documentation>
     					Indikerar om formuläret är obligatoriskt att
@@ -235,41 +271,18 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
-    		<xs:element maxOccurs="1" ref="tns:language">
+            <xs:element name="questionBlockId" type="tns:QuestionBlockType" minOccurs="0" maxOccurs="unbounded">
+    		</xs:element>
+            <xs:element ref="tns:templateId" maxOccurs="1">
     			<xs:annotation>
     				<xs:documentation>
-    					Kodverk för språk Innehåller språkkoder som
-    					utgår från SS-ISO 639-1:2005.
+    					Typ av formulär. Kodverk för standardiserade id
+    					för formulärtyper. T.ex. Mödrahälsovårdsjournal
+    					1 - MHV1. Kodverk!
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
-    		<xs:element maxOccurs="1" ref="tns:formName">
-    			<xs:annotation>
-    				<xs:documentation>
-    					Formulärets namn. T.ex. Hälsodeklaration
-    					Mödravård
-    				</xs:documentation>
-    			</xs:annotation>
-    		</xs:element>
-    		<xs:element minOccurs="0" ref="tns:description">
-    			<xs:annotation>
-    				<xs:documentation>
-    					Formulärets beskrivning och instruktioner. T.ex.
-    					Formuläret skall besvaras innan du besöker
-    					mottageningen.
-    				</xs:documentation>
-    			</xs:annotation>
-    		</xs:element>
-    		<xs:element minOccurs="0" ref="tns:informationURL">
-    			<xs:annotation>
-    				<xs:documentation>
-    					URL till ytterligare/relevant information. Länk
-    					till publik information utan krav på
-    					autentisering.
-    				</xs:documentation>
-    			</xs:annotation>
-    		</xs:element>
-    		<xs:element minOccurs="1" maxOccurs="1" ref="tns:term">
+            <xs:element minOccurs="1" maxOccurs="1" ref="tns:term">
     			<xs:annotation>
     				<xs:documentation>
     					Villkor kopplade till formuläret. T.ex.
@@ -277,20 +290,6 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
     					godkänna innan formuläret kan besvaras.
     				</xs:documentation>
     			</xs:annotation>
-    		</xs:element>
-    		<xs:element minOccurs="1" ref="tns:maxNumberOfQuestion">
-    			<xs:annotation>
-    				<xs:documentation>
-    					Beskriver hur många frågor formuläret maximalt
-    					kan innehåller. T.ex. 10
-    				</xs:documentation>
-    			</xs:annotation>
-    		</xs:element>
-    		<xs:element minOccurs="1" ref="tns:minNumberOfQuestion">
-    		</xs:element>
-    		<xs:element name="questionBlockId"
-    			type="tns:QuestionBlockType" minOccurs="0"
-    			maxOccurs="unbounded">
     		</xs:element>
     		<xs:any namespace='##other' processContents='lax'
     			minOccurs='0' maxOccurs='unbounded' />
@@ -328,15 +327,7 @@ KV Formulärkategori.</xs:documentation>
         			</xs:documentation>
         		</xs:annotation>
         	</xs:element>
-        	<xs:element name="subject" type="xs:string" minOccurs="0">
-        		<xs:annotation>
-        			<xs:documentation>
-        				Blockets rubrik. T.ex Medicin.
-        			</xs:documentation>
-        		</xs:annotation>
-        	</xs:element>
-        	<xs:element name="description" type="xs:string"
-        		minOccurs="0">
+            <xs:element name="description" type="xs:string" minOccurs="0">
         		<xs:annotation>
         			<xs:documentation>
         				Beskrivande text. Stöder kodverk ”DocBook” Se
@@ -345,8 +336,7 @@ KV Formulärkategori.</xs:documentation>
         			</xs:documentation>
         		</xs:annotation>
         	</xs:element>
-        	<xs:element name="lastBlock" type="xs:boolean"
-        		maxOccurs="1">
+            <xs:element name="lastBlock" type="xs:boolean" maxOccurs="1">
         		<xs:annotation>
         			<xs:documentation>
         				Indikerar om ytterligare frågeblock finns. Detta
@@ -358,16 +348,21 @@ KV Formulärkategori.</xs:documentation>
         			</xs:documentation>
         		</xs:annotation>
         	</xs:element>
-        	<xs:element name="numberOfQuestions" type="xs:int"
-        		maxOccurs="1">
+            <xs:element name="numberOfQuestions" type="xs:int" maxOccurs="1">
         		<xs:annotation>
         			<xs:documentation>
         				Antal frågor tillhörande blocket. T.ex. 10
         			</xs:documentation>
         		</xs:annotation>
         	</xs:element>
-        	<xs:element name="questionId" type="tns:QuestionType"
-        		maxOccurs="unbounded">
+            <xs:element name="question" type="tns:QuestionType" maxOccurs="unbounded">
+        	</xs:element>
+            <xs:element name="subject" type="xs:string" minOccurs="0">
+        		<xs:annotation>
+        			<xs:documentation>
+        				Blockets rubrik. T.ex Medicin.
+        			</xs:documentation>
+        		</xs:annotation>
         	</xs:element>
         	<xs:any namespace='##other' processContents='lax'
         		minOccurs='0' maxOccurs='unbounded' />
@@ -379,24 +374,15 @@ KV Formulärkategori.</xs:documentation>
         	<xs:documentation>Objektet innehåller en fråga samt metadata .  Exempel:”Vilken är din favoritfärg?”</xs:documentation>
         </xs:annotation>
         <xs:sequence>
-        	<xs:element name="ordinalNumber" type="xs:int"
-        		minOccurs="1">
-        		<xs:annotation>
-        			<xs:documentation>
-        				Frågans nummer i nummer serie. Används för att
-        				indikera hur långt användaren har kommit i
-        				formuläret. T.ex Fråga nummer 1 (av 10).
-        			</xs:documentation>
-        		</xs:annotation>
+        	<xs:element name="answer" type="tns:AnswerType"
+        		minOccurs="0" maxOccurs="unbounded">
         	</xs:element>
-        	<xs:element name="subject" type="xs:string" minOccurs="1">
-        		<xs:annotation>
-        			<xs:documentation>
-        				Frågans rubrik. T.ex Ange din blodgrupp.
-        			</xs:documentation>
-        		</xs:annotation>
+        	<xs:element name="answerAlternative"
+        		type="tns:AnswerAlternativeType" minOccurs="0"
+        		maxOccurs="unbounded">
         	</xs:element>
-        	<xs:element name="description" type="xs:string"
+            <xs:element name="questionSuperior" type="tns:QuestionSuperiorType" minOccurs="0"></xs:element>
+            <xs:element name="description" type="xs:string"
         		minOccurs="0">
         		<xs:annotation>
         			<xs:documentation>
@@ -405,24 +391,8 @@ KV Formulärkategori.</xs:documentation>
         			</xs:documentation>
         		</xs:annotation>
         	</xs:element>
-        	<xs:element minOccurs="1" ref="tns:questionId">
-        		<xs:annotation>
-        			<xs:documentation>
-        				Frågans unika id. (Producentens unika id)
-        			</xs:documentation>
-        		</xs:annotation>
-        	</xs:element>
-        	<xs:element name="questionsType" type="tns:inputType"
-        		minOccurs="1">
-        		<xs:annotation>
-        			<xs:documentation>
-        				Beskriver frågans inmatningstyp. Kodverk
-        				inmatningstyp T.ex. radio(enkelvärde),
-        				checkbox(multivärde) eller fritext.
-        			</xs:documentation>
-        		</xs:annotation>
-        	</xs:element>
-        	<xs:element name="Madatory" type="xs:boolean"
+        	<xs:element ref="tns:informationURL" minOccurs="0"></xs:element>
+        	<xs:element name="Mandatory" type="xs:boolean"
         		minOccurs="1">
         		<xs:annotation>
         			<xs:documentation>
@@ -449,12 +419,39 @@ KV Formulärkategori.</xs:documentation>
         			</xs:documentation>
         		</xs:annotation>
         	</xs:element>
-        	<xs:element name="answerAlternative"
-        		type="tns:AnswerAlternativeType" minOccurs="0"
-        		maxOccurs="unbounded">
+        	<xs:element name="ordinalNumber" type="xs:int"
+        		minOccurs="1">
+        		<xs:annotation>
+        			<xs:documentation>
+        				Frågans nummer i nummer serie. Används för att
+        				indikera hur långt användaren har kommit i
+        				formuläret. T.ex Fråga nummer 1 (av 10).
+        			</xs:documentation>
+        		</xs:annotation>
         	</xs:element>
-        	<xs:element name="answer" type="tns:AnswerType"
-        		minOccurs="0" maxOccurs="unbounded">
+        	<xs:element minOccurs="1" ref="tns:questionId">
+        		<xs:annotation>
+        			<xs:documentation>
+        				Frågans unika id. (Producentens unika id)
+        			</xs:documentation>
+        		</xs:annotation>
+        	</xs:element>
+        	<xs:element name="input" type="tns:inputType"
+        		minOccurs="1">
+        		<xs:annotation>
+        			<xs:documentation>
+        				Beskriver frågans inmatningstyp. Kodverk
+        				inmatningstyp T.ex. radio(enkelvärde),
+        				checkbox(multivärde) eller fritext.
+        			</xs:documentation>
+        		</xs:annotation>
+        	</xs:element>
+        	<xs:element name="subject" type="xs:string" minOccurs="1">
+        		<xs:annotation>
+        			<xs:documentation>
+        				Frågans rubrik. T.ex Ange din blodgrupp.
+        			</xs:documentation>
+        		</xs:annotation>
         	</xs:element>
         	<xs:any namespace='##other' processContents='lax'
         		minOccurs='0' maxOccurs='unbounded' />
@@ -472,14 +469,76 @@ KV Inmatnings typ.</xs:documentation>
     <xs:complexType name="AnswerAlternativeType">
     	<xs:annotation>
     		<xs:documentation>
-    			Objektet innehåller de svarsalternativen som skall
-    			presenteras för användaren. För varje svarsalternativ
-    			finns ett objekt. Nedanstående exempel kräver tre
-    			objekt.
-    		</xs:documentation>
+    			Objektet innehåller svarsalternativen samt formatering.  </xs:documentation>
     	</xs:annotation>
     	<xs:sequence>
-    		<xs:element name="inputUnit" type="xs:string"
+            <xs:element name="alternativeValue" type="xs:string" maxOccurs="1" minOccurs="0">
+    			<xs:annotation>
+    				<xs:documentation>
+    					Valbart svarsalternativ.
+    				</xs:documentation>
+    			</xs:annotation>
+    		</xs:element>
+            <xs:element maxOccurs="1" ref="tns:answerAlternativID">
+    			<xs:annotation>
+    				<xs:documentation>
+    					Svarsalternativets id.
+    				</xs:documentation>
+    			</xs:annotation>
+    		</xs:element>
+            <xs:element name="answerMax" type="xs:int" minOccurs="0">
+    			<xs:annotation>
+    				<xs:documentation>
+    					Specificerar maxvärde för inmatning. (Gäller
+    					typ: number, date) T.ex: Ett värde får inte
+    					överskrida 10. Blodtryck, rimlighetsparameter.
+    				</xs:documentation>
+    			</xs:annotation>
+    		</xs:element>
+            <xs:element name="answerMaxLenght" type="xs:int" minOccurs="0">
+    			<xs:annotation>
+    				<xs:documentation>
+    					Specificerar maxvärdelängd för inmatning.
+    					(Gäller typ: number) T.ex: En inmatning (text)
+    					får inte vara större än 100 tecken.
+    				</xs:documentation>
+    			</xs:annotation>
+    		</xs:element>
+            <xs:element name="answerMin" type="xs:int" minOccurs="0">
+    			<xs:annotation>
+    				<xs:documentation>
+    					Specificerar minvärde för inmatning. (Gäller
+    					typ: number, date)
+    				</xs:documentation>
+    			</xs:annotation>
+    		</xs:element>
+            <xs:element name="answerPattern" type="xs:string" minOccurs="0">
+    			<xs:annotation>
+    				<xs:documentation>
+    					Inmatningsvalidering (Regular expresson). T.ex:
+    					pattern="[A-z]{3}" tillåter endast 3 teckan A-z.
+    				</xs:documentation>
+    			</xs:annotation>
+    		</xs:element>
+            <xs:element name="answerStep" type="xs:int" minOccurs="0">
+    			<xs:annotation>
+    				<xs:documentation>
+    					Specificerar giltiga intervall för inmatning.
+    					(Gäller typ: number, range, date, datetime,
+    					datetime-local, month, time och week) T.ex:
+    					Skalningsfaktor för en ”slide” kontroll. Ange
+    					värde för temperatur 35-40.
+    				</xs:documentation>
+    			</xs:annotation>
+    		</xs:element>
+            <xs:element name="help" type="xs:string" minOccurs="0">
+    			<xs:annotation>
+    				<xs:documentation>
+    					Hjälptext till svarsalternativet. (placeholder)
+    				</xs:documentation>
+    			</xs:annotation>
+    		</xs:element>
+            <xs:element name="inputUnit" type="xs:string"
     			minOccurs="0">
     			<xs:annotation>
     				<xs:documentation>
@@ -489,75 +548,6 @@ KV Inmatnings typ.</xs:documentation>
 
     					Måttenheter enligt SI-systemet. SWEDAC (STAFS
     					2009:26)
-    				</xs:documentation>
-    			</xs:annotation>
-    		</xs:element>
-    		<xs:element name="alternativeValue" type="xs:string"
-    			maxOccurs="1" minOccurs="0">
-    			<xs:annotation>
-    				<xs:documentation>
-    					Valbart svarsalternativ.
-    				</xs:documentation>
-    			</xs:annotation>
-    		</xs:element>
-    		<xs:element name="help" type="xs:string" minOccurs="0">
-    			<xs:annotation>
-    				<xs:documentation>
-    					Hjälptext till svarsalternativet. (placeholder)
-    				</xs:documentation>
-    			</xs:annotation>
-    		</xs:element>
-    		<xs:element maxOccurs="1" ref="tns:answerAlternativID">
-    			<xs:annotation>
-    				<xs:documentation>
-    					Svarsalternativets id.
-    				</xs:documentation>
-    			</xs:annotation>
-    		</xs:element>
-    		<xs:element name="answerMax" type="xs:int" minOccurs="0">
-    			<xs:annotation>
-    				<xs:documentation>
-    					Specificerar maxvärde för inmatning. (Gäller
-    					typ: number, date) T.ex: Ett värde får inte
-    					överskrida 10. Blodtryck, rimlighetsparameter.
-    				</xs:documentation>
-    			</xs:annotation>
-    		</xs:element>
-    		<xs:element name="answerMin" type="xs:int" minOccurs="0">
-    			<xs:annotation>
-    				<xs:documentation>
-    					Specificerar minvärde för inmatning. (Gäller
-    					typ: number, date)
-    				</xs:documentation>
-    			</xs:annotation>
-    		</xs:element>
-    		<xs:element name="answerMaxLenght" type="xs:int"
-    			minOccurs="0">
-    			<xs:annotation>
-    				<xs:documentation>
-    					Specificerar maxvärdelängd för inmatning.
-    					(Gäller typ: number) T.ex: En inmatning (text)
-    					får inte vara större än 100 tecken.
-    				</xs:documentation>
-    			</xs:annotation>
-    		</xs:element>
-    		<xs:element name="answerPattern" type="xs:string"
-    			minOccurs="0">
-    			<xs:annotation>
-    				<xs:documentation>
-    					Inmatningsvalidering (Regular expresson). T.ex:
-    					pattern="[A-z]{3}" tillåter endast 3 teckan A-z.
-    				</xs:documentation>
-    			</xs:annotation>
-    		</xs:element>
-    		<xs:element name="answerStep" type="xs:int" minOccurs="0">
-    			<xs:annotation>
-    				<xs:documentation>
-    					Specificerar giltiga intervall för inmatning.
-    					(Gäller typ: number, range, date, datetime,
-    					datetime-local, month, time och week) T.ex:
-    					Skalningsfaktor för en ”slide” kontroll. Ange
-    					värde för temperatur 35-40.
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
@@ -575,16 +565,15 @@ KV Inmatnings typ.</xs:documentation>
     	</xs:annotation>
     	<xs:sequence>
             <xs:element ref="tns:answerAlternativID" minOccurs="1"></xs:element>
-            <xs:element name="value" type="xs:anySimpleType"
+            <xs:element name="answerStatus" type="tns:AnswerStatusType" minOccurs="0">
+    		</xs:element>
+            <xs:element name="value" type="xs:string"
     			maxOccurs="1">
     			<xs:annotation>
     				<xs:documentation>
     					Patientens/användarens svar.
     				</xs:documentation>
     			</xs:annotation>
-    		</xs:element>
-    		<xs:element name="Status" type="tns:AnswerStatusType"
-    			minOccurs="0">
     		</xs:element>
     		<xs:any namespace='##other' processContents='lax'
     			minOccurs='0' maxOccurs='unbounded' />
@@ -593,19 +582,24 @@ KV Inmatnings typ.</xs:documentation>
 
     <xs:complexType name="FormsType">
     	<xs:sequence>
+    		<xs:element ref="tns:createdDateTime" minOccurs="1"></xs:element>
+    		<xs:element ref="tns:expireDate" minOccurs="0"></xs:element>
+    		<xs:element ref="tns:formId" maxOccurs="1"></xs:element>
+    		<xs:element ref="tns:formStatus" maxOccurs="1"></xs:element>
     		<xs:element ref="tns:healthcare_CareGiver" minOccurs="0"></xs:element>
     		<xs:element ref="tns:healthcare_MedUnit" minOccurs="0"></xs:element>
-    		<xs:element ref="tns:healthcare_facility_CareUnit" minOccurs="1"></xs:element>
-    		<xs:element ref="tns:healthcare_facility_CareUnitName" minOccurs="1"></xs:element>
+    		<xs:element ref="tns:healthcare_facility_CareUnit"
+    			minOccurs="1">
+    		</xs:element>
+    		<xs:element ref="tns:healthcare_facility_CareUnitName"
+    			minOccurs="1">
+    		</xs:element>
     		<xs:element ref="tns:healthcare_systemID" minOccurs="0"></xs:element>
-    		<xs:element ref="tns:healthIssueThreadId" minOccurs="0"></xs:element>
-    		<xs:element ref="tns:formStatus" maxOccurs="1"></xs:element>
-    		<xs:element ref="tns:formId" maxOccurs="1"></xs:element>
-    		<xs:element ref="tns:subjectOfCare" minOccurs="1"></xs:element>
-    		<xs:element ref="tns:expireDate" minOccurs="0"></xs:element>
-    		<xs:element ref="tns:createdDateTime" minOccurs="1"></xs:element>
-    		<xs:element ref="tns:lastSavedDate" minOccurs="0"></xs:element>
+    		<xs:element ref="tns:clinicalProcessInterestId" minOccurs="0"></xs:element>
     		<xs:element ref="tns:keepUntil" minOccurs="1"></xs:element>
+    		<xs:element ref="tns:lastSavedDate" minOccurs="0"></xs:element>
+    		<xs:element ref="tns:subjectOfCare" minOccurs="1"></xs:element>
+    		<xs:element name="formsTemplate" type="tns:FormsTempateType" maxOccurs="1"></xs:element>
     	</xs:sequence>
     </xs:complexType>
     
@@ -651,18 +645,21 @@ KV Inmatnings typ.</xs:documentation>
 
     <xs:complexType name="QuestionBlockAnswersType">
     	<xs:sequence>
-    		<xs:element ref="tns:formId" minOccurs="1"></xs:element>
     		<xs:element ref="tns:blockID" minOccurs="1"></xs:element>
-    		<xs:element name="questionAnswer" type="tns:QuestionAnswerType" maxOccurs="unbounded"></xs:element>
-    		<xs:any namespace='##other' processContents='lax' minOccurs='0'
-    		maxOccurs='unbounded' />
+    		<xs:element ref="tns:formId" minOccurs="1"></xs:element>
+            <xs:element ref="tns:subjectOfCare" minOccurs="1" maxOccurs="1"></xs:element>
+            <xs:element name="questionAnswer"
+    			type="tns:QuestionAnswerType" maxOccurs="unbounded">
+    		</xs:element>
+    		<xs:any namespace='##other' processContents='lax'
+    			minOccurs='0' maxOccurs='unbounded' />
     	</xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="QuestionAnswerType">
     	<xs:sequence>
+            <xs:element name="answer" type="tns:AnswerType" minOccurs="1" maxOccurs="1"></xs:element>
             <xs:element ref="tns:questionId" minOccurs="1"></xs:element>
-    		<xs:element name="answer" type="tns:AnswerType" minOccurs="1" maxOccurs="1"></xs:element>
     		<xs:any namespace='##other' processContents='lax' minOccurs='0'
     		maxOccurs='unbounded' />
     	</xs:sequence>
@@ -681,13 +678,13 @@ KV Inmatnings typ.</xs:documentation>
         	<xs:documentation>Objekt innehåller statuskod och meddelande.  </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-    		<xs:element name="errorCode" type="tns:ResultCodeEnumType">
+    		<xs:element name="resultCodeEnum" type="tns:ResultCodeEnumType">
     			<xs:annotation>
     				<xs:documentation>Signalerar om frågan är ifylld på ett felaktigt sätt. Felkod.
 OK - Transaktion utfördINFO - Transaktion utförd med kommentar.ERROR - Transaktion ej genomförd 				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
-    		<xs:element name="errorText" type="xs:string">
+    		<xs:element name="resultCodeText" type="xs:string">
     			<xs:annotation>
     				<xs:documentation>Felmeddelande, förklarande text. Vid INFO eller ERROR.T.ex. INFO – Medtag legitimation.</xs:documentation>
     			</xs:annotation></xs:element>
@@ -727,25 +724,27 @@ KV Form Status
     		<xs:element ref="tns:healthcare_facility_CareUnit" minOccurs="1"></xs:element>
     		<xs:element ref="tns:healthcare_MedUnit" minOccurs="0"></xs:element>
     		<xs:element ref="tns:healthcare_systemID" minOccurs="0"></xs:element>
-    		<xs:element ref="tns:subjectOfCare" minOccurs="1"></xs:element>
+            <xs:element ref="tns:clinicalProcessInterestId" minOccurs="0"></xs:element>
+            <xs:element ref="tns:subjectOfCare" minOccurs="1"></xs:element>
     		<xs:element ref="tns:templateId" minOccurs="1"></xs:element>
-    		<xs:element ref="tns:healthIssueThreadId" minOccurs="0"></xs:element>
     	</xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="FormsTempateType">
     	<xs:sequence>
     		<xs:element ref="tns:category" minOccurs="1"></xs:element>
-    		<xs:element ref="tns:templateId" minOccurs="1"></xs:element>
-    		<xs:element ref="tns:mandatory" minOccurs="1"></xs:element>
-    		<xs:element ref="tns:language" minOccurs="1"></xs:element>
-    		<xs:element ref="tns:formName" minOccurs="1"></xs:element>
-    		<xs:element ref="tns:description" minOccurs="1"></xs:element>
-    		<xs:element ref="tns:informationURL" minOccurs="1"></xs:element>
+            <xs:element ref="tns:description" minOccurs="1"></xs:element>
+            <xs:element ref="tns:formName" minOccurs="1"></xs:element>
+            <xs:element ref="tns:informationURL" minOccurs="1"></xs:element>
+            <xs:element ref="tns:language" minOccurs="1"></xs:element>
+            <xs:element ref="tns:maxNumberOfBlocks" minOccurs="1"></xs:element>
+            <xs:element ref="tns:minNumberOfBlocks" minOccurs="1"></xs:element>
+            <xs:element ref="tns:maxNumberOfQuestion" minOccurs="1"></xs:element>
+            <xs:element ref="tns:minNumberOfQuestion" minOccurs="1"></xs:element>
+            <xs:element ref="tns:mandatory" minOccurs="1"></xs:element>
+            <xs:element ref="tns:templateId" minOccurs="1"></xs:element>
     		<xs:element ref="tns:term" minOccurs="1"></xs:element>
-    		<xs:element ref="tns:maxNumberOfQuestion" minOccurs="1"></xs:element>
-    		<xs:element ref="tns:minNumberOfQuestion" minOccurs="1"></xs:element>
-    		    		<xs:any namespace='##other' processContents='lax'
+    		<xs:any namespace='##other' processContents='lax'
     			minOccurs='0' maxOccurs='unbounded' />
     	</xs:sequence>
     </xs:complexType>
@@ -790,4 +789,39 @@ Kodverk för språk Innehåller språkkoder som utgår från SS-ISO 639-1:2005.
     	<xs:annotation>
     		<xs:documentation>Beskriver hur många frågor formuläret som minst kan innehåller.</xs:documentation>
     	</xs:annotation></xs:element>
+
+    <xs:element name="maxNumberOfBlocks" type="xs:int">
+    	<xs:annotation>
+    		<xs:documentation>Beskriver hur många ”block” formuläret maximalt kan innehåller.</xs:documentation>
+    	</xs:annotation></xs:element>
+
+    <xs:element name="minNumberOfBlocks" type="xs:int">
+    	<xs:annotation>
+    		<xs:documentation>Beskriver hur många ”block” formuläret minst kan innehåll.</xs:documentation>
+    	</xs:annotation></xs:element>
+
+    <xs:element name="superiorQuestionID" type="xs:string">
+    	<xs:annotation>
+    		<xs:documentation>Indikerar att frågan är beroende av överordnad fråga. Fältet innehåller ”QuestionID”. Detta innebär att fältet endast skall valideras om överordnad fråga är besvarad. </xs:documentation>
+    	</xs:annotation></xs:element>
+
+    <xs:element name="SuperiorAnswerAlternativeID" type="xs:string">
+    	<xs:annotation>
+    		<xs:documentation>Indikerar att frågan är beroende av ett specifikt svarsalternativ.T.ex. Frågan skall endast visas om ett specifikt svarsalternativ är markerat/valt.</xs:documentation>
+    	</xs:annotation></xs:element>
+
+    <xs:complexType name="QuestionSuperiorType">
+    	<xs:annotation>
+    		<xs:documentation>
+    			Objekt för att indikera beroenden till överordnade
+    			frågor finns.
+    		</xs:documentation>
+    	</xs:annotation>
+    	<xs:sequence>
+    		<xs:element ref="tns:SuperiorAnswerAlternativeID" minOccurs="1" maxOccurs="1"></xs:element>
+    		<xs:element ref="tns:superiorQuestionID" maxOccurs="1" minOccurs="1"></xs:element>
+    		<xs:any namespace='##other' processContents='lax'
+    			minOccurs='0' maxOccurs='unbounded' />
+    	</xs:sequence>
+    </xs:complexType>
 </xs:schema>
