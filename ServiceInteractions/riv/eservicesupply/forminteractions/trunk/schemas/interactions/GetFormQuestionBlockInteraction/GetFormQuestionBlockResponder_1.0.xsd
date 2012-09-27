@@ -23,19 +23,27 @@
   <xs:element name='GetFormQuestionBlockResponse' type='tns:GetFormQuestionBlockResponseType' />
   <xs:complexType name='GetFormQuestionBlockType'>
     <xs:sequence>
-            <xs:element ref="core:formId" minOccurs="1"></xs:element>
             <xs:element ref="core:blockID" minOccurs="1"></xs:element>
             <xs:element name="Direction" minOccurs="1">
-                <xs:annotation>
-                	<xs:documentation>Begäran-Direction ”BACK” är inte tillåtet om objektet ”BlockNumber” är 1.-Direction ”FORWARD” är inte tillåtet om föregående objektets LastBlock är sant (true).Vid ovanstående fel genereras ett exception.</xs:documentation>
-                </xs:annotation>
-                <xs:simpleType>
-            		<xs:restriction base="xs:string">
-            			<xs:enumeration value="FORWARD"></xs:enumeration>
-            			<xs:enumeration value="BACK"></xs:enumeration>
-            		</xs:restriction>
-            	</xs:simpleType>
-            </xs:element>
+    		<xs:annotation>
+    			<xs:documentation>
+    				Begäran -Direction ”BACK” är inte tillåtet om
+    				objektet ”BlockNumber” är 1. -Direction ”FORWARD” är
+    				inte tillåtet om föregående objektets LastBlock är
+    				sant (true). Vid ovanstående fel genereras ett
+    				exception.
+
+    			</xs:documentation>
+    		</xs:annotation>
+    		<xs:simpleType>
+    			<xs:restriction base="xs:string">
+    				<xs:enumeration value="FORWARD"></xs:enumeration>
+    				<xs:enumeration value="BACK"></xs:enumeration>
+    			</xs:restriction>
+    		</xs:simpleType>
+    	</xs:element>
+            <xs:element ref="core:formId" minOccurs="1"></xs:element>
+            <xs:element ref="core:subjectOfCare" maxOccurs="1" minOccurs="1"></xs:element>
             <xs:any namespace='##other' processContents='lax' minOccurs='0'
     		maxOccurs='unbounded' />
     </xs:sequence>
