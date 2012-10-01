@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="HamtaAktuellaOrdinationerInteraction"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:spdr="urn:riv:se.apotekensservice:nod:HamtaAktuellaOrdinationerResponder:2"
+                  xmlns="urn:riv:se.apotekensservice:nod:HamtaAktuellaOrdinationer:2:rivtabp20"
+                  targetNamespace="urn:riv:se.apotekensservice:nod:HamtaAktuellaOrdinationer:2:rivtabp20">
+
+    <xs:annotation>
+        <xs:documentation>
+            Beskrivning: Tjänstekontraktet som avser att konkretisera tillämpningen av RIV.
+            Revisioner: 2012-09-25 Version 2.0
+            Tjänstedomän: se.apotekensservice:nod.
+            Tjänsteinteraktionens namn: HamtaAktuellaOrdinationer.
+            Tjänsteinteraktionstyp: Fråga-Svar.
+            RIV Tekniska Anvisning: Basic Profile 2.0
+        </xs:documentation>
+    </xs:annotation>
+
+    <!-- Egendefinierade typer -->
+    <wsdl:types>
+        <xs:schema>
+            <xs:import namespace="urn:riv:se.apotekensservice:nod:HamtaAktuellaOrdinationerResponder:2" schemaLocation="HamtaAktuellaOrdinationerResponder_2.0.xsd"/>
+        </xs:schema>
+    </wsdl:types>
+
+    <!-- Meddelanden -->
+    <wsdl:message name="HamtaAktuellaOrdinationerRequest">
+        <wsdl:part name="parameters" element="spdr:HamtaAktuellaOrdinationer"/>
+    </wsdl:message>
+    <wsdl:message name="HamtaAktuellaOrdinationerResponse">
+        <wsdl:part name="parameters" element="spdr:HamtaAktuellaOrdinationerResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ApplicationException">
+        <wsdl:part name="parameters" element="spdr:ApplicationException"/>
+    </wsdl:message>
+    <wsdl:message name="SystemException">
+        <wsdl:part name="parameters" element="spdr:SystemException"/>
+    </wsdl:message>
+
+    <!-- Port typer -->
+    <wsdl:portType name="HamtaAktuellaOrdinationerResponderInterface">
+        <wsdl:operation name="HamtaAktuellaOrdinationer">
+            <wsdl:input message="HamtaAktuellaOrdinationerRequest"/>
+            <wsdl:output message="HamtaAktuellaOrdinationerResponse"/>
+            <wsdl:fault name="ApplicationException" message="ApplicationException"/>
+            <wsdl:fault name="SystemException" message="SystemException"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <!-- Bindningar -->
+    <wsdl:binding name="HamtaAktuellaOrdinationerResponderBinding" type="HamtaAktuellaOrdinationerResponderInterface">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="HamtaAktuellaOrdinationer">
+            <soap:operation soapAction="urn:riv:se.apotekensservice:nod:HamtaAktuellaOrdinationerResponder:2:HamtaAktuellaOrdinationer"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="ApplicationException">
+                <soap:fault use="literal" name="ApplicationException"/>
+            </wsdl:fault>
+            <wsdl:fault name="SystemException">
+                <soap:fault use="literal" name="SystemException"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <!-- Servicar -->
+    <wsdl:service name="HamtaAktuellaOrdinationerResponderService">
+        <wsdl:port name="HamtaAktuellaOrdinationerResponderPort" binding="HamtaAktuellaOrdinationerResponderBinding">
+            <soap:address location="http://temp.uri/"/>
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

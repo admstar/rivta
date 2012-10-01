@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="urn:riv:se.apotekensservice:nod:HamtaEjVerifieradeOrdinationerResponder:2"
+           targetNamespace="urn:riv:se.apotekensservice:nod:HamtaEjVerifieradeOrdinationerResponder:2"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="2.0">
+
+    <!-- Globala element: Metod parametrar -->
+    <xs:element name="HamtaEjVerifieradeOrdinationer" type="HamtaEjVerifieradeOrdinationerRequestType"/>
+    <xs:element name="HamtaEjVerifieradeOrdinationerResponse" type="HamtaEjVerifieradeOrdinationerResponseType"/>
+
+    <!-- Fel -->
+    <xs:element name="ApplicationException" type="ApplicationException"/>
+    <xs:element name="SystemException" type="SystemException"/>
+
+            <xs:complexType name="HamtaEjVerifieradeOrdinationerRequestType">
+            <xs:sequence>
+                <xs:element name="patient" type="PatientRequest" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Patient att hämta ej registrerade ordinationer för.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    
+            <xs:complexType name="HamtaEjVerifieradeOrdinationerResponseType">
+            <xs:sequence>
+                <xs:element name="ejVerifieradOrdination" type="EjVerifieradOrdinationResponse" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>Ej verifierade ordinationer.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            
+                <xs:element name="patient" type="PatientResponse" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Patient att hämta ej registrerade ordinationer för.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+
+
+<xs:complexType name="HelforpackningsforskrivningResponse">
+            <xs:sequence>                
+                <xs:element name="antalForpackningar" type="xs:int" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Förskrivet antal förpackningar.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="antalUttag" type="xs:int" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Förskrivet antal uttag.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="finnsEReceptRegistrerat" type="xs:boolean" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Finns tillhörande E-Recept registrerat</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forskrivetLakemedel" type="ForskrivetLakemedelResponse" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Förskrivet läkemedel</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forskrivningsforandring" type="ForskrivningsforandringResponse" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Eventuell förskrivningsförändring från vården.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forstaUttagFore" type="xs:dateTime" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Första uttag före</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="ingenDygnsdos" type="xs:boolean" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Ingen dygnsdos</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="intervallenhet" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Intervallenhet</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="maxDygnsdos" type="xs:int" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Max dygnsdos</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="maxVeckodos" type="xs:int" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Max veckodos</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="mottagandeApotek" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Apoteksid vid direktadressering</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="ordinatorensKommentar" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Ordinatörens kommentar till farmaceut.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="ordinatorinformation" type="OrdinatorinformationResponse" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Ordinatörsinformation</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="patientinformation" type="PatientinformationResponse" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Patientinformation</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="startforpackning" type="xs:boolean" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Startförpackning</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="utlamningsintervall" type="xs:int" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Utlämningsintervall</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+        </xs:complexType>
+
+<xs:complexType name="SystemException">
+        <xs:annotation>
+            <xs:documentation>Systemfel</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="code" type="xs:string"/>
+
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+    </xs:complexType>
+
+<xs:complexType name="PersonnummerResponse">
+            <xs:sequence>                
+                <xs:element name="identifikationsnummer" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Giltigt personnummer.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+        </xs:complexType>
+
+<xs:complexType name="PersonnummerRequest">
+            <xs:sequence>                
+                <xs:element name="identifikationsnummer" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Giltigt personnummer.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+        </xs:complexType>
+
+<xs:complexType name="OrdinatorinformationResponse">
+            <xs:sequence>                
+                <xs:element name="arbetsplatskod" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Unik kod för identifiering av förskrivarens
+arbetsplats vid ordinationstillfället.
+
+Saknar förskrivare ordinarie arbetsplats anges
+en grupparbetsplatskod. Arbetsplatskoden anges för att
+styra ekonomiska transaktioner vid ordinationer inom förmånen.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="befattningskod" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Användarens befattningskod enligt HSA.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="efternamn" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Användarens efternamn.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="fornamn" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Användarens förnamn.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forskrivarkod" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Förskrivarens individuella 7-ställiga legitimationskod eller förskrivarens gruppförskrivarkod då individuell kod saknas.
+Gruppförskrivarkod används då förskrivaren saknar individuell förskrivarkod men har via sin roll erhållit förskrivningsrätt. Kan exempelvis vara en AT-läkare eller förskrivare med förordnande.
+Förskrivarkoden definieras av Socialstyrelsen och gruppförskrivarkoden definieras av Apotekens Service.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="legitimationskod" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Förskrivares 7-ställiga förskrivarkod alternativt legitimerad användares 6-ställiga 
+legitimationskod enligt Socialstyrelsen. Obligatorisk för gruppförskrivare (ej läkare) och för farmaceuter.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="ordinatorensKontaktuppgifter" type="KontaktuppgiftResponse" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Kontaktuppgifter för ordinatören.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="utfardarkategori" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Utfärdarkategori enligt NEF LAK = Läkare ATL = AT-läkare LMF = Läkare med förordnande TAN = Tandläkare VET = Veterinär TAH = Tandhygienist BMO = Barnmorska SSK = Sjuksköterska HJM = Hjälpmedelsförskrivare</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="yrkeskod" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Användarens yrkeskod som definierar vilken typ
+av legitimation som användaren innehar. Obligatorisk för förskrivare.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+        </xs:complexType>
+
+<xs:complexType name="DispenseringsforskrivningResponse">
+            <xs:sequence>                
+                <xs:element name="akut" type="xs:boolean" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Akutflagga</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="bytesEj" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Anger om patient eller förskrivare angivit att förskrivningen ej får bytas.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="finnsEReceptRegistrerat" type="xs:boolean" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Finns tillhörande E-Recept registrerat</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forskrivetLakemedel" type="ForskrivetLakemedelResponse" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Förskrivet läkemedel</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forskrivningsforandring" type="ForskrivningsforandringResponse" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Eventuell förskrivningsförändring från vården.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="mottagandeApotek" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Apoteksid vid direktadressering</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="ordinatorensKommentar" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Ordinatörens kommentar till farmaceut.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="ordinatorinformation" type="OrdinatorinformationResponse" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Ordinatörsinformation</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="patientinformation" type="PatientinformationResponse" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Patientinformation</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+        </xs:complexType>
+
+<xs:complexType name="PatientinformationResponse">
+            <xs:sequence>                
+                <xs:element name="efternamn" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Patientens efternamn.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="fodelsedatuminformation" type="FodelsedatuminformationResponse" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Eventuell födelsedatuminformation om patienten inte har personnummer.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="fornamn" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Patientens förnamn.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="patientensKontaktuppgifter" type="KontaktuppgiftResponse" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Kontaktuppgifter för patienten.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="personnummer" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Patientens personnummer.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+        </xs:complexType>
+
+<xs:complexType name="ForskrivningsforandringResponse">
+            <xs:sequence>                
+                <xs:element name="forskrivare" type="ForskrivareInformationResponse" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Förändrande förskrivare.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+        </xs:complexType>
+
+<xs:complexType name="PatientResponse">
+            <xs:sequence>                
+                <xs:element name="personnummer" type="PersonnummerResponse" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Patientens eventuella personnummer.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="samordningsnummer" type="SamordningsnummerResponse" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Patientens eventuella samordningsnummer.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="underlagstidpunkt" type="xs:dateTime" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Tidpunkt för senast uppläst underlag för patient.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+        </xs:complexType>
+
+<xs:complexType name="PatientRequest">
+            <xs:sequence>                
+                <xs:element name="personnummer" type="PersonnummerRequest" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Patientens eventuella personnummer.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="samordningsnummer" type="SamordningsnummerRequest" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Patientens eventuella samordningsnummer.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+        </xs:complexType>
+
+<xs:complexType name="SamordningsnummerRequest">
+            <xs:sequence>                
+                <xs:element name="identifikationsnummer" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Giltigt samordningsnummer.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+        </xs:complexType>
+
+<xs:complexType name="ForskrivetLakemedelResponse">
+            <xs:sequence>                
+                <xs:element name="arUtbytt" type="xs:boolean" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Har läkemedlet bytts ut.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forskrivenArtikelbenamning" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Benämning på artikeln vid förskrivningstillfälle</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forskrivetProduktnamn" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Namn på produkten vid förskrivningstillfälle</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="nplId" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Artikelns NPL-ID</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="nplPackId" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Artikelns NPLPack-ID</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="varunummer" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Artikelns varunummer</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+        </xs:complexType>
+
+<xs:complexType name="EjVerifieradOrdinationResponse">
+            <xs:sequence>                
+                <xs:element name="dispenseringsforskrivningar" type="DispenseringsforskrivningResponse" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>Eventuella dispenseringsförskrivningar.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="helforpackningsforskrivningar" type="HelforpackningsforskrivningResponse" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>Eventuella helförpackningsförskrivningar.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="originalOrdinationsId" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>UUID</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+        </xs:complexType>
+
+<xs:complexType name="ForskrivareInformationResponse">
+            <xs:sequence>                
+                <xs:element name="arbetsplatskod" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Unik kod för identifiering av förskrivarens
+arbetsplats vid ordinationstillfället.
+
+Saknar förskrivare ordinarie arbetsplats anges
+en grupparbetsplatskod. Arbetsplatskoden anges för att
+styra ekonomiska transaktioner vid ordinationer inom förmånen.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="befattningskod" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Användarens befattningskod enligt HSA.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="efternamn" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Användarens efternamn.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="fornamn" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Användarens förnamn.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="forskrivarkod" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Förskrivarens individuella 7-ställiga legitimationskod eller förskrivarens gruppförskrivarkod då individuell kod saknas.
+Gruppförskrivarkod används då förskrivaren saknar individuell förskrivarkod men har via sin roll erhållit förskrivningsrätt. Kan exempelvis vara en AT-läkare eller förskrivare med förordnande.
+Förskrivarkoden definieras av Socialstyrelsen och gruppförskrivarkoden definieras av Apotekens Service.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="legitimationskod" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Förskrivares 7-ställiga förskrivarkod alternativt legitimerad användares 6-ställiga 
+legitimationskod enligt Socialstyrelsen. Obligatorisk för gruppförskrivare (ej läkare) och för farmaceuter.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="yrkeskod" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Användarens yrkeskod som definierar vilken typ
+av legitimation som användaren innehar. Obligatorisk för förskrivare.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+        </xs:complexType>
+
+<xs:complexType name="SamordningsnummerResponse">
+            <xs:sequence>                
+                <xs:element name="identifikationsnummer" type="xs:string" nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>Giltigt samordningsnummer.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+        </xs:complexType>
+
+<xs:complexType name="KontaktuppgiftResponse">
+            <xs:sequence>                
+                <xs:element name="adress1" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Förskrivarens lokalitet eller patientens adress 1. 
+Obligatorisk för förskrivare.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="adress2" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Patientens adress 2 eller förskrivarens
+alternativt vårdcentralens gatuadress. 
+Obligatorisk för förskrivare.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="postnummer" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Patientens eller förskrivarens postnummer. 
+Obligatorisk för förskrivare.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="postort" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Patientens eller förskrivarens postort. 
+Obligatorisk för förskrivare.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="telefonnummer1" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Patientens eller förskrivarens telefonnummer 1. 
+Obligatorisk för förskrivare.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="telefonnummer2" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Patientens eller förskrivarens telefonnummer 2.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+        </xs:complexType>
+
+<xs:complexType name="FodelsedatuminformationResponse">
+            <xs:sequence>                
+                <xs:element name="fodelsedatum" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Patientens födelsedatum.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                            
+                <xs:element name="kon" type="xs:int" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Patientens kön.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+        </xs:complexType>
+
+<xs:complexType name="ApplicationException">
+        <xs:annotation>
+            <xs:documentation>Applikationsfel</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="code" type="xs:string"/>
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
+
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+    </xs:complexType>
+
+	</xs:schema>
