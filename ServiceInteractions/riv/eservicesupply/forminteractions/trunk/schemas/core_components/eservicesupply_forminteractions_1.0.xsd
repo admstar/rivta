@@ -391,8 +391,11 @@ KV Formulärkategori.</xs:documentation>
         			</xs:documentation>
         		</xs:annotation>
         	</xs:element>
-        	<xs:element ref="tns:informationURL" minOccurs="0"></xs:element>
-        	<xs:element name="Mandatory" type="xs:boolean"
+        	<xs:element ref="tns:informationURL" minOccurs="0">
+        		<xs:annotation>
+        			<xs:documentation>URL till information.</xs:documentation>
+        		</xs:annotation></xs:element>
+        	<xs:element name="mandatory" type="xs:boolean"
         		minOccurs="1">
         		<xs:annotation>
         			<xs:documentation>
@@ -453,39 +456,6 @@ KV Formulärkategori.</xs:documentation>
         			</xs:documentation>
         		</xs:annotation>
         	</xs:element>
-        	<xs:any namespace='##other' processContents='lax'
-        		minOccurs='0' maxOccurs='unbounded' />
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:simpleType name="inputType">
-        <xs:annotation>
-        	<xs:documentation>Beskriver frågans inmatningstyp. Kodverk inmatningstyp. T.ex. radio(enkelvärde), checkbox(multivärde) eller fritext. 
-KV Inmatnings typ.</xs:documentation>
-        </xs:annotation>
-        <xs:restriction base="xs:string"></xs:restriction>
-    </xs:simpleType>
-
-    <xs:complexType name="AnswerAlternativeType">
-    	<xs:annotation>
-    		<xs:documentation>
-    			Objektet innehåller svarsalternativen samt formatering.  </xs:documentation>
-    	</xs:annotation>
-    	<xs:sequence>
-            <xs:element name="alternativeValue" type="xs:string" maxOccurs="1" minOccurs="0">
-    			<xs:annotation>
-    				<xs:documentation>
-    					Valbart svarsalternativ.
-    				</xs:documentation>
-    			</xs:annotation>
-    		</xs:element>
-            <xs:element maxOccurs="1" ref="tns:answerAlternativID">
-    			<xs:annotation>
-    				<xs:documentation>
-    					Svarsalternativets id.
-    				</xs:documentation>
-    			</xs:annotation>
-    		</xs:element>
             <xs:element name="answerMax" type="xs:int" minOccurs="0">
     			<xs:annotation>
     				<xs:documentation>
@@ -495,20 +465,20 @@ KV Inmatnings typ.</xs:documentation>
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
+            <xs:element name="answerMin" type="xs:int" minOccurs="0">
+    			<xs:annotation>
+    				<xs:documentation>
+    					Specificerar minvärde för inmatning. (Gäller
+    					typ: number, date)
+    				</xs:documentation>
+    			</xs:annotation>
+    		</xs:element>
             <xs:element name="answerMaxLenght" type="xs:int" minOccurs="0">
     			<xs:annotation>
     				<xs:documentation>
     					Specificerar maxvärdelängd för inmatning.
     					(Gäller typ: number) T.ex: En inmatning (text)
     					får inte vara större än 100 tecken.
-    				</xs:documentation>
-    			</xs:annotation>
-    		</xs:element>
-            <xs:element name="answerMin" type="xs:int" minOccurs="0">
-    			<xs:annotation>
-    				<xs:documentation>
-    					Specificerar minvärde för inmatning. (Gäller
-    					typ: number, date)
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
@@ -531,15 +501,7 @@ KV Inmatnings typ.</xs:documentation>
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
-            <xs:element name="help" type="xs:string" minOccurs="0">
-    			<xs:annotation>
-    				<xs:documentation>
-    					Hjälptext till svarsalternativet. (placeholder)
-    				</xs:documentation>
-    			</xs:annotation>
-    		</xs:element>
-            <xs:element name="inputUnit" type="xs:string"
-    			minOccurs="0">
+            <xs:element name="inputUnit" type="xs:string" minOccurs="0">
     			<xs:annotation>
     				<xs:documentation>
     					Typ av enhet. Grundenheter samt härledda
@@ -551,6 +513,46 @@ KV Inmatnings typ.</xs:documentation>
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
+            <xs:any namespace='##other' processContents='lax'
+        		minOccurs='0' maxOccurs='unbounded' />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="inputType">
+        <xs:annotation>
+        	<xs:documentation>Beskriver frågans inmatningstyp. Kodverk inmatningstyp. T.ex. radio(enkelvärde), checkbox(multivärde) eller fritext. 
+KV Inmatnings typ.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string"></xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="AnswerAlternativeType">
+    	<xs:annotation>
+    		<xs:documentation>
+    			Objektet innehåller svarsalternativen samt formatering.  </xs:documentation>
+    	</xs:annotation>
+    	<xs:sequence>
+            <xs:element name="alternativeValue" type="xs:string" maxOccurs="1" minOccurs="1">
+    			<xs:annotation>
+    				<xs:documentation>
+    					Valbart svarsalternativ.
+    				</xs:documentation>
+    			</xs:annotation>
+    		</xs:element>
+            <xs:element maxOccurs="1" ref="tns:answerAlternativID">
+    			<xs:annotation>
+    				<xs:documentation>
+    					Svarsalternativets id.
+    				</xs:documentation>
+    			</xs:annotation>
+    		</xs:element>
+            <xs:element name="answerHelp" type="xs:string" minOccurs="0">
+    			<xs:annotation>
+    				<xs:documentation>
+    					Hjälptext till svarsalternativet. (placeholder)
+    				</xs:documentation>
+    			</xs:annotation>
+    		</xs:element>
     		<xs:any namespace='##other' processContents='lax'
     			minOccurs='0' maxOccurs='unbounded' />
     	</xs:sequence>
@@ -558,17 +560,17 @@ KV Inmatnings typ.</xs:documentation>
 
     <xs:complexType name="AnswerType">
     	<xs:annotation>
-    		<xs:documentation>
-    			Objektet innehåller patientens/användarens svar på en
-    			fråga.
+    		<xs:documentation>Objektet innehåller patientens/användarens svar på en fråga.
+-answerAlternativID skall användas om ett fördefinierat svarsalternativ används.
+-value skall innehålla invånarens svar vid fritext (text).
     		</xs:documentation>
     	</xs:annotation>
     	<xs:sequence>
-            <xs:element ref="tns:answerAlternativID" minOccurs="1"></xs:element>
+            <xs:element ref="tns:answerAlternativID" minOccurs="0"></xs:element>
             <xs:element name="answerStatus" type="tns:AnswerStatusType" minOccurs="0">
     		</xs:element>
             <xs:element name="value" type="xs:string"
-    			maxOccurs="1">
+    			maxOccurs="1" minOccurs="0">
     			<xs:annotation>
     				<xs:documentation>
     					Patientens/användarens svar.
@@ -658,7 +660,7 @@ KV Inmatnings typ.</xs:documentation>
 
     <xs:complexType name="QuestionAnswerType">
     	<xs:sequence>
-            <xs:element name="answer" type="tns:AnswerType" minOccurs="1" maxOccurs="1"></xs:element>
+            <xs:element name="answer" type="tns:AnswerType" minOccurs="1" maxOccurs="unbounded"></xs:element>
             <xs:element ref="tns:questionId" minOccurs="1"></xs:element>
     		<xs:any namespace='##other' processContents='lax' minOccurs='0'
     		maxOccurs='unbounded' />
@@ -818,7 +820,7 @@ Kodverk för språk Innehåller språkkoder som utgår från SS-ISO 639-1:2005.
     		</xs:documentation>
     	</xs:annotation>
     	<xs:sequence>
-    		<xs:element ref="tns:SuperiorAnswerAlternativeID" minOccurs="1" maxOccurs="1"></xs:element>
+    		<xs:element ref="tns:SuperiorAnswerAlternativeID" minOccurs="0" maxOccurs="unbounded"></xs:element>
     		<xs:element ref="tns:superiorQuestionID" maxOccurs="1" minOccurs="1"></xs:element>
     		<xs:any namespace='##other' processContents='lax'
     			minOccurs='0' maxOccurs='unbounded' />
