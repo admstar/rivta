@@ -118,12 +118,22 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
 
     <xs:complexType name="FormType">
     	<xs:sequence>
-            <xs:element ref="tns:createdDateTime" maxOccurs="1"></xs:element>
-            <xs:element ref="tns:expireDate" minOccurs="0"></xs:element>
-            <xs:element ref="tns:formStatus" maxOccurs="1"></xs:element>
-            <xs:element name="formTemplate" type="tns:FormTemplateType" maxOccurs="1">
+    		<xs:element ref="tns:createdDateTime" maxOccurs="1"></xs:element>
+            <xs:element ref="tns:clinicalProcessInterestId" minOccurs="0">
+    			<xs:annotation>
+    				<xs:documentation>
+    					Hsa-id för framställarens enhet/process + unik
+    					identifierare. Globalt/nationellt hälsoärende
+    					ID. Hälsoärende är ett begrepp för det som
+    					håller samman information i en kärnprocess för
+    					en vård- och omsorgstagare, tvärs över
+    					organisatoriska enhetsgränser.
+    				</xs:documentation>
+    			</xs:annotation>
     		</xs:element>
-            <xs:element ref="tns:formId" minOccurs="1">
+            <xs:element ref="tns:expireDate" minOccurs="0"></xs:element>
+    		<xs:element ref="tns:formStatus" maxOccurs="1"></xs:element>
+    		<xs:element ref="tns:formId" minOccurs="1">
     			<xs:annotation>
     				<xs:documentation>
     					Formulärets unika ID (källsystemets unika
@@ -134,7 +144,7 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
-            <xs:element ref="tns:healthcare_CareGiver" minOccurs="0">
+    		<xs:element ref="tns:healthcare_CareGiver" minOccurs="0">
     			<xs:annotation>
     				<xs:documentation>
     					Ansvarig vårdgivare (huvudman). T.ex. Landsting
@@ -177,21 +187,10 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
-    		<xs:element ref="tns:clinicalProcessInterestId" minOccurs="0">
-    			<xs:annotation>
-    				<xs:documentation>
-    					Hsa-id för framställarens enhet/process + unik
-    					identifierare. Globalt/nationellt hälsoärende
-    					ID. Hälsoärende är ett begrepp för det som
-    					håller samman information i en kärnprocess för
-    					en vård- och omsorgstagare, tvärs över
-    					organisatoriska enhetsgränser.
-    				</xs:documentation>
-    			</xs:annotation>
-    		</xs:element>
-            <xs:element ref="tns:keepUntil" maxOccurs="1"></xs:element>
+    		<xs:element ref="tns:keepUntil" maxOccurs="1"></xs:element>
+            <xs:element name="Page" type="tns:PageType" maxOccurs="1" minOccurs="1"></xs:element>
             <xs:element ref="tns:lastSavedDate" minOccurs="0"></xs:element>
-            <xs:element ref="tns:subjectOfCare" maxOccurs="1">
+    		<xs:element ref="tns:subjectOfCare" maxOccurs="1">
     			<xs:annotation>
     				<xs:documentation>
     					Patienten formuläret avser. Personnummer format
@@ -199,7 +198,9 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
-    		<xs:any namespace='##other' processContents='lax'
+            <xs:element ref="tns:templateId" minOccurs="1" maxOccurs="1">
+    		</xs:element>
+            <xs:any namespace='##other' processContents='lax'
     			minOccurs='0' maxOccurs='unbounded' />
     	</xs:sequence>
     </xs:complexType>
@@ -214,7 +215,7 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
-            <xs:element minOccurs="0" ref="tns:description">
+    		<xs:element minOccurs="0" ref="tns:description">
     			<xs:annotation>
     				<xs:documentation>
     					Formulärets beskrivning och instruktioner. T.ex.
@@ -223,7 +224,7 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
-            <xs:element maxOccurs="1" ref="tns:formName">
+    		<xs:element maxOccurs="1" ref="tns:formName">
     			<xs:annotation>
     				<xs:documentation>
     					Formulärets namn. T.ex. Hälsodeklaration
@@ -231,7 +232,7 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
-            <xs:element minOccurs="0" ref="tns:informationURL">
+    		<xs:element minOccurs="0" ref="tns:informationURL">
     			<xs:annotation>
     				<xs:documentation>
     					URL till ytterligare/relevant information. Länk
@@ -240,7 +241,7 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
-            <xs:element maxOccurs="1" ref="tns:language">
+    		<xs:element maxOccurs="1" ref="tns:language">
     			<xs:annotation>
     				<xs:documentation>
     					Kodverk för språk Innehåller språkkoder som
@@ -248,9 +249,10 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
-            <xs:element ref="tns:minNumberOfBlocks" maxOccurs="1"></xs:element>
-            <xs:element ref="tns:maxNumberOfBlocks" maxOccurs="1"></xs:element>
-            <xs:element minOccurs="1" ref="tns:maxNumberOfQuestion" maxOccurs="1">
+    		<xs:element ref="tns:minNumberOfBlocks" maxOccurs="1"></xs:element>
+    		<xs:element ref="tns:maxNumberOfBlocks" maxOccurs="1"></xs:element>
+    		<xs:element minOccurs="1" ref="tns:maxNumberOfQuestion"
+    			maxOccurs="1">
     			<xs:annotation>
     				<xs:documentation>
     					Beskriver hur många frågor formuläret maximalt
@@ -258,9 +260,10 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
-            <xs:element minOccurs="1" ref="tns:minNumberOfQuestion" maxOccurs="1">
+    		<xs:element minOccurs="1" ref="tns:minNumberOfQuestion"
+    			maxOccurs="1">
     		</xs:element>
-            <xs:element maxOccurs="1" ref="tns:mandatory">
+    		<xs:element maxOccurs="1" ref="tns:mandatory">
     			<xs:annotation>
     				<xs:documentation>
     					Indikerar om formuläret är obligatoriskt att
@@ -271,9 +274,7 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
-            <xs:element name="questionBlockId" type="tns:QuestionBlockType" minOccurs="0" maxOccurs="unbounded">
-    		</xs:element>
-            <xs:element ref="tns:templateId" maxOccurs="1">
+    		<xs:element ref="tns:templateId" maxOccurs="1">
     			<xs:annotation>
     				<xs:documentation>
     					Typ av formulär. Kodverk för standardiserade id
@@ -282,7 +283,7 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
-            <xs:element minOccurs="1" maxOccurs="1" ref="tns:term">
+    		<xs:element minOccurs="1" maxOccurs="1" ref="tns:term">
     			<xs:annotation>
     				<xs:documentation>
     					Villkor kopplade till formuläret. T.ex.
@@ -293,6 +294,9 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
     		</xs:element>
     		<xs:any namespace='##other' processContents='lax'
     			minOccurs='0' maxOccurs='unbounded' />
+    		<xs:element ref="tns:minNumberOfPages" maxOccurs="1"></xs:element>
+    		<xs:element ref="tns:maxNumberOfPages" maxOccurs="1"></xs:element>
+    		<xs:element name="pages" type="tns:PageType"></xs:element>
     	</xs:sequence>
     </xs:complexType>
     
@@ -333,18 +337,6 @@ KV Formulärkategori.</xs:documentation>
         				Beskrivande text. Stöder kodverk ”DocBook” Se
         				tidbokningskontraktet!! T.ex här skall du lämna
         				information kring din medicinering.
-        			</xs:documentation>
-        		</xs:annotation>
-        	</xs:element>
-            <xs:element name="lastBlock" type="xs:boolean" maxOccurs="1">
-        		<xs:annotation>
-        			<xs:documentation>
-        				Indikerar om ytterligare frågeblock finns. Detta
-        				ger indikation för konsumerande system att
-        				presentera en knapp för att ”Avsluta och skicka”
-        				formuläret. True = Indikerar att detta är det
-        				sistea frågeblocket. False = Indikerar att
-        				ytterligare frågeblock.
         			</xs:documentation>
         		</xs:annotation>
         	</xs:element>
@@ -735,16 +727,18 @@ KV Form Status
     <xs:complexType name="FormsTempateType">
     	<xs:sequence>
     		<xs:element ref="tns:category" minOccurs="1"></xs:element>
-            <xs:element ref="tns:description" minOccurs="1"></xs:element>
-            <xs:element ref="tns:formName" minOccurs="1"></xs:element>
-            <xs:element ref="tns:informationURL" minOccurs="1"></xs:element>
-            <xs:element ref="tns:language" minOccurs="1"></xs:element>
-            <xs:element ref="tns:maxNumberOfBlocks" minOccurs="1"></xs:element>
-            <xs:element ref="tns:minNumberOfBlocks" minOccurs="1"></xs:element>
-            <xs:element ref="tns:maxNumberOfQuestion" minOccurs="1"></xs:element>
-            <xs:element ref="tns:minNumberOfQuestion" minOccurs="1"></xs:element>
+    		<xs:element ref="tns:description" minOccurs="1"></xs:element>
+    		<xs:element ref="tns:formName" minOccurs="1"></xs:element>
+    		<xs:element ref="tns:informationURL" minOccurs="1"></xs:element>
+    		<xs:element ref="tns:language" minOccurs="1"></xs:element>
             <xs:element ref="tns:mandatory" minOccurs="1"></xs:element>
-            <xs:element ref="tns:templateId" minOccurs="1"></xs:element>
+            <xs:element ref="tns:maxNumberOfBlocks" minOccurs="1"></xs:element>
+    		<xs:element ref="tns:minNumberOfBlocks" minOccurs="1"></xs:element>
+    		<xs:element ref="tns:maxNumberOfQuestion" minOccurs="1"></xs:element>
+    		<xs:element ref="tns:minNumberOfQuestion" minOccurs="1"></xs:element>
+            <xs:element ref="tns:maxNumberOfPages" minOccurs="1"></xs:element>
+            <xs:element ref="tns:minNumberOfPages" maxOccurs="1"></xs:element>
+    		<xs:element ref="tns:templateId" minOccurs="1"></xs:element>
     		<xs:element ref="tns:term" minOccurs="1"></xs:element>
     		<xs:any namespace='##other' processContents='lax'
     			minOccurs='0' maxOccurs='unbounded' />
@@ -770,7 +764,9 @@ Kodverk för språk Innehåller språkkoder som utgår från SS-ISO 639-1:2005.
     	<xs:annotation></xs:annotation>
     </xs:element>
     <xs:element name="description" type="xs:string">
-    	<xs:annotation></xs:annotation>
+    	<xs:annotation>
+    		<xs:documentation>Beskrivning</xs:documentation>
+    	</xs:annotation>
     </xs:element>
     <xs:element name="informationURL" type="xs:string">
     	<xs:annotation>
@@ -826,4 +822,92 @@ Kodverk för språk Innehåller språkkoder som utgår från SS-ISO 639-1:2005.
     			minOccurs='0' maxOccurs='unbounded' />
     	</xs:sequence>
     </xs:complexType>
+
+    <xs:complexType name="PageType">
+    	<xs:annotation>
+    		<xs:documentation>
+    			En PageType representerar en formulärsida. En page
+    			innehåller en gruppering av QuestionBlock som skall
+    			kunna visas tillsammans. - Sidan kan innehålla en till
+    			många QuestionBlock.
+    		</xs:documentation>
+    	</xs:annotation>
+    	<xs:sequence>
+    		<xs:element ref="tns:currentPage" minOccurs="1"
+    			maxOccurs="1">
+                <xs:annotation>
+                	<xs:documentation>Indikerar om sidan (Page) är den senaste sidan invånaren/användaren har besvarat.</xs:documentation>
+                </xs:annotation>
+    		</xs:element>
+    		<xs:element name="currentQuestionBlocks"
+    			type="tns:QuestionBlockType" minOccurs="1"
+    			maxOccurs="unbounded">
+    		</xs:element>
+    		<xs:element ref="tns:description" maxOccurs="1"
+    			minOccurs="0">
+                <xs:annotation>
+                	<xs:documentation>Beskrivande text. Stöder kodverk ”DocBook” Se
+        				tidbokningskontraktet för formatering (Todo).</xs:documentation>
+                </xs:annotation>
+    		</xs:element>
+    		<xs:element name="lastPage" type="xs:boolean" minOccurs="1"
+    			maxOccurs="1">
+    			<xs:annotation>
+    				<xs:documentation>
+    					Indikerar om ytterligare frågeblock/page finns.
+    					Detta ger indikation för konsumerande system att
+    					presentera en knapp för att ”Avsluta och skicka”
+    					formuläret. True = Indikerar att detta är det
+    					sistea frågeblocket/page. False = Indikerar att
+    					ytterligare frågeblock/page .
+    				</xs:documentation>
+    			</xs:annotation>
+    		</xs:element>
+    		<xs:element ref="tns:maxNumberOfBlocks" minOccurs="1"
+    			maxOccurs="1">
+    		</xs:element>
+    		<xs:element ref="tns:minNumberOfBlocks" minOccurs="1"
+    			maxOccurs="1">
+    		</xs:element>
+            <xs:element ref="tns:maxNumberOfPages" minOccurs="1" maxOccurs="1"></xs:element>
+            <xs:element ref="tns:minNumberOfPages" minOccurs="1" maxOccurs="1"></xs:element>
+            <xs:element ref="tns:pageID" minOccurs="1" maxOccurs="1"></xs:element>
+    		<xs:element name="subject" type="xs:string" minOccurs="0">
+    			<xs:annotation>
+    				<xs:documentation>Sidans rubrik. Information till invånaren/användaren.</xs:documentation>
+    			</xs:annotation></xs:element>
+    		<xs:element name="pageNumber" type="xs:string" maxOccurs="1"
+    			minOccurs="1">
+    			<xs:annotation>
+    				<xs:documentation>
+    					Grupperingsbegrepp av sida (page). Sidans nummer
+    					i nummerserie. Används för att indikera hur
+    					långt användaren har kommit i formuläret. T.ex
+    					Sida nummer 1 (av 10).
+    				</xs:documentation>
+    			</xs:annotation>
+    		</xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+    
+    <xs:element name="currentPage" type="xs:boolean">
+    	<xs:annotation>
+    		<xs:documentation>Indikerar aktuell sida (page).</xs:documentation>
+    	</xs:annotation></xs:element>
+
+    <xs:element name="page" type="xs:string">
+    	<xs:annotation>
+    		<xs:documentation>Identifierar den sidan som en till många block skall ingå i.</xs:documentation>
+    	</xs:annotation></xs:element>
+
+    <xs:element name="pageID" type="xs:string"></xs:element>
+
+    <xs:element name="subject" type="xs:string">
+    	<xs:annotation>
+    		<xs:documentation>Rubrik</xs:documentation>
+    	</xs:annotation></xs:element>
+
+    <xs:element name="maxNumberOfPages" type="xs:int"></xs:element>
+
+    <xs:element name="minNumberOfPages" type="xs:int"></xs:element>
 </xs:schema>
