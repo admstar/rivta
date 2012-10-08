@@ -17,44 +17,40 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:eservicesupply:forminteractions:GetFormQuestionBlockResponder:1' xmlns:core='urn:riv:eservicesupply:forminteractions:1' targetNamespace='urn:riv:eservicesupply:forminteractions:GetFormQuestionBlockResponder:1' elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'>
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:eservicesupply:forminteractions:GetFormQuestionPageInteractionResponder:1' xmlns:core='urn:riv:eservicesupply:forminteractions:1' targetNamespace='urn:riv:eservicesupply:forminteractions:GetFormQuestionPageInteractionResponder:1' elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'>
   <xs:import schemaLocation='../../core_components/eservicesupply_forminteractions_1.0.xsd' namespace='urn:riv:eservicesupply:forminteractions:1' />
-  <xs:element name='GetFormQuestionBlock' type='tns:GetFormQuestionBlockType' />
-  <xs:element name='GetFormQuestionBlockResponse' type='tns:GetFormQuestionBlockResponseType' />
-  <xs:complexType name='GetFormQuestionBlockType'>
+  <xs:element name='GetFormQuestionPageInteraction' type='tns:GetFormQuestionPageInteractionType' />
+  <xs:element name='GetFormQuestionPageInteractionResponse' type='tns:GetFormQuestionPageInteractionResponseType' />
+  <xs:complexType name='GetFormQuestionPageInteractionType'>
     <xs:sequence>
-            <xs:element ref="core:blockID" minOccurs="1"></xs:element>
-            <xs:element name="direction" minOccurs="1">
-    		<xs:annotation>
-    			<xs:documentation>
+            <xs:element name="direction" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                	<xs:documentation>
     				Begäran -Direction ”BACK” är inte tillåtet om
-    				objektet ”BlockNumber” är 1. -Direction ”FORWARD” är
+    				objektet ”PagenumberBlockNumber” är 1. -Direction ”FORWARD” är
     				inte tillåtet om föregående objektets LastBlock är
     				sant (true). Vid ovanstående fel genereras ett
-    				exception.
-
-    			</xs:documentation>
-    		</xs:annotation>
-    		<xs:simpleType>
-    			<xs:restriction base="xs:string">
-    				<xs:enumeration value="FORWARD"></xs:enumeration>
-    				<xs:enumeration value="BACK"></xs:enumeration>
-    			</xs:restriction>
-    		</xs:simpleType>
-    	</xs:element>
-            <xs:element ref="core:formId" minOccurs="1"></xs:element>
+    				exception.</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+            		<xs:restriction base="xs:string">
+            			<xs:enumeration value="FORWARD"></xs:enumeration>
+            			<xs:enumeration value="BACK"></xs:enumeration>
+            		</xs:restriction>
+            	</xs:simpleType>
+            </xs:element>
+            <xs:element ref="core:formId" maxOccurs="1" minOccurs="1"></xs:element>
+            <xs:element ref="core:pageID" maxOccurs="1"></xs:element>
             <xs:element ref="core:subjectOfCare" maxOccurs="1" minOccurs="1"></xs:element>
             <xs:any namespace='##other' processContents='lax' minOccurs='0'
     		maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name='GetFormQuestionBlockResponseType'>
+  <xs:complexType name='GetFormQuestionPageInteractionResponseType'>
     <xs:sequence>
-
-            <xs:element name="questionBlock" type="core:QuestionBlockType" maxOccurs="1" minOccurs="0"></xs:element>
+            <xs:element name="page" type="core:PageType" maxOccurs="1" minOccurs="1"></xs:element>
             <xs:any namespace='##other' processContents='lax' minOccurs='0'
     		maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
-
 </xs:schema>
