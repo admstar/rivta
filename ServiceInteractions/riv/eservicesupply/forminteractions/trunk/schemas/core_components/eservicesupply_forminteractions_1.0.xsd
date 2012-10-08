@@ -119,7 +119,8 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
     <xs:complexType name="FormType">
     	<xs:sequence>
     		<xs:element ref="tns:createdDateTime" maxOccurs="1"></xs:element>
-            <xs:element ref="tns:clinicalProcessInterestId" minOccurs="0">
+    		<xs:element ref="tns:clinicalProcessInterestId"
+    			minOccurs="0">
     			<xs:annotation>
     				<xs:documentation>
     					Hsa-id för framställarens enhet/process + unik
@@ -131,9 +132,8 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
-            <xs:element ref="tns:expireDate" minOccurs="0"></xs:element>
-    		<xs:element ref="tns:formStatus" maxOccurs="1"></xs:element>
-    		<xs:element ref="tns:formId" minOccurs="1">
+    		<xs:element ref="tns:expireDate" minOccurs="0"></xs:element>
+            <xs:element ref="tns:formId" minOccurs="1">
     			<xs:annotation>
     				<xs:documentation>
     					Formulärets unika ID (källsystemets unika
@@ -144,7 +144,9 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
-    		<xs:element ref="tns:healthcare_CareGiver" minOccurs="0">
+            <xs:element ref="tns:formStatus" maxOccurs="1"></xs:element>
+            <xs:element name="formTemplate" type="tns:FormTemplateType" maxOccurs="1" minOccurs="1"></xs:element>
+            <xs:element ref="tns:healthcare_CareGiver" minOccurs="0">
     			<xs:annotation>
     				<xs:documentation>
     					Ansvarig vårdgivare (huvudman). T.ex. Landsting
@@ -188,8 +190,13 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
     			</xs:annotation>
     		</xs:element>
     		<xs:element ref="tns:keepUntil" maxOccurs="1"></xs:element>
-            <xs:element name="Page" type="tns:PageType" maxOccurs="1" minOccurs="1"></xs:element>
-            <xs:element ref="tns:lastSavedDate" minOccurs="0"></xs:element>
+    		<xs:element name="currentPage" type="tns:PageType"
+    			maxOccurs="1" minOccurs="1">
+    		</xs:element>
+    		<xs:element name="answeredPage" type="tns:PageType"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</xs:element>
+    		<xs:element ref="tns:lastSavedDate" minOccurs="0"></xs:element>
     		<xs:element ref="tns:subjectOfCare" maxOccurs="1">
     			<xs:annotation>
     				<xs:documentation>
@@ -198,9 +205,10 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
-            <xs:element ref="tns:templateId" minOccurs="1" maxOccurs="1">
+    		<xs:element ref="tns:templateId" minOccurs="1"
+    			maxOccurs="1">
     		</xs:element>
-            <xs:any namespace='##other' processContents='lax'
+    		<xs:any namespace='##other' processContents='lax'
     			minOccurs='0' maxOccurs='unbounded' />
     	</xs:sequence>
     </xs:complexType>
@@ -263,7 +271,9 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
     		<xs:element minOccurs="1" ref="tns:minNumberOfQuestion"
     			maxOccurs="1">
     		</xs:element>
-    		<xs:element maxOccurs="1" ref="tns:mandatory">
+            <xs:element ref="tns:minNumberOfPages" maxOccurs="1"></xs:element>
+            <xs:element ref="tns:maxNumberOfPages" maxOccurs="1"></xs:element>
+            <xs:element maxOccurs="1" ref="tns:mandatory">
     			<xs:annotation>
     				<xs:documentation>
     					Indikerar om formuläret är obligatoriskt att
@@ -294,9 +304,6 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
     		</xs:element>
     		<xs:any namespace='##other' processContents='lax'
     			minOccurs='0' maxOccurs='unbounded' />
-    		<xs:element ref="tns:minNumberOfPages" maxOccurs="1"></xs:element>
-    		<xs:element ref="tns:maxNumberOfPages" maxOccurs="1"></xs:element>
-    		<xs:element name="pages" type="tns:PageType"></xs:element>
     	</xs:sequence>
     </xs:complexType>
     
@@ -640,8 +647,6 @@ KV Inmatnings typ.</xs:documentation>
     <xs:complexType name="QuestionBlockAnswersType">
     	<xs:sequence>
     		<xs:element ref="tns:blockID" minOccurs="1"></xs:element>
-    		<xs:element ref="tns:formId" minOccurs="1"></xs:element>
-            <xs:element ref="tns:subjectOfCare" minOccurs="1" maxOccurs="1"></xs:element>
             <xs:element name="questionAnswer"
     			type="tns:QuestionAnswerType" maxOccurs="unbounded">
     		</xs:element>
@@ -833,13 +838,7 @@ Kodverk för språk Innehåller språkkoder som utgår från SS-ISO 639-1:2005.
     		</xs:documentation>
     	</xs:annotation>
     	<xs:sequence>
-    		<xs:element ref="tns:currentPage" minOccurs="1"
-    			maxOccurs="1">
-                <xs:annotation>
-                	<xs:documentation>Indikerar om sidan (Page) är den senaste sidan invånaren/användaren har besvarat.</xs:documentation>
-                </xs:annotation>
-    		</xs:element>
-    		<xs:element name="currentQuestionBlocks"
+    		<xs:element name="questionBlocks"
     			type="tns:QuestionBlockType" minOccurs="1"
     			maxOccurs="unbounded">
     		</xs:element>
@@ -863,14 +862,6 @@ Kodverk för språk Innehåller språkkoder som utgår från SS-ISO 639-1:2005.
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
-    		<xs:element ref="tns:maxNumberOfBlocks" minOccurs="1"
-    			maxOccurs="1">
-    		</xs:element>
-    		<xs:element ref="tns:minNumberOfBlocks" minOccurs="1"
-    			maxOccurs="1">
-    		</xs:element>
-            <xs:element ref="tns:maxNumberOfPages" minOccurs="1" maxOccurs="1"></xs:element>
-            <xs:element ref="tns:minNumberOfPages" minOccurs="1" maxOccurs="1"></xs:element>
             <xs:element ref="tns:pageID" minOccurs="1" maxOccurs="1"></xs:element>
     		<xs:element name="subject" type="xs:string" minOccurs="0">
     			<xs:annotation>
@@ -910,4 +901,16 @@ Kodverk för språk Innehåller språkkoder som utgår från SS-ISO 639-1:2005.
     <xs:element name="maxNumberOfPages" type="xs:int"></xs:element>
 
     <xs:element name="minNumberOfPages" type="xs:int"></xs:element>
+
+    <xs:complexType name="PageAnswerType">
+    	<xs:sequence>
+    		<xs:element ref="tns:pageID" maxOccurs="1" minOccurs="1"></xs:element>
+    		<xs:element name="questionAnswerBlock"
+    			type="tns:QuestionBlockAnswersType" maxOccurs="unbounded">
+    		</xs:element>
+            <xs:element ref="tns:subjectOfCare" maxOccurs="1" minOccurs="1"></xs:element>
+            <xs:any namespace='##other' processContents='lax'
+    			minOccurs='0' maxOccurs='unbounded' />
+    	</xs:sequence>
+    </xs:complexType>
 </xs:schema>
