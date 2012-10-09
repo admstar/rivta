@@ -23,12 +23,18 @@
 	
 	SET SCHEMADIR=schemas
 	
-	SET W0=%SCHEMADIR%\.\interactions\GetRequestActivitiesInteraction\GetRequestActivitiesInteraction_1.0_RIVTABP21.wsdl
+SET W0=%SCHEMADIR%\.\interactions\GetRequestActivitiesInteraction\GetRequestActivitiesInteraction_1.0_RIVTABP21.wsdl
 SET X0=%SCHEMADIR%\interactions\GetRequestActivitiesInteraction\*.xsd
+
+SET W1=%SCHEMADIR%\.\interactions\ProcessRequestInteraction/\ProcessRequestInteraction_1.0_RIVTABP21.wsdl
+SET X1=%SCHEMADIR%\interactions\ProcessRequestInteraction/\*.xsd
+
+SET W2=%SCHEMADIR%\.\interactions\ProcessRequestOutcomeInteraction\ProcessRequestOutcomeInteraction_1.0_RIVTABP21.wsdl
+SET X2=%SCHEMADIR%\interactions\ProcessRequestOutcomeInteraction\*.xsd
 
 SET XCORE=%SCHEMADIR%\core_components\*.xsd
 
-SET SCHEMAS=%XCORE% %W0% %X0% 
+SET SCHEMAS=%XCORE% %W0% %X0% %W1% %X1% %W2% %X2%
 
 SET OUTFILE=/out:wcf\generated-src\ClinicalprocessRequestworkflowInteractions.cs
 SET APPCONFIG=/config:wcf\generated-src\app.config
