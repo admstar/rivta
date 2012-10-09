@@ -36,7 +36,7 @@ SET XCORE=%SCHEMADIR%\core_components\*.xsd
 
 SET SCHEMAS=%XCORE% %W0% %X0% %W1% %X1% %W2% %X2%
 
-SET OUTFILE=/out:wcf\generated-src\ClinicalprocessRequestworkflowInteractions.cs
+SET OUTFILE=/out:wcf\generated-src\eRemissInteraction.cs
 SET APPCONFIG=/config:wcf\generated-src\app.config
 SET NAMESPACE=/namespace:*,Riv.Clinicalprocess.Requestworkflow.Schemas.v1
 SET SVCUTIL="svcutil.exe"
