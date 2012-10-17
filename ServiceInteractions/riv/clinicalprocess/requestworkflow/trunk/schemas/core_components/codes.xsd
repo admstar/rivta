@@ -3,11 +3,9 @@
     elementFormDefault="qualified"
     targetNamespace='urn:riv:clinicalprocess:requestworkflow:codes'
     xmlns='urn:riv:clinicalprocess:requestworkflow:codes'
-    xmlns:gcda="AlschulerAssociates::GreenCDA" > 
-    
-    <xs:import schemaLocation='green_ccd.xsd' namespace='AlschulerAssociates::GreenCDA' />
+    > 
 
-    <!-- 1.2.752.97.3.2.8.1 -->
+    <!-- kv_framställantyp_NeR, 1.2.752.129.2.2.2.24 -->
     <xs:simpleType name="codeForRequestType_values">
         <xs:restriction base="xs:int">
             <xs:enumeration value="1">
@@ -53,18 +51,16 @@
         </xs:restriction>      
     </xs:simpleType>
     
+    <!-- kv_framställantyp_NeR, 1.2.752.129.2.2.2.24 -->
     <xs:complexType name="codeForRequestType">
         <xs:annotation>
             <xs:documentation>Denna värdemängd innehåller information om vilken typ av remiss som avses.</xs:documentation>
         </xs:annotation>
-        <xs:complexContent>
-            <xs:restriction base="gcda:cd">
-                <xs:attribute name="code" type="codeForRequestType_values"/>
-                <xs:attribute name="codeSystem" fixed="1.2.752.129.2.2.2.24"/>			
-            </xs:restriction>
-        </xs:complexContent>
+        <xs:attribute name="code" type="codeForRequestType_values" use="required" />
+        <xs:attribute name="codeSystem" fixed="1.2.752.129.2.2.2.24" use="required" />
     </xs:complexType>
     
+    <!-- kv_yrkeskoder, 1.2.752.97.3.2.8.8 -->
     <xs:simpleType name="codeForProfession_values">
         <xs:restriction base="xs:string">
             <xs:enumeration value="AP">
@@ -175,18 +171,18 @@
         </xs:restriction>      
     </xs:simpleType>
     
+    <!-- kv_yrkeskoder, 1.2.752.97.3.2.8.8 -->
     <xs:complexType name="codeForProfession">
         <xs:annotation>
-            <xs:documentation>Anger yrkesgrupper som är aktuella i remisshanteringen.</xs:documentation>
+            <xs:documentation>Anger yrkesgrupper som är aktuella i remisshanteringen.
+Se även kv_yrkeskoder i eRemiss SLL_Terminologier_koder_klassifikationer_och_format_Specifikation_version_0.9.4
+            </xs:documentation>
         </xs:annotation>
-        <xs:complexContent>
-            <xs:restriction base="gcda:cd">
-                <xs:attribute name="code" type="codeForProfession_values"/>
-                <xs:attribute name="codeSystem" fixed="1.2.752.97.3.2.8.8"/>			
-            </xs:restriction>
-        </xs:complexContent>
+        <xs:attribute name="code" type="codeForProfession_values" use="required" />
+        <xs:attribute name="codeSystem" fixed="1.2.752.97.3.2.8.8" use="required" />
     </xs:complexType>
     
+    <!-- -->
     <xs:simpleType name="codeVersionReason_values">
         <xs:annotation>
             <xs:documentation>Anger varför en ny version skapats</xs:documentation>
@@ -216,16 +212,13 @@
         </xs:restriction>      
     </xs:simpleType>
     
+    <!-- -->
     <xs:complexType name="codeVersionReason">
         <xs:annotation>
             <xs:documentation>Anger varför en ny version skapats.</xs:documentation>
         </xs:annotation>
-        <xs:complexContent>
-            <xs:restriction base="gcda:cd">
-                <xs:attribute name="code" type="codeVersionReason_values"/>
-                <xs:attribute name="codeSystem" fixed="1.2.752.97.3.2.8.5"/>			
-            </xs:restriction>
-        </xs:complexContent>
+        <xs:attribute name="code" type="codeVersionReason_values" use="required"/>
+        <xs:attribute name="codeSystem" fixed="1.2.752.97.3.2.8.5" use="required" />
     </xs:complexType>
 
     <xs:simpleType name="codeRequestOutcomeType_values">
@@ -239,27 +232,27 @@
 			@NOTE
 			The following codes will not be used during the pilot for SLL-eRemiss 
 
-            <xs:enumeration value="SR">
-                <xs:annotation>
-                    <xs:documentation>Svar på remissfråga</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="KB">
-                <xs:annotation>
-                    <xs:documentation>Kompletteringsbegäran</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="RB">
-                <xs:annotation>
-                    <xs:documentation>Remissbekräftelse</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="BV">
-                <xs:annotation>
-                    <xs:documentation>Besked om vidareskickning</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-			-->
+<xs:enumeration value="SR">
+<xs:annotation>
+<xs:documentation>Svar på remissfråga</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="KB">
+<xs:annotation>
+<xs:documentation>Kompletteringsbegäran</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="RB">
+<xs:annotation>
+<xs:documentation>Remissbekräftelse</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+<xs:enumeration value="BV">
+<xs:annotation>
+<xs:documentation>Besked om vidareskickning</xs:documentation>
+</xs:annotation>
+</xs:enumeration>
+         			-->
         </xs:restriction>      
     </xs:simpleType>
     
@@ -267,12 +260,8 @@
         <xs:annotation>
             <xs:documentation>Anger typen av svar.</xs:documentation>
         </xs:annotation>
-        <xs:complexContent>
-            <xs:restriction base="gcda:cd">
-                <xs:attribute name="code" type="codeRequestOutcomeType_values"/>
-                <xs:attribute name="codeSystem" fixed="1.2.752.97.3.2.8.6"/>			
-            </xs:restriction>
-        </xs:complexContent>
+        <xs:attribute name="code" type="codeRequestOutcomeType_values"/>
+        <xs:attribute name="codeSystem" fixed="1.2.752.97.3.2.8.6"/>			
     </xs:complexType>
     
     <xs:simpleType name="codeForGenderType_values">
@@ -304,12 +293,8 @@
         <xs:annotation>
             <xs:documentation>Anger adminstrativt kön.</xs:documentation>
         </xs:annotation>
-        <xs:complexContent>
-            <xs:restriction base="gcda:cd">
-                <xs:attribute name="code" type="codeForGenderType_values"/>
-                <xs:attribute name="codeSystem" fixed="1.2.752.129.2.2.1.1"/>			
-            </xs:restriction>
-        </xs:complexContent>
+        <xs:attribute name="code" type="codeForGenderType_values" use="required" />
+        <xs:attribute name="codeSystem" fixed="1.2.752.129.2.2.1.1" use="required" />			
     </xs:complexType>
     
     <xs:simpleType name="codeForTelecomType_values">
@@ -331,16 +316,9 @@
         <xs:annotation>
             <xs:documentation>Anger olika typer av telekomadresser</xs:documentation>
         </xs:annotation>
-        <xs:complexContent>
-            <xs:restriction base="gcda:cd">
-                <xs:attribute name="code" type="codeForTelecomType_values"/>
-                <xs:attribute name="codeSystem" fixed="1.2.752.129.2.2.1.30"/>			
-            </xs:restriction>
-        </xs:complexContent>
+                <xs:attribute name="code" type="codeForTelecomType_values" use="required"/>
+                <xs:attribute name="codeSystem" fixed="1.2.752.129.2.2.1.30" use="required"/>			
     </xs:complexType>
-    
-
-
 
     <xs:simpleType name="kv_e-remissmomenttyp_codes">
         <xs:restriction base="xs:string">
@@ -391,12 +369,8 @@
         <xs:annotation>
             <xs:documentation>Anger vilken typ av aktivitet som påverkar e-remissen.</xs:documentation>
         </xs:annotation>
-        <xs:complexContent>
-            <xs:restriction base="gcda:cd">
-                <xs:attribute name="code" type="kv_e-remissmomenttyp_codes"/>
-                <xs:attribute name="codeSystem" fixed="1.2.752.97.3.2.8.1"/>			
-            </xs:restriction>
-        </xs:complexContent>
+        <xs:attribute name="code" type="kv_e-remissmomenttyp_codes"/>
+        <xs:attribute name="codeSystem" fixed="1.2.752.97.3.2.8.1"/>			
     </xs:complexType>
     
     
@@ -444,12 +418,8 @@
         <xs:annotation>
             <xs:documentation>Beskriver var i sin livscykel som remissen befinner sig.</xs:documentation>
         </xs:annotation>
-            <xs:complexContent>
-            <xs:restriction base="gcda:cd">
-                <xs:attribute name="code" type="kv_eRemissStatus_codes"/>
-                <xs:attribute name="codeSystem" fixed="1.2.752.97.3.2.8.3"/>			
-            </xs:restriction>
-        </xs:complexContent>
+        <xs:attribute name="code" type="kv_eRemissStatus_codes"/>
+        <xs:attribute name="codeSystem" fixed="1.2.752.97.3.2.8.3"/>			
     </xs:complexType>
     
     <xs:simpleType name="kv_remissrolltyp_codes">
@@ -501,12 +471,8 @@
         <xs:annotation>
             <xs:documentation>Anger roller som aktörer spelar i e-remissmoment och e-remissmeddelanden.</xs:documentation>
         </xs:annotation>
-        <xs:complexContent>
-            <xs:restriction base="gcda:cd">
                 <xs:attribute name="code" type="kv_remissrolltyp_codes"/>
                 <xs:attribute name="codeSystem" fixed="1.2.752.97.3.2.8.4"/>			
-            </xs:restriction>
-        </xs:complexContent>
     </xs:complexType>
     
     <xs:simpleType name="kv_betalningsansvarstyp_code">
@@ -568,12 +534,8 @@
         <xs:annotation>
             <xs:documentation>Anger typer av betalningsansvar.</xs:documentation>
         </xs:annotation>
-        <xs:complexContent>
-            <xs:restriction base="gcda:cd">
-                <xs:attribute name="code" type="kv_betalningsansvarstyp_code"/>
-                <xs:attribute name="codeSystem" fixed="1.2.752.97.x.x.x.x"/>			
-            </xs:restriction>
-        </xs:complexContent>
+        <xs:attribute name="code" type="kv_betalningsansvarstyp_code"/>
+        <xs:attribute name="codeSystem" fixed="1.2.752.97.x.x.x.x"/>			
     </xs:complexType>
     
     
@@ -609,19 +571,15 @@
                     <xs:documentation>Taktilt uppfattade tecken</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-         </xs:restriction>      
+        </xs:restriction>      
     </xs:simpleType>
 
     <xs:complexType name="kv_sprakkommunikationsmetod">
         <xs:annotation>
             <xs:documentation>Värdemängden beskriver på vilka sätt den språkliga kommunikationen  går till.</xs:documentation>
         </xs:annotation>
-        <xs:complexContent>
-            <xs:restriction base="gcda:cd">
-                <xs:attribute name="code" type="kv_sprakkommunikationsmetod_codes"/>
-                <xs:attribute name="codeSystem" fixed="1.2.752.97.3.2.8.7"/>			
-            </xs:restriction>
-        </xs:complexContent>
+        <xs:attribute name="code" type="kv_sprakkommunikationsmetod_codes"/>
+        <xs:attribute name="codeSystem" fixed="1.2.752.97.3.2.8.7"/>			
     </xs:complexType>
 
     <!-- -->
@@ -660,12 +618,8 @@
         <xs:annotation>
             <xs:documentation>Anger typen av svar.</xs:documentation>
         </xs:annotation>
-        <xs:complexContent>
-            <xs:restriction base="gcda:cd">
                 <xs:attribute name="code" type="kv_svarsmeddelandetyp_codes"/>
                 <xs:attribute name="codeSystem" fixed="1.2.752.97.3.2.8.6"/>			
-            </xs:restriction>
-        </xs:complexContent>
     </xs:complexType>
     
     <xs:simpleType name="kv_aktmomentstatus_codes">
@@ -733,12 +687,8 @@
         <xs:annotation>
             <xs:documentation>Remissmomentet påverkar remisstatus endast då aktmomentstatus är Avklarad (= slutförd).</xs:documentation>
         </xs:annotation>
-        <xs:complexContent>
-            <xs:restriction base="gcda:cd">
-                <xs:attribute name="code" type="kv_aktmomentstatus_codes"/>
-                <xs:attribute name="codeSystem" fixed="1.2.752.129.2.2.2.27"/>			
-            </xs:restriction>
-        </xs:complexContent>
+        <xs:attribute name="code" type="kv_aktmomentstatus_codes"/>
+        <xs:attribute name="codeSystem" fixed="1.2.752.129.2.2.2.27"/>			
     </xs:complexType>
     
     <!-- -->
@@ -816,12 +766,8 @@
         <xs:annotation>
             <xs:documentation>Anger typ av nära relation.</xs:documentation>
         </xs:annotation>
-        <xs:complexContent>
-            <xs:restriction base="gcda:cd">
                 <xs:attribute name="code" type="kv_narstaenderelation_codes"/>
                 <xs:attribute name="codeSystem" fixed="1.2.752.129.2.2.1.8"/>			
-            </xs:restriction>
-        </xs:complexContent>
     </xs:complexType>
     
     <xs:simpleType name="codeForAdressType_values">
@@ -853,12 +799,8 @@
         <xs:annotation>
             <xs:documentation>Anger olika typer av adresser</xs:documentation>
         </xs:annotation>
-        <xs:complexContent>
-            <xs:restriction base="gcda:cd">
-                <xs:attribute name="code" type="codeForAdressType_values"/>
-                <xs:attribute name="codeSystem" fixed="1.2.752.129.2.2.1.20"/>			
-            </xs:restriction>
-        </xs:complexContent>
+        <xs:attribute name="code" type="codeForAdressType_values"/>
+        <xs:attribute name="codeSystem" fixed="1.2.752.129.2.2.1.20"/>			
     </xs:complexType>
     
 </xs:schema>
