@@ -23,35 +23,30 @@
   <xs:element name='GetHsaUnitListResponse' type='tns:GetHsaUnitListResponseType' />
   <xs:complexType name='GetHsaUnitListType'>
     <xs:sequence>
-      <xs:element name="hsaIdentity" type="tns:hsaIdentityType" minOccurs="0"/>
-      <xs:element name="searchBase" type="tns:searchBaseType" minOccurs="0"/>
+      <xs:element name="hsaIdentity" type="core:hsaIdentityType" minOccurs="0"/>
+      <xs:element name="searchBase" type="core:searchBaseType" minOccurs="0"/>
       <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
-
-  <xs:simpleType name="hsaIdentityType">
-    <xs:restriction base="xs:string"/>
-  </xs:simpleType>
-
-  <xs:simpleType name="searchBaseType">
-    <xs:restriction base="xs:token">
-        <xs:maxLength value="350"/>
-        <xs:pattern value="([OUDCNLoudcnl]{1,2}=[0-9\p{L}\p{Zs}\-.]*,?)*"/>
-    </xs:restriction>
-  </xs:simpleType>
 
   <xs:complexType name='GetHsaUnitListResponseType'>
     <xs:sequence>
-      <xs:element name="unitList" minOccurs="0" maxOccurs="unbounded">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="hsaIdentity" type="tns:hsaIdentityType" />
+        <xs:element name="UnitList" minOccurs="0">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="unitListUnit" type="tns:UnitListUnit" minOccurs="0" maxOccurs="unbounded" />
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+        <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="UnitListUnit">
+        <xs:sequence>
+            <xs:element name="hsaIdentity" type="core:hsaIdentityType" />
             <xs:element name="name" type="xs:string" />
-            <xs:element name="parentHsaIdentity" type="tns:hsaIdentityType" minOccurs='0' />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
-    </xs:sequence>
-  </xs:complexType>
+            <xs:element name="parentHsaIdentity" type="core:hsaIdentityType" minOccurs='0' />
+        </xs:sequence>
+    </xs:complexType>
 </xs:schema>
