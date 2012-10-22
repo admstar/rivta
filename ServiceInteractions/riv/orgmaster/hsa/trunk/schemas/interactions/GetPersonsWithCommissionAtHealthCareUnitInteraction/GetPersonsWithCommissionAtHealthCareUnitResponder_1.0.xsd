@@ -23,41 +23,36 @@
   <xs:element name='GetPersonsWithCommissionAtHealthCareUnitResponse' type='tns:GetPersonsWithCommissionAtHealthCareUnitResponseType' />
   <xs:complexType name='GetPersonsWithCommissionAtHealthCareUnitType'>
     <xs:sequence>
-      <xs:element name="hsaIdentity" type="tns:hsaIdentityType"/>
-      <xs:element name="searchBase" type="tns:searchBaseType" minOccurs="0"/>
+      <xs:element name="hsaIdentity" type="core:hsaIdentityType"/>
+      <xs:element name="searchBase" type="core:searchBaseType" minOccurs="0"/>
       <xs:element name="paTitleCode" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="hsaTitle" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
       <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
 
-  <xs:simpleType name="hsaIdentityType">
-    <xs:restriction base="xs:string"/>
-  </xs:simpleType>
-
-  <xs:simpleType name="searchBaseType">
-    <xs:restriction base="xs:token">
-        <xs:maxLength value="350"/>
-        <xs:pattern value="([OUDCNLoudcnl]{1,2}=[0-9\p{L}\p{Zs}\-.]*,?)*"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:complexType name='GetPersonsWithCommissionAtHealthCareUnitResponseType'>
-    <xs:sequence>
-      <xs:element name="PersonList" minOccurs="0" maxOccurs="unbounded">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="hsaIdentity" type="tns:hsaIdentityType" />
+    <xs:complexType name='GetPersonsWithCommissionAtHealthCareUnitResponseType'>
+        <xs:sequence>
+           <xs:element name="PersonList" minOccurs="0">
+             <xs:complexType>
+                 <xs:sequence>
+                    <xs:element name="personListPerson" type="tns:PersonListPerson" minOccurs="0" maxOccurs="unbounded" />
+                  </xs:sequence>
+              </xs:complexType>
+           </xs:element>
+           <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
+        </xs:sequence>
+    </xs:complexType>
+  
+    <xs:complexType name="PersonListPerson">
+        <xs:sequence>
+            <xs:element name="hsaIdentity" type="core:hsaIdentityType" />
             <xs:element name="givenName" type="xs:string"/>
             <xs:element name="sn" type="xs:string" />
             <xs:element name="personalPrescriptionCode" type="xs:string" minOccurs="0" />
             <xs:element name="paTitleCode" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="paTitleName" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="hsaTitle" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
-    </xs:sequence>
-  </xs:complexType>
+        </xs:sequence>
+    </xs:complexType>
 </xs:schema>

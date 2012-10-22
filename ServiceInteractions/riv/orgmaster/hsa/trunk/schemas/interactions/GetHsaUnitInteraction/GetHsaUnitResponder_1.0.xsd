@@ -90,7 +90,7 @@
       <xs:element name="dropInHours" minOccurs="0">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="dropInHour" type="tns:TimeSpanType" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element name="dropInHour" type="core:TimeSpanType" minOccurs="0" maxOccurs="unbounded" />
             </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -113,10 +113,11 @@
       </xs:element>
       <xs:element name="hsaIdentity" type="tns:hsaIdentityType"/>
       <xs:element name="hsaJpegLogotype" type="xs:string" minOccurs="0"/>
-      <xs:element name="invoiceAddress" type="tns:AddressType" minOccurs="0"/>
+      <xs:element name="invoiceAddress" type="core:AddressType" minOccurs="0"/>
       <xs:element name="jpegPhoto" type="xs:string" minOccurs="0"/>
       <xs:element name="labeledUri" type="xs:string" minOccurs="0"/>
       <xs:element name="location" type="xs:string" minOccurs="0"/>
+      <xs:element name="webPage1177" type="xs:string" minOccurs="0"/>
       <xs:element name="managements" minOccurs="0">
         <xs:complexType>
             <xs:sequence>
@@ -129,7 +130,7 @@
       <xs:element name="municipalitySection" type="xs:string" minOccurs="0"/>
       <xs:element name="name" type="xs:string"/>
       <xs:element name="patientInformation" type="xs:string" minOccurs="0"/>
-      <xs:element name="postalAddress" type="tns:AddressType" minOccurs="0"/>
+      <xs:element name="postalAddress" type="core:AddressType" minOccurs="0"/>
       <xs:element name="postalCode" type="xs:string" minOccurs="0"/>
       <xs:element name="priceInformation" type="xs:string" minOccurs="0"/>
       <xs:element name="publicName" type="xs:string"/>
@@ -145,7 +146,7 @@
       <xs:element name="surgeryHours" minOccurs="0">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="surgeryHour" type="tns:TimeSpanType" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element name="surgeryHour" type="core:TimeSpanType" minOccurs="0" maxOccurs="unbounded" />
             </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -153,7 +154,7 @@
       <xs:element name="telephoneHours" minOccurs="0">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="telephoneHour" type="tns:TimeSpanType" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element name="telephoneHour" type="core:TimeSpanType" minOccurs="0" maxOccurs="unbounded" />
             </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -179,56 +180,19 @@
             </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:element name="unitTemporaryInformation" type="tns:DateSpanType" minOccurs="0"/>
+      <xs:element name="unitTemporaryInformation" type="core:DateSpanType" minOccurs="0"/>
       <xs:element name="visitingHours" minOccurs="0">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="visitingHour" type="tns:TimeSpanType" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element name="visitingHour" type="core:TimeSpanType" minOccurs="0" maxOccurs="unbounded" />
             </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:element name="visitingRuleAge" type="tns:AgeSpanType" minOccurs="0"/>
+      <xs:element name="visitingRuleAge" type="core:AgeSpanType" minOccurs="0"/>
       <xs:element name="visitingRuleReferral" type="xs:string" minOccurs="0"/>
       <xs:element name="visitingRules" type="xs:string" minOccurs="0"/>
       <xs:element name="DN" type="xs:string"/>
       <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="AddressType">
-    <xs:sequence>
-      <xs:element name="addressLine" type="xs:string" maxOccurs="unbounded"/>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="AgeSpanType">
-    <xs:sequence>
-      <xs:element name="from" type="xs:integer" />
-      <xs:element name="to" type="xs:integer" />
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-    
-  <xs:complexType name="TimeSpanType">
-    <xs:sequence>
-      <xs:element name="fromDay" type="xs:integer" />
-      <xs:element name="fromTime" type="xs:time" />
-      <xs:element name="fromTime2" type="xs:string" />
-      <xs:element name="toDay" type="xs:integer" />
-      <xs:element name="toTime" type="xs:time" />
-      <xs:element name="toTime2" type="xs:string" />
-      <xs:element name="comment" type="xs:string" />
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-  
-  <xs:complexType name="DateSpanType">
-    <xs:sequence>
-      <xs:element name="fromDate" type="xs:string" />
-      <xs:element name="toDate" type="xs:string" />
-      <xs:element name="comment" type="xs:string" />
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   
@@ -238,7 +202,7 @@
       <xs:element name="telephoneHours" minOccurs="0">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="telephoneHour" type="tns:TimeSpanType" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element name="telephoneHour" type="core:TimeSpanType" minOccurs="0" maxOccurs="unbounded" />
             </xs:sequence>
         </xs:complexType>
       </xs:element>
