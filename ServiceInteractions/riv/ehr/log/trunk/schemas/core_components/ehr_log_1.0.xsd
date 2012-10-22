@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' 
+	xmlns:tns='urn:riv:ehr:log:1'
+	targetNamespace='urn:riv:ehr:log:1'
+	elementFormDefault='qualified'
+	attributeFormDefault='unqualified' 
+	version='1.0'>
+
+
+
+
+
+
+	<xs:simpleType name="ActivityTypeType">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Enumerationsvärde som anger typ av aktivitet som utförts. 
+		        Kan vara Läsa, Skriva, Signera, Utskrift, Vidimera, Radera, Nödöppning
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Läsa">
+				<xs:annotation>
+				    <xs:documentation xml:lang='sv'>
+				        En läsning av data har utförts.
+				    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Skriva">
+				<xs:annotation>
+				    <xs:documentation xml:lang='sv'>
+				        En aktivitet där något läggs till.
+				    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Signera">
+				<xs:annotation>
+				    <xs:documentation xml:lang='sv'>
+				        Signering har utförts.
+				    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Utskrift">
+				<xs:annotation>
+				    <xs:documentation xml:lang='sv'>
+				        En utskrift har utförts.
+				    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Vidimera">
+				<xs:annotation>
+				    <xs:documentation xml:lang='sv'>
+				        En autentisering har utförts.
+				    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Radera">
+				<xs:annotation>
+				    <xs:documentation xml:lang='sv'>
+				        Något har raderats.
+				    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Nödöppning">
+				<xs:annotation>
+				    <xs:documentation xml:lang='sv'>
+				        Nödöppning har gjorts.
+				    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="PurposeTypeType">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Enumerationsvärde som anger syfte till aktivitet. 
+		        Kan vara Vård och behandling, Kvalitetssäkring, Annan dokumentation enligt lag, Statistik, Administration/tillsyn, Specialuppgift
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Vård och behandling">
+				<xs:annotation>
+				    <xs:documentation xml:lang='sv'>
+				        Aktivitetens syfte är vård och behandling
+				    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Kvalitetssäkring">
+				<xs:annotation>
+				    <xs:documentation xml:lang='sv'>
+				        Aktivitetens syfte är kvalitetssäkring
+				    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Annan dokumentation enligt lag">
+				<xs:annotation>
+				    <xs:documentation xml:lang='sv'>
+				        Aktivitetens syfte är annan dokumentation enligt lag
+				    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Statistik">
+				<xs:annotation>
+				    <xs:documentation xml:lang='sv'>
+				        Aktivitetens syfte är statistik
+				    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Administration/tillsyn">
+				<xs:annotation>
+				    <xs:documentation xml:lang='sv'>
+				        Aktivitetens syfte är administration/tillsyn
+				    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Specialuppgift">
+				<xs:annotation>
+				    <xs:documentation xml:lang='sv'>
+				        Aktivitetens syfte är av typen specialuppgift
+				    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="ResultCodeType">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Enumerationsvärde som anger de svarskoder som finns.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OK">
+				<xs:annotation>
+				    <xs:documentation xml:lang='sv'>
+				        Transaktionen har utförts enligt uppdraget.
+				    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="INFO">
+				<xs:annotation>
+				    <xs:documentation xml:lang='sv'>
+				        Transaktionen har utförts enligt begäran, men det finns ett meddelande som konsumenten måste visa upp för användaren (om tillämpbart). Exempel på detta kan vara &amp;quot;kom fastande&amp;quot;.
+				    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ERROR">
+				<xs:annotation>
+				    <xs:documentation xml:lang='sv'>
+				        Transaktionen har INTE kunnat utföras p.g.a ett logiskt fel. Det finns ett meddelande som konsumenten måste visa upp. Exempel på detta kan vara &amp;quot;tiden har bokats av annan patient&amp;quot;.
+				    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VALIDATION_ERROR">
+				<xs:annotation>
+				    <xs:documentation xml:lang='sv'>
+				        En eller flera inparametrar innehåller felaktiga värden. Angiven tjänst utfördes ej.
+				    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ACCESSDENIED">
+				<xs:annotation>
+				    <xs:documentation xml:lang='sv'>
+				        Behörighet saknas för att utföra begärd tjänst. Angiven tjänst utfördes ej.
+				    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="SystemNameValue">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Datatyp som representerar namn på ett system.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="UserNameValue">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Datatyp som representerar namn för en användare.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="AssignmentValue">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Datatyp som representerar namn på medarbetare i uppdrag.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="UserTitleValue">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Datatyp som representerar titel på användare.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="ActivityLevelValue">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Datatyp som representerar en aktivitets nivå.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="ActivityArgsValue">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Datatyp som representerar en .
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="8192"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="ResourceTypeValue">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Datatyp som representerar en aktivitets nivå.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="CareProviderNameValue">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Datatyp som representerar namn på en vårdgivare.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="CareUnitNameValue">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Datatyp som representerar namn på en vårdenhet.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="PatientNameValue">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Datatyp som representerar en patients namn.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="Id">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Datatyp som representerar ett unikt identifikationsnummer enligt formatet för UUID (Universally Unique Identifier).
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="36"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="HsaId">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Datatyp som representerar det unika nummer som identifierar en anställd, uppdragstagare, strukturenhet eller en HCC funktion (HSA-id).
+		        Specificerat enligt HSA-schema tjänsteträdet version 3.9.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="32"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="PersonIdValue">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Datatyp som representerar ett personnummer, samordningsnummer eller ett reservnummer.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="12"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:complexType name="LogType">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Datatyp som representerar en loggpost enligt PDL. Datatypen beskriver grundformatet för en loggpost.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="LogId" type="tns:Id"/>
+			<xs:element name="System" type="tns:SystemType"/>
+			<xs:element name="Activity" type="tns:ActivityType"/>
+			<xs:element name="User" type="tns:UserType"/>
+			<xs:element name="Resources" type="tns:ResourcesType"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="ResourcesType">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Information om aktuella resurser. En loggpost kan hålla en eller flera resurser.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Resource" type="tns:ResourceType" maxOccurs="unbounded"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="ActivityType">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Datatyp som representerar vilken typ av aktivitet som utförts, på vilken nivå, tidpunkt samt syftet med aktiviteten.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ActivityType" type="tns:ActivityTypeType"/>
+			<xs:element name="ActivityLevel" type="tns:ActivityLevelValue" minOccurs="0"/>
+			<xs:element name="ActivityArgs" type="tns:ActivityArgsValue" minOccurs="0"/>
+			<xs:element name="StartDate" type="xs:dateTime"/>
+			<xs:element name="Purpose" type="tns:PurposeTypeType"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="UserType">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Datatyp som representerar användaren som utfört aktivitet, tillika ägare av loggpost.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UserId" type="tns:HsaId"/>
+			<xs:element name="Name" type="tns:UserNameValue" minOccurs="0"/>
+			<xs:element name="PersonId" type="tns:PersonIdValue" minOccurs="0"/>
+			<xs:element name="Assignment" type="tns:AssignmentValue" minOccurs="0"/>
+			<xs:element name="Title" type="tns:UserTitleValue" minOccurs="0"/>
+			<xs:element name="CareUnit" type="tns:CareUnitType"/>
+			<xs:element name="CareProvider" type="tns:CareProviderType"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="ResourceType">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Datatyp som representerar en resurs i loggposten.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ResourceType" type="tns:ResourceTypeValue"/>
+			<xs:element name="Patient" type="tns:PatientType" minOccurs="0"/>
+			<xs:element name="CareProvider" type="tns:ResourceCareProviderType"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="SystemType">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Datatyp som representerar ett system i loggposten. Det system som skapar loggposten.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SystemId" type="tns:HsaId"/>
+			<xs:element name="SystemName" type="tns:SystemNameValue" minOccurs="0"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="CareUnitType">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Datatyp som representerar en vårdenhet.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CareUnitId" type="tns:HsaId"/>
+			<xs:element name="CareUnitName" type="tns:CareUnitNameValue" minOccurs="0"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="CareProviderType">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Datatyp som representerar en vårdgivare.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CareProviderId" type="tns:HsaId"/>
+			<xs:element name="CareProviderName" type="tns:CareProviderNameValue" minOccurs="0"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="ResourceCareProviderType">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Datatyp som representerar den vårdgivare som en resurs tillhör.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CareProviderId" type="tns:HsaId"/>
+			<xs:element name="CareProviderName" type="tns:CareProviderNameValue" minOccurs="0"/>
+			<xs:element name="CareUnit" type="tns:CareUnitType" minOccurs="0"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="PatientType">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Datatyp som representerar en patient i en resurs.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PatientId" type="tns:PersonIdValue"/>
+			<xs:element name="PatientName" type="tns:PatientNameValue" minOccurs="0"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="ResultType">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Datatyp som returneras som ett generellt svar från alla förändrande tjänster, t.ex. skapa, radera, etc. 
+		        En anropande klient skall alltid kontrollera att resultatkoden inte innehåller fel för att på så sätt veta om anropet lyckades. 
+		        Alla svarskoder förutom OK och INFO betyder att åtgärden inte genomfördes.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ResultCode" type="tns:ResultCodeType"/>
+			<xs:element name="ResultText" type="xs:string"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>
