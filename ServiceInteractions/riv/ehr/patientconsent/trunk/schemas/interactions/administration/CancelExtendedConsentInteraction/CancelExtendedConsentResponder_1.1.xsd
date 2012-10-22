@@ -19,19 +19,14 @@
  -->	
 <xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' 
 	xmlns:tns='urn:riv:ehr:patientconsent:administration:CancelExtendedConsentResponder:1'				
-	xmlns:common='urn:riv:ehr:common:1'
+	xmlns:patientconsent='urn:riv:ehr:patientconsent:1'
 	targetNamespace='urn:riv:ehr:patientconsent:administration:CancelExtendedConsentResponder:1'
 	elementFormDefault='qualified'
 	attributeFormDefault='unqualified'
-	version='1.0'>
+	version='1.1'>
 
-	<xs:import schemaLocation='../../../common/Common_1.0.xsd' namespace='urn:riv:ehr:common:1' />
+	<xs:import schemaLocation='../../../core_components/ehr_patientconsent_1.1.xsd' namespace='urn:riv:ehr:patientconsent:1' />
 
-	<xs:element name="UnauthorizedFault" type="common:UnauthorizedFaultType"/>
-	<xs:element name="ValidationErrorFault" type="common:ValidationErrorFaultType"/>
-	<xs:element name="ItemDoesNotExistFault" type="common:ItemDoesNotExistFaultType"/>
-	<xs:element name="ItemInactiveFault" type="common:ItemInactiveFaultType"/>
-	<xs:element name="InternalErrorFault" type="common:InternalErrorFaultType"/>
 
 	<xs:element name='CancelExtendedConsentRequest' type='tns:CancelExtendedConsentRequestType'/>
 
@@ -42,8 +37,8 @@
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="AssertionId" type="common:Id"/>
-			<xs:element name="CancellationAction" type="common:ActionType"/>
+			<xs:element name="AssertionId" type="patientconsent:Id"/>
+			<xs:element name="CancellationAction" type="patientconsent:ActionType"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -57,7 +52,7 @@
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="ResultType" type="common:ResultType"/>
+			<xs:element name="ResultType" type="patientconsent:ResultType"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
 		</xs:sequence>
 	</xs:complexType>

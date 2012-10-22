@@ -20,18 +20,13 @@
 <xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' 
 	xmlns:tns='urn:riv:ehr:patientconsent:querying:GetConsentsForCareProviderResponder:1'				
 	xmlns:patientconsent='urn:riv:ehr:patientconsent:1'
-	xmlns:common='urn:riv:ehr:common:1'
 	targetNamespace='urn:riv:ehr:patientconsent:querying:GetConsentsForCareProviderResponder:1'
 	elementFormDefault='qualified'
 	attributeFormDefault='unqualified'
-	version='1.0'>
+	version='1.1'>
 
-	<xs:import schemaLocation='../../Patientconsent_1.0.xsd' namespace='urn:riv:ehr:patientconsent:1' />
-	<xs:import schemaLocation='../../../common/Common_1.0.xsd' namespace='urn:riv:ehr:common:1' />
+	<xs:import schemaLocation='../../../core_components/ehr_patientconsent_1.1.xsd' namespace='urn:riv:ehr:patientconsent:1' />
 
-	<xs:element name="UnauthorizedFault" type="common:UnauthorizedFaultType"/>
-	<xs:element name="ValidationErrorFault" type="common:ValidationErrorFaultType"/>
-	<xs:element name="InternalErrorFault" type="common:InternalErrorFaultType"/>
 
 	<xs:element name='GetConsentsForCareProviderRequest' type='tns:GetConsentsForCareProviderRequestType'/>
 
@@ -43,14 +38,14 @@
 		        Det är valbart om makulerade och återkallade samtyckesintyg som ej är utgångna (giltigt t o m har passerats) skall returneras. 
 		        Utgångna samtyckesintyg (giltigt t o m har passerats) returneras ej oavsett makulering eller återkallning.
 		        Det går även att ange en tidpunkt (CreatedOnOrAfter) från när man önskar inhämta uppgifter och på så sätt undvika att inhämta data som redan hämtats vid ett tidigare tillfälle. Här avses tidpunkten då samtycket lagrades i tjänsten.         
-		        Tjänsten tillåts att dela upp listan av samtyckesintyg i mindre delar för att minska på belastningen på systemet. Om detta sker kommer flaggan HasMore att vara satt. Resten av samtyckesintygen skall i så fall hämtas med ytterligare anrop till tjänsten. 
+		        Tjänsten tillåts att dela upp listan av samtyckesintyg i mindre delar för att minska på belastningen på systemet. Om detta sker kommer flaggan HasMore att vara satt om det finns fler samtyckesintyg att hämta. De resterande samtyckesintygen skall i så fall hämtas med ytterligare anrop till tjänsten tills flaggan HashMore ej längre är satt (false). 
 		        Tjänsten returnerar en ny tidpunkt (CreatedOnOrAfter) som anger från och med nästa tidpunkt som samtyckesintygen ej har hämtats. Detta värde kan användas som inparameter i ytterligare anrop till tjänsten för att hämta nästa sekvens av samtyckesintyg.                
 		        Tjänsten kan användas i ett integrationsmönster där vårdsystemet med visst intervall inhämtar alla samtycken det behöver utifrån de vårdgivare som systemet hanterar information från, för att sedan vid behov utföra intern kontroll mot underlaget av samtycken och nödsituationsintyg.        
 		        Viktigt att kontrollera att alla samtycken är hämtade genom att kontrollera värdet på flaggan HasMore.
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="CareProviderId" type="common:HsaId"/>
+			<xs:element name="CareProviderId" type="patientconsent:HsaId"/>
 			<xs:element name="CreatedOnOrAfter" type="xs:dateTime" minOccurs="0"/>
 			<xs:element name="GetCancelledFlag" type="xs:boolean"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
@@ -67,14 +62,14 @@
 		        Det är valbart om makulerade och återkallade samtyckesintyg som ej är utgångna (giltigt t o m har passerats) skall returneras. 
 		        Utgångna samtyckesintyg (giltigt t o m har passerats) returneras ej oavsett makulering eller återkallning.
 		        Det går även att ange en tidpunkt (CreatedOnOrAfter) från när man önskar inhämta uppgifter och på så sätt undvika att inhämta data som redan hämtats vid ett tidigare tillfälle. Här avses tidpunkten då samtycket lagrades i tjänsten.         
-		        Tjänsten tillåts att dela upp listan av samtyckesintyg i mindre delar för att minska på belastningen på systemet. Om detta sker kommer flaggan HasMore att vara satt. Resten av samtyckesintygen skall i så fall hämtas med ytterligare anrop till tjänsten. 
+		        Tjänsten tillåts att dela upp listan av samtyckesintyg i mindre delar för att minska på belastningen på systemet. Om detta sker kommer flaggan HasMore att vara satt om det finns fler samtyckesintyg att hämta. De resterande samtyckesintygen skall i så fall hämtas med ytterligare anrop till tjänsten tills flaggan HashMore ej längre är satt (false). 
 		        Tjänsten returnerar en ny tidpunkt (CreatedOnOrAfter) som anger från och med nästa tidpunkt som samtyckesintygen ej har hämtats. Detta värde kan användas som inparameter i ytterligare anrop till tjänsten för att hämta nästa sekvens av samtyckesintyg.                
 		        Tjänsten kan användas i ett integrationsmönster där vårdsystemet med visst intervall inhämtar alla samtycken det behöver utifrån de vårdgivare som systemet hanterar information från, för att sedan vid behov utföra intern kontroll mot underlaget av samtycken och nödsituationsintyg.        
 		        Viktigt att kontrollera att alla samtycken är hämtade genom att kontrollera värdet på flaggan HasMore.
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="AllAssertionsType" type="patientconsent:AllAssertionsType"/>
+			<xs:element name="GetAllAssertionsResultType" type="patientconsent:GetAllAssertionsResultType"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
 		</xs:sequence>
 	</xs:complexType>

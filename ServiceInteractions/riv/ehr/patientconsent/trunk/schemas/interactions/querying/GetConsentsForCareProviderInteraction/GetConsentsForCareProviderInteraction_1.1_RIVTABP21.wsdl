@@ -26,7 +26,7 @@
 	xmlns:tns='urn:riv:ehr:patientconsent:querying:GetConsentsForCareProvider:1:rivtabp21'
 	targetNamespace='urn:riv:ehr:patientconsent:querying:GetConsentsForCareProvider:1:rivtabp21'>
 
-	<wsdl:documentation>
+	<wsdl:documentation xml:lang='sv'>
 		 Tjänsteinteraktionens namn: GetConsentsForCareProvider
 		 Beskrivning: 
 		   Tjänst som läser alla giltiga samtyckesintyg för en viss vårdgivare med grundinformation.        
@@ -34,7 +34,7 @@
 		   Det är valbart om makulerade och återkallade samtyckesintyg som ej är utgångna (giltigt t o m har passerats) skall returneras. 
 		   Utgångna samtyckesintyg (giltigt t o m har passerats) returneras ej oavsett makulering eller återkallning.
 		   Det går även att ange en tidpunkt (CreatedOnOrAfter) från när man önskar inhämta uppgifter och på så sätt undvika att inhämta data som redan hämtats vid ett tidigare tillfälle. Här avses tidpunkten då samtycket lagrades i tjänsten.         
-		   Tjänsten tillåts att dela upp listan av samtyckesintyg i mindre delar för att minska på belastningen på systemet. Om detta sker kommer flaggan HasMore att vara satt. Resten av samtyckesintygen skall i så fall hämtas med ytterligare anrop till tjänsten. 
+		   Tjänsten tillåts att dela upp listan av samtyckesintyg i mindre delar för att minska på belastningen på systemet. Om detta sker kommer flaggan HasMore att vara satt om det finns fler samtyckesintyg att hämta. De resterande samtyckesintygen skall i så fall hämtas med ytterligare anrop till tjänsten tills flaggan HashMore ej längre är satt (false). 
 		   Tjänsten returnerar en ny tidpunkt (CreatedOnOrAfter) som anger från och med nästa tidpunkt som samtyckesintygen ej har hämtats. Detta värde kan användas som inparameter i ytterligare anrop till tjänsten för att hämta nästa sekvens av samtyckesintyg.                
 		   Tjänsten kan användas i ett integrationsmönster där vårdsystemet med visst intervall inhämtar alla samtycken det behöver utifrån de vårdgivare som systemet hanterar information från, för att sedan vid behov utföra intern kontroll mot underlaget av samtycken och nödsituationsintyg.        
 		   Viktigt att kontrollera att alla samtycken är hämtade genom att kontrollera värdet på flaggan HasMore.
@@ -47,33 +47,15 @@
 	
 	<wsdl:types>
 		<xs:schema targetNamespace='urn:riv:ehr:patientconsent:querying:GetConsentsForCareProvider:1:rivtabp21'>
-			<xs:import schemaLocation='GetConsentsForCareProviderResponder_1.0.xsd' namespace='urn:riv:ehr:patientconsent:querying:GetConsentsForCareProviderResponder:1' />
-			<xs:import schemaLocation='../../../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
+			<xs:import schemaLocation='GetConsentsForCareProviderResponder_1.1.xsd' namespace='urn:riv:ehr:patientconsent:querying:GetConsentsForCareProviderResponder:1' />
+			<xs:import schemaLocation='../../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
 		</xs:schema>
 	</wsdl:types>
 	
-	<wsdl:message name="UnauthorizedFault">
-		<wsdl:documentation>Undantag som kastas då behörighet saknas för att utföra begärd tjänst.
-		</wsdl:documentation>
-		<wsdl:part name="parameters" element="tjsr:UnauthorizedFault" />
-	</wsdl:message>
-
-	<wsdl:message name="ValidationErrorFault">
-		<wsdl:documentation>Undantag som kastas då en eller flera inparametrar innehåller felaktiga värden. Angiven tjänst utfördes ej.
-		</wsdl:documentation>
-		<wsdl:part name="parameters" element="tjsr:ValidationErrorFault" />
-	</wsdl:message>
-
-	<wsdl:message name="InternalErrorFault">
-		<wsdl:documentation>Undantag som kastas då ett ohanterbart internt problem uppstått. Angiven tjänst utfördes ej.
-		</wsdl:documentation>
-		<wsdl:part name="parameters" element="tjsr:InternalErrorFault" />
-	</wsdl:message>
-
 		
 	<wsdl:message name='GetConsentsForCareProviderRequest'>
 		<wsdl:part name='LogicalAddress' element='itr:LogicalAddress'>
-			<wsdl:documentation>http://tempuri.org</wsdl:documentation>
+			<wsdl:documentation xml:lang='sv'>Som logisk adress anges HSA-id för aktörens vårdgivare.</wsdl:documentation>
 		</wsdl:part>
 	
 		<wsdl:part name='parameters' element='tjsr:GetConsentsForCareProviderRequest' />
@@ -87,9 +69,6 @@
 		<wsdl:operation name='GetConsentsForCareProvider'>
 			<wsdl:input message='tns:GetConsentsForCareProviderRequest' />
 			<wsdl:output message='tns:GetConsentsForCareProviderResponse' />
-			<wsdl:fault name="UnauthorizedFault" message="tns:UnauthorizedFault" />
-			<wsdl:fault name="ValidationErrorFault" message="tns:ValidationErrorFault" />
-			<wsdl:fault name="InternalErrorFault" message="tns:InternalErrorFault" />
 		</wsdl:operation>
 	</wsdl:portType>
 
@@ -104,15 +83,6 @@
 			<wsdl:output>
 				<soap:body use='literal' />
 			</wsdl:output>
-			<wsdl:fault name="UnauthorizedFault">
-				<soap:fault use="literal" name="UnauthorizedFault" />
-			</wsdl:fault>
-			<wsdl:fault name="ValidationErrorFault">
-				<soap:fault use="literal" name="ValidationErrorFault" />
-			</wsdl:fault>
-			<wsdl:fault name="InternalErrorFault">
-				<soap:fault use="literal" name="InternalErrorFault" />
-			</wsdl:fault>
 		</wsdl:operation>
 	</wsdl:binding>
 
