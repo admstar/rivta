@@ -26,7 +26,7 @@
 	xmlns:tns='urn:riv:ehr:patientconsent:administration:GetExtendedConsentsForPatient:1:rivtabp21'
 	targetNamespace='urn:riv:ehr:patientconsent:administration:GetExtendedConsentsForPatient:1:rivtabp21'>
 
-	<wsdl:documentation>
+	<wsdl:documentation xml:lang='sv'>
 		 Tjänsteinteraktionens namn: GetExtendedConsentsForPatient
 		 Beskrivning: 
 		   Tjänst som läser registrerade samtyckesintyg för en viss patient med utökad information.		
@@ -41,33 +41,15 @@
 	
 	<wsdl:types>
 		<xs:schema targetNamespace='urn:riv:ehr:patientconsent:administration:GetExtendedConsentsForPatient:1:rivtabp21'>
-			<xs:import schemaLocation='GetExtendedConsentsForPatientResponder_1.0.xsd' namespace='urn:riv:ehr:patientconsent:administration:GetExtendedConsentsForPatientResponder:1' />
-			<xs:import schemaLocation='../../../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
+			<xs:import schemaLocation='GetExtendedConsentsForPatientResponder_1.1.xsd' namespace='urn:riv:ehr:patientconsent:administration:GetExtendedConsentsForPatientResponder:1' />
+			<xs:import schemaLocation='../../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
 		</xs:schema>
 	</wsdl:types>
 	
-	<wsdl:message name="UnauthorizedFault">
-		<wsdl:documentation>Undantag som kastas då behörighet saknas för att utföra begärd tjänst.
-		</wsdl:documentation>
-		<wsdl:part name="parameters" element="tjsr:UnauthorizedFault" />
-	</wsdl:message>
-
-	<wsdl:message name="ValidationErrorFault">
-		<wsdl:documentation>Undantag som kastas då en eller flera inparametrar innehåller felaktiga värden. Angiven tjänst utfördes ej.
-		</wsdl:documentation>
-		<wsdl:part name="parameters" element="tjsr:ValidationErrorFault" />
-	</wsdl:message>
-
-	<wsdl:message name="InternalErrorFault">
-		<wsdl:documentation>Undantag som kastas då ett ohanterbart internt problem uppstått. Angiven tjänst utfördes ej.
-		</wsdl:documentation>
-		<wsdl:part name="parameters" element="tjsr:InternalErrorFault" />
-	</wsdl:message>
-
 		
 	<wsdl:message name='GetExtendedConsentsForPatientRequest'>
 		<wsdl:part name='LogicalAddress' element='itr:LogicalAddress'>
-			<wsdl:documentation>http://tempuri.org</wsdl:documentation>
+			<wsdl:documentation xml:lang='sv'>Som logisk adress anges HSA-id för aktörens vårdgivare.</wsdl:documentation>
 		</wsdl:part>
 	
 		<wsdl:part name='parameters' element='tjsr:GetExtendedConsentsForPatientRequest' />
@@ -81,9 +63,6 @@
 		<wsdl:operation name='GetExtendedConsentsForPatient'>
 			<wsdl:input message='tns:GetExtendedConsentsForPatientRequest' />
 			<wsdl:output message='tns:GetExtendedConsentsForPatientResponse' />
-			<wsdl:fault name="UnauthorizedFault" message="tns:UnauthorizedFault" />
-			<wsdl:fault name="ValidationErrorFault" message="tns:ValidationErrorFault" />
-			<wsdl:fault name="InternalErrorFault" message="tns:InternalErrorFault" />
 		</wsdl:operation>
 	</wsdl:portType>
 
@@ -98,15 +77,6 @@
 			<wsdl:output>
 				<soap:body use='literal' />
 			</wsdl:output>
-			<wsdl:fault name="UnauthorizedFault">
-				<soap:fault use="literal" name="UnauthorizedFault" />
-			</wsdl:fault>
-			<wsdl:fault name="ValidationErrorFault">
-				<soap:fault use="literal" name="ValidationErrorFault" />
-			</wsdl:fault>
-			<wsdl:fault name="InternalErrorFault">
-				<soap:fault use="literal" name="InternalErrorFault" />
-			</wsdl:fault>
 		</wsdl:operation>
 	</wsdl:binding>
 

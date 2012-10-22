@@ -19,20 +19,14 @@
  -->	
 <xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' 
 	xmlns:tns='urn:riv:ehr:patientconsent:administration:RegisterExtendedConsentResponder:1'				
-	xmlns:common='urn:riv:ehr:common:1'
 	xmlns:patientconsent='urn:riv:ehr:patientconsent:1'
 	targetNamespace='urn:riv:ehr:patientconsent:administration:RegisterExtendedConsentResponder:1'
 	elementFormDefault='qualified'
 	attributeFormDefault='unqualified'
-	version='1.0'>
+	version='1.1'>
 
-	<xs:import schemaLocation='../../../common/Common_1.0.xsd' namespace='urn:riv:ehr:common:1' />
-	<xs:import schemaLocation='../../Patientconsent_1.0.xsd' namespace='urn:riv:ehr:patientconsent:1' />
+	<xs:import schemaLocation='../../../core_components/ehr_patientconsent_1.1.xsd' namespace='urn:riv:ehr:patientconsent:1' />
 
-	<xs:element name="UnauthorizedFault" type="common:UnauthorizedFaultType"/>
-	<xs:element name="ValidationErrorFault" type="common:ValidationErrorFaultType"/>
-	<xs:element name="InternalErrorFault" type="common:InternalErrorFaultType"/>
-	<xs:element name="ItemAlreadyExistFault" type="common:ItemAlreadyExistFaultType"/>
 
 	<xs:element name='RegisterExtendedConsentRequest' type='tns:RegisterExtendedConsentRequestType'/>
 
@@ -46,17 +40,17 @@
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="AssertionId" type="common:Id"/>
+			<xs:element name="AssertionId" type="patientconsent:Id"/>
 			<xs:element name="AssertionType" type="patientconsent:AssertionTypeType"/>
 			<xs:element name="Scope" type="patientconsent:ScopeType"/>
-			<xs:element name="PatientId" type="common:PersonIdValue"/>
-			<xs:element name="CareProviderId" type="common:HsaId"/>
-			<xs:element name="CareUnitId" type="common:HsaId"/>
-			<xs:element name="EmployeeId" type="common:HsaId" minOccurs="0"/>
+			<xs:element name="PatientId" type="patientconsent:PersonIdValue"/>
+			<xs:element name="CareProviderId" type="patientconsent:HsaId"/>
+			<xs:element name="CareUnitId" type="patientconsent:HsaId"/>
+			<xs:element name="EmployeeId" type="patientconsent:HsaId" minOccurs="0"/>
 			<xs:element name="StartDate" type="xs:dateTime" minOccurs="0"/>
 			<xs:element name="EndDate" type="xs:dateTime" minOccurs="0"/>
-			<xs:element name="RepresentedBy" type="common:PersonIdValue" minOccurs="0"/>
-			<xs:element name="RegistrationAction" type="common:ActionType"/>
+			<xs:element name="RepresentedBy" type="patientconsent:PersonIdValue" minOccurs="0"/>
+			<xs:element name="RegistrationAction" type="patientconsent:ActionType"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -73,7 +67,7 @@
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="ResultType" type="common:ResultType"/>
+			<xs:element name="ResultType" type="patientconsent:ResultType"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
 		</xs:sequence>
 	</xs:complexType>
