@@ -22,7 +22,7 @@
 CD ..
 SET OUTFILE=/out:generated-src\EhrBlockingInteractions.cs
 SET APPCONFIG=/config:generated-src\app.config
-SET NAMESPACE=/namespace:*,Riv.Ehr.Blocking.Schemas.v1
+SET NAMESPACE=/namespace:*,Riv.Ehr.Blocking.Schemas.v2
 SET SCHEMADIR="..\schemas"
 SET BLOCKINGDIR="%SCHEMADIR%\interactions"
 SET SVCUTIL="svcutil.exe"
