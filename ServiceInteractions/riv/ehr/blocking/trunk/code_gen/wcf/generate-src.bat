@@ -20,54 +20,66 @@
 @REM ---------------------------------------------------------------------------------
 
 CD ..
-SET OUTFILE=/out:wcf\generated-src\EhrBlockingInteractions.cs
-SET APPCONFIG=/config:wcf\generated-src\app.config
+SET OUTFILE=/out:generated-src\EhrBlockingInteractions.cs
+SET APPCONFIG=/config:generated-src\app.config
 SET NAMESPACE=/namespace:*,Riv.Ehr.Blocking.Schemas.v1
-SET SCHEMADIR="schemas"
+SET SCHEMADIR="..\schemas"
+SET BLOCKINGDIR="%SCHEMADIR%\interactions"
 SET SVCUTIL="svcutil.exe"
 
-SET W1=%SCHEMADIR%\accesscontrol\CheckBlocksInteraction\CheckBlocksInteraction_1.0_RIVTABP20.wsdl
-SET X1=%SCHEMADIR%\accesscontrol\CheckBlocksInteraction\*.xsd
+SET W1=%BLOCKINGDIR%\accesscontrol\CheckBlocksInteraction\CheckBlocksInteraction_2.0_RIVTABP21.wsdl
+SET X1=%BLOCKINGDIR%\accesscontrol\CheckBlocksInteraction\*.xsd
 
-SET W2=%SCHEMADIR%\administration\CancelTemporaryExtendedRevokeInteraction\CancelTemporaryExtendedRevokeInteraction_1.0_RIVTABP20.wsdl
-SET X2=%SCHEMADIR%\administration\CancelTemporaryExtendedRevokeInteraction\*.xsd
+SET W2=%BLOCKINGDIR%\administration\CancelTemporaryExtendedRevokeInteraction\CancelTemporaryExtendedRevokeInteraction_2.0_RIVTABP21.wsdl
+SET X2=%BLOCKINGDIR%\administration\CancelTemporaryExtendedRevokeInteraction\*.xsd
 
-SET W3=%SCHEMADIR%\administration\DeleteExtendedBlockInteraction\DeleteExtendedBlockInteraction_1.0_RIVTABP20.wsdl
-SET X3=%SCHEMADIR%\administration\DeleteExtendedBlockInteraction\*.xsd
+SET W3=%BLOCKINGDIR%\administration\DeleteExtendedBlockInteraction\DeleteExtendedBlockInteraction_2.0_RIVTABP21.wsdl
+SET X3=%BLOCKINGDIR%\administration\DeleteExtendedBlockInteraction\*.xsd
 
-SET W4=%SCHEMADIR%\administration\GetExtendedBlocksForPatientInteraction\GetExtendedBlocksForPatientInteraction_1.0_RIVTABP20.wsdl
-SET X4=%SCHEMADIR%\administration\GetExtendedBlocksForPatientInteraction\*.xsd
+SET W4=%BLOCKINGDIR%\administration\GetExtendedBlocksForPatientInteraction\GetExtendedBlocksForPatientInteraction_2.0_RIVTABP21.wsdl
+SET X4=%BLOCKINGDIR%\administration\GetExtendedBlocksForPatientInteraction\*.xsd
 
-SET W6=%SCHEMADIR%\administration\RegisterExtendedBlockInteraction\RegisterExtendedBlockInteraction_1.0_RIVTABP20.wsdl
-SET X6=%SCHEMADIR%\administration\RegisterExtendedBlockInteraction\*.xsd
+SET W6=%BLOCKINGDIR%\administration\RegisterExtendedBlockInteraction\RegisterExtendedBlockInteraction_2.0_RIVTABP21.wsdl
+SET X6=%BLOCKINGDIR%\administration\RegisterExtendedBlockInteraction\*.xsd
 
-SET W7=%SCHEMADIR%\administration\RegisterTemporaryExtendedRevokeInteraction\RegisterTemporaryExtendedRevokeInteraction_1.0_RIVTABP20.wsdl
-SET X7=%SCHEMADIR%\administration\RegisterTemporaryExtendedRevokeInteraction\*.xsd
+SET W7=%BLOCKINGDIR%\administration\RegisterTemporaryExtendedRevokeInteraction\RegisterTemporaryExtendedRevokeInteraction_2.0_RIVTABP21.wsdl
+SET X7=%BLOCKINGDIR%\administration\RegisterTemporaryExtendedRevokeInteraction\*.xsd
 
-SET W8=%SCHEMADIR%\administration\RevokeExtendedBlockInteraction\RevokeExtendedBlockInteraction_1.0_RIVTABP20.wsdl
-SET X8=%SCHEMADIR%\administration\RevokeExtendedBlockInteraction\*.xsd
+SET W8=%BLOCKINGDIR%\administration\RevokeExtendedBlockInteraction\RevokeExtendedBlockInteraction_2.0_RIVTABP21.wsdl
+SET X8=%BLOCKINGDIR%\administration\RevokeExtendedBlockInteraction\*.xsd
 
-SET W9=%SCHEMADIR%\querying\GetAllBlocksInteraction\GetAllBlocksInteraction_1.0_RIVTABP20.wsdl
-SET X9=%SCHEMADIR%\querying\GetAllBlocksInteraction\*.xsd
+SET W9=%BLOCKINGDIR%\querying\GetAllBlocksInteraction\GetAllBlocksInteraction_2.0_RIVTABP21.wsdl
+SET X9=%BLOCKINGDIR%\querying\GetAllBlocksInteraction\*.xsd
 
-SET W10=%SCHEMADIR%\querying\GetBlocksForPatientInteraction\GetBlocksForPatientInteraction_1.0_RIVTABP20.wsdl
-SET X10=%SCHEMADIR%\querying\GetBlocksForPatientInteraction\*.xsd
+SET W10=%BLOCKINGDIR%\querying\GetAllBlocksForPatientInteraction\GetAllBlocksForPatientInteraction_2.0_RIVTABP21.wsdl
+SET X10=%BLOCKINGDIR%\querying\GetAllBlocksForPatientInteraction\*.xsd
 
-SET W11=%SCHEMADIR%\synchronization\RegisterBlockInteraction\RegisterBlockInteraction_1.0_RIVTABP20.wsdl
-SET X11=%SCHEMADIR%\synchronization\RegisterBlockInteraction\*.xsd
+SET W11=%BLOCKINGDIR%\administration\GetPatientIdsInteraction\GetPatientIdsInteraction_2.0_RIVTABP21.wsdl
+SET X11=%BLOCKINGDIR%\administration\GetPatientIdsInteraction\*.xsd
 
-SET W12=%SCHEMADIR%\synchronization\RegisterTemporaryRevokeInteraction\RegisterTemporaryRevokeInteraction_1.0_RIVTABP20.wsdl
-SET X12=%SCHEMADIR%\synchronization\RegisterTemporaryRevokeInteraction\*.xsd
+SET W12=%BLOCKINGDIR%\synchronization\RegisterBlockInteraction\RegisterBlockInteraction_2.0_RIVTABP21.wsdl
+SET X12=%BLOCKINGDIR%\synchronization\RegisterBlockInteraction\*.xsd
 
-SET W13=%SCHEMADIR%\synchronization\UnregisterBlockInteraction\UnregisterBlockInteraction_1.0_RIVTABP20.wsdl
-SET X13=%SCHEMADIR%\synchronization\UnregisterBlockInteraction\*.xsd
+SET W13=%BLOCKINGDIR%\synchronization\RegisterTemporaryRevokeInteraction\RegisterTemporaryRevokeInteraction_2.0_RIVTABP21.wsdl
+SET X13=%BLOCKINGDIR%\synchronization\RegisterTemporaryRevokeInteraction\*.xsd
 
-SET W14=%SCHEMADIR%\synchronization\UnregisterTemporaryRevokeInteraction\UnregisterTemporaryRevokeInteraction_1.0_RIVTABP20.wsdl
-SET X14=%SCHEMADIR%\synchronization\UnregisterTemporaryRevokeInteraction\*.xsd
+SET W14=%BLOCKINGDIR%\synchronization\UnregisterBlockInteraction\UnregisterBlockInteraction_2.0_RIVTABP21.wsdl
+SET X14=%BLOCKINGDIR%\synchronization\UnregisterBlockInteraction\*.xsd
 
-SET X15=%SCHEMADIR%\common\*.xsd
+SET W15=%BLOCKINGDIR%\synchronization\UnregisterTemporaryRevokeInteraction\UnregisterTemporaryRevokeInteraction_2.0_RIVTABP21.wsdl
+SET X15=%BLOCKINGDIR%\synchronization\UnregisterTemporaryRevokeInteraction\*.xsd
 
-SET SCHEMAS=%W1% %X1% %W2% %X2% %W3% %X3% %W4% %X4% %W6% %X6% %W7% %X7% %W8% %X8% %W9% %X9% %W10% %X10% %W11% %X11% %W12% %X12% %W13% %X13% %W14% %X14% %X15%
+SET W16=%BLOCKINGDIR%\querying\GetBlocksInteraction\GetBlocksInteraction_2.0_RIVTABP21.wsdl
+SET X16=%BLOCKINGDIR%\querying\GetBlocksInteraction\*.xsd
+
+SET W17=%BLOCKINGDIR%\querying\GetBlocksForPatientInteraction\GetBlocksForPatientInteraction_2.0_RIVTABP21.wsdl
+SET X17=%BLOCKINGDIR%\querying\GetBlocksForPatientInteraction\*.xsd
+
+SET X20=%SCHEMADIR%\core_components\*.xsd
+
+SET X21=%BLOCKINGDIR%\administration\*.xsd
+
+SET SCHEMAS=%W1% %X1% %W2% %X2% %W3% %X3% %W4% %X4% %W6% %X6% %W7% %X7% %W8% %X8% %W9% %X9% %W10% %X10% %W11% %X11% %W12% %X12% %W13% %X13% %W14% %X14% %W15% %X15% %W16% %X16% %W17% %X17% %X20% %X21%
 
 %SVCUTIL% /language:cs /wrapped %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
 
