@@ -26,7 +26,7 @@
 	xmlns:tns='urn:riv:ehr:patientrelationship:administration:DeleteExtendedPatientRelation:1:rivtabp21'
 	targetNamespace='urn:riv:ehr:patientrelationship:administration:DeleteExtendedPatientRelation:1:rivtabp21'>
 
-	<wsdl:documentation>
+	<wsdl:documentation xml:lang='sv'>
 		 Tjänsteinteraktionens namn: DeleteExtendedPatientRelation
 		 Beskrivning: 
 		   Tjänst som makulerar en patientrelation i patientrelationstjänsten. Makulering av patientrelation används enbart för borttagning av felregistrerade patientrelationer.
@@ -40,45 +40,15 @@
 	
 	<wsdl:types>
 		<xs:schema targetNamespace='urn:riv:ehr:patientrelationship:administration:DeleteExtendedPatientRelation:1:rivtabp21'>
-			<xs:import schemaLocation='DeleteExtendedPatientRelationResponder_1.0.xsd' namespace='urn:riv:ehr:patientrelationship:administration:DeleteExtendedPatientRelationResponder:1' />
-			<xs:import schemaLocation='../../../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
+			<xs:import schemaLocation='DeleteExtendedPatientRelationResponder_1.1.xsd' namespace='urn:riv:ehr:patientrelationship:administration:DeleteExtendedPatientRelationResponder:1' />
+			<xs:import schemaLocation='../../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
 		</xs:schema>
 	</wsdl:types>
 	
-	<wsdl:message name="UnauthorizedFault">
-		<wsdl:documentation>Undantag som kastas då behörighet saknas för att utföra begärd tjänst.
-		</wsdl:documentation>
-		<wsdl:part name="parameters" element="tjsr:UnauthorizedFault" />
-	</wsdl:message>
-
-	<wsdl:message name="ValidationErrorFault">
-		<wsdl:documentation>Undantag som kastas då en eller flera inparametrar innehåller felaktiga värden. Angiven tjänst utfördes ej.
-		</wsdl:documentation>
-		<wsdl:part name="parameters" element="tjsr:ValidationErrorFault" />
-	</wsdl:message>
-
-	<wsdl:message name="ItemDoesNotExistFault">
-		<wsdl:documentation>Undantag som kastas då refererad artifakt inte finns.
-		</wsdl:documentation>
-		<wsdl:part name="parameters" element="tjsr:ItemDoesNotExistFault" />
-	</wsdl:message>
-
-	<wsdl:message name="ItemInactiveFault">
-		<wsdl:documentation>Undantag som kastas då refererad artifakt länkar till/använder en artifact som ej längre är giltig.
-		</wsdl:documentation>
-		<wsdl:part name="parameters" element="tjsr:ItemInactiveFault" />
-	</wsdl:message>
-
-	<wsdl:message name="InternalErrorFault">
-		<wsdl:documentation>Undantag som kastas då ett ohanterbart internt problem uppstått. Angiven tjänst utfördes ej.
-		</wsdl:documentation>
-		<wsdl:part name="parameters" element="tjsr:InternalErrorFault" />
-	</wsdl:message>
-
 		
 	<wsdl:message name='DeleteExtendedPatientRelationRequest'>
 		<wsdl:part name='LogicalAddress' element='itr:LogicalAddress'>
-			<wsdl:documentation>http://tempuri.org</wsdl:documentation>
+			<wsdl:documentation xml:lang='sv'>Som logisk adress anges HSA-id för vårdgivare som patientrelationen gäller för.</wsdl:documentation>
 		</wsdl:part>
 	
 		<wsdl:part name='parameters' element='tjsr:DeleteExtendedPatientRelationRequest' />
@@ -92,11 +62,6 @@
 		<wsdl:operation name='DeleteExtendedPatientRelation'>
 			<wsdl:input message='tns:DeleteExtendedPatientRelationRequest' />
 			<wsdl:output message='tns:DeleteExtendedPatientRelationResponse' />
-			<wsdl:fault name="UnauthorizedFault" message="tns:UnauthorizedFault" />
-			<wsdl:fault name="ValidationErrorFault" message="tns:ValidationErrorFault" />
-			<wsdl:fault name="ItemDoesNotExistFault" message="tns:ItemDoesNotExistFault" />
-			<wsdl:fault name="ItemInactiveFault" message="tns:ItemInactiveFault" />
-			<wsdl:fault name="InternalErrorFault" message="tns:InternalErrorFault" />
 		</wsdl:operation>
 	</wsdl:portType>
 
@@ -111,21 +76,6 @@
 			<wsdl:output>
 				<soap:body use='literal' />
 			</wsdl:output>
-			<wsdl:fault name="UnauthorizedFault">
-				<soap:fault use="literal" name="UnauthorizedFault" />
-			</wsdl:fault>
-			<wsdl:fault name="ValidationErrorFault">
-				<soap:fault use="literal" name="ValidationErrorFault" />
-			</wsdl:fault>
-			<wsdl:fault name="ItemDoesNotExistFault">
-				<soap:fault use="literal" name="ItemDoesNotExistFault" />
-			</wsdl:fault>
-			<wsdl:fault name="ItemInactiveFault">
-				<soap:fault use="literal" name="ItemInactiveFault" />
-			</wsdl:fault>
-			<wsdl:fault name="InternalErrorFault">
-				<soap:fault use="literal" name="InternalErrorFault" />
-			</wsdl:fault>
 		</wsdl:operation>
 	</wsdl:binding>
 

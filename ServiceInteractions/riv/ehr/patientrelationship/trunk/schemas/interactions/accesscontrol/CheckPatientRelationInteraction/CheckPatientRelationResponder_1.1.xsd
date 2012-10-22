@@ -19,17 +19,14 @@
  -->	
 <xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' 
 	xmlns:tns='urn:riv:ehr:patientrelationship:accesscontrol:CheckPatientRelationResponder:1'				
-	xmlns:common='urn:riv:ehr:common:1'
+	xmlns:patientrelationship='urn:riv:ehr:patientrelationship:1'
 	targetNamespace='urn:riv:ehr:patientrelationship:accesscontrol:CheckPatientRelationResponder:1'
 	elementFormDefault='qualified'
 	attributeFormDefault='unqualified'
-	version='1.0'>
+	version='1.1'>
 
-	<xs:import schemaLocation='../../../common/Common_1.0.xsd' namespace='urn:riv:ehr:common:1' />
+	<xs:import schemaLocation='../../../core_components/ehr_patientrelationship_1.1.xsd' namespace='urn:riv:ehr:patientrelationship:1' />
 
-	<xs:element name="UnauthorizedFault" type="common:UnauthorizedFaultType"/>
-	<xs:element name="ValidationErrorFault" type="common:ValidationErrorFaultType"/>
-	<xs:element name="InternalErrorFault" type="common:InternalErrorFaultType"/>
 
 	<xs:element name='CheckPatientRelationRequest' type='tns:CheckPatientRelationRequestType'/>
 
@@ -43,8 +40,8 @@
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="AccessingActor" type="common:AccessingActorType"/>
-			<xs:element name="PatientId" type="common:PersonIdValue"/>
+			<xs:element name="AccessingActor" type="patientrelationship:AccessingActorType"/>
+			<xs:element name="PatientId" type="patientrelationship:PersonIdValue"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -61,7 +58,7 @@
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Result" type="xs:boolean"/>
+			<xs:element name="CheckResultType" type="patientrelationship:CheckResultType"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
 		</xs:sequence>
 	</xs:complexType>

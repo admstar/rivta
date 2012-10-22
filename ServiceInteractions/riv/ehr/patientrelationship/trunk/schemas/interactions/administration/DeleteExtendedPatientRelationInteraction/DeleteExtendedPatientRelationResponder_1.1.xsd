@@ -19,19 +19,14 @@
  -->	
 <xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' 
 	xmlns:tns='urn:riv:ehr:patientrelationship:administration:DeleteExtendedPatientRelationResponder:1'				
-	xmlns:common='urn:riv:ehr:common:1'
+	xmlns:patientrelationship='urn:riv:ehr:patientrelationship:1'
 	targetNamespace='urn:riv:ehr:patientrelationship:administration:DeleteExtendedPatientRelationResponder:1'
 	elementFormDefault='qualified'
 	attributeFormDefault='unqualified'
-	version='1.0'>
+	version='1.1'>
 
-	<xs:import schemaLocation='../../../common/Common_1.0.xsd' namespace='urn:riv:ehr:common:1' />
+	<xs:import schemaLocation='../../../core_components/ehr_patientrelationship_1.1.xsd' namespace='urn:riv:ehr:patientrelationship:1' />
 
-	<xs:element name="UnauthorizedFault" type="common:UnauthorizedFaultType"/>
-	<xs:element name="ValidationErrorFault" type="common:ValidationErrorFaultType"/>
-	<xs:element name="ItemDoesNotExistFault" type="common:ItemDoesNotExistFaultType"/>
-	<xs:element name="ItemInactiveFault" type="common:ItemInactiveFaultType"/>
-	<xs:element name="InternalErrorFault" type="common:InternalErrorFaultType"/>
 
 	<xs:element name='DeleteExtendedPatientRelationRequest' type='tns:DeleteExtendedPatientRelationRequestType'/>
 
@@ -43,8 +38,8 @@
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="PatientRelationId" type="common:Id"/>
-			<xs:element name="DeletionAction" type="common:ActionType"/>
+			<xs:element name="PatientRelationId" type="patientrelationship:Id"/>
+			<xs:element name="DeletionAction" type="patientrelationship:ActionType"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -59,7 +54,7 @@
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="ResultType" type="common:ResultType"/>
+			<xs:element name="ResultType" type="patientrelationship:ResultType"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
 		</xs:sequence>
 	</xs:complexType>
