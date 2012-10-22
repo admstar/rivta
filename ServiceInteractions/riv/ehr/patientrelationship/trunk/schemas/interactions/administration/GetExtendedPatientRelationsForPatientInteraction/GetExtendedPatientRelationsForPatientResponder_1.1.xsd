@@ -20,18 +20,13 @@
 <xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' 
 	xmlns:tns='urn:riv:ehr:patientrelationship:administration:GetExtendedPatientRelationsForPatientResponder:1'				
 	xmlns:patientrelationship='urn:riv:ehr:patientrelationship:1'
-	xmlns:common='urn:riv:ehr:common:1'
 	targetNamespace='urn:riv:ehr:patientrelationship:administration:GetExtendedPatientRelationsForPatientResponder:1'
 	elementFormDefault='qualified'
 	attributeFormDefault='unqualified'
-	version='1.0'>
+	version='1.1'>
 
-	<xs:import schemaLocation='../../Patientrelationship_1.0.xsd' namespace='urn:riv:ehr:patientrelationship:1' />
-	<xs:import schemaLocation='../../../common/Common_1.0.xsd' namespace='urn:riv:ehr:common:1' />
+	<xs:import schemaLocation='../../../core_components/ehr_patientrelationship_1.1.xsd' namespace='urn:riv:ehr:patientrelationship:1' />
 
-	<xs:element name="UnauthorizedFault" type="common:UnauthorizedFaultType"/>
-	<xs:element name="ValidationErrorFault" type="common:ValidationErrorFaultType"/>
-	<xs:element name="InternalErrorFault" type="common:InternalErrorFaultType"/>
 
 	<xs:element name='GetExtendedPatientRelationsForPatientRequest' type='tns:GetExtendedPatientRelationsForPatientRequestType'/>
 
@@ -44,8 +39,8 @@
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="CareProviderId" type="common:HsaId"/>
-			<xs:element name="PatientId" type="common:PersonIdValue"/>
+			<xs:element name="CareProviderId" type="patientrelationship:HsaId"/>
+			<xs:element name="PatientId" type="patientrelationship:PersonIdValue"/>
 			<xs:element name="GetCancelledFlag" type="xs:boolean"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
 		</xs:sequence>
@@ -62,7 +57,7 @@
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="ExtendedPatientRelationType" type="patientrelationship:ExtendedPatientRelationType" maxOccurs="unbounded"/>
+			<xs:element name="GetExtendedPatientRelationResultType" type="patientrelationship:GetExtendedPatientRelationResultType"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
 		</xs:sequence>
 	</xs:complexType>

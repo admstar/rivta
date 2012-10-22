@@ -20,18 +20,13 @@
 <xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' 
 	xmlns:tns='urn:riv:ehr:patientrelationship:querying:GetPatientRelationsForCareProviderResponder:1'				
 	xmlns:patientrelationship='urn:riv:ehr:patientrelationship:1'
-	xmlns:common='urn:riv:ehr:common:1'
 	targetNamespace='urn:riv:ehr:patientrelationship:querying:GetPatientRelationsForCareProviderResponder:1'
 	elementFormDefault='qualified'
 	attributeFormDefault='unqualified'
-	version='1.0'>
+	version='1.1'>
 
-	<xs:import schemaLocation='../../Patientrelationship_1.0.xsd' namespace='urn:riv:ehr:patientrelationship:1' />
-	<xs:import schemaLocation='../../../common/Common_1.0.xsd' namespace='urn:riv:ehr:common:1' />
+	<xs:import schemaLocation='../../../core_components/ehr_patientrelationship_1.1.xsd' namespace='urn:riv:ehr:patientrelationship:1' />
 
-	<xs:element name="UnauthorizedFault" type="common:UnauthorizedFaultType"/>
-	<xs:element name="ValidationErrorFault" type="common:ValidationErrorFaultType"/>
-	<xs:element name="InternalErrorFault" type="common:InternalErrorFaultType"/>
 
 	<xs:element name='GetPatientRelationsForCareProviderRequest' type='tns:GetPatientRelationsForCareProviderRequestType'/>
 
@@ -42,14 +37,14 @@
 		        Det är valbart om makulerade och återkallade patientrelationer som ej är utgångna (giltigt t o m har passerats) skall returneras. 
 		        Utgångna patientrelationer (giltigt t o m har passerats) returneras ej oavsett makulering eller återkallning.
 		        Det går även att ange en tidpunkt (CreatedOnOrAfter) från när man önskar inhämta uppgifter och på så sätt undvika att inhämta data som redan hämtats vid ett tidigare tillfälle. Här avses tidpunkten då patientrealtioner lagrades i tjänsten. 
-		        Tjänsten tillåts att dela upp listan av patientrelationer i mindre delar för att minska på belastningen på systemet. Om detta sker kommer flaggan HasMore att vara satt. Resten av patientrelationerna skall i så fall hämtas med ytterligare anrop till tjänsten. 
+		        Tjänsten tillåts att dela upp listan av patientrelationer i mindre delar för att minska på belastningen på systemet. Om detta sker kommer flaggan HasMore att vara satt om det finns fler patientrelationer att hämta. De resterande patientrelationerna skall i så fall hämtas med ytterligare anrop till tjänsten ända tills flaggan HasMore ej längre är satt (false). 
 		        Tjänsten returnerar en ny tidpunkt (CreatedOnOrAfter) som anger från och med nästa tidpunkt som patientrelationer ej har hämtats. Detta värde kan användas som inparameter i ytterligare anrop till tjänsten för att hämta nästa sekvens av patientrelationer.
 		        Tjänsten kan användas i ett integrationsmönster där vårdsystemet med visst intervall inhämtar allt patientrelationsunderlag den behöver utifrån de vårdgivare som systemet hanterar information från, för att sedan vid behov utföra intern kontroll mot underlaget för patientrelationer.
-		        Viktigt att kontrollera att alla patientrelationer är hämtade genom returnvärdet HasMore.
+		        Viktigt att kontrollera att alla patientrelationer är hämtade genom att kontrollera värdet på HasMore.
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="CareProviderId" type="common:HsaId"/>
+			<xs:element name="CareProviderId" type="patientrelationship:HsaId"/>
 			<xs:element name="CreatedOnOrAfter" type="xs:dateTime" minOccurs="0"/>
 			<xs:element name="GetCancelledFlag" type="xs:boolean"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
@@ -65,14 +60,14 @@
 		        Det är valbart om makulerade och återkallade patientrelationer som ej är utgångna (giltigt t o m har passerats) skall returneras. 
 		        Utgångna patientrelationer (giltigt t o m har passerats) returneras ej oavsett makulering eller återkallning.
 		        Det går även att ange en tidpunkt (CreatedOnOrAfter) från när man önskar inhämta uppgifter och på så sätt undvika att inhämta data som redan hämtats vid ett tidigare tillfälle. Här avses tidpunkten då patientrealtioner lagrades i tjänsten. 
-		        Tjänsten tillåts att dela upp listan av patientrelationer i mindre delar för att minska på belastningen på systemet. Om detta sker kommer flaggan HasMore att vara satt. Resten av patientrelationerna skall i så fall hämtas med ytterligare anrop till tjänsten. 
+		        Tjänsten tillåts att dela upp listan av patientrelationer i mindre delar för att minska på belastningen på systemet. Om detta sker kommer flaggan HasMore att vara satt om det finns fler patientrelationer att hämta. De resterande patientrelationerna skall i så fall hämtas med ytterligare anrop till tjänsten ända tills flaggan HasMore ej längre är satt (false). 
 		        Tjänsten returnerar en ny tidpunkt (CreatedOnOrAfter) som anger från och med nästa tidpunkt som patientrelationer ej har hämtats. Detta värde kan användas som inparameter i ytterligare anrop till tjänsten för att hämta nästa sekvens av patientrelationer.
 		        Tjänsten kan användas i ett integrationsmönster där vårdsystemet med visst intervall inhämtar allt patientrelationsunderlag den behöver utifrån de vårdgivare som systemet hanterar information från, för att sedan vid behov utföra intern kontroll mot underlaget för patientrelationer.
-		        Viktigt att kontrollera att alla patientrelationer är hämtade genom returnvärdet HasMore.
+		        Viktigt att kontrollera att alla patientrelationer är hämtade genom att kontrollera värdet på HasMore.
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="AllPatientRelationsType" type="patientrelationship:AllPatientRelationsType"/>
+			<xs:element name="GetAllPatientRelationsResultType" type="patientrelationship:GetAllPatientRelationsResultType"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
 		</xs:sequence>
 	</xs:complexType>
