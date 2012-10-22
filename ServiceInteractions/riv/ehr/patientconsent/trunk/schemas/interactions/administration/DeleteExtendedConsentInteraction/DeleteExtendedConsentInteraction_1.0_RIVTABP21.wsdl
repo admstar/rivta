@@ -17,19 +17,20 @@
  specific language governing permissions and limitations
  under the License.
  -->	
-<wsdl:definitions name='CancelExtendedConsentInteraction'
+<wsdl:definitions name='DeleteExtendedConsentInteraction'
 	xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'
 	xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/'
 	xmlns:xs='http://www.w3.org/2001/XMLSchema'
-	xmlns:tjsr='urn:riv:ehr:patientconsent:administration:CancelExtendedConsentResponder:1'
+	xmlns:tjsr='urn:riv:ehr:patientconsent:administration:DeleteExtendedConsentResponder:1'
 	xmlns:itr='urn:riv:itintegration:registry:1'
-	xmlns:tns='urn:riv:ehr:patientconsent:administration:CancelExtendedConsent:1:rivtabp21'
-	targetNamespace='urn:riv:ehr:patientconsent:administration:CancelExtendedConsent:1:rivtabp21'>
+	xmlns:tns='urn:riv:ehr:patientconsent:administration:DeleteExtendedConsent:1:rivtabp21'
+	targetNamespace='urn:riv:ehr:patientconsent:administration:DeleteExtendedConsent:1:rivtabp21'>
 
 	<wsdl:documentation xml:lang='sv'>
-		 Tjänsteinteraktionens namn: CancelExtendedConsent
+		 Tjänsteinteraktionens namn: DeleteExtendedConsent
 		 Beskrivning: 
-		   Tjänst som återkallar ett samtycke i samtyckestjänsten. Intyget raderas inte från samtyckestjänsten utan markeras som återkallad (ej längre giltig) för historikens skull. En återkallan kan ej återtas.
+		   Tjänst som makulerar ett samtycke i samtyckestjänsten. Makulering av samtycke används enbart för borttagning av felregistrerade samtycken.        
+		   Samtycket raderas inte från samtyckestjänst utan markeras som makulerad (ej längre giltig) för historikens skull. En makulering kan ej återtas.
 		 Revisioner: 
 		 Tjänstedomän: patientconsent:administration
 		 Tjänsteinteraktionstyp: Fråga-Svar
@@ -38,38 +39,38 @@
 	</wsdl:documentation>
 	
 	<wsdl:types>
-		<xs:schema targetNamespace='urn:riv:ehr:patientconsent:administration:CancelExtendedConsent:1:rivtabp21'>
-			<xs:import schemaLocation='CancelExtendedConsentResponder_1.1.xsd' namespace='urn:riv:ehr:patientconsent:administration:CancelExtendedConsentResponder:1' />
+		<xs:schema targetNamespace='urn:riv:ehr:patientconsent:administration:DeleteExtendedConsent:1:rivtabp21'>
+			<xs:import schemaLocation='DeleteExtendedConsentResponder_1.0.xsd' namespace='urn:riv:ehr:patientconsent:administration:DeleteExtendedConsentResponder:1' />
 			<xs:import schemaLocation='../../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
 		</xs:schema>
 	</wsdl:types>
 	
 		
-	<wsdl:message name='CancelExtendedConsentRequest'>
+	<wsdl:message name='DeleteExtendedConsentRequest'>
 		<wsdl:part name='LogicalAddress' element='itr:LogicalAddress'>
 			<wsdl:documentation xml:lang='sv'>Som logisk adress anges HSA-id för vårdgivaren som samtycket gäller för.</wsdl:documentation>
 		</wsdl:part>
 	
-		<wsdl:part name='parameters' element='tjsr:CancelExtendedConsentRequest' />
+		<wsdl:part name='parameters' element='tjsr:DeleteExtendedConsentRequest' />
 	</wsdl:message>
 
-	<wsdl:message name='CancelExtendedConsentResponse'>
-		<wsdl:part name='parameters' element='tjsr:CancelExtendedConsentResponse' />
+	<wsdl:message name='DeleteExtendedConsentResponse'>
+		<wsdl:part name='parameters' element='tjsr:DeleteExtendedConsentResponse' />
 	</wsdl:message>
 
-	<wsdl:portType name='CancelExtendedConsentResponderInterface'>
-		<wsdl:operation name='CancelExtendedConsent'>
-			<wsdl:input message='tns:CancelExtendedConsentRequest' />
-			<wsdl:output message='tns:CancelExtendedConsentResponse' />
+	<wsdl:portType name='DeleteExtendedConsentResponderInterface'>
+		<wsdl:operation name='DeleteExtendedConsent'>
+			<wsdl:input message='tns:DeleteExtendedConsentRequest' />
+			<wsdl:output message='tns:DeleteExtendedConsentResponse' />
 		</wsdl:operation>
 	</wsdl:portType>
 
-	<wsdl:binding name='CancelExtendedConsentResponderBinding' type='tns:CancelExtendedConsentResponderInterface'>
+	<wsdl:binding name='DeleteExtendedConsentResponderBinding' type='tns:DeleteExtendedConsentResponderInterface'>
 		<soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
-		<wsdl:operation name='CancelExtendedConsent'>
-			<soap:operation soapAction='urn:riv:ehr:patientconsent:administration:CancelExtendedConsentResponder:1:CancelExtendedConsent' style='document' />
+		<wsdl:operation name='DeleteExtendedConsent'>
+			<soap:operation soapAction='urn:riv:ehr:patientconsent:administration:DeleteExtendedConsentResponder:1:DeleteExtendedConsent' style='document' />
 			<wsdl:input>
-				<soap:header use='literal' message='tns:CancelExtendedConsentRequest' part='LogicalAddress' />
+				<soap:header use='literal' message='tns:DeleteExtendedConsentRequest' part='LogicalAddress' />
 				<soap:body use='literal' parts='parameters' />
 			</wsdl:input>
 			<wsdl:output>
@@ -78,8 +79,8 @@
 		</wsdl:operation>
 	</wsdl:binding>
 
-	<wsdl:service name='CancelExtendedConsentResponderService'>
-		<wsdl:port name='CancelExtendedConsentResponderPort' binding='tns:CancelExtendedConsentResponderBinding'>
+	<wsdl:service name='DeleteExtendedConsentResponderService'>
+		<wsdl:port name='DeleteExtendedConsentResponderPort' binding='tns:DeleteExtendedConsentResponderBinding'>
 			<soap:address location='http://tempuri.org' />
 		</wsdl:port>
 	</wsdl:service>

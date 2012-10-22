@@ -27,32 +27,31 @@ SET NAMESPACE=/namespace:*,Riv.Ehr.Patientconsent.Schemas.v1
 SET SCHEMADIR="..\..\schemas"
 SET SVCUTIL="svcutil.exe"
 	
-SET XPAT=%SCHEMADIR%\interactions\patientconsent\*.xsd
-SET XCOM=%SCHEMADIR%\interactions\common\*.xsd
 
-SET W1=%SCHEMADIR%\interactions\patientconsent\administration\cancelextendedconsent\CancelExtendedConsentInteraction_1.0_RIVTABP21.wsdl
-SET X1=%SCHEMADIR%\interactions\patientconsent\administration\cancelextendedconsent\*.xsd
 
-SET W2=%SCHEMADIR%\interactions\patientconsent\administration\deleteextendedconsent\DeleteExtendedConsentInteraction_1.0_RIVTABP21.wsdl
-SET X2=%SCHEMADIR%\interactions\patientconsent\administration\deleteextendedconsent\*.xsd
+SET W1=%SCHEMADIR%\interactions\administration\CancelExtendedConsentInteraction\CancelExtendedConsentInteraction_1.0_RIVTABP21.wsdl
+SET X1=%SCHEMADIR%\interactions\administration\CancelExtendedConsentInteraction\*.xsd
 
-SET W3=%SCHEMADIR%\interactions\patientconsent\administration\getextendedconsentsforpatient\GetExtendedConsentsForPatientInteraction_1.0_RIVTABP21.wsdl
-SET X3=%SCHEMADIR%\interactions\patientconsent\administration\getextendedconsentsforpatient\*.xsd
+SET W2=%SCHEMADIR%\interactions\administration\DeleteExtendedConsentInteraction\DeleteExtendedConsentInteraction_1.0_RIVTABP21.wsdl
+SET X2=%SCHEMADIR%\interactions\administration\DeleteExtendedConsentInteraction\*.xsd
 
-SET W4=%SCHEMADIR%\interactions\patientconsent\administration\registerextendedconsent/RegisterExtendedConsentInteraction_1.0_RIVTABP21.wsdl
-SET X4=%SCHEMADIR%\interactions\patientconsent\administration\registerextendedconsent\*.xsd
+SET W3=%SCHEMADIR%\interactions\administration\GetExtendedConsentsForPatientInteraction\GetExtendedConsentsForPatientInteraction_1.0_RIVTABP21.wsdl
+SET X3=%SCHEMADIR%\interactions\administration\GetExtendedConsentsForPatientInteraction\*.xsd
 
-SET W5=%SCHEMADIR%\interactions\patientconsent\querying/getconsentsforcareprovider/GetConsentsForCareProviderInteraction_1.0_RIVTABP21.wsdl
-SET X5=%SCHEMADIR%\interactions\patientconsent\querying\getconsentsforcareprovider\*.xsd
+SET W4=%SCHEMADIR%\interactions\administration\RegisterExtendedConsentInteraction/RegisterExtendedConsentInteraction_1.0_RIVTABP21.wsdl
+SET X4=%SCHEMADIR%\interactions\administration\RegisterExtendedConsentInteraction\*.xsd
 
-SET W6=%SCHEMADIR%\interactions\patientconsent\querying/getconsentsforpatient/GetConsentsForPatientInteraction_1.0_RIVTABP21.wsdl
-SET X6=%SCHEMADIR%\interactions\patientconsent\querying\getconsentsforpatient\*.xsd
+SET W5=%SCHEMADIR%\interactions\querying/GetConsentsForCareProviderInteraction/GetConsentsForCareProviderInteraction_1.0_RIVTABP21.wsdl
+SET X5=%SCHEMADIR%\interactions\querying\GetConsentsForCareProviderInteraction\*.xsd
 
-SET W7=%SCHEMADIR%\interactions\patientconsent/accesscontrol/checkconsent/CheckConsentInteraction_1.0_RIVTABP21.wsdl
-SET X7=%SCHEMADIR%\interactions\patientconsent\accesscontrol\checkconsent\*.xsd
+SET W6=%SCHEMADIR%\interactions\querying/GetConsentsForPatientInteraction/GetConsentsForPatientInteraction_1.0_RIVTABP21.wsdl
+SET X6=%SCHEMADIR%\interactions\querying\GetConsentsForPatientInteraction\*.xsd
+
+SET W7=%SCHEMADIR%\interactions\accesscontrol/CheckConsentInteraction/CheckConsentInteraction_1.0_RIVTABP21.wsdl
+SET X7=%SCHEMADIR%\interactions\accesscontrol\CheckConsentInteraction\*.xsd
 
 SET XCORE=%SCHEMADIR%\core_components\*.xsd
-SET SCHEMAS=%XCORE% %XCOM% %XPAT% %W1% %X1% %W2% %X2% %W3% %X3% %W4% %X4% %W5% %X5% %W6% %X6% %W7% %X7% 
+SET SCHEMAS=%XCORE% %W1% %X1% %W2% %X2% %W3% %X3% %W4% %X4% %W5% %X5% %W6% %X6% %W7% %X7% 
 
 %SVCUTIL% /language:cs /wrapped %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
 
