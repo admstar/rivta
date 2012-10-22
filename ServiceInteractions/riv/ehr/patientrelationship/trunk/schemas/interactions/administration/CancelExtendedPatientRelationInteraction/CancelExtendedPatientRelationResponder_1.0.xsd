@@ -18,39 +18,37 @@
  under the License.
  -->	
 <xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' 
-	xmlns:tns='urn:riv:ehr:patientrelationship:administration:DeleteExtendedPatientRelationResponder:1'				
+	xmlns:tns='urn:riv:ehr:patientrelationship:administration:CancelExtendedPatientRelationResponder:1'				
 	xmlns:patientrelationship='urn:riv:ehr:patientrelationship:1'
-	targetNamespace='urn:riv:ehr:patientrelationship:administration:DeleteExtendedPatientRelationResponder:1'
+	targetNamespace='urn:riv:ehr:patientrelationship:administration:CancelExtendedPatientRelationResponder:1'
 	elementFormDefault='qualified'
 	attributeFormDefault='unqualified'
-	version='1.1'>
+	version='1.0'>
 
-	<xs:import schemaLocation='../../../core_components/ehr_patientrelationship_1.1.xsd' namespace='urn:riv:ehr:patientrelationship:1' />
+	<xs:import schemaLocation='../../../core_components/ehr_patientrelationship_1.0.xsd' namespace='urn:riv:ehr:patientrelationship:1' />
 
 
-	<xs:element name='DeleteExtendedPatientRelationRequest' type='tns:DeleteExtendedPatientRelationRequestType'/>
+	<xs:element name='CancelExtendedPatientRelationRequest' type='tns:CancelExtendedPatientRelationRequestType'/>
 
-	<xs:complexType name='DeleteExtendedPatientRelationRequestType'>
+	<xs:complexType name='CancelExtendedPatientRelationRequestType'>
 		<xs:annotation>
 		    <xs:documentation xml:lang='sv'>
-		        Tjänst som makulerar en patientrelation i patientrelationstjänsten. Makulering av patientrelation används enbart för borttagning av felregistrerade patientrelationer.
-		        Patientrelationen raderas inte från patientrelationstjänsten utan markeras som makulerad (ej längre giltig) för historikens skull. En makulering kan ej återtas.
+		        Denna tjänst återkallar en patientrelation i patientrelationstjänsten. patientrelationen raderas inte från patientrelationstjänsten utan markeras som återkallad (ej längre giltig) för historikens skull. En återkallan kan ej återtas.
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="PatientRelationId" type="patientrelationship:Id"/>
-			<xs:element name="DeletionAction" type="patientrelationship:ActionType"/>
+			<xs:element name="CancellationAction" type="patientrelationship:ActionType"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:element name='DeleteExtendedPatientRelationResponse' type='tns:DeleteExtendedPatientRelationResponseType'/>
+	<xs:element name='CancelExtendedPatientRelationResponse' type='tns:CancelExtendedPatientRelationResponseType'/>
 
-	<xs:complexType name='DeleteExtendedPatientRelationResponseType'>
+	<xs:complexType name='CancelExtendedPatientRelationResponseType'>
 		<xs:annotation>
 		    <xs:documentation xml:lang='sv'>
-		        Tjänst som makulerar en patientrelation i patientrelationstjänsten. Makulering av patientrelation används enbart för borttagning av felregistrerade patientrelationer.
-		        Patientrelationen raderas inte från patientrelationstjänsten utan markeras som makulerad (ej längre giltig) för historikens skull. En makulering kan ej återtas.
+		        Denna tjänst återkallar en patientrelation i patientrelationstjänsten. patientrelationen raderas inte från patientrelationstjänsten utan markeras som återkallad (ej längre giltig) för historikens skull. En återkallan kan ej återtas.
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>

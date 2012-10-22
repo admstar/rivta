@@ -18,37 +18,45 @@
  under the License.
  -->	
 <xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' 
-	xmlns:tns='urn:riv:ehr:patientrelationship:administration:CancelExtendedPatientRelationResponder:1'				
+	xmlns:tns='urn:riv:ehr:patientrelationship:administration:RegisterExtendedPatientRelationResponder:1'				
 	xmlns:patientrelationship='urn:riv:ehr:patientrelationship:1'
-	targetNamespace='urn:riv:ehr:patientrelationship:administration:CancelExtendedPatientRelationResponder:1'
+	targetNamespace='urn:riv:ehr:patientrelationship:administration:RegisterExtendedPatientRelationResponder:1'
 	elementFormDefault='qualified'
 	attributeFormDefault='unqualified'
-	version='1.1'>
+	version='1.0'>
 
-	<xs:import schemaLocation='../../../core_components/ehr_patientrelationship_1.1.xsd' namespace='urn:riv:ehr:patientrelationship:1' />
+	<xs:import schemaLocation='../../../core_components/ehr_patientrelationship_1.0.xsd' namespace='urn:riv:ehr:patientrelationship:1' />
 
 
-	<xs:element name='CancelExtendedPatientRelationRequest' type='tns:CancelExtendedPatientRelationRequestType'/>
+	<xs:element name='RegisterExtendedPatientRelationRequest' type='tns:RegisterExtendedPatientRelationRequestType'/>
 
-	<xs:complexType name='CancelExtendedPatientRelationRequestType'>
+	<xs:complexType name='RegisterExtendedPatientRelationRequestType'>
 		<xs:annotation>
 		    <xs:documentation xml:lang='sv'>
-		        Denna tjänst återkallar en patientrelation i patientrelationstjänsten. patientrelationen raderas inte från patientrelationstjänsten utan markeras som återkallad (ej längre giltig) för historikens skull. En återkallan kan ej återtas.
+		        Tjänst som registrerar en patientrelation mellan en patient och en medarbetare.
+		        Tjänsten kräver utökad information (metainformation) kring skapande av intyget.
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="PatientRelationId" type="patientrelationship:Id"/>
-			<xs:element name="CancellationAction" type="patientrelationship:ActionType"/>
+			<xs:element name="PatientId" type="patientrelationship:PersonIdValue"/>
+			<xs:element name="CareProviderId" type="patientrelationship:HsaId"/>
+			<xs:element name="CareUnitId" type="patientrelationship:HsaId"/>
+			<xs:element name="EmployeeId" type="patientrelationship:HsaId"/>
+			<xs:element name="StartDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="EndDate" type="xs:dateTime"/>
+			<xs:element name="RegistrationAction" type="patientrelationship:ActionType"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:element name='CancelExtendedPatientRelationResponse' type='tns:CancelExtendedPatientRelationResponseType'/>
+	<xs:element name='RegisterExtendedPatientRelationResponse' type='tns:RegisterExtendedPatientRelationResponseType'/>
 
-	<xs:complexType name='CancelExtendedPatientRelationResponseType'>
+	<xs:complexType name='RegisterExtendedPatientRelationResponseType'>
 		<xs:annotation>
 		    <xs:documentation xml:lang='sv'>
-		        Denna tjänst återkallar en patientrelation i patientrelationstjänsten. patientrelationen raderas inte från patientrelationstjänsten utan markeras som återkallad (ej längre giltig) för historikens skull. En återkallan kan ej återtas.
+		        Tjänst som registrerar en patientrelation mellan en patient och en medarbetare.
+		        Tjänsten kräver utökad information (metainformation) kring skapande av intyget.
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
