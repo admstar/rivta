@@ -665,16 +665,18 @@ KV Inmatnings typ.</xs:documentation>
         	<xs:documentation>Objekt innehåller statuskod och meddelande.  </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-    		<xs:element name="resultCodeEnum" type="tns:ResultCodeEnumType">
+    		<xs:element name="resultCodeEnum" type="tns:ResultCodeEnumType" minOccurs="1">
     			<xs:annotation>
     				<xs:documentation>Signalerar om frågan är ifylld på ett felaktigt sätt. Felkod.
 OK - Transaktion utfördINFO - Transaktion utförd med kommentar.ERROR - Transaktion ej genomförd 				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
-    		<xs:element name="resultCodeText" type="xs:string">
+    		<xs:element name="resultCodeText" type="xs:string" maxOccurs="1">
     			<xs:annotation>
     				<xs:documentation>Felmeddelande, förklarande text. Vid INFO eller ERROR.T.ex. INFO – Medtag legitimation.</xs:documentation>
     			</xs:annotation></xs:element>
+    			            <xs:any namespace='##other' processContents='lax'
+    			minOccurs='0' maxOccurs='unbounded' />
     	</xs:sequence>
     </xs:complexType>
 
@@ -714,6 +716,9 @@ KV Form Status
             <xs:element ref="tns:clinicalProcessInterestId" minOccurs="0"></xs:element>
             <xs:element ref="tns:subjectOfCare" minOccurs="1"></xs:element>
     		<xs:element ref="tns:templateId" minOccurs="1"></xs:element>
+    		
+    		            <xs:any namespace='##other' processContents='lax' minOccurs='0'
+    		maxOccurs='unbounded' />
     	</xs:sequence>
     </xs:complexType>
     
@@ -851,6 +856,8 @@ Kodverk för språk Innehåller språkkoder som utgår från SS-ISO 639-1:2005.
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
+    		            <xs:any namespace='##other' processContents='lax' minOccurs='0'
+    		maxOccurs='unbounded' />
     	</xs:sequence>
     </xs:complexType>
     
@@ -896,6 +903,8 @@ Kodverk för språk Innehåller språkkoder som utgår från SS-ISO 639-1:2005.
             <xs:element ref="tns:formId" minOccurs="1" maxOccurs="1"></xs:element>
             <xs:element ref="tns:healthcare_facility_CareUnit" minOccurs="1" maxOccurs="1"></xs:element>
     		<xs:element ref="tns:subjectOfCare" minOccurs="1" maxOccurs="1"></xs:element>
+    		            <xs:any namespace='##other' processContents='lax' minOccurs='0'
+    		maxOccurs='unbounded' />
     	</xs:sequence>
     </xs:complexType>
 
