@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Inera AB licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->	
 <xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' 
 	xmlns:tns='urn:riv:ehr:log:1'
 	targetNamespace='urn:riv:ehr:log:1'
@@ -451,6 +469,23 @@
 		<xs:sequence>
 			<xs:element name="PatientId" type="tns:PersonIdValue"/>
 			<xs:element name="PatientName" type="tns:PatientNameValue" minOccurs="0"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="ArchiveType">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Information om befinntliga arkiv.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ArchiveId" type="tns:Id"/>
+			<xs:element name="IntervalStart" type="xs:dateTime"/>
+			<xs:element name="IntervalEnd" type="xs:dateTime"/>
+			<xs:element name="CareProvider" type="xs:string"/>
+			<xs:element name="Fetched" type="xs:boolean"/>
+			<xs:element name="Count" type="xs:int"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
 		</xs:sequence>
 	</xs:complexType>
