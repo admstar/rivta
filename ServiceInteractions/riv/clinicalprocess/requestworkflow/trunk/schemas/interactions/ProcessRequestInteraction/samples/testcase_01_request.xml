@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <request xmlns="urn:riv:clinicalprocess:requestworkflow:request"
          xsi:schemaLocation="urn:riv:clinicalprocess:requestworkflow:request ../../../../schemas/core_components/request.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
     <!-- SE-ABC123 will be the HSA id used -->
-    <requestId root="1.2.752.129.2.1.2.1" extension="SE-ABC123#testcase_01"/>
+    <requestId root="1.2.752.129.2.1.2.1" extension="SE-ABC123#testcase_01_request"/>
     <typeOfRequest code="4" codeSystem="1.2.752.129.2.2.2.24"/>
+    <!-- SSÅÅMMDDttmmss, SSÅÅMMDDttmm -->
     <versionTimeStamp value="201203121636"/>
+    <!-- Always 1 in the SLL Pilot -->
     <versionNumber>001</versionNumber>
     <reasonForVersion>
         <typeOfReason code="NR" codeSystem="1.2.752.97.3.2.8.5"/>
@@ -28,21 +31,14 @@
     </patient>
 
     <author>
-        <!-- Maps to clinicalDocument/author/time -->                               
         <dateOfRequest value="20120312"/>
-        <!-- No mapping for clinicalDocument/author/assignedAuthor -->                               
         <staff>
-           <!-- Maps to clinicalDocument/author/assignedAuthor/id --> 
             <id root="1.2.752.129.2.1.4.1" extension="HSA-id Remittent"/>
-            <!-- Maps to clinicalDocument/author/assignedAuthor/assignedPerson/name -->                          
             <name>Elin Ek</name>
         </staff>
-        <!-- Maps to clinicalDocument/author/assignedAuthor/code -->                               
         <typeOfStaff code="LK" codeSystem="1.2.752.97.3.2.8.8" />
         <staffOrganisation>
-            <!-- Maps to clinicalDocument/author/assignedAuthor/representedOrganization/id -->                                     
             <careUnitId root="1.2.752.129.2.1.4.1" extension="HSA-id for RT organization"/>
-            <!-- Maps to clinicalDocument/author/assignedAuthor/representedOrganization/name -->                                     
             <careUnitName>Avd 33, Medicinkliniken, Capio S:t Görans sjukhus</careUnitName>
         </staffOrganisation>
         
@@ -57,9 +53,7 @@
 
     <recipient>
         <organisation>
-            <!-- Maps to clinicalDocument/informationRecipient/receivedOrganization/id -->                                     
             <careUnitId root="1.2.752.129.2.1.4.1" extension="HSA-id for recipient organization"/>
-            <!-- Maps to clinicalDocument/informationRecipient/receivedOrganization/name -->                                     
             <careUnitName>Hasselby vårdcentral</careUnitName>
         </organisation>
     </recipient>
@@ -74,12 +68,14 @@
         <text>Har hepatit C.</text>
     </awarenessInformation>
 
+    <!-- Only one questionFormulation element is allowed -->
     <questionFormulation>
-        <id root="1.2.752.129.2.1.2.1" extension="SE-ABC123#testcase_01#questionFormulation0"/>
+        <id root="1.2.752.129.2.1.2.1" extension="SE-ABC123#testcase_01_request#questionFormulation0"/>
         <text>Diabetes?</text>
-        <!-- <desiredAction/> -->
+        
+        <!-- Only one clinicalInformation element per questionFormulation is allowed -->
         <clinicalInformation>
-            <id root="1.2.752.129.2.1.2.1" extension="SE-ABC123#testcase_01#questionFormulation0#clinicalInformation0"/>
+            <id root="1.2.752.129.2.1.2.1" extension="SE-ABC123#testcase_01_request#questionFormulation0#clinicalInformation0"/>
             <text>33-årig blandmissbrukande man som inkom 11/3 pga centrala bröstsmärtor. Patienten har vårdats inneliggande under ett dygn och hjärtinfarkt har uteslutits. Smärtorna bedöms som muskuloskelettala. Under vårdtiden har förhöjda blodsockervärden uppmätts vid flera tillfällen som högst 10,8. Patienten har ingen känd diabetes. Tacksam för uppföljning av patientens förhöjda blodsockervärden.
 
                 Vänliga hälsningar

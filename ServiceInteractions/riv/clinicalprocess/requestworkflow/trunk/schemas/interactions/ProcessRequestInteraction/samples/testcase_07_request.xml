@@ -6,6 +6,7 @@
     <requestId root="1.2.752.129.2.1.2.1" extension="SE-ABC123#testcase_07"/>
     <typeOfRequest code="4" codeSystem="1.2.752.129.2.2.2.24"/>
     <versionTimeStamp value="201203011636"/>
+    <!-- Always 1 in the SLL Pilot -->
     <versionNumber>1</versionNumber>
     
     <reasonForVersion>
@@ -83,10 +84,12 @@
         <text>Har hepatit C.</text>
     </awarenessInformation>
     
-
+    <!-- Only one questionFormulation element is allowed -->
     <questionFormulation>
         <id root="1.2.752.129.2.1.2.1" extension="SE-ABC123#testcase_07#questionFormulation0"/>
         <text>Meniskskada? Korsbandsskada?</text>
+        
+        <!-- Only one clinicalInformation element per questionFormulation is allowed -->
         <clinicalInformation>
             <id root="1.2.752.129.2.1.2.1" extension="SE-ABC123#testcase_07#questionFormulation0#clinicalInformation0"/>
             <text>33-årig blandmissbrukande man som ramlade omkring 1 februari i berusat tillstånd och på något sätt skadat höger knä. Ej sökt vård. Sedan dess har patienten haft intermittent svullnad av höger knä och låsningsfenomen. I status noteras måttlig hydrops, kraftig smärta vid meniskprovokationstest och misstänkt främre draglåda. Röntgenundersökning har inte visat något patologiskt. Har ej genomgått MR. Tacksam för bedömning och ställningstagande till artroskopi.
@@ -96,18 +99,23 @@
                 Distriktsläkare
             </text>
 
+            <!-- Multiple conditions, mixed code and text 
+            One may not use code AND text within one condition element.
+            -->
             <condition>
-                <id root="1.2.752.129.2.1.2.1" extension="SE-ABC123#testcase_07#questionFormulation0#condition0"/>
+                <id root="1.2.752.129.2.1.2.1" extension="SE-ABC123#testcase_07_request#questionFormulation0#condition0"/>
                 <code root="1.2.752.116.1.1.1.1.3" extension="S83.6" />
             </condition>
-            
+
+            <!-- Desired actions to be taken 0..1 -->            
             <desiredAction>
-                <id root="1.2.752.129.2.1.2.1" extension="SE-ABC123#testcase_07#questionFormulation0#desiredAction0"/>
+                <id root="1.2.752.129.2.1.2.1" extension="SE-ABC123#testcase_07_request#questionFormulation0#desiredAction0"/>
                 <code root="1.2.752.97.3.1.11" extension="NGA11"/>
             </desiredAction>
 
+            <!-- An example of a desired action that is not coded after KVÅ -->
             <desiredAction>
-                <id root="1.2.752.129.2.1.2.1" extension="SE-ABC123#testcase_07#questionFormulation0#desiredAction1"/>
+                <id root="1.2.752.129.2.1.2.1" extension="SE-ABC123#testcase_07_request#questionFormulation0#desiredAction1"/>
                 <text>Artroskopi höger knä</text>
             </desiredAction>
 
