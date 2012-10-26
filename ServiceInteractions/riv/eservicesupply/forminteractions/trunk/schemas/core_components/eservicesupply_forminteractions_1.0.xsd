@@ -499,7 +499,7 @@ KV Formulärkategori.</xs:documentation>
         	</xs:element>
             <xs:element name="questionSuperior" type="tns:QuestionSuperiorType" minOccurs="0">
         	</xs:element>
-            <xs:element name="validationText" type="tns:ValidationTextType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+            <xs:element name="validationEvent" type="tns:ValidationEventType" minOccurs="0" maxOccurs="unbounded"></xs:element>
             <xs:any namespace='##other' processContents='lax'
         		minOccurs='0' maxOccurs='unbounded' />
         </xs:sequence>
@@ -644,7 +644,10 @@ KV Inmatnings typ.</xs:documentation>
     </xs:complexType>
 
     <xs:complexType name="QuestionAnswerType">
-    	<xs:sequence>
+        <xs:annotation>
+        	<xs:documentation>Objektet innehåller en svaret på en fråga.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
             <xs:element name="answer" type="tns:AnswerType" minOccurs="1" maxOccurs="unbounded"></xs:element>
             <xs:element ref="tns:questionNumber" minOccurs="1"></xs:element>
     		<xs:any namespace='##other' processContents='lax' minOccurs='0'
@@ -908,18 +911,19 @@ Kodverk för språk Innehåller språkkoder som utgår från SS-ISO 639-1:2005.
     	</xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="ValidationTextType">
+    <xs:complexType name="ValidationEventType">
     	<xs:annotation>
     		<xs:documentation>Objektet innehåller felmeddelanen kopplade till en fråga.
 Följande Events är giltiga:
-mandatoryanswerMaxanswerMinAnswerMaxLenghtAnswerPatternmaxNumberOfChoisesminNumberOfChoisesanswerSuperior
+mandatoryanswerMaxanswerMinanswerMaxLengthanswerPatternmaxNumberOfChoisesminNumberOfChoisesanswerSuperior
     		</xs:documentation>
     	</xs:annotation>
     	<xs:sequence>
     		<xs:element name="validationEvent" type="xs:string" minOccurs="1">
     			<xs:annotation>
     				<xs:documentation>Följande events är giltiga:
-mandatoryanswerMaxanswerMinAnswerMaxLenghtAnswerPatternmaxNumberOfChoisesminNumberOfChoisesanswerSuperior</xs:documentation>
+mandatoryanswerMaxanswerMin
+answerMaxLengthanswerPatternmaxNumberOfChoisesminNumberOfChoisesanswerSuperior</xs:documentation>
     			</xs:annotation></xs:element>
     		<xs:element name="validationText" type="xs:string" minOccurs="1" maxOccurs="1">
     			<xs:annotation>
