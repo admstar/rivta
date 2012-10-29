@@ -347,8 +347,12 @@ Examples: 1
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            
+            <!-- Anamnes 1..1 -->
             <xs:element name="clinicalInformation" type="ClinicalInformationType" minOccurs="1" maxOccurs="1"/>
+            <!-- Condition 0..1 -->
+            <xs:element name="condition" type="ConditionType" minOccurs="0" maxOccurs="unbounded"/>
+            <!-- Desired actions 0..1 -->
+            <xs:element name="desiredAction" type="ActionType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
     
@@ -372,28 +376,20 @@ Examples: 1
     <xs:complexType name="ClinicalInformationType">
         <xs:sequence>
             <xs:element name="id" type="ClinicalInformationIdType" />
-            <xs:element name="text">
+            <xs:element name="text" minOccurs="1" maxOccurs="1">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:maxLength value="8192"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="condition" type="ConditionType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="desiredAction" type="ActionType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
     
     <xs:complexType name="ClinicalInformationOutcomeType">
         <xs:sequence>
             <xs:element name="id" type="ClinicalInformationIdType" />
-            <xs:element name="text">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="8192"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
+            <xs:element name="text" />
         </xs:sequence>
     </xs:complexType>
     
