@@ -25,9 +25,14 @@
 
 	<xs:complexType name='GetRequestActivitiesType'>
 		<xs:sequence>
-			<xs:element name='person-id' type='core:SubjectOfCareIdType' />
-			<xs:element name='from-date' type='core:TS' minOccurs="0"/>
-			<xs:element name='to-date' type='core:TS' minOccurs="0"/>
+			<xs:element name='personId'
+				type='core:SubjectOfCareIdType' />
+			<xs:element name="organizationalUnitId" type="xs:string"
+				maxOccurs="1" minOccurs="1">
+			</xs:element>
+			<xs:element name="typeOfRequest" type="core:RequestTypeCodeEnum"></xs:element>
+			<xs:element name='fromDate' type='core:TS' minOccurs="0" />
+			<xs:element name='toDate' type='core:TS' minOccurs="0" />
 			<xs:any namespace=' #
 				other ' processContents='lax'
 				minOccurs='0' maxOccurs='unbounded' />
@@ -36,7 +41,7 @@
 
 	<xs:complexType name='GetRequestActivitiesResponseType'>
 		<xs:sequence>
-			<xs:element name='eventStatuses' type='core:StatusEventType'
+			<xs:element name='requestActivity' type='core:RequestActivityType'
 				minOccurs='0' maxOccurs='unbounded' />
 			<xs:any namespace='##other' processContents='lax'
 				minOccurs='0' maxOccurs='unbounded' />
