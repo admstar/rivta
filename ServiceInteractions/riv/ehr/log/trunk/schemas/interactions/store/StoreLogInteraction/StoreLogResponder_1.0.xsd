@@ -18,19 +18,21 @@
  under the License.
  -->	
 <xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' 
-	xmlns:tns='urn:riv:ehr:log:LogResponder:1'				
+	xmlns:tns='urn:riv:ehr:log:store:StoreLogResponder:1'				
+	xmlns:logstore='urn:riv:ehr:log:store:1'
 	xmlns:log='urn:riv:ehr:log:1'
-	targetNamespace='urn:riv:ehr:log:LogResponder:1'
+	targetNamespace='urn:riv:ehr:log:store:StoreLogResponder:1'
 	elementFormDefault='qualified'
 	attributeFormDefault='unqualified'
 	version='1.0'>
 
-	<xs:import schemaLocation='../../core_components/ehr_log_1.0.xsd' namespace='urn:riv:ehr:log:1' />
+	<xs:import schemaLocation='../../../core_components/store/ehr_logstore_1.0.xsd' namespace='urn:riv:ehr:log:store:1' />
+	<xs:import schemaLocation='../../../core_components/ehr_log_1.0.xsd' namespace='urn:riv:ehr:log:1' />
 
 
-	<xs:element name='LogRequest' type='tns:LogRequestType'/>
+	<xs:element name='StoreLogRequest' type='tns:StoreLogRequestType'/>
 
-	<xs:complexType name='LogRequestType'>
+	<xs:complexType name='StoreLogRequestType'>
 		<xs:annotation>
 		    <xs:documentation xml:lang='sv'>
 		        Tjänst som sparar en eller flera loggposter i loggtjänsten för att möjliggöra uppföljning enligt PDL. Loggposter sparas i ett arkiv med löpnummer samt signeras för att säkerställa integriteten av loggposter. 
@@ -38,14 +40,14 @@
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Logs" type="log:LogType" maxOccurs="unbounded"/>
+			<xs:element name="Log" type="log:LogType" maxOccurs="unbounded"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:element name='LogResponse' type='tns:LogResponseType'/>
+	<xs:element name='StoreLogResponse' type='tns:StoreLogResponseType'/>
 
-	<xs:complexType name='LogResponseType'>
+	<xs:complexType name='StoreLogResponseType'>
 		<xs:annotation>
 		    <xs:documentation xml:lang='sv'>
 		        Tjänst som sparar en eller flera loggposter i loggtjänsten för att möjliggöra uppföljning enligt PDL. Loggposter sparas i ett arkiv med löpnummer samt signeras för att säkerställa integriteten av loggposter. 
@@ -53,7 +55,7 @@
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="ResultType" type="log:ResultType"/>
+			<xs:element name="ResultType" type="logstore:ResultType"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
 		</xs:sequence>
 	</xs:complexType>
