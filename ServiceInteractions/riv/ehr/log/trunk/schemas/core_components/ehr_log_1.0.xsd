@@ -24,11 +24,88 @@
 	attributeFormDefault='unqualified' 
 	version='1.0'>
 
+	<xs:annotation>
+	    <xs:documentation xml:lang='sv'>
+	    </xs:documentation>
+	</xs:annotation>
 
 
 
 
 
+	<xs:simpleType name="ResultCodeType">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Enumerationsvärde som anger de svarskoder som finns.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OK">
+				<xs:annotation>
+				    <xs:documentation xml:lang='sv'>
+				        Transaktionen har utförts enligt uppdraget.
+				    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="INFO">
+				<xs:annotation>
+				    <xs:documentation xml:lang='sv'>
+				        Transaktionen har utförts enligt begäran, men det finns ett meddelande som konsumenten måste visa upp för användaren (om tillämpbart). Exempel på detta kan vara &amp;quot;kom fastande&amp;quot;.
+				    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ERROR">
+				<xs:annotation>
+				    <xs:documentation xml:lang='sv'>
+				        Transaktionen har INTE kunnat utföras p.g.a ett logiskt fel. Det finns ett meddelande som konsumenten måste visa upp. Exempel på detta kan vara &amp;quot;tiden har bokats av annan patient&amp;quot;.
+				    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VALIDATION_ERROR">
+				<xs:annotation>
+				    <xs:documentation xml:lang='sv'>
+				        En eller flera inparametrar innehåller felaktiga värden. Angiven tjänst utfördes ej.
+				    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ACCESSDENIED">
+				<xs:annotation>
+				    <xs:documentation xml:lang='sv'>
+				        Behörighet saknas för att utföra begärd tjänst. Angiven tjänst utfördes ej.
+				    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="REPORT_ON_QUEUE">
+				<xs:annotation>
+				    <xs:documentation xml:lang='sv'>
+				        Angiven rapport är ej klar. Rapporten ligger på kö för att genereras. Ytterligere anrop kan göras för att kontrollera om jobbet är klart.
+				    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="REPORT_IN_PROCESS">
+				<xs:annotation>
+				    <xs:documentation xml:lang='sv'>
+				        Angiven rapport är ej klar. Rapporten är under uppbyggnad. Ytterligere anrop kan göras för att kontrollera om jobbet är klart.
+				    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="REPORT_NOT_FOUND">
+				<xs:annotation>
+				    <xs:documentation xml:lang='sv'>
+				        Felaktig id angivet. Angiven tjänst ej kan hitta rapport med angivet id som är skapad eller rapport som ligger på kö för att skapas.
+				    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MAX_QUERY_RESULT_EXCEEDED">
+				<xs:annotation>
+				    <xs:documentation xml:lang='sv'>
+				        Max antal loggposter som tjänsten kan returnerar har överstigits. Ändra sökparametrar för att begränsa rapportuttaget.
+				    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	
 	<xs:simpleType name="ActivityTypeType">
 		<xs:annotation>
 		    <xs:documentation xml:lang='sv'>
@@ -142,52 +219,7 @@
 		</xs:restriction>
 	</xs:simpleType>
 	
-	<xs:simpleType name="ResultCodeType">
-		<xs:annotation>
-		    <xs:documentation xml:lang='sv'>
-		        Enumerationsvärde som anger de svarskoder som finns.
-		    </xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="OK">
-				<xs:annotation>
-				    <xs:documentation xml:lang='sv'>
-				        Transaktionen har utförts enligt uppdraget.
-				    </xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="INFO">
-				<xs:annotation>
-				    <xs:documentation xml:lang='sv'>
-				        Transaktionen har utförts enligt begäran, men det finns ett meddelande som konsumenten måste visa upp för användaren (om tillämpbart). Exempel på detta kan vara &amp;quot;kom fastande&amp;quot;.
-				    </xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="ERROR">
-				<xs:annotation>
-				    <xs:documentation xml:lang='sv'>
-				        Transaktionen har INTE kunnat utföras p.g.a ett logiskt fel. Det finns ett meddelande som konsumenten måste visa upp. Exempel på detta kan vara &amp;quot;tiden har bokats av annan patient&amp;quot;.
-				    </xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="VALIDATION_ERROR">
-				<xs:annotation>
-				    <xs:documentation xml:lang='sv'>
-				        En eller flera inparametrar innehåller felaktiga värden. Angiven tjänst utfördes ej.
-				    </xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="ACCESSDENIED">
-				<xs:annotation>
-				    <xs:documentation xml:lang='sv'>
-				        Behörighet saknas för att utföra begärd tjänst. Angiven tjänst utfördes ej.
-				    </xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-		</xs:restriction>
-	</xs:simpleType>
-	
-	<xs:simpleType name="SystemNameValue">
+	<xs:simpleType name="SystemName">
 		<xs:annotation>
 		    <xs:documentation xml:lang='sv'>
 		        Datatyp som representerar namn på ett system.
@@ -198,7 +230,7 @@
 		</xs:restriction>
 	</xs:simpleType>
 	
-	<xs:simpleType name="UserNameValue">
+	<xs:simpleType name="UserName">
 		<xs:annotation>
 		    <xs:documentation xml:lang='sv'>
 		        Datatyp som representerar namn för en användare.
@@ -209,7 +241,7 @@
 		</xs:restriction>
 	</xs:simpleType>
 	
-	<xs:simpleType name="AssignmentValue">
+	<xs:simpleType name="Assignment">
 		<xs:annotation>
 		    <xs:documentation xml:lang='sv'>
 		        Datatyp som representerar namn på medarbetare i uppdrag.
@@ -220,7 +252,7 @@
 		</xs:restriction>
 	</xs:simpleType>
 	
-	<xs:simpleType name="UserTitleValue">
+	<xs:simpleType name="UserTitle">
 		<xs:annotation>
 		    <xs:documentation xml:lang='sv'>
 		        Datatyp som representerar titel på användare.
@@ -231,7 +263,7 @@
 		</xs:restriction>
 	</xs:simpleType>
 	
-	<xs:simpleType name="ActivityLevelValue">
+	<xs:simpleType name="ActivityLevel">
 		<xs:annotation>
 		    <xs:documentation xml:lang='sv'>
 		        Datatyp som representerar en aktivitets nivå.
@@ -242,7 +274,7 @@
 		</xs:restriction>
 	</xs:simpleType>
 	
-	<xs:simpleType name="ActivityArgsValue">
+	<xs:simpleType name="ActivityArgs">
 		<xs:annotation>
 		    <xs:documentation xml:lang='sv'>
 		        Datatyp som representerar en .
@@ -264,7 +296,7 @@
 		</xs:restriction>
 	</xs:simpleType>
 	
-	<xs:simpleType name="CareProviderNameValue">
+	<xs:simpleType name="CareProviderName">
 		<xs:annotation>
 		    <xs:documentation xml:lang='sv'>
 		        Datatyp som representerar namn på en vårdgivare.
@@ -275,7 +307,7 @@
 		</xs:restriction>
 	</xs:simpleType>
 	
-	<xs:simpleType name="CareUnitNameValue">
+	<xs:simpleType name="CareUnitName">
 		<xs:annotation>
 		    <xs:documentation xml:lang='sv'>
 		        Datatyp som representerar namn på en vårdenhet.
@@ -286,7 +318,7 @@
 		</xs:restriction>
 	</xs:simpleType>
 	
-	<xs:simpleType name="PatientNameValue">
+	<xs:simpleType name="PatientName">
 		<xs:annotation>
 		    <xs:documentation xml:lang='sv'>
 		        Datatyp som representerar en patients namn.
@@ -320,7 +352,7 @@
 		</xs:restriction>
 	</xs:simpleType>
 	
-	<xs:simpleType name="PersonIdValue">
+	<xs:simpleType name="PersonId">
 		<xs:annotation>
 		    <xs:documentation xml:lang='sv'>
 		        Datatyp som representerar ett personnummer, samordningsnummer eller ett reservnummer.
@@ -330,6 +362,21 @@
 			<xs:maxLength value="12"/>
 		</xs:restriction>
 	</xs:simpleType>
+	
+	<xs:complexType name="ArchiveMetaDataType">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Datatyp som beskriver metadata för ett arkiv.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ArchiveId" type="tns:Id"/>
+			<xs:element name="Careprovider" type="tns:CareProviderType"/>
+			<xs:element name="FromDate" type="xs:dateTime"/>
+			<xs:element name="ToDate" type="xs:dateTime"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
 	
 	<xs:complexType name="LogType">
 		<xs:annotation>
@@ -367,8 +414,8 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="ActivityType" type="tns:ActivityTypeType"/>
-			<xs:element name="ActivityLevel" type="tns:ActivityLevelValue" minOccurs="0"/>
-			<xs:element name="ActivityArgs" type="tns:ActivityArgsValue" minOccurs="0"/>
+			<xs:element name="ActivityLevel" type="tns:ActivityLevel" minOccurs="0"/>
+			<xs:element name="ActivityArgs" type="tns:ActivityArgs" minOccurs="0"/>
 			<xs:element name="StartDate" type="xs:dateTime"/>
 			<xs:element name="Purpose" type="tns:PurposeTypeType"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
@@ -383,12 +430,12 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="UserId" type="tns:HsaId"/>
-			<xs:element name="Name" type="tns:UserNameValue" minOccurs="0"/>
-			<xs:element name="PersonId" type="tns:PersonIdValue" minOccurs="0"/>
-			<xs:element name="Assignment" type="tns:AssignmentValue" minOccurs="0"/>
-			<xs:element name="Title" type="tns:UserTitleValue" minOccurs="0"/>
-			<xs:element name="CareUnit" type="tns:CareUnitType"/>
+			<xs:element name="Name" type="tns:UserName" minOccurs="0"/>
+			<xs:element name="PersonId" type="tns:PersonId" minOccurs="0"/>
+			<xs:element name="Assignment" type="tns:Assignment" minOccurs="0"/>
+			<xs:element name="Title" type="tns:UserTitle" minOccurs="0"/>
 			<xs:element name="CareProvider" type="tns:CareProviderType"/>
+			<xs:element name="CareUnit" type="tns:CareUnitType"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -402,7 +449,8 @@
 		<xs:sequence>
 			<xs:element name="ResourceType" type="tns:ResourceTypeValue"/>
 			<xs:element name="Patient" type="tns:PatientType" minOccurs="0"/>
-			<xs:element name="CareProvider" type="tns:ResourceCareProviderType"/>
+			<xs:element name="CareProvider" type="tns:CareProviderType"/>
+			<xs:element name="CareUnit" type="tns:CareUnitType" minOccurs="0"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -415,7 +463,7 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="SystemId" type="tns:HsaId"/>
-			<xs:element name="SystemName" type="tns:SystemNameValue" minOccurs="0"/>
+			<xs:element name="SystemName" type="tns:SystemName" minOccurs="0"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -428,7 +476,7 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="CareUnitId" type="tns:HsaId"/>
-			<xs:element name="CareUnitName" type="tns:CareUnitNameValue" minOccurs="0"/>
+			<xs:element name="CareUnitName" type="tns:CareUnitName" minOccurs="0"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -441,21 +489,7 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="CareProviderId" type="tns:HsaId"/>
-			<xs:element name="CareProviderName" type="tns:CareProviderNameValue" minOccurs="0"/>
-			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-		</xs:sequence>
-	</xs:complexType>
-	
-	<xs:complexType name="ResourceCareProviderType">
-		<xs:annotation>
-		    <xs:documentation xml:lang='sv'>
-		        Datatyp som representerar den vårdgivare som en resurs tillhör.
-		    </xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="CareProviderId" type="tns:HsaId"/>
-			<xs:element name="CareProviderName" type="tns:CareProviderNameValue" minOccurs="0"/>
-			<xs:element name="CareUnit" type="tns:CareUnitType" minOccurs="0"/>
+			<xs:element name="CareProviderName" type="tns:CareProviderName" minOccurs="0"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -467,40 +501,8 @@
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="PatientId" type="tns:PersonIdValue"/>
-			<xs:element name="PatientName" type="tns:PatientNameValue" minOccurs="0"/>
-			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-		</xs:sequence>
-	</xs:complexType>
-	
-	<xs:complexType name="ArchiveType">
-		<xs:annotation>
-		    <xs:documentation xml:lang='sv'>
-		        Information om befinntliga arkiv.
-		    </xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="ArchiveId" type="tns:Id"/>
-			<xs:element name="IntervalStart" type="xs:dateTime"/>
-			<xs:element name="IntervalEnd" type="xs:dateTime"/>
-			<xs:element name="CareProvider" type="xs:string"/>
-			<xs:element name="Fetched" type="xs:boolean"/>
-			<xs:element name="Count" type="xs:int"/>
-			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-		</xs:sequence>
-	</xs:complexType>
-	
-	<xs:complexType name="ResultType">
-		<xs:annotation>
-		    <xs:documentation xml:lang='sv'>
-		        Datatyp som returneras som ett generellt svar från alla förändrande tjänster, t.ex. skapa, radera, etc. 
-		        En anropande klient skall alltid kontrollera att resultatkoden inte innehåller fel för att på så sätt veta om anropet lyckades. 
-		        Alla svarskoder förutom OK och INFO betyder att åtgärden inte genomfördes.
-		    </xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="ResultCode" type="tns:ResultCodeType"/>
-			<xs:element name="ResultText" type="xs:string"/>
+			<xs:element name="PatientId" type="tns:PersonId"/>
+			<xs:element name="PatientName" type="tns:PatientName" minOccurs="0"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
 		</xs:sequence>
 	</xs:complexType>
