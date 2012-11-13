@@ -30,9 +30,6 @@
 	</xs:annotation>
 
 
-
-
-
 	<xs:simpleType name="ResultCodeType">
 		<xs:annotation>
 		    <xs:documentation xml:lang='sv'>
@@ -99,7 +96,7 @@
 			<xs:enumeration value="MAX_QUERY_RESULT_EXCEEDED">
 				<xs:annotation>
 				    <xs:documentation xml:lang='sv'>
-				        Max antal loggposter som tjänsten kan returnerar har överstigits. Ändra sökparametrar för att begränsa rapportuttaget.
+				        Max antal loggposter som tjänsten kan returnera har överstigits. Ändra sökparametrar för att begränsa rapportuttaget.
 				    </xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
@@ -170,52 +167,74 @@
 		<xs:annotation>
 		    <xs:documentation xml:lang='sv'>
 		        Enumerationsvärde som anger syfte till aktivitet. 
-		        Kan vara Vård och behandling, Kvalitetssäkring, Annan dokumentation enligt lag, Statistik, Administration/tillsyn, Specialuppgift
+		        Kan vara Vård och behandling, Kvalitetssäkring, Annan dokumentation enligt lag, Statistik, Administration och Kvalitetsregister
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="Vård och behandling">
 				<xs:annotation>
 				    <xs:documentation xml:lang='sv'>
-				        Aktivitetens syfte är vård och behandling
+				        Innefattar följande ändamål enligt Patientdatalag 2kap4§: Att fullgöra de skyldigheter som anges i 3 kap. (Skyldigheten att föra patientjournal) och upprätta annan dokumentation som behövs i och för vården av patienter. Administration som rör patienter och som syftar till att ge vård i enskilda fall eller som annars föranleds av vård i enskilda fall.
 				    </xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="Kvalitetssäkring">
 				<xs:annotation>
 				    <xs:documentation xml:lang='sv'>
-				        Aktivitetens syfte är kvalitetssäkring
+				        Innefattar följande ändamål enligt Patientdatalag 2kap4§: Systematiskt och fortlöpande utveckla och säkra kvaliteten i verksamheten.
 				    </xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="Annan dokumentation enligt lag">
 				<xs:annotation>
 				    <xs:documentation xml:lang='sv'>
-				        Aktivitetens syfte är annan dokumentation enligt lag
+				        Innefattar följande ändamål enligt Patientdatalag 2kap4§: Upprätta annan dokumentation som följer av lag, förordning eller annan författning.
 				    </xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="Statistik">
 				<xs:annotation>
 				    <xs:documentation xml:lang='sv'>
-				        Aktivitetens syfte är statistik
+				        Innefattar följande ändamål enligt Patientdatalag 2kap4§: Framställa statistik om hälso- och sjukvården.
 				    </xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="Administration/tillsyn">
+			<xs:enumeration value="Administration">
 				<xs:annotation>
 				    <xs:documentation xml:lang='sv'>
-				        Aktivitetens syfte är administration/tillsyn
+				        Innefattar följande ändamål enligt Patientdatalag 2kap4§: Administration, planering, uppföljning, utvärdering och tillsyn av verksamheten.
 				    </xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="Specialuppgift">
+			<xs:enumeration value="Kvalitetsregister">
 				<xs:annotation>
 				    <xs:documentation xml:lang='sv'>
-				        Aktivitetens syfte är av typen specialuppgift
+				        Beskrivs i Patientdatalagen 7kap4§: Att systematiskt och fortlöpande utveckla och säkra vårdens kvalitet. Ändamålet ska användas vid kvalitetsuppföljning i av SKL godkända kvalitetsregister.
 				    </xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="PurposeDescription">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Datatyp som representerar beskrivning av ett syfte i Hsa.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="ActivityTypeValue">
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Datatyp som representerar beskrivning av en aktivitetstyp.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="256"/>
 		</xs:restriction>
 	</xs:simpleType>
 	
@@ -363,20 +382,6 @@
 		</xs:restriction>
 	</xs:simpleType>
 	
-	<xs:complexType name="ArchiveMetaDataType">
-		<xs:annotation>
-		    <xs:documentation xml:lang='sv'>
-		        Datatyp som beskriver metadata för ett arkiv.
-		    </xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="ArchiveId" type="tns:Id"/>
-			<xs:element name="Careprovider" type="tns:CareProviderType"/>
-			<xs:element name="FromDate" type="xs:dateTime"/>
-			<xs:element name="ToDate" type="xs:dateTime"/>
-			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
-		</xs:sequence>
-	</xs:complexType>
 	
 	<xs:complexType name="LogType">
 		<xs:annotation>
@@ -413,11 +418,11 @@
 		    </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="ActivityType" type="tns:ActivityTypeType"/>
+			<xs:element name="ActivityType" type="tns:ActivityTypeValue"/>
 			<xs:element name="ActivityLevel" type="tns:ActivityLevel" minOccurs="0"/>
 			<xs:element name="ActivityArgs" type="tns:ActivityArgs" minOccurs="0"/>
 			<xs:element name="StartDate" type="xs:dateTime"/>
-			<xs:element name="Purpose" type="tns:PurposeTypeType"/>
+			<xs:element name="Purpose" type="tns:PurposeDescription"/>
 			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
 		</xs:sequence>
 	</xs:complexType>
