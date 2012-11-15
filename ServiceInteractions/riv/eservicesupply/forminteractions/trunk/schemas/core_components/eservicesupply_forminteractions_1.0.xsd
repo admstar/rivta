@@ -73,7 +73,8 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
 
     <xs:element name="subjectOfCare" type="tns:SubjectOfCareIdType">
     	<xs:annotation>
-    		<xs:documentation>Patienten formuläret avser. Personnummer  format yyyymmddnnnn.T.ex. 191212121212 </xs:documentation>
+    		<xs:documentation>Patienten formuläret avser. Personnummer  format yyyymmddnnnn.T.ex. 191212121212 
+FormTemplate.anonymousForm styr huruvida formulärmotorn hanterar detta fält som obligatoriskt eller frivilligt.</xs:documentation>
     	</xs:annotation></xs:element>
 
     <xs:element name="templateId" type="tns:TemplateIdType">
@@ -197,11 +198,10 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
     			maxOccurs="unbounded" minOccurs="0">
     		</xs:element>
     		<xs:element ref="tns:lastSavedDate" minOccurs="0"></xs:element>
-    		<xs:element ref="tns:subjectOfCare" maxOccurs="1">
+    		<xs:element ref="tns:subjectOfCare" maxOccurs="1" minOccurs="0">
     			<xs:annotation>
-    				<xs:documentation>
-    					Patienten formuläret avser. Personnummer format
-    					yyyymmddnnnn. T.ex. 191212121212.
+    				<xs:documentation>Patienten formuläret avser. Personnummer format yyyymmddnnnn. T.ex. 191212121212.
+FormTemplate.anonymousForm styr huruvida formulärmotorn hanterar detta fält som obligatoriskt eller frivilligt.
     				</xs:documentation>
     			</xs:annotation>
     		</xs:element>
@@ -212,7 +212,15 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
 
     <xs:complexType name="FormTemplateType">
     	<xs:sequence>
-    		<xs:element maxOccurs="1" ref="tns:category">
+            <xs:element name="anonymousForm" type="xs:boolean" minOccurs="1">
+    			<xs:annotation>
+    				<xs:documentation>Attributet styr huruvida formulärmotorn stöder anonym användning av formuläret.
+Värden
+True = Tillåter anonym användning. "SubjectOfCare" får inte användas.
+False = Tillåter inte anonym användning. "SubjectOfCare" är obligatorisk attribut.
+</xs:documentation>
+    			</xs:annotation></xs:element>
+            <xs:element maxOccurs="1" ref="tns:category">
     			<xs:annotation>
     				<xs:documentation>
     					Formulärets kategori T.ex. Anmälan,
@@ -266,9 +274,9 @@ Författare:		Marco de Luca, marco.deluca@callistaenterprise.se</xs:documentatio
     		<xs:element minOccurs="1" ref="tns:minNumberOfQuestion"
     			maxOccurs="1">
     		</xs:element>
-            <xs:element ref="tns:minNumberOfPages" maxOccurs="1"></xs:element>
-            <xs:element ref="tns:maxNumberOfPages" maxOccurs="1"></xs:element>
-            <xs:element maxOccurs="1" ref="tns:mandatory">
+    		<xs:element ref="tns:minNumberOfPages" maxOccurs="1"></xs:element>
+    		<xs:element ref="tns:maxNumberOfPages" maxOccurs="1"></xs:element>
+    		<xs:element maxOccurs="1" ref="tns:mandatory">
     			<xs:annotation>
     				<xs:documentation>
     					Indikerar om formuläret är obligatoriskt att
@@ -587,7 +595,10 @@ KV Inmatnings typ.</xs:documentation>
     		<xs:element ref="tns:clinicalProcessInterestId" minOccurs="0"></xs:element>
     		<xs:element ref="tns:keepUntil" minOccurs="1"></xs:element>
     		<xs:element ref="tns:lastSavedDate" minOccurs="0"></xs:element>
-    		<xs:element ref="tns:subjectOfCare" minOccurs="1"></xs:element>
+    		<xs:element ref="tns:subjectOfCare" minOccurs="0">
+    			<xs:annotation>
+    				<xs:documentation>FormTemplate.anonymousForm styr huruvida formulärmotorn hanterar detta fält som obligatoriskt eller frivilligt.</xs:documentation>
+    			</xs:annotation></xs:element>
     		<xs:element name="formTemplate" type="tns:FormTemplateType" maxOccurs="1"></xs:element>
     	</xs:sequence>
     </xs:complexType>
@@ -606,8 +617,8 @@ KV Inmatnings typ.</xs:documentation>
     		<xs:documentation>
     					Datum när användaren/patienten skapade
     					formuläret. T.ex. 2012-11-01 kl 13:05:00
-    					20121101130500 Format: ÅÅÅÅMMDDttmmss
-    					(yyyyMMddhhmmss)</xs:documentation>
+    					20121101130500 Format: ÅÅÅÅMMDDTttmmss
+    					(yyyyMMddThhmmss)</xs:documentation>
     	</xs:annotation></xs:element>
 
     <xs:element name="lastSavedDate" type="xs:string">
@@ -615,8 +626,8 @@ KV Inmatnings typ.</xs:documentation>
     		<xs:documentation>
     					Datum för senaste temporärsparning
     					(användare/patientens). T.ex. 2012-11-01 kl
-    					13:05:00 20121101130500. Format: ÅÅÅÅMMDDttmmss
-    					(yyyyMMddhhmmss)</xs:documentation>
+    					13:05:00 20121101130500. Format: ÅÅÅÅMMDDTttmmss
+    					(yyyyMMddThhmmss)</xs:documentation>
     	</xs:annotation></xs:element>
 
     <xs:element name="keepUntil" type="xs:string">
@@ -717,7 +728,10 @@ KV Form Status
     		<xs:element ref="tns:healthcare_MedUnit" minOccurs="0"></xs:element>
     		<xs:element ref="tns:healthcare_systemID" minOccurs="0"></xs:element>
             <xs:element ref="tns:clinicalProcessInterestId" minOccurs="0"></xs:element>
-            <xs:element ref="tns:subjectOfCare" minOccurs="1"></xs:element>
+            <xs:element ref="tns:subjectOfCare" minOccurs="0">
+            	<xs:annotation>
+            		<xs:documentation>FormTemplate.anonymousForm styr huruvida formulärmotorn hanterar detta fält som obligatoriskt eller frivilligt.</xs:documentation>
+            	</xs:annotation></xs:element>
     		<xs:element ref="tns:templateId" minOccurs="1"></xs:element>
     		
     		            <xs:any namespace='##other' processContents='lax' minOccurs='0'
@@ -891,7 +905,6 @@ Kodverk för språk Innehåller språkkoder som utgår från SS-ISO 639-1:2005.
     		<xs:element name="questionAnswerBlock"
     			type="tns:QuestionBlockAnswersType" maxOccurs="unbounded">
     		</xs:element>
-            <xs:element ref="tns:subjectOfCare" maxOccurs="1" minOccurs="1"></xs:element>
             <xs:any namespace='##other' processContents='lax'
     			minOccurs='0' maxOccurs='unbounded' />
     	</xs:sequence>
@@ -905,7 +918,10 @@ Kodverk för språk Innehåller språkkoder som utgår från SS-ISO 639-1:2005.
             <xs:element ref="tns:clinicalProcessInterestId" minOccurs="1" maxOccurs="1"></xs:element>
             <xs:element ref="tns:formId" minOccurs="1" maxOccurs="1"></xs:element>
             <xs:element ref="tns:healthcare_facility_CareUnit" minOccurs="1" maxOccurs="1"></xs:element>
-    		<xs:element ref="tns:subjectOfCare" minOccurs="1" maxOccurs="1"></xs:element>
+    		<xs:element ref="tns:subjectOfCare" minOccurs="0" maxOccurs="1">
+    			<xs:annotation>
+    				<xs:documentation>FormTemplate.anonymousForm styr huruvida formulärmotorn hanterar detta fält som obligatoriskt eller frivilligt.</xs:documentation>
+    			</xs:annotation></xs:element>
     		            <xs:any namespace='##other' processContents='lax' minOccurs='0'
     		maxOccurs='unbounded' />
     	</xs:sequence>
