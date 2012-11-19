@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <!-- 
  Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
@@ -23,28 +23,17 @@
   <xs:element name='GetHsaUnitResponse' type='tns:GetHsaUnitResponseType' />
   <xs:complexType name='GetHsaUnitType'>
     <xs:sequence>
-      <xs:element name="hsaIdentity" type="tns:hsaIdentityType"/>
-      <xs:element name="searchBase" type="tns:searchBaseType" minOccurs="0"/>
+      <xs:element name="hsaIdentity" type="core:HsaIdentityType"/>
+      <xs:element name="searchBase" type="core:SearchBaseType" minOccurs="0"/>
       <xs:element name="getParentInfo" type="xs:boolean"/>
       <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
 
-  <xs:simpleType name="hsaIdentityType">
-    <xs:restriction base="xs:string"/>
-  </xs:simpleType>
-
-  <xs:simpleType name="searchBaseType">
-    <xs:restriction base="xs:token">
-        <xs:maxLength value="350"/>
-        <xs:pattern value="([OUDCNLoudcnl]{1,2}=[0-9\p{L}\p{Zs}\-.]*,?)*"/>
-    </xs:restriction>
-  </xs:simpleType>
-
   <xs:complexType name='GetHsaUnitResponseType'>
     <xs:sequence>
       <xs:element name="careGiver" type="xs:string" minOccurs="0"/>
-      <xs:element name="parentHsaIdentity" type="tns:hsaIdentityType" minOccurs="0"/>
+      <xs:element name="parentHsaIdentity" type="core:HsaIdentityType" minOccurs="0"/>
       <xs:element name="unitPrescriptionCodes" type="xs:string"/>
       <xs:element name="alternateNames" minOccurs="0">
         <xs:complexType>
@@ -111,7 +100,7 @@
             </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:element name="hsaIdentity" type="tns:hsaIdentityType"/>
+      <xs:element name="hsaIdentity" type="core:HsaIdentityType"/>
       <xs:element name="hsaJpegLogotype" type="xs:string" minOccurs="0"/>
       <xs:element name="invoiceAddress" type="core:AddressType" minOccurs="0"/>
       <xs:element name="jpegPhoto" type="xs:string" minOccurs="0"/>
@@ -161,14 +150,14 @@
       <xs:element name="telephoneNumbers" minOccurs="0">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="telephoneNumber" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element name="telephoneNumber" type="core:TelephoneNumberType" minOccurs="0" maxOccurs="unbounded" />
             </xs:sequence>
         </xs:complexType>
       </xs:element>
       <xs:element name="textTelephoneNumbers" minOccurs="0">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="textTelephoneNumber" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element name="textTelephoneNumber" type="core:TelephoneNumberType" minOccurs="0" maxOccurs="unbounded" />
             </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -217,7 +206,7 @@
       <xs:element name="telephoneNumbers" minOccurs="0">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="telephoneNumber" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element name="telephoneNumber" type="core:TelephoneNumberType" minOccurs="0" maxOccurs="unbounded" />
             </xs:sequence>
         </xs:complexType>
       </xs:element>

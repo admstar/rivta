@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <!-- 
  Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
@@ -24,10 +24,10 @@
   <xs:complexType name='GetMiuForPersonType'>
     <xs:sequence>
       <xs:choice>
-        <xs:element name="hsaIdentity" type="core:hsaIdentityType"/>
+        <xs:element name="hsaIdentity" type="core:HsaIdentityType"/>
         <xs:element name="personalIdentityNumber" type="xs:string"/>
       </xs:choice>
-      <xs:element name="searchBase" type="core:searchBaseType" minOccurs="0"/>
+      <xs:element name="searchBase" type="core:SearchBaseType" minOccurs="0"/>
       <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
@@ -42,9 +42,9 @@
   <xs:complexType name="MiuInformationType">
     <xs:sequence>
       <xs:element name="miuName" type="xs:string"/>
-      <xs:element name="hsaIdentity" type="core:hsaIdentityType"/>
+      <xs:element name="hsaIdentity" type="core:HsaIdentityType"/>
       <xs:element name="miuPurpose" type="xs:string"/>
-      <xs:element name="careUnitHsaIdentity" type="core:hsaIdentityType"/>
+      <xs:element name="careUnitHsaIdentity" type="core:HsaIdentityType"/>
       <xs:element name="careUnitName" type="xs:string" minOccurs="0"/>
       <xs:element name="careGiver" type="xs:string"/>
       <xs:element name="careGiverName" type="xs:string"/>
@@ -53,8 +53,14 @@
       <xs:element name="hsaTitles" type="tns:HsaTitlesType"/>
       <xs:element name="miuRights" type="tns:MiuRightsType"/>
       <xs:element name="hsaSystemRoles" type="tns:HsaSystemRolesType"/>
-      <xs:element name="hsaIdentityPerson" type="core:hsaIdentityType"/>
-      <xs:element name="paTitleCode" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="hsaIdentityPerson" type="core:HsaIdentityType"/>
+      <xs:element name="paTitleCodes" minOccurs="0">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="paTitleCode" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+      </xs:element>
       <xs:element name="givenName" type="xs:string"/>
       <xs:element name="middleAndSurName" type="xs:string"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>

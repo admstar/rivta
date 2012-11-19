@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <!-- 
  Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
@@ -23,10 +23,22 @@
   <xs:element name='GetPersonsWithCommissionAtHealthCareUnitResponse' type='tns:GetPersonsWithCommissionAtHealthCareUnitResponseType' />
   <xs:complexType name='GetPersonsWithCommissionAtHealthCareUnitType'>
     <xs:sequence>
-      <xs:element name="hsaIdentity" type="core:hsaIdentityType"/>
-      <xs:element name="searchBase" type="core:searchBaseType" minOccurs="0"/>
-      <xs:element name="paTitleCode" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="hsaTitle" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="hsaIdentity" type="core:HsaIdentityType"/>
+      <xs:element name="searchBase" type="core:SearchBaseType" minOccurs="0"/>
+      <xs:element name="paTitleCodes" minOccurs="0">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="paTitleCode" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="hsaTitles" minOccurs="0">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="hsaTitle" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+      </xs:element>
       <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
@@ -46,13 +58,32 @@
   
     <xs:complexType name="PersonListPerson">
         <xs:sequence>
-            <xs:element name="hsaIdentity" type="core:hsaIdentityType" />
+            <xs:element name="hsaIdentity" type="core:HsaIdentityType" />
             <xs:element name="givenName" type="xs:string"/>
             <xs:element name="sn" type="xs:string" />
             <xs:element name="personalPrescriptionCode" type="xs:string" minOccurs="0" />
-            <xs:element name="paTitleCode" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="paTitleName" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="paTitleCodes" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="paTitleCode" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="paTitleNames" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="paTitleName" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
             <xs:element name="hsaTitle" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="hsaTitles" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="hsaTitle" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>
