@@ -18,20 +18,20 @@
  under the License.
  -->		
 <xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'
-xmlns:tns='urn:riv:clinicalprocess:requestworkflow:1'		
-xmlns:request='urn:riv:clinicalprocess:requestworkflow:request'		
-targetNamespace='urn:riv:clinicalprocess:requestworkflow:1'		
+xmlns:tns='urn:riv:crm:requeststatus:1'		
+xmlns:request='urn:riv:crm:requeststatus:request'		
+targetNamespace='urn:riv:crm:requeststatus:1'		
 elementFormDefault='qualified'		
 attributeFormDefault='unqualified'		
 version='1.0'>
 
-<xs:import schemaLocation='request.xsd' namespace='urn:riv:clinicalprocess:requestworkflow:request' />		
+<xs:import schemaLocation='request.xsd' namespace='urn:riv:crm:requeststatus:request' />		
 <xs:element name="request" type="request:RequestType"/>		
 <xs:element name="requestOutcome" type="request:RequestOutcomeType"/>
 
 <xs:complexType name="RequestActivityType">
 	<xs:sequence>
-		<xs:element name='personId' type='tns:SubjectOfCareIdType' />
+		<xs:element name='subjectOfCareId' type='tns:SubjectOfCareIdType' />
 		<xs:element name='senderRequestId' type='xs:string'
 			minOccurs="0" />
 		<xs:element name='receiverRequestId' type='xs:string'
@@ -58,14 +58,6 @@ version='1.0'>
 		<xs:any namespace=' #
 			other ' processContents='lax'
 			minOccurs='0' maxOccurs='unbounded' />
-	</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name='PersonIdType'>
-	<xs:sequence>
-		<xs:element name='Patient-id' type='xs:string' />
-		<xs:any namespace='##other' processContents='lax' minOccurs='0'
-			maxOccurs='unbounded' />
 	</xs:sequence>
 </xs:complexType>
 
