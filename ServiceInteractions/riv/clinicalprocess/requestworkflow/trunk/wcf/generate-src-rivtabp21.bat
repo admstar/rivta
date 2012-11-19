@@ -23,9 +23,6 @@
 	
 	SET SCHEMADIR=schemas
 	
-SET W0=%SCHEMADIR%\.\interactions\GetRequestActivitiesInteraction\GetRequestActivitiesInteraction_1.0_RIVTABP21.wsdl
-SET X0=%SCHEMADIR%\interactions\GetRequestActivitiesInteraction\*.xsd
-
 SET W1=%SCHEMADIR%\.\interactions\ProcessRequestInteraction/\ProcessRequestInteraction_1.0_RIVTABP21.wsdl
 SET X1=%SCHEMADIR%\interactions\ProcessRequestInteraction/\*.xsd
 

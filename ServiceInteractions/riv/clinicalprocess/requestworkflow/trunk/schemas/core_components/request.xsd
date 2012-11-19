@@ -39,7 +39,7 @@
             <xs:element name="versionTimeStamp" type="TimeStampType"/>
             <xs:element name="versionNumber" type="VersionNumberType"/>
             <xs:element name="patient" type="PatientTypeOutcome"/>           
-            <xs:element name="author" type="AuthorType"/>
+            <xs:element name="author" type="AuthorTypeRequestOutcome"/>
             <xs:element name="recipient" type="RecipientType"/>
             <xs:element name="outcome" type="OutcomeType" />
         </xs:sequence>        
@@ -158,7 +158,7 @@ Examples: 1
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>
-        <xs:attribute name="root" use="required" fixed="1.2.752.129.2.1.3.1" />
+        <xs:attribute name="root" use="required" type="codes:codeForPersonId_values"/>
     </xs:complexType>
     
     <!-- Type for carrying an address, modeled after navnet -->
@@ -212,6 +212,17 @@ Examples: 1
     <xs:complexType name="AuthorType">
         <xs:sequence>
             <xs:element name="dateOfRequest" type="DateType"/>
+            <xs:element name="staff" type="StaffType" />            
+            <xs:element name="typeOfStaff" type="codes:codeForProfession" minOccurs="0" />
+            <xs:element name="staffOrganisation" type="OrganisationType" /> <!-- custodian -->            
+            <xs:element name="staffOriginOrganisation" type="OrganisationType" minOccurs="0" /> <!-- representedOrganisation -->
+            <xs:element name="legalAuthenticator" type="LegalAuthenticatorType" minOccurs="0"/> <!-- legalAuthenticator -->
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="AuthorTypeRequestOutcome">
+        <xs:sequence>
+            <xs:element name="dateOfRequestOutcome" type="DateType"/>
             <xs:element name="staff" type="StaffType" />            
             <xs:element name="typeOfStaff" type="codes:codeForProfession" minOccurs="0" />
             <xs:element name="staffOrganisation" type="OrganisationType" /> <!-- custodian -->            
