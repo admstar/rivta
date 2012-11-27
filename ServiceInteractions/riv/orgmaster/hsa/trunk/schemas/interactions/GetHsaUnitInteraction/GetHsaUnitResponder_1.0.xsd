@@ -93,7 +93,7 @@
       </xs:element>
       <xs:element name="geographicalCoordinatesRt90" type="tns:CoordinatesType" minOccurs="0"/>
       <xs:element name="healthCareArea" type="xs:string" minOccurs="0"/>
-      <xs:element name="hsaDestinationIndicators" minOccurs="0">
+      <xs:element name="hsaDestinationIndicators" minOccurs="1">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="hsaDestinationIndicator" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
@@ -107,7 +107,7 @@
       <xs:element name="labeledUri" type="xs:string" minOccurs="0"/>
       <xs:element name="location" type="xs:string" minOccurs="0"/>
       <xs:element name="webPage1177" type="xs:string" minOccurs="0"/>
-      <xs:element name="managements" minOccurs="0">
+      <xs:element name="managements" minOccurs="1">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="management" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
@@ -123,7 +123,7 @@
       <xs:element name="postalCode" type="xs:string" minOccurs="0"/>
       <xs:element name="priceInformation" type="xs:string" minOccurs="0"/>
       <xs:element name="publicName" type="xs:string"/>
-      <xs:element name="relatedUnits" minOccurs="0">
+      <xs:element name="relatedUnits" minOccurs="1">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="relatedUnit" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
@@ -132,37 +132,31 @@
       </xs:element>
       <xs:element name="route" type="xs:string" minOccurs="0"/>
       <xs:element name="street" type="xs:string" minOccurs="0"/>
-      <xs:element name="surgeryHours" minOccurs="0">
+      <xs:element name="surgeryHours" minOccurs="1">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="surgeryHour" type="core:TimeSpanType" minOccurs="0" maxOccurs="unbounded" />
             </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:element name="switchboardNumber" type="xs:string" minOccurs="0"/>
-      <xs:element name="telephoneHours" minOccurs="0">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="telephoneHour" type="core:TimeSpanType" minOccurs="0" maxOccurs="unbounded" />
-            </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="telephoneNumbers" minOccurs="0">
+      <xs:element name="switchboardNumber" type="core:TelephoneNumberType" minOccurs="0"/>
+      <xs:element name="telephoneHours" type="core:TelephoneHoursType" />
+      <xs:element name="telephoneNumbers" minOccurs="1">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="telephoneNumber" type="core:TelephoneNumberType" minOccurs="0" maxOccurs="unbounded" />
             </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:element name="textTelephoneNumbers" minOccurs="0">
+      <xs:element name="textTelephoneNumbers" minOccurs="1">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="textTelephoneNumber" type="core:TelephoneNumberType" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element name="textTelephoneNumber" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
             </xs:sequence>
         </xs:complexType>
       </xs:element>
       <xs:element name="unitExtraInformation" type="xs:string" minOccurs="0"/>
-      <xs:element name="unitFunctions" minOccurs="0">
+      <xs:element name="unitFunctions" minOccurs="1">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="unitFunction" type="tns:HsaUnitFunctionType" minOccurs="0" maxOccurs="unbounded" />
@@ -170,7 +164,7 @@
         </xs:complexType>
       </xs:element>
       <xs:element name="unitTemporaryInformation" type="core:DateSpanType" minOccurs="0"/>
-      <xs:element name="visitingHours" minOccurs="0">
+      <xs:element name="visitingHours" minOccurs="1">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="visitingHour" type="core:TimeSpanType" minOccurs="0" maxOccurs="unbounded" />
@@ -181,7 +175,7 @@
       <xs:element name="visitingRuleReferral" type="xs:string" minOccurs="0"/>
       <xs:element name="visitingRules" type="xs:string" minOccurs="0"/>
       <xs:element name="referralReceiver" type="xs:boolean" minOccurs="0"/>
-      <xs:element name="referralTypes" minOccurs="0">
+      <xs:element name="referralTypes" minOccurs="1">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="referralType" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
@@ -196,14 +190,8 @@
   <xs:complexType name="HsaUnitFunctionType">
     <xs:sequence>
       <xs:element name="name" type="xs:string" />
-      <xs:element name="telephoneHours" minOccurs="0">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="telephoneHour" type="core:TimeSpanType" minOccurs="0" maxOccurs="unbounded" />
-            </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="telephoneNumbers" minOccurs="0">
+      <xs:element name="telephoneHours" type="core:TelephoneHoursType" />
+      <xs:element name="telephoneNumbers" minOccurs="1">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="telephoneNumber" type="core:TelephoneNumberType" minOccurs="0" maxOccurs="unbounded" />
