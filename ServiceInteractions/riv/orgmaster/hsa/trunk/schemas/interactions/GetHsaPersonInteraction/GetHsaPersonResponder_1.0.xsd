@@ -50,25 +50,13 @@
     <xs:sequence>
       <xs:element name="personalPrescriptionCode" type="xs:string" minOccurs="0" />
       <xs:element name="description" type="xs:string" minOccurs="0" />
-      <xs:element name="paTitleCodes" minOccurs="0">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="paTitleCode" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
-            </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="paTitleNames" minOccurs="0">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="paTitleName" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
-            </xs:sequence>
-        </xs:complexType>
-      </xs:element>
+      <xs:element name="paTitleCodes" type="core:PaTitleCodesType" />
+      <xs:element name="paTitleNames" type="core:PaTitleNamesType" />
       <xs:element name="mail" type="xs:string" minOccurs="0" />
       <xs:element name="givenName" type="xs:string" />
       <xs:element name="hsaIdentity" type="core:HsaIdentityType" />
-      <xs:element name="hsaSwitchboardNumber" type="xs:string" minOccurs="0" />
-      <xs:element name="hsaTelephoneNumbers" minOccurs="0">
+      <xs:element name="hsaSwitchboardNumber" type="core:TelephoneNumberType" minOccurs="0" />
+      <xs:element name="hsaTelephoneNumbers" minOccurs="1">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="hsaTelephoneNumber" type="core:TelephoneNumberType" minOccurs="0" maxOccurs="unbounded" />
@@ -83,14 +71,14 @@
             </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:element name="mobileNumbers" minOccurs="0">
+      <xs:element name="mobileNumbers" minOccurs="1">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="mobileNumber" type="core:TelephoneNumberType" minOccurs="0" maxOccurs="unbounded" />
             </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:element name="facsimileTelephoneNumbers" minOccurs="0">
+      <xs:element name="facsimileTelephoneNumbers" minOccurs="1">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="facsimileTelephoneNumber" type="core:TelephoneNumberType" minOccurs="0" maxOccurs="unbounded" />
@@ -99,14 +87,14 @@
       </xs:element>
       <xs:element name="nickName" type="xs:string" minOccurs="0" />
       <xs:element name="smsTelephoneNumber" type="core:TelephoneNumberType" minOccurs="0" />
-      <xs:element name="specialityCodes" minOccurs="0">
+      <xs:element name="specialityCodes" minOccurs="1">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="specialityCode" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
             </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:element name="specialityNames" minOccurs="0">
+      <xs:element name="specialityNames" minOccurs="1">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="specialityName" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
@@ -114,14 +102,8 @@
         </xs:complexType>
       </xs:element>
       <xs:element name="sn" type="xs:string" />
-      <xs:element name="telephoneHours" minOccurs="0">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="telephoneHour" type="core:TimeSpanType" minOccurs="0" maxOccurs="unbounded" />
-            </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="telephoneNumbers" minOccurs="0">
+      <xs:element name="telephoneHours" type="core:TelephoneHoursType" />
+      <xs:element name="telephoneNumbers" minOccurs="1">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="telephoneNumber" type="core:TelephoneNumberType" minOccurs="0" maxOccurs="unbounded" />
@@ -132,13 +114,8 @@
       <xs:element name="DN" type="xs:string" />
       <xs:element name="middleName" type="xs:string" />
       <xs:element name="postalAddress" type="core:AddressType" minOccurs="0"/>
-      <xs:element name="hsaTitles" minOccurs="0">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="hsaTitle" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
-            </xs:sequence>
-        </xs:complexType>
-      </xs:element>
+      <xs:element name="hsaTitles" type="core:HsaTitlesType" />
+      <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
 </xs:schema>

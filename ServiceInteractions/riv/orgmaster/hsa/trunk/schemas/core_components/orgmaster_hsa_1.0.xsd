@@ -46,7 +46,9 @@
   </xs:complexType>
 
   <xs:simpleType name="TelephoneNumberType">
-    <xs:restriction base="xs:string"/>
+    <xs:restriction base="xs:string"> 
+        <xs:pattern value="([0-9])*"/> 
+    </xs:restriction>
   </xs:simpleType>
   
   <xs:complexType name="AgeSpanType">
@@ -56,7 +58,14 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  
+
+  <xs:complexType name="TelephoneHoursType">
+    <xs:sequence>
+        <xs:element name="telephoneHour" type="tns:TimeSpanType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="TimeSpanType">
     <xs:sequence>
       <xs:element name="fromDay" type="xs:integer" />
@@ -77,5 +86,26 @@
       <xs:element name="comment" type="xs:string" />
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="HsaTitlesType">
+    <xs:sequence>
+      <xs:element name="hsaTitle" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="PaTitleNamesType">
+      <xs:sequence>
+        <xs:element name="paTitleName" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+        <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="PaTitleCodesType">
+    <xs:sequence>
+        <xs:element name="paTitleCode" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+        <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
   </xs:complexType>
 </xs:schema>
