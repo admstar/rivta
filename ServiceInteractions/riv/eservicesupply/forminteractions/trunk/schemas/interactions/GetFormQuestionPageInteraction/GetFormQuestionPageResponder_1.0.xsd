@@ -23,27 +23,29 @@
   <xs:element name='GetFormQuestionPageResponse' type='tns:GetFormQuestionPageResponseType' />
   <xs:complexType name='GetFormQuestionPageType'>
     <xs:sequence>
-            <xs:element name="direction" minOccurs="1" maxOccurs="1">
-                <xs:annotation>
-                	<xs:documentation>
+    	<xs:element name="direction" minOccurs="1" maxOccurs="1">
+    		<xs:annotation>
+    			<xs:documentation>
     				Begäran -Direction ”BACK” är inte tillåtet om
-    				objektet ”PagenumberBlockNumber” är 1. -Direction ”FORWARD” är
-    				inte tillåtet om föregående objektets LastBlock är
-    				sant (true). Vid ovanstående fel genereras ett
-    				exception.</xs:documentation>
-                </xs:annotation>
-                <xs:simpleType>
-            		<xs:restriction base="xs:string">
-            			<xs:enumeration value="FORWARD"></xs:enumeration>
-            			<xs:enumeration value="BACK"></xs:enumeration>
-            		</xs:restriction>
-            	</xs:simpleType>
-            </xs:element>
-            <xs:element ref="core:formId" maxOccurs="1" minOccurs="1"></xs:element>
-            <xs:element ref="core:pageNumber" maxOccurs="1"></xs:element>
-            <xs:element ref="core:subjectOfCare" maxOccurs="1" minOccurs="0">
+    				objektet ”PagenumberBlockNumber” är 1. -Direction
+    				”FORWARD” är inte tillåtet om föregående objektets
+    				LastBlock är sant (true). Vid ovanstående fel
+    				genereras ett exception.
+    			</xs:documentation>
+    		</xs:annotation>
+    		<xs:simpleType>
+    			<xs:restriction base="xs:string">
+    				<xs:enumeration value="FORWARD"></xs:enumeration>
+    				<xs:enumeration value="BACK"></xs:enumeration>
+    			</xs:restriction>
+    		</xs:simpleType>
+    	</xs:element>
+    	<xs:element ref="core:formId" maxOccurs="1" minOccurs="1"></xs:element>
+    	<xs:element ref="core:pageNumber" maxOccurs="1"></xs:element>
+            <xs:element name="subjectOfCare" type="core:SubjectOfCareIdType" minOccurs="0">
             	<xs:annotation>
-            		<xs:documentation>FormTemplate.anonymousForm styr huruvida formulärmotorn hanterar detta fält som obligatoriskt eller frivilligt.</xs:documentation>
+            		<xs:documentation>Autentiserad invånare (personnummer). 
+FormTemplate.anonymousForm styr huruvida formulärmotorn hanterar detta fält som obligatoriskt eller frivilligt.</xs:documentation>
             	</xs:annotation></xs:element>
             <xs:any namespace='##other' processContents='lax' minOccurs='0'
     		maxOccurs='unbounded' />
