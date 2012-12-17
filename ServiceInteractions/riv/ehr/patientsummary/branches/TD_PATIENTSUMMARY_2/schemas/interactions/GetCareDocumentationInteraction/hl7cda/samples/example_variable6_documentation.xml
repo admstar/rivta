@@ -3,7 +3,7 @@
 
 <ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:voc="urn:hl7-org:v3/voc"
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                  xsi:schemaLocation="urn:hl7-org:v3 ../schemas/hl7/infrastructure/cda/CDA.xsd">
+                  xsi:schemaLocation="urn:hl7-org:v3 ../infrastructure/cda/CDA.xsd">
     <!-- CDA Header för vård- och omsorgsdokument -->
     <typeId root="2.16.840.1.113883.1.3" extension="POCD_HD000040"/>
     <!-- Fast värde: indikerar att detta är ett CDA-dokumen -->
@@ -42,11 +42,6 @@
             <id extension="HSA-id för person" root="1.2.752.129.2.1.4.1"/>
             <!-- HSA för författare extension = HSA-id för författaren, RIV:vård- och omsorgspersonal.personal-id
             root= fast värde, OID för HSA (1.2.752.129.2.1.4.1)  -->
-            codeSystem = fast värde OID för kodverk Befattning (1.2.752.129.2.2.1.4) -->
-            <assignedPerson>
-                <name>namn på författare</name>
-                <!-- Optional Namn på författare. RIV: Vård- och omsorgspersonal.namn-->
-            </assignedPerson>
 
             <representedOrganization>
                 <id extension="HSA-id för organisation" root="1.2.752.129.2.1.4.1"/>
@@ -95,6 +90,16 @@
         </assignedEntity>
     </legalAuthenticator>
 
+    <authorization>            <!-- Optional: kod för menprövning. <authorization> utesluts helt om information om menprövning inte är tillgänglig-->
+        <consent>
+            <code code="menprövningskod" codeSystem="2.16.840.1.113883.5.25"/>
+            <!-- Kod som anger typ på menprövning. Motsvarighet i RIV saknas
+            code = kod för menprövning/typ av menprövning
+            extensioner = kodverk för menprövningskoder. Här är ej korrekt OID angiven -->
+            <statusCode code="completed"/>
+        </consent>
+    </authorization>
+
     <!-- CDA Body -->
     <component>
         <structuredBody>
@@ -118,6 +123,8 @@
                     sva = Slutenvårdsanteckning
                     bes = Besöksanteckning
                     -->
+                    <title>Namn på dokument</title>
+                    <!-- Optional: Titel på dokument. RIV: Vård- och omsorgsdokument.dokumentnamn -->
                     <text>
                         <!-- själva anteckningen, här läggs texten -->
                         <renderMultiMedia referencedObject="MM1"/>
