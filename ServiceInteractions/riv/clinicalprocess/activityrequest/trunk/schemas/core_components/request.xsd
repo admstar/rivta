@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2009 sp1 (http://www.altova.com) by Viktor Jernelöv (Mawell Svenska AB) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="urn:riv:clinicalprocess:activityrequest:request" xmlns:codes="urn:riv:clinicalprocess:activityrequest:codes" targetNamespace="urn:riv:clinicalprocess:activityrequest:request" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="urn:riv:clinicalprocess:activityrequest:codes" schemaLocation="codes.xsd"/>
+	<xs:element name="request" type="RequestType"/>
+	<!-- Remiss -->
+	<xs:element name="requestOutcome" type="RequestOutcomeType"/>
+	<!-- Remissvar -->
+	<xs:element name="requestConfirmation" type="RequestConfirmationType"/>
+	<!-- Remissbekräftelse -->
+	<xs:element name="requestStatus" type="RequestStatusType"/>
+	<!-- Remisstatus -->
+	<xs:complexType name="RequestType">
+		<xs:sequence>
+			<!--eRemiss-id-->
+			<xs:element name="requestId" type="RequestIdType"/>
+			<!--e-remisstyp-->
+			<xs:element name="typeOfRequest" type="codes:codeForRequestType"/>
+			<!--versionstidpunkt-->
+			<xs:element name="versionTimeStamp" type="TimeStampType"/>
+			<!--versions-id-->
+			<xs:element name="versionNumber" type="VersionNumberType"/>
+			<!--versionorsak + versionsorsak text-->
+			<xs:element name="reasonForVersion" type="ReasonForVersionType"/>
+			<!--berör Patient-->
+			<xs:element name="patient" type="PatientType"/>
+			<!--har remitterande HoS-personal/Organisatorisk enhet-->
+			<xs:element name="author" type="AuthorType"/>
+			<!--har remissmottagande Organisatorisk enhet-->
+			<xs:element name="recipient" type="RecipientType"/>
+			<!--har vidareskickande-->
+			<xs:element name="intermediaryParticipant" type="IntermediaryType" minOccurs="0"/>
+			<!--kompletterande administrativ information-->
+			<xs:element name="additionalInformation" type="AdditionalInformationType"/>
+			<!--Borde ligga under PatientType?-->
+			<xs:element name="awarenessInformation" type="AwarenessInformationType" minOccurs="0"/>
+			<!--innehåller Frågeställning-->
+			<xs:element name="questionFormulation" type="QuestionFormulationType"/>
+			<!--erfordrar Betalningsförbindelse-->
+			<xs:element name="paymentCommitment" type="PaymentCommitmentType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RequestConfirmationType">
+		<xs:sequence>
+			<!--besvarar eRemiss.eRemiss-id-->
+			<xs:element name="requestId" type="RequestIdType"/>
+			<!--svars-id-->
+			<xs:element name="requestOutcomeId" type="RequestIdType"/>
+			<!--svarsmeddelandetyp-->
+			<xs:element name="typeOfRequestOutcome" type="codes:codeRequestOutcomeType"/>
+			<!--eRemiss.versions-id-->
+			<xs:element name="requestVersionNumber" type="VersionNumberType"/>
+			<xs:element name="patient" type="PatientTypeOutcome"/>
+			<xs:element name="author" type="AuthorType"/>
+			<xs:element name="recipient" type="RecipientType"/>
+			<xs:element name="outcome" type="ReceivedConfirmationOutcomeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReceivedConfirmationOutcomeType">
+		<xs:sequence>
+			<!--besvarar eRemiss.eRemiss-id-->
+			<xs:element name="requestId" type="RequestIdType"/>
+			<!--svars-id-->
+			<xs:element name="requestOutcomeId" type="RequestIdType"/>
+			<!--svarsmeddelandetyp-->
+			<xs:element name="typeOfRequestOutcome" type="codes:codeRequestOutcomeType"/>
+			<!--eRemiss.versions-id-->
+			<xs:element name="requestVersionNumber" type="VersionNumberType"/>
+			<xs:element name="patient" type="PatientTypeOutcome"/>
+			<xs:element name="author" type="AuthorType"/>
+			<xs:element name="recipient" type="RecipientType"/>
+			<xs:element name="outcome" type="RequestReceivedConfirmationOutcomeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RequestOutcomeType">
+		<xs:sequence>
+			<!--besvarar eRemiss.eRemiss-id-->
+			<xs:element name="requestId" type="RequestIdType"/>
+			<!--svars-id-->
+			<xs:element name="requestOutcomeId" type="RequestIdType"/>
+			<!--svarsmeddelandetyp-->
+			<xs:element name="typeOfRequestOutcome" type="codes:codeRequestOutcomeType"/>
+			<!--eRemiss.versions-id-->
+			<xs:element name="requestVersionNumber" type="VersionNumberType"/>
+			<xs:element name="requestOutcomeTime" type="TimeStampType" minOccurs="0"/>
+			<xs:element name="patient" type="PatientTypeOutcome"/>
+			<xs:element name="author" type="AuthorType"/>
+			<xs:element name="recipient" type="RecipientType"/>
+			<xs:element name="outcome" type="OutcomeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Type for requestId and requestOutcomId -->
+	<xs:complexType name="RequestIdType">
+		<xs:attribute name="extension" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="256"/>
+					<xs:pattern value="(.*)#(.*)"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="root" use="required" fixed="1.2.752.129.2.1.2.1">
+			<xs:simpleType>
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="TimeStampType">
+		<xs:attribute name="value" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])\d{4,6}"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="TelecomType">
+		<xs:sequence>
+			<xs:element name="typeOfTelecom" type="codes:codeForTelecomType"/>
+			<xs:element name="number" type="TelecomNumberType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReasonForVersionType">
+		<xs:sequence>
+			<xs:element name="typeOfReason" type="codes:codeVersionReason"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Patient type -->
+	<xs:complexType name="PatientType">
+		<xs:sequence>
+			<xs:element name="personId" type="PersonIdType"/>
+			<xs:element name="address" type="AddressType" minOccurs="0"/>
+			<xs:element name="telecom" type="TelecomType" minOccurs="0" maxOccurs="2"/>
+			<xs:element name="name" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="216"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="gender" type="codes:codeForGenderType" minOccurs="0"/>
+			<xs:element name="dateOfBirth" type="DateType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- -->
+	<xs:complexType name="PatientTypeOutcome">
+		<xs:sequence>
+			<xs:element name="personId" type="PersonIdType"/>
+			<xs:element name="name" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="216"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Version number only allows a number of 1 and higher. with leading 0
+Examples: 1
+    01
+    0001
+    2
+    and so on
+    -->
+	<xs:simpleType name="VersionNumberType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(0*[1-9]+|[1-9])\d*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Telecom number format +123-12345678 -->
+	<xs:simpleType name="TelecomNumberType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\+\d+-\d+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Date format SSYYMMDD -->
+	<xs:complexType name="DateType">
+		<xs:attribute name="value" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="PersonIdType">
+		<xs:attribute name="extension" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[0-9]{8}[0-9pPtTfF][0-9]{3}"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="root" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="1.2.752.129.2.1.3.1">
+						<xs:annotation>
+							<xs:documentation>Personnummer</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="1.2.752.129.2.1.3.3">
+						<xs:annotation>
+							<xs:documentation>Nationellt samordningsnummer</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="1.2.752.129.2.1.3.2">
+						<xs:annotation>
+							<xs:documentation>Nationellt reservnummer</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<!-- Type for carrying an address, modeled after navnet with addition of postBox -->
+	<xs:complexType name="AddressType">
+		<xs:sequence>
+			<xs:element name="careOf" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="35"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="streetName1">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="35"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="streetName2" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="35"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="streetName3" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="35"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="postalCode">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[0-9]{3,3}\s[0-9]{2,2}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="postalCity">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="27"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="postBox" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="9"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AuthorType">
+		<xs:sequence>
+			<!--eRemiss.remissdatum-->
+			<xs:element name="dateOfRequest" type="DateType"/>
+			<!--Required when type codeRequestOutcomeType = SR, KS, KB, RB-->
+			<xs:element name="healthcareProfessional" type="HealthcareProfessionalType"/>
+			<xs:element name="typeOfHealthcareProfessional" type="codes:codeForProfession"/>
+			<!-- custodian + author.representedOrganisation-->
+			<xs:element name="healthcareProfessionalOrganisation" type="OrganisationType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IntermediaryType">
+		<xs:sequence>
+			<xs:element name="healthcareProfessionalOrganisation" type="OrganisationType"/>
+			<!-- custodian -->
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RecipientType">
+		<xs:sequence>
+			<xs:element name="organisation" type="OrganisationType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- healthcareProfessional id and healthcareProfessional name restrictions mirrors HSA -->
+	<xs:complexType name="HealthcareProfessionalType">
+		<xs:sequence>
+			<xs:element name="id" type="HsaIdType" minOccurs="0"/>
+			<xs:element name="name">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="64"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HsaIdType">
+		<xs:attribute name="extension" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="64"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="root" use="required" fixed="1.2.752.129.2.1.4.1">
+			<xs:simpleType>
+				<xs:restriction base="xs:string"/>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="OrganisationType">
+		<xs:sequence>
+			<xs:element name="careUnitId" type="HsaIdType"/>
+			<!--
+			<xs:element name="careUnitName">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="64"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element> -->
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdditionalInformationType">
+		<xs:sequence>
+			<xs:element name="desiredDateForPerformance" type="TimeIntervalType" minOccurs="0"/>
+			<xs:element name="desiredRequestRecipient" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="8192"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="administrativeInformation" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="8192"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="interpreterRequirement" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="8192"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AwarenessInformationType">
+		<xs:sequence>
+			<xs:element name="text">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="8192"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Question Formulation -->
+	<xs:complexType name="QuestionFormulationType">
+		<xs:sequence>
+			<xs:element name="text">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="8192"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<!-- Anamnes 1..1 -->
+			<xs:element name="clinicalInformation" type="ClinicalInformationType"/>
+			<!-- Condition 0..* -->
+			<xs:element name="condition" type="ConditionType" minOccurs="0" maxOccurs="unbounded"/>
+			<!-- Desired activities 0..* -->
+			<xs:element name="desiredActivity" type="ActivityType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ClinicalInformationType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="code" type="codes:codeForClinicalInformation"/>
+				<xs:element name="text">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="8192"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Condition Types -->
+	<xs:complexType name="ConditionType">
+		<xs:sequence>
+			<xs:element name="id" type="ConditionIdType"/>
+			<xs:element name="text" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="8192"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="code" type="codes:codeForClinicalInformation" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConditionIdType">
+		<xs:attribute name="extension" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="(.*)"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="root" use="required" fixed="1.2.752.129.2.1.2.1"/>
+	</xs:complexType>
+	<!-- Activity types -->
+	<xs:complexType name="ActivityType">
+		<xs:sequence>
+			<xs:element name="id" type="ActivityIdType"/>
+			<xs:element name="text">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="8192"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="code" type="ActivityCodeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ActivityIdType">
+		<xs:attribute name="extension" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="(.*)"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="root" use="required" fixed="1.2.752.129.2.1.2.1"/>
+	</xs:complexType>
+	<!-- -->
+	<xs:complexType name="ActivityCodeType">
+		<xs:attribute name="extension" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="(.*)"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="root" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="1.2.752.116.1.3.2.1.4"/>
+					<xs:enumeration value="1.2.752.116.2.1.1"/>
+					<xs:enumeration value="1.2.752.97.3.1.11"/>
+					<!--KVÅ-->
+					<!--Snomed CT-->
+					<!--SLL IKK-->
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<!-- Answer section of a request response -->
+	<xs:complexType name="OutcomeType">
+		<xs:sequence>
+			<xs:element name="outcomeText">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="49152"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="condition" type="ConditionType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="accomplishedActivity" type="ActivityType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RequestReceivedConfirmationOutcomeType">
+		<xs:sequence>
+			<xs:element name="outcomeText">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="49152"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Date type -->
+	<xs:complexType name="TimeIntervalType">
+		<xs:attribute name="low">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="high">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="PaymentCommitmentType">
+		<xs:sequence>
+			<xs:element name="paymentCommitmentId" type="PaymentCommitmentIdType"/>
+			<xs:element name="commitmentType" type="codes:codeForCommitmentType"/>
+			<xs:element name="commitmentTypeChapter" type="codes:codeForCommitmentTypeChapter" minOccurs="0"/>
+			<xs:element name="validity" type="TimeIntervalType"/>
+			<xs:element name="clinicalResponsibilityDescription" type="ResponsibilityDescriptionType" minOccurs="0"/>
+			<xs:element name="administrativeResponsibilityDescription" type="ResponsibilityDescriptionType" minOccurs="0"/>
+			<xs:element name="validOnlyForOutpatientCare" type="xs:boolean"/>
+			<xs:element name="liableCountyCouncil" type="codes:codeForCountyCouncil"/>
+			<xs:element name="dateOfApproval" type="TimeStampType" minOccurs="0"/>
+			<xs:element name="issuedInConsultationWith" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="128"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="costCenter" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="64"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="reimbursementInformation" type="ReimbursementInformationType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReimbursementInformationType">
+		<xs:sequence>
+			<xs:element name="reimbursementType" type="codes:codeForReimbursementType"/>
+			<xs:element name="ownerOfInvokedContract" type="codes:codeForCountyCouncil"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentCommitmentIdType">
+		<xs:attribute name="extension" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="(.*)"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<!--Not needed when fixed in greenCDA
+		<xs:attribute name="root" use="required" fixed="1.2.752.129.2.1.2.1"/>
+		-->
+	</xs:complexType>
+	<xs:simpleType name="ResponsibilityDescriptionType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="49152"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="RequestStatusType">
+		<xs:sequence>
+			<xs:element name="requestId" type="RequestIdType"/>
+			<xs:element name="requestVersionNumber" type="VersionNumberType"/>
+			<xs:element name="patient" type="PatientTypeOutcome"/>
+			<xs:element name="requestStatusId" type="RequestStatusIdType"/>
+			<xs:element name="requestStatus" type="codes:kv_status_framstallan"/>
+			<xs:element name="statusTime" type="TimeStampType"/>
+			<xs:element name="statusSetter" type="OrganisationType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RequestStatusIdType">
+		<xs:attribute name="extension" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="(.*)"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<!--Not needed when fixed in greenCDA
+		<xs:attribute name="root" use="required" fixed="1.2.752.129.2.1.2.1"/>
+		-->
+	</xs:complexType>
+</xs:schema>
