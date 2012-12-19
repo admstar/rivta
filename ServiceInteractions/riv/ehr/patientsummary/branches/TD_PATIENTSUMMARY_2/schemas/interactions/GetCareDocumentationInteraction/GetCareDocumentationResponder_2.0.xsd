@@ -24,18 +24,18 @@
 	<xs:element name="GetCareDocumentationResponse" type="tns:GetCareDocumentationResponseType"/>
 	<xs:complexType name="GetCareDocumentationType">
 		<xs:sequence>
-			<xs:element name="logicalAddress" type="ST"/>
+			<xs:element name="logicalAddress" type="core:PSST"/>
 			<xs:element name="authorOrganizationID" type="core:HSAIdType"/>
-			<xs:element name="patientID" type="core:PatientIdType"/>
+			<xs:element name="patientID" type="core:PSII"/>
 			<xs:element name="timePeriod" type="IVL_TS" minOccurs="0"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="GetCareDocumentationResponseType">
 		<xs:sequence>
-			<xs:element name="careDocumentationHeader" type="core:HeaderType"/>
-			<xs:element name="careDocumentationBody" type="core:CareDocumentationType"/>
-			<xs:element name="result" type="core:ResultType"/>
+			<xs:element name="careDocumentationHeader" type="core:patientSummaryHeaderType"/>
+			<xs:element name="careDocumentationBody" type="core:careDocumentationType"/>
+			<xs:element name="result" type="core:resultType"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
