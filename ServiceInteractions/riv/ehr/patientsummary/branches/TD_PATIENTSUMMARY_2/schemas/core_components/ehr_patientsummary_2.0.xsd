@@ -251,12 +251,12 @@
 	<xs:complexType name="authorIdType">
 		<xs:complexContent>
 			<xs:restriction base="II">
+				<xs:attribute name="nullFlavor" type="st" use="prohibited"/>
 				<xs:attribute name="root" use="required" fixed="1.2.752.129.2.2.1.4">
 					<xs:simpleType>
 						<xs:restriction base="uid"/>
 					</xs:simpleType>
 				</xs:attribute>
-				<xs:attribute name="nullFlavor" type="st" use="prohibited"/>
 				<xs:attribute name="assigningAuthorityName" type="st" use="prohibited"/>
 				<xs:attribute name="displayable" type="bl" use="prohibited"/>
 			</xs:restriction>
@@ -265,12 +265,12 @@
 	<xs:complexType name="authorRoleCodeType">
 		<xs:complexContent>
 			<xs:restriction base="II">
+				<xs:attribute name="nullFlavor" type="st" use="prohibited"/>
 				<xs:attribute name="root" use="required" fixed="1.2.752.129.2.2.1.4">
 					<xs:simpleType>
 						<xs:restriction base="uid"/>
 					</xs:simpleType>
 				</xs:attribute>
-				<xs:attribute name="nullFlavor" type="st" use="prohibited"/>
 				<xs:attribute name="assigningAuthorityName" type="st" use="prohibited"/>
 				<xs:attribute name="displayable" type="bl" use="prohibited"/>
 			</xs:restriction>
@@ -279,6 +279,7 @@
 	<xs:complexType name="careDocumentNoteCodeType">
 		<xs:complexContent>
 			<xs:restriction base="CD">
+				<xs:attribute name="nullFlavor" type="st" use="prohibited"/>
 				<xs:attribute name="code" use="required">
 					<xs:simpleType>
 						<xs:restriction base="cs">
@@ -297,18 +298,21 @@
 						<xs:restriction base="uid"/>
 					</xs:simpleType>
 				</xs:attribute>
+				<xs:attribute name="codeSystemName" type="st" use="prohibited"/>
+				<xs:attribute name="codeSystemVersion" type="st" use="prohibited"/>
+				<xs:attribute name="displayName" type="st" use="prohibited"/>				
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
 	<xs:complexType name="HSAIdType">
 		<xs:complexContent>
 			<xs:restriction base="II">
+				<xs:attribute name="nullFlavor" type="st" use="prohibited"/>
 				<xs:attribute name="root" use="required" fixed="1.2.752.129.2.1.4.1">
 					<xs:simpleType>
 						<xs:restriction base="uid"/>
 					</xs:simpleType>
 				</xs:attribute>
-				<xs:attribute name="nullFlavor" type="st" use="prohibited"/>
 				<xs:attribute name="assigningAuthorityName" type="st" use="prohibited"/>
 				<xs:attribute name="displayable" type="bl" use="prohibited"/>
 			</xs:restriction>
@@ -321,7 +325,6 @@
 			<xs:enumeration value="INFO"/>
 		</xs:restriction>
 	</xs:simpleType>
-	
 	<xs:complexType name="PSTS">
 		<xs:annotation>
 			<xs:documentation>
@@ -336,6 +339,7 @@
 		</xs:annotation>
 		<xs:complexContent>
 			<xs:restriction base="TS">
+				<xs:attribute name="nullFlavor" type="st" use="prohibited"/>
 				<xs:attribute name="value">
 					<xs:simpleType>
 						<xs:restriction base="ts">
@@ -343,7 +347,6 @@
 						</xs:restriction>
 					</xs:simpleType>
 				</xs:attribute>
-				<xs:attribute name="nullFlavor" type="st" use="prohibited"/>
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
@@ -355,11 +358,11 @@
 				Den komplexa typen PSII sätter restriktioner på bastypen II genom att inte tillåta
 				användning av attribut som inte ska användas av tjänster inom domänen.
 			</xs:documentation>
-		</xs:annotation>	
+		</xs:annotation>
 		<xs:complexContent>
 			<xs:restriction base="II">
-				<xs:attribute name="root" type="uid" use="required"/>
 				<xs:attribute name="nullFlavor" type="st" use="prohibited"/>
+				<xs:attribute name="root" type="uid" use="required"/>
 				<xs:attribute name="assigningAuthorityName" type="st" use="prohibited"/>
 				<xs:attribute name="displayable" type="bl" use="prohibited"/>
 			</xs:restriction>
@@ -373,7 +376,7 @@
 				Den komplexa typen PSST sätter restriktioner på bastypen ST genom att inte tillåta
 				användning av attribut som inte ska användas av tjänster inom domänen.
 			</xs:documentation>
-		</xs:annotation>	
+		</xs:annotation>
 		<xs:complexContent>
 			<xs:restriction base="ST">
 				<xs:attribute name="nullFlavor" type="st" use="prohibited"/>
@@ -381,4 +384,5 @@
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
+
 </xs:schema>
