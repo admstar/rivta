@@ -19,7 +19,7 @@
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:ehr:patientsummary:2" targetNamespace="urn:riv:ehr:patientsummary:2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
 	<xs:import schemaLocation="datatypes.xsd"/>
-	<xs:complexType name="AssignedEntityType">
+	<xs:complexType name="assignedEntityType">
 		<xs:annotation>
 			<xs:documentation>
 				Information om person som signerat dokument
@@ -36,7 +36,7 @@
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="AuthorizationType">
+	<xs:complexType name="authorizationType">
 		<xs:annotation>
 			<xs:documentation>
 				Information om menprövning
@@ -46,17 +46,17 @@
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="authorizationCode" type="tns:AuthorizationCodeType"/>
+			<xs:element name="authorizationCode" type="tns:PSII"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="AuthorType">
+	<xs:complexType name="authorType">
 		<xs:annotation>
 			<xs:documentation>
 				Information om författare till dokumentet
 			
 				authorTime: 
-					Information om författare till dokumentet
+					Tidpunkt då dokumentet skapades
 				authorID: 
 					HSA-id för författare. 
 					OID för HSA används (1.2.752.129.2.2.1.4)
@@ -77,26 +77,26 @@
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="authorTime" type="TS"/>
-			<xs:element name="authorID" type="tns:AuthorIdType"/>
-			<xs:element name="authorRoleCode" type="tns:AuthorRoleCodeType"/>
-			<xs:element name="authorName" type="ST" minOccurs="0"/>
+			<xs:element name="authorTime" type="tns:PSTS"/>
+			<xs:element name="authorID" type="tns:authorIdType"/>
+			<xs:element name="authorRoleCode" type="tns:authorRoleCodeType"/>
+			<xs:element name="authorName" type="tns:PSST" minOccurs="0"/>
 			<xs:element name="authorOrganizationID" type="tns:HSAIdType"/>
-			<xs:element name="authorOrganizationName" type="ST" minOccurs="0"/>
-			<xs:element name="authorOrganizationTelecom" type="ST" minOccurs="0"/>
-			<xs:element name="authorOrganizationAddress" type="ST" minOccurs="0"/>
+			<xs:element name="authorOrganizationName" type="tns:PSST" minOccurs="0"/>
+			<xs:element name="authorOrganizationTelecom" type="tns:PSST" minOccurs="0"/>
+			<xs:element name="authorOrganizationAddress" type="tns:PSST" minOccurs="0"/>
 			<xs:element name="careProviderID" type="tns:HSAIdType"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="CareDocumentationType">
+	<xs:complexType name="careDocumentationType">
 		<xs:sequence>
-			<xs:element name="clinicalDocumentNote" type="tns:ClinicalDocumentNoteType"/>
-			<xs:element name="multimediaEntry" type="tns:MultimediaEntryType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="clinicalDocumentNote" type="tns:clinicalDocumentNoteType"/>
+			<xs:element name="multimediaEntry" type="tns:multimediaEntryType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="ClinicalDocumentNoteType">
+	<xs:complexType name="clinicalDocumentNoteType">
 		<xs:annotation>
 			<xs:documentation>
 			Dokument/anteckning
@@ -122,13 +122,13 @@
 		</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="careDocumentNoteCode" type="tns:CareDocumentNoteCodeType"/>
-			<xs:element name="careDocumentNoteTitle" type="ST" minOccurs="0"/>
-			<xs:element name="careDocumentNoteText" type="ST"/>
+			<xs:element name="careDocumentNoteCode" type="tns:careDocumentNoteCodeType"/>
+			<xs:element name="careDocumentNoteTitle" type="tns:PSST" minOccurs="0"/>
+			<xs:element name="careDocumentNoteText" type="tns:PSST"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="CustodianType">
+	<xs:complexType name="custodianType">
 		<xs:annotation>
 			<xs:documentation>
 				Information om PDL-enhet som har ansvar för informationen
@@ -142,7 +142,7 @@
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="EncompassingEncounterType">
+	<xs:complexType name="encompassingEncounterType">
 		<xs:annotation>
 			<xs:documentation>
 				Information om  Vård- och omsorgskontakt som föranlett vårddokumentation.
@@ -155,12 +155,12 @@
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="encounterID" type="II"/>
-			<xs:element name="encounterTime" type="TS"/>
+			<xs:element name="encounterID" type="tns:PSII"/>
+			<xs:element name="encounterTime" type="tns:PSTS"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="HeaderType">
+	<xs:complexType name="patientSummaryHeaderType">
 		<xs:annotation>
 			<xs:documentation>
 				careDocumentID: 
@@ -179,19 +179,19 @@
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="careDocumentID" type="tns:CareDocumentIdType"/>
-			<xs:element name="careDocumentTitle" type="ST" minOccurs="0"/>
-			<xs:element name="careDocumentTime" type="TS"/>
-			<xs:element name="patientID" type="tns:PatientIdType"/>
-			<xs:element name="author" type="tns:AuthorType"/>
-			<xs:element name="custodian" type="tns:CustodianType"/>
-			<xs:element name="legalAuthenticator" type="tns:LegalAuthenticatorType" minOccurs="0"/>
-			<xs:element name="authorization" type="tns:AuthorizationType" minOccurs="0"/>
-			<xs:element name="encompassingEncounter" type="tns:EncompassingEncounterType" minOccurs="0"/>
+			<xs:element name="careDocumentID" type="tns:PSII"/>
+			<xs:element name="careDocumentTitle" type="tns:PSST" minOccurs="0"/>
+			<xs:element name="careDocumentTime" type="tns:PSTS"/>
+			<xs:element name="patientID" type="tns:PSII"/>
+			<xs:element name="author" type="tns:authorType"/>
+			<xs:element name="custodian" type="tns:custodianType"/>
+			<xs:element name="legalAuthenticator" type="tns:legalAuthenticatorType" minOccurs="0"/>
+			<xs:element name="authorization" type="tns:authorizationType" minOccurs="0"/>
+			<xs:element name="encompassingEncounter" type="tns:encompassingEncounterType" minOccurs="0"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="LegalAuthenticatorType">
+	<xs:complexType name="legalAuthenticatorType">
 		<xs:annotation>
 			<xs:documentation>
 				Information om signering
@@ -202,12 +202,12 @@
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="signatureTime" type="tns:TimeStampType"/>
-			<xs:element name="assignedEntity" type="tns:AssignedEntityType" minOccurs="0"/>
+			<xs:element name="signatureTime" type="tns:PSTS"/>
+			<xs:element name="assignedEntity" type="tns:assignedEntityType" minOccurs="0"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="MultimediaEntryType">
+	<xs:complexType name="multimediaEntryType">
 		<xs:annotation>
 			<xs:documentation>
 				Multimedia som finns i dokumentet, motsvaras av platshållare i careDocumentNoteText
@@ -219,12 +219,12 @@
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="multiMediaID" type="ST"/>
+			<xs:element name="multiMediaID" type="tns:PSST"/>
 			<xs:element name="value" type="ED"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="ResultType">
+	<xs:complexType name="resultType">
 		<xs:annotation>
 			<xs:documentation>
 				Vid ett logiskt fel i de uppdaterande tjänsterna levereras resultCode, resultText. 
@@ -243,12 +243,12 @@
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="resultCode" type="tns:ResultCodeEnum"/>
-			<xs:element name="resultText" type="ST" minOccurs="0"/>
+			<xs:element name="resultCode" type="tns:resultCodeEnum"/>
+			<xs:element name="resultText" type="tns:PSST" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
-	<!-- Below: types that extends another type and adds some restriction to the type  -->
-	<xs:complexType name="AuthorIdType">
+	<!-- Below: types that (1) extends another type and (2) adds some kind of restriction to the type  -->
+	<xs:complexType name="authorIdType">
 		<xs:complexContent>
 			<xs:restriction base="II">
 				<xs:attribute name="root" use="required" fixed="1.2.752.129.2.2.1.4">
@@ -256,17 +256,13 @@
 						<xs:restriction base="uid"/>
 					</xs:simpleType>
 				</xs:attribute>
+				<xs:attribute name="nullFlavor" type="st" use="prohibited"/>
+				<xs:attribute name="assigningAuthorityName" type="st" use="prohibited"/>
+				<xs:attribute name="displayable" type="bl" use="prohibited"/>
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
-	<xs:complexType name="AuthorizationCodeType">
-		<xs:complexContent>
-			<xs:restriction base="II">
-				<xs:attribute name="root" type="uid" use="required"/>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="AuthorRoleCodeType">
+	<xs:complexType name="authorRoleCodeType">
 		<xs:complexContent>
 			<xs:restriction base="II">
 				<xs:attribute name="root" use="required" fixed="1.2.752.129.2.2.1.4">
@@ -274,17 +270,13 @@
 						<xs:restriction base="uid"/>
 					</xs:simpleType>
 				</xs:attribute>
+				<xs:attribute name="nullFlavor" type="st" use="prohibited"/>
+				<xs:attribute name="assigningAuthorityName" type="st" use="prohibited"/>
+				<xs:attribute name="displayable" type="bl" use="prohibited"/>
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
-	<xs:complexType name="CareDocumentIdType">
-		<xs:complexContent>
-			<xs:restriction base="II">
-				<xs:attribute name="root" type="uid" use="required"/>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="CareDocumentNoteCodeType">
+	<xs:complexType name="careDocumentNoteCodeType">
 		<xs:complexContent>
 			<xs:restriction base="CD">
 				<xs:attribute name="code" use="required">
@@ -308,13 +300,6 @@
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
-	<xs:complexType name="EncounterIdType">
-		<xs:complexContent>
-			<xs:restriction base="II">
-				<xs:attribute name="root" type="uid" use="required"/>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
 	<xs:complexType name="HSAIdType">
 		<xs:complexContent>
 			<xs:restriction base="II">
@@ -323,24 +308,32 @@
 						<xs:restriction base="uid"/>
 					</xs:simpleType>
 				</xs:attribute>
+				<xs:attribute name="nullFlavor" type="st" use="prohibited"/>
+				<xs:attribute name="assigningAuthorityName" type="st" use="prohibited"/>
+				<xs:attribute name="displayable" type="bl" use="prohibited"/>
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
-	<xs:complexType name="PatientIdType">
-		<xs:complexContent>
-			<xs:restriction base="II">
-				<xs:attribute name="root" type="uid" use="required"/>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:simpleType name="ResultCodeEnum">
+	<xs:simpleType name="resultCodeEnum">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="OK"/>
 			<xs:enumeration value="ERROR"/>
 			<xs:enumeration value="INFO"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:complexType name="TimeStampType">
+	
+	<xs:complexType name="PSTS">
+		<xs:annotation>
+			<xs:documentation>
+				Patient Summary Timestamp (PSTS) type
+				
+				Den komplexa typen PSTS sätter restriktioner på bastypen TS genom att inte tillåta
+				användning av attribut som inte ska användas av tjänster inom domänen.
+
+				value: 
+					Tidpunktpå formatett ÅÅÅÅMMDDHHMMSS
+			</xs:documentation>
+		</xs:annotation>
 		<xs:complexContent>
 			<xs:restriction base="TS">
 				<xs:attribute name="value">
@@ -350,6 +343,41 @@
 						</xs:restriction>
 					</xs:simpleType>
 				</xs:attribute>
+				<xs:attribute name="nullFlavor" type="st" use="prohibited"/>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PSII">
+		<xs:annotation>
+			<xs:documentation>
+				Patient Summary II (PSII) type
+			
+				Den komplexa typen PSII sätter restriktioner på bastypen II genom att inte tillåta
+				användning av attribut som inte ska användas av tjänster inom domänen.
+			</xs:documentation>
+		</xs:annotation>	
+		<xs:complexContent>
+			<xs:restriction base="II">
+				<xs:attribute name="root" type="uid" use="required"/>
+				<xs:attribute name="nullFlavor" type="st" use="prohibited"/>
+				<xs:attribute name="assigningAuthorityName" type="st" use="prohibited"/>
+				<xs:attribute name="displayable" type="bl" use="prohibited"/>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PSST">
+		<xs:annotation>
+			<xs:documentation>
+				Patient Summary ST (PSST) type
+			
+				Den komplexa typen PSST sätter restriktioner på bastypen ST genom att inte tillåta
+				användning av attribut som inte ska användas av tjänster inom domänen.
+			</xs:documentation>
+		</xs:annotation>	
+		<xs:complexContent>
+			<xs:restriction base="ST">
+				<xs:attribute name="nullFlavor" type="st" use="prohibited"/>
+				<xs:attribute name="language" type="cs" use="prohibited"/>
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
