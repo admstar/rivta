@@ -50,28 +50,33 @@
 			<xs:element name="typeOfRequestOutcome" type="codes:codeRequestOutcomeType"/>
 			<!--eRemiss.versions-id-->
 			<xs:element name="requestVersionNumber" type="VersionNumberType"/>
-			<xs:element name="patient" type="PatientTypeOutcome"/>
-			<xs:element name="author" type="AuthorType"/>
-			<xs:element name="recipient" type="RecipientType"/>
-			<xs:element name="outcome" type="ReceivedConfirmationOutcomeType"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="ReceivedConfirmationOutcomeType">
-		<xs:sequence>
-			<!--besvarar eRemiss.eRemiss-id-->
-			<xs:element name="requestId" type="RequestIdType"/>
-			<!--svars-id-->
-			<xs:element name="requestOutcomeId" type="RequestIdType"/>
-			<!--svarsmeddelandetyp-->
-			<xs:element name="typeOfRequestOutcome" type="codes:codeRequestOutcomeType"/>
-			<!--eRemiss.versions-id-->
-			<xs:element name="requestVersionNumber" type="VersionNumberType"/>
+			<xs:element name="requestOutcomeTime" type="TimeStampType" minOccurs="0"/>
 			<xs:element name="patient" type="PatientTypeOutcome"/>
 			<xs:element name="author" type="AuthorType"/>
 			<xs:element name="recipient" type="RecipientType"/>
 			<xs:element name="outcome" type="RequestReceivedConfirmationOutcomeType"/>
 		</xs:sequence>
 	</xs:complexType>
+	<!--
+	<xs:complexType name="ReceivedConfirmationOutcomeType">
+		<xs:sequence> -->
+	<!--besvarar eRemiss.eRemiss-id 
+			<xs:element name="requestId" type="RequestIdType"/>
+				-->
+	<!--svars-id
+			<xs:element name="requestOutcomeId" type="RequestIdType"/>
+			-->
+	<!--svarsmeddelandetyp
+			<xs:element name="typeOfRequestOutcome" type="codes:codeRequestOutcomeType"/>
+			-->
+	<!--eRemiss.versions-id-
+			<xs:element name="requestVersionNumber" type="VersionNumberType"/>
+			<xs:element name="patient" type="PatientTypeOutcome"/>
+			<xs:element name="author" type="AuthorType"/>
+			<xs:element name="recipient" type="RecipientType"/>
+			<xs:element name="outcome" type="RequestReceivedConfirmationOutcomeType"/>
+		</xs:sequence>
+	</xs:complexType> -->
 	<xs:complexType name="RequestOutcomeType">
 		<xs:sequence>
 			<!--besvarar eRemiss.eRemiss-id-->
@@ -376,8 +381,8 @@ Examples: 1
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<!-- Anamnes 1..1 -->
-			<xs:element name="clinicalInformation" type="ClinicalInformationType"/>
+			<!-- Anamnes 0..1 -->
+			<xs:element name="clinicalInformation" type="ClinicalInformationType" minOccurs="0"/>
 			<!-- Condition 0..* -->
 			<xs:element name="condition" type="ConditionType" minOccurs="0" maxOccurs="unbounded"/>
 			<!-- Desired activities 0..* -->
@@ -387,7 +392,6 @@ Examples: 1
 	<xs:complexType name="ClinicalInformationType">
 		<xs:sequence>
 			<xs:choice>
-				<xs:element name="code" type="codes:codeForClinicalInformation"/>
 				<xs:element name="text">
 					<xs:simpleType>
 						<xs:restriction base="xs:string">
@@ -426,14 +430,14 @@ Examples: 1
 	<xs:complexType name="ActivityType">
 		<xs:sequence>
 			<xs:element name="id" type="ActivityIdType"/>
-			<xs:element name="text">
+			<xs:element name="text" minOccurs="0">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
 						<xs:maxLength value="8192"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="code" type="ActivityCodeType"/>
+			<xs:element name="code" minOccurs="0" type="ActivityCodeType"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ActivityIdType">
@@ -448,14 +452,14 @@ Examples: 1
 	</xs:complexType>
 	<!-- -->
 	<xs:complexType name="ActivityCodeType">
-		<xs:attribute name="extension" use="required">
+		<xs:attribute name="code" use="required">
 			<xs:simpleType>
 				<xs:restriction base="xs:string">
 					<xs:pattern value="(.*)"/>
 				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>
-		<xs:attribute name="root" use="required">
+		<xs:attribute name="codeSystem" use="required">
 			<xs:simpleType>
 				<xs:restriction base="xs:string">
 					<xs:enumeration value="1.2.752.116.1.3.2.1.4"/>
@@ -564,7 +568,6 @@ Examples: 1
 	<xs:complexType name="RequestStatusType">
 		<xs:sequence>
 			<xs:element name="requestId" type="RequestIdType"/>
-			<xs:element name="requestVersionNumber" type="VersionNumberType"/>
 			<xs:element name="patient" type="PatientTypeOutcome"/>
 			<xs:element name="requestStatusId" type="RequestStatusIdType"/>
 			<xs:element name="requestStatus" type="codes:kv_status_framstallan"/>
