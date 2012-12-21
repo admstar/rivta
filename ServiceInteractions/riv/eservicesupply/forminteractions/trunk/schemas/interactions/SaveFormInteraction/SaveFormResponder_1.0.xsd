@@ -23,13 +23,19 @@
   <xs:element name='SaveFormResponse' type='tns:SaveFormResponseType' />
   <xs:complexType name='SaveFormType'>
     <xs:sequence>
-    	<xs:element ref="core:formId" minOccurs="1"></xs:element>
-            <xs:element name="subjectOfCare" type="core:SubjectOfCareIdType" maxOccurs="1" minOccurs="0">
-            	<xs:annotation>
-            		<xs:documentation>Autentiserad invånare (personnummer). 
-FormTemplate.anonymousForm styr huruvida formulärmotorn hanterar detta fält som obligatoriskt eller frivilligt.</xs:documentation>
-            	</xs:annotation></xs:element>
-            <xs:any namespace='##other' processContents='lax' minOccurs='0'
+            <xs:element name="formId" type="core:FormIDType" minOccurs="1"></xs:element>
+    	<xs:element name="subjectOfCare" type="core:SubjectOfCareIdType"
+    		maxOccurs="1" minOccurs="0">
+    		<xs:annotation>
+    			<xs:documentation>
+    				Autentiserad invånare (personnummer).
+    				FormTemplate.anonymousForm styr huruvida
+    				formulärmotorn hanterar detta fält som obligatoriskt
+    				eller frivilligt.
+    			</xs:documentation>
+    		</xs:annotation>
+    	</xs:element>
+    	<xs:any namespace='##other' processContents='lax' minOccurs='0'
     		maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
