@@ -22,19 +22,25 @@
 	<xs:element name='CreateFormResponse' type='tns:CreateFormResponseType' />
 	<xs:complexType name='CreateFormType'>
 		<xs:sequence>
-			<xs:element ref="core:healthcare_facility_CareUnit"
-				minOccurs="1">
+			<xs:element name="healthcare_facility_CareUnit"
+				type="core:HsaIdType" minOccurs="1">
 			</xs:element>
-			<xs:element ref="core:clinicalProcessInterestId"
-				minOccurs="0">
+			<xs:element name="clinicalProcessInterestId"
+				type="core:clinicalProcessInterestIdType" minOccurs="0">
 			</xs:element>
-            <xs:element name="subjectOfCare" type="core:SubjectOfCareIdType" minOccurs="0">
-            	<xs:annotation>
-            		<xs:documentation>Autentiserad invånare (personnummer). 
-FormTemplate.anonymousForm styr huruvida formulärmotorn hanterar detta fält som obligatoriskt eller frivilligt.</xs:documentation>
-            	</xs:annotation></xs:element>
-            <xs:element ref="core:templateId" minOccurs="1"></xs:element>
-            <xs:any namespace='##other' processContents='lax'
+			<xs:element name="subjectOfCare"
+				type="core:SubjectOfCareIdType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						Autentiserad invånare (personnummer).
+						FormTemplate.anonymousForm styr huruvida
+						formulärmotorn hanterar detta fält som
+						obligatoriskt eller frivilligt.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+            <xs:element name="templateId" type="core:TemplateIdType" minOccurs="1"></xs:element>
+			<xs:any namespace='##other' processContents='lax'
 				minOccurs='0' maxOccurs='unbounded' />
 		</xs:sequence>
 	</xs:complexType>
