@@ -24,17 +24,24 @@
 	<xs:element name="GetCareDocumentationResponse" type="tns:GetCareDocumentationResponseType"/>
 	<xs:complexType name="GetCareDocumentationType">
 		<xs:sequence>
-			<xs:element name="logicalAddress" type="core:PSST"/>
 			<xs:element name="authorOrganizationID" type="core:HSAIdType"/>
-			<xs:element name="patientID" type="core:PSII"/>
-			<xs:element name="timePeriod" type="IVL_TS" minOccurs="0"/>
+			<xs:element name="patientID">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:restriction base="II">
+							<xs:attribute name="root" type="uid" use="required"/>
+							<xs:attribute name="extension" type="st" use="required"/>
+						</xs:restriction>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="timePeriod" type="core:PSTP" minOccurs="0"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="GetCareDocumentationResponseType">
 		<xs:sequence>
-			<xs:element name="careDocumentationHeader" type="core:patientSummaryHeaderType"/>
-			<xs:element name="careDocumentationBody" type="core:careDocumentationType"/>
+			<xs:element name="careDocumentation" type="core:careDocumentationType"/>
 			<xs:element name="result" type="core:resultType"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
