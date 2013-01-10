@@ -17,12 +17,36 @@
  specific language governing permissions and limitations
  under the License.
  -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:ehr:patientsummary:GetCareDocumentationResponder:2" xmlns:core="urn:riv:ehr:patientsummary:2" targetNamespace="urn:riv:ehr:patientsummary:GetCareDocumentationResponder:2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+<xs:schema 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="urn:riv:ehr:patientsummary:GetCareDocumentationResponder:2" 
+	xmlns:core="urn:riv:ehr:patientsummary:2" 
+	targetNamespace="urn:riv:ehr:patientsummary:GetCareDocumentationResponder:2" 
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified" 
+	version="2.0">
+
 	<xs:import namespace="urn:riv:ehr:patientsummary:2" schemaLocation="../../core_components/ehr_patientsummary_2.0.xsd"/>
 	<xs:import schemaLocation="../../core_components/datatypes.xsd"/>
+
 	<xs:element name="GetCareDocumentation" type="tns:GetCareDocumentationType"/>
 	<xs:element name="GetCareDocumentationResponse" type="tns:GetCareDocumentationResponseType"/>
+
 	<xs:complexType name="GetCareDocumentationType">
+		<xs:annotation>
+			<xs:documentation>
+				authorOrganizationID: 
+					HSA-Id för e-tjänsteproducent.
+				patientID: 
+					Patientens identitet, nationellt unikt person-id.
+				timePeriod
+					Begränsning av sökningen i tid, baserat på kliniskt
+					relevanta datum. Händelser anses ligga inom intervallet, 
+					om de till någon del ligger inom intervallet. 
+					(Start- och slutpunkt inkluderas i intervallet.) 
+					Formatet för start- respektive slutdatum är ÅÅÅÅMMDD.
+			</xs:documentation>
+		</xs:annotation>	
 		<xs:sequence>
 			<xs:element name="authorOrganizationID" type="core:HSAIdType"/>
 			<xs:element name="patientID">
@@ -35,15 +59,166 @@
 					</xs:complexContent>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="timePeriod" type="core:PSTP" minOccurs="0"/>
+			<xs:element name="timePeriod" type="core:timePeriodType" minOccurs="0"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
+	
 	<xs:complexType name="GetCareDocumentationResponseType">
+		<xs:annotation>
+			<xs:documentation>
+				careDocumentation: 
+					De vård- och omsorgsdokument som matchar begäran.
+			</xs:documentation>
+		</xs:annotation>	
 		<xs:sequence>
-			<xs:element name="careDocumentation" type="core:careDocumentationType"/>
-			<xs:element name="result" type="core:resultType"/>
+			<xs:element name="careDocumentation" type="tns:careDocumentationType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
+
+	<xs:complexType name="careDocumentationType">
+		<xs:annotation>
+			<xs:documentation>
+				patientSummaryHeader: 
+					De vård- och omsorgsdokument som matchar begäran.
+				careDocumentationBody:
+					Innehåller basinformation om dokumentet
+			</xs:documentation>
+		</xs:annotation>	
+		<xs:sequence>
+			<xs:element name="patientSummaryHeader" type="tns:patientSummaryHeaderType"/>
+			<xs:element name="careDocumentationBody" type="tns:careDocumentationBodyType"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="careDocumentationBodyType">
+		<xs:annotation>
+			<xs:documentation>
+				clinicalDocumentNote: 
+					Dokument/anteckning
+				multimediaEntry:
+					Multimedia som finns i dokumentet, motsvaras av platshållare i careDocumentNoteText
+			</xs:documentation>
+		</xs:annotation>	
+		<xs:sequence>
+			<xs:element name="clinicalDocumentNote" type="tns:clinicalDocumentNoteType"/>
+			<xs:element name="multimediaEntry" type="tns:multimediaEntryType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="clinicalDocumentNoteType">
+		<xs:annotation>
+			<xs:documentation>
+				Dokument/anteckning
+				
+				careDocumentNoteCode: 
+					Typ av vård- och omsorgsdokument. 
+					Kod tas från KV Anteckningstyp (1.2.752.129.2.2.2.11).
+					Tillåtna värden från kodverk	Anteckningstyp: 
+						utr = Utredning, 
+						atb = åtgärd/Behandling, 
+						sam = Sammanfattning, 
+						sao = Samordning, 
+						ins = Inskrivning, 
+						slu = Slutanteckning, 
+						auf = Anteckning utan fysiskt
+				careDocumentNoteTitle: 
+					Titel på dokument
+				careDocumentNoteText: 
+					Själva dokumentet. 
+					Formatet i textfältet ska följa HL7 CDA "Narrative Block". 
+					Om dokumentet innehåller multimedia läggs en platshållare i texten enligt formatet <renderMultiMedia referencedObject="MM1"/>. 
+					Innehåller dokumentet fler multimedia läggs ytterligare platshållare i texten, där referencesObject får namn "MM2", "MM3" osv
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="careDocumentNoteCode">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:restriction base="CD">
+							<xs:attribute name="nullFlavor" type="st" use="prohibited"/>
+							<xs:attribute name="code" use="required">
+								<xs:simpleType>
+									<xs:restriction base="cs">
+										<xs:enumeration value="utr"/>
+										<xs:enumeration value="atb"/>
+										<xs:enumeration value="sam"/>
+										<xs:enumeration value="sao"/>
+										<xs:enumeration value="ins"/>
+										<xs:enumeration value="slu"/>
+										<xs:enumeration value="auf"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="codeSystem" use="required" fixed="1.2.752.129.2.2.2.11">
+								<xs:simpleType>
+									<xs:restriction base="uid"/>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="codeSystemName" use="required" fixed="Anteckningstyp">
+								<xs:simpleType>
+									<xs:restriction base="st"/>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:restriction>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="careDocumentNoteTitle" type="ST" minOccurs="0"/>
+			<xs:element name="careDocumentNoteText" type="ST"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="encompassingEncounterType">
+		<xs:annotation>
+			<xs:documentation>
+				Information om  Vård- och omsorgskontakt som föranlett vårddokumentation.
+			
+				encounterID: 
+					Unik identifierare för vård- och omsorgskontakt. 
+					OID kan sättas till 1.2.752.129.2.1.2.1  
+					(Icke-nationell identifierare Org+lokalt unikt id)
+				encounterTime: 
+					Tidpunkt för vård- och omsorgskontakt
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="encounterID" type="II"/>
+			<xs:element name="encounterTime" type="core:timestampType"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="multimediaEntryType">
+		<xs:annotation>
+			<xs:documentation>
+				Multimedia som finns i dokumentet, motsvaras av platshållare i careDocumentNoteText
+			
+				multiMediaID: 
+					ID på multimedia
+				value: 
+					Multimediainnehållet, med lämplig mime-typ och kodningstyp
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="multiMediaID" type="ST"/>
+			<xs:element name="value" type="ED"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="patientSummaryHeaderType">
+		<xs:complexContent>
+			<xs:extension base="core:patientSummaryHeaderType">
+				<xs:sequence>
+					<xs:element name="encompassingEncounter" type="tns:encompassingEncounterType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
 </xs:schema>
