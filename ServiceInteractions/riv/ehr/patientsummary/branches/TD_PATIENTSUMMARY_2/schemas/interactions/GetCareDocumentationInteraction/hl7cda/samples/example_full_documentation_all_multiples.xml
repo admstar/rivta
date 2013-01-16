@@ -59,7 +59,7 @@
                 root = fast värde OID för HSA (1.2.752.129.2.1.4.1)-->
                 <name>Enhetsnamn</name>
                 <!-- Optional namn på enhet. RIV: enhet.enhetsnamn-->
-                <telecom use="" value="+46-812345678" />
+                <telecom value="+46-812345678" />
                 <!-- Optional telefonnummer till enhet. RIV: enhet.telefonnummer, enhet.e-postadress,-->
                 <addr>some street</addr>
                 <!-- Optional adress till enhet. RIV: enhet.postadress -->
@@ -114,6 +114,7 @@
             <statusCode code="completed"/>
         </consent>
     </authorization>
+
     <!-- Optional. Information om  Vård- och omsorgskontakt som föranlett vårddokumentation. <componentOf> utesluts helt om Vård- och omsorgskontakt saknas -->
     <componentOf>
         <encompassingEncounter>
@@ -154,6 +155,7 @@
                     <title>Namn på dokument</title>
                     <!-- Optional: Titel på dokument. RIV: Vård- och omsorgsdokument.dokumentnamn -->
                     <text>
+                        some text
                         <!-- själva anteckningen, här läggs texten -->
                         <renderMultiMedia referencedObject="MM1"/>
                         <!-- Optional, platshållare för bifogad anteckning i mime-format. Används endast om mulitmedia skickas med i dokumentet.
@@ -168,7 +170,8 @@
                     <entry>
                         <!-- ID sätts till samma ID som angivits i referencedObject i <renderMultimedia> ovan -->
                         <observationMedia classCode="OBS" moodCode="EVN" ID="MM1">
-                            <value xsi:type="ED" mediaType="image/jpeg" representation="B64"><!-- mediaType anger lämplig mime-typ representation anger kodningstyp-->
+							<!-- mediaType anger lämplig mime-typ representation anger kodningstyp-->
+                            <value xsi:type="ED" mediaType="image/jpeg" representation="B64">
                                 Here is the inline B64 multimedia content MM1
                             </value>
                         </observationMedia>
@@ -176,14 +179,14 @@
 
                     <entry>
                         <observationMedia classCode="OBS" moodCode="EVN" ID="MM2">
-                            <value xsi:type="ED" mediaType="image/jpeg" representation="B64">
+                            <value xsi:type="ED" mediaType="image/gif" representation="B64">
                                 Here is the inline B64 multimedia content MM2
                             </value>
                         </observationMedia>
                     </entry>
                     <entry>
                         <observationMedia classCode="OBS" moodCode="EVN" ID="MM3">
-                            <value xsi:type="ED" mediaType="image/jpeg" representation="B64">
+                            <value xsi:type="ED" mediaType="image/png" representation="B64">
                                 Here is the inline B64 multimedia content MM3
                             </value>
                         </observationMedia>
@@ -191,7 +194,7 @@
 
                     <entry>
                         <observationMedia classCode="OBS" moodCode="EVN" ID="MM4">
-                            <value xsi:type="ED" mediaType="image/jpeg" representation="B64">
+                            <value xsi:type="ED" mediaType="text/plain" representation="B64">
                                 Here is the inline B64 multimedia content MM4
                             </value>
                         </observationMedia>

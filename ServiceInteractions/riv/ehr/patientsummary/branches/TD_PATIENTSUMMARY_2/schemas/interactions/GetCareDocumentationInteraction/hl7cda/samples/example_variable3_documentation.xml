@@ -41,8 +41,8 @@
         <assignedAuthor>
             <id extension="HSA-id för person" root="1.2.752.129.2.1.4.1"/>
             <!-- HSA för författare extension = HSA-id för författaren, RIV:vård- och omsorgspersonal.personal-id
-            root= fast värde, OID för HSA (1.2.752.129.2.1.4.1) 
-            codeSystem = fast värde OID för kodverk Befattning (1.2.752.129.2.2.1.4) -->
+            root= fast värde, OID för HSA (1.2.752.129.2.1.4.1)  -->
+            <code code="lämplig_kod" codeSystem="1.2.752.129.2.2.1.4" displayName="Lämplig befattning"/>
             <assignedPerson>
                 <name>namn på författare</name>
                 <!-- Optional Namn på författare. RIV: Vård- och omsorgspersonal.namn-->
@@ -122,7 +122,13 @@
                         <!-- själva anteckningen, här läggs texten -->
                         <renderMultiMedia referencedObject="MM1"/>
                     </text>
-
+                    <entry>
+                        <observationMedia classCode="OBS" moodCode="EVN" ID="MM1">
+                            <value xsi:type="ED" mediaType="image/jpeg" representation="B64">
+                                Here is the inline B64 multimedia content for example_variable3
+                            </value>
+                        </observationMedia>
+                    </entry>
                 </section>
             </component>
         </structuredBody>

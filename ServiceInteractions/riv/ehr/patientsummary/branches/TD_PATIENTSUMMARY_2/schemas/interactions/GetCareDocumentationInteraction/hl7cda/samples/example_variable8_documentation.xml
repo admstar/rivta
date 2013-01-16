@@ -42,6 +42,7 @@
             <id extension="HSA-id för person" root="1.2.752.129.2.1.4.1"/>
             <!-- HSA för författare extension = HSA-id för författaren, RIV:vård- och omsorgspersonal.personal-id
             root= fast värde, OID för HSA (1.2.752.129.2.1.4.1)  -->
+            <code code="lämplig_kod" codeSystem="1.2.752.129.2.2.1.4" displayName="Lämplig befattning"/>
 
             <representedOrganization>
                 <id extension="HSA-id för organisation" root="1.2.752.129.2.1.4.1"/>
@@ -114,12 +115,7 @@
                     sva = Slutenvårdsanteckning
                     bes = Besöksanteckning
                     -->
-                    <text>
-                        <!-- själva anteckningen, här läggs texten -->
-                        <renderMultiMedia referencedObject="MM1"/>
-                        <!-- Optional, platshållare för bifogad anteckning i mime-format. Används endast om mulitmedia skickas med i dokumentet.
-                        För varje multimediaobjekt i meddelandet skapas en <renderMultiMedia> med tillhörande <observationMedia>,
-                        där referencedObjekt har unik identitet (exempelvis MM1, MM2, MM3 osv) -->
+                    <text>text<renderMultiMedia referencedObject="MM1"/>
                         <renderMultiMedia referencedObject="MM2"/>
                         <renderMultiMedia referencedObject="MM3"/>
                         <renderMultiMedia referencedObject="MM4"/>
@@ -129,7 +125,8 @@
                     <entry>
                         <!-- ID sätts till samma ID som angivits i referencedObject i <renderMultimedia> ovan -->
                         <observationMedia classCode="OBS" moodCode="EVN" ID="MM1">
-                            <value xsi:type="ED" mediaType="image/jpeg" representation="B64"><!-- mediaType anger lämplig mime-typ representation anger kodningstyp-->
+							<!-- mediaType anger lämplig mime-typ representation anger kodningstyp-->
+                            <value xsi:type="ED" mediaType="image/jpeg" representation="B64">
                                 Here is the inline B64 multimedia content MM1
                             </value>
                         </observationMedia>
