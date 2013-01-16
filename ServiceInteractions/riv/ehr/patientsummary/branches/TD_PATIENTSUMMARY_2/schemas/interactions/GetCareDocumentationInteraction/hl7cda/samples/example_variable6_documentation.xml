@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- ?xml-stylesheet type="text/xsl" href="CDA.xsl"? -->
 
-<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:voc="urn:hl7-org:v3/voc"
+<ClinicalDocument xmlns="urn:hl7-org:v3"
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="urn:hl7-org:v3 ../infrastructure/cda/CDA.xsd">
     <!-- CDA Header för vård- och omsorgsdokument -->
@@ -42,7 +42,7 @@
             <id extension="HSA-id för person" root="1.2.752.129.2.1.4.1"/>
             <!-- HSA för författare extension = HSA-id för författaren, RIV:vård- och omsorgspersonal.personal-id
             root= fast värde, OID för HSA (1.2.752.129.2.1.4.1)  -->
-
+            <code code="lämplig_kod" codeSystem="1.2.752.129.2.2.1.4" displayName="Lämplig befattning"/>
             <representedOrganization>
                 <id extension="HSA-id för organisation" root="1.2.752.129.2.1.4.1"/>
                 <!--  Id för den enhet där den som är författare är uppdragstagare.
@@ -126,9 +126,17 @@
                     <title>Namn på dokument</title>
                     <!-- Optional: Titel på dokument. RIV: Vård- och omsorgsdokument.dokumentnamn -->
                     <text>
+                        text
                         <!-- själva anteckningen, här läggs texten -->
                         <renderMultiMedia referencedObject="MM1"/>
                     </text>
+                    <entry>
+                        <observationMedia classCode="OBS" moodCode="EVN" ID="MM1">
+                            <value xsi:type="ED" mediaType="image/jpeg" representation="B64">
+                                Here is the inline B64 multimedia content for example_variable7
+                            </value>
+                        </observationMedia>
+                    </entry>
 
                 </section>
             </component>
