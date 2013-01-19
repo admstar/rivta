@@ -219,7 +219,7 @@
                         <xsl:for-each
                                 select="*[name()='structuredBody']/*[name()='component']/*[name()='section']">
                             <clinicalDocumentNote>
-                                <careDocumentNoteCode codeSystem="1.2.752.129.2.2.2.11">
+                                <careDocumentNoteCode codeSystem="1.2.752.129.2.2.2.11" code="">
                                     <xsl:attribute name="code">
                                         <xsl:value-of
                                                 select="*[name()='code']/@code"/>
@@ -262,14 +262,10 @@
                         </xsl:for-each>
                     </careDocumentationBody>
                 </xsl:for-each>
-
             </careDocumentation>
-
             <result>
                 <resultCode>OK</resultCode>
             </result>
-
         </careDocumentationResponse>
-
     </xsl:template>
 </xsl:stylesheet>
