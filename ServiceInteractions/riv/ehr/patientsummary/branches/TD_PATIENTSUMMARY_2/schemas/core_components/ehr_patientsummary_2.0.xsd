@@ -17,8 +17,15 @@
  specific language governing permissions and limitations
  under the License.
  -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:ehr:patientsummary:2" targetNamespace="urn:riv:ehr:patientsummary:2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
-	<xs:import schemaLocation="datatypes.xsd"/>
+<xs:schema 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    xmlns:tns="urn:riv:ehr:patientsummary:2" 
+    targetNamespace="urn:riv:ehr:patientsummary:2" 
+    elementFormDefault="qualified" 
+    attributeFormDefault="unqualified" 
+    version="2.0">
+	
+    <xs:import schemaLocation="datatypes.xsd"/>
 
 	<xs:complexType name="assignedEntityType">
 		<xs:annotation>
@@ -117,7 +124,20 @@
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-	
+
+    <xs:complexType name="careDocumentationType">
+        <xs:annotation>
+            <xs:documentation>
+                patientSummaryHeader: 
+                    De vård- och omsorgsdokument som matchar begäran.
+            </xs:documentation>
+        </xs:annotation>	
+        <xs:sequence>
+            <xs:element name="patientSummaryHeader" type="tns:patientSummaryHeaderType"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    
 	<xs:complexType name="custodianType">
 		<xs:annotation>
 			<xs:documentation>
@@ -136,6 +156,26 @@
 		</xs:sequence>
 	</xs:complexType>
 
+    <xs:complexType name="encompassingEncounterType">
+        <xs:annotation>
+            <xs:documentation>
+                Information om  Vård- och omsorgskontakt som föranlett vårddokumentation.
+                
+                encounterID: 
+                Unik identifierare för vård- och omsorgskontakt. 
+                OID kan sättas till 1.2.752.129.2.1.2.1  
+                (Icke-nationell identifierare Org+lokalt unikt id)
+                encounterTime: 
+                Tidpunkt för vård- och omsorgskontakt
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="encounterID" type="II"/>
+            <xs:element name="encounterTime" type="tns:timestampType"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    
 	<xs:complexType name="legalAuthenticatorType">
 		<xs:annotation>
 			<xs:documentation>
@@ -183,6 +223,8 @@
 					Information om PDL-enhet som har ansvar för informationen
 				authorization
 					Information om tillgänglighet av information, exempelvis att information kan ges till patient
+				encompassingEncounter
+				    Information om  Vård- och omsorgskontakt som föranlett vårddokumentation
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
@@ -219,6 +261,7 @@
 			<xs:element name="author" type="tns:authorType"/>
 			<xs:element name="custodian" type="tns:custodianType"/>
 			<xs:element name="authorization" type="tns:authorizationType" minOccurs="0" maxOccurs="unbounded"/>
+		    <xs:element name="encompassingEncounter" type="tns:encompassingEncounterType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 		
