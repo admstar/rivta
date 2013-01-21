@@ -17,7 +17,7 @@ task test() {
 	description = 'Test task designed to transform CDA xml examples to GreenCDA then back to CDA and run XMLDiff between the generated CDA against the original CDA.'
 }
 test.dependsOn = ['doCompare', 'validateGreenCDA', 'validateCDA']
-test.outputs.dir outputDir
+// test.outputs.dir outputDir
 clean.dependsOn = ['cleanTest']
 
 //
@@ -25,10 +25,10 @@ clean.dependsOn = ['cleanTest']
 //
 task toGreenCDA(type: XsltTransform) {
 	description = 'Transforms CDA to GreenCDA'
-    source = new File('../schemas/interactions/GetCareDocumentationInteraction/hl7cda/samples')
+    source = new File('../samples')
     include '*.xml'
     destDir = new File('./test/GreenCDA')
-    stylesheetFile = file('../schemas/interactions/GetCareDocumentationInteraction/hl7cda/transformations/CDA_to_GreenCDA.xslt')
+    stylesheetFile = file('../transformations/CDA_to_GreenCDA.xslt')
 }
 
 task toCDA(type: XsltTransform) {
@@ -36,14 +36,14 @@ task toCDA(type: XsltTransform) {
     source = new File('./test/GreenCDA')
     include '*.xml'
     destDir = new File('./test/CDA')
-    stylesheetFile = file('../schemas/interactions/GetCareDocumentationInteraction/hl7cda/transformations/GreenCDA_to_CDA.xslt')
+    stylesheetFile = file('../transformations/GreenCDA_to_CDA.xslt')
 }
 toCDA.dependsOn = ['toGreenCDA']
 
 task doCompare(type: XMLDiff) {
 	description = 'Runs XMLDiff on xml files from two different directories, file names are used to pick pairs'
     source = new File('./test/CDA')
-	expectedResultDir = new String("../schemas/interactions/GetCareDocumentationInteraction/hl7cda/samples/")
+	expectedResultDir = new String("../samples/")
     include '*.xml'
 }
 doCompare.dependsOn = ['toCDA']
@@ -53,7 +53,7 @@ task validateGreenCDA(type: XMLValidate) {
 	description = 'Validate all xml files under test/GreenCDA with greenCDA.xsd'
     source = new File('./test/GreenCDA')
     include '*.xml'
-    schemaFile = file('../schemas/interactions/GetCareDocumentationInteraction/hl7cda/infrastructure/cda/greenCDA.xsd')
+    schemaFile = file('../infrastructure/cda/greenCDA.xsd')
 }
 validateGreenCDA.dependsOn = ['toGreenCDA']
 
@@ -61,10 +61,9 @@ task validateCDA(type: XMLValidate) {
 	description = 'Validate all xml files under test/CDA with CDA.xsd'
     source = new File('./test/CDA')
     include '*.xml'
-    schemaFile = file('../schemas/interactions/GetCareDocumentationInteraction/hl7cda/infrastructure/cda/CDA.xsd')
+    schemaFile = file('../infrastructure/cda/CDA.xsd')
 }
 validateCDA.dependsOn = ['toCDA']
-
 
 import javax.xml.transform.TransformerFactory
 import javax.xml.transform.stream.StreamResult
@@ -87,13 +86,7 @@ import javax.xml.XMLConstants
  * @param destination Takes a destination directory
  */
 class XsltTransform extends SourceTask {
-
-    @OutputFile
-    @Optional
-    File destFile
-
     @OutputDirectory
-    @Optional
     File destDir
 
     @InputFile
@@ -101,7 +94,10 @@ class XsltTransform extends SourceTask {
 
     @TaskAction
     def transform() {
-        if (!((destFile != null) ^ (destDir != null))) {
+        if (source == null) {
+            throw new InvalidUserDataException("Must specify source file or dir.")
+        }
+        if (destDir == null) {
             throw new InvalidUserDataException("Must specify output file or dir.")
         }
 
@@ -117,9 +113,7 @@ class XsltTransform extends SourceTask {
 			if(fvd.file.name == "example_GetCareDocumentationResponse.xml")
 				return
 
-            File d = destFile;
-            if (d == null)
-                d = new File(destDir, fvd.file.name)
+            File d = new File(destDir, fvd.file.name)
 
             transformer.transform(new StreamSource(fvd.file), new StreamResult(d))
         }
@@ -177,6 +171,9 @@ class XMLDiff extends SourceTask {
         XMLUnit.setIgnoreWhitespace(true);
         XMLUnit.setIgnoreComments(true);
 
+		entry = new File(expectedResultDir)
+		assert entry.isDirectory()
+
         source.visit { FileVisitDetails fvd ->
             if (fvd.isDirectory()) {
                 return
@@ -192,7 +189,7 @@ class XMLDiff extends SourceTask {
             	XMLAssert.assertXMLEqual(expectedXml, generatedXml);
 			} catch (Exception e) {
 				println fvd.file
-				println e.printstacktrace
+				println e
             	println ""
                 errors = errors + 1
 			}
