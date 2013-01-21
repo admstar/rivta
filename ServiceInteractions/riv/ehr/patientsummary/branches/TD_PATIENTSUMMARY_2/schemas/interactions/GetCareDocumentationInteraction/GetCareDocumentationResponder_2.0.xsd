@@ -74,12 +74,24 @@
 			</xs:documentation>
 		</xs:annotation>	
 		<xs:sequence>
-			<xs:element name="careDocumentation" type="core:CareDocumentationType" minOccurs="0" maxOccurs="unbounded"/>
-		    <xs:element name="careDocumentationBody" type="tns:CareDocumentationBodyType"/>
+			<xs:element name="careDocumentation" type="tns:CareDocumentationType" minOccurs="0" maxOccurs="unbounded"/>
 		    <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 
+    <xs:complexType name="CareDocumentationType">
+        <xs:annotation>
+            <xs:documentation>
+                patientSummaryHeader: 
+                    De vård- och omsorgsdokument som matchar begäran.
+            </xs:documentation>
+        </xs:annotation>	
+        <xs:sequence>
+            <xs:element name="patientSummaryHeader" type="tns:PatientSummaryHeaderType"/>
+            <xs:element name="careDocumentationBody" type="tns:CareDocumentationBodyType"/>
+        </xs:sequence>
+    </xs:complexType>
+    
 	<xs:complexType name="CareDocumentationBodyType">
 		<xs:annotation>
 			<xs:documentation>
@@ -159,7 +171,27 @@
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-	
+
+    <xs:complexType name="EncompassingEncounterType">
+        <xs:annotation>
+            <xs:documentation>
+                Information om  Vård- och omsorgskontakt som föranlett vårddokumentation.
+                
+                encounterID: 
+                Unik identifierare för vård- och omsorgskontakt. 
+                OID kan sättas till 1.2.752.129.2.1.2.1  
+                (Icke-nationell identifierare Org+lokalt unikt id)
+                encounterTime: 
+                Tidpunkt för vård- och omsorgskontakt
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="encounterID" type="II"/>
+            <xs:element name="encounterTime" type="core:TimestampType"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    
 	<xs:complexType name="MultimediaEntryType">
 		<xs:annotation>
 			<xs:documentation>
@@ -177,5 +209,21 @@
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
+    
+    <xs:complexType name="PatientSummaryHeaderType">
+        <xs:annotation>
+            <xs:documentation>
+                patientSummaryHeader: 
+                    De vård- och omsorgsdokument som matchar begäran.
+            </xs:documentation>
+        </xs:annotation>	
+        <xs:complexContent> 
+            <xs:extension base="core:PatientSummaryHeaderType">
+                <xs:sequence>
+                    <xs:element name="encompassingEncounter" type="tns:EncompassingEncounterType"/>
+                </xs:sequence>
+            </xs:extension>                
+        </xs:complexContent>         
+    </xs:complexType>
 
 </xs:schema>
