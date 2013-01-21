@@ -357,5 +357,5 @@ root = fast värde OID för HSA (1.2.752.129.2.1.4.1)-->
             </xsl:for-each>
         </ClinicalDocument>
     </xsl:template>
-    <xsl:template match="/careDocumentationResponse/result"/>
+    <xsl:template match="/*[name()='careDocumentationResponse']/*[name()='result']"/>
 </xsl:stylesheet>
