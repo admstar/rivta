@@ -124,19 +124,6 @@
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-
-    <xs:complexType name="CareDocumentationType">
-        <xs:annotation>
-            <xs:documentation>
-                patientSummaryHeader: 
-                    De vård- och omsorgsdokument som matchar begäran.
-            </xs:documentation>
-        </xs:annotation>	
-        <xs:sequence>
-            <xs:element name="patientSummaryHeader" type="tns:PatientSummaryHeaderType"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
     
 	<xs:complexType name="CustodianType">
 		<xs:annotation>
@@ -156,26 +143,6 @@
 		</xs:sequence>
 	</xs:complexType>
 
-    <xs:complexType name="EncompassingEncounterType">
-        <xs:annotation>
-            <xs:documentation>
-                Information om  Vård- och omsorgskontakt som föranlett vårddokumentation.
-                
-                encounterID: 
-                Unik identifierare för vård- och omsorgskontakt. 
-                OID kan sättas till 1.2.752.129.2.1.2.1  
-                (Icke-nationell identifierare Org+lokalt unikt id)
-                encounterTime: 
-                Tidpunkt för vård- och omsorgskontakt
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="encounterID" type="II"/>
-            <xs:element name="encounterTime" type="tns:TimestampType"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-    
 	<xs:complexType name="LegalAuthenticatorType">
 		<xs:annotation>
 			<xs:documentation>
@@ -197,7 +164,7 @@
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-		
+        
 	<xs:complexType name="PatientSummaryHeaderType">
 		<xs:annotation>
 			<xs:documentation>
@@ -261,10 +228,40 @@
 			<xs:element name="author" type="tns:AuthorType"/>
 			<xs:element name="custodian" type="tns:CustodianType"/>
 			<xs:element name="authorization" type="tns:AuthorizationType" minOccurs="0" maxOccurs="unbounded"/>
-		    <xs:element name="encompassingEncounter" type="tns:EncompassingEncounterType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
-		
+
+    <xs:complexType name="PatientSummaryRequestType">
+        <xs:annotation>
+            <xs:documentation>
+                authorOrganizationID: 
+                    HSA-Id för e-tjänsteproducent.
+                patientID: 
+                    Patientens identitet, nationellt unikt person-id.
+                timePeriod:
+                    Begränsning av sökningen i tid, baserat på kliniskt
+                    relevanta datum. Händelser anses ligga inom intervallet, 
+                    om de till någon del ligger inom intervallet. 
+                    (Start- och slutpunkt inkluderas i intervallet.) 
+                    Formatet för start- respektive slutdatum är ÅÅÅÅMMDD.
+            </xs:documentation>
+        </xs:annotation>	
+        <xs:sequence>
+            <xs:element name="authorOrganizationID" type="tns:HSAIdType"/>
+            <xs:element name="patientID">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:restriction base="II">
+                            <xs:attribute name="root" type="uid" use="required"/>
+                            <xs:attribute name="extension" type="st" use="required"/>
+                        </xs:restriction>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="timePeriod" type="tns:TimePeriodType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
 	<!-- 
 		Below: types that 
 			(1) extends another type and 
