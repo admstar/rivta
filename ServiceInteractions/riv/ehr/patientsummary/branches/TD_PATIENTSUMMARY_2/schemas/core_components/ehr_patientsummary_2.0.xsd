@@ -27,7 +27,7 @@
 	
     <xs:import schemaLocation="datatypes.xsd"/>
 
-	<xs:complexType name="assignedEntityType">
+	<xs:complexType name="AssignedEntityType">
 		<xs:annotation>
 			<xs:documentation>
 				Information om person som signerat dokument
@@ -39,12 +39,12 @@
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="assignedEntityID" type="tns:HSAIdType"/>
+			<xs:element name="AssignedEntityID" type="tns:HSAIdType"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 		
-	<xs:complexType name="authorizationType">
+	<xs:complexType name="AuthorizationType">
 		<xs:annotation>
 			<xs:documentation>
 				Information om menprövning
@@ -61,7 +61,7 @@
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:complexType name="authorType">
+	<xs:complexType name="AuthorType">
 		<xs:annotation>
 			<xs:documentation>
 				Information om författare till dokumentet
@@ -88,7 +88,7 @@
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="authorTime" type="tns:timestampType"/>
+			<xs:element name="authorTime" type="tns:TimestampType"/>
 			<xs:element name="authorID">
 				<xs:complexType>
 					<xs:complexContent>
@@ -125,7 +125,7 @@
 		</xs:sequence>
 	</xs:complexType>
 
-    <xs:complexType name="careDocumentationType">
+    <xs:complexType name="CareDocumentationType">
         <xs:annotation>
             <xs:documentation>
                 patientSummaryHeader: 
@@ -133,12 +133,12 @@
             </xs:documentation>
         </xs:annotation>	
         <xs:sequence>
-            <xs:element name="patientSummaryHeader" type="tns:patientSummaryHeaderType"/>
+            <xs:element name="patientSummaryHeader" type="tns:PatientSummaryHeaderType"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
     
-	<xs:complexType name="custodianType">
+	<xs:complexType name="CustodianType">
 		<xs:annotation>
 			<xs:documentation>
 				Information om PDL-enhet som har ansvar för informationen
@@ -151,12 +151,12 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="custodianID" type="tns:HSAIdType"/>
-			<xs:element name="legalAuthenticator" type="tns:legalAuthenticatorType" minOccurs="0"/>
+			<xs:element name="legalAuthenticator" type="tns:LegalAuthenticatorType" minOccurs="0"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 
-    <xs:complexType name="encompassingEncounterType">
+    <xs:complexType name="EncompassingEncounterType">
         <xs:annotation>
             <xs:documentation>
                 Information om  Vård- och omsorgskontakt som föranlett vårddokumentation.
@@ -171,12 +171,12 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="encounterID" type="II"/>
-            <xs:element name="encounterTime" type="tns:timestampType"/>
+            <xs:element name="encounterTime" type="tns:TimestampType"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
     
-	<xs:complexType name="legalAuthenticatorType">
+	<xs:complexType name="LegalAuthenticatorType">
 		<xs:annotation>
 			<xs:documentation>
 				Information om signering
@@ -191,14 +191,14 @@
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="signatureTime" type="tns:timestampType"/>
-			<xs:element name="assignedEntity" type="tns:assignedEntityType" minOccurs="0"/>
+			<xs:element name="signatureTime" type="tns:TimestampType"/>
+			<xs:element name="assignedEntity" type="tns:AssignedEntityType" minOccurs="0"/>
 			<xs:element name="representedOrganizationID" type="tns:HSAIdType"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 		
-	<xs:complexType name="patientSummaryHeaderType">
+	<xs:complexType name="PatientSummaryHeaderType">
 		<xs:annotation>
 			<xs:documentation>
 				documentID: 
@@ -239,7 +239,7 @@
 			</xs:element>
 			<xs:element name="documentCode" type="CD"/>
 			<xs:element name="documentTitle" type="ST" minOccurs="0"/>
-			<xs:element name="documentTime" type="tns:timestampType"/>
+			<xs:element name="documentTime" type="tns:TimestampType"/>
 			<xs:element name="patientID">
 				<xs:complexType>
 					<xs:complexContent>
@@ -258,10 +258,10 @@
 					</xs:complexContent>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="author" type="tns:authorType"/>
-			<xs:element name="custodian" type="tns:custodianType"/>
-			<xs:element name="authorization" type="tns:authorizationType" minOccurs="0" maxOccurs="unbounded"/>
-		    <xs:element name="encompassingEncounter" type="tns:encompassingEncounterType" minOccurs="0"/>
+			<xs:element name="author" type="tns:AuthorType"/>
+			<xs:element name="custodian" type="tns:CustodianType"/>
+			<xs:element name="authorization" type="tns:AuthorizationType" minOccurs="0" maxOccurs="unbounded"/>
+		    <xs:element name="encompassingEncounter" type="tns:EncompassingEncounterType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 		
@@ -284,7 +284,7 @@
 		</xs:complexContent>
 	</xs:complexType>
 	
-	<xs:complexType name="timestampType">
+	<xs:complexType name="TimestampType">
 		<xs:annotation>
 			<xs:documentation>
 				Patient Summary Timestamp type
@@ -309,7 +309,7 @@
 		</xs:complexContent>
 	</xs:complexType>
 	
-	<xs:complexType name="timePeriodType">
+	<xs:complexType name="TimePeriodType">
 		<xs:annotation>
 			<xs:documentation>
 				Patient Summary Time Period type
