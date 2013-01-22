@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="urn:riv:ehr:patientsummary:codes"
+    xmlns="urn:riv:ehr:patientsummary:codes">
+
+    <!-- kv_yrkeskoder, 1.2.752.97.3.2.8.8 -->
+    <xs:simpleType name="AuthorRoleValueValues">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="AP">
+                <xs:annotation>
+                    <xs:documentation>Apotekare</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AT">
+                <xs:annotation>
+                    <xs:documentation>Arbetsterapeut</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AU">
+                <xs:annotation>
+                    <xs:documentation>Audionom</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BM">
+                <xs:annotation>
+                    <xs:documentation>Barnmorska</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BA">
+                <xs:annotation>
+                    <xs:documentation>Biomedicinsk analytiker</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DT">
+                <xs:annotation>
+                    <xs:documentation>Dietist</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KP">
+                <xs:annotation>
+                    <xs:documentation>Kiropraktor</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LG">
+                <xs:annotation>
+                    <xs:documentation>Logoped</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LK">
+                <xs:annotation>
+                    <xs:documentation>Läkare</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NA">
+                <xs:annotation>
+                    <xs:documentation>Naprapat</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="OP">
+                <xs:annotation>
+                    <xs:documentation>Optiker</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="OT">
+                <xs:annotation>
+                    <xs:documentation>Ortopedingenjör</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PS">
+                <xs:annotation>
+                    <xs:documentation>Psykolog</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PT">
+                <xs:annotation>
+                    <xs:documentation>Psykoterapeut</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="RC">
+                <xs:annotation>
+                    <xs:documentation>Receptarie</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="RS">
+                <xs:annotation>
+                    <xs:documentation>Röntgensjuksköterska</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SG">
+                <xs:annotation>
+                    <xs:documentation>Sjukgymnast</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SF">
+                <xs:annotation>
+                    <xs:documentation>Sjukhusfysiker</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SJ">
+                <xs:annotation>
+                    <xs:documentation>Sjuksköterska</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TH">
+                <xs:annotation>
+                    <xs:documentation>Tandhygienist</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TL">
+                <xs:annotation>
+                    <xs:documentation>Tandläkare</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Values for AuthorRoleType/code -->
+    <xs:simpleType name="AuthorRoleCodeValues">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="1.2.752.129.2.2.1.4">
+                <xs:annotation>
+                    <xs:documentation>OID for KV Befattning</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!--  
+    <xs:simpleType name="codeForTelecomType_values">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="H">
+                <xs:annotation>
+                    <xs:documentation>hemtelefon</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MC">
+                <xs:annotation>
+                    <xs:documentation>mobiltelefon</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>      
+    </xs:simpleType>
+    -->
+    <!--
+    <xs:complexType name="codeForTelecomType">
+        <xs:annotation>
+            <xs:documentation>Anger olika typer av telekomadresser</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="code" type="codeForTelecomType_values" use="required"/>
+        <xs:attribute name="codeSystem" fixed="1.2.752.129.2.2.1.30" use="required"/>			
+    </xs:complexType>    
+    -->
+
+    <xs:simpleType name="CareDocumentNoteCodeValueValues">
+        <!--
+        Kod för typ av anteckning.
+        Tillåtna värden från kodverk Anteckningstyp:
+        utr = Utredning,
+        atb = åtgärd/Behandling,
+        sam = Sammanfattning,
+        sao = Samordning,
+        ins = Inskrivning,
+        slu = Slutanteckning,
+        auf = Anteckning utan fysiskt möte,
+        sva = Slutenvårdsanteckning,
+        bes =
+        -->
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="utr">
+                <xs:annotation>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="atb">
+                <xs:annotation>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="sam">
+                <xs:annotation>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="sao">
+                <xs:annotation>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ins">
+                <xs:annotation>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="slu">
+                <xs:annotation>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="auf">
+                <xs:annotation>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="sva">
+                <xs:annotation>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="bes">
+                <xs:annotation>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Values for CareDocumentNoteCodeType/code -->
+    <xs:simpleType name="CareDocumentNoteCodeCodeValues">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="1.2.752.129.2.2.2.11">
+                <xs:annotation>
+                    <xs:documentation>OID for KV type of document note</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Values for HsaIdType/code -->
+    <xs:simpleType name="EncounterIdCodeValues">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="1.2.752.129.2.1.2.1">
+                <xs:annotation>
+                    <xs:documentation>OID for HSA ID</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Values for HsaIdType/code -->
+    <xs:simpleType name="HsaIdCodeValues">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="1.2.752.129.2.1.4.1">
+                <xs:annotation>
+                    <xs:documentation>OID for HSA ID</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Values for PersonIdType/code -->
+    <xs:simpleType name="PersonIdCodeValues">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="1.2.752.129.2.1.3.1">
+                <xs:annotation>
+                    <xs:documentation>OID for Swedish social security numbers</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1.2.752.97.3.1.3">
+                <xs:annotation>
+                    <xs:documentation>OID for Stockholm county reserved social security
+                        numbers</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

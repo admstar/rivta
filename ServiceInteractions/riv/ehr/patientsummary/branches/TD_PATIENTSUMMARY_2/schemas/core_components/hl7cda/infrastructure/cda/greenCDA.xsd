@@ -1,54 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="urn:riv:ehr:patientsummary:caredocumentation"
-           targetNamespace="urn:riv:ehr:patientsummary:caredocumentation" elementFormDefault="qualified" attributeFormDefault="unqualified"
-        >
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns="urn:riv:ehr:patientsummary:caredocumentation"
+	targetNamespace="urn:riv:ehr:patientsummary:caredocumentation" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
 
-	<xs:include schemaLocation="../../processable/coreschemas/datatypes.xsd"/>
+	<!-- <xs:include schemaLocation="../../processable/coreschemas/datatypes.xsd"/> -->
+	<xs:include schemaLocation="../../../new_datatypes.xsd"/>
 
-	<xs:element name="careDocumentation" type="careDocumentationRequestType"/>
-	<xs:element name="careDocumentationResponse" type="careDocumentationResponseType"/>
+	<xs:element name="careDocumentation" type="CareDocumentationRequestType"/>
+	<xs:element name="careDocumentationResponse" type="CareDocumentationResponseType"/>
 
-	<xs:complexType name="careDocumentationRequestType">
+	<xs:complexType name="CareDocumentationRequestType">
 		<xs:sequence>
-			<xs:element name="logicalAddress" type="ST"/>
-			<xs:element name="authorOrganizationID" type="HSAIdType"/>
-			<xs:element name="patientID" type="patientIdType"/>
-			<xs:element name="timePeriod" type="IVL_TS" minOccurs="0"/>
+			<xs:element name="logicalAddress" type="xs:string"/>
+			<xs:element name="authorOrganizationId" type="HsaIdType"/>
+			<xs:element name="patientId" type="PersonIdType"/>
+			<xs:element name="timePeriod" type="DateTimePeriodType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="careDocumentationResponseType">
+	<xs:complexType name="CareDocumentationResponseType">
 		<xs:sequence>
-			<xs:element name="careDocumentation" type="careDocumentationType"/>
-			<xs:element name="result" type="resultType"/>
+			<xs:element name="careDocumentation" type="CareDocumentationType"/>
+			<xs:element name="result" type="ResultType"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="careDocumentationType">
+	<xs:complexType name="CareDocumentationType">
 		<xs:sequence>
-			<xs:element name="careDocumentationHeader" type="careDocumentationHeaderType"/>
-			<xs:element name="careDocumentationBody" type="careDocumentationBodyType"/>
+			<xs:element name="careDocumentationHeader" type="CareDocumentationHeaderType"/>
+			<xs:element name="careDocumentationBody" type="CareDocumentationBodyType"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="resultType">
+	<xs:complexType name="ResultType">
 		<xs:sequence>
-			<xs:element name="resultCode" type="resultCodeType"/>
-			<xs:element name="resultText" type="ST" minOccurs="0"/>
+			<xs:element name="resultCode" type="ResultCodeType"/>
+			<xs:element name="resultText" type="xs:string" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:simpleType name="resultCodeType">
+	<xs:simpleType name="ResultCodeType">
 		<xs:annotation>
-			<xs:documentation>
-				Vid ett logiskt fel i de uppdaterande tjänsterna levereras resultCode, resultText. resultCode kan vara:
-				
-				OK
-					Transaktionen har utförts enligt uppdraget i frågemeddelandet.
-				INFO
-					Transaktionen har utförts enligt begäran, men det finns ett meddelande
-					som konsumenten måste visa upp för användaren (om tillämpbart).
-					Exempel på detta kan vara ”kom fastande”.
-				ERROR
-					Transaktionen har INTE kunnat utföras enligt p.g.a. logiskt fel. 
-					Det finns ett meddelande som konsumenten måste visa upp. 
-					Exempel på detta kan vara ”tiden har bokats av annan patient
+			<xs:documentation> Vid ett logiskt fel i de uppdaterande tjänsterna levereras
+				resultCode, resultText. resultCode kan vara: OK Transaktionen har utförts enligt
+				uppdraget i frågemeddelandet. INFO Transaktionen har utförts enligt begäran, men det
+				finns ett meddelande som konsumenten måste visa upp för användaren (om tillämpbart).
+				Exempel på detta kan vara ”kom fastande”. ERROR Transaktionen har INTE kunnat
+				utföras enligt p.g.a. logiskt fel. Det finns ett meddelande som konsumenten måste
+				visa upp. Exempel på detta kan vara ”tiden har bokats av annan patient
 			</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
@@ -57,301 +53,72 @@
 			<xs:enumeration value="INFO"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:complexType name="careDocumentationHeaderType">
+	<xs:complexType name="CareDocumentationHeaderType">
 		<xs:annotation>
-			<xs:documentation>
-				careDocumentID: 
-					Vårddokumentets unika identifierare.
-					OID kan sättas till 1.2.752.129.2.1.2.1 (Icke-nationell identifierare Org+lokalt unikt id)
-				careDocumentTitle: 
-					Titel på dokument
-				careDocumentTime: 
-					Tidpunkt då dokumentet skapades
-				patientID: 
-					Patientens ID. Root sätts till typ av patientsidentifierare.  
-					Bland tillåtna typer finns: 
-						personnummer (1.2.752.129.2.1.3.1), 
-						samordningsnummer (1.2.752.129.2.1.3.3), 
-						reservnummer SLL (1.2.752.97.3.1.3)
-			</xs:documentation>
+			<xs:documentation> careDocumentID: Vårddokumentets unika identifierare. OID kan sättas
+				till 1.2.752.129.2.1.2.1 (Icke-nationell identifierare Org+lokalt unikt id)
+				careDocumentTitle: Titel på dokument careDocumentTime: Tidpunkt då dokumentet
+				skapades patientId: Patientens ID. Root sätts till typ av patientsidentifierare.
+				Bland tillåtna typer finns: personnummer (1.2.752.129.2.1.3.1), samordningsnummer
+				(1.2.752.129.2.1.3.3), reservnummer SLL (1.2.752.97.3.1.3) </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="careDocumentID" type="careDocumentIdType"/>
-			<xs:element name="careDocumentTitle" type="ST" minOccurs="0"/>
-			<xs:element name="careDocumentTime" type="TS"/>
-			<xs:element name="patientID" type="patientIdType"/>
-			<xs:element name="author" type="authorType"/>
-			<xs:element name="custodian" type="custodianType"/>
-			<xs:element name="legalAuthenticator" type="legalAuthenticatorType" minOccurs="0"/>
-			<xs:element name="authorization" type="authorizationType" minOccurs="0"/>
-			<xs:element name="encompassingEncounter" type="encompassingEncounterType" minOccurs="0"/>
+			<xs:element name="careDocumentId" type="xs:string"/>
+			<xs:element name="careDocumentTitle" type="xs:string" minOccurs="0"/>
+			<xs:element name="careDocumentTime" type="TimeStampType"/>
+			<xs:element name="patientId" type="PersonIdType"/>
+			<xs:element name="author" type="AuthorType"/>
+			<xs:element name="careGiver" type="HsaIdType"/>
+			<xs:element name="legalAuthenticator" type="LegalAuthenticatorType" minOccurs="0"/>
+			<xs:element name="approvedForPatient" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="encompassingEncounter" type="encompassingEncounterType" minOccurs="0"
+			/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="careDocumentationBodyType">
+	<xs:complexType name="CareDocumentationBodyType">
 		<xs:sequence>
-			<xs:element name="clinicalDocumentNote" type="clinicalDocumentNoteType"/>
-			<xs:element name="multimediaEntry" type="multimediaEntryType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="clinicalDocumentNote" type="ClinicalDocumentNoteType"/>
+			<xs:element name="multimediaEntry" type="MultimediaEntryType" minOccurs="0"
+				maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="authorType">
-		<xs:annotation>
-			<xs:documentation>
-			Information om författare till dokumentet
-			
-			authorTime: 
-				Information om författare till dokumentet
-			authorID: 
-				HSA-id för författare. 
-				OID för HSA används (1.2.752.129.2.2.1.4)
-			authorRoleCode: 
-				Kod för författarens befattning, enligt kodverket Befattning (OID 1.2.752.129.2.2.1.4)
-			authorName: 
-				Namn på författaren
-			authorOrganizationID: 
-				HSA-id för den enhet som författaren är uppdragstagare hos
-			authorOrganizationName: 
-				Namn på den enhet som författaren är uppdragstagare hos
-			authorOrganizationTelecom: 
-				Telefonnummer till den enhet som författaren är uppdragstage hos
-			authorOrganizationAddress: 
-				Adress till den enhet som författaren är uppdragstagere hos
-			careProviderId:
-				HSA-id för vårdgivaren, som är vårdgivare för den enhet som författaren är uppdragstagare för
-		</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="authorTime" type="TS"/>
-			<xs:element name="authorID" type="authorIdType"/>
-			<xs:element name="authorRoleCode" type="authorRoleCodeType"/>
-			<xs:element name="authorName" type="ST" minOccurs="0"/>
-			<xs:element name="authorOrganizationID" type="HSAIdType"/>
-			<xs:element name="authorOrganizationName" type="ST" minOccurs="0"/>
-			<xs:element name="authorOrganizationTelecom" type="ST" minOccurs="0"/>
-			<xs:element name="authorOrganizationAddress" type="ST" minOccurs="0"/>
-			<xs:element name="careProviderID" type="HSAIdType"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="custodianType">
-		<xs:annotation>
-			<xs:documentation>
-			Information om PDL-enhet som har ansvar för informationen
-			
-			custodianID: 
-				HSA-id för PDL-enhet
-		</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="custodianID" type="HSAIdType"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="legalAuthenticatorType">
-		<xs:annotation>
-			<xs:documentation>
-			Information om signering
-			
-			signatureTime: 
-				Tidpunkt för signering, format YYYYMMDDHHMMSS. 
-				RIV: Vård- och omsorgsdokument.signeringstidpunkt
-		</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="signatureTime" type="timeStampType"/>
-			<xs:element name="assignedEntity" type="assignedEntityType" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
+
 	<xs:complexType name="assignedEntityType">
 		<xs:annotation>
-			<xs:documentation>
-			Information om person som signerat dokument
-			
-			assignedEntityID: 
-				HSA-id för person
-			representedOrganizationID: 
-				HSA-id för den organisation som personen har uppdrag för
-		</xs:documentation>
+			<xs:documentation> Information om person som signerat dokument assignedEntityID: HSA-id
+				för person representedOrganizationID: HSA-id för den organisation som personen har
+				uppdrag för </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="assignedEntityID" type="HSAIdType"/>
-			<xs:element name="representedOrganizationID" type="HSAIdType" minOccurs="0"/>
+			<xs:element name="assignedEntityID" type="HsaIdType"/>
+			<xs:element name="representedOrganizationID" type="HsaIdType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="authorizationType">
-		<xs:annotation>
-			<xs:documentation>
-			Information om menprövning
-			
-			authorizationCode: 
-				Kod för typ av menprövning. Värden från kodverket KV XX
-		</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="authorizationCode" type="authorizationCodeType"/>
-		</xs:sequence>
-	</xs:complexType>
+
 	<xs:complexType name="encompassingEncounterType">
 		<xs:annotation>
-			<xs:documentation>
-			Information om  Vård- och omsorgskontakt som föranlett vårddokumentation.
-			
-			encounterID: 
-				Unik identifierare för vård- och omsorgskontakt. 
-				OID kan sättas till 1.2.752.129.2.1.2.1  (Icke-nationell identifierare Org+lokalt unikt id)
-			encounterTime: 
-				Tidpunkt för vård- och omsorgskontakt
-		</xs:documentation>
+			<xs:documentation> Information om Vård- och omsorgskontakt som föranlett
+				vårddokumentation. encounterID: Unik identifierare för vård- och omsorgskontakt. OID
+				kan sättas till 1.2.752.129.2.1.2.1 (Icke-nationell identifierare Org+lokalt unikt
+				id) encounterTime: Tidpunkt för vård- och omsorgskontakt </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="encounterID" type="II"/>
-			<xs:element name="encounterTime" type="TS"/>
+			<xs:element name="encounterId" type="EncounterIdType"/>
+			<xs:element name="encounterTime" type="TimeStampType"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="clinicalDocumentNoteType">
+
+	<xs:complexType name="MultimediaEntryType">
 		<xs:annotation>
-			<xs:documentation>
-			Dokument/anteckning
-			
-			careDocumentNoteCode: 
-				Typ av vård- och omsorgsdokument.
-				Kod tas från KV Anteckningstyp (1.2.752.129.2.2.2.11).
-				Tillåtna värden från kodverk	Anteckningstyp: 
-					utr = Utredning, 
-					atb = åtgärd/Behandling, 
-					sam = Sammanfattning, 
-					sao = Samordning, 
-					ins = Inskrivning, 
-					slu = Slutanteckning, 
-					auf = Anteckning utan fysiskt
-			careDocumentNoteTitle: 
-				Titel på dokument
-			careDocumentNoteText: 
-				Själva dokumentet. 
-				Formatet i textfältet ska följa HL7 CDA "Narrative Block". 
-				Om dokumentet innehåller multimedia läggs en platshållare i texten enligt formatet <renderMultiMedia referencedObject="MM1"/>. 
-				Innehåller dokumentet fler multimedia läggs ytterligare platshållare i texten, där referencesObject får namn "MM2", "MM3" osv
-		</xs:documentation>
+			<xs:documentation> Multimedia som finns i dokumentet, motsvaras av platshållare i
+				careDocumentNoteText multiMediaID: ID på multimedia value: Multimediainnehållet, med
+				lämplig mime-typ och kodningstyp </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="careDocumentNoteCode" type="careDocumentNoteCodeType"/>
-			<xs:element name="careDocumentNoteTitle" type="ST" minOccurs="0"/>
-			<xs:element name="careDocumentNoteText" type="xs:anyType"/>
+			<xs:element name="id" type="xs:string"/>
+			<xs:element name="type" type="xs:string"/>
+			<xs:element name="encoding" type="xs:string"/>
+			<xs:element name="value" type="xs:string"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="multimediaEntryType">
-		<xs:annotation>
-			<xs:documentation>
-			Multimedia som finns i dokumentet, motsvaras av platshållare i careDocumentNoteText
-			
-			multiMediaID: 
-				ID på multimedia
-			value: 
-				Multimediainnehållet, med lämplig mime-typ och kodningstyp
-		</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="multiMediaID" type="ST"/>
-			<xs:element name="value" type="ED"/>
-		</xs:sequence>
-	</xs:complexType>
-	<!--
-		Helper datatypes 
-	-->
-	<xs:complexType name="HSAIdType">
-		<xs:complexContent>
-			<xs:restriction base="II">
-				<xs:attribute name="root" use="required" fixed="1.2.752.129.2.1.4.1">
-					<xs:simpleType>
-						<xs:restriction base="uid"/>
-					</xs:simpleType>
-				</xs:attribute>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="careDocumentIdType">
-		<xs:complexContent>
-			<xs:restriction base="II">
-				<xs:attribute name="root" type="uid" use="required"/>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="patientIdType">
-		<xs:complexContent>
-			<xs:restriction base="II">
-				<xs:attribute name="root" type="uid" use="required"/>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="authorIdType">
-		<xs:complexContent>
-			<xs:restriction base="II">
-				<xs:attribute name="root" use="required" fixed="1.2.752.129.2.1.4.1">
-					<xs:simpleType>
-						<xs:restriction base="uid"/>
-					</xs:simpleType>
-				</xs:attribute>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="authorRoleCodeType">
-		<xs:complexContent>
-			<xs:restriction base="II">
-				<xs:attribute name="root" use="required" fixed="1.2.752.129.2.2.1.4">
-					<xs:simpleType>
-						<xs:restriction base="uid"/>
-					</xs:simpleType>
-				</xs:attribute>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="timeStampType">
-		<xs:complexContent>
-			<xs:restriction base="TS">
-				<xs:attribute name="value">
-					<xs:simpleType>
-						<xs:restriction base="ts">
-							<xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])\d{6}"/>
-						</xs:restriction>
-					</xs:simpleType>
-				</xs:attribute>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="authorizationCodeType">
-		<xs:complexContent>
-			<xs:restriction base="II">
-				<xs:attribute name="root" type="uid" use="required"/>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="encounterIdType">
-		<xs:complexContent>
-			<xs:restriction base="II">
-				<xs:attribute name="root" type="uid" use="required"/>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="careDocumentNoteCodeType">
-		<xs:complexContent>
-			<xs:restriction base="CD">
-				<xs:attribute name="code" use="required">
-					<xs:simpleType>
-						<xs:restriction base="cs">
-							<xs:enumeration value="utr"/>
-							<xs:enumeration value="atb"/>
-							<xs:enumeration value="sam"/>
-							<xs:enumeration value="sao"/>
-							<xs:enumeration value="ins"/>
-							<xs:enumeration value="slu"/>
-							<xs:enumeration value="auf"/>
-						</xs:restriction>
-					</xs:simpleType>
-				</xs:attribute>
-				<xs:attribute name="codeSystem" use="required" fixed="1.2.752.129.2.2.2.11">
-					<xs:simpleType>
-						<xs:restriction base="uid"/>
-					</xs:simpleType>
-				</xs:attribute>
-			</xs:restriction>
-		</xs:complexContent>
-	</xs:complexType>
-	<!-- ///////////////////////////////////////////////////////////////////////////////////////// -->
 </xs:schema>
