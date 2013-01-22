@@ -21,7 +21,7 @@
         <xs:sequence>
             <xs:element name="authorTime" type="TimeStampType"/>
             <xs:element name="authorId" type="HsaIdType"/>
-            <xs:element name="authorRoleCode" type="AuthorRoleType"/>
+            <xs:element name="authorRoleCode" type="codes:AuthorRoleValueValues"/>
             <xs:element name="authorName" type="xs:string" minOccurs="0"/>
             <xs:element name="authorOrganizationID" type="HsaIdType"/>
             <xs:element name="authorOrganizationName" type="xs:string" minOccurs="0"/>
@@ -76,7 +76,7 @@
     <!-- -->
     <xs:complexType name="AuthorRoleType">
         <xs:sequence>
-            <xs:element name="code" type="codes:AuthorRoleCodeValues"/>
+            <!-- <xs:element name="code" type="codes:AuthorRoleCodeValues"/> -->
             <xs:element name="value" type="codes:AuthorRoleValueValues"/>
         </xs:sequence>
     </xs:complexType>
@@ -97,17 +97,15 @@
     </xs:complexType>
 
     <!-- @TODO Should we have maxlength 64? -->
-    <xs:complexType name="HsaIdType">
-        <xs:sequence>
-            <xs:element name="code" type="codes:HsaIdCodeValues"/>
-            <xs:element name="value" type="HsaValueType"/>
-        </xs:sequence>
-    </xs:complexType>
+    <xs:simpleType name="HsaIdType">
+        <xs:restriction base="xs:string">           
+        </xs:restriction>       
+    </xs:simpleType>
 
     <!-- @TODO Should we have maxlength 64? -->
     <xs:complexType name="EncounterIdType">
         <xs:sequence>
-            <xs:element name="code" type="codes:EncounterIdCodeValues"/>
+            <!-- <xs:element name="code" type="codes:EncounterIdCodeValues"/> -->
             <xs:element name="value" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
@@ -115,17 +113,10 @@
     <xs:complexType name="PersonIdType">
         <xs:sequence>
             <xs:element name="type" type="codes:PersonIdCodeValues"/>
-            <xs:element name="value" type="PersonIdTypeType" /> 
+            <xs:element name="value" type="PersonIdTypeType"/>
         </xs:sequence>
     </xs:complexType>
-
-    <xs:complexType name="OrganisationType">
-        <xs:sequence>
-            <xs:element name="id" type="HsaIdType"/>
-            <xs:element name="name" minOccurs="0"/>
-        </xs:sequence>
-    </xs:complexType>
-
+    
     <!-- -->
     <xs:simpleType name="PersonIdTypeType">
         <xs:restriction base="xs:string">
