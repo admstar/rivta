@@ -39,7 +39,7 @@
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="AssignedEntityID" type="tns:HSAIdType"/>
+			<xs:element name="AssignedEntityID" type="tns:HsaIdType"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -56,7 +56,7 @@
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="authorizationCode" type="ST" fixed=" P0-00790 för Information till Patient"/>
+			<xs:element name="authorizationCode" type="xs:string" fixed="P0-00790 för Information till Patient"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -115,12 +115,12 @@
 					</xs:complexContent>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="authorName" type="ST" minOccurs="0"/>
-			<xs:element name="authorOrganizationID" type="tns:HSAIdType"/>
-			<xs:element name="authorOrganizationName" type="ST" minOccurs="0"/>
-			<xs:element name="authorOrganizationTelecom" type="ST" minOccurs="0"/>
-			<xs:element name="authorOrganizationAddress" type="ST" minOccurs="0"/>
-			<xs:element name="careProviderID" type="tns:HSAIdType"/>
+			<xs:element name="authorName" type="xs:string" minOccurs="0"/>
+			<xs:element name="authorOrganizationID" type="tns:HsaIdType"/>
+			<xs:element name="authorOrganizationName" type="xs:string" minOccurs="0"/>
+			<xs:element name="authorOrganizationTelecom" type="xs:string" minOccurs="0"/>
+			<xs:element name="authorOrganizationAddress" type="xs:string" minOccurs="0"/>
+			<xs:element name="careProviderID" type="tns:HsaIdType"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -137,7 +137,7 @@
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="custodianID" type="tns:HSAIdType"/>
+			<xs:element name="custodianID" type="tns:HsaIdType"/>
 			<xs:element name="legalAuthenticator" type="tns:LegalAuthenticatorType" minOccurs="0"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
@@ -160,7 +160,7 @@
 		<xs:sequence>
 			<xs:element name="signatureTime" type="tns:TimestampType"/>
 			<xs:element name="assignedEntity" type="tns:AssignedEntityType" minOccurs="0"/>
-			<xs:element name="representedOrganizationID" type="tns:HSAIdType"/>
+			<xs:element name="representedOrganizationID" type="tns:HsaIdType"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -205,7 +205,7 @@
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="documentCode" type="CD"/>
-			<xs:element name="documentTitle" type="ST" minOccurs="0"/>
+			<xs:element name="documentTitle" type="xs:string" minOccurs="0"/>
 			<xs:element name="documentTime" type="tns:TimestampType"/>
 			<xs:element name="patientID">
 				<xs:complexType>
@@ -247,7 +247,7 @@
             </xs:documentation>
         </xs:annotation>	
         <xs:sequence>
-            <xs:element name="authorOrganizationID" type="tns:HSAIdType"/>
+            <xs:element name="authorOrganizationID" type="tns:HsaIdType"/>
             <xs:element name="patientID">
                 <xs:complexType>
                     <xs:complexContent>
@@ -267,7 +267,7 @@
 			(1) extends another type and 
 			(2) adds some kind of restriction to the type 
 	 -->
-	<xs:complexType name="HSAIdType">
+	<xs:complexType name="HsaIdType">
 		<xs:complexContent>
 			<xs:restriction base="II">
 				<xs:attribute name="nullFalvor" use="prohibited"/>
