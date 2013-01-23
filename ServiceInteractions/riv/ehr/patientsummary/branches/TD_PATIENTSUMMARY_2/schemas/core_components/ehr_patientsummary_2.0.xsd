@@ -20,47 +20,15 @@
 <xs:schema 
     xmlns:xs="http://www.w3.org/2001/XMLSchema" 
     xmlns:tns="urn:riv:ehr:patientsummary:2" 
-    xmlns:codes="urn:riv:ehr:patientsummary:codes:1" 
-    xmlns:media="urn:riv:ehr:patientsummary:media:1" 
+    xmlns:codes="urn:riv:ehr:patientsummary:codes" 
+    xmlns:media="urn:riv:ehr:patientsummary:media" 
     targetNamespace="urn:riv:ehr:patientsummary:2" 
     elementFormDefault="qualified" 
     attributeFormDefault="unqualified" 
     version="2.0">
 	
-    <xs:import schemaLocation="codes_m.xsd" namespace="urn:riv:ehr:patientsummary:codes:1"/>
-    <xs:import schemaLocation="media.xsd" namespace="urn:riv:ehr:patientsummary:media:1"/>
-    
-	<xs:complexType name="AssignedEntityType">
-		<xs:annotation>
-			<xs:documentation>
-				Information om person som signerat dokument
-			
-				assignedEntityId: 
-					HSA-id för person
-				representedOrganizationId: 
-					HSA-id för den organisation som personen har uppdrag för
-			</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="assignedEntityId" type="tns:HsaIdType"/>
-		</xs:sequence>
-	</xs:complexType>
-		
-	<xs:complexType name="AuthorizationType">
-		<xs:annotation>
-			<xs:documentation>
-				Information om menprövning
-			
-				authorizationCode: 
-					Kod som anger typ av tillgänglighet. Tillåtna värden
-					är P0-00790 för Information till Patient (att information
-					är tillgänglig till patient kan ha föregåtts av menprövning)
-			</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-		    <xs:element name="authorizationCode" type="codes:AuthorizationCodeValues"/>
-		</xs:sequence>
-	</xs:complexType>
+    <xs:import schemaLocation="./codes.xsd" namespace="urn:riv:ehr:patientsummary:codes"/>
+    <xs:import schemaLocation="./media.xsd" namespace="urn:riv:ehr:patientsummary:media"/>
 
 	<xs:complexType name="AuthorType">
 		<xs:annotation>
@@ -89,80 +57,104 @@
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="authorTime" type="tns:TimestampType"/>
-			<xs:element name="authorId" type="tns:AuthorIdType"/>
-			<xs:element name="authorRoleCode" type="tns:AuthorRoleCodeType" minOccurs="0"/>
+			<xs:element name="authorTime" type="tns:TimeStampType"/>
+		    <xs:element name="authorId" type="tns:HsaIdType"/>
+		    <xs:element name="authorRoleCode" type="codes:AuthorRoleCodeValueValues" minOccurs="0"/>
 			<xs:element name="authorName" type="xs:string" minOccurs="0"/>
 			<xs:element name="authorOrganizationId" type="tns:HsaIdType"/>
 			<xs:element name="authorOrganizationName" type="xs:string" minOccurs="0"/>
-			<xs:element name="authorOrganizationTelecom" type="xs:string" minOccurs="0"/>
+		    <xs:element name="authorOrganizationTelecom" type="tns:TelecomNumberType" minOccurs="0"/>
 			<xs:element name="authorOrganizationAddress" type="xs:string" minOccurs="0"/>
 			<xs:element name="careProviderId" type="tns:HsaIdType"/>
 		</xs:sequence>
 	</xs:complexType>
 
-    <xs:complexType name="AuthorIdType">
-        <xs:sequence>
-            <xs:element name="code" type="codes:AuthorIdCodeValues"/>
-            <xs:element name="value" type="xs:string"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="AuthorRoleCodeType">
-        <xs:sequence>
-            <xs:element name="code" type="codes:AuthorRoleCodeValues"/>
-            <xs:element name="value" type="xs:string"/>
-        </xs:sequence>
-    </xs:complexType>
-    
-	<xs:complexType name="CustodianType">
-		<xs:annotation>
-			<xs:documentation>
-				Information om PDL-enhet som har ansvar för informationen
-			
-				custodianId: 
-					HSA-id för PDL-enhet
-				legalAuthenticator:
-					Information om signering				
-			</xs:documentation>
-		</xs:annotation>
+    <!--
+	<xs:complexType name="AuthorRoleCodeType">
 		<xs:sequence>
-			<xs:element name="custodianId" type="tns:HsaIdType"/>
-			<xs:element name="legalAuthenticator" type="tns:LegalAuthenticatorType" minOccurs="0"/>
+			<xs:element name="code" type="codes:AuthorRoleCodeValues"/>
+			<xs:element name="value" type="codes:AuthorRoleValueValues"/>
 		</xs:sequence>
 	</xs:complexType>
+	-->
 
-    <xs:complexType name="DocumentCodeType">
+    <xs:simpleType name="BinaryDataEncodingType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="B64"/>
+            <xs:enumeration value="TXT"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:complexType name="DateTimePeriodType">
         <xs:annotation>
             <xs:documentation>
-                code:
-                    Kod för åtgärd. 
-                    Fast värde: "Kliniskt dokument" (R-42BAC) 
-                codeSystem:
-                    Kodverk (2.16.840.1.11.3883.6.96)
-                codeSystemName:
-                    Namn på kodverk (SNOMED CT)
+                Används för att specificera ett datumintervall
+                med hjälp av start- och slutdatum.
+                
+                start: 
+                    Startdatum på formatet ÅÅÅÅMMDD
+                end: 
+                    Slutdatum på formatet ÅÅÅÅMMDD
             </xs:documentation>
-        </xs:annotation>	
+        </xs:annotation>
         <xs:sequence>
-            <xs:element name="code" type="codes:DocumentCodeValues"/>
-            <xs:element name="codeSystem" type="codes:DocumentCodeSystemValues"/>
-            <xs:element name="codeSystemName" type="codes:DocumentCodeSystemNameValues"/>
-        </xs:sequence>
-    </xs:complexType>
-    
-    <xs:complexType name="HsaIdType">
-        <xs:sequence>
-            <xs:element name="code" type="codes:HsaIdCodeValues"/>
-            <xs:element name="value">
+            <xs:element name="start">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
-                        <xs:maxLength value="64"/>
+                        <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="end">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
         </xs:sequence>
     </xs:complexType>
+    
+    <!-- YYYYMMDD -->
+    <xs:simpleType name="DateType">
+        <xs:annotation>
+            <xs:documentation/>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"/>
+        </xs:restriction>
+    </xs:simpleType>    
+
+    <!-- @TODO Should we have maxlength 64? -->
+    <xs:complexType name="EncounterIdType">
+        <xs:sequence>
+            <!-- <xs:element name="code" type="codes:EncounterIdCodeValues"/> -->
+            <xs:element name="value" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <!-- @TODO Should we have maxlength 64? -->
+    <xs:simpleType name="HsaIdType">
+        <xs:restriction base="xs:string"> </xs:restriction>
+    </xs:simpleType>
+    
+    <!-- @TODO Shall we keep this
+    <xs:complexType name="HsaIdType">
+        <xs:sequence>
+            <xs:element name="code" type="codes:HsaIdCodeValues"/>
+            <xs:element name="value" type="tns:HsaValueType"/>
+        </xs:sequence>
+    </xs:complexType>
+    -->
+    
+    <!-- Limit HSA name values to 64 characters -->
+    <!-- @TODO Shall we keep this
+    <xs:simpleType name="HsaValueType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="64"/>
+        </xs:restriction>
+    </xs:simpleType>
+    -->
     
 	<xs:complexType name="LegalAuthenticatorType">
 		<xs:annotation>
@@ -172,29 +164,25 @@
 				signatureTime: 
 					Tidpunkt för signering, format ÅÅÅÅMMDDttmmss. 
 					RIV: Vård- och omsorgsdokument.signeringstidpunkt
-				assignedEntity:
-					Information om person som signerat dokumentet
-				representedOrganizationId
+				assignedEntityId: 
+					HSA-id för person
+				representedOrganizationId: 
 					HSA-id för den organisation som personen har uppdrag för
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="signatureTime" type="tns:TimestampType"/>
-			<xs:element name="assignedEntity" type="tns:AssignedEntityType" minOccurs="0"/>
-			<xs:element name="representedOrganizationId" type="tns:HsaIdType"/>
+		    <xs:element name="signatureTime" type="tns:TimeStampType"/>
+		    <xs:element name="assignedEntityId" type="tns:HsaIdType" minOccurs="0"/>
+		    <xs:element name="representedOrganizationId" type="tns:HsaIdType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 
-    <xs:complexType name="PatientIdType">
+    <xs:complexType name="MediaEntryType">
         <xs:sequence>
-            <xs:element name="type" type="codes:PatientIdCodeValues"/>
-            <xs:element name="value">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="64"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
+            <xs:element name="id" type="xs:string"/>
+            <xs:element name="mediaType" type="media:MediaType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="encoding" type="tns:BinaryDataEncodingType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="value" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
     
@@ -223,21 +211,18 @@
 					HSA-id för den PDL-enhet som har ansvar för informationen
 				authorization
 					Information om tillgänglighet av information, exempelvis att information kan ges till patient
-				encompassingEncounter
-				    Information om  Vård- och omsorgskontakt som föranlett vårddokumentation
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="documentId" type="codes:DocumentIdCodeValues"/>
-			<xs:element name="documentCode" type="tns:DocumentCodeType"/>
+			<xs:element name="documentId" type="xs:string"/>
+		    <xs:element name="documentCode" type="xs:string"/>
 			<xs:element name="documentTitle" type="xs:string" minOccurs="0"/>
-			<xs:element name="documentTime" type="tns:TimestampType"/>
-		    <xs:element name="patientId" type="tns:PatientIdType"/>
+			<xs:element name="documentTime" type="tns:TimeStampType"/>
+		    <xs:element name="patientId" type="tns:PersonIdType"/>
 			<xs:element name="author" type="tns:AuthorType"/>
-			<xs:element name="careGiverId" type="tns:HsaIdType"/>
+			<xs:element name="careGiver" type="tns:HsaIdType"/>
 		    <xs:element name="legalAuthenticator" type="tns:LegalAuthenticatorType" minOccurs="0"/>
-		    <!--<xs:element name="authorization" type="tns:AuthorizationType" minOccurs="0" maxOccurs="unbounded"/>-->
-		    <xs:element name="approvedForPatient" type="xs:boolean"/>
+		    <xs:element name="approvedForPatient" type="xs:boolean" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 
@@ -258,13 +243,32 @@
         </xs:annotation>	
         <xs:sequence>
             <xs:element name="authorOrganizationId" type="tns:HsaIdType"/>
-            <xs:element name="patientId" type="tns:PatientIdType"/>
-            <xs:element name="timePeriod" type="tns:TimePeriodType" minOccurs="0"/>
+            <xs:element name="patientId" type="tns:PersonIdType"/>
+            <xs:element name="timePeriod" type="tns:DateTimePeriodType" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
-
-    <xs:simpleType name="TimestampType">
+    <xs:complexType name="PersonIdType">
+        <xs:sequence>
+            <xs:element name="type" type="codes:PersonIdCodeValues"/>
+            <xs:element name="value" type="tns:PersonIdTypeType"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:simpleType name="PersonIdTypeType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]{8}[0-9pPtTfF][0-9]{3}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <!-- Telecom number format +123-12345678 -->
+    <xs:simpleType name="TelecomNumberType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\+\d+-\d+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="TimeStampType">
         <xs:annotation>
             <xs:documentation>
                 A quantity specifying a point on the axis of natural time.
@@ -275,53 +279,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
-            <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])\d{6}"/>
-        </xs:restriction>
-    </xs:simpleType>
-    
-    <xs:complexType name="TimePeriodType">
-		<xs:annotation>
-			<xs:documentation>
-				Används för att specificera ett datumintervall
-				med hjälp av start- och slutdatum.
-				
-				start: 
-					Startdatum på formatet ÅÅÅÅMMDD
-				end: 
-					Slutdatum på formatet ÅÅÅÅMMDD
-			</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="start">
-			    <xs:simpleType>
-			        <xs:restriction base="xs:string">
-			            <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"/>
-			        </xs:restriction>
-			    </xs:simpleType>
-			</xs:element>
-		    <xs:element name="end">
-		        <xs:simpleType>
-		            <xs:restriction base="xs:string">
-		                <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"/>
-		            </xs:restriction>
-		        </xs:simpleType>
-		    </xs:element>
-		</xs:sequence>
-	</xs:complexType>
-    
-    <xs:complexType name="MediaEntryType">
-        <xs:sequence>
-            <xs:element name="id" type="xs:string"/>
-            <xs:element name="mediaType" type="media:MediaType" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="encoding" type="tns:BinaryDataEncodingType" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="value" type="xs:string"/>
-        </xs:sequence>
-     </xs:complexType>
-    
-    <xs:simpleType name="BinaryDataEncodingType">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="B64"/>
-            <xs:enumeration value="TXT"/>
+            <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])\d{4,6}"/>
         </xs:restriction>
     </xs:simpleType>
     

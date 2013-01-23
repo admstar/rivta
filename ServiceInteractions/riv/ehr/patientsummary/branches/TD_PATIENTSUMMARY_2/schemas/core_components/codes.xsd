@@ -1,10 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="urn:riv:ehr:patientsummary:codes"
-    xmlns="urn:riv:ehr:patientsummary:codes">
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+ 
+ http://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->
+<xs:schema 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    xmlns:tns="urn:riv:ehr:patientsummary:codes" 
+    targetNamespace="urn:riv:ehr:patientsummary:codes" 
+    elementFormDefault="qualified" 
+    attributeFormDefault="unqualified" 
+    version="1.0">
 
+    <!-- Values for AuthorRoleCodeType/code -->
+    <xs:simpleType name="AuthorRoleCodeCodeValues">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="1.2.752.129.2.2.1.4">
+                <xs:annotation>
+                    <xs:documentation>OID for code system Befattning</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <!-- Values for AuthorRoleCodeType/value -->
     <!-- kv_yrkeskoder, 1.2.752.97.3.2.8.8 -->
-    <xs:simpleType name="AuthorRoleValueValues">
+    <xs:simpleType name="AuthorRoleCodeValueValues">
         <xs:restriction base="xs:string">
             <xs:enumeration value="AP">
                 <xs:annotation>
@@ -114,17 +148,6 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <!-- Values for AuthorRoleType/code -->
-    <xs:simpleType name="AuthorRoleCodeValues">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="1.2.752.129.2.2.1.4">
-                <xs:annotation>
-                    <xs:documentation>OID for KV Befattning</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-        </xs:restriction>
-    </xs:simpleType>
-
     <!--  
     <xs:simpleType name="codeForTelecomType_values">
         <xs:restriction base="xs:string">
@@ -151,59 +174,52 @@
     </xs:complexType>    
     -->
 
-    <xs:simpleType name="CareDocumentNoteCodeValueValues">
-        <!--
-        Kod för typ av anteckning.
-        Tillåtna värden från kodverk Anteckningstyp:
-        utr = Utredning,
-        atb = åtgärd/Behandling,
-        sam = Sammanfattning,
-        sao = Samordning,
-        ins = Inskrivning,
-        slu = Slutanteckning,
-        auf = Anteckning utan fysiskt möte,
-        sva = Slutenvårdsanteckning,
-        bes =
-        -->
+    <xs:simpleType name="ClinicalDocumentNoteCodeValueValues">
+        <xs:annotation>
+            <xs:documentation>
+                Kod för typ av anteckning.
+                Tillåtna värden från kodverk Anteckningstyp (1.2.752.129.2.2.2.11):
+            </xs:documentation>
+        </xs:annotation>
         <xs:restriction base="xs:string">
             <xs:enumeration value="utr">
                 <xs:annotation>
-                    <xs:documentation/>
+                    <xs:documentation>Utredning</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="atb">
                 <xs:annotation>
-                    <xs:documentation/>
+                    <xs:documentation>Åtgärd/Behandling</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="sam">
                 <xs:annotation>
-                    <xs:documentation/>
+                    <xs:documentation>Sammanfattning</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="sao">
                 <xs:annotation>
-                    <xs:documentation/>
+                    <xs:documentation>Samordning</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="ins">
                 <xs:annotation>
-                    <xs:documentation/>
+                    <xs:documentation>Inskrivning</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="slu">
                 <xs:annotation>
-                    <xs:documentation/>
+                    <xs:documentation>Slutanteckning</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="auf">
                 <xs:annotation>
-                    <xs:documentation/>
+                    <xs:documentation>Anteckning utan fysiskt möte</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="sva">
                 <xs:annotation>
-                    <xs:documentation/>
+                    <xs:documentation>Slutenvårdsanteckning</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="bes">
@@ -213,24 +229,23 @@
             </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
-
-    <!-- Values for CareDocumentNoteCodeType/code -->
-    <xs:simpleType name="CareDocumentNoteCodeCodeValues">
+    
+    <xs:simpleType name="ClinicalDocumentNoteCodeCodeValues">
         <xs:restriction base="xs:string">
             <xs:enumeration value="1.2.752.129.2.2.2.11">
                 <xs:annotation>
-                    <xs:documentation>OID for KV type of document note</xs:documentation>
+                    <xs:documentation>OID for code system Anteckningstyp</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
-
-    <!-- Values for HsaIdType/code -->
+    
+    <!-- Values for EncounterIdType/code -->
     <xs:simpleType name="EncounterIdCodeValues">
         <xs:restriction base="xs:string">
             <xs:enumeration value="1.2.752.129.2.1.2.1">
                 <xs:annotation>
-                    <xs:documentation>OID for HSA ID</xs:documentation>
+                    <xs:documentation>OID for code system ??</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
         </xs:restriction>
@@ -250,17 +265,22 @@
     <!-- Values for PersonIdType/code -->
     <xs:simpleType name="PersonIdCodeValues">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="1.2.752.129.2.1.3.1">
+            <xs:enumeration value="P">
                 <xs:annotation>
-                    <xs:documentation>OID for Swedish social security numbers</xs:documentation>
+                    <xs:documentation>Abbrevation for code system Skatteverket Personnummer (1.2.752.129.2.1.3.1)</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="1.2.752.97.3.1.3">
+            <xs:enumeration value="S">
                 <xs:annotation>
-                    <xs:documentation>OID for Stockholm county reserved social security
-                        numbers</xs:documentation>
+                    <xs:documentation>Abbrevation for code system Skatteverket Samordningsnummer (1.2.752.129.2.1.3.3)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SLL_R">
+                <xs:annotation>
+                    <xs:documentation>Abbrevation for code system SLL Reservnummer (1.2.752.97.3.1.3)</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
+    
 </xs:schema>

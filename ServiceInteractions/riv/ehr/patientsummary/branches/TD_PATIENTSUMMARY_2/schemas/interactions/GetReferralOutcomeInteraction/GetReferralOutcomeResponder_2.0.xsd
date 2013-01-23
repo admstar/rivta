@@ -20,14 +20,14 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:tns="urn:riv:ehr:patientsummary:GetReferralOutcomeResponder:2"
     xmlns:core="urn:riv:ehr:patientsummary:2"
-    xmlns:codes="urn:riv:ehr:patientsummary:codes:1"
+    xmlns:codes="urn:riv:ehr:patientsummary:codes"
     targetNamespace="urn:riv:ehr:patientsummary:GetReferralOutcomeResponder:2"
     elementFormDefault="qualified" 
     attributeFormDefault="unqualified" 
     version="2.0">
 
     <xs:import schemaLocation="../../core_components/ehr_patientsummary_2.0.xsd" namespace="urn:riv:ehr:patientsummary:2"/>
-    <xs:import schemaLocation="../../core_components/codes_m.xsd" namespace="urn:riv:ehr:patientsummary:codes:1"/>
+    <xs:import schemaLocation="../../core_components/codes.xsd" namespace="urn:riv:ehr:patientsummary:codes"/>
     
     <xs:element name="GetReferralOutcome" type="tns:GetReferralOutcomeType"/>
     <xs:element name="GetReferralOutcomeResponse" type="tns:GetReferralOutcomeResponseType"/>
@@ -41,34 +41,58 @@
     <xs:complexType name="GetReferralOutcomeResponseType">
         <xs:annotation>
             <xs:documentation>
-                careDocumentation: 
-                    De vård- och omsorgsdokument som matchar begäran.
-                careDocumentationBody:
-                    Innehåller basinformation om dokumentet
+                referralOutcome: 
+                result:
             </xs:documentation>
         </xs:annotation>	
         <xs:sequence>
             <xs:element name="referralOutcome" type="tns:ReferralOutcomeType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="result" type="tns:ResultType"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="ReferralOutcomeType">
-        <xs:annotation>
-            <xs:documentation>
-                patientSummaryHeader: 
-                    De vård- och omsorgsdokument som matchar begäran.
-                referralOutcomeBody:
-                    ????
-                    
-            </xs:documentation>
-        </xs:annotation>	
         <xs:sequence>
-            <xs:element name="patientSummaryHeader" type="core:PatientSummaryHeaderType"/>
+            <xs:element name="referralOutcomeHeader" type="tns:ReferralOutcomeHeaderType"/>
             <xs:element name="referralOutcomeBody" type="tns:ReferralOutcomeBodyType"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
+    
+    <xs:complexType name="ResultType">
+        <xs:sequence>
+            <xs:element name="resultCode" type="tns:ResultCodeType"/>
+            <xs:element name="resultText" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:simpleType name="ResultCodeType">
+        <xs:annotation>
+            <xs:documentation> 
+                Vid ett logiskt fel i de uppdaterande tjänsterna levereras resultCode, resultText. 
+                
+                resultCode kan vara: 
+                OK    Transaktionen har utförts enligt uppdraget i frågemeddelandet. 
+                INFO  Transaktionen har utförts enligt begäran, men detfinns ett 
+                meddelande som konsumenten måste visa upp för användaren (om tillämpbart).
+                Exempel på detta kan vara ”kom fastande”. 
+                ERROR Transaktionen har INTE kunnat utföras enligt p.g.a. logiskt fel. 
+                Det finns ett meddelande som konsumenten måste visa upp. Exempel på 
+                detta kan vara ”tiden har bokats av annan patient
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="OK"/>
+            <xs:enumeration value="ERROR"/>
+            <xs:enumeration value="INFO"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="ReferralOutcomeHeaderType">
+        <xs:complexContent> 
+            <xs:extension base="core:PatientSummaryHeaderType"/>
+        </xs:complexContent>         
+    </xs:complexType>        
     
     <xs:complexType name="ReferralOutcomeBodyType">
         <xs:annotation>
@@ -109,27 +133,8 @@
             </xs:documentation>
         </xs:annotation>	
         <xs:sequence>
-            <xs:element name="clinicalInformationCode" type="tns:ClinicalInformationCodeType"/>
+            <xs:element name="clinicalInformationCode" type="xs:string"/>
             <xs:element name="clinicalInformationText" type="xs:string"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-    
-    <xs:complexType name="ClinicalInformationCodeType">
-        <xs:annotation>
-            <xs:documentation>
-                code:
-                    Kod för åtgärd.
-                codeSystem:
-                    Kodverk (1.2.752.116.1.1.1.1.3)
-                codeSystemName:
-                    Namn på kodverk (ICD-10)
-            </xs:documentation>
-        </xs:annotation>	
-        <xs:sequence>
-            <xs:element name="code" type="xs:string"/>
-            <xs:element name="codeSystem" type="codes:ClinicalInformationCodeSystemValues"/>
-            <xs:element name="codeSystemName" type="codes:ClinicalInformationCodeSystemNameValues"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -147,45 +152,25 @@
                 actText:
                     Text som anger namnet på den kod som anges i actCode alt.
                     beskrivning av åtgärd om ingen kod har angets i actCode.
-                result:
+                actResult:
                     Resultat av åtgärd. Data i form av bifogade bilder eller liknande.
             </xs:documentation>
         </xs:annotation>	
         <xs:sequence>
-            <xs:element name="actId" type="tns:ActIdType" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="actCode" type="tns:ActCodeType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="actId" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="actCode" type="xs:string" minOccurs="0" maxOccurs="1"/>
             <xs:element name="actText" type="xs:string"/>
-            <xs:element name="result" type="core:MediaEntryType"/>
+            <xs:element name="actResult" type="tns:ActResultType"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="ActIdType">
+    <xs:complexType name="ActResultType">
         <xs:sequence>
-            <xs:element name="code" type="codes:ActIdCodeValues"/>
-            <xs:element name="value" type="xs:string"/>
+            <xs:element name="value" type="core:MediaEntryType"/>
         </xs:sequence>
     </xs:complexType>
-
-    <xs:complexType name="ActCodeType">
-        <xs:annotation>
-            <xs:documentation>
-                code:
-                    Kod för åtgärd.
-                codeSystem:
-                    Kodverk (1.2.752.116.1.3.2.1.4)
-                codeSystemName:
-                    Namn på kodverk (KVÅ)
-            </xs:documentation>
-        </xs:annotation>	
-        <xs:sequence>
-            <xs:element name="code" type="xs:string"/>
-            <xs:element name="codeSystem" type="codes:ActCodeSystemValues"/>
-            <xs:element name="codeSystemName" type="codes:ActCodeSystemNameValues"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-        
+    
     <xs:complexType name="CareRequestType">
         <xs:annotation>
             <xs:documentation>
@@ -215,9 +200,9 @@
             </xs:documentation>
         </xs:annotation>	
         <xs:sequence>
-            <xs:element name="careRequestId" type="tns:CareRequestIdType"/>
+            <xs:element name="careRequestId" type="xs:string"/>
             <xs:element name="careRequestText" type="xs:string"/>
-            <xs:element name="careRequestTime" type="core:TimestampType"/>
+            <xs:element name="careRequestTime" type="core:TimeStampType"/>
             <xs:element name="careRequestAuthorId" type="core:HsaIdType"/>
             <xs:element name="careRequestAuthorName" type="xs:string" minOccurs="0" maxOccurs="1"/>
             <xs:element name="careRequestOrganizationId" type="core:HsaIdType"/>
@@ -229,13 +214,6 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="CareRequestIdType">
-        <xs:sequence>
-            <xs:element name="code" type="codes:CareRequestIdCodeValues"/>
-            <xs:element name="value" type="xs:string"/>
-        </xs:sequence>
-    </xs:complexType>
-    
     <xs:complexType name="CareEncounterType">
         <xs:annotation>
             <xs:documentation>
@@ -248,19 +226,12 @@
             </xs:documentation>
         </xs:annotation>	
         <xs:sequence>
-            <xs:element name="careEncounterId" type="tns:CareEncounterIdType"/>
+            <xs:element name="careEncounterId" type="xs:string"/>
             <xs:element name="careEncounterTime" type="tns:CareEncounterTimeType"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="CareEncounterIdType">
-        <xs:sequence>
-            <xs:element name="code" type="codes:CareEncounterIdCodeValues"/>
-            <xs:element name="value" type="xs:string"/>
-        </xs:sequence>
-    </xs:complexType>
-    
     <xs:complexType name="CareEncounterTimeType">
         <xs:annotation>
             <xs:documentation>
@@ -271,8 +242,8 @@
             </xs:documentation>
         </xs:annotation>	
         <xs:sequence>
-            <xs:element name="start" type="core:TimestampType" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="end" type="core:TimestampType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="start" type="core:TimeStampType"/>
+            <xs:element name="end" type="core:TimeStampType" minOccurs="0" maxOccurs="1"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
