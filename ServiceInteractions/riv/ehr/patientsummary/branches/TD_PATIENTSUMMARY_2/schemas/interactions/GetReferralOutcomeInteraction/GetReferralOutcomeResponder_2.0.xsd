@@ -20,22 +20,38 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:tns="urn:riv:ehr:patientsummary:GetReferralOutcomeResponder:2"
     xmlns:core="urn:riv:ehr:patientsummary:2"
-    xmlns:codes="urn:riv:ehr:patientsummary:codes"
+    xmlns:codes="urn:riv:ehr:patientsummary:enums:2"
     targetNamespace="urn:riv:ehr:patientsummary:GetReferralOutcomeResponder:2"
     elementFormDefault="qualified" 
     attributeFormDefault="unqualified" 
     version="2.0">
 
     <xs:import schemaLocation="../../core_components/ehr_patientsummary_2.0.xsd" namespace="urn:riv:ehr:patientsummary:2"/>
-    <xs:import schemaLocation="../../core_components/codes.xsd" namespace="urn:riv:ehr:patientsummary:codes"/>
+    <xs:import schemaLocation="../../core_components/ehr_patientsummary_enum_2.0.xsd" namespace="urn:riv:ehr:patientsummary:enums:2"/>
     
     <xs:element name="GetReferralOutcome" type="tns:GetReferralOutcomeType"/>
     <xs:element name="GetReferralOutcomeResponse" type="tns:GetReferralOutcomeResponseType"/>
     
     <xs:complexType name="GetReferralOutcomeType">
-        <xs:complexContent> 
-           <xs:extension base="core:PatientSummaryRequestType" /> 
-         </xs:complexContent>         
+        <xs:annotation>
+            <xs:documentation>
+                careUnitHSAid: 
+                    HSA-Id för e-tjänsteproducent.
+                patientId: 
+                    Patientens identitet, nationellt unikt person-id.
+                timePeriod:
+                    Begränsning av sökningen i tid, baserat på kliniskt
+                    relevanta datum. Händelser anses ligga inom intervallet, 
+                    om de till någon del ligger inom intervallet. 
+                    (Start- och slutpunkt inkluderas i intervallet.) 
+                    Formatet för start- respektive slutdatum är ÅÅÅÅMMDD.
+            </xs:documentation>
+        </xs:annotation>	
+        <xs:sequence>
+            <xs:element name="careUnitHSAid" type="core:HsaIdType"/>
+            <xs:element name="patientId" type="core:PersonIdType"/>
+            <xs:element name="timePeriod" type="core:DateTimePeriodType" minOccurs="0"/>
+        </xs:sequence>
     </xs:complexType>
     
     <xs:complexType name="GetReferralOutcomeResponseType">
@@ -89,18 +105,9 @@
     </xs:simpleType>
 
     <xs:complexType name="ReferralOutcomeHeaderType">
-        <xs:sequence>
-            <xs:element name="documentId" type="xs:string"/>
-            <xs:element name="documentCode" type="tns:DocumentCodeType"/>
-            <xs:element name="documentTitle" type="xs:string" minOccurs="0"/>
-            <xs:element name="documentTime" type="core:TimeStampType"/>
-            <xs:element name="patientId" type="core:PersonIdType"/>
-            <xs:element name="author" type="core:AuthorType"/>
-            <xs:element name="careGiver" type="core:HsaIdType"/>
-            <xs:element name="legalAuthenticator" type="core:LegalAuthenticatorType" minOccurs="0"/>
-            <xs:element name="approvedForPatient" type="xs:boolean" minOccurs="0"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>    
+        <xs:complexContent>
+            <xs:extension base="core:PatientSummaryHeaderType"/>
+        </xs:complexContent>
     </xs:complexType>
     
     <xs:complexType name="ReferralOutcomeBodyType">

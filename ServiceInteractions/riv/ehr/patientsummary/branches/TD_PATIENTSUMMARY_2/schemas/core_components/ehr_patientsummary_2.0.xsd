@@ -20,15 +20,14 @@
 <xs:schema 
     xmlns:xs="http://www.w3.org/2001/XMLSchema" 
     xmlns:tns="urn:riv:ehr:patientsummary:2" 
-    xmlns:codes="urn:riv:ehr:patientsummary:codes" 
+    xmlns:codes="urn:riv:ehr:patientsummary:enums:2" 
     xmlns:media="urn:riv:ehr:patientsummary:media" 
     targetNamespace="urn:riv:ehr:patientsummary:2" 
     elementFormDefault="qualified" 
     attributeFormDefault="unqualified" 
     version="2.0">
 	
-    <xs:import schemaLocation="./codes.xsd" namespace="urn:riv:ehr:patientsummary:codes"/>
-    <xs:import schemaLocation="./media.xsd" namespace="urn:riv:ehr:patientsummary:media"/>
+    <xs:import schemaLocation="./ehr_patientsummary_enum_2.0.xsd" namespace="urn:riv:ehr:patientsummary:enums:2"/>
 
 	<xs:complexType name="AuthorType">
 		<xs:annotation>
@@ -59,7 +58,7 @@
 		<xs:sequence>
 			<xs:element name="authorTime" type="tns:TimeStampType"/>
 		    <xs:element name="authorId" type="tns:HsaIdType"/>
-		    <xs:element name="authorRoleCode" type="codes:AuthorRoleCodeValueValues" minOccurs="0"/>
+		    <xs:element name="authorRoleCode" type="codes:AuthorRoleCodeEnum" minOccurs="0"/>
 			<xs:element name="authorName" type="xs:string" minOccurs="0"/>
 			<xs:element name="authorOrganizationId" type="tns:HsaIdType"/>
 			<xs:element name="authorOrganizationName" type="xs:string" minOccurs="0"/>
@@ -180,7 +179,7 @@
     <xs:complexType name="MediaEntryType">
         <xs:sequence>
             <xs:element name="id" type="xs:string"/>
-            <xs:element name="mediaType" type="media:MediaType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="mediaType" type="codes:MediaEnum" minOccurs="0" maxOccurs="1"/>
             <xs:element name="encoding" type="tns:BinaryDataEncodingType" minOccurs="0" maxOccurs="1"/>
             <xs:element name="value" type="xs:string"/>
         </xs:sequence>
@@ -193,8 +192,6 @@
 					Vårddokumentets unika identifierare.
 					OID kan sättas till 1.2.752.129.2.1.2.1 
 					(Icke-nationell identifierare Org+lokalt unikt id)
-				documentCode:
-					Kod som anger typ av innehåll
 				documentTitle: 
 					Titel på dokumentet/anteckningen
 				documentTime: 
@@ -215,7 +212,6 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="documentId" type="xs:string"/>
-		    <xs:element name="documentCode" type="xs:string"/>
 			<xs:element name="documentTitle" type="xs:string" minOccurs="0"/>
 			<xs:element name="documentTime" type="tns:TimeStampType"/>
 		    <xs:element name="patientId" type="tns:PersonIdType"/>
@@ -226,36 +222,14 @@
 		</xs:sequence>
 	</xs:complexType>
 
-    <xs:complexType name="PatientSummaryRequestType">
-        <xs:annotation>
-            <xs:documentation>
-                authorOrganizationId: 
-                    HSA-Id för e-tjänsteproducent.
-                patientId: 
-                    Patientens identitet, nationellt unikt person-id.
-                timePeriod:
-                    Begränsning av sökningen i tid, baserat på kliniskt
-                    relevanta datum. Händelser anses ligga inom intervallet, 
-                    om de till någon del ligger inom intervallet. 
-                    (Start- och slutpunkt inkluderas i intervallet.) 
-                    Formatet för start- respektive slutdatum är ÅÅÅÅMMDD.
-            </xs:documentation>
-        </xs:annotation>	
-        <xs:sequence>
-            <xs:element name="authorOrganizationId" type="tns:HsaIdType"/>
-            <xs:element name="patientId" type="tns:PersonIdType"/>
-            <xs:element name="timePeriod" type="tns:DateTimePeriodType" minOccurs="0"/>
-        </xs:sequence>
-    </xs:complexType>
-
     <xs:complexType name="PersonIdType">
         <xs:sequence>
-            <xs:element name="type" type="codes:PersonIdCodeValues"/>
-            <xs:element name="value" type="tns:PersonIdTypeType"/>
+            <xs:element name="code" type="codes:PersonIdEnum"/>
+            <xs:element name="value" type="tns:PersonIdValueType"/>
         </xs:sequence>
     </xs:complexType>
     
-    <xs:simpleType name="PersonIdTypeType">
+    <xs:simpleType name="PersonIdValueType">
         <xs:restriction base="xs:string">
             <xs:pattern value="[0-9]{8}[0-9pPtTfF][0-9]{3}"/>
         </xs:restriction>
