@@ -89,10 +89,19 @@
     </xs:simpleType>
 
     <xs:complexType name="ReferralOutcomeHeaderType">
-        <xs:complexContent> 
-            <xs:extension base="core:PatientSummaryHeaderType"/>
-        </xs:complexContent>         
-    </xs:complexType>        
+        <xs:sequence>
+            <xs:element name="documentId" type="xs:string"/>
+            <xs:element name="documentCode" type="tns:DocumentCodeType"/>
+            <xs:element name="documentTitle" type="xs:string" minOccurs="0"/>
+            <xs:element name="documentTime" type="core:TimeStampType"/>
+            <xs:element name="patientId" type="core:PersonIdType"/>
+            <xs:element name="author" type="core:AuthorType"/>
+            <xs:element name="careGiver" type="core:HsaIdType"/>
+            <xs:element name="legalAuthenticator" type="core:LegalAuthenticatorType" minOccurs="0"/>
+            <xs:element name="approvedForPatient" type="xs:boolean" minOccurs="0"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>    
+    </xs:complexType>
     
     <xs:complexType name="ReferralOutcomeBodyType">
         <xs:annotation>
@@ -248,4 +257,26 @@
         </xs:sequence>
     </xs:complexType>
 
+    <!-- Values for DocumentCodeType/value -->
+    <xs:simpleType name="DocumentCodeType">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates the type of referral outcome.
+                Allowed values ​​from code system Anteckningstyp (1.2.752.97.3.2.8.6)
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SR">
+                <xs:annotation>
+                    <xs:documentation>Svar på remissfråga</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SS">
+                <xs:annotation>
+                    <xs:documentation>Slutsvar på remissfråga</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    
 </xs:schema>

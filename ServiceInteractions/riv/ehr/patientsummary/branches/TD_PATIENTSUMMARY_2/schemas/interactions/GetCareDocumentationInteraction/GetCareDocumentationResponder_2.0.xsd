@@ -98,14 +98,19 @@
                     Information om  Vård- och omsorgskontakt som föranlett vårddokumentation
             </xs:documentation>
         </xs:annotation>	
-        <xs:complexContent> 
-            <xs:extension base="core:PatientSummaryHeaderType">
-                <xs:sequence>
-                    <xs:element name="encompassingEncounter" type="tns:EncompassingEncounterType"/>
-                    <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-                </xs:sequence>
-            </xs:extension>                
-        </xs:complexContent>         
+        <xs:sequence>
+            <xs:element name="documentId" type="xs:string"/>
+            <xs:element name="documentCode" type="tns:DocumentCodeType"/>
+            <xs:element name="documentTitle" type="xs:string" minOccurs="0"/>
+            <xs:element name="documentTime" type="core:TimeStampType"/>
+            <xs:element name="patientId" type="core:PersonIdType"/>
+            <xs:element name="author" type="core:AuthorType"/>
+            <xs:element name="careGiver" type="core:HsaIdType"/>
+            <xs:element name="legalAuthenticator" type="core:LegalAuthenticatorType" minOccurs="0"/>
+            <xs:element name="approvedForPatient" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="encompassingEncounter" type="tns:EncompassingEncounterType"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
     </xs:complexType>        
     
 	<xs:complexType name="CareDocumentationBodyType">
@@ -156,6 +161,23 @@
         </xs:sequence>
     </xs:complexType>
 
+    <!-- Values for DocumentCodeType/value -->
+    <xs:simpleType name="DocumentCodeType">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates the type of care documentation.
+                Allowed values ​​from code system SNOMED CT (2.16.840.1.113883.6.96)
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Kliniskt dokument (R-42BAC)">
+                <xs:annotation>
+                    <xs:documentation>Kliniskt dokument (R-42BAC)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    
     <xs:complexType name="EncompassingEncounterType">
         <xs:annotation>
             <xs:documentation>
