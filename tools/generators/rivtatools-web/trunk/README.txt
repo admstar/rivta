@@ -15,6 +15,7 @@ Some of the GAE application admins (with deploy privileges) are:
 The following technology is used:
 
 Development language: Groovy
+Unit-testing: JUnit 4 + XMLUnit
 IDE: Eclipse with the latest Groovy (springsource) and Google App Engine (google) plug-ins. The Eclipse project file is committed to the project, while the Eclipse workspace isn't
 Target web container: Google App Engine
 JRE: 1.6 due to restrictions of GAE
