@@ -24,25 +24,25 @@
 	SET SCHEMADIR=schemas
 	
 	SET W0=%SCHEMADIR%\interactions\accesscontrol\CheckConsentInteraction\CheckConsentInteraction_1.0_RIVTABP21.wsdl
-SET X0=%SCHEMADIR%\interactions\CheckConsentInteraction\*.xsd
+SET X0=%SCHEMADIR%\interactions\accesscontrol\CheckConsentInteraction\*.xsd
 
 SET W1=%SCHEMADIR%\interactions\administration\CancelExtendedConsentInteraction\CancelExtendedConsentInteraction_1.0_RIVTABP21.wsdl
-SET X1=%SCHEMADIR%\interactions\CancelExtendedConsentInteraction\*.xsd
+SET X1=%SCHEMADIR%\interactions\administration\CancelExtendedConsentInteraction\*.xsd
 
 SET W2=%SCHEMADIR%\interactions\administration\DeleteExtendedConsentInteraction\DeleteExtendedConsentInteraction_1.0_RIVTABP21.wsdl
-SET X2=%SCHEMADIR%\interactions\DeleteExtendedConsentInteraction\*.xsd
+SET X2=%SCHEMADIR%\interactions\administration\DeleteExtendedConsentInteraction\*.xsd
 
 SET W3=%SCHEMADIR%\interactions\administration\GetExtendedConsentsForPatientInteraction\GetExtendedConsentsForPatientInteraction_1.0_RIVTABP21.wsdl
-SET X3=%SCHEMADIR%\interactions\GetExtendedConsentsForPatientInteraction\*.xsd
+SET X3=%SCHEMADIR%\interactions\administration\GetExtendedConsentsForPatientInteraction\*.xsd
 
 SET W4=%SCHEMADIR%\interactions\administration\RegisterExtendedConsentInteraction\RegisterExtendedConsentInteraction_1.0_RIVTABP21.wsdl
-SET X4=%SCHEMADIR%\interactions\RegisterExtendedConsentInteraction\*.xsd
+SET X4=%SCHEMADIR%\interactions\administration\RegisterExtendedConsentInteraction\*.xsd
 
 SET W5=%SCHEMADIR%\interactions\querying\GetConsentsForCareProviderInteraction\GetConsentsForCareProviderInteraction_1.0_RIVTABP21.wsdl
-SET X5=%SCHEMADIR%\interactions\GetConsentsForCareProviderInteraction\*.xsd
+SET X5=%SCHEMADIR%\interactions\querying\GetConsentsForCareProviderInteraction\*.xsd
 
 SET W6=%SCHEMADIR%\interactions\querying\GetConsentsForPatientInteraction\GetConsentsForPatientInteraction_1.0_RIVTABP21.wsdl
-SET X6=%SCHEMADIR%\interactions\GetConsentsForPatientInteraction\*.xsd
+SET X6=%SCHEMADIR%\interactions\querying\GetConsentsForPatientInteraction\*.xsd
 
 SET XCORE=%SCHEMADIR%\core_components\*.xsd
 
