@@ -48,8 +48,8 @@
             </xs:documentation>
         </xs:annotation>	
         <xs:sequence>
-            <xs:element name="careUnitHSAid" type="core:HsaIdType"/>
-            <xs:element name="patientId" type="core:PersonIdType"/>
+            <xs:element name="careUnitHSAid" type="core:HSAIdType"/>
+            <xs:element name="patientId" type="core:PatientIdType"/>
             <xs:element name="timePeriod" type="core:DatePeriodType" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
@@ -72,7 +72,7 @@
 
     <xs:complexType name="ReferralOutcomeType">
         <xs:sequence>
-            <xs:element name="referralOutcomeHeader" type="tns:ReferralOutcomeHeaderType"/>
+            <xs:element name="referralOutcomeHeader" type="core:PatientSummaryHeaderType"/>
             <xs:element name="referralOutcomeBody" type="tns:ReferralOutcomeBodyType"/>
         </xs:sequence>
     </xs:complexType>
@@ -106,12 +106,6 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:complexType name="ReferralOutcomeHeaderType">
-        <xs:complexContent>
-            <xs:extension base="core:PatientSummaryHeaderType"/>
-        </xs:complexContent>
-    </xs:complexType>
-    
     <xs:complexType name="ReferralOutcomeBodyType">
         <xs:annotation>
             <xs:documentation>
@@ -198,7 +192,7 @@
             <xs:element name="actCode" type="tns:ActCodeType" minOccurs="0" maxOccurs="1"/>
             <xs:element name="actText" type="xs:string"/>
             <xs:element name="actTime" type="core:TimeStampType"/>
-            <xs:element name="actResult" type="core:MediaEntryType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="actResult" type="core:MultimediaType" minOccurs="0" maxOccurs="1"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -206,29 +200,15 @@
     <xs:complexType name="ActCodeType">
         <xs:sequence>
             <xs:element name="code" type="xs:string"/>
-            <xs:element name="codeSystem" type="tns:ActCodeCodeSystemType"/>
+            <xs:element name="codeSystem" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
-    
-    <xs:simpleType name="ActCodeCodeSystemType">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="1.2.752.116.1.3.2.1.4"/>
-        </xs:restriction>
-    </xs:simpleType>
-    
-    <!--  
-    <xs:complexType name="ActResultType">
-        <xs:sequence>
-            <xs:element name="value" type="core:MediaEntryType"/>
-        </xs:sequence>
-    </xs:complexType>
-    -->
     
     <xs:complexType name="ReferralType">
         <xs:annotation>
             <xs:documentation>
                 referralId:
-                    Remissens identitet som är unik inom det lokala avsändade systemet
+                    Remissens identitet som är unik inom det lokala avsändande systemet
                 referralText:
                     Texten från vårdbegäran.
                 referralTime:
@@ -247,16 +227,16 @@
                 referralOrganizationAddress:
                     Adress till organisatorisk enhet.
                 careEncounterId:
-                    Bakomliggande vård- och omsorgskontakt.                
+                    Unik identitet på bakomliggande vård- och omsorgskontakt.                
             </xs:documentation>
         </xs:annotation>	
         <xs:sequence>
             <xs:element name="referralId" type="xs:string"/>
             <xs:element name="referralText" type="xs:string"/>
             <xs:element name="referralTime" type="core:TimeStampType"/>
-            <xs:element name="referralAuthorId" type="core:HsaIdType"/>
+            <xs:element name="referralAuthorId" type="core:HSAIdType"/>
             <xs:element name="referralAuthorName" type="xs:string" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="referralOrganizationHSAid" type="core:HsaIdType"/>
+            <xs:element name="referralOrganizationHSAid" type="core:HSAIdType"/>
             <xs:element name="referralOrganizationName" type="xs:string" minOccurs="0" maxOccurs="1"/>
             <xs:element name="referralOrganizationTelecom" type="xs:string" minOccurs="0" maxOccurs="1"/>
             <xs:element name="referralOrganizationAddress" type="xs:string" minOccurs="0" maxOccurs="1"/>

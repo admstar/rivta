@@ -61,9 +61,9 @@
             <xs:element name="documentId" type="xs:string"/>
             <xs:element name="documentTitle" type="xs:string" minOccurs="0"/>
             <xs:element name="documentTime" type="tns:TimeStampType"/>
-            <xs:element name="patientId" type="tns:PersonIdType"/>
+            <xs:element name="patientId" type="tns:PatientIdType"/>
             <xs:element name="author" type="tns:AuthorType"/>
-            <xs:element name="careUnitHSAid" type="tns:HsaIdType"/>
+            <xs:element name="careUnitHSAid" type="tns:HSAIdType"/>
             <xs:element name="legalAuthenticator" type="tns:LegalAuthenticatorType" minOccurs="0"/>
             <xs:element name="approvedForPatient" type="xs:boolean" minOccurs="0"/>
             <xs:element name="careContact" type="tns:CareContactType" minOccurs="0"/>
@@ -99,14 +99,14 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="authorTime" type="tns:TimeStampType"/>
-		    <xs:element name="authorHSAid" type="tns:HsaIdType"/>
-		    <xs:element name="authorRoleCode" type="codes:AuthorRoleCodeEnum" minOccurs="0"/>
+		    <xs:element name="authorHSAid" type="tns:HSAIdType"/>
+		    <xs:element name="authorRoleCode" type="xs:string" minOccurs="0"/>
 			<xs:element name="authorName" type="xs:string" minOccurs="0"/>
-		    <xs:element name="organizationUnitHSAid" type="tns:HsaIdType"/>
+		    <xs:element name="organizationUnitHSAid" type="tns:HSAIdType"/>
 		    <xs:element name="organizationUnitName" type="xs:string" minOccurs="0"/>
-		    <xs:element name="organizationUnitTelecom" type="tns:TelecomNumberType" minOccurs="0"/>
+		    <xs:element name="organizationUnitTelecom" type="xs:string" minOccurs="0"/>
 		    <xs:element name="organizationUnitAddress" type="xs:string" minOccurs="0"/>
-		    <xs:element name="careGiverHSAid" type="tns:HsaIdType"/>
+		    <xs:element name="careGiverHSAid" type="tns:HSAIdType"/>
 		    <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -131,8 +131,8 @@
 
     <xs:complexType name="AssignedEntityType">
         <xs:sequence>
-            <xs:element name="assignedEntityHSAid" type="tns:HsaIdType"/>
-            <xs:element name="representedOrganizationHSAid " type="tns:HsaIdType"/>
+            <xs:element name="assignedEntityHSAid" type="tns:HSAIdType"/>
+            <xs:element name="representedOrganizationHSAid " type="tns:HSAIdType"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -149,26 +149,10 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="encounterId" type="tns:EncounterIdType"/>
-            <xs:element name="encounterTime" type="tns:EncounterTimeType"/>
+            <xs:element name="encounterId" type="xs:string"/>
+            <xs:element name="encounterTime" type="tns:TimePeriodType"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="EncounterTimeType">
-        <xs:annotation>
-            <xs:documentation>
-                Tid för vård- och omsorgskontaktens start och slut.
-                
-                start: 
-                    Startdatum på formatet YYYYMMDDhhmmss
-                end: 
-                    Slutdatum på formatet YYYYMMDDhhmmss
-            </xs:documentation>
-        </xs:annotation>
-        <xs:complexContent>
-            <xs:extension base="tns:TimePeriodType"/>
-        </xs:complexContent>
     </xs:complexType>
 
     <!-- 
@@ -177,13 +161,6 @@
         A helper type is a type used in one ore more of the domain schema common types.
         It can also be a type used in two or more service schemas.
     -->
-    
-    <xs:simpleType name="BinaryDataEncodingType">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="B64"/>
-            <xs:enumeration value="TXT"/>
-        </xs:restriction>
-    </xs:simpleType>
     
     <xs:complexType name="DatePeriodType">
         <xs:annotation>
@@ -214,17 +191,12 @@
     </xs:simpleType>    
 
     <!-- @TODO Should we have maxlength 64? -->
-    <xs:simpleType name="EncounterIdType">
-        <xs:restriction base="xs:string"/> 
-    </xs:simpleType>
-    
-    <!-- @TODO Should we have maxlength 64? -->
-    <xs:simpleType name="HsaIdType">
+    <xs:simpleType name="HSAIdType">
         <xs:restriction base="xs:string"/> 
     </xs:simpleType>
     
     <!-- @TODO Shall we keep this
-    <xs:complexType name="HsaIdType">
+    <xs:complexType name="HSAIdType">
         <xs:sequence>
             <xs:element name="code" type="codes:HsaIdCodeValues"/>
             <xs:element name="value" type="tns:HsaValueType"/>
@@ -241,35 +213,24 @@
     </xs:simpleType>
     -->
 
-    <xs:complexType name="MediaEntryType">
+    <xs:complexType name="MultimediaType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="mediaType" type="codes:MediaTypeEnum"/>
+            <xs:choice>
+                <xs:element name="value" type="xs:base64Binary"/>
+                <xs:element name="reference" type="xs:anyURI"/>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="PatientIdType">
         <xs:sequence>
             <xs:element name="id" type="xs:string"/>
-            <xs:element name="mediaType" type="codes:MediaTypeEnum" minOccurs="1" maxOccurs="1"/>
-            <xs:element name="encoding" type="tns:BinaryDataEncodingType" minOccurs="1" maxOccurs="1"/>
-            <xs:element name="value" type="xs:string"/>
+            <xs:element name="type" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
     
-    <xs:complexType name="PersonIdType">
-        <xs:sequence>
-            <xs:element name="code" type="codes:PersonIdEnum"/>
-            <xs:element name="value" type="tns:PersonIdValueType"/>
-        </xs:sequence>
-    </xs:complexType>
-    
-    <xs:simpleType name="PersonIdValueType">
-        <xs:restriction base="xs:string">
-            <xs:pattern value="[0-9]{8}[0-9pPtTfF][0-9]{3}"/>
-        </xs:restriction>
-    </xs:simpleType>
-    
-    <!-- Telecom number format +123-12345678 -->
-    <xs:simpleType name="TelecomNumberType">
-        <xs:restriction base="xs:string">
-            <xs:pattern value="\+\d+-\d+"/>
-        </xs:restriction>
-    </xs:simpleType>
-
     <xs:complexType name="TimePeriodType">
         <xs:annotation>
             <xs:documentation>
