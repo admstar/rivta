@@ -49,9 +49,9 @@
 	        </xs:documentation>
 	    </xs:annotation>	
 	    <xs:sequence>
-	        <xs:element name="careUnitHSAid" type="core:HsaIdType"/>
+	        <xs:element name="careUnitHSAid" type="core:HsaIdType" minOccurs="0" maxOccurs="unbounded"/>
 	        <xs:element name="patientId" type="core:PersonIdType"/>
-	        <xs:element name="timePeriod" type="core:DateTimePeriodType" minOccurs="0"/>
+	        <xs:element name="timePeriod" type="core:DatePeriodType" minOccurs="0"/>
 	    </xs:sequence>
 	</xs:complexType>
 	
@@ -61,7 +61,7 @@
 				careDocumentation: 
 					De vård- och omsorgsdokument som matchar begäran.
 				result:
-					
+				    Status på resulat frågan
 			</xs:documentation>
 		</xs:annotation>	
 		<xs:sequence>
@@ -73,7 +73,7 @@
     
     <xs:complexType name="CareDocumentationType">
         <xs:sequence>
-            <xs:element name="careDocumentationHeader" type="tns:CareDocumentationHeaderType"/>
+            <xs:element name="careDocumentationHeader" type="core:PatientSummaryHeaderType"/>
             <xs:element name="careDocumentationBody" type="tns:CareDocumentationBodyType"/>
         </xs:sequence>
     </xs:complexType>
@@ -106,17 +106,6 @@
             <xs:enumeration value="INFO"/>
         </xs:restriction>
     </xs:simpleType>
-
-    <xs:complexType name="CareDocumentationHeaderType">
-        <xs:complexContent>
-            <xs:extension base="core:PatientSummaryHeaderType">
-                <xs:sequence>
-                    <xs:element name="encompassingEncounter" type="tns:EncompassingEncounterType"/>
-                    <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>        
     
 	<xs:complexType name="CareDocumentationBodyType">
 		<xs:annotation>
@@ -155,11 +144,12 @@
         <xs:sequence>
             <xs:element name="clinicalDocumentNoteCode" type="codes:ClinicalDocumentNoteCodeEnum"/>
             <xs:element name="clinicalDocumentNoteTitle" type="xs:string"/>
-            <xs:element name="clinicalDocumentNoteText" type="xs:anyType"/>
+            <xs:element name="clinicalDocumentNoteText" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
     
     <!-- Values for DocumentCodeType/value -->
+    <!-- 
     <xs:simpleType name="DocumentCodeType">
         <xs:annotation>
             <xs:documentation>
@@ -175,25 +165,6 @@
             </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
-    
-    <xs:complexType name="EncompassingEncounterType">
-        <xs:annotation>
-            <xs:documentation>
-                Information om  Vård- och omsorgskontakt som föranlett vårddokumentation.
-                
-                encounterId: 
-                    Unik identifierare för vård- och omsorgskontakt. 
-                    OID kan sättas till 1.2.752.129.2.1.2.1  
-                    (Icke-nationell identifierare Org+lokalt unikt id)
-                encounterTime: 
-                    Tidpunkt för vård- och omsorgskontakt
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="encounterId" type="xs:string"/>
-            <xs:element name="encounterTime" type="core:TimeStampType"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
+     -->
 
 </xs:schema>
