@@ -104,7 +104,7 @@
       <xs:element name="hsaJpegLogotype" type="xs:string" minOccurs="0"/>
       <xs:element name="invoiceAddress" type="core:AddressType" minOccurs="0"/>
       <xs:element name="jpegPhoto" type="xs:string" minOccurs="0"/>
-      <xs:element name="labeledUri" type="xs:string" minOccurs="0"/>
+      <xs:element name="labeledUri" type="core:LabeledUriType" minOccurs="0"/>
       <xs:element name="location" type="xs:string" minOccurs="0"/>
       <xs:element name="webPage1177" type="xs:string" minOccurs="0"/>
       <xs:element name="managements" minOccurs="1">
@@ -140,7 +140,13 @@
         </xs:complexType>
       </xs:element>
       <xs:element name="switchboardNumber" type="core:TelephoneNumberType" minOccurs="0"/>
-      <xs:element name="telephoneHours" type="core:TelephoneHoursType" />
+      <xs:element name="telephoneHours" minOccurs="0">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="telephoneHour" type="core:TimeSpanType" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+      </xs:element>
       <xs:element name="telephoneNumbers" minOccurs="1">
         <xs:complexType>
             <xs:sequence>
@@ -190,7 +196,13 @@
   <xs:complexType name="HsaUnitFunctionType">
     <xs:sequence>
       <xs:element name="name" type="xs:string" />
-      <xs:element name="telephoneHours" type="core:TelephoneHoursType" />
+      <xs:element name="telephoneHours" minOccurs="0">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="telephoneHour" type="core:TimeSpanType" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+      </xs:element>
       <xs:element name="telephoneNumbers" minOccurs="1">
         <xs:complexType>
             <xs:sequence>
