@@ -25,8 +25,20 @@
     <xs:sequence>
       <xs:element name="hsaIdentity" type="core:HsaIdentityType"/>
       <xs:element name="searchBase" type="core:SearchBaseType" minOccurs="0"/>
-      <xs:element name="paTitleCodes" type="core:PaTitleCodesType" />
-      <xs:element name="hsaTitles" type="core:HsaTitlesType" />
+      <xs:element name="paTitleCodes" minOccurs="0">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="paTitleCode" type="core:PaTitleCodeType" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="hsaTitles" minOccurs="0">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="hsaTitle" type="core:HsaTitleType" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+      </xs:element>
       <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
@@ -50,9 +62,27 @@
             <xs:element name="givenName" type="xs:string"/>
             <xs:element name="sn" type="xs:string" />
             <xs:element name="personalPrescriptionCode" type="xs:string" minOccurs="0" />
-            <xs:element name="paTitleCodes" type="core:PaTitleCodesType" />
-            <xs:element name="paTitleNames" type="core:PaTitleNamesType" />
-            <xs:element name="hsaTitles" type="core:HsaTitlesType" />
+            <xs:element name="paTitleCodes" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="paTitleCode" type="core:PaTitleCodeType" minOccurs="0" maxOccurs="unbounded" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="paTitleNames" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="paTitleName" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="hsaTitles" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="hsaTitle" type="core:HsaTitleType" minOccurs="0" maxOccurs="unbounded" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
             <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
         </xs:sequence>
     </xs:complexType>
