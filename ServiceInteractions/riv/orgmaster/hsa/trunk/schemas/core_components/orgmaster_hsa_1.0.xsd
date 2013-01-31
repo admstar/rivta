@@ -59,13 +59,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="TelephoneHoursType">
-    <xs:sequence>
-        <xs:element name="telephoneHour" type="tns:TimeSpanType" minOccurs="0" maxOccurs="unbounded" />
-        <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="TimeSpanType">
     <xs:sequence>
       <xs:element name="fromDay" type="xs:integer" />
@@ -88,24 +81,31 @@
     </xs:sequence>
   </xs:complexType>
   
-  <xs:complexType name="HsaTitlesType">
-    <xs:sequence>
-      <xs:element name="hsaTitle" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
+  <xs:simpleType name="HsaTitleType">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
   
-  <xs:complexType name="PaTitleNamesType">
-      <xs:sequence>
-        <xs:element name="paTitleName" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
-        <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-      </xs:sequence>
-  </xs:complexType>
+  <xs:simpleType name="OrgNoType">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
   
-  <xs:complexType name="PaTitleCodesType">
-    <xs:sequence>
-        <xs:element name="paTitleCode" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
-        <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-      </xs:sequence>
-  </xs:complexType>
+  <xs:simpleType name="LabeledUriType">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  
+  <xs:simpleType name="SpecialityNameType">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  
+  <xs:simpleType name="SpecialityCodeType">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="HsaSystemRoleType">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  
+  <xs:simpleType name="PaTitleCodeType">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
 </xs:schema>
