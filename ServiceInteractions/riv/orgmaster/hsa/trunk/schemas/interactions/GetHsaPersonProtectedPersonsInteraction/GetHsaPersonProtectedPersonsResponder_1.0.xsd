@@ -17,34 +17,32 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:orgmaster:hsa:IsAuthorizedToSystemResponder:1' xmlns:core='urn:riv:orgmaster:hsa:1' targetNamespace='urn:riv:orgmaster:hsa:IsAuthorizedToSystemResponder:1' elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'>
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:orgmaster:hsa:GetHsaPersonProtectedPersonsResponder:1' xmlns:core='urn:riv:orgmaster:hsa:1' targetNamespace='urn:riv:orgmaster:hsa:GetHsaPersonProtectedPersonsResponder:1' elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'>
   <xs:import schemaLocation='../../core_components/orgmaster_hsa_1.0.xsd' namespace='urn:riv:orgmaster:hsa:1' />
-  <xs:element name='IsAuthorizedToSystem' type='tns:IsAuthorizedToSystemType' />
-  <xs:element name='IsAuthorizedToSystemResponse' type='tns:IsAuthorizedToSystemResponseType' />
+  <xs:element name='GetHsaPersonProtectedPersons' type='tns:GetHsaPersonProtectedPersonsType' />
+  <xs:element name='GetHsaPersonProtectedPersonsResponse' type='tns:GetHsaPersonProtectedPersonsResponseType' />
 
-  <xs:complexType name='IsAuthorizedToSystemType'>
+  <xs:complexType name='GetHsaPersonProtectedPersonsType'>
     <xs:sequence>
       <xs:choice>
         <xs:element name="hsaIdentity" type="core:HsaIdentityType" />
         <xs:element name="personalIdentityNumber" type="xs:string" />
-      </xs:choice>			
-      <xs:element name="system" type="xs:string" />
+      </xs:choice>
       <xs:element name='searchBase' type='core:SearchBaseType' minOccurs="0"/>
       <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name='IsAuthorizedToSystemResponseType'>
-    <xs:sequence>      
-      <xs:element name="isAuthorized" type="xs:boolean" />
+  <xs:complexType name='GetHsaPersonProtectedPersonsResponseType'>
+    <xs:sequence>
       <xs:element name="userInformations" minOccurs="0">
         <xs:complexType>
-            <xs:sequence>
-                <xs:element name="userInformation" type="core:HsaUserType" minOccurs="0" maxOccurs="unbounded" />
-            </xs:sequence>
+          <xs:sequence>
+            <xs:element name="userInformation" type="core:GetHsaPersonHsaUserType" minOccurs="0" maxOccurs="unbounded" />
+          </xs:sequence>
         </xs:complexType>
       </xs:element>
       <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
-    </xs:sequence>        
+    </xs:sequence>
   </xs:complexType>
 </xs:schema>
