@@ -24,29 +24,31 @@
 	SET SCHEMADIR=schemas
 	
 	SET W0=%SCHEMADIR%\interactions\querying\GetAccessLogsForPatientInteraction\GetAccessLogsForPatientInteraction_1.0_RIVTABP21.wsdl
-SET X0=%SCHEMADIR%\interactions\GetAccessLogsForPatientInteraction\*.xsd
+SET X0=%SCHEMADIR%\interactions\querying\GetAccessLogsForPatientInteraction\*.xsd
 
 SET W1=%SCHEMADIR%\interactions\querying\GetInfoLogsForCareProviderInteraction\GetInfoLogsForCareProviderInteraction_1.0_RIVTABP21.wsdl
-SET X1=%SCHEMADIR%\interactions\GetInfoLogsForCareProviderInteraction\*.xsd
+SET X1=%SCHEMADIR%\interactions\querying\GetInfoLogsForCareProviderInteraction\*.xsd
 
 SET W2=%SCHEMADIR%\interactions\querying\GetInfoLogsForPatientInteraction\GetInfoLogsForPatientInteraction_1.0_RIVTABP21.wsdl
-SET X2=%SCHEMADIR%\interactions\GetInfoLogsForPatientInteraction\*.xsd
+SET X2=%SCHEMADIR%\interactions\querying\GetInfoLogsForPatientInteraction\*.xsd
 
 SET W3=%SCHEMADIR%\interactions\querying\GetLogsForCareProviderInteraction\GetLogsForCareProviderInteraction_1.0_RIVTABP21.wsdl
-SET X3=%SCHEMADIR%\interactions\GetLogsForCareProviderInteraction\*.xsd
+SET X3=%SCHEMADIR%\interactions\querying\GetLogsForCareProviderInteraction\*.xsd
 
 SET W4=%SCHEMADIR%\interactions\querying\GetLogsForPatientInteraction\GetLogsForPatientInteraction_1.0_RIVTABP21.wsdl
-SET X4=%SCHEMADIR%\interactions\GetLogsForPatientInteraction\*.xsd
+SET X4=%SCHEMADIR%\interactions\querying\GetLogsForPatientInteraction\*.xsd
 
 SET W5=%SCHEMADIR%\interactions\querying\GetLogsForUserInteraction\GetLogsForUserInteraction_1.0_RIVTABP21.wsdl
-SET X5=%SCHEMADIR%\interactions\GetLogsForUserInteraction\*.xsd
+SET X5=%SCHEMADIR%\interactions\querying\GetLogsForUserInteraction\*.xsd
 
 SET W6=%SCHEMADIR%\interactions\store\StoreLogInteraction\StoreLogInteraction_1.0_RIVTABP21.wsdl
-SET X6=%SCHEMADIR%\interactions\StoreLogInteraction\*.xsd
+SET X6=%SCHEMADIR%\interactions\store\StoreLogInteraction\*.xsd
 
 SET XCORE=%SCHEMADIR%\core_components\*.xsd
+SET XSD_QUERYING=%SCHEMADIR%\core_components\querying\*.xsd
+SET XSD_STORE=%SCHEMADIR%\core_components\store\*.xsd
 
-SET SCHEMAS=%XCORE% %W0% %X0% %W1% %X1% %W2% %X2% %W3% %X3% %W4% %X4% %W5% %X5% %W6% %X6% 
+SET SCHEMAS=%XCORE% %XSD_QUERYING% %XSD_STORE% %W0% %X0% %W1% %X1% %W2% %X2% %W3% %X3% %W4% %X4% %W5% %X5% %W6% %X6% 
 
 SET OUTFILE=/out:wcf\generated-src\UrnRivEhrLogInteractions.cs
 SET APPCONFIG=/config:wcf\generated-src\app.config
