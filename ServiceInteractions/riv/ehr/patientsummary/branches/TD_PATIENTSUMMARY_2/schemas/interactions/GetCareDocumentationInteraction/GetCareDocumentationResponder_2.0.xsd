@@ -61,7 +61,7 @@
 				careDocumentation: 
 					De vård- och omsorgsdokument som matchar begäran.
 				result:
-				    Status på resulat frågan
+				    Status på frågan
 			</xs:documentation>
 		</xs:annotation>	
 		<xs:sequence>
@@ -118,7 +118,7 @@
 		</xs:annotation>	
 		<xs:sequence>
 			<xs:element name="clinicalDocumentNote" type="tns:ClinicalDocumentNoteType"/>
-		    <xs:element name="multimediaEntry" type="core:MultimediaType" minOccurs="0" maxOccurs="unbounded"/>
+		    <xs:element name="multimediaEntry" type="tns:MultimediaType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -143,28 +143,25 @@
         
         <xs:sequence>
             <xs:element name="clinicalDocumentNoteCode" type="codes:ClinicalDocumentNoteCodeEnum"/>
-            <xs:element name="clinicalDocumentNoteTitle" type="xs:string"/>
+            <xs:element name="clinicalDocumentNoteTitle" type="xs:string" minOccurs="0"/>
             <xs:element name="clinicalDocumentNoteText" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
+ 
+    <xs:complexType name="MultimediaType">
+        <xs:complexContent>
+            <xs:extension base="core:MultimediaType">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:string"/>
+                    <xs:element name="mediaType" type="codes:MediaTypeEnum"/>
+                    <xs:choice>
+                        <xs:element name="value" type="xs:base64Binary"/>
+                        <xs:element name="reference" type="xs:anyURI"/>
+                    </xs:choice>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
     
-    <!-- Values for DocumentCodeType/value -->
-    <!-- 
-    <xs:simpleType name="DocumentCodeType">
-        <xs:annotation>
-            <xs:documentation>
-                Indicates the type of care documentation.
-                Allowed values ​​from code system SNOMED CT (2.16.840.1.113883.6.96)
-            </xs:documentation>
-        </xs:annotation>
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="R-42BAC">
-                <xs:annotation>
-                    <xs:documentation>Kliniskt dokument (R-42BAC)</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-        </xs:restriction>
-    </xs:simpleType>
-     -->
-
+    
 </xs:schema>

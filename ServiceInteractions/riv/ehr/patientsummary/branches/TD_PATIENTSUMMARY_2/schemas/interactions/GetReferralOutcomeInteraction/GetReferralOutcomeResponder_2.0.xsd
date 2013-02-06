@@ -191,8 +191,8 @@
             <xs:element name="actId" type="xs:string" minOccurs="0" maxOccurs="1"/>
             <xs:element name="actCode" type="tns:ActCodeType" minOccurs="0" maxOccurs="1"/>
             <xs:element name="actText" type="xs:string"/>
-            <xs:element name="actTime" type="core:TimeStampType"/>
-            <xs:element name="actResult" type="core:MultimediaType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="actTime" type="core:TimeStampType" minOccurs="0"/>
+            <xs:element name="actResult" type="core:MultimediaType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -226,8 +226,10 @@
                     Telefonnummer till organisatorisk enhet.
                 referralOrganizationAddress:
                     Adress till organisatorisk enhet.
-                careEncounterId:
-                    Unik identitet på bakomliggande vård- och omsorgskontakt.                
+                careContactId:
+                    Identitet för den vård- och omsorgskontakt som föranlett den 
+                    information som omfattas av dokumentet. Identiteten är unik 
+                    inom källsystemet.                
             </xs:documentation>
         </xs:annotation>	
         <xs:sequence>
@@ -240,7 +242,7 @@
             <xs:element name="referralOrganizationName" type="xs:string" minOccurs="0" maxOccurs="1"/>
             <xs:element name="referralOrganizationTelecom" type="xs:string" minOccurs="0" maxOccurs="1"/>
             <xs:element name="referralOrganizationAddress" type="xs:string" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="careEncounterId" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="careContactId" type="xs:string" minOccurs="0" maxOccurs="1"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
