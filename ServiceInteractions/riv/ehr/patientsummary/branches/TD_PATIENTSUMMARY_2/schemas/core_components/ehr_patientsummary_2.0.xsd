@@ -50,9 +50,12 @@
                 legalAuthenticator
                     Information om vem som signerat informationen i dokumentet.
                 approvedForPatient:
-                    Anger om information får delas till patient. Värdet sätts i sådant fall till true, i annat fall till false. Utelämnas approvedForPatient tolkas detta som false.
-                careContact:
-                    Information om vårdkontakt som föranlett den information som omfattas av dokumentet.
+                    Anger om information får delas till patient. Värdet sätts i 
+                    sådant fall till true, i annat fall till false.
+                careContactId:
+                    Identitet för den vård- och omsorgskontakt som föranlett den 
+                    information som omfattas av dokumentet. Identiteten är unik 
+                    inom källsystemet.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
@@ -63,8 +66,7 @@
             <xs:element name="author" type="tns:AuthorType"/>
             <xs:element name="legalAuthenticator" type="tns:LegalAuthenticatorType" minOccurs="0"/>
             <xs:element name="approvedForPatient" type="xs:boolean"/>
-            <xs:element name="careContact" type="tns:CareContactType" minOccurs="0"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="careContactId" type="xs:string" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
     
@@ -101,7 +103,6 @@
 		    <xs:element name="careUnitName" type="xs:string" minOccurs="0"/>
 		    <xs:element name="careUnitAddress" type="xs:string" minOccurs="0"/>
 		    <xs:element name="careGiverHSAid" type="tns:HSAIdType"/>
-		    <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 
@@ -119,33 +120,6 @@
         <xs:sequence>
             <xs:element name="signatureTime" type="tns:TimeStampType"/>
             <xs:element name="legalAuthenticatorHSAid" type="tns:HSAIdType" />
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="AssignedEntityType">
-        <xs:sequence>
-            <xs:element name="assignedEntityHSAid" type="tns:HSAIdType"/>
-            <xs:element name="representedOrganizationHSAid " type="tns:HSAIdType"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="CareContactType">
-        <xs:annotation>
-            <xs:documentation>
-                Information om  Vård- och omsorgskontakt som föranlett vårddokumentation.
-                
-                encounterId: 
-                    Vård- och omsorgskontaktens identitet som är unik inom källsystemet
-                encounterTime: 
-                    Tid för vård- och omsorgskontaktens start och slut. 
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="encounterId" type="xs:string"/>
-            <xs:element name="encounterTime" type="tns:TimePeriodType"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -188,24 +162,6 @@
     <xs:simpleType name="HSAIdType">
         <xs:restriction base="xs:string"/> 
     </xs:simpleType>
-    
-    <!-- @TODO Shall we keep this
-    <xs:complexType name="HSAIdType">
-        <xs:sequence>
-            <xs:element name="code" type="codes:HsaIdCodeValues"/>
-            <xs:element name="value" type="tns:HsaValueType"/>
-        </xs:sequence>
-    </xs:complexType>
-    -->
-    
-    <!-- Limit HSA name values to 64 characters -->
-    <!-- @TODO Shall we keep this
-    <xs:simpleType name="HsaValueType">
-        <xs:restriction base="xs:string">
-            <xs:maxLength value="64"/>
-        </xs:restriction>
-    </xs:simpleType>
-    -->
 
     <xs:complexType name="MultimediaType">
         <xs:sequence>

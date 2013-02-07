@@ -51,6 +51,7 @@
             <xs:element name="careUnitHSAid" type="core:HSAIdType"/>
             <xs:element name="patientId" type="core:PatientIdType"/>
             <xs:element name="timePeriod" type="core:DatePeriodType" minOccurs="0"/>
+            <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
         </xs:sequence>
     </xs:complexType>
     
@@ -60,7 +61,7 @@
                 referralOutcome:
                     Returnerar en patients konsultationsremisssvar
                 result:
-                    Status på resulat frågan
+                    Status på resultat för frågan
             </xs:documentation>
         </xs:annotation>	
         <xs:sequence>
@@ -79,12 +80,12 @@
     
     <xs:complexType name="ResultType">
         <xs:sequence>
-            <xs:element name="resultCode" type="tns:ResultCodeType"/>
+            <xs:element name="resultCode" type="tns:ResultCodeEnum"/>
             <xs:element name="resultText" type="xs:string" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
     
-    <xs:simpleType name="ResultCodeType">
+    <xs:simpleType name="ResultCodeEnum">
         <xs:annotation>
             <xs:documentation> 
                 Vid ett logiskt fel i de uppdaterande tjänsterna levereras resultCode, resultText. 
@@ -112,8 +113,8 @@
                 referralOutcomeTypeCode:
                     Anger typ av svar. 
                     Giltiga koder: 
-                    SR, svar på remissfråga
-                    SS, slutsvar på remissfråga 
+                        SR, svar på remissfråga
+                        SS, slutsvar på remissfråga 
                 referralOutcomeTitle: 
                     Dokument/anteckning
                 referralOutcomeText:

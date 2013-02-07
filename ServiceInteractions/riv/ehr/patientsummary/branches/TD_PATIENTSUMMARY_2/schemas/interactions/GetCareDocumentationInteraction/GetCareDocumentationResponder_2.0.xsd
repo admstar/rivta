@@ -52,6 +52,7 @@
 	        <xs:element name="careUnitHSAid" type="core:HSAIdType" minOccurs="0" maxOccurs="unbounded"/>
 	        <xs:element name="patientId" type="core:PatientIdType"/>
 	        <xs:element name="timePeriod" type="core:DatePeriodType" minOccurs="0"/>
+	        <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
 	    </xs:sequence>
 	</xs:complexType>
 	
@@ -118,7 +119,7 @@
 		</xs:annotation>	
 		<xs:sequence>
 			<xs:element name="clinicalDocumentNote" type="tns:ClinicalDocumentNoteType"/>
-		    <xs:element name="multimediaEntry" type="tns:MultimediaType" minOccurs="0" maxOccurs="unbounded"/>
+		    <xs:element name="multimediaEntry" type="core:MultimediaType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -147,21 +148,5 @@
             <xs:element name="clinicalDocumentNoteText" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
- 
-    <xs:complexType name="MultimediaType">
-        <xs:complexContent>
-            <xs:extension base="core:MultimediaType">
-                <xs:sequence>
-                    <xs:element name="id" type="xs:string"/>
-                    <xs:element name="mediaType" type="codes:MediaTypeEnum"/>
-                    <xs:choice>
-                        <xs:element name="value" type="xs:base64Binary"/>
-                        <xs:element name="reference" type="xs:anyURI"/>
-                    </xs:choice>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    
     
 </xs:schema>
