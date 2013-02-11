@@ -31,10 +31,15 @@
 	<version>1.0-SNAPSHOT</version>
 	<name>processdevelopment-infections-schemas</name>
 	<url>http://maven.apache.org</url>
+
+	<parent>
+		<groupId>se.skl.tp</groupId>
+		<artifactId>processdevelopment-infections</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
 	
 	<properties>
-		<schema.path>../schemas</schema.path>
-		<cxf.version>2.2.2</cxf.version>
+		<schema.path>schemas</schema.path>
 	</properties>
  
 	<dependencies>
@@ -250,8 +255,8 @@
 										</extraarg>
 									</extraargs>
 									<wsdl>${schema.path}/interactions/DeleteLaboratoryReportInteraction/DeleteLaboratoryReportInteraction_1.0_RIVTABP20.wsdl</wsdl>
-								</wsdlOption>								
-																
+								</wsdlOption>													
+								
 								<wsdlOption>
 									<extraargs>
 										<extraarg>-p</extraarg>
@@ -293,9 +298,53 @@
 										</extraarg>
 									</extraargs>
 									<wsdl>${schema.path}/interactions/DeletePrescriptionReasonInteraction/DeletePrescriptionReasonInteraction_1.0_RIVTABP20.wsdl</wsdl>
-								</wsdlOption>								
-								
-								<wsdlOption>
+								</wsdlOption>
+
+                <wsdlOption>
+                  <extraargs>
+                    <extraarg>-p</extraarg>
+                    Note: be careful when changing this - must be in sync for all schemas generations in this namespace!
+                    <extraarg>
+                      urn:riv:processdevelopment:infections:DeletePrescription:1:rivtabp20=se.riv.processdevelopment.infections.deleteprescription.v1
+                    </extraarg>
+                    <extraarg>-p</extraarg>
+                    <extraarg>
+                      urn:riv:processdevelopment:infections:DeletePrescriptionResponder:1=se.riv.processdevelopment.infections.deleteprescription.v1
+                    </extraarg>
+                    <extraarg>-p</extraarg>
+                    <extraarg>
+                      urn:riv:processdevelopment:infections:1=se.riv.processdevelopment.infections.v1
+                    </extraarg>
+                    <extraarg>-p</extraarg>
+                    <extraarg>
+                      urn:riv:processdevelopment:infections:1:Activity=se.riv.processdevelopment.infections.activity.v1
+                    </extraarg>
+                    <extraarg>-p</extraarg>
+                    <extraarg>
+                      urn:riv:processdevelopment:infections:1:CareEncounter=se.riv.processdevelopment.infections.careencounter.v1
+                    </extraarg>
+                    <extraarg>-p</extraarg>
+                    <extraarg>
+                      urn:riv:processdevelopment:infections:1:Condition=se.riv.processdevelopment.infections.condition.v1
+                    </extraarg>
+                    <extraarg>-p</extraarg>
+                    <extraarg>
+                      urn:riv:processdevelopment:infections:1:LaboratoryReport=se.riv.processdevelopment.infections.laboratoryreport.v1
+                    </extraarg>
+                    <extraarg>-p</extraarg>
+                    <extraarg>
+                      urn:riv:processdevelopment:infections:1:PrescriptionReason=se.riv.processdevelopment.infections.prescriptionreason.v1
+                    </extraarg>
+                    <extraarg>-p</extraarg>
+                    <extraarg>
+                      http://www.w3.org/2005/08/addressing=org.w3.wsaddressing10
+                    </extraarg>
+                  </extraargs>
+                  <wsdl>${schema.path}/interactions/DeletePrescriptionReasonInteraction/DeletePrescriptionReasonInteraction_1.0_RIVTABP20.wsdl</wsdl>
+                </wsdlOption>
+
+
+                <wsdlOption>
 									<extraargs>
 										<extraarg>-p</extraarg>
 										Note: be careful when changing this - must be in sync for all schemas generations in this namespace!										 
@@ -517,15 +566,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
-				</configuration>
-			</plugin> 
-			
 		</plugins>
 	</build>
 	
