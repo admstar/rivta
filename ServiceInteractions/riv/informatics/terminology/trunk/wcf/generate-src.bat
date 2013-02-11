@@ -28,11 +28,14 @@ SET SCHEMADIR=schemas\interactions
 SET W1=%SCHEMADIR%\GetTerminologySubsetInteraction\GetTerminologySubsetInteraction_1.0_rivtabp20.wsdl 
 SET X1=%SCHEMADIR%\GetTerminologySubsetInteraction\*.xsd 
 
-SET X2=schemas\core_components\*.xsd
+SET W2=%SCHEMADIR%\GetTerminologySubsetVersionInteraction\GetTerminologySubsetVersionInteraction_1.0_rivtabp20.wsdl 
+SET X2=%SCHEMADIR%\GetTerminologySubsetVersionInteraction\*.xsd 
+
+SET X3=schemas\core_components\*.xsd
 
 ECHO %W1%
 
-SET SCHEMAS=%W1% %X1% %X2%
+SET SCHEMAS=%W1% %W2% %X1% %X2% %X3%
 
 svcutil.exe /language:cs /wrapped %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
 

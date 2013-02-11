@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->		
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:informatics:terminology:GetTerminologySubsetVersionResponder:1' xmlns:core='urn:riv:informatics:terminology:1' targetNamespace='urn:riv:informatics:terminology:GetTerminologySubsetVersionResponder:1' elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'>
+  <xs:import schemaLocation="../../core_components/TerminologyServiceBaseTypes_1.0.xsd" namespace="urn:riv:informatics:terminology:1"/>
+  <xs:element name='GetTerminologySubsetVersion' type='tns:GetTerminologySubsetVersionType' />
+  <xs:element name='GetTerminologySubsetVersionResponse' type='tns:GetTerminologySubsetVersionResponseType' />
+  
+  <xs:complexType name='GetTerminologySubsetVersionType'>
+    <xs:sequence>
+      <xs:element name="SubsetIdentity" type="xs:string" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Identifierare som representerar urvalet</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LocalOrganizationExtension" type="core:HSAIdType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>HSAId för organisationspost motsvarande vårdgivare i HSA-trädet</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TermType" type="xs:string" default="DisplayName">
+        <xs:annotation>
+          <xs:documentation>Type of term</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+
+  <xs:complexType name='GetTerminologySubsetVersionResponseType'>
+    <xs:sequence>
+      <xs:element name="SubsetVersion" type="tns:SubsetVersionType" maxOccurs="unbounded"/>
+      <xs:element name='ResultCode' type='tns:ResultCodeEnum' />
+      <xs:element name='comment' type='xs:string' minOccurs='0' />
+      <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="SubsetVersionType" >
+    <xs:sequence>
+      <xs:element name="SubsetIdentity" type="tns:SubsetIdentityType">
+        <xs:annotation>
+          <xs:documentation>Identifierare av urval</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Version" type="tns:VersionType">
+        <xs:annotation>
+          <xs:documentation>Version för urvalet</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="SubsetIdentityType">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="128"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="VersionType">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="32"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  
+  <xs:simpleType name='ResultCodeEnum'>
+    <xs:restriction base='xs:string'>
+      <xs:enumeration value='OK' />
+      <xs:enumeration value='ERROR' />
+      <xs:enumeration value='INFO' />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
