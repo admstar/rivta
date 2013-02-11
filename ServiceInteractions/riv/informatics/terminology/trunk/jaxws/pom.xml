@@ -111,8 +111,53 @@
 					</execution>
 				</executions>
 			</plugin>
-			
-			<plugin>
+
+
+      <plugin>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-codegen-plugin</artifactId>
+        <version>${cxf.version}</version>
+        <executions>
+          <execution>
+            <id>generate-sources</id>
+            <phase>generate-sources</phase>
+            <configuration>
+              <sourceRoot>${project.build.directory}/generated</sourceRoot>
+              <wsdlOptions>
+                <wsdlOption>
+                  <extraargs>
+                    <extraarg>-p</extraarg>
+                    Note: be careful when changing this - must be in sync for all schemas generations in this namespace!
+                    <extraarg>
+                      urn:riv:informatics:terminology:GetTerminologySubsetVersion:1:rivtabp20=se.riv.informatics.terminology.getterminologysubsetversion.v1
+                    </extraarg>
+                    <extraarg>-p</extraarg>
+                    <extraarg>
+                      urn:riv:informatics:terminology:GetTerminologySubsetVersionResponder:1=se.riv.informatics.terminology.getterminologysubsetversion.v1
+                    </extraarg>
+                    <extraarg>-p</extraarg>
+                    <extraarg>
+                      urn:riv:informatics:terminology:1=se.riv.informatics.terminology.v1
+                    </extraarg>
+                    <extraarg>-p</extraarg>
+                    <extraarg>
+                      http://www.w3.org/2005/08/addressing=org.w3.wsaddressing10
+                    </extraarg>
+                  </extraargs>
+                  <wsdl>${schema.path}/interactions/GetTerminologySubsetVersionInteraction/GetTerminologySubsetVersionInteraction_1.0_RIVTABP20.wsdl</wsdl>
+                </wsdlOption>
+              </wsdlOptions>
+            </configuration>
+            <goals>
+              <goal>wsdl2java</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      
+
+
+          <plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<source>1.5</source>
