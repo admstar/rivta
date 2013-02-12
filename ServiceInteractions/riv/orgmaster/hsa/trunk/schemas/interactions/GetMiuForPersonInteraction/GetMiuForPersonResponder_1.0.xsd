@@ -64,13 +64,7 @@
             </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:element name="hsaSystemRoles" minOccurs="0">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="hsaSystemRole" type="core:HsaSystemRoleType" minOccurs="0" maxOccurs="unbounded" />
-            </xs:sequence>
-        </xs:complexType>
-      </xs:element>
+      <xs:element name="hsaSystemRoles" type="tns:HsaSystemRolesType"/>
       <xs:element name="hsaIdentityPerson" type="core:HsaIdentityType"/>
       <xs:element name="paTitleCodes" minOccurs="0">
         <xs:complexType>
@@ -81,6 +75,18 @@
       </xs:element>
       <xs:element name="givenName" type="xs:string"/>
       <xs:element name="middleAndSurName" type="xs:string"/>
+      <xs:element name="careUnitStartDate" type="xs:dateTime" minOccurs="0" />
+      <xs:element name="careUnitEndDate" type="xs:dateTime" minOccurs="0" />			
+      <xs:element name="careGiverStartDate" type="xs:dateTime" minOccurs="0" />
+      <xs:element name="careGiverEndDate" type="xs:dateTime"  minOccurs="0" />
+      <xs:element name="hsaProtectedPerson" type="xs:boolean" minOccurs="0" />
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="HsaSystemRolesType">
+    <xs:sequence>
+      <xs:element name="hsaSystemRole" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
