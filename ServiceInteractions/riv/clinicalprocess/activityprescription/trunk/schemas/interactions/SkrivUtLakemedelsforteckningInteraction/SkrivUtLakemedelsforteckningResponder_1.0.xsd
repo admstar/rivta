@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Apotekens Service AB licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'
+           xmlns:tns='urn:riv:clinicalprocess:activityprescription:SkrivUtLakemedelsforteckningResponder:1'
+           xmlns:core='urn:riv:clinicalprocess:activityprescription:1'
+           targetNamespace='urn:riv:clinicalprocess:activityprescription:SkrivUtLakemedelsforteckningResponder:1'
+           elementFormDefault='qualified'
+           attributeFormDefault='unqualified'
+           version='1.0'>
+    <xs:import schemaLocation='../../core_components/clinicalprocess_activityprescription_1.0.xsd'
+               namespace='urn:riv:clinicalprocess:activityprescription:1' />
+
+    <xs:element name='SkrivUtLakemedelsforteckning'
+                type='tns:SkrivUtLakemedelsforteckningType' />
+    <xs:element name='SkrivUtLakemedelsforteckningResponse'
+                type='tns:SkrivUtLakemedelsforteckningResponseType'/>
+
+    <xs:complexType name='SkrivUtLakemedelsforteckningType'>
+        <xs:sequence>
+
+            <xs:element name="anvandaresHSAId"
+                        type="xs:string" 
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>HSA-id för läsande person.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="anvandarnamn"
+                        type="xs:string"
+                        minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Namn på användaren som begärt utskrift av patientens läkemedelsförteckning.
+                        Obligatoriskt om förskrivarkod saknas.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="arbetsplatsnamn"
+                        type="xs:string" 
+                        minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Namnet på användarens arbetsplats. Används istället för arbetsplatskod.
+                        Obligatorisk om arbetsplatskod inte anges.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="arbetsplatsort"
+                        type="xs:string" 
+                        minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Orten för användarens arbetsplats. Används istället för arbetsplatskod.
+                        Obligatorisk om arbetsplatskod inte anges.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="arbetsplatskod" 
+                        type="xs:string" 
+                        minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Förskrivarens arbetsplatskod, valideras mot ARKO. Obligatorisk om arbetsplatsnamn och
+                        arbetsplatsort inte anges.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="forskrivarkod" 
+                        type="xs:string" 
+                        minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Förskrivarens förskrivarkod, valideras mot FORS. Finns användarnamn tas ingen
+                        hänsyn till förskrivarkoden. Obligatorisk om anvandarNamn saknas.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="klientinformation" 
+                        type="tns:Klientinformation"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>Information om klienten som anropar tjänsten.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="personnummer" 
+                        type="xs:string" 
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>Personnummer. Format: yyyymmddnnnn.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="vardenhetsHSAId"
+                        type="xs:string" 
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>HSA-id för läsande vårdenhet.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="vardgivaresHSAId"
+                        type="xs:string" 
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>HSA-id för läsande vårdgivare.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:any namespace='##other'
+                    processContents='lax'
+                    minOccurs='0'
+                    maxOccurs='unbounded' />
+
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name='SkrivUtLakemedelsforteckningResponseType'>
+        <xs:sequence>
+
+            <xs:element name="patient" 
+                        type="tns:PatientMedRedNamnResponse"
+                        nillable="false"
+                        minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Information om patienten vars läkemedelsförteckning man hämtat. Om
+                        patienten är markerad som Avliden så returneras ej pdf.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="pdf"
+                        type="xs:base64Binary"
+                        minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Utdrag från läkemedelsförteckningen som data.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name='ResultCode'
+                        type='tns:ResultCodeEnum' />
+            <xs:element name='comment'
+                        type='xs:string'
+                        minOccurs='0' />
+
+            <xs:any namespace='##other'
+                    processContents='lax'
+                    minOccurs='0'
+                    maxOccurs='unbounded' />
+
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name='ResultCodeEnum'>
+        <xs:restriction base='xs:string'>
+            <xs:enumeration value='OK' />
+            <xs:enumeration value='ERROR' />
+            <xs:enumeration value='INFO' />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="Klientinformation">
+        <xs:sequence>
+
+            <xs:element name="anvandare"
+                        type="xs:string"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>Unikt användarid i anropande system.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="session"
+                        type="xs:string"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>Sessionens id i anropande system.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="system"
+                        type="xs:string"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>Systemnamn för anropande system. GLN-kod krävs för anrop från MVK och LTj.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:any namespace="##other"
+                    processContents="lax"
+                    minOccurs="0"
+                    maxOccurs="unbounded"/>
+
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PatientMedRedNamnResponse">
+        <xs:sequence>
+
+            <xs:element name="avliden"
+                        type="xs:boolean"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>Anger om patienten är markerad som avliden i FOLK. Sant om personen är
+                        markerad som avliden, annars falskt.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="efternamn"
+                        type="xs:string"
+                        minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Patientens efternamn som registrerat i FOLK. För patient med skyddad identitet
+                        visas inte efternamn.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="fornamn"
+                        type="xs:string"
+                        minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Patientens förnamn som registrerat i FOLK. För patient med skyddad identitet
+                        visas inte förnamn.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="personnummer"
+                        type="xs:string"
+                        minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Patientens personnummer.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="redigeratNamn"
+                        type="xs:string"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>Redigerat namn - mellannamn efternamn, förnamn. Förkortat till 36 tecken.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="redigeratNamnForkortat"
+                        type="xs:boolean"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>Anger om redigerat namn (redNamn) har förkortats.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:any namespace="##other"
+                    processContents="lax"
+                    minOccurs="0"
+                    maxOccurs="unbounded"/>
+
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
