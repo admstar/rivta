@@ -30,11 +30,11 @@
   <xs:element name='GetFormDataResponse' type='tns:GetFormDataResponseType' />
   <xs:complexType name='GetFormDataType'>
     <xs:sequence>
-    	<xs:element name='formId' type='xs:string' minOccurs='1' maxOccurs="1" />
-    	<xs:element name="subjectOfCareId" type="core:SubjectOfCareIdType" minOccurs='1' maxOccurs="1" />
-		<xs:element name="careEncounterStartDate" type="core:Iso8601DateType" minOccurs='0' maxOccurs="1" />
-    	<xs:element name="careProviderId" type="core:HsaIdType" minOccurs='1' maxOccurs="1" />
-    	<xs:element name="employeeId" type="core:HsaIdType" minOccurs='1' maxOccurs="1" />
+    	<xs:element name='formId' type='xs:string' />
+    	<xs:element name="subjectOfCareId" type="core:SubjectOfCareIdType" />
+		<xs:element name="careEncounterStartDate" type="core:Iso8601DateType" minOccurs='0' />
+    	<xs:element name="careProviderId" type="core:HsaIdType" />
+    	<xs:element name="employeeId" type="core:HsaIdType" />
     	<xs:any namespace='##other' processContents='lax' minOccurs='0'
     		maxOccurs='unbounded' />
     </xs:sequence>
@@ -43,9 +43,7 @@
     <xs:sequence>
     	<xs:element name='formElement' type='core:FormElementType'
     		maxOccurs="unbounded" minOccurs="0" />
-    	<xs:element name="resultCode" type="core:ResultCodeEnum" maxOccurs="1"
-    		minOccurs="1">
-    	</xs:element>
+    	<xs:element name="resultCode" type="core:ResultCodeEnum" />
     	<xs:element name='resultText' type='xs:string' minOccurs='0' />
     	<xs:any namespace='##other' processContents='lax' minOccurs='0'
     		maxOccurs='unbounded' />
