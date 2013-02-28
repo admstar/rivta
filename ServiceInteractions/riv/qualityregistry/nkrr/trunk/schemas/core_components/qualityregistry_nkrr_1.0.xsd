@@ -41,31 +41,37 @@
 	</xs:simpleType>
 	<xs:complexType name="FormElementType">
 		<xs:sequence>
-			<xs:element name="formId" type="xs:string"></xs:element>
-			<xs:element name="query" type="xs:string" minOccurs="0">
-			</xs:element>
+			<xs:element name="formId" type="xs:string" />
+			<xs:element name="query" type="xs:string" minOccurs="0" />
 			<xs:element name="answer" type="tns:AnswerType"
-				maxOccurs="unbounded" minOccurs="0">
-			</xs:element>
+				maxOccurs="unbounded" minOccurs="0" />
 			<xs:element name="sourceData" type="tns:SourceDataType"
-				maxOccurs="unbounded" minOccurs="0">
-			</xs:element>
+				maxOccurs="unbounded" minOccurs="0" />
 			<xs:any namespace='##other' processContents='lax' minOccurs='0'
 				maxOccurs='unbounded' />
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="AnswerType">
 		<xs:sequence>
-			<xs:element name="value" type="xs:string"></xs:element>
-			<xs:element name="type" type="xs:string"></xs:element>
+			<xs:element name="value" type="xs:string" />
+			<xs:element name="type" type="xs:string" />
 			<xs:any namespace='##other' processContents='lax' minOccurs='0'
 				maxOccurs='unbounded' />
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="SourceDataType">
 		<xs:sequence>
-			<xs:element name="name" type="xs:string"></xs:element>
-			<xs:element name="value" type="xs:string"></xs:element>
+		<xs:element name="name" type="xs:string" />
+			<xs:element name="entry" type="tns:SourceDataEntryType"
+				maxOccurs="unbounded" />
+			<xs:any namespace='##other' processContents='lax' minOccurs='0'
+				maxOccurs='unbounded' />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SourceDataEntryType">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" />
+			<xs:element name="value" type="xs:string" />
 			<xs:any namespace='##other' processContents='lax' minOccurs='0'
 				maxOccurs='unbounded' />
 		</xs:sequence>
