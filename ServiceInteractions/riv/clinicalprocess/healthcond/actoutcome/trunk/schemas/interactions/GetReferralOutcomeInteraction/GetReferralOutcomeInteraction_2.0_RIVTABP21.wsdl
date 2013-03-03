@@ -17,22 +17,27 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<wsdl:definitions name='GetReferralOutcomeInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tjsr='urn:riv:ehr:patientsummary:GetReferralOutcomeResponder:2' xmlns:tjsi='urn:riv:ehr:patientsummary:GetReferralOutcomeInitiator:2' xmlns:tns='urn:riv:ehr:patientsummary:GetReferralOutcome:2:rivtabp21' targetNamespace='urn:riv:ehr:patientsummary:GetReferralOutcome:2:rivtabp21' xmlns:itr='urn:riv:itintegration:registry:1'>
+<wsdl:definitions name='GetReferralOutcomeInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema'
+  xmlns:tjsr='urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcomeResponder:2'
+  xmlns:tjsi='urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcomeInitiator:2'
+  xmlns:tns='urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcome:2:rivtabp21'
+  targetNamespace='urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcome:2:rivtabp21'
+  xmlns:itr='urn:riv:itintegration:registry:1'>
   <xs:annotation>
     <xs:documentation>
 			 Tjänsteinteraktionens namn: GetReferralOutcomeInteraction
 			 Beskrivning: 
 			   Returnerar svar på en förfrågan om konsultationsremiss för en patient
 			 Revisioner: 
-			 Tjänstedomän: ehr:patientsummary
+			 Tjänstedomän: clinicalprocess:healthcond:actoutcome
 			 Tjänsteinteraktionstyp: Fråga-Svar
 			 WS-profil: RIVTABP21
 			 Förvaltas av: Sveriges Kommuner och Landsting
 			 </xs:documentation>
   </xs:annotation>
   <wsdl:types>
-    <xs:schema targetNamespace='urn:riv:ehr:patientsummary:GetReferralOutcome:2:rivtabp21'>
-      <xs:import schemaLocation='GetReferralOutcomeResponder_2.0.xsd' namespace='urn:riv:ehr:patientsummary:GetReferralOutcomeResponder:2' />
+    <xs:schema targetNamespace='urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcome:2:rivtabp21'>
+      <xs:import schemaLocation='GetReferralOutcomeResponder_2.0.xsd' namespace='urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcomeResponder:2' />
       <xs:import schemaLocation='../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
     </xs:schema>
   </wsdl:types>
@@ -54,7 +59,7 @@
   <wsdl:binding name='GetReferralOutcomeResponderBinding' type='tns:GetReferralOutcomeResponderInterface'>
     <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
     <wsdl:operation name='GetReferralOutcome'>
-      <soap:operation soapAction='urn:riv:ehr:patientsummary:GetReferralOutcomeResponder:2:GetReferralOutcome' style='document' />
+      <soap:operation soapAction='urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcomeResponder:2:GetReferralOutcome' style='document' />
       <wsdl:input>
         <soap:header use='literal' message='tns:GetReferralOutcomeRequest' part='LogicalAddress' />
         <soap:body use='literal' parts='parameters' />
