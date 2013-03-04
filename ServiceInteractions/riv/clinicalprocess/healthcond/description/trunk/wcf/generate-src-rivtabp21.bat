@@ -30,12 +30,12 @@ SET XCORE=%SCHEMADIR%\core_components\*.xsd
 
 SET SCHEMAS=%XCORE% %W0% %X0% %W1% %X1% %W2% %X2%
 
-SET OUTFILE=/out:wcf\generated-src\ehrPatientSummary.cs
+SET OUTFILE=/out:wcf\generated-src\clinicalprocessHealthcondDescription.cs
 SET APPCONFIG=/config:wcf\generated-src\app.config
-SET NAMESPACE=/namespace:*,Riv.Ehr.PatientSummary.Schemas.v1
+SET NAMESPACE=/namespace:*,Riv.ClinicalProcess.HealthCond.Description.Schemas.v1
 SET SVCUTIL="svcutil.exe"
 %SVCUTIL% /language:cs %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
 
 CD wcf
-ECHO Generating Service contract .Net Binding interfaces and classes for clinicalprocess:requestworkflow Release 1
+ECHO Generating Service contract .Net Binding interfaces and classes for clinicalprocess:healthcond:description Release 1
 ECHO I DotNetprojektet ska du ta lagga till referens till System.ServiceModel
