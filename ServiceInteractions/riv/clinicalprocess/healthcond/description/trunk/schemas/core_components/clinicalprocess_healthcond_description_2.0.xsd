@@ -28,6 +28,54 @@
 	
     <xs:import schemaLocation="./clinicalprocess_healthcond_description_enum_2.0.xsd" namespace="urn:riv:clinicalprocess:healthcond:description:enums:2"/>
 
+  <xs:complexType name="CareDocumentationType">
+        <xs:sequence>
+            <xs:element name="careDocumentationHeader" type="tns:PatientSummaryHeaderType"/>
+            <xs:element name="careDocumentationBody" type="tns:CareDocumentationBodyType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+	<xs:complexType name="CareDocumentationBodyType">
+		<xs:annotation>
+			<xs:documentation>
+				clinicalDocumentNote: 
+					Dokument/anteckning
+				multimediaEntry:
+					Multimedia som finns i dokumentet, motsvaras av platshållare i careDocumentNoteText
+			</xs:documentation>
+		</xs:annotation>	
+		<xs:sequence>
+			<xs:element name="clinicalDocumentNote" type="tns:ClinicalDocumentNoteType"/>
+		    <xs:element name="multimediaEntry" type="tns:MultimediaType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+    <!-- @TODO better names for clinicalDocumentNoteCode -->
+    <xs:complexType name="ClinicalDocumentNoteType">
+        <xs:annotation>
+            <xs:documentation>
+                Dokument/anteckning
+
+                clinicalDocumentNoteCode: 
+                    Typ av vård- och omsorgsdokument. 
+                clinicalDocumentNoteTitle: 
+                    Titel på dokument
+                clinicalDocumentNoteText: 
+                    Själva dokumentet. 
+                    Formatet i textfältet ska följa HL7 CDA "Narrative Block". 
+                    Om dokumentet innehåller multimedia läggs en platshållare i texten enligt formatet <renderMultiMedia referencedObject="MM1"/>. 
+                    Innehåller dokumentet fler multimedia läggs ytterligare platshållare i texten, där referencesObject får namn "MM2", "MM3" osv
+            </xs:documentation>
+        </xs:annotation>
+
+        <xs:sequence>
+            <xs:element name="clinicalDocumentNoteCode" type="codes:ClinicalDocumentNoteCodeEnum"/>
+            <xs:element name="clinicalDocumentNoteTitle" type="xs:string" minOccurs="0"/>
+            <xs:element name="clinicalDocumentNoteText" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="PatientSummaryHeaderType">
         <xs:annotation>
             <xs:documentation>
