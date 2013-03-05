@@ -28,6 +28,60 @@
 	
     <xs:import schemaLocation="./clinicalprocess_logistics_logistics_enum_2.0.xsd" namespace="urn:riv:clinicalprocess:logistics:logistics:enums:2"/>
 
+ <xs:complexType name="CareContactType">
+        <xs:sequence>
+            <xs:element name="careContactHeader" type="tns:PatientSummaryHeaderType"/>
+            <xs:element name="careContactBody" type="tns:CareContactBodyType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="CareContactBodyType">
+        <xs:annotation>
+            <xs:documentation>
+                careContactCode:
+                    Typ av vård- och omsorgsdokumentation. Nullvärde tillåtetet.
+                careContactReason:
+                    Text som beskriver orsaken till vård- och omsorgskontakt som 
+                    vård- och omsorgstagaren själv eller dess företrädare anger.
+                careContactTime:
+                    Tidpunkt för kontakt.
+                careContactUnit:
+                    Den eller de enheter som kontakt utfördes vid
+                careContactStatus:
+                    Tillåtna statusvärden (från KV aktivitetsmomentstatus)
+            </xs:documentation>
+        </xs:annotation>	
+        <xs:sequence>
+            <xs:element name="careContactCode" type="codes:CareContactCodeEnum"/>
+            <xs:element name="careContactReason" type="xs:string" minOccurs="0"/>
+            <xs:element name="careContactTime" type="tns:TimeStampType"/>
+            <xs:element name="careContactUnit" type="tns:CareContactUnitType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="careContactStatus" type="codes:CareContactStatusEnum" minOccurs="0" maxOccurs="1"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CareContactUnitType">
+        <xs:annotation>
+            <xs:documentation>
+                careContactUnitId:
+                    HSA-id på den person inom enheten som hade
+                    kontakt med patienten
+                careContactUnitName:
+                    Namne på enhet 
+                careContactUnitAddress:
+                    Adress till enhet
+            </xs:documentation>
+        </xs:annotation>	
+        <xs:sequence>
+            <xs:element name="careContactUnitId" type="tns:HSAIdType"/>
+            <xs:element name="careContactUnitName" type="xs:string"/>
+            <xs:element name="careContactUnitAddress" type="xs:string" minOccurs="0"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="PatientSummaryHeaderType">
         <xs:annotation>
             <xs:documentation>
@@ -98,36 +152,17 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="authorTime" type="tns:TimeStampType"/>
-		    <xs:element name="authorHSAid" type="tns:HSAIdType"/>
-		    <xs:element name="authorRoleCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="authorHSAid" type="tns:HSAIdType"/>
+			<xs:element name="authorRoleCode" type="xs:string" minOccurs="0"/>
 			<xs:element name="authorName" type="xs:string" minOccurs="0"/>
-		    <xs:element name="authorOrgUnitHSAid" type="tns:HSAIdType"/>
-		    <xs:element name="authorOrgUnitName" type="xs:string"/>
-		    <xs:element name="careUnitHSAid" type="tns:HSAIdType"/>
-		    <xs:element name="careUnitName" type="xs:string" minOccurs="0"/>
-		    <xs:element name="careUnitAddress" type="xs:string" minOccurs="0"/>
-		    <xs:element name="careGiverHSAid" type="tns:HSAIdType"/>
+			<xs:element name="authorOrgUnitHSAid" type="tns:HSAIdType"/>
+			<xs:element name="authorOrgUnitName" type="xs:string"/>
+			<xs:element name="authorOrgUnitAddress" type="xs:string" minOccurs="0"/>		
+			<xs:element name="careUnitHSAid" type="tns:HSAIdType"/>
+			<xs:element name="careGiverHSAid" type="tns:HSAIdType"/>
 		</xs:sequence>
 	</xs:complexType>
 
-<!--
-    <xs:complexType name="LegalAuthenticatorType">
-        <xs:annotation>
-            <xs:documentation>
-                Information om signering
-                
-                signatureTime: 
-                    Tidpunkt för signering, format ÅÅÅÅMMDDttmmss. 
-                assignedEntity: 
-                    Information om person som signerat dokumentet
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="signatureTime" type="tns:TimeStampType"/>
-            <xs:element name="legalAuthenticatorHSAid" type="tns:HSAIdType" />
-        </xs:sequence>
-    </xs:complexType>
--->
     <!-- 
         Below: only helper types allowed.
         
@@ -167,17 +202,6 @@
     <xs:simpleType name="HSAIdType">
         <xs:restriction base="xs:string"/> 
     </xs:simpleType>
-
-    <xs:complexType name="MultimediaType">
-        <xs:sequence>
-            <xs:element name="id" type="xs:string" minOccurs="0"/>
-            <xs:element name="mediaType" type="codes:MediaTypeEnum"/>
-            <xs:choice>
-                <xs:element name="value" type="xs:base64Binary"/>
-                <xs:element name="reference" type="xs:anyURI"/>
-            </xs:choice>
-        </xs:sequence>
-    </xs:complexType>
     
     <xs:complexType name="PatientIdType">
         <xs:sequence>

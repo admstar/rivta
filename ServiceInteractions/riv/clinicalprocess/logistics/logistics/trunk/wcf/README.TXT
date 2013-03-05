@@ -10,7 +10,7 @@ How to run the bat-file:
 2) Open a command window and "cd" to the directory where this howto-file is located.
 3) Enter "generate-src.bat" on the commandline and process enter
 
-The generated c# class file and the generated WCF app.config file will appear in a sub-directory created by the bat file: generated-src\CrmSchedulingInteractions.cs. CrmSchedulingInteractions.cs contains C# interfaces for all scheduling service contracts (all wsdl-files).
+The generated c# class file and the generated WCF app.config file will appear in a sub-directory created by the bat file: generated-src\GetCareContactInteraction.cs. GetCareContactInteraction.cs contains C# interfaces for all scheduling service contracts (all wsdl-files).
 
 Now that you have the client proxies for calling a scheduling service from a .Net application, and the service contract interfaces required develop the scheduling services, you you may want to see a complete example. There isn't a complete example (consumer + producer) for these specific service contracts, but there is a complete example based on a sample service contract that you can use as a pattern / template. Since the way of working is the same, regardless of service contract, this is hopefully what you need to get up and running in .Net with the scheduling service contracts. See bellow for links to the example application. 
 
