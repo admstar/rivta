@@ -32,7 +32,7 @@ SET SCHEMAS=%XCORE% %W0% %X0% %W1% %X1% %W2% %X2%
 
 SET OUTFILE=/out:wcf\generated-src\clinicalProcessLogisticsLogistics.cs
 SET APPCONFIG=/config:wcf\generated-src\app.config
-SET NAMESPACE=/namespace:*,Riv.ClinicalProcess.Logistics.Logistics.v1
+SET NAMESPACE=/namespace:*,Riv.ClinicalProcess.Logistics.Logistics.v2
 SET SVCUTIL="svcutil.exe"
 %SVCUTIL% /language:cs %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
 

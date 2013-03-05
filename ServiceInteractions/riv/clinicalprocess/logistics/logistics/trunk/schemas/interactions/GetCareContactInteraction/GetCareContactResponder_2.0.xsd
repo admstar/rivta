@@ -33,24 +33,13 @@
     <xs:element name="GetCareContactResponse" type="tns:GetCareContactResponseType"/>
 
     <xs:complexType name="GetCareContactType">
-        <xs:annotation>
-            <xs:documentation> 
-                careUnitHSAid: 
-                    HSA-Id för e-tjänsteproducent. 
-                patientId: 
-                    Patientens identitet, nationellt unikt person-id. 
-                timePeriod: 
-                    Begränsning av sökningen i tid, baserat på kliniskt relevanta datum. 
-                    Händelser anses ligga inom intervallet, om de till någon del ligger 
-                    inom intervallet. (Start- och slutpunkt inkluderas i intervallet) 
-                    Formatet för start- respektive slutdatum är ÅÅÅÅMMDD.
-            </xs:documentation>
-        </xs:annotation>
         <xs:sequence>
-            <xs:element name="careUnitHSAid" type="core:HSAIdType"/>
-            <xs:element name="patientId" type="core:PatientIdType"/>
-            <xs:element name="timePeriod" type="core:DatePeriodType" minOccurs="0"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+	        <xs:element name="careUnitHSAid" type="core:HSAIdType" minOccurs="0" maxOccurs="unbounded"/>
+	        <xs:element name="patientId" type="core:PatientIdType"/>
+	        <xs:element name="timePeriod" type="core:DatePeriodType" minOccurs="0"/>
+	        <xs:element name="sourceSystem" type="core:HSAIdType" minOccurs="0"/>
+		    <xs:element name="careContactId" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+	        <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
         </xs:sequence>
     </xs:complexType>
 
@@ -60,94 +49,8 @@
                 Status på resultat för frågan </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="careContact" type="tns:CareContactType" minOccurs="0"
+            <xs:element name="careContact" type="core:CareContactType" minOccurs="0"
                 maxOccurs="unbounded"/>
-            <xs:element name="result" type="tns:ResultType"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="CareContactType">
-        <xs:sequence>
-            <xs:element name="careContactHeader" type="core:PatientSummaryHeaderType"/>
-            <xs:element name="careContactBody" type="tns:CareContactBodyType"/>
-        </xs:sequence>
-    </xs:complexType>
-    
-    <xs:complexType name="ResultType">
-        <xs:sequence>
-            <xs:element name="resultCode" type="tns:ResultCodeEnum"/>
-            <xs:element name="resultText" type="xs:string" minOccurs="0"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:simpleType name="ResultCodeEnum">
-        <xs:annotation>
-            <xs:documentation> 
-                Vid ett logiskt fel i de uppdaterande tjänsterna levereras
-                resultCode, resultText. resultCode kan vara: 
-                
-                OK 
-                    Transaktionen har utförts enligt uppdraget i frågemeddelandet. 
-                INFO 
-                    Transaktionen har utförts enligt begäran, men det finns ett 
-                    meddelande som konsumenten måste visa upp för användaren (om tillämpbart). 
-                    Exempel på detta kan vara ”kom fastande”. 
-                ERROR 
-                    Transaktionen har INTE kunnat utföras enligt p.g.a. logiskt fel. 
-                    Det finns ett meddelande som konsumenten måste visa upp. Exempel 
-                    på detta kan vara ”tiden har bokats av annan patient
-            </xs:documentation>
-        </xs:annotation>
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="OK"/>
-            <xs:enumeration value="ERROR"/>
-            <xs:enumeration value="INFO"/>
-        </xs:restriction>
-    </xs:simpleType>
-
-    <xs:complexType name="CareContactBodyType">
-        <xs:annotation>
-            <xs:documentation>
-                careContactCode:
-                    Typ av vård- och omsorgsdokumentation. Nullvärde tillåtetet.
-                careContactReason:
-                    Text som beskriver orsaken till vård- och omsorgskontakt som 
-                    vård- och omsorgstagaren själv eller dess företrädare anger.
-                careContactTime:
-                    Tidpunkt för kontakt.
-                careContactUnit:
-                    Den eller de enheter som kontakt utfördes vid
-                careContactStatus:
-                    Tillåtna statusvärden (från KV aktivitetsmomentstatus)
-            </xs:documentation>
-        </xs:annotation>	
-        <xs:sequence>
-            <xs:element name="careContactCode" type="codes:CareContactCodeEnum"/>
-            <xs:element name="careContactReason" type="xs:string" minOccurs="0"/>
-            <xs:element name="careContactTime" type="core:TimeStampType"/>
-            <xs:element name="careContactUnit" type="tns:CareContactUnitType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="careContactStatus" type="codes:CareContactStatusEnum" minOccurs="0" maxOccurs="1"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="CareContactUnitType">
-        <xs:annotation>
-            <xs:documentation>
-                careContactUnitId:
-                    HSA-id på den person inom enheten som hade
-                    kontakt med patienten
-                careContactUnitName:
-                    Namne på enhet 
-                careContactUnitAddress:
-                    Adress till enhet
-            </xs:documentation>
-        </xs:annotation>	
-        <xs:sequence>
-            <xs:element name="careContactUnitId" type="core:HSAIdType"/>
-            <xs:element name="careContactUnitName" type="xs:string"/>
-            <xs:element name="careContactUnitAddress" type="xs:string" minOccurs="0"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
