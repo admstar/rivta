@@ -53,9 +53,24 @@ SET X8=%SCHEMADIR%\SendMedicalCertificateAnswerInteraction\*.xsd
 SET W9=%SCHEMADIR%\SendMedicalCertificateQuestionInteraction\SendMedicalCertificateQuestionInteraction_1.0_rivtabp20.wsdl
 SET X9=%SCHEMADIR%\SendMedicalCertificateQuestionInteraction\*.xsd 
 
-SET X10=schemas\core_components\*.xsd
+SET W10=%SCHEMADIR%\SendMedicalCertificateQuestionInteraction\SendMedicalCertificateQuestionInteraction_1.0_rivtabp20.wsdl
+SET X10=%SCHEMADIR%\SendMedicalCertificateQuestionInteraction\*.xsd 
 
-SET SCHEMAS=%W1% %X1% %W2% %X2% %W3% %X3% %W4% %X4% %W5% %X5% %W6% %X6% %W7% %X7% %W8% %X8% %W9% %X9% %X10%
+SET W11=%SCHEMADIR%\SendMedicalCertificateQuestionInteraction\SendMedicalCertificateQuestionInteraction_1.0_rivtabp20.wsdl
+SET X11=%SCHEMADIR%\SendMedicalCertificateQuestionInteraction\*.xsd 
+
+SET W12=%SCHEMADIR%\SendMedicalCertificateQuestionInteraction\SendMedicalCertificateQuestionInteraction_1.0_rivtabp20.wsdl
+SET X12=%SCHEMADIR%\SendMedicalCertificateQuestionInteraction\*.xsd 
+
+SET W13=%SCHEMADIR%\SendMedicalCertificateQuestionInteraction\SendMedicalCertificateQuestionInteraction_1.0_rivtabp20.wsdl
+SET X13=%SCHEMADIR%\SendMedicalCertificateQuestionInteraction\*.xsd 
+
+SET W14=%SCHEMADIR%\SendMedicalCertificateQuestionInteraction\SendMedicalCertificateQuestionInteraction_1.0_rivtabp20.wsdl
+SET X14=%SCHEMADIR%\SendMedicalCertificateQuestionInteraction\*.xsd 
+
+SET X15=schemas\core_components\*.xsd
+
+SET SCHEMAS=%W1% %X1% %W2% %X2% %W3% %X3% %W4% %X4% %W5% %X5% %W6% %X6% %W7% %X7% %W8% %X8% %W9% %X9% %W10% %X10% %W11% %X11% %W12% %X12% %W13% %X13% %W14% %X14% %X15%
 
 %SVCUTIL% /language:cs /wrapped %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
 
