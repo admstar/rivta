@@ -17,34 +17,31 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:orgmaster:hsa:GetHsaPersonProtectedPersonsResponder:1' xmlns:core='urn:riv:orgmaster:hsa:1' targetNamespace='urn:riv:orgmaster:hsa:GetHsaPersonProtectedPersonsResponder:1' elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'>
-  <xs:import schemaLocation='../../core_components/orgmaster_hsa_1.0.xsd' namespace='urn:riv:orgmaster:hsa:1' />
-  <xs:element name='GetHsaPersonProtectedPersons' type='tns:GetHsaPersonProtectedPersonsType' />
-  <xs:element name='GetHsaPersonProtectedPersonsResponse' type='tns:GetHsaPersonProtectedPersonsResponseType' />
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:orgmaster:hsa:GetCareUnitResponder:1' xmlns:core='urn:riv:orgmaster:hsa:1' targetNamespace='urn:riv:orgmaster:hsa:GetCareUnitResponder:1' elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'>
+  <xs:import schemaLocation='../../core_components/orgmaster_hsa_1.1.xsd' namespace='urn:riv:orgmaster:hsa:1' />
+  <xs:element name='GetCareUnit' type='tns:GetCareUnitType' />
+  <xs:element name='GetCareUnitResponse' type='tns:GetCareUnitResponseType' />
 
-  <xs:complexType name='GetHsaPersonProtectedPersonsType'>
+  <xs:complexType name='GetCareUnitType'>
     <xs:sequence>
-      <xs:choice>
-        <xs:element name="hsaIdentity" type="core:HsaIdentityType" />
-        <xs:element name="personalIdentityNumber" type="xs:string" />
-      </xs:choice>
+      <xs:element name="hsaIdentity" type="core:HsaIdentityType" />
       <xs:element name='searchBase' type='core:SearchBaseType' minOccurs="0"/>
       <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name='GetHsaPersonProtectedPersonsResponseType'>
+  <xs:complexType name='GetCareUnitResponseType'>
     <xs:sequence>
-      <xs:element name="userInformations" minOccurs="0">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="userInformation" type="core:GetHsaPersonHsaUserType" minOccurs="0" maxOccurs="unbounded" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
+      <xs:element name="careUnitHsaIdentity" type="core:HsaIdentityType"/>
+      <xs:element name="careGiver" type="core:OrgNoType"/>
+      <xs:element name="careUnitStartDate" type="xs:dateTime" minOccurs="0" />
+      <xs:element name="careUnitEndDate" type="xs:dateTime" minOccurs="0" />
+      <xs:element name="careGiverStartDate" type="xs:dateTime" minOccurs="0" />
+      <xs:element name="careGiverEndDate" type="xs:dateTime" minOccurs="0" />
       <xs:element name="resultCode" type="core:ResultCodeEnum" minOccurs="1" maxOccurs="1" />
 	  <xs:element name="resultText" type="xs:string" minOccurs="0" maxOccurs="1" />
       <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
-    </xs:sequence>
+    </xs:sequence>        
   </xs:complexType>
+
 </xs:schema>
