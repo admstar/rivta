@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->		
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:clinicalprocess:healthcond:actoutcome:0' targetNamespace='urn:riv:clinicalprocess:healthcond:actoutcome:0' elementFormDefault='qualified' attributeFormDefault='unqualified' version='0.9'>
+  <xs:complexType name="MeasureResponseType">
+		<xs:sequence>
+			<xs:element name="personId" type="tns:PersonIdType" minOccurs="0"/>
+			<xs:element name="care_unit" type="tns:HsaIdType" minOccurs="0"/>
+			<xs:element name="performer" type="tns:HsaIdType" minOccurs="0"/>
+			<xs:element name="observation_ time" type="tns:DT" minOccurs="0"/>
+			<xs:element name="stature" type="tns:StatureType" minOccurs="0"/>
+			<xs:element name="bodyweight" type="tns:BodyWeightType" minOccurs="0"/>
+			<xs:element name="head_circumference" type="tns:HeadCircumferenceType" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PersonIdType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="^[0-9]{8}[0-9pPtTfF][0-9]{3}$"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="KonTYPE">
+		<xs:annotation>
+			<xs:documentation>K=Kvinna, M=Man</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="K"/>
+			<xs:enumeration value="M"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HsaIdType">
+		<xs:annotation>
+			<xs:documentation>HSA-ID</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="StatureType">
+		<xs:annotation>
+			<xs:documentation>Stature (mm)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:int"/>
+	</xs:simpleType>
+	<xs:simpleType name="BodyWeight">
+		<xs:annotation>
+			<xs:documentation>Body weight (hg)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:int"/>
+	</xs:simpleType>
+	<xs:simpleType name="HeadCircumferenceType">
+		<xs:annotation>
+			<xs:documentation>Head circumference (mm)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:int"/>
+	</xs:simpleType>
+	<xs:simpleType name="DT">
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+</xs:schema>
