@@ -53,20 +53,20 @@ SET X8=%SCHEMADIR%\SendMedicalCertificateAnswerInteraction\*.xsd
 SET W9=%SCHEMADIR%\SendMedicalCertificateQuestionInteraction\SendMedicalCertificateQuestionInteraction_1.0_rivtabp20.wsdl
 SET X9=%SCHEMADIR%\SendMedicalCertificateQuestionInteraction\*.xsd 
 
-SET W10=%SCHEMADIR%\SendMedicalCertificateQuestionInteraction\SendMedicalCertificateQuestionInteraction_1.0_rivtabp20.wsdl
-SET X10=%SCHEMADIR%\SendMedicalCertificateQuestionInteraction\*.xsd 
+SET W10=%SCHEMADIR%\GetCertificateInteraction\GetCertificateInteraction_1.0_rivtabp20.wsdl
+SET X10=%SCHEMADIR%\GetCertificateInteraction\*.xsd 
 
-SET W11=%SCHEMADIR%\SendMedicalCertificateQuestionInteraction\SendMedicalCertificateQuestionInteraction_1.0_rivtabp20.wsdl
-SET X11=%SCHEMADIR%\SendMedicalCertificateQuestionInteraction\*.xsd 
+SET W11=%SCHEMADIR%\ListCertificatesInteraction\ListCertificatesInteraction_1.0_rivtabp20.wsdl
+SET X11=%SCHEMADIR%\ListCertificatesInteraction\*.xsd 
 
-SET W12=%SCHEMADIR%\SendMedicalCertificateQuestionInteraction\SendMedicalCertificateQuestionInteraction_1.0_rivtabp20.wsdl
-SET X12=%SCHEMADIR%\SendMedicalCertificateQuestionInteraction\*.xsd 
+SET W12=%SCHEMADIR%\RevokeMedicalCertificateInteraction\RevokeMedicalCertificateInteraction_1.0_rivtabp20.wsdl
+SET X12=%SCHEMADIR%\RevokeMedicalCertificateInteraction\*.xsd 
 
-SET W13=%SCHEMADIR%\SendMedicalCertificateQuestionInteraction\SendMedicalCertificateQuestionInteraction_1.0_rivtabp20.wsdl
-SET X13=%SCHEMADIR%\SendMedicalCertificateQuestionInteraction\*.xsd 
+SET W13=%SCHEMADIR%\SendMedicalCertificateInteraction\SendMedicalCertificateInteraction_1.0_rivtabp20.wsdl
+SET X13=%SCHEMADIR%\SendMedicalCertificateInteraction\*.xsd 
 
-SET W14=%SCHEMADIR%\SendMedicalCertificateQuestionInteraction\SendMedicalCertificateQuestionInteraction_1.0_rivtabp20.wsdl
-SET X14=%SCHEMADIR%\SendMedicalCertificateQuestionInteraction\*.xsd 
+SET W14=%SCHEMADIR%\SetCertificateStatusInteraction\SetCertificateStatusInteraction_1.0_rivtabp20.wsdl
+SET X14=%SCHEMADIR%\SetCertificateStatusInteraction\*.xsd 
 
 SET X15=schemas\core_components\*.xsd
 
