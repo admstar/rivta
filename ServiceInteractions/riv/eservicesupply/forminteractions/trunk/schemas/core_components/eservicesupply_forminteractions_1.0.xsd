@@ -1177,7 +1177,7 @@ textareaCheckboxRadioSelectSelectMultipleNumberURLDate and timeDateMont
 			<xs:element name="pages" type="tns:TemplateRoutedPageType"
 				maxOccurs="unbounded">
 			</xs:element>
-			<xs:element name="published" type="xs:boolean" minOccurs="1"
+			<xs:element name="publishStatus" type="tns:publishStatusType" minOccurs="1"
 				maxOccurs="1">
 			</xs:element>
 			<xs:element name="templateId" type="xs:string"
@@ -1401,5 +1401,13 @@ GT (greater)</xs:documentation>
     		<xs:enumeration value="LT"></xs:enumeration>
     		<xs:enumeration value="GT"></xs:enumeration>
     	</xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="publishStatusType">
+        <xs:annotation>
+        	<xs:documentation>Mallens status:
+Unpublished - NyPending - Redo för publiseringPublished - Publiserad (kan användas för att skapa formulär)Archived - Arkiverad (kan EJ användas för att skapa formulär)</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string"></xs:restriction>
     </xs:simpleType>
 </xs:schema>
