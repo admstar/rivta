@@ -124,6 +124,7 @@
             <xs:element name="authorTime" type="tns:TimeStampType"/>
             <xs:element name="authorHSAid" type="tns:HSAIdType"/>
             <xs:element name="authorRoleCode" type="xs:string" minOccurs="0"/>
+            <xs:element name="authorOtherRole" minOccurs="0" type="tns:AuthorOtherRoleType"/>
             <xs:element name="authorName" type="xs:string" minOccurs="0"/>
             <xs:element name="authorOrgUnitHSAid" type="tns:HSAIdType"/>
             <xs:element name="authorOrgUnitName" type="xs:string"/>
@@ -253,8 +254,7 @@
 
     <xs:complexType name="PrenatalMedicalHistoryType">
         <xs:sequence>
-            <xs:element name="prenatalMedicalHistoryHeader"
-                type="tns:PatientSummaryHeaderType"/>
+            <xs:element name="prenatalMedicalHistoryHeader" type="tns:PatientSummaryHeaderType"/>
             <xs:element name="prenatalMedicalHistoryBody" type="tns:PrenatalMedicalHistoryBodyType"
             />
         </xs:sequence>
@@ -308,13 +308,13 @@
                 type="xs:int"/>
         </xs:sequence>
     </xs:complexType>
-    
+
     <xs:complexType name="MedicationBeforRegistrationDuringPregnacyType">
         <xs:sequence>
             <xs:element name="medicationBeforRegistrationDuringPregnacyMedication"/>
         </xs:sequence>
     </xs:complexType>
-    
+
     <xs:complexType name="PregnancyCheckupType">
         <xs:sequence>
             <xs:element name="pregnancyCheckupContactDate" type="tns:DateType"/>
@@ -343,8 +343,7 @@
     <!-- DeliverMedicalHistory -->
     <xs:complexType name="DeliveryMedicalHistoryType">
         <xs:sequence>
-            <xs:element name="deliveryMedicalHistoryHeader"
-                type="tns:PatientSummaryHeaderType"/>
+            <xs:element name="deliveryMedicalHistoryHeader" type="tns:PatientSummaryHeaderType"/>
             <xs:element name="deliveryMedicalHistoryBody" type="tns:DeliveryMedicalHistoryBodyType"
             />
         </xs:sequence>
@@ -375,6 +374,16 @@
             <xs:element minOccurs="0" name="suckle" type="xs:boolean"/>
             <xs:element minOccurs="0" name="urinated" type="xs:boolean"/>
             <xs:element minOccurs="0" name="meconium" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AuthorOtherRoleType">
+        <xs:annotation>
+            <xs:documentation/>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="authorOtherRoleCode" type="xs:string"/>
+            <xs:element name="authorOtherRoleCodeOID" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>
