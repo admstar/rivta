@@ -59,6 +59,13 @@
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="TelephoneHoursType">
+    <xs:sequence>
+        <xs:element name="telephoneHour" type="tns:TimeSpanType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="TimeSpanType">
     <xs:sequence>
       <xs:element name="fromDay" type="xs:integer" />
@@ -81,220 +88,24 @@
     </xs:sequence>
   </xs:complexType>
   
-  <xs:complexType name="HsaSystemRoleType">
+  <xs:complexType name="HsaTitlesType">
     <xs:sequence>
-        <xs:element name="system" type="xs:string" />
-        <xs:element name="role" type="xs:string" />
+      <xs:element name="hsaTitle" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="PaTitleNamesType">
+      <xs:sequence>
+        <xs:element name="paTitleName" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
         <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
+      </xs:sequence>
   </xs:complexType>
-
-  <xs:simpleType name="HsaTitleType">
-    <xs:restriction base="xs:string"/>
-  </xs:simpleType>
   
-  <xs:simpleType name="OrgNoType">
-    <xs:restriction base="xs:string"/>
-  </xs:simpleType>
-  
-  <xs:simpleType name="LabeledUriType">
-    <xs:restriction base="xs:string"/>
-  </xs:simpleType>
-  
-  <xs:simpleType name="SpecialityNameType">
-    <xs:restriction base="xs:string"/>
-  </xs:simpleType>
-  
-  <xs:simpleType name="SpecialityCodeType">
-    <xs:restriction base="xs:string"/>
-  </xs:simpleType>
-  
-  <xs:simpleType name="PaTitleCodeType">
-    <xs:restriction base="xs:string"/>
-  </xs:simpleType>
-  
-  <xs:complexType name="GetHsaPersonHsaUserType">
+  <xs:complexType name="PaTitleCodesType">
     <xs:sequence>
-      <xs:element name="personalPrescriptionCode" type="xs:string" minOccurs="0" />
-      <xs:element name="description" type="xs:string" minOccurs="0" />
-      <xs:element name="paTitleCodes" minOccurs="0">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="paTitleCode" type="tns:PaTitleCodeType" minOccurs="0" maxOccurs="unbounded" />
-            </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="paTitleNames" minOccurs="0">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="paTitleName" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
-            </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="mail" type="xs:string" minOccurs="0" />
-      <xs:element name="givenName" type="xs:string" />
-      <xs:element name="hsaIdentity" type="tns:HsaIdentityType" />
-      <xs:element name="hsaSwitchboardNumber" type="tns:TelephoneNumberType" minOccurs="0" />
-      <xs:element name="hsaTelephoneNumbers" minOccurs="1">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="hsaTelephoneNumber" type="tns:TelephoneNumberType" minOccurs="0" maxOccurs="unbounded" />
-            </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="labeledUri" type="tns:LabeledUriType" minOccurs="0" />
-      <xs:element name="languageKnowledgeCodes" minOccurs="0">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="languageKnowledgeCode" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
-            </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="mobileNumbers" minOccurs="1">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="mobileNumber" type="tns:TelephoneNumberType" minOccurs="0" maxOccurs="unbounded" />
-            </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="facsimileTelephoneNumbers" minOccurs="1">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="facsimileTelephoneNumber" type="tns:TelephoneNumberType" minOccurs="0" maxOccurs="unbounded" />
-            </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="nickName" type="xs:string" minOccurs="0" />
-      <xs:element name="smsTelephoneNumber" type="tns:TelephoneNumberType" minOccurs="0" />
-      <xs:element name="specialityCodes" minOccurs="1">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="specialityCode" type="tns:SpecialityCodeType" minOccurs="0" maxOccurs="unbounded" />
-            </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="specialityNames" minOccurs="1">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="specialityName" type="tns:SpecialityNameType" minOccurs="0" maxOccurs="unbounded" />
-            </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="sn" type="xs:string" />
-      <xs:element name="telephoneHours" minOccurs="0">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="telephoneHour" type="tns:TimeSpanType" minOccurs="0" maxOccurs="unbounded" />
-            </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="telephoneNumbers" minOccurs="0">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="telephoneNumber" type="tns:TelephoneNumberType" minOccurs="0" maxOccurs="unbounded" />
-            </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="title" type="xs:string" minOccurs="0" />
-      <xs:element name="DN" type="xs:string" />
-      <xs:element name="middleName" type="xs:string" />
-      <xs:element name="postalAddress" type="tns:AddressType" minOccurs="0"/>
-      <xs:element name="hsaTitles" minOccurs="0">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="hsaTitle" type="tns:HsaTitleType" minOccurs="0" maxOccurs="unbounded" />
-            </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
-    </xs:sequence>
+        <xs:element name="paTitleCode" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+        <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
   </xs:complexType>
-  
-  <xs:complexType name="HsaUserType">
-    <xs:sequence>
-        <xs:element name="description" type="xs:string" minOccurs="0" />
-        <xs:element name="email" type="xs:string" minOccurs="0" />
-        <xs:element name="givenName" type="xs:string" />
-        <xs:element name="hsaIdentity" type="tns:HsaIdentityType" />
-        <xs:element name="hsaSwitchboardNumbers" minOccurs="0">
-            <xs:complexType>
-                <xs:sequence>
-                    <xs:element name="hsaSwitchboardNumber" type="tns:TelephoneNumberType" minOccurs="0" maxOccurs="unbounded" />
-                </xs:sequence>
-            </xs:complexType>
-        </xs:element>
-        <xs:element name="hsaSystemRoles" minOccurs="0">
-            <xs:complexType>
-                <xs:sequence>
-                    <xs:element name="hsaSystemRole" type="tns:HsaSystemRoleType" minOccurs="0" maxOccurs="unbounded" />
-                </xs:sequence>
-            </xs:complexType>
-        </xs:element>
-        <xs:element name="hsaTelephoneNumbers" minOccurs="0">
-            <xs:complexType>
-                <xs:sequence>
-                    <xs:element name="hsaTelephoneNumber" type="tns:TelephoneNumberType" minOccurs="0" maxOccurs="unbounded" />
-                </xs:sequence>
-            </xs:complexType>
-        </xs:element>
-        <xs:element name="labeledUri" type="tns:LabeledUriType" minOccurs="0" />
-        <xs:element name="languageKnowledgeCodes" minOccurs="0">
-            <xs:complexType>
-                <xs:sequence>
-                    <xs:element name="languageKnowledgeCode" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
-                </xs:sequence>
-            </xs:complexType>
-        </xs:element>
-        <xs:element name="mobileNumbers" minOccurs="0">
-            <xs:complexType>
-                <xs:sequence>
-                    <xs:element name="mobileNumber" type="tns:TelephoneNumberType" minOccurs="0" maxOccurs="unbounded" />
-                </xs:sequence>
-            </xs:complexType>
-        </xs:element>
-        <xs:element name="nickname" type="xs:string" minOccurs="0" />
-        <xs:element name="smsTelephoneNumber" type="tns:TelephoneNumberType" minOccurs="0" />
-        <xs:element name="specialityCodes" minOccurs="0">
-            <xs:complexType>
-                <xs:sequence>
-                    <xs:element name="specialityCode" type="tns:SpecialityCodeType" minOccurs="0" maxOccurs="unbounded" />
-                </xs:sequence>
-            </xs:complexType>
-        </xs:element>
-        <xs:element name="specialityNames" minOccurs="0">
-            <xs:complexType>
-                <xs:sequence>
-                    <xs:element name="specialityName" type="tns:SpecialityNameType" minOccurs="0" maxOccurs="unbounded" />
-                </xs:sequence>
-            </xs:complexType>
-        </xs:element>
-        <xs:element name="surname" type="xs:string" />
-        <xs:element name="telephoneHours" minOccurs="0">
-          <xs:complexType>
-            <xs:sequence>
-                <xs:element name="telephonehour" type="tns:TimeSpanType" minOccurs="0" maxOccurs="unbounded" />
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="telephoneNumbers" minOccurs="0">
-            <xs:complexType>
-                <xs:sequence>
-                    <xs:element name="telephoneNumber" type="tns:TelephoneNumberType" minOccurs="0" maxOccurs="unbounded" />
-                </xs:sequence>
-            </xs:complexType>
-        </xs:element>
-        <xs:element name="title" type="xs:string" minOccurs="0" />
-        <xs:element name="DN" type="xs:string" />
-        <xs:element name="middleName" type="xs:string" />
-        <xs:element name="hsaProtectedPerson" type="xs:boolean" minOccurs="0" />	
-        <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
-    </xs:sequence>
-  </xs:complexType>
-	<xs:simpleType name="ResultCodeEnum">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="OK"/>
-			<xs:enumeration value="ERROR"/>
-			<xs:enumeration value="INFO"/>
-		</xs:restriction>
-	</xs:simpleType>  
 </xs:schema>
