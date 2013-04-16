@@ -46,6 +46,11 @@
                     Tidpunkt för kontakt.
                 careContactUnit:
                     Den eller de enheter som kontakt utfördes vid
+	            careContactTimePeriod:
+	                    För besök sätts sluttidpunken till samma tid som anges som starttidpunkt.
+						För planerade kontakter sätts ingen sluttidpunkt.
+						Pågående vårdtillfälle ska anges på samma sätt som en planerad vårdkontakt, 
+						dvs med angivet startdatum, men utan slutdatum.				
                 careContactStatus:
                     Tillåtna statusvärden (från KV aktivitetsmomentstatus)
             </xs:documentation>
@@ -56,7 +61,8 @@
             <xs:element name="careContactTime" type="tns:TimeStampType"/>
             <xs:element name="careContactUnit" type="tns:CareContactUnitType" minOccurs="0"
                 maxOccurs="unbounded"/>
-            <xs:element name="careContactStatus" type="codes:CareContactStatusEnum" minOccurs="0"
+			<xs:element name="careContactTimePeriod" type="tns:TimePeriodType" />
+			<xs:element name="careContactStatus" type="codes:CareContactStatusEnum" minOccurs="0"
                 maxOccurs="1"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
@@ -247,7 +253,7 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="start" type="tns:TimeStampType"/>
-            <xs:element name="end" type="tns:TimeStampType"/>
+            <xs:element name="end" type="tns:TimeStampType" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
