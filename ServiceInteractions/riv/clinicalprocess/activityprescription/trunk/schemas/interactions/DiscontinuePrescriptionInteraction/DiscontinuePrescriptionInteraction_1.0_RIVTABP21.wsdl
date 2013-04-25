@@ -17,20 +17,20 @@
  specific language governing permissions and limitations
  under the License.
  -->
-<wsdl:definitions name='OrdineraUtsattningInteraction'
+<wsdl:definitions name='DiscontinuePrescriptionInteraction'
                   xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'
                   xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/'
                   xmlns:xs='http://www.w3.org/2001/XMLSchema'
-                  xmlns:tjsr='urn:riv:clinicalprocess:activityprescription:OrdineraUtsattningResponder:1'
-                  xmlns:tjsi='urn:riv:clinicalprocess:activityprescription:OrdineraUtsattningInitiator:1'
-                  xmlns:tns='urn:riv:clinicalprocess:activityprescription:OrdineraUtsattning:1:rivtabp21'
-                  targetNamespace='urn:riv:clinicalprocess:activityprescription:OrdineraUtsattning:1:rivtabp21'
+                  xmlns:tjsr='urn:riv:clinicalprocess:activityprescription:prescribe:DiscontinuePrescriptionResponder:1'
+                  xmlns:tjsi='urn:riv:clinicalprocess:activityprescription:prescribe:DiscontinuePrescriptionInitiator:1'
+                  xmlns:tns='urn:riv:clinicalprocess:activityprescription:prescribe:DiscontinuePrescription:1:rivtabp21'
+                  targetNamespace='urn:riv:clinicalprocess:activityprescription:prescribe:DiscontinuePrescription:1:rivtabp21'
                   xmlns:itr='urn:riv:itintegration:registry:1'>
     <xs:annotation>
         <xs:documentation>
-            Tjänsteinteraktionens namn: OrdineraUtsattningInteraction
+            Tjänsteinteraktionens namn: DiscontinuePrescriptionInteraction
             Beskrivning:
-            Submission of activityprescription withdrawal to the national activityprescription database.
+                Submission of prescription withdrawal to the national prescription database.
             Revisioner:
             Tjänstedomän: clinicalprocess:activityprescription
             Tjänsteinteraktionstyp: Fråga-Svar
@@ -39,41 +39,41 @@
         </xs:documentation>
     </xs:annotation>
     <wsdl:types>
-        <xs:schema targetNamespace='urn:riv:clinicalprocess:activityprescription:OrdineraUtsattning:1:rivtabp21'>
-            <xs:import schemaLocation='OrdineraUtsattningResponder_1.0.xsd'
-                       namespace='urn:riv:clinicalprocess:activityprescription:OrdineraUtsattningResponder:1' />
+        <xs:schema targetNamespace='urn:riv:clinicalprocess:activityprescription:prescribe:DiscontinuePrescription:1:rivtabp21'>
+            <xs:import schemaLocation='DiscontinuePrescriptionResponder_1.0.xsd'
+                       namespace='urn:riv:clinicalprocess:activityprescription:prescribe:DiscontinuePrescriptionResponder:1' />
             <xs:import schemaLocation='../../core_components/itintegration_registry_1.0.xsd'
                        namespace='urn:riv:itintegration:registry:1' />
         </xs:schema>
     </wsdl:types>
-    <wsdl:message name='OrdineraUtsattningRequest'>
+    <wsdl:message name='DiscontinuePrescriptionRequest'>
         <wsdl:part name='LogicalAddress'
                    element='itr:LogicalAddress'>
-            <wsdl:documentation>HSA-Id of prescribing department and provider.</wsdl:documentation>
+            <wsdl:documentation>Logical address of service producer.</wsdl:documentation>
         </wsdl:part>
         <wsdl:part name='parameters'
-                   element='tjsr:OrdineraUtsattning' />
+                   element='tjsr:DiscontinuePrescription' />
     </wsdl:message>
-    <wsdl:message name='OrdineraUtsattningResponse'>
+    <wsdl:message name='DiscontinuePrescriptionResponse'>
         <wsdl:part name='parameters'
-                   element='tjsr:OrdineraUtsattningResponse' />
+                   element='tjsr:DiscontinuePrescriptionResponse' />
     </wsdl:message>
-    <wsdl:portType name='OrdineraUtsattningResponderInterface'>
-        <wsdl:operation name='OrdineraUtsattning'>
-            <wsdl:input message='tns:OrdineraUtsattningRequest' />
-            <wsdl:output message='tns:OrdineraUtsattningResponse' />
+    <wsdl:portType name='DiscontinuePrescriptionResponderInterface'>
+        <wsdl:operation name='DiscontinuePrescription'>
+            <wsdl:input message='tns:DiscontinuePrescriptionRequest' />
+            <wsdl:output message='tns:DiscontinuePrescriptionResponse' />
         </wsdl:operation>
     </wsdl:portType>
-    <wsdl:binding name='OrdineraUtsattningResponderBinding'
-                  type='tns:OrdineraUtsattningResponderInterface'>
+    <wsdl:binding name='DiscontinuePrescriptionResponderBinding'
+                  type='tns:DiscontinuePrescriptionResponderInterface'>
         <soap:binding style='document'
                       transport='http://schemas.xmlsoap.org/soap/http' />
-        <wsdl:operation name='OrdineraUtsattning'>
-            <soap:operation soapAction='urn:riv:clinicalprocess:activityprescription:OrdineraUtsattningResponder:1:OrdineraUtsattning'
+        <wsdl:operation name='DiscontinuePrescription'>
+            <soap:operation soapAction='urn:riv:clinicalprocess:activityprescription:prescribe:DiscontinuePrescriptionResponder:1:DiscontinuePrescription'
                             style='document' />
             <wsdl:input>
                 <soap:header use='literal'
-                             message='tns:OrdineraUtsattningRequest'
+                             message='tns:DiscontinuePrescriptionRequest'
                              part='LogicalAddress' />
                 <soap:body use='literal'
                            parts='parameters' />
@@ -83,9 +83,9 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-    <wsdl:service name='OrdineraUtsattningResponderService'>
-        <wsdl:port name='OrdineraUtsattningResponderPort'
-                   binding='tns:OrdineraUtsattningResponderBinding'>
+    <wsdl:service name='DiscontinuePrescriptionResponderService'>
+        <wsdl:port name='DiscontinuePrescriptionResponderPort'
+                   binding='tns:DiscontinuePrescriptionResponderBinding'>
             <soap:address location='http://tempuri.org' />
         </wsdl:port>
     </wsdl:service>

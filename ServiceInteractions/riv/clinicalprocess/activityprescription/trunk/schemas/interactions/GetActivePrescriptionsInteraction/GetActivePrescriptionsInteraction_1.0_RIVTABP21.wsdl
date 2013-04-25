@@ -18,20 +18,20 @@
  under the License.
  -->
 <wsdl:definitions
-        name='SkrivUtLakemedelsforteckningInteraction'
+        name='GetActivePrescriptionsInteraction'
         xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'
         xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/'
         xmlns:xs='http://www.w3.org/2001/XMLSchema'
-        xmlns:tjsr='urn:riv:clinicalprocess:activityprescription:SkrivUtLakemedelsforteckningResponder:1'
-        xmlns:tjsi='urn:riv:clinicalprocess:activityprescription:SkrivUtLakemedelsforteckningInitiator:1'
-        xmlns:tns='urn:riv:clinicalprocess:activityprescription:SkrivUtLakemedelsforteckning:1:rivtabp21'
-        targetNamespace='urn:riv:clinicalprocess:activityprescription:SkrivUtLakemedelsforteckning:1:rivtabp21'
+        xmlns:tjsr='urn:riv:clinicalprocess:activityprescription:actoutcome:GetActivePrescriptionsResponder:1'
+        xmlns:tjsi='urn:riv:clinicalprocess:activityprescription:actoutcome:GetActivePrescriptionsInitiator:1'
+        xmlns:tns='urn:riv:clinicalprocess:activityprescription:actoutcome:GetActivePrescriptions:1:rivtabp21'
+        targetNamespace='urn:riv:clinicalprocess:activityprescription:actoutcome:GetActivePrescriptions:1:rivtabp21'
         xmlns:itr='urn:riv:itintegration:registry:1'>
     <xs:annotation>
         <xs:documentation>
-            Tjänsteinteraktionens namn: SkrivUtLakemedelsforteckningInteraction
+            Tjänsteinteraktionens namn: GetActivePrescriptionsInteraction
             Beskrivning:
-                To be written.
+                Get current prescriptions from to the national prescription database.
             Revisioner:
             Tjänstedomän: clinicalprocess:activityprescription
             Tjänsteinteraktionstyp: Fråga-Svar
@@ -40,41 +40,41 @@
         </xs:documentation>
     </xs:annotation>
     <wsdl:types>
-        <xs:schema targetNamespace='urn:riv:clinicalprocess:activityprescription:SkrivUtLakemedelsforteckning:1:rivtabp21'>
-            <xs:import schemaLocation='SkrivUtLakemedelsforteckningResponder_1.0.xsd'
-                       namespace='urn:riv:clinicalprocess:activityprescription:SkrivUtLakemedelsforteckningResponder:1' />
+        <xs:schema targetNamespace='urn:riv:clinicalprocess:activityprescription:actoutcome:GetActivePrescriptions:1:rivtabp21'>
+            <xs:import schemaLocation='GetActivePrescriptionsResponder_1.0.xsd'
+                       namespace='urn:riv:clinicalprocess:activityprescription:actoutcome:GetActivePrescriptionsResponder:1' />
             <xs:import schemaLocation='../../core_components/itintegration_registry_1.0.xsd'
                        namespace='urn:riv:itintegration:registry:1' />
         </xs:schema>
     </wsdl:types>
-    <wsdl:message name='SkrivUtLakemedelsforteckningRequest'>
+    <wsdl:message name='GetActivePrescriptionsRequest'>
         <wsdl:part name='LogicalAddress'
                    element='itr:LogicalAddress'>
-            <wsdl:documentation>HSA-Id of accessing department and provider.</wsdl:documentation>
+            <wsdl:documentation>Logical address of service producer.</wsdl:documentation>
         </wsdl:part>
         <wsdl:part name='parameters'
-                   element='tjsr:SkrivUtLakemedelsforteckning' />
+                   element='tjsr:GetActivePrescriptions' />
     </wsdl:message>
-    <wsdl:message name='SkrivUtLakemedelsforteckningResponse'>
+    <wsdl:message name='GetActivePrescriptionsResponse'>
         <wsdl:part name='parameters'
-                   element='tjsr:SkrivUtLakemedelsforteckningResponse' />
+                   element='tjsr:GetActivePrescriptionsResponse' />
     </wsdl:message>
-    <wsdl:portType name='SkrivUtLakemedelsforteckningResponderInterface'>
-        <wsdl:operation name='SkrivUtLakemedelsforteckning'>
-            <wsdl:input message='tns:SkrivUtLakemedelsforteckningRequest' />
-            <wsdl:output message='tns:SkrivUtLakemedelsforteckningResponse' />
+    <wsdl:portType name='GetActivePrescriptionsResponderInterface'>
+        <wsdl:operation name='GetActivePrescriptions'>
+            <wsdl:input message='tns:GetActivePrescriptionsRequest' />
+            <wsdl:output message='tns:GetActivePrescriptionsResponse' />
         </wsdl:operation>
     </wsdl:portType>
-    <wsdl:binding name='SkrivUtLakemedelsforteckningResponderBinding'
-                  type='tns:SkrivUtLakemedelsforteckningResponderInterface'>
+    <wsdl:binding name='GetActivePrescriptionsResponderBinding'
+                  type='tns:GetActivePrescriptionsResponderInterface'>
         <soap:binding style='document'
                       transport='http://schemas.xmlsoap.org/soap/http' />
-        <wsdl:operation name='SkrivUtLakemedelsforteckning'>
-            <soap:operation soapAction='urn:riv:clinicalprocess:activityprescription:SkrivUtLakemedelsforteckningResponder:1:SkrivUtLakemedelsforteckning'
+        <wsdl:operation name='GetActivePrescriptions'>
+            <soap:operation soapAction='urn:riv:clinicalprocess:activityprescription:actoutcome:GetActivePrescriptionsResponder:1:GetActivePrescriptions'
                             style='document' />
             <wsdl:input>
                 <soap:header use='literal'
-                             message='tns:SkrivUtLakemedelsforteckningRequest'
+                             message='tns:GetActivePrescriptionsRequest'
                              part='LogicalAddress' />
                 <soap:body use='literal'
                            parts='parameters' />
@@ -84,9 +84,9 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-    <wsdl:service name='SkrivUtLakemedelsforteckningResponderService'>
-        <wsdl:port name='SkrivUtLakemedelsforteckningResponderPort'
-                   binding='tns:SkrivUtLakemedelsforteckningResponderBinding'>
+    <wsdl:service name='GetActivePrescriptionsResponderService'>
+        <wsdl:port name='GetActivePrescriptionsResponderPort'
+                   binding='tns:GetActivePrescriptionsResponderBinding'>
             <soap:address location='http://tempuri.org' />
         </wsdl:port>
     </wsdl:service>

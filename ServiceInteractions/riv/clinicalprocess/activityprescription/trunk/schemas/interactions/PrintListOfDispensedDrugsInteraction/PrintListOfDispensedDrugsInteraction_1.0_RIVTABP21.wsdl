@@ -18,20 +18,20 @@
  under the License.
  -->
 <wsdl:definitions
-        name='HamtaLakemedelsforteckningInteraction'
+        name='PrintListOfDispensedDrugsInteraction'
         xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'
         xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/'
         xmlns:xs='http://www.w3.org/2001/XMLSchema'
-        xmlns:tjsr='urn:riv:clinicalprocess:activityprescription:HamtaLakemedelsforteckningResponder:1'
-        xmlns:tjsi='urn:riv:clinicalprocess:activityprescription:HamtaLakemedelsforteckningInitiator:1'
-        xmlns:tns='urn:riv:clinicalprocess:activityprescription:HamtaLakemedelsforteckning:1:rivtabp21'
-        targetNamespace='urn:riv:clinicalprocess:activityprescription:HamtaLakemedelsforteckning:1:rivtabp21'
+        xmlns:tjsr='urn:riv:clinicalprocess:activityprescription:actoutcome:PrintListOfDispensedDrugsResponder:1'
+        xmlns:tjsi='urn:riv:clinicalprocess:activityprescription:actoutcome:PrintListOfDispensedDrugsInitiator:1'
+        xmlns:tns='urn:riv:clinicalprocess:activityprescription:actoutcome:PrintListOfDispensedDrugs:1:rivtabp21'
+        targetNamespace='urn:riv:clinicalprocess:activityprescription:actoutcome:PrintListOfDispensedDrugs:1:rivtabp21'
         xmlns:itr='urn:riv:itintegration:registry:1'>
     <xs:annotation>
         <xs:documentation>
-            Tjänsteinteraktionens namn: HamtaLakemedelsforteckningInteraction
+            Tjänsteinteraktionens namn: PrintListOfDispensedDrugsInteraction
             Beskrivning:
-                To be written.
+                Print list of dispensed drugs from the dispensed drugs registry.
             Revisioner:
             Tjänstedomän: clinicalprocess:activityprescription
             Tjänsteinteraktionstyp: Fråga-Svar
@@ -40,41 +40,41 @@
         </xs:documentation>
     </xs:annotation>
     <wsdl:types>
-        <xs:schema targetNamespace='urn:riv:clinicalprocess:activityprescription:HamtaLakemedelsforteckning:1:rivtabp21'>
-            <xs:import schemaLocation='HamtaLakemedelsforteckningResponder_1.0.xsd'
-                       namespace='urn:riv:clinicalprocess:activityprescription:HamtaLakemedelsforteckningResponder:1' />
+        <xs:schema targetNamespace='urn:riv:clinicalprocess:activityprescription:actoutcome:PrintListOfDispensedDrugs:1:rivtabp21'>
+            <xs:import schemaLocation='PrintListOfDispensedDrugsResponder_1.0.xsd'
+                       namespace='urn:riv:clinicalprocess:activityprescription:actoutcome:PrintListOfDispensedDrugsResponder:1' />
             <xs:import schemaLocation='../../core_components/itintegration_registry_1.0.xsd'
                        namespace='urn:riv:itintegration:registry:1' />
         </xs:schema>
     </wsdl:types>
-    <wsdl:message name='HamtaLakemedelsforteckningRequest'>
+    <wsdl:message name='PrintListOfDispensedDrugsRequest'>
         <wsdl:part name='LogicalAddress'
                    element='itr:LogicalAddress'>
-            <wsdl:documentation>HSA-Id of accessing department and provider.</wsdl:documentation>
+            <wsdl:documentation>Logical address of service producer.</wsdl:documentation>
         </wsdl:part>
         <wsdl:part name='parameters'
-                   element='tjsr:HamtaLakemedelsforteckning' />
+                   element='tjsr:PrintListOfDispensedDrugs' />
     </wsdl:message>
-    <wsdl:message name='HamtaLakemedelsforteckningResponse'>
+    <wsdl:message name='PrintListOfDispensedDrugsResponse'>
         <wsdl:part name='parameters'
-                   element='tjsr:HamtaLakemedelsforteckningResponse' />
+                   element='tjsr:PrintListOfDispensedDrugsResponse' />
     </wsdl:message>
-    <wsdl:portType name='HamtaLakemedelsforteckningResponderInterface'>
-        <wsdl:operation name='HamtaLakemedelsforteckning'>
-            <wsdl:input message='tns:HamtaLakemedelsforteckningRequest' />
-            <wsdl:output message='tns:HamtaLakemedelsforteckningResponse' />
+    <wsdl:portType name='PrintListOfDispensedDrugsResponderInterface'>
+        <wsdl:operation name='PrintListOfDispensedDrugs'>
+            <wsdl:input message='tns:PrintListOfDispensedDrugsRequest' />
+            <wsdl:output message='tns:PrintListOfDispensedDrugsResponse' />
         </wsdl:operation>
     </wsdl:portType>
-    <wsdl:binding name='HamtaLakemedelsforteckningResponderBinding'
-                  type='tns:HamtaLakemedelsforteckningResponderInterface'>
+    <wsdl:binding name='PrintListOfDispensedDrugsResponderBinding'
+                  type='tns:PrintListOfDispensedDrugsResponderInterface'>
         <soap:binding style='document'
                       transport='http://schemas.xmlsoap.org/soap/http' />
-        <wsdl:operation name='HamtaLakemedelsforteckning'>
-            <soap:operation soapAction='urn:riv:clinicalprocess:activityprescription:HamtaLakemedelsforteckningResponder:1:HamtaLakemedelsforteckning'
+        <wsdl:operation name='PrintListOfDispensedDrugs'>
+            <soap:operation soapAction='urn:riv:clinicalprocess:activityprescription:actoutcome:PrintListOfDispensedDrugsResponder:1:PrintListOfDispensedDrugs'
                             style='document' />
             <wsdl:input>
                 <soap:header use='literal'
-                             message='tns:HamtaLakemedelsforteckningRequest'
+                             message='tns:PrintListOfDispensedDrugsRequest'
                              part='LogicalAddress' />
                 <soap:body use='literal'
                            parts='parameters' />
@@ -84,9 +84,9 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-    <wsdl:service name='HamtaLakemedelsforteckningResponderService'>
-        <wsdl:port name='HamtaLakemedelsforteckningResponderPort'
-                   binding='tns:HamtaLakemedelsforteckningResponderBinding'>
+    <wsdl:service name='PrintListOfDispensedDrugsResponderService'>
+        <wsdl:port name='PrintListOfDispensedDrugsResponderPort'
+                   binding='tns:PrintListOfDispensedDrugsResponderBinding'>
             <soap:address location='http://tempuri.org' />
         </wsdl:port>
     </wsdl:service>

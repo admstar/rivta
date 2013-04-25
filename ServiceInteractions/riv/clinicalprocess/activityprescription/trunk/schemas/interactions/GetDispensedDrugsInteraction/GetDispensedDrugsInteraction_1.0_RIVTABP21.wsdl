@@ -18,20 +18,20 @@
  under the License.
  -->
 <wsdl:definitions
-        name='HamtaAktuellaOrdinationerInteraction'
+        name='GetDispensedDrugsInteraction'
         xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'
         xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/'
         xmlns:xs='http://www.w3.org/2001/XMLSchema'
-        xmlns:tjsr='urn:riv:clinicalprocess:activityprescription:HamtaAktuellaOrdinationerResponder:1'
-        xmlns:tjsi='urn:riv:clinicalprocess:activityprescription:HamtaAktuellaOrdinationerInitiator:1'
-        xmlns:tns='urn:riv:clinicalprocess:activityprescription:HamtaAktuellaOrdinationer:1:rivtabp21'
-        targetNamespace='urn:riv:clinicalprocess:activityprescription:HamtaAktuellaOrdinationer:1:rivtabp21'
+        xmlns:tjsr='urn:riv:clinicalprocess:activityprescription:actoutcome:GetDispensedDrugsResponder:1'
+        xmlns:tjsi='urn:riv:clinicalprocess:activityprescription:actoutcome:GetDispensedDrugsInitiator:1'
+        xmlns:tns='urn:riv:clinicalprocess:activityprescription:actoutcome:GetDispensedDrugs:1:rivtabp21'
+        targetNamespace='urn:riv:clinicalprocess:activityprescription:actoutcome:GetDispensedDrugs:1:rivtabp21'
         xmlns:itr='urn:riv:itintegration:registry:1'>
     <xs:annotation>
         <xs:documentation>
-            Tjänsteinteraktionens namn: HamtaAktuellaOrdinationerInteraction
+            Tjänsteinteraktionens namn: GetDispensedDrugsInteraction
             Beskrivning:
-            Fetch current activityprescriptions from to the national activityprescription database.
+                To be written.
             Revisioner:
             Tjänstedomän: clinicalprocess:activityprescription
             Tjänsteinteraktionstyp: Fråga-Svar
@@ -40,41 +40,41 @@
         </xs:documentation>
     </xs:annotation>
     <wsdl:types>
-        <xs:schema targetNamespace='urn:riv:clinicalprocess:activityprescription:HamtaAktuellaOrdinationer:1:rivtabp21'>
-            <xs:import schemaLocation='HamtaAktuellaOrdinationerResponder_1.0.xsd'
-                       namespace='urn:riv:clinicalprocess:activityprescription:HamtaAktuellaOrdinationerResponder:1' />
+        <xs:schema targetNamespace='urn:riv:clinicalprocess:activityprescription:actoutcome:GetDispensedDrugs:1:rivtabp21'>
+            <xs:import schemaLocation='GetDispensedDrugsResponder_1.0.xsd'
+                       namespace='urn:riv:clinicalprocess:activityprescription:actoutcome:GetDispensedDrugsResponder:1' />
             <xs:import schemaLocation='../../core_components/itintegration_registry_1.0.xsd'
                        namespace='urn:riv:itintegration:registry:1' />
         </xs:schema>
     </wsdl:types>
-    <wsdl:message name='HamtaAktuellaOrdinationerRequest'>
+    <wsdl:message name='GetDispensedDrugsRequest'>
         <wsdl:part name='LogicalAddress'
                    element='itr:LogicalAddress'>
-            <wsdl:documentation>HSA-Id of prescribing department and provider.</wsdl:documentation>
+            <wsdl:documentation>Logical address of service producer.</wsdl:documentation>
         </wsdl:part>
         <wsdl:part name='parameters'
-                   element='tjsr:HamtaAktuellaOrdinationer' />
+                   element='tjsr:GetDispensedDrugs' />
     </wsdl:message>
-    <wsdl:message name='HamtaAktuellaOrdinationerResponse'>
+    <wsdl:message name='GetDispensedDrugsResponse'>
         <wsdl:part name='parameters'
-                   element='tjsr:HamtaAktuellaOrdinationerResponse' />
+                   element='tjsr:GetDispensedDrugsResponse' />
     </wsdl:message>
-    <wsdl:portType name='HamtaAktuellaOrdinationerResponderInterface'>
-        <wsdl:operation name='HamtaAktuellaOrdinationer'>
-            <wsdl:input message='tns:HamtaAktuellaOrdinationerRequest' />
-            <wsdl:output message='tns:HamtaAktuellaOrdinationerResponse' />
+    <wsdl:portType name='GetDispensedDrugsResponderInterface'>
+        <wsdl:operation name='GetDispensedDrugs'>
+            <wsdl:input message='tns:GetDispensedDrugsRequest' />
+            <wsdl:output message='tns:GetDispensedDrugsResponse' />
         </wsdl:operation>
     </wsdl:portType>
-    <wsdl:binding name='HamtaAktuellaOrdinationerResponderBinding'
-                  type='tns:HamtaAktuellaOrdinationerResponderInterface'>
+    <wsdl:binding name='GetDispensedDrugsResponderBinding'
+                  type='tns:GetDispensedDrugsResponderInterface'>
         <soap:binding style='document'
                       transport='http://schemas.xmlsoap.org/soap/http' />
-        <wsdl:operation name='HamtaAktuellaOrdinationer'>
-            <soap:operation soapAction='urn:riv:clinicalprocess:activityprescription:HamtaAktuellaOrdinationerResponder:1:HamtaAktuellaOrdinationer'
+        <wsdl:operation name='GetDispensedDrugs'>
+            <soap:operation soapAction='urn:riv:clinicalprocess:activityprescription:actoutcome:GetDispensedDrugsResponder:1:GetDispensedDrugs'
                             style='document' />
             <wsdl:input>
                 <soap:header use='literal'
-                             message='tns:HamtaAktuellaOrdinationerRequest'
+                             message='tns:GetDispensedDrugsRequest'
                              part='LogicalAddress' />
                 <soap:body use='literal'
                            parts='parameters' />
@@ -84,9 +84,9 @@
             </wsdl:output>
         </wsdl:operation>
     </wsdl:binding>
-    <wsdl:service name='HamtaAktuellaOrdinationerResponderService'>
-        <wsdl:port name='HamtaAktuellaOrdinationerResponderPort'
-                   binding='tns:HamtaAktuellaOrdinationerResponderBinding'>
+    <wsdl:service name='GetDispensedDrugsResponderService'>
+        <wsdl:port name='GetDispensedDrugsResponderPort'
+                   binding='tns:GetDispensedDrugsResponderBinding'>
             <soap:address location='http://tempuri.org' />
         </wsdl:port>
     </wsdl:service>

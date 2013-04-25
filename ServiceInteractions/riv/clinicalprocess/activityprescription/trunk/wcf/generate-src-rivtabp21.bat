@@ -19,37 +19,40 @@
 @REM under the License.
 @REM ---------------------------------------------------------------------------------
 CD ..
-
+	
 SET SCHEMADIR=schemas
-SET W0=%SCHEMADIR%%SCHEMADIR%\interactions\HamtaAktuellaOrdinationerInteraction\HamtaAktuellaOrdinationerInteraction_1.0_RIVTABP21.wsdl
-SET X0=%SCHEMADIR%\interactions\HamtaAktuellaOrdinationerInteraction\*.xsd
+SET W0=%SCHEMADIR%\interactions\GetActivePrescriptionsInteraction\GetActivePrescriptionsInteraction_1.0_RIVTABP21.wsdl
+SET X0=%SCHEMADIR%\interactions\GetActivePrescriptionsInteraction\*.xsd
 
-SET W1=%SCHEMADIR%%SCHEMADIR%\interactions\HamtaEjVerifieradeOrdinationerInteraction\HamtaEjVerifieradeOrdinationerInteraction_1.0_RIVTABP21.wsdl
-SET X1=%SCHEMADIR%\interactions\HamtaEjVerifieradeOrdinationerInteraction\*.xsd
+SET W1=%SCHEMADIR%\interactions\GetUnconfirmedPrescriptionsInteraction\GetUnconfirmedPrescriptionsInteraction_1.0_RIVTABP21.wsdl
+SET X1=%SCHEMADIR%\interactions\GetUnconfirmedPrescriptionsInteraction\*.xsd
 
-SET W2=%SCHEMADIR%%SCHEMADIR%\interactions\HamtaIckeAktuellaOrdinationerInteraction\HamtaIckeAktuellaOrdinationerInteraction_1.0_RIVTABP21.wsdl
-SET X2=%SCHEMADIR%\interactions\HamtaIckeAktuellaOrdinationerInteraction\*.xsd
+SET W2=%SCHEMADIR%\interactions\GetInactivePrescriptionsInteraction\GetInactivePrescriptionsInteraction_1.0_RIVTABP21.wsdl
+SET X2=%SCHEMADIR%\interactions\GetInactivePrescriptionsInteraction\*.xsd
 
-SET W3=%SCHEMADIR%%SCHEMADIR%\interactions\HamtaOrdinationskedjaInteraction\HamtaOrdinationskedjaInteraction_1.0_RIVTABP21.wsdl
-SET X3=%SCHEMADIR%\interactions\HamtaOrdinationskedjaInteraction\*.xsd
+SET W3=%SCHEMADIR%\interactions\GetPrescriptionHistoryInteraction\GetPrescriptionHistoryInteraction_1.0_RIVTABP21.wsdl
+SET X3=%SCHEMADIR%\interactions\GetPrescriptionHistoryInteraction\*.xsd
 
-SET W4=%SCHEMADIR%%SCHEMADIR%\interactions\OrdineraInsattningInteraction\OrdineraInsattningInteraction_1.0_RIVTABP21.wsdl
-SET X4=%SCHEMADIR%\interactions\OrdineraInsattningInteraction\*.xsd
+SET W4=%SCHEMADIR%\interactions\RegisterPrescriptionInteraction\RegisterPrescriptionInteraction_1.0_RIVTABP21.wsdl
+SET X4=%SCHEMADIR%\interactions\RegisterPrescriptionInteraction\*.xsd
 
-SET W5=%SCHEMADIR%%SCHEMADIR%\interactions\OrdineraUtsattningInteraction\OrdineraUtsattningInteraction_1.0_RIVTABP21.wsdl
-SET X5=%SCHEMADIR%\interactions\OrdineraUtsattningInteraction\*.xsd
+SET W5=%SCHEMADIR%\interactions\DiscontinuePrescriptionInteraction\DiscontinuePrescriptionInteraction_1.0_RIVTABP21.wsdl
+SET X5=%SCHEMADIR%\interactions\DiscontinuePrescriptionInteraction\*.xsd
 
-SET W6=%SCHEMADIR%%SCHEMADIR%\interactions\HamtaLakemedelsforteckningInteraction\HamtaLakemedelsforteckningInteraction_1.0_RIVTABP21.wsdl
-SET X6=%SCHEMADIR%%SCHEMADIR%\interactions\HamtaLakemedelsforteckningInteraction\*.xsd
+SET W5=%SCHEMADIR%\interactions\DiscontinuePrescriptionInteraction\DiscontinuePrescriptionInteraction_1.0_RIVTABP21.wsdl
+SET X5=%SCHEMADIR%\interactions\DiscontinuePrescriptionInteraction\*.xsd
 
-SET W7=%SCHEMADIR%%SCHEMADIR%\interactions\SkrivUtLakemedelsforteckningInteraction\SkrivUtLakemedelsforteckningInteraction_1.0_RIVTABP21.wsdl
-SET X7=%SCHEMADIR%%SCHEMADIR%\interactions\SkrivUtLakemedelsforteckningInteraction\*.wsdl
+SET W6=%SCHEMADIR%\interactions\GetDispensedDrugsInteraction\GetDispensedDrugsInteraction_1.0_RIVTABP21.wsdl
+SET X6=%SCHEMADIR%\interactions\GetDispensedDrugsInteraction\*.xsd
+
+SET W7=%SCHEMADIR%\interactions\PrintListOfDispensedDrugsInteraction\PrintListOfDispensedDrugsInteraction_1.0_RIVTABP21.wsdl
+SET X7=%SCHEMADIR%\interactions\PrintListOfDispensedDrugsInteraction\*.xsd
 
 SET XCORE=%SCHEMADIR%\core_components\*.xsd
 
 SET SCHEMAS=%XCORE% %W0% %X0% %W1% %X1% %W2% %X2% %W3% %X3% %W4% %X4% %W5% %X5% %W6% %X6% %W7% %X7% 
 
-SET OUTFILE=/out:wcf\generated-src\clinicalprocess_activityprescription_interactions.cs
+SET OUTFILE=/out:wcf\generated-src\clinicalprocess_activityprescription.cs
 SET APPCONFIG=/config:wcf\generated-src\app.config
 SET NAMESPACE=/namespace:*,riv.clinicalprocess.activityprescription.schemas.v1
 SET SVCUTIL="svcutil.exe"
@@ -58,4 +61,4 @@ SET XCORE=%SCHEMADIR%\core_components\*.xsd
 
 CD wcf
 ECHO Generating Service contract .Net Binding interfaces and classes for clinicalprocess:activityprescription Release 1
-ECHO I DotNetprojektet ska du ta lagga till referens till System.ServiceModel
+ECHO Reference to System.ServiceModel is needed in DotNetproject.
