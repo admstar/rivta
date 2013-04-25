@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Apotekens Service AB licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'
+           xmlns:tns='urn:riv:clinicalprocess:activityprescription:actoutcome:GetDispensedDrugsResponder:1'
+           xmlns:core='urn:riv:clinicalprocess:activityprescription:1'
+           targetNamespace='urn:riv:clinicalprocess:activityprescription:actoutcome:GetDispensedDrugsResponder:1'
+           elementFormDefault='qualified'
+           attributeFormDefault='unqualified'
+           version='1.0'>
+
+    <xs:import schemaLocation='../../core_components/clinicalprocess_activity_prescription_1.0.xsd'
+               namespace='urn:riv:clinicalprocess:activityprescription:1' />
+
+    <xs:element name='GetDispensedDrugs'
+                type='tns:GetDispensedDrugsType' />
+
+    <xs:element name='GetDispensedDrugsResponse'
+                type='tns:GetDispensedDrugsResponseType'/>
+
+    <xs:complexType name='GetDispensedDrugsType'>
+        <xs:sequence>
+
+            <xs:element name="anvandaresHSAId"
+                        type="xs:string"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>HSA-id för läsande person.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="anvandarnamn"
+                        type="xs:string"
+                        minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Användarnamn, används i kombination med HSA användar-id (klientinformation.anvandare)
+                        för att identifiera användare. Obligatoriskt om förskrivarkod saknas.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="arbetsplatskod"
+                        type="xs:string"
+                        minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Förskrivarens arbetsplatskod, valideras mot ARKO.
+                        Obligatorisk om arbetsplatsnamn och arbetsplatsort inte anges.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="arbetsplatsnamn"
+                        type="xs:string"
+                        minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Namnet på användarens arbetsplats.
+                        Används istället för arbetsplatskod.
+                        Obligatorisk om arbetsplatskod inte anges.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="arbetsplatsort"
+                        type="xs:string"
+                        minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Orten för användarens arbetsplats.
+                        Används istället för arbetsplatskod.
+                        Obligatorisk om arbetsplatskod inte anges.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="atkomsttyp"
+                        type="xs:string"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>Treställig kod för typ av åtkomst. Tillåtna värden:
+                        <itemizedlist>
+                            <listitem>ENG - Engångssamtycke</listitem>
+                            <listitem>SAM - Tillsvidaresamtycke</listitem>
+                            <listitem>NOD - Nödåtkomst</listitem>
+                        </itemizedlist></xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="forskrivarkod"
+                        type="xs:string"
+                        minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Förskrivarens förskrivarkod, valideras mot FORS. Förskrivarkod skall även
+                        anges som användare i klientinformation.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="personnummer"
+                        type="xs:string"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>Giltigt personnummer för patient vars läkemedelsförteckning skall hämtas.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="vardenhetsHSAId"
+                        type="xs:string"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>HSA-id för läsande vårdenhet.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="vardgivaresHSAId"
+                        type="xs:string"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>HSA-id för läsande vårdgivare.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            
+            <xs:any namespace='##other'
+                    processContents='lax'
+                    minOccurs='0'
+                    maxOccurs='unbounded' />
+
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name='GetDispensedDrugsResponseType'>
+        <xs:sequence>
+
+            <xs:element name="lakemedelsforteckning"
+                        type="core:ReceptexpeditionsradMedOrdinationsmappningResponse"
+                        minOccurs="0"
+                        maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Patientens läkemedelsförteckning kompletterad med ordinationsmappningsinformation.
+                        Om patienten saknar poster i läkemedelsförteckningen så returneras en tom lista.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="patient"
+                        type="core:PatientMedRedNamnResponse"
+                        nillable="false"
+                        minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Information om patienten vars läkemedelsförteckning man hämtat. Om
+                        patienten är markerad som Avliden så returneras ej läkemedelsförteckning.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="varningsnivaUppnadd"
+                        minOccurs="0"
+                        type="xs:boolean"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>Flagga som anger om förskrivarens antal läsningar det senaste dygnet
+                        överskridit varningsnivå. Sant om varningsnivå har uppnåtts, annars
+                        falskt.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            
+            <xs:element name='ResultCode'
+                        type='core:ResultCodeEnum' />
+
+            <xs:element name='comment'
+                        type='xs:string'
+                        minOccurs='0' />
+
+            <xs:any namespace='##other'
+                    processContents='lax'
+                    minOccurs='0'
+                    maxOccurs='unbounded' />
+
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
