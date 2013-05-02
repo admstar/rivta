@@ -134,6 +134,17 @@
         </xs:sequence>
     </xs:complexType>
 
+	    <xs:complexType name="AuthorOtherRoleType">
+	        <xs:annotation>
+	            <xs:documentation/>
+	        </xs:annotation>
+	        <xs:sequence>
+	            <xs:element name="authorOtherRoleCode" type="xs:string"/>
+	            <xs:element name="authorOtherRoleCodeOID" type="xs:string"/>
+	        </xs:sequence>
+	    </xs:complexType>
+	</xs:schema>
+
     <xs:complexType name="LegalAuthenticatorType">
         <xs:annotation>
             <xs:documentation>
@@ -244,146 +255,123 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:complexType name="GenderType">
-        <xs:annotation>
-            <xs:documentation>CeHis gender codes.</xs:documentation>
-        </xs:annotation>
-        <xs:attribute name="code" type="codes:GenderTypeCodeEnum" use="required"/>
-        <xs:attribute name="codeSystem" fixed="1.2.752.129.2.2.1.1" use="required"/>
-    </xs:complexType>
-
-    <xs:complexType name="PrenatalMedicalHistoryType">
+    <xs:complexType name="MaternityMedicalRecordType">
         <xs:sequence>
-            <xs:element name="prenatalMedicalHistoryHeader" type="tns:PatientSummaryHeaderType"/>
-            <xs:element name="prenatalMedicalHistoryBody" type="tns:PrenatalMedicalHistoryBodyType"
-            />
+            <xs:element name="maternityMedicalRecordHeader" type="tns:PatientSummaryHeaderType"/>
+            <xs:element name="maternityMedicalRecordBody" type="tns:MaternityMedicalRecordBodyType" />
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="PrenatalMedicalHistoryBodyType">
+    <xs:complexType name="MaternityMedicalRecordBodyType">
         <xs:sequence>
-            <xs:element name="currentPregnancyLatestMenstruaton" type="tns:DateType" minOccurs="0"/>
-            <xs:element name="currentPregnancyPregnancyIndicationPositive" type="tns:DateType"
+            <xs:element name="registrationRecord" type="tns:RegistrationRecordType" minOccurs="0"/>
+            <xs:element name="pregnancyCheckupRecord" type="tns:PregnancyCheckupRecordType" minOccurs="0"/>
+            <xs:element name="postDeliveryRecord" type="tns:PostDeliveryRecordType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegistrationRecordType">
+        <xs:sequence>
+            <xs:element name="latestMenstruaton" type="tns:DateType" minOccurs="0"/>
+            <xs:element name="pregnancyIndicationPositive" type="tns:DateType"
                 minOccurs="0"/>
-            <xs:element name="currentPregnancyHaltedPreventivMedication" type="tns:DateType"
+            <xs:element name="haltedPreventivMedication" type="tns:DateType"
                 minOccurs="0"/>
             <xs:element name="expectedDeliveryFromLastMenstruation" type="tns:DateType"
-                minOccurs="0" maxOccurs="1"/>
-            <xs:element name="expectedDeliveryFromUltrasound" type="tns:DateType" minOccurs="0"
-                maxOccurs="1"/>
+                minOccurs="0" />
+            <xs:element name="expectedDeliveryFromUltrasound" type="tns:DateType" minOccurs="0" />
             <xs:element name="expectedDeliveryFromEmbryonicTransfer" type="tns:DateType"
                 minOccurs="0"/>
-            <xs:element minOccurs="0" name="weightAtRegistration" type="xs:int"/>
-            <xs:element minOccurs="0" name="involuntaryChildlessnessNumberOfYears" type="xs:string"/>
-            <xs:element maxOccurs="unbounded" minOccurs="0" name="previousPregnanciesAndDeliveries"
-                type="tns:PreviousPregnanciesAndDeliveriesType"/>
-            <xs:element name="diseasesThrombosis" type="xs:boolean"/>
-            <xs:element name="diseasesEndocineDiseases" type="xs:boolean"/>
-            <xs:element name="diseasesRecurrentUrinaryTractInfections" type="xs:boolean"/>
-            <xs:element name="diseasesDiabetesMellitus" type="xs:boolean"/>
-            <xs:element maxOccurs="unbounded" minOccurs="0"
-                name="medicationBeforRegistrationDuringPregnacy"
-                type="tns:MedicationBeforRegistrationDuringPregnacyType"/>
-            <xs:element minOccurs="0" name="assessmentAtFirstContactStandardCare" type="xs:boolean"/>
-            <xs:element maxOccurs="unbounded" minOccurs="0" name="pregnancyCheckup"
-                type="tns:PregnancyCheckupType"/>
+            <xs:element name="weight" type="xs:int" minOccurs="0" />
+            <xs:element name="involuntaryChildlessnessNumberOfYears" type="xs:string" minOccurs="0" />
+            <xs:element name="previousPregnancy"
+                type="tns:PreviousPregnancyType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="diseasesThrombosis" type="xs:boolean" minOccurs="0" />
+            <xs:element name="diseasesEndocineDiseases" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="diseasesRecurrentUrinaryTractInfections" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="diseasesDiabetesMellitus" type="xs:boolean" minOccurs="0"/>
+            <xs:element 
+                name="medicationDuringPregnacy"
+                type="tns:MedicationType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="assessmentAtFirstContactStandardCare" type="xs:boolean" minOccurs="0" />
+            <xs:element name="pregnancyCheckup"
+                type="tns:PregnancyCheckupType minOccurs="0" maxOccurs="unbounded"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="PreviousPregnanciesAndDeliveriesType">
+    <xs:complexType name="PreviousPregnancyType">
         <xs:sequence>
-            <xs:element name="previousPregnanciesAndDeliveriesYear" type="xs:int"/>
-            <xs:element name="previousPregnanciesAndDeliveriesMonth" type="xs:int"/>
-            <xs:element minOccurs="0" name="previousPregnanciesAndDeliveriesMiscarriage"
-                type="xs:boolean"/>
-            <xs:element minOccurs="0" name="previousPregnanciesAndDeliveriesHospital"
-                type="xs:string"/>
-            <xs:element minOccurs="0" name="previousPregnanciesAndDeliveriesProgress"
-                type="xs:string"/>
-            <xs:element minOccurs="0" name="previousPregnanciesAndDeliveriesSex"
-                type="tns:GenderType"/>
-            <xs:element minOccurs="0" name="previousPregnanciesAndDeliveriesWeight" type="xs:int"/>
-            <xs:element minOccurs="0" name="previousPregnanciesAndDeliveriesWeekOfGestation"
-                type="xs:int"/>
+            <xs:element name="year" type="xs:int"/>
+            <xs:element name="month" type="xs:int"/>
+            <xs:element name="delivery"
+                type="codes:DeliveryCodeEnum" minOccurs="0" />
+            <xs:elementname="healthcareFacility"
+                type="xs:string" minOccurs="0" />
+            <xs:element name="progress"
+                type="xs:string" minOccurs="0" />
+            <xs:element minOccurs="0" name="sex"
+                type="tns:SexCodeEnum"/>
+            <xs:element name="weightOfChild" type="tns:PQType" minOccurs="0" />
+            <xs:element name="weekOfGestation" type="xs:int" minOccurs="0" />
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="MedicationBeforRegistrationDuringPregnacyType">
+    <xs:complexType name="MedicationType">
         <xs:sequence>
-            <xs:element name="medicationBeforRegistrationDuringPregnacyMedication"/>
+            <xs:element name="medicament" type="xs:string"/>
+	        <xs:element name="dosage" type="tns:PQType" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="PregnancyCheckupType">
+    <xs:complexType name="PregnancyCheckupRecordType">
         <xs:sequence>
-            <xs:element name="pregnancyCheckupContactDate" type="tns:DateType"/>
-            <xs:element minOccurs="0" name="pregnancyCheckupCompleteWeeksOfGestation" type="xs:int"/>
-            <xs:element minOccurs="0" name="pregnancyCheckupWeight" type="xs:int"/>
-            <xs:element minOccurs="0" name="pregnancyCheckupSymfysFundus" type="xs:int"/>
-            <xs:element minOccurs="0" name="pregnancyCheckupHaemoglobin" type="xs:int"/>
-            <xs:element minOccurs="0" name="pregnancyCheckupXXX"
-                type="codes:PregnancyCheckupXXXCodeEnum"/>
-            <xs:element minOccurs="0" name="pregnancyCheckupBloodPressureSystolic" type="xs:int"/>
-            <xs:element minOccurs="0" name="pregnancyCheckupBloodPressureDiastolic" type="xs:int"/>
-            <xs:element minOccurs="0" name="pregnancyCheckupFetusPosition"
-                type="codes:pregnancyCheckupFetusPositionCodeEnum"/>
-            <xs:element minOccurs="0" name="pregnancyCheckupXXX2"
-                type="codes:PregnancyCheckupXXXCodeEnum"/>
-            <xs:element minOccurs="0" name="pregnancyCheckupFetusSound" type="xs:int"/>
-            <xs:element minOccurs="0" name="pregnancyCheckupTypeOfLeave"
-                type="codes:pregnancyCheckupTypeOfLeaveCodeEnum"/>
-            <xs:element maxOccurs="unbounded" minOccurs="0" name="pregnancyCheckupMedication"
-                type="codes:pregnancyCheckupMedicationCodeEnum"/>
-            <xs:element name="pregnancyCheckupMedicationMedication" type="xs:string"/>
-            <xs:element minOccurs="0" name="pregnancyCheckupMedicationDosage" type="xs:string"/>
+            <xs:element name="completeWeeksOfGestation" type="xs:int" minOccurs="0"/>
+            <xs:element name="weight" type="tns:PQType" minOccurs="0" />
+            <xs:element name="symfysFundus" type="tns:PQType" minOccurs="0" />
+            <xs:element name="haemoglobin" type="tns:PQType" minOccurs="0" />
+            <xs:element name="bloodPressureSystolic" type="tns:PQType" minOccurs="0" />
+            <xs:element name="bloodPressureDiastolic" type="tns:PQType" minOccurs="0" />
+            <xs:element name="fetalPosition"
+                type="codes:FetalPositionCodeEnum" minOccurs="0" />
+	        <xs:element name="fetalPresentation"
+	                type="codes:FetalPresentationCodeEnum" minOccurs="0" />
+            <xs:element name="fetalSound" type="tns:PQType" minOccurs="0" />
+            <xs:element name="typeOfLeave"
+                type="codes:TypeOfLeaveCodeEnum" minOccurs="0" />
+            <xs:element name="medicationSinceRegistration"
+                type="codes:MedicationType" minOccurs="0" maxOccurs="unbounded" />
         </xs:sequence>
     </xs:complexType>
 
-    <!-- DeliverMedicalHistory -->
-    <xs:complexType name="DeliveryMedicalHistoryType">
+ <xs:complexType name="PostDeliveryRecordType">
         <xs:sequence>
-            <xs:element name="deliveryMedicalHistoryHeader" type="tns:PatientSummaryHeaderType"/>
-            <xs:element name="deliveryMedicalHistoryBody" type="tns:DeliveryMedicalHistoryBodyType"
-            />
+            <xs:element name="motherPostDeliveryRecord" type="tns:MotherPostDeliveryRecordType"/>
+	        <xs:element name="childPostDeliveryRecord" type="tns:ChildPostDeliveryRecordType" minOccurs="1" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="DeliveryMedicalHistoryBodyType">
+    <xs:complexType name="MotherPostDeliveryRecordType">
         <xs:sequence>
-            <xs:element name="deliveryMedicalHistoryMother"
-                type="tns:DeliveryMedicalHistoryMotherType" minOccurs="0"/>
-            <xs:element name="deliveryMedicalHistoryChild"
-                type="tns:DeliveryMedicalHistoryChildType" minOccurs="0"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="DeliveryMedicalHistoryMotherType">
-        <xs:sequence>
-            <xs:element name="bloodPressureSystolic" type="xs:int" minOccurs="0"/>
-            <xs:element name="bloodPressureDiastolic" type="xs:int" minOccurs="0"/>
+            <xs:element name="bloodPressureSystolic" type="tns:PQTyp" minOccurs="0"/>
+            <xs:element name="bloodPressureDiastolic" type="tns:PQTyp" minOccurs="0"/>
+            <xs:element name="haemoglobin" type="tns:PQTyp" minOccurs="0"/>
             <xs:element name="bodyTemperature" type="xs:decimal" minOccurs="0"/>
-            <xs:element name="Urinated" type="xs:boolean" minOccurs="0"/>
-            <xs:element name="haemorrhageBeforePlacentaDelivery" type="xs:int" minOccurs="0"/>
-            <xs:element name="haemorrhageAfterPlacentaDelivery" type="xs:int" minOccurs="0"/>
+            <xs:element name="scarsOK" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="sutureRemoved" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="pelvicFloorOK" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="vulvaVaginaPortioOK" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="uterusOK" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="uterusNote" type="xs:string" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="DeliveryMedicalHistoryChildType">
+    <xs:complexType name="ChildPostDeliveryRecordType">
         <xs:sequence>
-            <xs:element minOccurs="0" name="suckle" type="xs:boolean"/>
-            <xs:element minOccurs="0" name="urinated" type="xs:boolean"/>
-            <xs:element minOccurs="0" name="meconium" type="xs:boolean"/>
+            <xs:element name="ordinalNumber" type="xs:int" />
+            <xs:element name="weight" type="tns:PQType" minOccurs="0" />
+            <xs:element name="apgarScore" type="xs:int" minOccurs="0" />
+            <xs:element name="suckle" type="xs:boolean" minOccurs="0" />
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="AuthorOtherRoleType">
-        <xs:annotation>
-            <xs:documentation/>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="authorOtherRoleCode" type="xs:string"/>
-            <xs:element name="authorOtherRoleCodeOID" type="xs:string"/>
-        </xs:sequence>
-    </xs:complexType>
-</xs:schema>
