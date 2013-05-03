@@ -143,7 +143,6 @@
 	            <xs:element name="authorOtherRoleCodeOID" type="xs:string"/>
 	        </xs:sequence>
 	    </xs:complexType>
-	</xs:schema>
 
     <xs:complexType name="LegalAuthenticatorType">
         <xs:annotation>
@@ -217,6 +216,13 @@
         <xs:sequence>
             <xs:element name="id" type="xs:string"/>
             <xs:element name="type" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PQType">
+        <xs:sequence>
+            <xs:element name="value" type="xs:decimal"/>
+            <xs:element name="unit" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -295,7 +301,7 @@
                 type="tns:MedicationType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="assessmentAtFirstContactStandardCare" type="xs:boolean" minOccurs="0" />
             <xs:element name="pregnancyCheckup"
-                type="tns:PregnancyCheckupType minOccurs="0" maxOccurs="unbounded"/>
+                type="tns:PregnancyCheckupRecordType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -306,12 +312,12 @@
             <xs:element name="month" type="xs:int"/>
             <xs:element name="delivery"
                 type="codes:DeliveryCodeEnum" minOccurs="0" />
-            <xs:elementname="healthcareFacility"
+            <xs:element name="healthcareFacility"
                 type="xs:string" minOccurs="0" />
             <xs:element name="progress"
                 type="xs:string" minOccurs="0" />
             <xs:element minOccurs="0" name="sex"
-                type="tns:SexCodeEnum"/>
+                type="codes:SexCodeEnum"/>
             <xs:element name="weightOfChild" type="tns:PQType" minOccurs="0" />
             <xs:element name="weekOfGestation" type="xs:int" minOccurs="0" />
         </xs:sequence>
@@ -340,7 +346,7 @@
             <xs:element name="typeOfLeave"
                 type="codes:TypeOfLeaveCodeEnum" minOccurs="0" />
             <xs:element name="medicationSinceRegistration"
-                type="codes:MedicationType" minOccurs="0" maxOccurs="unbounded" />
+                type="tns:MedicationType" minOccurs="0" maxOccurs="unbounded" />
         </xs:sequence>
     </xs:complexType>
 
@@ -353,9 +359,9 @@
 
     <xs:complexType name="MotherPostDeliveryRecordType">
         <xs:sequence>
-            <xs:element name="bloodPressureSystolic" type="tns:PQTyp" minOccurs="0"/>
-            <xs:element name="bloodPressureDiastolic" type="tns:PQTyp" minOccurs="0"/>
-            <xs:element name="haemoglobin" type="tns:PQTyp" minOccurs="0"/>
+            <xs:element name="bloodPressureSystolic" type="tns:PQType" minOccurs="0"/>
+            <xs:element name="bloodPressureDiastolic" type="tns:PQType" minOccurs="0"/>
+            <xs:element name="haemoglobin" type="tns:PQType" minOccurs="0"/>
             <xs:element name="bodyTemperature" type="xs:decimal" minOccurs="0"/>
             <xs:element name="scarsOK" type="xs:boolean" minOccurs="0"/>
             <xs:element name="sutureRemoved" type="xs:boolean" minOccurs="0"/>
@@ -374,4 +380,4 @@
             <xs:element name="suckle" type="xs:boolean" minOccurs="0" />
         </xs:sequence>
     </xs:complexType>
-
+</xs:schema>

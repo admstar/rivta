@@ -23,19 +23,22 @@
 	
 	SET SCHEMADIR=schemas
 	
-SET W1=%SCHEMADIR%\.\interactions\GetReferralOutcomeInteraction\GetReferralOutcomeInteraction_2.0_RIVTABP21.wsdl
-SET X1=%SCHEMADIR%\interactions\GetReferralOutcomeInteraction/\*.xsd
+	SET W0=%SCHEMADIR%\interactions\GetMaternityMedicalHistoryInteraction\GetMaternityMedicalHistoryInteraction_2.0_RIVTABP21.wsdl
+SET X0=%SCHEMADIR%\interactions\GetMaternityMedicalHistoryInteraction\*.xsd
+
+SET W1=%SCHEMADIR%\interactions\GetReferralOutcomeInteraction\GetReferralOutcomeInteraction_2.0_RIVTABP21.wsdl
+SET X1=%SCHEMADIR%\interactions\GetReferralOutcomeInteraction\*.xsd
 
 SET XCORE=%SCHEMADIR%\core_components\*.xsd
 
-SET SCHEMAS=%XCORE% %W0% %X0% %W1% %X1% %W2% %X2%
+SET SCHEMAS=%XCORE% %W0% %X0% %W1% %X1% 
 
-SET OUTFILE=/out:wcf\generated-src\clinicalprocessHealthcondActoutcome.cs
+SET OUTFILE=/out:wcf\generated-src\ClinicalprocessHealthcondActoutcomeInteractions.cs
 SET APPCONFIG=/config:wcf\generated-src\app.config
-SET NAMESPACE=/namespace:*,Riv.ClinicalProcess.Healthcond.Actoutcome.Schemas.v1
+SET NAMESPACE=/namespace:*,Riv.Clinicalprocess.Healthcond.Actoutcome.Schemas.v2
 SET SVCUTIL="svcutil.exe"
 %SVCUTIL% /language:cs %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
 
 CD wcf
-ECHO Generating Service contract .Net Binding interfaces and classes for clinicalprocess:requestworkflow Release 1
+ECHO Generating Service contract .Net Binding interfaces and classes for clinicalprocess:healthcond:actoutcome Release 2
 ECHO I DotNetprojektet ska du ta lagga till referens till System.ServiceModel
