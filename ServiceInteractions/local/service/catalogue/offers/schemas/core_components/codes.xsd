@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="urn:riv:service:catalogue:waitingtimes:codes">
+
+    <xs:simpleType name="codeForFinancingType_values">
+        <xs:restriction base="xs:int">
+            <xs:enumeration value="1">
+                <xs:annotation>
+                    <xs:documentation>finans1</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+                <xs:annotation>
+                    <xs:documentation>finans2</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+                <xs:annotation>
+                    <xs:documentation>finans3</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="codeForFinancingType">
+        <xs:annotation>
+            <xs:documentation>All typer av finansiering.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xs:anyType">                
+                <xs:attribute name="code" type="codeForFinancingType_values"/>
+                <xs:attribute name="codeSystem" fixed="x.y.z.w"/>
+            </xs:restriction>          
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>
