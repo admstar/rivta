@@ -32,7 +32,7 @@
 
   <xs:complexType name="GetWaitingTimeFromDateToDateByHsaIDType">
     <xs:annotation>
-      <xs:documentation>One or all elements can be used to narrow down the search.</xs:documentation>
+      <xs:documentation>The purpose of this interaction is to return one to many waiting times for a given hsaID and a start and end date</xs:documentation>
     </xs:annotation>
     <xs:sequence>
       <xs:element name="hsaID" type="xs:string" minOccurs="1">
@@ -48,7 +48,8 @@
 
   <xs:complexType name="GetWaitingTimeFromDateToDateByHsaIDResponseType">
     <xs:sequence>
-      <xs:element name="service" type="core:WaitingTimeType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="historicalWaitingTimes" type="core:WaitingTimeType" minOccurs="0"
+        maxOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
