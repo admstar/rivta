@@ -20,8 +20,8 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:tns="urn:riv:service:catalogue:FindWaitingTimesResponder:1"
   xmlns:core="urn:riv:service:catalogue:1"
-  targetNamespace="urn:riv:service:catalogue:FindWaitingTimesResponder:1" elementFormDefault="qualified"
-  attributeFormDefault="unqualified" version="1.0">
+  targetNamespace="urn:riv:service:catalogue:FindWaitingTimesResponder:1"
+  elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
   <xs:import schemaLocation="../../core_components/service_catalogue_waiting_times_1.0.xsd"
     namespace="urn:riv:service:catalogue:1"/>
 
@@ -33,24 +33,14 @@
       <xs:documentation>One or all elements can be used to narrow down the search.</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="hsaID" type="xs:string" minOccurs="0">
+      <xs:element name="hsaID" type="xs:string" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation>
           <xs:documentation>hsaID.</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="serviceID" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="productID" type="xs:string" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation>
           <xs:documentation>zero or more serviceID's can be listed.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="comissionID" type="xs:string" minOccurs="0">
-        <xs:annotation>
-          <xs:documentation>comissionID</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="offerID" type="xs:string" minOccurs="0">
-        <xs:annotation>
-          <xs:documentation>offerID.</xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
