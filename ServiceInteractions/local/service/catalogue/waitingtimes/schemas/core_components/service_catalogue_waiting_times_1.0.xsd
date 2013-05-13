@@ -17,9 +17,13 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:service:catalogue:1"
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:tns="urn:riv:service:catalogue:1"
+  xmlns:codes="urn:riv:service:catalogue:waitingtimes:codes"
   targetNamespace="urn:riv:service:catalogue:1" elementFormDefault="qualified"
   attributeFormDefault="unqualified" version="1.0">
+  
+  <xs:import namespace="urn:riv:service:catalogue:waitingtimes:codes" schemaLocation="codes.xsd"/>
 
   <xs:complexType name="WaitingTimeTransactionType">
     <xs:annotation>
@@ -66,8 +70,7 @@
   <!-- -->
   <xs:complexType name="WaitingTimeType">
     <xs:sequence>
-      <xs:element name="code"/>
-      <xs:element name="codeSystem"/>
+      <xs:element name="type" type="codes:codeForWaitingTimeType"/>
       <xs:element name="value" type="xs:unsignedLong">
         <xs:annotation>
           <xs:documentation>unit is measured in seconds.</xs:documentation>
