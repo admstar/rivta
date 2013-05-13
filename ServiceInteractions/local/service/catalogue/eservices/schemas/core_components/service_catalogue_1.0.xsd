@@ -17,14 +17,16 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:service:catalogue:1"
-  targetNamespace="urn:riv:service:catalogue:1" elementFormDefault="qualified"
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:tns="urn:riv:itintegration:catalogue:product:1"
+  targetNamespace="urn:riv:itintegration:catalogue:product:1" elementFormDefault="qualified"
   attributeFormDefault="unqualified" version="1.0">
 
   <xs:complexType name="ServiceTransactionType">
     <xs:annotation>
-      <xs:documentation>When deleteFlag is set to true, the given careUnitId will be deleted from the catalogue.
-        When set to false a create or update will be performed.</xs:documentation>
+      <xs:documentation>When deleteFlag is set to true, the given service will be deleted from the catalogue.
+
+When set to false a create or update will be performed.</xs:documentation>
     </xs:annotation>
     <xs:sequence>
       <xs:element name="deleteFlag" type="xs:boolean"/>
@@ -35,24 +37,27 @@
 
   <xs:complexType name="ServiceType">
     <xs:sequence>
-      <xs:element name="careUnit" type="tns:CareUnitType"/>
-      <xs:element name="validFrom" type="tns:DateType">
+      <xs:element name="serviceID" type="xs:string"/>
+      <xs:element name="bookable" type="xs:boolean">
         <xs:annotation>
-          <xs:documentation>Valid date from when this care unit starts handling type of cares.</xs:documentation>
+          <xs:documentation>bookable..</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="validTo" type="tns:DateType">
+      <xs:element name="bookableFor" type="tns:BookableType" maxOccurs="unbounded" minOccurs="0">
         <xs:annotation>
-          <xs:documentation>Date when this care unit stops handling type of cares.</xs:documentation>
+          <xs:documentation>Code framework XXX</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="supportedInteractions" type="tns:SupportedInteractionsType"/>
-      <xs:element name="sourceSystem" type="tns:HsaIdType"/>
-      <xs:element name="typeOfCare" type="tns:TypeOfCareType"/>
-      <xs:element name="typeOfCareServices" type="tns:CauseType"/>
+      <xs:element name="bookableComment" type="xs:string" minOccurs="0"/>
+      <xs:element name="referallXXX" type="xs:boolean"/>
+      <xs:element name="remittentRequirement" type="tns:RemittentKravType" maxOccurs="1"
+        minOccurs="0"/>
+      <xs:element name="remittentRequirementComment" type="xs:string" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="ownNoticeRequirement" type="xs:boolean"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="population" type="tns:PopulationType"/>
+      <xs:element name="forProfessionalActor" type="xs:boolean"/>
       <xs:element name="creationTime" type="tns:TS" minOccurs="0"/>
       <xs:element name="updateTime" type="tns:TS" minOccurs="0"/>
-      <xs:element name="administrativeInformation" type="tns:AdministrativeInformationType" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -98,8 +103,8 @@
       <xs:maxLength value="1024"/>
     </xs:restriction>
   </xs:simpleType>
-  
-  <!--  -->  
+
+  <!--  -->
   <xs:complexType name="CareUnitAddressType">
     <xs:sequence>
       <xs:element name="streetName1">
@@ -152,10 +157,12 @@
   <xs:complexType name="SupportedInteractionsType">
     <xs:annotation>
       <xs:documentation>When electronic is set to true each supported interactions must be listed.</xs:documentation>
-    </xs:annotation>    
+    </xs:annotation>
     <xs:sequence>
       <xs:element name="electronic" type="xs:boolean">
-        <xs:annotation><xs:documentation>Set to true if the given care unit can handle electronic requests.</xs:documentation></xs:annotation>
+        <xs:annotation>
+          <xs:documentation>Set to true if the given care unit can handle electronic requests.</xs:documentation>
+        </xs:annotation>
       </xs:element>
       <xs:sequence>
         <xs:annotation>
@@ -172,7 +179,7 @@
   <!-- -->
   <xs:complexType name="TypeOfCareType">
     <xs:annotation>
-      <xs:documentation></xs:documentation>
+      <xs:documentation/>
     </xs:annotation>
     <xs:sequence>
       <xs:element name="code" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
@@ -182,7 +189,7 @@
   <!-- -->
   <xs:complexType name="CauseType">
     <xs:annotation>
-      <xs:documentation></xs:documentation>
+      <xs:documentation/>
     </xs:annotation>
     <xs:sequence>
       <xs:element name="code" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
@@ -191,7 +198,9 @@
 
   <!-- -->
   <xs:simpleType name="HsaIdType">
-    <xs:restriction base="xs:string"><xs:maxLength value="64"/></xs:restriction>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="64"/>
+    </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="TS">
