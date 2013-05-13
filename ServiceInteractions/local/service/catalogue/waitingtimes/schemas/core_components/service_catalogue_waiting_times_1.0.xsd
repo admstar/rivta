@@ -79,13 +79,25 @@
           <xs:documentation>waiting time... point in time</xs:documentation>
         </xs:annotation>
       </xs:element>
+      <xs:element name="waitingTime" type="tns:WaitingTimeType" />
       <xs:element name="creationTime" type="tns:TS" minOccurs="0"/>
       <xs:element name="updateTime" type="tns:TS" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
-  <!-- Date format SSYYMMDD -->
+  <!-- -->
+  <xs:complexType name="WaitinTimeType">
+    <xs:sequence>
+      <xs:element name="code"/>
+      <xs:element name="codeSystem"/>
+      <xs:element name="unit" type="xs:unsignedLong">
+        <xs:annotation>
+          <xs:documentation>unit is measured in seconds.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
 
 
   <!-- -->
