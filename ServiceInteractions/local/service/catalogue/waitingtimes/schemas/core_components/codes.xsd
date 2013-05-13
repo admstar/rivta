@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="urn:riv:service:catalogue:waitingtimes:codes">
+    targetNamespace="urn:riv:service:catalogue:waitingtimes:codes"
+    xmlns:codes="urn:riv:service:catalogue:waitingtimes:codes">
 
     <xs:simpleType name="codeForWaitingTimeType_values">
         <xs:restriction base="xs:int">
@@ -36,11 +37,10 @@
         <xs:annotation>
             <xs:documentation>All typer av tidskoder.</xs:documentation>
         </xs:annotation>
-        <xs:complexContent>
-            <xs:restriction base="xs:anyType">
-                <xs:element name="code" type="codeForWaitingTimeType_values"/>
-                <xs:element name="codeSystem" fixed="x.y.z.w" type="xs:string"/>
-            </xs:restriction>            
-        </xs:complexContent>
+        <xs:sequence>
+            <xs:element name="code" type="codes:codeForWaitingTimeType_values"/>
+            <xs:element name="codeSystem" fixed="x.y.z.w" type="xs:string"/>
+        </xs:sequence>
+
     </xs:complexType>
 </xs:schema>

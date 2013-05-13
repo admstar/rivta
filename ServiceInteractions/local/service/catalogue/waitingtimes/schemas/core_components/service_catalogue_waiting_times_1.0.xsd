@@ -28,23 +28,13 @@
     </xs:annotation>
     <xs:sequence>
       <xs:element name="deleteFlag" type="xs:boolean"/>
-      <xs:element name="waitingTime" type="tns:WaitingTimeType"/>
+      <xs:element name="productWaitingTime" type="tns:ProductTimeType" maxOccurs="unbounded"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="WaitingTimeType">
+  <xs:complexType name="ProductTimeType">
     <xs:sequence>
-      <xs:element name="offerID" type="xs:string">
-        <xs:annotation>
-          <xs:documentation>offeRID</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="comissionID" type="xs:string">
-        <xs:annotation>
-          <xs:documentation>comissionID</xs:documentation>
-        </xs:annotation>
-      </xs:element>
       <xs:element name="hsaID" type="tns:HsaIdType">
         <xs:annotation>
           <xs:documentation>hsaID</xs:documentation>
@@ -57,41 +47,28 @@
         </xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="serviceID" type="xs:string" minOccurs="1" maxOccurs="unbounded">
+      <xs:element name="createdByHsaID" type="tns:HsaIdType"/>
+      <xs:element name="productID" type="xs:string" minOccurs="1" maxOccurs="1">
         <xs:annotation>
-          <xs:documentation>serviceID</xs:documentation>
+          <xs:documentation>productID</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="waitingTimeHistory" type="tns:TP" minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="waitingTime" type="tns:WaitingTimeType" maxOccurs="unbounded">
         <xs:annotation>
-          <xs:documentation>waiting time... point in time</xs:documentation>
+          <xs:documentation>Tidstyper finns specifierade i codes.xsd</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="waitingTimePrognosisNormal" type="tns:TP" minOccurs="0"
-        maxOccurs="unbounded">
-        <xs:annotation>
-          <xs:documentation>waiting time... point in time</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="waitingTimePrognosisPriority" type="tns:TP" minOccurs="0"
-        maxOccurs="unbounded">
-        <xs:annotation>
-          <xs:documentation>waiting time... point in time</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="waitingTime" type="tns:WaitingTimeType" />
       <xs:element name="creationTime" type="tns:TS" minOccurs="0"/>
-      <xs:element name="updateTime" type="tns:TS" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
   <!-- -->
-  <xs:complexType name="WaitinTimeType">
+  <xs:complexType name="WaitingTimeType">
     <xs:sequence>
       <xs:element name="code"/>
       <xs:element name="codeSystem"/>
-      <xs:element name="unit" type="xs:unsignedLong">
+      <xs:element name="value" type="xs:unsignedLong">
         <xs:annotation>
           <xs:documentation>unit is measured in seconds.</xs:documentation>
         </xs:annotation>
