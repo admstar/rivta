@@ -4,7 +4,7 @@
 		<add:To>SE5564323748-0001</add:To>
 	</soapenv:Header>
 	<soapenv:Body>
-		<urn:ProcessPrescriptionReason>
+<urn:ProcessPrescriptionReason>
 			<urn1:Ordinationsorsak template_id="Ordinationsorsak" archetype_node_id="openEHR-EHR-COMPOSITION.ordinationsorsak.v1" type="COMPOSITION" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 				<urn1:name>
 					<urn1:value>Ordinationsorsak</urn1:value>
@@ -79,17 +79,17 @@
 								<oe:value>20091013T1320</oe:value>
 							</urn1:value>
 						</urn1:registreringstidpunkt>
-						<urn1:Aktivitetsmoment archetype_node_id="openEHR-EHR-CLUSTER.activity_changing_event.v1" type="CLUSTER">
+						<urn1:Bedomt_halsorelaterat_tillstand archetype_node_id="openEHR-EHR-CLUSTER.assessed_condition.v1" type="CLUSTER">
 							<urn1:name>
-								<urn1:value>Aktivitetsmoment</urn1:value>
+								<urn1:value>Bedömt hälsorelaterat tillstånd</urn1:value>
 							</urn1:name>
-							<urn1:Admininfo_aktivitetsmoment archetype_node_id="openEHR-EHR-CLUSTER.admin_activity_changing_event.v1" type="CLUSTER">
+							<urn1:Specifikation_av_bedomt_tillstand archetype_node_id="openEHR-EHR-CLUSTER.specification_of_assessed_condition.v1" type="CLUSTER">
 								<urn1:name>
-									<urn1:value>Admininfo aktivitetsmoment</urn1:value>
+									<urn1:value>Specifikation av bedömt tillstånd</urn1:value>
 								</urn1:name>
-								<urn1:aktivitetskod archetype_node_id="at0001" type="ELEMENT" valueType="DV_CODED_TEXT">
+								<urn1:tillstandskod archetype_node_id="at0001" type="ELEMENT" valueType="DV_CODED_TEXT">
 									<urn1:name>
-										<urn1:value>aktivitetskod</urn1:value>
+										<urn1:value>tillståndskod</urn1:value>
 									</urn1:name>
 									<urn1:value>
 										<oe:value></oe:value>
@@ -97,23 +97,54 @@
 											<oe:terminology_id>
 												<oe:value>1.2.752.116.2.1.1</oe:value>
 											</oe:terminology_id>
-											<oe:code_string>422181004</oe:code_string>
+											<oe:code_string>58126003</oe:code_string>
 										</oe:defining_code>
 									</urn1:value>
-								</urn1:aktivitetskod>
+								</urn1:tillstandskod>
+								<urn1:smittvag archetype_node_id="at0002" type="ELEMENT" valueType="DV_CODED_TEXT">
+									<urn1:name>
+										<urn1:value>smittväg</urn1:value>
+									</urn1:name>
+									<urn1:value>
+										<oe:value></oe:value>
+										<oe:defining_code>
+											<oe:terminology_id>
+												<oe:value>AEFFE64F-0BE8-47C0-8CB2-EA4502B7DCB1</oe:value>
+											</oe:terminology_id>
+											<oe:code_string>vard</oe:code_string>
+										</oe:defining_code>
+									</urn1:value>
+								</urn1:smittvag>
+							</urn1:Specifikation_av_bedomt_tillstand>
+							<urn1:Admininfo_bedomt_halsorelaterat_tillstand archetype_node_id="openEHR-EHR-CLUSTER.admin_assessed_condition.v1" type="CLUSTER">
+								<urn1:name>
+									<urn1:value>Admininfo bedömt hälsorelaterat tillstånd</urn1:value>
+								</urn1:name>
+								<urn1:tillstands_-_id>
+									<urn1:name>
+										<urn1:value>tillstånds-id</urn1:value>
+									</urn1:name>
+									<urn1:value>
+										<oe:issuer>CeHis</oe:issuer>
+										<oe:assigner>SE5564323748-0015886</oe:assigner>
+										<oe:id>SE5564323748-0015886tillstid1</oe:id>
+										<oe:type>1.2.752.129.2.1.2.1</oe:type>
+									</urn1:value>
+								</urn1:tillstands_-_id>
+								<!--Anges endast i de fall då en postoperativ sårinfektion ska relateras till den operation som orsakade infektionen-->
 								<urn1:aktivitet__fslash_id archetype_node_id="at0002" type="ELEMENT" valueType="DV_IDENTIFIER">
 									<urn1:name>
 										<urn1:value>aktivitet /id</urn1:value>
 									</urn1:name>
 									<urn1:value>
-										<oe:issuer>CeHis</oe:issuer>
-										<oe:assigner>SE5564323748-0015886</oe:assigner>
-										<oe:id>SE5564323748-0015886aktid2</oe:id>
-										<oe:type>1.2.752.129.2.1.2.1</oe:type>
+										<oe:issuer>Infektionsverktyget</oe:issuer>
+										<oe:assigner>BC533FBB-DD4F-4F14-9E77-9E67A1E6D738</oe:assigner>
+										<oe:id></oe:id>
+										<oe:type></oe:type>
 									</urn1:value>
 								</urn1:aktivitet__fslash_id>
-							</urn1:Admininfo_aktivitetsmoment>
-						</urn1:Aktivitetsmoment>
+							</urn1:Admininfo_bedomt_halsorelaterat_tillstand>
+						</urn1:Bedomt_halsorelaterat_tillstand>
 					</urn1:data>
 				</urn1:Ordinationsorsak>
 				<urn1:Ordinationsmoment archetype_node_id="openEHR-EHR-ACTION.activity_changing_event.v1" type="ACTION">
@@ -164,7 +195,7 @@
 							<urn1:value>
 								<oe:issuer>CeHis</oe:issuer>
 								<oe:assigner>SE5564323748-0015886</oe:assigner>
-								<oe:id>SE5564323748-0015886ordid2</oe:id>
+								<oe:id>SE5564323748-0015886ordid1</oe:id>
 								<oe:type>1.2.752.129.2.1.2.1</oe:type>
 							</urn1:value>
 						</urn1:ordination__fslash_id>
@@ -183,7 +214,7 @@
 									<oe:terminology_id>
 										<oe:value>1.2.752.129.2.2.3.1.1 </oe:value>
 									</oe:terminology_id>
-									<oe:code_string>J01CA04</oe:code_string>
+									<oe:code_string>J01CF05</oe:code_string>
 								</oe:defining_code>
 							</urn1:value>
 						</urn1:ATC_-_kod>
