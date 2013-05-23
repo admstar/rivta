@@ -33,20 +33,20 @@
   </xs:complexType>
   <xs:complexType name='GetVaccinationHistoryResponseType'>
     <xs:sequence>
-      <xs:element name='vaccinationMedicalRecord' type='tns:VaccinationRecordMedicalType' minOccurs='0' maxOccurs='unbounded' />
+      <xs:element name='vaccinationMedicalRecord' type='tns:VaccinationMedicalRecordType' minOccurs='0' maxOccurs='unbounded' />
       <xs:element name='ResultCode' type='tns:ResultCodeEnum' />
       <xs:element name='comment' type='xs:string' minOccurs='0' />
       <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name='VaccinationRecordMedicalType'>
+  <xs:complexType name='VaccinationMedicalRecordType'>
     <xs:sequence>
-      <xs:element name='vaccinationRecordMedicalHeader' type='core:PatientSummaryHeaderType' minOccurs='1' maxOccurs='1' />
-      <xs:element name='vaccinationRecordMedicalBody' type='tns:VaccinationRecordMedicalBodyType' minOccurs='1' maxOccurs='1' />
+      <xs:element name='vaccinationMedicalRecordHeader' type='core:PatientSummaryHeaderType' minOccurs='1' maxOccurs='1' />
+      <xs:element name='vaccinationMedicalRecordBody' type='tns:VaccinationMedicalRecordBodyType' minOccurs='1' maxOccurs='1' />
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name='VaccinationRecordMedicalBodyType'>
+  <xs:complexType name='VaccinationMedicalRecordBodyType'>
     <xs:sequence>
       <xs:element name='registrationRecord' type='tns:RegistrationRecordType' minOccurs='1' maxOccurs='1' />
       <xs:element name='administrationRecord' type='tns:AdministrationRecordType' minOccurs='0' maxOccurs='unbounded' />
