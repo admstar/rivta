@@ -33,59 +33,10 @@
   </xs:complexType>
   <xs:complexType name='GetVaccinationHistoryResponseType'>
     <xs:sequence>
-      <xs:element name='vaccinationMedicalRecord' type='tns:VaccinationMedicalRecordType' minOccurs='0' maxOccurs='unbounded' />
+      <xs:element name='vaccinationMedicalRecord' type='core:VaccinationMedicalRecordType' minOccurs='0' maxOccurs='unbounded' />
       <xs:element name='ResultCode' type='tns:ResultCodeEnum' />
       <xs:element name='comment' type='xs:string' minOccurs='0' />
       <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name='VaccinationMedicalRecordType'>
-    <xs:sequence>
-      <xs:element name='vaccinationMedicalRecordHeader' type='core:PatientSummaryHeaderType' minOccurs='1' maxOccurs='1' />
-      <xs:element name='vaccinationMedicalRecordBody' type='tns:VaccinationMedicalRecordBodyType' minOccurs='1' maxOccurs='1' />
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name='VaccinationMedicalRecordBodyType'>
-    <xs:sequence>
-      <xs:element name='registrationRecord' type='tns:RegistrationRecordType' minOccurs='1' maxOccurs='1' />
-      <xs:element name='administrationRecord' type='tns:AdministrationRecordType' minOccurs='0' maxOccurs='unbounded' />
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name='RegistrationRecordType'>
-    <xs:sequence>
-      <xs:element name='date' type='core:DateType' minOccurs='1' maxOccurs='1' />
-      <xs:element name='patientPostalCode' type='xs:string' minOccurs='0' maxOccurs='1' />
-      <xs:element name='vaccinationUnstructuredNote' type='xs:string' minOccurs='0' maxOccurs='1' />
-      <xs:element name='riskCategory' type='core:CVType' minOccurs='0' maxOccurs='unbounded' />
-      <xs:element name='patientAdverseEffect' type='core:CVType' minOccurs='0' maxOccurs='unbounded' />
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name='AdministrationRecordType'>
-    <xs:sequence>
-      <xs:element name='vaccinationProgramName' type='core:CVType' minOccurs='0' maxOccurs='1' />
-      <xs:element name='prescriberOrg' type='core:OrgUnitType' minOccurs='0' maxOccurs='1' />
-      <xs:element name='prescriberPerson' type='core:ActorType' minOccurs='0' maxOccurs='1' />
-      <xs:element name='performerOrg' type='core:OrgUnitType' minOccurs='0' maxOccurs='1' />
-      <xs:element name='performer' type='core:ActorType' minOccurs='0' maxOccurs='1' />
-      <xs:element name='anatomicalSite' type='core:CVType' minOccurs='1' maxOccurs='1' />
-      <xs:element name='route' type='core:CVType' minOccurs='1' maxOccurs='1' />
-      <xs:element name='dosage' type='core:DosageType' minOccurs='0' maxOccurs='1' />
-      <xs:element name='isDoseComplete' type='xs:boolean' minOccurs='0' maxOccurs='1' />
-      <xs:element name='doseOrdinalNumber' type='xs:integer' minOccurs='0' maxOccurs='1' />
-      <xs:element name='numberOfPrescribedDoses' type='xs:integer' minOccurs='0' maxOccurs='1' />
-      <xs:element name='sourceDescription' type='xs:string' minOccurs='0' maxOccurs='1' />
-      <xs:element name='commentPrescription' type='xs:string' minOccurs='0' maxOccurs='1' />
-      <xs:element name='commentAdministration' type='xs:string' minOccurs='0' maxOccurs='1' />
-      <xs:element name='patientAdverseEffect' type='core:CVType' minOccurs='0' maxOccurs='unbounded' />
-      <xs:element name='vaccineType' type='core:CVType' minOccurs='1' maxOccurs='1' />
-      <xs:element name='vaccineName' type='core:CVType' minOccurs='1' maxOccurs='1' />
-      <xs:element name='vaccineBatchId' type='xs:string' minOccurs='0' maxOccurs='1' />
-      <xs:element name='vaccineManufacturer' type='xs:string' minOccurs='0' maxOccurs='1' />
-      <xs:element name='vaccineTargetDisease' type='core:CVType' minOccurs='0' maxOccurs='unbounded' />
-      
     </xs:sequence>
   </xs:complexType>
   
