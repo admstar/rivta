@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->		
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:tns="urn:riv:service:catalogue:FindOffersResponder:1"
+  xmlns:core="urn:riv:service:catalogue:1"
+  targetNamespace="urn:riv:service:catalogue:FindOffersResponder:1" elementFormDefault="qualified"
+  attributeFormDefault="unqualified" version="1.0">
+  <xs:import schemaLocation="../../core_components/service_catalogue_1.0.xsd"
+    namespace="urn:riv:service:catalogue:1"/>
+
+  <xs:element name="FindOffers" type="tns:FindOffersType"/>
+  <xs:element name="FindOffersResponse" type="tns:FindOffersResponseType"/>
+
+  <xs:complexType name="FindOffersType">
+    <xs:annotation>
+      <xs:documentation>One or all elements can be used to narrow down the search.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="careUnitName" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Search for offers based on a wildcard search on a care unit name.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="codeName" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Search for offers based on code names, for example HSA.verksamhetskoder or KVÅ.name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="productName" type="xs:string" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Search for offers based on product name.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="supportedInteractions" type="core:SupportedInteractionsType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Search for offers based on RIVTA interaction names, for example clinicalprocess:requestworkflow:ProcessRequest can be used to search
+            for all care units that can be adressed with that particular interaction.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="FindOffersResponseType">
+    <xs:sequence>
+      <xs:element name="offer" type="core:OfferType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
