@@ -44,7 +44,7 @@ SET X5=%SCHEMADIR%\ReceiveMedicalCertificateAnswerInteraction\*.xsd
 SET W6=%SCHEMADIR%\ReceiveMedicalCertificateQuestionInteraction\ReceiveMedicalCertificateQuestionInteraction_1.0_rivtabp20.wsdl
 SET X6=%SCHEMADIR%\ReceiveMedicalCertificateQuestionInteraction\*.xsd
 
-SET W7=%SCHEMADIR%\RegisterMedicalCertificateInteraction\RegisterMedicalCertificateInteraction_3.0_rivtabp20.wsdl
+SET W7=%SCHEMADIR%\RegisterMedicalCertificateInteraction\RegisterMedicalCertificateInteraction_3.1_rivtabp20.wsdl
 SET X7=%SCHEMADIR%\RegisterMedicalCertificateInteraction\*.xsd
 
 SET W8=%SCHEMADIR%\SendMedicalCertificateAnswerInteraction\SendMedicalCertificateAnswerInteraction_1.0_rivtabp20.wsdl
