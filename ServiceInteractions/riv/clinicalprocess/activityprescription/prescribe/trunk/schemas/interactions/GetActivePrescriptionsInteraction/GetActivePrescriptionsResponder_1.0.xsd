@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type="text/xsl" href="./xsd_viewer.xsl"?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Apotekens Service AB licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'
+           xmlns='urn:riv:clinicalprocess:activityprescription:prescribe:GetActivePrescriptionsResponder:1'
+           xmlns:tns='urn:riv:clinicalprocess:activityprescription:prescribe:1'
+           targetNamespace='urn:riv:clinicalprocess:activityprescription:prescribe:GetActivePrescriptionsResponder:1'
+           elementFormDefault='qualified'
+           attributeFormDefault='unqualified'
+           version='1.0'>
+
+    <xs:import schemaLocation='../../../schemas/core_components/clinicalprocess_activityprescription_prescribe_1.0.xsd'
+               namespace='urn:riv:clinicalprocess:activityprescription:prescribe:1' />
+
+    <xs:element name='GetActivePrescriptions'
+                type='GetActivePrescriptionsType' />
+
+    <xs:element name='GetActivePrescriptionsResponse'
+                type='GetActivePrescriptionsResponseType'/>
+
+    <xs:complexType name='GetActivePrescriptionsType'>
+        <xs:sequence>
+
+            <xs:element name="patient"
+                        type="tns:Patient"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>Patient att hämta aktuella ordinationer för.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="svarsurval"
+                        type="tns:Svarsurval"
+                        minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Urval som begränsar antal returnerade poster. Om svarsurval ej är angivet begränsas antal poster till de 100 första.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:any namespace='##other'
+                    processContents='lax'
+                    minOccurs='0'
+                    maxOccurs='unbounded' />
+
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name='GetActivePrescriptionsResponseType'>
+        <xs:sequence>
+
+            <xs:element name="underlagstidpunkt"
+                        type="xs:dateTime"
+                        minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Tidpunkt för senaste ordinationsändring för en patient. Returneras endast
+                        om patienten har ordinationer.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+
+            <xs:element name="lakemedelsordination"
+                        type="tns:Lakemedelsordination"
+                        minOccurs="0"
+                        maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Aktuella ordinationer för angiven patient.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="svarsurval"
+                        type="tns:Svarsurval"
+                        minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Svarsurval returneras om svarsurval är angivet i begäran eller om svarsurval inte är angivet och totalt antal poster är större än 100.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="totaltAntalPoster"
+                        type="xs:int"
+                        minOccurs="0"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>Totalt antal poster.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name='resultCode'
+                        type='tns:resultCodeEnum'>
+                <xs:annotation>
+                    <xs:documentation>Resultatkod för anropet.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+
+            <xs:element name='comment'
+                        type='xs:string'
+                        minOccurs='0'>
+                <xs:annotation>
+                    <xs:documentation>Kommentar till eventuella fel eller varningar.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:any namespace='##other'
+                    processContents='lax'
+                    minOccurs='0'
+                    maxOccurs='unbounded' />
+
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

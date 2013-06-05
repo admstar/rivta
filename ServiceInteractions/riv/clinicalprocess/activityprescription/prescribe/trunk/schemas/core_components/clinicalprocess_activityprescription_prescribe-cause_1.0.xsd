@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type="text/xsl" href="./xsd_viewer.xsl"?>
+<!--
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Apotekens Service AB licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->
+<xs:schema
+        xmlns:xs='http://www.w3.org/2001/XMLSchema'
+        xmlns:tns='urn:riv:clinicalprocess:activityprescription:prescribe:1'
+        targetNamespace='urn:riv:clinicalprocess:activityprescription:prescribe:1'
+        elementFormDefault='qualified'
+        attributeFormDefault='unqualified'
+        version='1.0'>
+
+    <xs:annotation>
+        <xs:documentation>
+            Beskrivning: 	    Informationsobjekt för ordinationsorsaker
+            Revisionshistorik:  2013-05-03 Daniel Sundberg, Apotekens Service AB
+                                Separat xsd för ordinationsorsak.
+        </xs:documentation>
+    </xs:annotation>
+
+    <xs:complexType name="Insattningsorsaker">
+        <xs:sequence>
+
+            <xs:element name="huvudorsak"
+                        type="tns:Insattningsorsak"
+                        minOccurs="1"
+                        maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Huvudordinationsorsak för insättning.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="underorsak"
+                        type="tns:Insattningsorsak"
+                        minOccurs="0"
+                        maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Underordinationsorsak för insättning.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:any namespace="##other"
+                    processContents="lax"
+                    minOccurs="0"
+                    maxOccurs="unbounded"/>
+
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Insattningsorsak">
+        <xs:sequence>
+
+            <xs:element name="orsak"
+                        type="tns:Orsak"
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>Ordinationsorsak till insättning. Snomed CT-kod används för vald ordinationsorsak.
+                        Koden valideras att den finns i angiven version av Socialstyrelsens kodsystem för ordinations-orsaker (NKOO).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="annanOrsak"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>Ordinationsorsak i fritext om ”Annan orsak” anges.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:any namespace="##other"
+                    processContents="lax"
+                    minOccurs="0"
+                    maxOccurs="unbounded"/>
+
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Orsak">
+        <xs:sequence>
+
+            <xs:element name="kod"
+                        type="xs:string"
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>Kod för orsaken.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+
+            <xs:element name="text"
+                        type="xs:string"
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>Textutläsning av kod.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+
+            <xs:element name="register"
+                        type="xs:string"
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>Unikt id för det kodsystem som används.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+
+            <xs:element name="version"
+                        type="xs:string"
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>Version av det kodsystem som används.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+
+            <xs:any namespace="##other"
+                    processContents="lax"
+                    minOccurs="0"
+                    maxOccurs="unbounded"/>
+
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
