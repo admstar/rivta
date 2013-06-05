@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type="text/xsl" href="./xsd_viewer.xsl"?>
+<!--
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Apotekens Service AB licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'
+           xmlns='urn:riv:clinicalprocess:activityprescription:prescribe:DiscontinuePrescriptionResponder:1'
+           xmlns:tns='urn:riv:clinicalprocess:activityprescription:prescribe:1'
+           targetNamespace='urn:riv:clinicalprocess:activityprescription:prescribe:DiscontinuePrescriptionResponder:1'
+           elementFormDefault='qualified'
+           attributeFormDefault='unqualified'
+           version='1.0'>
+
+    <xs:import schemaLocation='../../../schemas/core_components/clinicalprocess_activityprescription_prescribe_1.0.xsd'
+               namespace='urn:riv:clinicalprocess:activityprescription:prescribe:1' />
+
+    <xs:element name='DiscontinuePrescription'
+                type='DiscontinuePrescriptionType' />
+
+    <xs:element name='DiscontinuePrescriptionResponse'
+                type='DiscontinuePrescriptionResponseType' />
+
+    <xs:complexType name='DiscontinuePrescriptionType'>
+        <xs:sequence>
+
+            <xs:element name="aktuellUnderlagstidpunkt"
+                        type="xs:dateTime"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>Tidpunkt för senast uppläst underlag för utsättning.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="forskrivningsunderlagsversion"
+                        type="xs:int"
+                        minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Förskrivningens underlagsversion från receptdepån.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:choice minOccurs="0"
+                       maxOccurs="1">
+
+                <xs:element name="forskrivningsmakulering"
+                            type="tns:Forskrivningsmakulering">
+                    <xs:annotation>
+                        <xs:documentation>Makuleringsunderlag av förskrivning för icke dospatient.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+                <xs:element name="forskrivningsutsattning"
+                            type="tns:Forskrivningsutsattning">
+                    <xs:annotation>
+                        <xs:documentation>Utsättningsunderlag av förskrivning för dospatient.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+            </xs:choice>
+
+            <xs:element name="ordinationsId"
+                        type="xs:string"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>Referens till ordination att sätta ut.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+
+            <xs:element name="utsattning"
+                        type="tns:Utsattning"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>Utsättningsinformation.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:any namespace='##other'
+                    processContents='lax'
+                    minOccurs='0'
+                    maxOccurs='unbounded' />
+
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name='DiscontinuePrescriptionResponseType'>
+        <xs:sequence>
+            <xs:element name="ordinationsId"
+                        type="xs:string"
+                        nillable="false"
+                        minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Referens till ordination som satts ut.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="uppdateradUnderlagstidpunkt"
+                        type="xs:dateTime"
+                        nillable="false"
+                        minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Tidpunkt för uppdaterat underlag efter utsättning.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="vokresultat"
+                        type="tns:VOKResultat"
+                        nillable="false"
+                        minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Resultat från VOK-UTS.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+
+            <xs:element name='resultCode'
+                        type='tns:resultCodeEnum'>
+                <xs:annotation>
+                    <xs:documentation>Resultatkod för anropet.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name='comment'
+                        type='xs:string'
+                        minOccurs='0'>
+                <xs:annotation>
+                    <xs:documentation>Kommentar till eventuella fel eller varningar.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:any namespace='##other'
+                    processContents='lax'
+                    minOccurs='0'
+                    maxOccurs='unbounded' />
+
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

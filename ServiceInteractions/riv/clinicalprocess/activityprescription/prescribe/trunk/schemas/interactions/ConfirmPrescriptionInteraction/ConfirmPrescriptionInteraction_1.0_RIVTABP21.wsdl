@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Apotekens Service AB licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->
+<wsdl:definitions name='ConfirmPrescriptionInteraction'
+                  xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'
+                  xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/'
+                  xmlns:xs='http://www.w3.org/2001/XMLSchema'
+                  xmlns:tjsr='urn:riv:clinicalprocess:activityprescription:prescribe:ConfirmPrescriptionResponder:1'
+                  xmlns:tjsi='urn:riv:clinicalprocess:activityprescription:prescribe:ConfirmPrescriptionInitiator:1'
+                  xmlns:tns='urn:riv:clinicalprocess:activityprescription:prescribe:ConfirmPrescription:1:rivtabp21'
+                  targetNamespace='urn:riv:clinicalprocess:activityprescription:prescribe:ConfirmPrescription:1:rivtabp21'
+                  xmlns:itr='urn:riv:itintegration:registry:1'>
+    <xs:annotation>
+        <xs:documentation>
+            Tjänsteinteraktionens namn: ConfirmPrescriptionInteraction
+            Beskrivning:
+                Confirmation of prescription in the national prescription database.
+            Revisioner:
+            Tjänstedomän: clinicalprocess:activityprescription:prescribe
+            Tjänsteinteraktionstyp: Fråga-Svar
+            WS-profil: RIVTABP21
+            Förvaltas av: Apotekens Service AB
+        </xs:documentation>
+    </xs:annotation>
+    <wsdl:types>
+        <xs:schema targetNamespace='urn:riv:clinicalprocess:activityprescription:prescribe:ConfirmPrescription:1:rivtabp21'>
+            <xs:import schemaLocation='ConfirmPrescriptionResponder_1.0.xsd'
+                       namespace='urn:riv:clinicalprocess:activityprescription:prescribe:ConfirmPrescriptionResponder:1' />
+            <xs:import schemaLocation='../../../schemas/core_components/itintegration_registry_1.0.xsd'
+                       namespace='urn:riv:itintegration:registry:1' />
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name='ConfirmPrescriptionRequest'>
+        <wsdl:part name='LogicalAddress'
+                   element='itr:LogicalAddress'>
+            <wsdl:documentation>Logical address of service producer.</wsdl:documentation>
+        </wsdl:part>
+        <wsdl:part name='parameters'
+                   element='tjsr:ConfirmPrescription' />
+    </wsdl:message>
+    <wsdl:message name='ConfirmPrescriptionResponse'>
+        <wsdl:part name='parameters'
+                   element='tjsr:ConfirmPrescriptionResponse' />
+    </wsdl:message>
+    <wsdl:portType name='ConfirmPrescriptionResponderInterface'>
+        <wsdl:operation name='ConfirmPrescription'>
+            <wsdl:input message='tns:ConfirmPrescriptionRequest' />
+            <wsdl:output message='tns:ConfirmPrescriptionResponse' />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name='ConfirmPrescriptionResponderBinding'
+                  type='tns:ConfirmPrescriptionResponderInterface'>
+        <soap:binding style='document'
+                      transport='http://schemas.xmlsoap.org/soap/http' />
+        <wsdl:operation name='ConfirmPrescription'>
+            <soap:operation soapAction='urn:riv:clinicalprocess:activityprescription:prescribe:ConfirmPrescriptionResponder:1:ConfirmPrescription'
+                            style='document' />
+            <wsdl:input>
+                <soap:header use='literal'
+                             message='tns:ConfirmPrescriptionRequest'
+                             part='LogicalAddress' />
+                <soap:body use='literal'
+                           parts='parameters' />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use='literal' />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name='ConfirmPrescriptionResponderService'>
+        <wsdl:port name='ConfirmPrescriptionResponderPort'
+                   binding='tns:ConfirmPrescriptionResponderBinding'>
+            <soap:address location='http://tempuri.org' />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type="text/xsl" href="./xsd_viewer.xsl"?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Apotekens Service AB licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'
+           xmlns='urn:riv:clinicalprocess:activityprescription:logistics:GetDispensedDrugsResponder:1'
+           xmlns:tns='urn:riv:clinicalprocess:activityprescription:logistics:1'
+           targetNamespace='urn:riv:clinicalprocess:activityprescription:logistics:GetDispensedDrugsResponder:1'
+           elementFormDefault='qualified'
+           attributeFormDefault='unqualified'
+           version='1.0'>
+
+    <xs:import schemaLocation='../../../schemas/core_components/clinicalprocess_activityprescription_logistics_1.0.xsd'
+               namespace='urn:riv:clinicalprocess:activityprescription:logistics:1' />
+
+    <xs:element name='GetDispensedDrugs'
+                type='GetDispensedDrugsType' />
+
+    <xs:element name='GetDispensedDrugsResponse'
+                type='GetDispensedDrugsResponseType'/>
+
+    <xs:complexType name='GetDispensedDrugsType'>
+        <xs:sequence>
+
+            <xs:element name="patient"
+                        type="tns:Patient"
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
+
+                <xs:annotation>
+                    <xs:documentation>
+                        Patient vars läkemedelsförteckning skall hämtas.
+                    </xs:documentation>
+                </xs:annotation>
+
+            </xs:element>
+
+            <xs:element name="anropandeVardpersonal"
+                        type="tns:Vardpersonal"
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
+
+                <xs:annotation>
+                    <xs:documentation>
+                        Anropande vårdpersonal.
+                    </xs:documentation>
+                </xs:annotation>
+
+            </xs:element>
+
+            <xs:element name="forskrivarkod"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+
+                <xs:annotation>
+                    <xs:documentation>
+                        Förskrivarens individuella förskrivarkod.
+                        Gruppförskrivarkoder får ej användas.
+                        Valideras mot FORS. Obligatorisk om atkomsttyp = SAM
+                    </xs:documentation>
+                </xs:annotation>
+
+            </xs:element>
+
+            <xs:element name="identifieradArbetsplats"
+                        type="tns:ArbetsplatsIdentifikation"
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Identifierad arbetsplats.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="atkomsttyp"
+                        type="tns:atkomsttyp"
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
+
+                <xs:annotation>
+                    <xs:documentation>
+                        Treställig kod för typ av åtkomst.
+                    </xs:documentation>
+                </xs:annotation>
+
+            </xs:element>
+            
+            <xs:any namespace='##other'
+                    processContents='lax'
+                    minOccurs='0'
+                    maxOccurs='unbounded' />
+
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name='GetDispensedDrugsResponseType'>
+        <xs:sequence>
+
+            <xs:element name="lakemedelsforteckning"
+                        type="tns:Receptexpeditionsrad"
+                        minOccurs="0"
+                        maxOccurs="unbounded">
+
+                <xs:annotation>
+                    <xs:documentation>
+                        Patientens läkemedelsförteckning kompletterad med ordinationsmappningsinformation.
+                        Om patienten saknar poster i läkemedelsförteckningen så returneras en tom lista.
+                    </xs:documentation>
+                </xs:annotation>
+
+            </xs:element>
+
+            <xs:element name="patientinformation"
+                        type="tns:Patientinformation"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+
+                <xs:annotation>
+                    <xs:documentation>
+                        Information om patienten vars läkemedelsförteckning man hämtat.
+                        Om patienten är markerad som 'Avliden' så returneras inga rader ur läkemedelsförteckningen.
+                    </xs:documentation>
+                </xs:annotation>
+
+            </xs:element>
+
+            <xs:element name="varningsnivaUppnadd"
+                        type="xs:boolean"
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
+
+                <xs:annotation>
+                    <xs:documentation>
+                        Flagga som anger om förskrivarens antal läsningar det senaste dygnet
+                        överskridit varningsnivå. Sant om varningsnivå har uppnåtts, annars
+                        falskt.
+                    </xs:documentation>
+                </xs:annotation>
+
+            </xs:element>
+            
+            <xs:element name='resultCode'
+                        type='tns:resultCodeEnum'>
+                <xs:annotation>
+                    <xs:documentation>Resultatkod för anropet.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name='comment'
+                        type='xs:string'
+                        minOccurs='0'>
+                <xs:annotation>
+                    <xs:documentation>Kommentar till eventuella fel eller varningar.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:any namespace='##other'
+                    processContents='lax'
+                    minOccurs='0'
+                    maxOccurs='unbounded' />
+
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
