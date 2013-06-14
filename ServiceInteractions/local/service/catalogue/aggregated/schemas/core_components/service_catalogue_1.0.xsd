@@ -33,6 +33,7 @@
     </xs:sequence>
   </xs:complexType>
 
+  <xs:element name="capacity" type="tns:CapacityType"/>
   <xs:complexType name="OfferType">
     <xs:sequence>
       <xs:element name="careUnit" type="tns:CareUnitType"/>
@@ -47,7 +48,9 @@
         </xs:annotation>
       </xs:element>
       <xs:element name="supportedInteractions" type="tns:SupportedInteractionsType"/>
-      <xs:element name="product" type="tns:ProductType" maxOccurs="unbounded"/>
+      <xs:element name="product" type="tns:ProductType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="capacity" type="tns:CapacityType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="comment" type="xs:string" maxOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -85,17 +88,6 @@
   </xs:simpleType>
 
   <!--  -->
-  <xs:complexType name="ProductType">
-    <xs:annotation>
-      <xs:documentation>Product information</xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="name" type="xs:string"/>
-      <xs:element name="productID" type="xs:string"/>
-      <xs:element name="description" type="xs:string"/>
-      <xs:element name="capacity" type="tns:CapacityType" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
 
   <xs:complexType name="CapacityType">
     <xs:annotation>
@@ -211,4 +203,16 @@
       <xs:enumeration value="INFO"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:complexType name="ProductType">
+    <xs:annotation>
+      <xs:documentation>Product information</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="displayName" type="xs:string"/>
+      <xs:element name="description" type="xs:string"/>
+      <xs:element name="code" type="xs:string"/>
+      <xs:element name="codeSystem" type="xs:string"/>
+      <xs:element name="price" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
 </xs:schema>
