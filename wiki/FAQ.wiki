@@ -3,6 +3,47 @@
 
 <wiki:toc max_depth="3" />
 
+=Versionshantering=
+
+==Namngivning av zip-fil==
+*Fråga: *
+Vi har uppgraderat ett kontrakt i domänen till 1.1. Hur löser vi det med versionsnummer på wsdlerna och på zipfilen? Måste zipfilen bli 1.1 eller kan den vara kvar som 1.0? Måste vi göra nya tjänstekontrakt med version 1.1 på alla tjänster trots att dom kommer vara identiska med 1.0? Får en zipfil som heter 1.1 innehålla kontrakt som heter 1.0?
+
+*Svar: *
+Zip-filen skall alltid ges samma version som den taggning den motsvarar i subversion. 
+Grundprinicipen är att versionen skall motsvara den högsta versionen på de ingående kontrakten.
+Vid varje förändring av innehållet som inte påverkar versionering läggs en tredje siffra på som räknas upp
+Ex
+
+Läge 1:
+• Kontrakt A 1.0
+• Kontrakt B 1.0
+• Tag och zip blir 1.0
+
+Läge 2:
+• Kontrakt A 1.0
+• Kontrakt B 1.1
+• Tag och zip blir 1.1
+
+Läge 3:
+• Kontrakt A 1.1
+• Kontrakt B 1.1
+• Tag och zip blir 1.1.1
+
+Läge 4: Enbart dokumentationsuppdatering
+• Kontrakt A 1.1
+• Kontrakt B 1.1  
+• Tag och zip blir 1.1.2 
+
+RIV TA kommer att förtydligas med den här anvisningen. 
+ 
+Så, applicerat på dina frågor:
+
+ZIP-filen skall döpas med versionen på det högsta kontraktsversionen
+Tjänster som inte ändrats skall inte förändras, dvs skall fortsatt vara 1.0
+Zip 1.1 kan alltså innehålla kontrakt på 1.0 (dock inte motsatsen, en zip 1.0 kan inte innehålla kontrakt 1.1)
+
+
 =Test=
 
 ==Testflagga i tjänstekontrakt==
