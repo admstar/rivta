@@ -21,24 +21,26 @@
 	xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'
 	xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/'
 	xmlns:xs='http://www.w3.org/2001/XMLSchema'
-	xmlns:tjsr='urn:riv:ehr:blocking:accesscontrol:CheckBlocksResponder:2'
+	xmlns:tjsr='urn:riv:ehr:blocking:accesscontrol:CheckBlocksResponder:3'
 	xmlns:itr='urn:riv:itintegration:registry:1'
-	xmlns:tns='urn:riv:ehr:blocking:accesscontrol:CheckBlocks:2:rivtabp21'
-	targetNamespace='urn:riv:ehr:blocking:accesscontrol:CheckBlocks:2:rivtabp21'>
+	xmlns:tns='urn:riv:ehr:blocking:accesscontrol:CheckBlocks:3:rivtabp21'
+	targetNamespace='urn:riv:ehr:blocking:accesscontrol:CheckBlocks:3:rivtabp21'>
 
 	<wsdl:documentation xml:lang='sv'>
 		 Tjänsteinteraktionens namn: CheckBlocks
 		 Beskrivning: 
-		   Tjänst som kontrollerar om given information är spärrad eller inte. Den utvärderar alla spärrar som finns i tjänsten och om någon spärr är helt applicerbar för given information och tillfälle kommer tjänsten att markera den informationen som spärrad. Om det finns minst en tillfällig hävning för spärren som applicerar på den angivna aktören blir informationen ospärrad.
-		   Denna operation kan användas då tjänstekonsumenten inte själv kan avgöra/kontrollera om information är spärrad eller inte. Tjänsten stödjer kontroll av flertal informationsmängder i ett och samma anrop.
-		   Evalueringen av huruvida informationen är spärrad görs enligt följande:
-		   - Om ingen spärr föreligger för den angiven informationstypen blir informationen EJ spärrad.
-		   - Om spärren inte innehåller någon giltighetstid blir all information av den specifika informationstypen som spärren gäller för spärrad.
+		   Tjänst som kontrollerar om given information är spärrad eller inte. Den utvärderar alla spärrar som finns i tjänsten och om någon spärr är helt applicerbar för given information och tillfälle kommer tjänsten att markera den informationen som spärrad. 
+		   Om det finns minst en tillfällig hävning för spärren som applicerar på den angivna aktören blir informationen ospärrad.
+		   Denna tjänst kan användas då tjänstekonsumenten inte själv kan avgöra/kontrollera om information är spärrad eller inte. Tjänsten stödjer kontroll av flertal informationsmängder i ett och samma anrop.
+		   Evalueringen av huruvida informationen är spärrad eller ej görs enligt följande:
+		   - Om spärr föreligger (inre eller yttre) blir informationen spärrad. 
+		   - Om undantag av spärr för &amp;apos;lak&amp;apos; och/eller &amp;apos;upp&amp;apos; har angivets blir denna informationen EJ spärrad.
+		   - Om spärren inte innehåller någon giltighetstid blir informationen spärrad.
 		   - Om tidsspannet för informationen ligger inom spärrens giltighetstid blir informationen spärrad.
 		   - Om spärrens giltighetstid delvis överlappar tidsspannet (start- eller sluttid) för informationen blir informationen spärrad.
-		   - Om tidsspannet för informationen ligger helt utanför spärrens giltighetstid blir informationen EJ spärrad.
+		   - Om tidsspannet för informationen ligger helt utanför spärrens giltighetstid blir informationen EJ spärrad.    
 		   Tjänsten realiseras både på lokal och nationell nivå.
-		   Notera att tjänsten förutsätter att kontrollen görs på ett komplett spärrunderlag. En lokal realisering måste inhämta ytterligare spärrunderlag från nationell nivå via tjänsten GetAllBlocks.
+		   Tjänster på nationell nivå kräver ett komplett spärrunderlag.
 		 Revisioner: 
 		 Tjänstedomän: blocking:accesscontrol
 		 Tjänsteinteraktionstyp: Fråga-Svar
@@ -47,8 +49,8 @@
 	</wsdl:documentation>
 	
 	<wsdl:types>
-		<xs:schema targetNamespace='urn:riv:ehr:blocking:accesscontrol:CheckBlocks:2:rivtabp21'>
-			<xs:import schemaLocation='CheckBlocksResponder_2.0.xsd' namespace='urn:riv:ehr:blocking:accesscontrol:CheckBlocksResponder:2' />
+		<xs:schema targetNamespace='urn:riv:ehr:blocking:accesscontrol:CheckBlocks:3:rivtabp21'>
+			<xs:import schemaLocation='CheckBlocksResponder_3.0.xsd' namespace='urn:riv:ehr:blocking:accesscontrol:CheckBlocksResponder:3' />
 			<xs:import schemaLocation='../../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
 		</xs:schema>
 	</wsdl:types>
@@ -76,7 +78,7 @@
 	<wsdl:binding name='CheckBlocksResponderBinding' type='tns:CheckBlocksResponderInterface'>
 		<soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
 		<wsdl:operation name='CheckBlocks'>
-			<soap:operation soapAction='urn:riv:ehr:blocking:accesscontrol:CheckBlocksResponder:2:CheckBlocks' style='document' />
+			<soap:operation soapAction='urn:riv:ehr:blocking:accesscontrol:CheckBlocksResponder:3:CheckBlocks' style='document' />
 			<wsdl:input>
 				<soap:header use='literal' message='tns:CheckBlocksRequest' part='LogicalAddress' />
 				<soap:body use='literal' parts='parameters' />
