@@ -42,8 +42,8 @@
                 careContactReason:
                     Text som beskriver orsaken till vård- och omsorgskontakt som 
                     vård- och omsorgstagaren själv eller dess företrädare anger.
-                careContactUnit:
-                    Den eller de enheter som kontakt utfördes vid
+                careContactOrgUnit:
+                    Den enhet som kontakt utfördes vid
 	            careContactTimePeriod:
 	                    För besök sätts sluttidpunken till samma tid som anges som starttidpunkt.
 						För planerade kontakter sätts ingen sluttidpunkt.
@@ -56,8 +56,7 @@
         <xs:sequence>
             <xs:element name="careContactCode" type="codes:CareContactCodeEnum" minOccurs="0"/>
             <xs:element name="careContactReason" type="xs:string" minOccurs="0"/>
-            <xs:element name="careContactUnit" type="tns:CareContactUnitType" minOccurs="0"
-                maxOccurs="unbounded"/>
+            <xs:element name="careContactOrgUnit" type="tns:CareContactUnitType" />
 			<xs:element name="careContactTimePeriod" type="tns:TimePeriodType" />
 			<xs:element name="careContactStatus" type="codes:CareContactStatusEnum" minOccurs="0"
                 maxOccurs="1"/>
@@ -68,22 +67,28 @@
     <xs:complexType name="CareContactUnitType">
         <xs:annotation>
             <xs:documentation>
-                careContactUnitId:
+                careContactOrgUnitId:
                     HSA-id på den person inom enheten som hade
                     kontakt med patienten
-                careContactUnitName:
+                careContactOrgUnitName:
                     Namne på enhet 
-                careContactUnitAddress:
+                careContactOrgUnitTelecom:
+                    Telefon till organisationsenheten
+                careContactOrgUnitEmail:
+                    Epost till organisationsenheten
+                careContactOrgUnitAddress:
                     Adress till enhet
+	            careContactOrgUnitLocation:
+	                Text som anger namnet på plats eller ort för organisationsenhetens eller funktionens fysiska placering
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="careContactUnitId" type="tns:HSAIdType"/>
-            <xs:element name="careContactUnitName" type="xs:string"/>
-            <xs:element name="careContactUnitTelecom" type="xs:string" minOccurs="0" />
-            <xs:element name="careContactUnitEmail" type="xs:string"  minOccurs="0"/>
-            <xs:element name="careContactUnitAddress" type="xs:string" minOccurs="0"/>
-            <xs:element name="careContactUnitLocation" type="xs:string" minOccurs="0" />
+            <xs:element name="careContactOrgUnitId" type="tns:HSAIdType"/>
+            <xs:element name="careContactOrgUnitName" type="xs:string"/>
+            <xs:element name="careContactOrgUnitTelecom" type="xs:string" minOccurs="0" />
+            <xs:element name="careContactOrgUnitEmail" type="xs:string"  minOccurs="0"/>
+            <xs:element name="careContactOrgUnitAddress" type="xs:string" minOccurs="0"/>
+            <xs:element name="careContactOrgUnitLocation" type="xs:string" minOccurs="0" />
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
