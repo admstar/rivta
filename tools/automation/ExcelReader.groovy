@@ -1,4 +1,3 @@
- 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.apache.poi.hssf.usermodel.HSSFSheet
 import org.apache.poi.hssf.usermodel.HSSFRow
@@ -10,8 +9,6 @@ import org.apache.poi.hssf.usermodel.HSSFDateUtil
  * Microsoft Excel spreadsheets.
  * @author Goran Ehrsson
  */
- 
-/** Modified / extended by Peter Hernfalk */
 
 class ExcelReader {
  
@@ -72,29 +69,7 @@ class ExcelReader {
     def propertyMissing(String name) {
         cell(name)
     }
-    
-    
-    //-----2do, new method: findStringinSheetColumn(String searchPhrase, int columnNumber)
-    def findStringInSheetColumn(Map params = [:], Closure closure) {
-        /*def offset = params.offset ?: 0
-        def max = params.max ?: 9999999
-        def sheet = getSheet(params.sheet)
-        def rowIterator = sheet.rowIterator()
-        def linesRead = 0
- 
-        if(params.labels) {
-            labels = rowIterator.next().collect{it.toString().toLowerCase()}
-        }
-        offset.times{ rowIterator.next() }
- 
-        closure.setDelegate(this)
- 
-        while(rowIterator.hasNext() && linesRead++ < max) {
-            row = rowIterator.next()
-            closure.call(row)
-        }*/
-    }
-    
+
  
     def eachLine(Map params = [:], Closure closure) {
         def offset = params.offset ?: 0
@@ -116,11 +91,3 @@ class ExcelReader {
         }
     }
 }
-
-
-/*
-new ExcelReader("/Users/peterhernfalk/Desktop/_Peter_Files/Ineraprojekt/AL/Aktiviteter/Landskap med TP och TK/Groovyscript/Underlag/MasterTest.xls").eachLine {
-  //println "Row ${it.rowNum} = ${cell(0)} \t ${cell(1)} \t ${cell(2)} \t ${cell(3)} \t ${cell(4)} \t ${cell(5)}"
-  println "Row ${it.rowNum} = ${cell(5)} \t\t ${cell(0)}"
-}
-*/
