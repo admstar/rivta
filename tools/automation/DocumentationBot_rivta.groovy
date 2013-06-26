@@ -357,8 +357,9 @@ if ((outputType == output2HtmlTable) || (outputType == output2All)) {
     def index = 0
     new ExcelReader(excelFile).eachLine {
         excelMasterFile[index] = [contract:"${cell(0)}".trim(), contractcategory:"${cell(1)}".trim(),
-                rivtaname:"${cell(2)}".trim(), domaincategory:"${cell(3)}".trim(), vifodomain:"${cell(4)}".trim(),
-                swedishdomain:"${cell(5)}".trim(), domaincontact:"${cell(6)}".trim()]
+                rivtaname:"${cell(2)}".trim(), domaincategory:"${cell(3)}".trim(),
+                vifodomain:"${cell(4)}".trim(), swedishdomain:"${cell(5)}".trim(),
+                domaincontact:"${cell(6)}".trim()]
         log(loglevelDebug, "excelMasterFile[index]: " +excelMasterFile[index])
         index += 1
     }
@@ -391,18 +392,16 @@ if ((outputType == output2HtmlTable) || (outputType == output2All)) {
             def newLevel6 = ext[5]
             def urlEmptyLevel4 = RIVTADomainFolder + newLevel2 + delimiterToken + newLevel3 + trunkDocsSubPath
             def urlAllLevels = RIVTADomainFolder + newLevel2 + delimiterToken + newLevel3 + delimiterToken + newLevel4 + trunkDocsSubPath
-            
-            serviceDomainName = ""
-            serviceDomainContact = ""
 
-            //-----Begin dev: write all lines on separate table rows
+            serviceDomainName = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.swedishdomain" }
+            if (serviceDomainName == null) { serviceDomainName = " " }
+            serviceDomainContact = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.domaincontact" }
+            lastServiceDomainContact = addMailto(lastServiceDomainContact)
+            log(loglevelDebug, "serviceDomain (Name+Contact): " + newLevel6 + "  " + serviceDomainName + "  " + lastServiceDomainContact)
             if(firstTime == true) {
-                serviceDomainName = excelMasterFile.find { it.contract == newLevel6 }?.with { map -> "$map.swedishdomain" }
-                serviceDomainContact = excelMasterFile.find { it.contract == newLevel6 }?.with { map -> "$map.domaincontact" }
-                lastServiceDomainContact = addMailto(lastServiceDomainContact)
                 //log(loglevelDebug, "serviceDomain (Name+Contact): " + newLevel6 + "  " + serviceDomainName + "  " + lastServiceDomainContact)
                 firstTime = false
-                writer.write '<tr>' + "\n" 
+                writer.write '<tr>' + "\n"
                 writer.write '<td><p>' + serviceDomainName + '</p></td>' + "\n" 
                 writer.write '<td><p>' + newLevel2 + ":" + newLevel3 + '</p></td>' + "\n" 
                 
@@ -418,23 +417,18 @@ if ((outputType == output2HtmlTable) || (outputType == output2All)) {
                 }
                 writer.write newLevel6 + "\n" 
             } else {
-                serviceDomainName = excelMasterFile.find { it.contract == newLevel6 }?.with { map -> "$map.swedishdomain" }
-                serviceDomainContact = excelMasterFile.find { it.contract == newLevel6 }?.with { map -> "$map.domaincontact" }
-                lastServiceDomainContact = addMailto(lastServiceDomainContact)
-                log(loglevelDebug, "serviceDomain (Name+Contact): " + newLevel6 + "  " + serviceDomainName + "  " + lastServiceDomainContact)
-
+                //log(loglevelDebug, "serviceDomain (Name+Contact): " + newLevel6 + "  " + serviceDomainName + "  " + lastServiceDomainContact)
                 if ((newLevel2 != lastLevel2) || (newLevel3 != lastLevel3)) {
                     writer.write '</td>' + "\n"
                     if (lastServiceDomainContact != null && lastServiceDomainContact.indexOf('@') >= 0) {
-                        //writer.write '<td><a href="' + lastServiceDomainContact + '"> Tjänstedomänansvarig: ' + lastServiceDomainContact + '</td>' + "\n"
                         writer.write '<td><a href="' + lastServiceDomainContact + '"> Tjänstedomänansvarig</td>' + "\n"
                     } else {
                         writer.write "<td></td>" + "\n"
                     }
                     writer.write '</tr>' + "\n"
-                    writer.write '<tr>' + "\n" 
-                    writer.write '<td><p>' + serviceDomainName + '</p></td>' + "\n" 
-                    writer.write '<td><p>' + newLevel2 + ":" + newLevel3 + '</p></td>' + "\n" 
+                    writer.write '<tr>' + "\n"
+                    writer.write '<td><p>' + serviceDomainName + '</p></td>' + "\n"
+                    writer.write '<td><p>' + newLevel2 + ":" + newLevel3 + '</p></td>' + "\n"
                     writer.write '<td>' + "\n" 
                     if (newLevel4 == " ") {
                         if ((useAndVerifyDocumentationURL == true) && (getResponseCode(urlEmptyLevel4) == 200)) {
