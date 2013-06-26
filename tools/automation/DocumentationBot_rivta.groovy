@@ -16,10 +16,11 @@
  *
  * @author Peter Hernfalk
  */
- 
+
 import static groovy.io.FileType.FILES
 
 //-----Definitions
+excelMasterFile = []
 freeplaneMapBeginning = []
 freeplaneMapBeginning[0]  = '<map version="freeplane 1.2.0">'
 freeplaneMapBeginning[1]  = ""
@@ -82,18 +83,18 @@ HtmlTableBeginning[0]  = '<table border="1" cellpadding="1" cellspacing="1" styl
 HtmlTableBeginning[1]  = '<tbody>'
 HtmlTableBeginning[2]  = '<tr>'
 HtmlTableBeginning[3]  = '<td>'
-HtmlTableBeginning[4]  = '<p><strong>Svenskt tjänstedomännamn</strong></p>'
+HtmlTableBeginning[4]  = '<p><strong>Svenskt tj√§nstedom√§nnamn</strong></p>'
 HtmlTableBeginning[5]  = '</td>'
 HtmlTableBeginning[6]  = '<td>'
 HtmlTableBeginning[7]  = '<p>'
 HtmlTableBeginning[8]  = '<strong><strong><br />'
-HtmlTableBeginning[9]  = 'Namn på google code, rivta-webben</strong></strong></p>'
+HtmlTableBeginning[9]  = 'Namn p√• google code, rivta-webben</strong></strong></p>'
 HtmlTableBeginning[10] = '</td>'
 HtmlTableBeginning[11] = '<td>'
-HtmlTableBeginning[12] = '<p><strong>Ingående tjänstekontrakt</strong></p>'
+HtmlTableBeginning[12] = '<p><strong>Ing√•ende tj√§nstekontrakt</strong></p>'
 HtmlTableBeginning[13] = '</td>'
 HtmlTableBeginning[14] = '<td>'
-HtmlTableBeginning[15] = '<p><strong>Tjänstedomän-förvaltare, kontakt</strong></p>'
+HtmlTableBeginning[15] = '<p><strong>Tj√§nstedom√§n-f√∂rvaltare, kontakt</strong></p>'
 HtmlTableBeginning[16] = '</td>'
 HtmlTableBeginning[17] = '</tr>'
 HtmlTableEnd = []
@@ -104,10 +105,16 @@ htbSize = HtmlTableBeginning.size
 hteSize = HtmlTableEnd.size
 
 logFile = "/_logFile.txt"
+loglevelDebug = "DEBUG"
+loglevelError = "ERROR"
+loglevelInfo = "INFO"
+loglevelWarning = "WARNING"
+//lookForDomainContact = "lookForDomainContact"
+//lookForDomainName = "lookForDomainName"
 mapLevel1 = ['clinicalprocess':'Medarbetare', 'infrastructure':'Infrastruktur']
-mapLevel2 = ['clinicalprocess':'Vård och omsorgs kärnprocess', 'infrastructure':'Infrastruktur']
-mapLevel3 = ['activity':'Hantera aktiviteter', 'activityprescription':'Hantera aktiviteter', 'healthcond':'Hantera hälsorelaterade tillstånd', 'logistics':'Logistik']
-mapLevel4 = ['description':'Tillståndsbeskrivning', 'request':'request', 'trunk':'trunk', 'actoutcome':'actoutcome', 'logistics':'logistics', 'organisation':'organisation']
+mapLevel2 = ['clinicalprocess':'V√•rd och omsorgs k√§rnprocess', 'infrastructure':'Infrastruktur']
+mapLevel3 = ['activity':'Hantera aktiviteter', 'activityprescription':'Hantera aktiviteter', 'healthcond':'Hantera h√§lsorelaterade tillst√•nd', 'logistics':'Logistik']
+mapLevel4 = ['description':'Tillst√•ndsbeskrivning', 'request':'request', 'trunk':'trunk', 'actoutcome':'actoutcome', 'logistics':'logistics', 'organisation':'organisation']
 mbSize = freeplaneMapBeginning.size
 meSize = freeplaneMapEnd.size
 mindmapFile = "/_devMap.mm"
@@ -147,7 +154,7 @@ if (downloadTKFiles == true) {
     
     //-----Download files from the RIV-TA site to the local target folder
     def process = RIVTACheckoutCommandToFolder.execute()
-    process.in.eachLine { line -> println "Downloading: " + line }
+    process.in.eachLine { line -> log(loglevelDebug, "Downloading: " + line) }
 }
 
 //-----Download information regarding current status for service domains and service contracts
@@ -207,7 +214,7 @@ new File(RIVTATargetFolder).eachFileRecurse(FILES) {
                     Level6 = tkPrefix + it.attributes().name
                 }
             }
-            println "Nivå 1: " + Level1 + "   Nivå 2: " + Level2 + "   Nivå 3: " + Level3 + "   Nivå 4: " + Level4 + "   Nivå 5: " + Level5 + "   Nivå 6: " + Level6
+            log(loglevelDebug, "Niv√• 1: " + Level1 + "   Niv√• 2: " + Level2 + "   Niv√• 3: " + Level3 + "   Niv√• 4: " + Level4 + "   Niv√• 5: " + Level5 + "   Niv√• 6: " + Level6)
             wsdlList << Level1 + delimiterToken + Level2 + delimiterToken + Level3 + delimiterToken + Level4 + delimiterToken + Level5 + delimiterToken + Level6
         }
     }
@@ -344,7 +351,18 @@ if ((outputType == output2HtmlTable) || (outputType == output2All)) {
     ///////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////
     */
-    
+
+    //-----Fetch a copy of the contents of the Excel file
+    //-----2do: modify this so it's possible to use a smarter fetch och hash values
+    def index = 0
+    new ExcelReader(excelFile).eachLine {
+        excelMasterFile[index] = [contract:"${cell(0)}".trim(), contractcategory:"${cell(1)}".trim(),
+                rivtaname:"${cell(2)}".trim(), domaincategory:"${cell(3)}".trim(), vifodomain:"${cell(4)}".trim(),
+                swedishdomain:"${cell(5)}".trim(), domaincontact:"${cell(6)}".trim()]
+        log(loglevelDebug, "excelMasterFile[index]: " +excelMasterFile[index])
+        index += 1
+    }
+
     //-----2do: recursive logic that creates as many tables as needed
     
     //-----Write a Html Table file, containing all Service Contract descriptions
@@ -357,8 +375,10 @@ if ((outputType == output2HtmlTable) || (outputType == output2All)) {
     def lastLevel2 = ""
     def lastLevel3 = ""
     def lastLevel4 = ""
+    def lastServiceDomainContact = ""
+    def lastServiceDomainName = ""
     def firstTime = true
-    
+
     new File(RIVTATargetFolder + htmltTableFile).withWriterAppend(charset) { 
         writer -> wsdlListSize.times { 
             def ext = wsdlList[it].tokenize(delimiterToken)
@@ -372,18 +392,15 @@ if ((outputType == output2HtmlTable) || (outputType == output2All)) {
             def urlEmptyLevel4 = RIVTADomainFolder + newLevel2 + delimiterToken + newLevel3 + trunkDocsSubPath
             def urlAllLevels = RIVTADomainFolder + newLevel2 + delimiterToken + newLevel3 + delimiterToken + newLevel4 + trunkDocsSubPath
             
-            //-----2do: fill these variables with correct values
-            def serviceDomainName = "Svenskt namn"
-            def serviceDomainContact = "mailto:namn@förvaltningsorganisation.se"
-            new ExcelReader(excelFile).eachLine {
-                if ("${cell(0)}" == newLevel6) {
-                    serviceDomainName = "${cell(5)}"
-                    println "Excel: " + "${cell(0)} \t ${cell(5)}" + "  TK:" + newLevel6
-                }
-            }
-    
+            serviceDomainName = ""
+            serviceDomainContact = ""
+
             //-----Begin dev: write all lines on separate table rows
             if(firstTime == true) {
+                serviceDomainName = excelMasterFile.find { it.contract == newLevel6 }?.with { map -> "$map.swedishdomain" }
+                serviceDomainContact = excelMasterFile.find { it.contract == newLevel6 }?.with { map -> "$map.domaincontact" }
+                lastServiceDomainContact = addMailto(lastServiceDomainContact)
+                //log(loglevelDebug, "serviceDomain (Name+Contact): " + newLevel6 + "  " + serviceDomainName + "  " + lastServiceDomainContact)
                 firstTime = false
                 writer.write '<tr>' + "\n" 
                 writer.write '<td><p>' + serviceDomainName + '</p></td>' + "\n" 
@@ -401,10 +418,20 @@ if ((outputType == output2HtmlTable) || (outputType == output2All)) {
                 }
                 writer.write newLevel6 + "\n" 
             } else {
+                serviceDomainName = excelMasterFile.find { it.contract == newLevel6 }?.with { map -> "$map.swedishdomain" }
+                serviceDomainContact = excelMasterFile.find { it.contract == newLevel6 }?.with { map -> "$map.domaincontact" }
+                lastServiceDomainContact = addMailto(lastServiceDomainContact)
+                log(loglevelDebug, "serviceDomain (Name+Contact): " + newLevel6 + "  " + serviceDomainName + "  " + lastServiceDomainContact)
+
                 if ((newLevel2 != lastLevel2) || (newLevel3 != lastLevel3)) {
-                    writer.write '</td>' + "\n" 
-                    writer.write '<td><a href="' + serviceDomainContact + '">Tjänstedomänansvarig</td>' + "\n" 
-                    writer.write '</tr>' + "\n" 
+                    writer.write '</td>' + "\n"
+                    if (lastServiceDomainContact != null && lastServiceDomainContact.indexOf('@') >= 0) {
+                        //writer.write '<td><a href="' + lastServiceDomainContact + '"> Tj√§nstedom√§nansvarig: ' + lastServiceDomainContact + '</td>' + "\n"
+                        writer.write '<td><a href="' + lastServiceDomainContact + '"> Tj√§nstedom√§nansvarig</td>' + "\n"
+                    } else {
+                        writer.write "<td></td>" + "\n"
+                    }
+                    writer.write '</tr>' + "\n"
                     writer.write '<tr>' + "\n" 
                     writer.write '<td><p>' + serviceDomainName + '</p></td>' + "\n" 
                     writer.write '<td><p>' + newLevel2 + ":" + newLevel3 + '</p></td>' + "\n" 
@@ -425,6 +452,8 @@ if ((outputType == output2HtmlTable) || (outputType == output2All)) {
         lastLevel2 = newLevel2
         lastLevel3 = newLevel3
         lastLevel4 = newLevel4
+        lastServiceDomainContact = serviceDomainContact
+        lastServiceDomainName = serviceDomainName
         }
 
     }
@@ -439,7 +468,7 @@ if ((outputType == output2HtmlTable) || (outputType == output2All)) {
 //-----Write a text file, containing the paths and names of the wsdl files
 File lstFile = new File(RIVTATargetFolder + logFile)
 lstFile.withWriter{ 
-    out ->  wsdlList.each { 
+    out ->  wsdlList.each {
         out.println it
       }
 }
@@ -449,40 +478,53 @@ ShowExecutionStatistics()
 
 
 //-------------------- Methods --------------------//
+
+/** Adds "mailto:" to a valid e-mail address */
+def addMailto(lastServiceDomainContact) {
+    if (lastServiceDomainContact != null && lastServiceDomainContact.indexOf('@') >= 0) {
+        lastServiceDomainContact = "mailto:" + lastServiceDomainContact
+    } else {
+        lastServiceDomainContact = " "
+    }
+}
+
+/** Logs text */
+def log(level, text) {
+    //-----2do: add logic that directs the output to configured target
+    println text
+}
+
+/** Verifies if the URL is working or not */
 public static int getResponseCode(String urlString) throws MalformedURLException, IOException {
     URL u = new URL(urlString); 
-    HttpURLConnection huc =  (HttpURLConnection)  u.openConnection(); 
+    HttpURLConnection huc =  (HttpURLConnection) u.openConnection(); 
     huc.setRequestMethod("GET"); 
     huc.connect(); 
     if (huc.getResponseCode() != 200) {
-        println "Broken link: " + urlString
+        log("INFO", "Broken link: " + urlString)
     }
     
     return huc.getResponseCode();
 }
 
 
+/** Displays execution statistics */
 def ShowExecutionStatistics() {
-    println ""
-    println "----- Execution statistics -----"
-    println wsdlList.size + " WSDL files, excisting in trunk directories, were listed"
+    log("INFO", "")
+    log("INFO", "----- Execution statistics -----")
+    log("INFO", wsdlList.size + " WSDL files, excisting in trunk directories, were listed")
 }
 
 
-/** Write nodes in html table format */
-def writeHtmlTable() {
-    //-----2do
-}
-
-
-/**-----Decides wether a service contract is apporved to be published or not*/
+/** Decides wether a service contract is apporved to be published or not */
 private boolean IsContractPublished(String level1, level2, level3, level4, level5) {
   isPublished = false
 
   if (useStatusFilter == true) {
       //-----Look up status for the wsdl file
       isPublished = publishStatus4Wsdl.get(level5)
-  } else { isPublished = true 
+  } else { 
+      isPublished = true
   }
   
   return isPublished
