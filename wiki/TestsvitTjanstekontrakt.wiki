@@ -1,18 +1,27 @@
 #summary Dokumentation för hur man skapar en testsvit för ett tjänstekontrakt
 
-= Introduction =
+= Översikt =
+Som verktyg för att skapa och exekvera testsviterna används SoapUI som finns på http://www.soapui.org/.
 
-To keep the testsuites at a reasonable size it is recomended to create one SoapUI project per Service Contract. This would make it easy to verify separate messages within the contract.
-If the service domain is a process domain, where several contracts are used together, it is recomended to create a separate SoapUI project that verifies the implementation of the process.
+För att hålla testsviterna på en rimlig storlek är rekommendationen att göra ett SoapUI-projekt per tjänstekontrakt. 
+Detta gör det möjligt för tjänsteleverantören att verifiera själva meddelandet i kontraktet.
+Om domänen innehåller flera tjänstekontrakt som samverkar i en process, är ansatsen att göra ett separat SoapUI-projekt som verifiera flödet i processen genom flera kontrakt.
 
-For each contract there will be two different SoapUI projects, one for the test suite and one that will contain a mock service that is used to create and maintain the test suite.
+För varje tjänstekontrakt måste man skapa två SoapUI-projekt, där det första är själva testsviten och det andra innehåller en mock-tjänst som används vid utveckling och underhåll av sviten.
 
-To simplify the mocking of responses, a Http-Header (“x-mock-response”) is used to select which response that should be used. Every request in the test suite must therefore contain this extra header.
+För att på enklast sätt få mock-tjänsten att returnera rätt svar på en Request används en HttpHeader (“x-mock-response”) som innehåller namnet på det svar som ska användas, varje Request i testsviten måste därför innehålla denna HttpHeader.
 
-==Create Schematron validation rules==
-There are some rules that cannot easily be described using the Schema language, and to verify the response messages there is a possibility to use the Schematron language to further verify details of a message. To create Schematron rules, you have to compare the Schema rules and the business-rules described in “Fältregler” for each contract. 
+==Referensimplementation==
+För att visa hur en testsvit kan se ut finns det en referensimplementation under https://code.google.com/p/rivta/source/browse/#svn%2Ftools%2Ftest%2Freference-suite. Denna testsvit innehåller samtliga delar som beskrivs nedan och kan med fördel användas som mall för en ny testsvit.
 
-==Creating the test project==
+==Schematron-validering==
+För vissa affärsregler räcker det inte att använda XML Schema, och då är rekommendationen att skapa Schematron-regler som kan validera meddelanden ytterligare. För att hitta de konstruktioner där Schematron behövs får man jämföra Schema-definitionen av kontraktet med dess fältregler och se om det finns avvikande definitioner.
+De områden där Schematron kan hjälpa till handlar oftast om regler som anger att "om fält A har ett värde får inte fält B anges".
+Mer information om Schematron finns på http://www.schematron.com/.
+
+Se script-avsnittet nedan för meddelanden valideras mot Schematron-regler.
+
+==Skapa testprojekt==
  # Create a SoapUI project for the contract where the test suite will be created, should be named as the contract
  # Import the WSDL-file for the contract
  # Add a TestSuite in the project.
@@ -41,8 +50,10 @@ return responseName
  # If there are Schematron validations available for the contract, add a Script Assertion that verifies the response. See Schematron script.
  # Add further assertions using Script, XPath or XQuery
 
+==Script==
+Här visas exempel på script som kan användas för att skapa en testsvit.
 
-===Read data script===
+===Läsa testdata===
 {{{
 import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
@@ -54,7 +65,7 @@ def source = new XmlDataReader(context, dataFile)
 source.load("Date_Boundaries")
 }}}
 
-===Schematron validation script===
+===Schematron-validering===
 {{{
 import se.skl.rivta.testsupport.soapui.validation.SchematronValidator
 import se.skl.rivta.testsupport.soapui.ContextHelper
