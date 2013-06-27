@@ -352,15 +352,15 @@ if ((outputType == output2HtmlTable) || (outputType == output2All)) {
     ///////////////////////////////////////////////////////////////////////////////////
     */
 
-    //-----Fetch a copy of the contents of the Excel file
-    //-----2do: modify this so it's possible to use a smarter fetch och hash values
+    //-----Fetch a copy of the contents of the Excel file. Store the data in a map that contains named attributes
     def index = 0
     new ExcelReader(excelFile).eachLine {
-        excelMasterFile[index] = [contract:"${cell(0)}".trim(), contractcategory:"${cell(1)}".trim(),
+        excelMasterFile[index] = [
+                contract:"${cell(0)}".trim(), contractcategory:"${cell(1)}".trim(),
                 rivtaname:"${cell(2)}".trim(), domaincategory:"${cell(3)}".trim(),
                 vifodomain:"${cell(4)}".trim(), swedishdomain:"${cell(5)}".trim(),
                 domaincontact:"${cell(6)}".trim()]
-        log(loglevelDebug, "excelMasterFile[index]: " +excelMasterFile[index])
+        log(loglevelDebug, "excelMasterFile[index]: " + excelMasterFile[index])
         index += 1
     }
 
@@ -381,32 +381,37 @@ if ((outputType == output2HtmlTable) || (outputType == output2All)) {
     def firstTime = true
 
     new File(RIVTATargetFolder + htmltTableFile).withWriterAppend(charset) { 
-        writer -> wsdlListSize.times { 
+        writer -> wsdlListSize.times {
             def ext = wsdlList[it].tokenize(delimiterToken)
-            //-----2do: look up and use the swedish names that corresponds to the path tokens
             def newLevel1 = ext[0]
             def newLevel2 = ext[1]
             def newLevel3 = ext[2]
             def newLevel4 = ext[3]
-            def newLevel5 = ext[4]
+            //def newLevel5 = ext[4]    2do: verify that this token isn't needed
             def newLevel6 = ext[5]
             def urlEmptyLevel4 = RIVTADomainFolder + newLevel2 + delimiterToken + newLevel3 + trunkDocsSubPath
             def urlAllLevels = RIVTADomainFolder + newLevel2 + delimiterToken + newLevel3 + delimiterToken + newLevel4 + trunkDocsSubPath
 
+            //-----Fetch serviceDomainName and serviceDomainContact from the map, containing Excel data
             serviceDomainName = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.swedishdomain" }
             if (serviceDomainName == null) { serviceDomainName = " " }
-            serviceDomainContact = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.domaincontact" }
-            lastServiceDomainContact = addMailto(lastServiceDomainContact)
-            log(loglevelDebug, "serviceDomain (Name+Contact): " + newLevel6 + "  " + serviceDomainName + "  " + lastServiceDomainContact)
+
+            //-----Fetch the Domain contact only when the RIV-Ta name changes
+            if ((newLevel2 != lastLevel2) || (newLevel3 != lastLevel3)) {
+                serviceDomainContact = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.domaincontact" }
+                serviceDomainContact = addMailto(serviceDomainContact)
+            }
+
+            //-----Write HTML table, using available data
             if(firstTime == true) {
-                //log(loglevelDebug, "serviceDomain (Name+Contact): " + newLevel6 + "  " + serviceDomainName + "  " + lastServiceDomainContact)
                 firstTime = false
+                lastServiceDomainContact = serviceDomainContact
                 writer.write '<tr>' + "\n"
                 writer.write '<td><p>' + serviceDomainName + '</p></td>' + "\n" 
                 writer.write '<td><p>' + newLevel2 + ":" + newLevel3 + '</p></td>' + "\n" 
                 
                 //-----Add a link to the docs folder on the RIV-TA site
-                writer.write '<td>' + "\n" 
+                writer.write '<td>' + "\n"
 
                 if (newLevel4 == " ") {
                     if ((useAndVerifyDocumentationURL == true) && (getResponseCode(urlEmptyLevel4) == 200)) {
@@ -415,16 +420,17 @@ if ((outputType == output2HtmlTable) || (outputType == output2All)) {
                 } else if ((useAndVerifyDocumentationURL == true) && (getResponseCode(urlAllLevels) == 200)) {
                     writer.write '<a href="' + RIVTADomainFolder + newLevel2 + delimiterToken + newLevel3 + delimiterToken + newLevel4 + trunkDocsSubPath + '">Dokumentation</a><br>' + "\n" 
                 }
-                writer.write newLevel6 + "\n" 
+                writer.write newLevel6 + "\n"
             } else {
-                //log(loglevelDebug, "serviceDomain (Name+Contact): " + newLevel6 + "  " + serviceDomainName + "  " + lastServiceDomainContact)
+                //log(loglevelDebug, "TK: " + newLevel6 + " newLevel2: " + newLevel2 + " lastLevel2: " + lastLevel2 + " newLevel3: " + newLevel3 + " lastLevel3: " + lastLevel3)
                 if ((newLevel2 != lastLevel2) || (newLevel3 != lastLevel3)) {
                     writer.write '</td>' + "\n"
+                    writer.write '<td>'
                     if (lastServiceDomainContact != null && lastServiceDomainContact.indexOf('@') >= 0) {
-                        writer.write '<td><a href="' + lastServiceDomainContact + '"> Tjänstedomänansvarig</td>' + "\n"
-                    } else {
-                        writer.write "<td></td>" + "\n"
+                        writer.write '<a href="' + lastServiceDomainContact + '"> Tjänstedomänansvarig'
+                        log(loglevelDebug, "Tjänstedomänansvarig, sdc: " + serviceDomainContact + " l-sdc: " + lastServiceDomainContact )
                     }
+                    writer.write '</td>' + "\n"
                     writer.write '</tr>' + "\n"
                     writer.write '<tr>' + "\n"
                     writer.write '<td><p>' + serviceDomainName + '</p></td>' + "\n"
@@ -442,6 +448,7 @@ if ((outputType == output2HtmlTable) || (outputType == output2All)) {
                     writer.write '<br>' + newLevel6 + "\n" 
                 }
             }
+        log(loglevelDebug, "serviceDomain (Name+Contact): " + newLevel6 + "  " + serviceDomainName + "  sdc: " + serviceDomainContact + "  l-sdc: " + lastServiceDomainContact)
         lastLevel1 = newLevel1
         lastLevel2 = newLevel2
         lastLevel3 = newLevel3
