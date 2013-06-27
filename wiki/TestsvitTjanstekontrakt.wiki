@@ -22,33 +22,33 @@ Mer information om Schematron finns på http://www.schematron.com/.
 Se script-avsnittet nedan för meddelanden valideras mot Schematron-regler.
 
 ==Skapa testprojekt==
- # Create a SoapUI project for the contract where the test suite will be created, should be named as the contract
- # Import the WSDL-file for the contract
- # Add a TestSuite in the project.
+ # Skapa ett SoapUI-projekt för tjänstekontraktet, detta ska namnges med samma namn som kontraktet.
+ # Importera WSDL-filen för kontraktet.
+ # Lägg till en TestSuite i projektet.
 
-==Creating the mock project==
- # Create another SoapUI project where the mock services will be created, should be named as the contract with suffix “Mock”
- # Import the WSDL-file for the contract and mark the “Create MockService” checkbox.
- # Open the “Mock Operation” dialog and choose “Script” as dispatch. To make the response dispatch selection, paste the following lines last in the script editor:
+==Skapa mockprojekt==
+ # Skapa ytterligare ett SoapUI-projekt, som ska innehålla mock-tjänsterna. Detta ska namnges med samma namn som kontraktet med tillägget "Mock" sist.
+ # Importera WSDL-filen för kontraktet och välj "Create MockService" i guiden.
+ # Öppna "Mock Operation"-dialogen och välj "Script" som Dispatch. För att välja vilket svar mock-tjänsten ska returnera baserat på ovan nämnda HttpHeader, klistra in följande rader sist i script-editorn:
 {{{
 def responseName = mockRequest.requestHeaders['x-mock-response'][0]
 log.debug("responseName: ${responseName}")
 
 return responseName
 }}}
- # The script can also contain other logic that is used to read values from the request, but this should be the least amount of code used to select the correct response.
- # Now you should be ready to create test cases.
+ # Scriptet kan även innehålla annan logik för att hämta värden från Request'en, men detta bör vara den minsta mängden kod som används för att välja rätt Response för givet Request.
+ # Du bör nu vara redo att skapa själva testfallen.
 
-==Create testcase==
- # Add a TestCase under the TestSuite
- # Add a Script step “Read data” under the new TestCase, that is used to read the test data.
- # Add a Test Request under the TestCase
- # Add the header “x-mock-response” to select which response should be sent back
- # Add the header “x-rivta-original-serviceconsumer-hsaid” with the value “${httpHeaderHsaId}”
- # Modify the contents of the request, so that it matches the current testcase. Variables are referecend with ${careUnitHsaId}
- # Add the following assertions (if applicable): Not Soap Fault, Respons SLA (15 seconds, Schema Compliance, SOAP Response
- # If there are Schematron validations available for the contract, add a Script Assertion that verifies the response. See Schematron script.
- # Add further assertions using Script, XPath or XQuery
+==Skapa testfall==
+ # Lägg till ett TestCase under TestSuite'n.
+ # Lägg till ett "Script step" som namnges “Read data” under det nya TestCase't, som används för att läsa in testdata. Se exempel på script nedan.
+ # Lägg till ett "Test Request" efter Script-steget.
+ # Lägg till en HttpHeader “x-mock-response” för att låta mock-tjänsten kunna välja lämpligt svar på Request'en.
+ # Lägg till en HttpHeader “x-rivta-original-serviceconsumer-hsaid” med värdet “${httpHeaderHsaId}”. Värdet på variabel läses in av script-steget.
+ # Anpassa innehållet i Request'en så att det återspeglar det som ska verifieras av ditt testfall. Variabler refereras med ${careUnitHsaId}.
+ # Lägg till lämpliga verifieringar av svaret: Not Soap Fault, Respons SLA (15 sekunder), Schema Compliance, SOAP Response.
+ # Om det finns Schematron-regler för kontraktet, lägg till en "Script Assertion" som kontrollerar meddelandet mot dessa reglerna. Se script nedan.
+ # Lägg till ytterligare valideringar med Script, Xpath eller XQuery.
 
 ==Script==
 Här visas exempel på script som kan användas för att skapa en testsvit.
@@ -79,4 +79,66 @@ def failures = validator.validateMessage(messageExchange.response.getResponseCon
 	new File(utils.projectPath + "/constraints.xml"))
 
 failures.each { failure -> contextHelper.fail(failure.text) }
+}}}
+===Validering av meddelandets innehåll===
+Detta script validerar att svaret endast innehåller samma PatientId och PatientIdType som skickades i Requesten.
+{{{
+import com.eviware.soapui.support.XmlHolder
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def contextHelper = new ContextHelper(context)
+
+def holder = new XmlHolder( messageExchange.response.responseContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:2'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:logistics:logistics:2'
+
+def careContacts = holder.getDomNodes('/soapenv:Envelope/soapenv:Body/urn:GetCareContactsResponse/urn:careContact')
+
+careContacts.each {c -> 
+	def contactHolder = new XmlHolder( c )
+	holder.namespaces.each {key, value -> contactHolder.namespaces[key] = value}
+
+	def careContactId = contactHolder.getNodeValue('/urn:careContact/urn1:careContactHeader/urn1:careContactId')
+	def patientId = contactHolder.getNodeValue('/urn:careContact/urn1:careContactHeader/urn1:patientId/urn1:id')
+	def patientIdType = contactHolder.getNodeValue('/urn:careContact/urn1:careContactHeader/urn1:patientId/urn1:type')
+	
+	if (patientId != context.patientId) {
+		contextHelper.fail("Response contains a contact with other PatientId. PatientId: ${patientId} CareContactId: ${careContactId}")
+	}
+	if (patientIdType != context.patientIdType ) {
+		contextHelper.fail("Response contains a contact with other PatientIdType. PatientIdType: ${patientIdType} CareContactId: ${careContactId}")
+	}
+}
+}}}
+===Mock-script===
+Detta script är ett exempel för hur mock-tjänsten hämtar värden från Request'en, som sedan blir tillgängliga att använda i svaret som returneras.
+{{{
+import com.eviware.soapui.support.XmlHolder
+
+def holder = new XmlHolder( mockRequest.requestContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:itintegration:registry:1'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:2'
+holder.namespaces['urn2'] = 'urn:riv:clinicalprocess:logistics:logistics:2'
+
+def logicalAddress = holder.getNodeValue('/soapenv:Envelope/soapenv:Header/urn:LogicalAddress')
+def careUnitHSAid = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetCareContacts/urn1:careUnitHSAid')
+def careContactId = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetCareContacts/urn1:careContactId')
+def sourceSystemHSAid = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetCareContacts/urn1:sourceSystemHSAid')
+def datePeriodStart = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetCareContacts/urn1:timePeriod/urn2:start')
+def datePeriodEnd = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetCareContacts/urn1:timePeriod/urn2:end')
+def patientId = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetCareContacts/urn1:patientId/urn2:id')
+def patientIdType = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetCareContacts/urn1:patientId/urn2:type')
+
+context.patientId = patientId
+context.patientIdType = patientIdType
+context.careUnitHSAid = careUnitHSAid
+
+def responseName = mockRequest.requestHeaders['x-mock-response'][0]
+log.debug("responseName: ${responseName}")
+
+return responseName
 }}}
