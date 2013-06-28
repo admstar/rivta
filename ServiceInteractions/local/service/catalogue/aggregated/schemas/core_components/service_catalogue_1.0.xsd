@@ -203,6 +203,8 @@
       <xs:enumeration value="INFO"/>
     </xs:restriction>
   </xs:simpleType>
+  
+  <!-- -->
   <xs:complexType name="ProductType">
     <xs:annotation>
       <xs:documentation>Product information</xs:documentation>
@@ -210,9 +212,21 @@
     <xs:sequence>
       <xs:element name="displayName" type="xs:string"/>
       <xs:element name="description" type="xs:string"/>
-      <xs:element name="code" type="xs:string"/>
-      <xs:element name="codeSystem" type="xs:string"/>
+      <xs:element name="code" type="tns:CodeType" maxOccurs="unbounded"/>
       <xs:element name="price" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+
+  <xs:complexType name="CodeType">
+    <xs:annotation>
+      <xs:documentation>CodeSystem information</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="displayName" type="xs:string"/>
+      <xs:element name="description" type="xs:string"/>
+      <xs:element name="code" type="xs:string"/>
+      <xs:element name="codeSystem" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
 </xs:schema>
