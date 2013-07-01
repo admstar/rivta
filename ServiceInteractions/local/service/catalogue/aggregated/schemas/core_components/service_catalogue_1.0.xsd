@@ -21,6 +21,7 @@
   targetNamespace="urn:riv:service:catalogue:1" elementFormDefault="qualified"
   attributeFormDefault="unqualified" version="1.0">
 
+  <!-- -->
   <xs:complexType name="OffersTransactionType">
     <xs:annotation>
       <xs:documentation>When deleteFlag is set to true, the given careUnitId will be deleted from the catalogue.
@@ -32,8 +33,9 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-
   <xs:element name="capacity" type="tns:CapacityType"/>
+
+  <!-- -->
   <xs:complexType name="OfferType">
     <xs:sequence>
       <xs:element name="careUnit" type="tns:CareUnitType"/>
@@ -88,7 +90,6 @@
   </xs:simpleType>
 
   <!--  -->
-
   <xs:complexType name="CapacityType">
     <xs:annotation>
       <xs:documentation>Product information</xs:documentation>
@@ -99,9 +100,9 @@
       <xs:element name="code" type="xs:string"/>
       <xs:element name="codeSystem" type="xs:string"/>
       <xs:element name="value" type="xs:string"/>
+      <xs:element name="validTo" type="tns:TS"/>
     </xs:sequence>
   </xs:complexType>
-
 
   <!--  -->
   <xs:complexType name="CareUnitAddressType">
