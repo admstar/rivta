@@ -20,7 +20,7 @@
  -->
 <xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'
            xmlns='urn:riv:clinicalprocess:activityprescription:logistics:GetDispensedDrugsResponder:1'
-           xmlns:tns='urn:riv:clinicalprocess:activityprescription:logistics:1'
+           xmlns:logistics='urn:riv:clinicalprocess:activityprescription:logistics:1'
            targetNamespace='urn:riv:clinicalprocess:activityprescription:logistics:GetDispensedDrugsResponder:1'
            elementFormDefault='qualified'
            attributeFormDefault='unqualified'
@@ -39,31 +39,27 @@
         <xs:sequence>
 
             <xs:element name="patient"
-                        type="tns:Patient"
+                        type="logistics:Patient"
                         minOccurs="1"
                         maxOccurs="1"
                         nillable="false">
-
                 <xs:annotation>
                     <xs:documentation>
                         Patient vars läkemedelsförteckning skall hämtas.
                     </xs:documentation>
                 </xs:annotation>
-
             </xs:element>
 
             <xs:element name="anropandeVardpersonal"
-                        type="tns:Vardpersonal"
+                        type="logistics:Vardpersonal"
                         minOccurs="1"
                         maxOccurs="1"
                         nillable="false">
-
                 <xs:annotation>
                     <xs:documentation>
                         Anropande vårdpersonal.
                     </xs:documentation>
                 </xs:annotation>
-
             </xs:element>
 
             <xs:element name="forskrivarkod"
@@ -71,7 +67,6 @@
                         minOccurs="0"
                         maxOccurs="1"
                         nillable="false">
-
                 <xs:annotation>
                     <xs:documentation>
                         Förskrivarens individuella förskrivarkod.
@@ -79,11 +74,10 @@
                         Valideras mot FORS. Obligatorisk om atkomsttyp = SAM
                     </xs:documentation>
                 </xs:annotation>
-
             </xs:element>
 
             <xs:element name="identifieradArbetsplats"
-                        type="tns:ArbetsplatsIdentifikation"
+                        type="logistics:ArbetsplatsIdentifikation"
                         minOccurs="1"
                         maxOccurs="1"
                         nillable="false">
@@ -95,17 +89,15 @@
             </xs:element>
 
             <xs:element name="atkomsttyp"
-                        type="tns:atkomsttyp"
+                        type="logistics:atkomsttyp"
                         minOccurs="1"
                         maxOccurs="1"
                         nillable="false">
-
                 <xs:annotation>
                     <xs:documentation>
                         Treställig kod för typ av åtkomst.
                     </xs:documentation>
                 </xs:annotation>
-
             </xs:element>
             
             <xs:any namespace='##other'
@@ -120,32 +112,29 @@
         <xs:sequence>
 
             <xs:element name="lakemedelsforteckning"
-                        type="tns:Receptexpeditionsrad"
+                        type="logistics:Receptexpeditionsrad"
                         minOccurs="0"
-                        maxOccurs="unbounded">
-
+                        maxOccurs="unbounded"
+                        nillable="false">
                 <xs:annotation>
                     <xs:documentation>
                         Patientens läkemedelsförteckning kompletterad med ordinationsmappningsinformation.
                         Om patienten saknar poster i läkemedelsförteckningen så returneras en tom lista.
                     </xs:documentation>
                 </xs:annotation>
-
             </xs:element>
 
             <xs:element name="patientinformation"
-                        type="tns:Patientinformation"
+                        type="logistics:Patientinformation"
                         minOccurs="0"
                         maxOccurs="1"
                         nillable="false">
-
                 <xs:annotation>
                     <xs:documentation>
                         Information om patienten vars läkemedelsförteckning man hämtat.
                         Om patienten är markerad som 'Avliden' så returneras inga rader ur läkemedelsförteckningen.
                     </xs:documentation>
                 </xs:annotation>
-
             </xs:element>
 
             <xs:element name="varningsnivaUppnadd"
@@ -153,7 +142,6 @@
                         minOccurs="1"
                         maxOccurs="1"
                         nillable="false">
-
                 <xs:annotation>
                     <xs:documentation>
                         Flagga som anger om förskrivarens antal läsningar det senaste dygnet
@@ -161,21 +149,29 @@
                         falskt.
                     </xs:documentation>
                 </xs:annotation>
-
             </xs:element>
             
             <xs:element name='resultCode'
-                        type='tns:resultCodeEnum'>
+                        type='logistics:resultCodeEnum'
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Resultatkod för anropet.</xs:documentation>
+                    <xs:documentation>
+                        Resultatkod för anropet.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name='comment'
                         type='xs:string'
-                        minOccurs='0'>
+                        minOccurs='0'
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Kommentar till eventuella fel eller varningar.</xs:documentation>
+                    <xs:documentation>
+                        Kommentar till eventuella fel eller varningar.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 

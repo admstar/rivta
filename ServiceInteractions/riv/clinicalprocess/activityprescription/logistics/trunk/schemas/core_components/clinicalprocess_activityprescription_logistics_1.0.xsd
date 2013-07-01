@@ -20,7 +20,7 @@
  -->		
 <xs:schema
         xmlns:xs='http://www.w3.org/2001/XMLSchema'
-        xmlns:tns='urn:riv:clinicalprocess:activityprescription:logistics:1'
+        xmlns='urn:riv:clinicalprocess:activityprescription:logistics:1'
         targetNamespace='urn:riv:clinicalprocess:activityprescription:logistics:1'
         elementFormDefault='qualified'
         attributeFormDefault='unqualified'
@@ -30,9 +30,11 @@
         <xs:documentation>
             Beskrivning: 	    Informationsobjekt för domänen clinicalprocess:activityprescription:logistics
             Revisionshistorik:  2013-05-03 Daniel Sundberg, Apotekens Service AB
-                                           Adderade version 1.0 av gemensamma informationsobjekt.
+                                Adderade version 1.0 av gemensamma informationsobjekt.
                                 2013-05-23 Daniel Sundberg, Apotekens Service AB
-                                           Strukturerade objekt skapas.
+                                Strukturerade objekt skapas.
+                                2013-06-28 Daniel Sundberg, Apotekens Service AB.
+                                Konsoliderat struktur och ordning för läsbarhet.
         </xs:documentation>
     </xs:annotation>
 
@@ -44,13 +46,11 @@
                         minOccurs="1"
                         maxOccurs="1"
                         nillable="false">
-
                 <xs:annotation>
                     <xs:documentation>
-                        Aktörens expeditionsId
+                        Aktörens expeditionsId.
                     </xs:documentation>
                 </xs:annotation>
-
             </xs:element>
 
             <xs:element name="antalForpackningar"
@@ -61,7 +61,7 @@
                 <xs:annotation>
                     <xs:documentation>
                         Antal förpackningar av utlämnad vara.
-                        Returneras om posten ej är en dosdispenserad artikel
+                        Returneras om posten ej är en dosdispenserad artikel.
                     </xs:documentation>
                 </xs:annotation>
             </xs:element>
@@ -71,7 +71,6 @@
                         minOccurs="0"
                         maxOccurs="1"
                         nillable="false">
-
                 <xs:annotation>
                     <xs:documentation>
                         Antal avdelade doser inklusive enhet. Returneras om posten är en
@@ -81,17 +80,15 @@
             </xs:element>
 
             <xs:element name="artikelinformation"
-                        type="tns:Artikelinformation"
+                        type="Artikelinformation"
                         minOccurs="1"
                         maxOccurs="1"
                         nillable="false">
-
                 <xs:annotation>
                     <xs:documentation>
                         Information om utlämnad artikel.
                     </xs:documentation>
                 </xs:annotation>
-
             </xs:element>
 
             <xs:element name="borttagen"
@@ -99,14 +96,12 @@
                         minOccurs="1"
                         maxOccurs="1"
                         nillable="false">
-
                 <xs:annotation>
                     <xs:documentation>
                         Markering om posten är borttagen.
                         Sant om posten är borttagen, annars falskt.
                     </xs:documentation>
                 </xs:annotation>
-
             </xs:element>
 
             <xs:element name="borttagsdatum"
@@ -114,29 +109,30 @@
                         minOccurs="0"
                         maxOccurs="1"
                         nillable="false">
-
                 <xs:annotation>
                     <xs:documentation>
-                        Tidpunkt då posten blev markerad som borttagen. Returneras endast om borttagen
-                        är sant.
+                        Tidpunkt då posten blev markerad som borttagen.
+                        Returneras endast om borttagen är sant.
                     </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="borttagsorsak"
                         type="xs:string"
-                        minOccurs="0">
-
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
                     <xs:documentation>
                         Kommentar för borttagen post. Returneras endast om borttagen är sant.
                     </xs:documentation>
                 </xs:annotation>
-
             </xs:element>
 
             <xs:element name="doseringstext"
                         type="xs:string"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
                     <xs:documentation>
@@ -147,7 +143,9 @@
 
             <xs:element name="expeditionsId"
                         type="xs:string"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
                     <xs:documentation>
                         Expeditionsid hämtat från Apotekens Service.
@@ -157,6 +155,8 @@
 
             <xs:element name="expeditionsdatum"
                         type="xs:dateTime"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
                     <xs:documentation>
@@ -168,7 +168,9 @@
 
             <xs:element name="forskrivarensArbetsplatsnamn"
                         type="xs:string"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
                     <xs:documentation>
                         Förskrivarens arbetsplats namn.
@@ -178,7 +180,9 @@
 
             <xs:element name="forskrivarensArbetsplatsOrt"
                         type="xs:string"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
                     <xs:documentation>
                         Förskrivarens arbetsplats ort.
@@ -188,7 +192,9 @@
 
             <xs:element name="forskrivarnamn"
                         type="xs:string"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
                     <xs:documentation>
                         Förskrivarens namn.
@@ -198,7 +204,9 @@
 
             <xs:element name="forskrivarpostadress"
                         type="xs:string"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
                     <xs:documentation>
                         Förskrivarens postadress.
@@ -208,7 +216,9 @@
 
             <xs:element name="forskrivarpostnummer"
                         type="xs:string"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
                     <xs:documentation>
                         Förskrivarens postnummer.
@@ -219,15 +229,20 @@
             <xs:element name="forskrivarspecialiteter"
                         type="xs:string"
                         minOccurs="0"
-                        maxOccurs="unbounded">
+                        maxOccurs="unbounded"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Förskrivarens specialitet i klartext</xs:documentation>
+                    <xs:documentation>
+                        Förskrivarens specialitet i klartext.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="forskrivaryrke"
                         type="xs:string"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
                     <xs:documentation>
                         Förskrivarens yrke i klartext.
@@ -237,6 +252,8 @@
 
             <xs:element name="mangd"
                         type="xs:string"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
                     <xs:documentation>
@@ -248,21 +265,21 @@
             </xs:element>
 
             <xs:element name="ordinationsmappning"
-                        type="tns:Ordinationsmappning"
+                        type="Ordinationsmappning"
                         minOccurs="0"
                         maxOccurs="1"
                         nillable="false">
-
                 <xs:annotation>
                     <xs:documentation>
                         Information som behövs för att mappa en post i läkemedelsförteckningen till en ordination.
                     </xs:documentation>
                 </xs:annotation>
-
             </xs:element>
 
             <xs:element name="radid"
                         type="xs:long"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
                     <xs:documentation>
@@ -274,7 +291,8 @@
             <xs:element name="radnummer"
                         type="xs:int"
                         minOccurs="0"
-                        maxOccurs="1">
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
                     <xs:documentation>
                         Radnummer för utlämnad vara i aktuell expedition.
@@ -295,18 +313,22 @@
 
             <xs:element name="antalEnhet"
                         type="xs:string"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
                     <xs:documentation>
                         Enhet för antalForpackning. Exempelvis "styck" eller "milliliter".
-                        Exempel där antalEnhet ingår: "6 x 5 x 0.72 milliliter"
+                        Exempel där antalEnhet ingår: "6 x 5 x 0.72 milliliter".
                     </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="antalIForpackning"
-                        type="tns:decimaltal"
-                        minOccurs="0">
+                        type="decimaltal"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
                     <xs:documentation>
                         Antal i förpackning. Numerisk angivelse, exempelvis 0,72.
@@ -328,7 +350,9 @@
 
             <xs:element name="antalYttreForpackning"
                         type="xs:int"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
                     <xs:documentation>
                         Antal multipel 1. Antal yttre förpackningar som varan har, exempelvis 5.
@@ -339,17 +363,21 @@
 
             <xs:element name="atckod"
                         type="xs:string"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
                     <xs:documentation>
-                        ATC-kod. Exempel: "C07AB03
+                        ATC-kod. Exempel: "C07AB03".
                     </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="atckodKlartext"
                         type="xs:string"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
                     <xs:documentation>
                         Verksamt ämne enligt atckod. Exempel: "Atenolol".
@@ -359,7 +387,9 @@
 
             <xs:element name="forpackningsstorlek"
                         type="xs:string"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
                     <xs:documentation>
                         Förpackningsstorlek. Exempel: "6 x 5 x 0.72 milliliter".
@@ -369,7 +399,9 @@
 
             <xs:element name="forpackningstyp"
                         type="xs:string"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
                     <xs:documentation>
                         Beskrivning av artikelns förpackningstyp. Exempel: "Blister".
@@ -379,7 +411,9 @@
 
             <xs:element name="intressent"
                         type="xs:string"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
                     <xs:documentation>
                         Ansvarigt företag för artikeln.
@@ -392,38 +426,45 @@
 
             <xs:element name="lakemedelsform"
                         type="xs:string"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
                     <xs:documentation>
-                        Läkemedelsform. Exempel: "Filmdragerad tablett"
+                        Läkemedelsform. Exempel: "Filmdragerad tablett".
                     </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="lakemedelsformKod"
                         type="xs:string"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
                     <xs:documentation>
-                        Kod för läkemedelsform (beredningsformkod). Exempel: "FICOTA"
+                        Kod för läkemedelsform (beredningsformkod). Exempel: "FICOTA".
                     </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="nplPackid"
                         type="xs:string"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
                     <xs:documentation>
-                        Identitet på förskrivet läkemedel som har NPL Pack-id alternativt SB
-                        Pack-id.
+                        Identitet på förskrivet läkemedel som har NPL Pack-id alternativt SB Pack-id.
                     </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="produktnamn"
                         type="xs:string"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
                     <xs:documentation>
                         Läkemedelsnamn.
@@ -432,8 +473,10 @@
             </xs:element>
 
             <xs:element name="styrka"
-                        type="tns:decimaltal"
-                        minOccurs="0">
+                        type="decimaltal"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
                     <xs:documentation>
                         Numerisk styrka. Exempel "20.0".
@@ -443,7 +486,9 @@
 
             <xs:element name="styrkaEnhet"
                         type="xs:string"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
                     <xs:documentation>
                         Styrkans enhet. Exempel: "mg".
@@ -453,10 +498,12 @@
 
             <xs:element name="styrkaKlartext"
                         type="xs:string"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
                     <xs:documentation>
-                        Styrka i klartext. Exempel: "20.0 mg"
+                        Styrka i klartext. Exempel: "20.0 mg".
                     </xs:documentation>
                 </xs:annotation>
             </xs:element>
@@ -474,6 +521,8 @@
 
             <xs:element name="ordinationsId"
                         type="xs:string"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
                     <xs:documentation>
@@ -484,7 +533,9 @@
 
             <xs:element name="produktradnummer"
                         type="xs:int"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
                     <xs:documentation>
                         Tillhörande recepts eventuella prdradnummer NEF i receptdepån.
@@ -495,7 +546,9 @@
 
             <xs:element name="radnummer"
                         type="xs:int"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
                     <xs:documentation>
                         Tillhörande recepts eventuella radnummer NEF i receptdepån.
@@ -516,11 +569,10 @@
         <xs:sequence>
 
             <xs:element name="patientidentifikation"
-                        type="tns:Patientidentifikation"
+                        type="Patientidentifikation"
                         minOccurs="0"
                         maxOccurs="1"
                         nillable="false">
-
                 <xs:annotation>
                     <xs:documentation>
                         Patientidentifikationen kan enbart innehålla följande typ:
@@ -529,7 +581,6 @@
                         Tilldelas av skattekontoret.
                     </xs:documentation>
                 </xs:annotation>
-
             </xs:element>
 
             <xs:element name="fornamn"
@@ -537,14 +588,12 @@
                         minOccurs="0"
                         maxOccurs="1"
                         nillable="false">
-
                 <xs:annotation>
                     <xs:documentation>
                         Patientens förnamn.
                         För patient med skyddad identitet visas inte förnamn.
                     </xs:documentation>
                 </xs:annotation>
-
             </xs:element>
 
             <xs:element name="efternamn"
@@ -552,14 +601,12 @@
                         minOccurs="0"
                         maxOccurs="1"
                         nillable="false">
-
                 <xs:annotation>
                     <xs:documentation>
                         Patientens efternamn.
                         För patient med skyddad identitet visas inte efternamn.
                     </xs:documentation>
                 </xs:annotation>
-
             </xs:element>
 
             <xs:element name="redigeratNamn"
@@ -567,14 +614,12 @@
                         minOccurs="1"
                         maxOccurs="1"
                         nillable="false">
-
                 <xs:annotation>
                     <xs:documentation>
                         Redigerat namn i formatet "mellannamn efternamn, förnamn".
                         Förkortat till 36 tecken.
                     </xs:documentation>
                 </xs:annotation>
-
             </xs:element>
 
             <xs:element name="harRedigeratNamnForkortats"
@@ -582,13 +627,11 @@
                         minOccurs="1"
                         maxOccurs="1"
                         nillable="false">
-
                 <xs:annotation>
                     <xs:documentation>
                         Anger om redigeratNamn har förkortats.
                     </xs:documentation>
                 </xs:annotation>
-
             </xs:element>
 
             <xs:element name="avliden"
@@ -596,7 +639,6 @@
                         minOccurs="1"
                         maxOccurs="1"
                         nillable="false">
-
                 <xs:annotation>
                     <xs:documentation>
                         Anger om patienten är avliden.
@@ -605,7 +647,6 @@
                 </xs:annotation>
 
             </xs:element>
-
 
         </xs:sequence>
     </xs:complexType>
@@ -620,27 +661,23 @@
                             minOccurs="1"
                             maxOccurs="1"
                             nillable="false">
-
                     <xs:annotation>
                         <xs:documentation>
                             Förskrivarens arbetsplatskod. Valideras. Obligatorisk om arbetsplats inte anges.
                         </xs:documentation>
                     </xs:annotation>
-
                 </xs:element>
 
                 <xs:element name="arbetsplats"
-                            type="tns:Arbetsplats"
+                            type="Arbetsplats"
                             minOccurs="1"
                             maxOccurs="1"
                             nillable="false">
-
                     <xs:annotation>
                         <xs:documentation>
                             Förskrivarens arbetsplats. Obligatorisk om arbetsplatskod inte anges.
                         </xs:documentation>
                     </xs:annotation>
-
                 </xs:element>
 
             </xs:choice>
@@ -657,11 +694,10 @@
         <xs:sequence>
 
             <xs:element name="patientidentifikation"
-                        type="tns:Patientidentifikation"
+                        type="Patientidentifikation"
                         minOccurs="1"
                         maxOccurs="1"
                         nillable="false">
-
                 <xs:annotation>
                     <xs:documentation>
                         Patientidentifikationen kan innehålla följande typer:
@@ -670,7 +706,6 @@
                         Tilldelas av skattekontoret.
                     </xs:documentation>
                 </xs:annotation>
-
             </xs:element>
 
             <xs:any namespace="##other"
@@ -718,31 +753,29 @@
 
     <xs:complexType name="Patientidentifikation">
         <xs:sequence>
+
             <xs:element name="kod"
                         type="xs:string"
                         minOccurs="1"
                         maxOccurs="1"
                         nillable="false">
-
                 <xs:annotation>
                     <xs:documentation>
                         Patientens personnummer.
                     </xs:documentation>
                 </xs:annotation>
-
             </xs:element>
+
             <xs:element name="kodverk"
-                        type="tns:OID"
+                        type="OID"
                         minOccurs="1"
                         maxOccurs="1"
                         nillable="false">
-
                 <xs:annotation>
                     <xs:documentation>
                         Identifierng av berört kodverk/klassifikation enligt V-TIM 2.2.
                     </xs:documentation>
                 </xs:annotation>
-
             </xs:element>
 
             <xs:any namespace="##other"
@@ -758,6 +791,8 @@
 
             <xs:element name="efternamn"
                         type="xs:string"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
                     <xs:documentation>
@@ -768,6 +803,8 @@
 
             <xs:element name="fornamn"
                         type="xs:string"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
                     <xs:documentation>
@@ -778,6 +815,8 @@
 
             <xs:element name="personHsaId"
                         type="xs:string"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
                     <xs:documentation>
@@ -788,6 +827,8 @@
 
             <xs:element name="vardenhetHsaId"
                         type="xs:string"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
                     <xs:documentation>
@@ -798,6 +839,8 @@
 
             <xs:element name="vardgivareHsaId"
                         type="xs:string"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
                     <xs:documentation>
