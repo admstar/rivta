@@ -20,7 +20,7 @@
  -->
 <xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'
            xmlns='urn:riv:clinicalprocess:activityprescription:prescribe:StopPrescriptionDispensationResponder:1'
-           xmlns:tns='urn:riv:clinicalprocess:activityprescription:prescribe:1'
+           xmlns:prescribe='urn:riv:clinicalprocess:activityprescription:prescribe:1'
            targetNamespace='urn:riv:clinicalprocess:activityprescription:prescribe:StopPrescriptionDispensationResponder:1'
            elementFormDefault='qualified'
            attributeFormDefault='unqualified'
@@ -38,51 +38,85 @@
     <xs:complexType name='StopPrescriptionDispensationType'>
         <xs:sequence>
 
+            <xs:element name="patient"
+                        type="prescribe:Patient"
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Patientens identifikationsobjekt.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
             <xs:element name="aktuellUnderlagstidpunkt"
                         type="xs:dateTime"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Tidpunkt för senast uppläst underlag för utsättning.</xs:documentation>
+                    <xs:documentation>
+                        Tidpunkt för senast uppläst underlag för utsättning.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
-            <xs:element name="forskrivningsunderlagsversion"
+            <xs:element name="underlagsversion"
                         type="xs:int"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Förskrivningens underlagsversion från receptdepån.</xs:documentation>
+                    <xs:documentation>
+                        Underlagsversion från receptdepån, obligatorisk parameter för dospatient.
+                        Skall ej anges för icke-dospatient.
+
+                        Värdet används för att stoppa uttag av den första förskrivningen varpå
+                        efterföljande anrop mot Receptdepån uppdateras via föregående svar.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
-            <xs:choice minOccurs="0"
-                       maxOccurs="1">
-                <xs:element name="forskrivningsmakulering"
-                            type="tns:Forskrivningsmakulering">
-                    <xs:annotation>
-                        <xs:documentation>Makuleringsunderlag av förskrivning för icke dospatient.</xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-
-                <xs:element name="forskrivningsutsattning"
-                            type="tns:Forskrivningsutsattning">
-                    <xs:annotation>
-                        <xs:documentation>Utsättningsunderlag av förskrivning för dospatient.</xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-
-            </xs:choice>
-
-            <xs:element name="ordinationskedjeid"
-                        type="xs:long"
+            <xs:element name="forskrivningsmakulering"
+                        type="prescribe:Forskrivningsmakulering"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Ordinationskedja att stoppa uttag för.</xs:documentation>
+                    <xs:documentation>
+                        Makuleringsunderlag till förskrivningar.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="ordinationsId"
+                        type="prescribe:UUID"
+                        minOccurs="1"
+                        maxOccurs="unbounded"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Ordinationer att stoppa läkemedelsuttag för.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="stoppaUttag"
+                        type="prescribe:StoppaUttag"
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Information om beslutet att stoppa uttag för ordinationens förskrivning.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="klientinformation"
-                        type="tns:ReceptregisterKlientinformation"
-                        minOccurs="0"
+                        type="prescribe:Klientinformation"
+                        minOccurs="1"
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
@@ -106,35 +140,49 @@
 
             <xs:element name="uppdateradUnderlagstidpunkt"
                         type="xs:dateTime"
-                        nillable="false"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Tidpunkt för uppdaterat underlag för patient.</xs:documentation>
+                    <xs:documentation>
+                        Tidpunkt för uppdaterat underlag för patient.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="vokresultat"
-                        type="tns:VOKResultat"
-                        nillable="false"
+                        type="prescribe:VOKResultat"
                         minOccurs="0"
-                        maxOccurs="3">
+                        maxOccurs="unbounded"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Resultat från VOK-MAK eller VOK-UTS.</xs:documentation>
+                    <xs:documentation>
+                        Resultat från VOK-MAK eller VOK-UTS för respektive stoppad förskrivning.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name='resultCode'
-                        type='tns:resultCodeEnum'>
+                        type='prescribe:resultCodeEnum'
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Resultatkod för anropet.</xs:documentation>
+                    <xs:documentation>
+                        Resultatkod för anropet.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name='comment'
                         type='xs:string'
-                        minOccurs='0'>
+                        minOccurs='0'
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Kommentar till eventuella fel eller varningar.</xs:documentation>
+                    <xs:documentation>
+                        Kommentar till eventuella fel eller varningar.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -145,4 +193,5 @@
 
         </xs:sequence>
     </xs:complexType>
+
 </xs:schema>

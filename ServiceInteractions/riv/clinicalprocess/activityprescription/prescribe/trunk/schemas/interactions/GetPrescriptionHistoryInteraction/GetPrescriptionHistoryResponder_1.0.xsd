@@ -20,7 +20,7 @@
  -->
 <xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'
            xmlns='urn:riv:clinicalprocess:activityprescription:prescribe:GetPrescriptionHistoryResponder:1'
-           xmlns:tns='urn:riv:clinicalprocess:activityprescription:prescribe:1'
+           xmlns:prescribe='urn:riv:clinicalprocess:activityprescription:prescribe:1'
            targetNamespace='urn:riv:clinicalprocess:activityprescription:prescribe:GetPrescriptionHistoryResponder:1'
            elementFormDefault='qualified'
            attributeFormDefault='unqualified'
@@ -40,33 +40,52 @@
 
             <xs:element name="ordinationskedjeid"
                         type="xs:long"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Ordinationskedjans ID.</xs:documentation>
+                    <xs:documentation>
+                        Ordinationskedjans ID.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="franDatum"
                         type="xs:dateTime"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Hämta ordinationskedja med insättningstidpunkt (förändringstidpunkt) &gt;= franDatum.</xs:documentation>
+                    <xs:documentation>
+                        Hämta ordinationskedja med insättningstidpunkt
+                        (förändringstidpunkt) &gt;= franDatum.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="tillDatum"
                         type="xs:dateTime"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Hämta ordinationskedja med insättningstidpunkt (förändringstidpunkt) &lt;= tillDatum.</xs:documentation>
+                    <xs:documentation>
+                        Hämta ordinationskedja med insättningstidpunkt
+                        (förändringstidpunkt) &lt;= tillDatum.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="svarsurval"
-                        type="tns:Svarsurval"
-                        minOccurs="0">
+                        type="prescribe:Svarsurval"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Urval som begränsar antal returnerade poster. Om svarsurval ej är angivet begränsas antal poster till de 100 första.</xs:documentation>
+                    <xs:documentation>
+                        Urval som begränsar antal returnerade poster. Om svarsurval ej är angivet
+                        begränsas antal poster till de 100 första.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -83,52 +102,75 @@
 
             <xs:element name="underlagstidpunkt"
                         type="xs:dateTime"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
                     <xs:documentation>
                         Tidpunkt för senaste ordinationsändring för en patient. Returneras endast
-                        om patienten har ordinationer.</xs:documentation>
+                        om patienten har ordinationer.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="ordinationkedja"
-                        type="tns:Ordinationkedja"
-                        nillable="false"
-                        minOccurs="0">
+                        type="prescribe:Ordinationkedja"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Ordinationskedja för angivet ordinationskedjeid.</xs:documentation>
+                    <xs:documentation>
+                        Ordinationskedja för angivet ordinationskedjeid.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="svarsurval"
-                        type="tns:Svarsurval"
-                        minOccurs="0">
+                        type="prescribe:Svarsurval"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Svarsurval returneras om svarsurval är angivet i begäran eller om svarsurval inte är angivet och totalt antal poster är större än 100.</xs:documentation>
+                    <xs:documentation>
+                        Svarsurval returneras om svarsurval är angivet i begäran eller om svarsurval
+                        inte är angivet och totalt antal poster är större än 100.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="totaltAntalPoster"
                         type="xs:int"
                         minOccurs="0"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Totalt antal poster inom angiven tidsperiod.</xs:documentation>
+                    <xs:documentation>
+                        Totalt antal poster inom angiven tidsperiod.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name='resultCode'
-                        type='tns:resultCodeEnum'>
+                        type='prescribe:resultCodeEnum'
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Resultatkod för anropet.</xs:documentation>
+                    <xs:documentation>
+                        Resultatkod för anropet.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name='comment'
                         type='xs:string'
-                        minOccurs='0'>
+                        minOccurs='0'
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Kommentar till eventuella fel eller varningar.</xs:documentation>
+                    <xs:documentation>
+                        Kommentar till eventuella fel eller varningar.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -139,6 +181,5 @@
 
         </xs:sequence>
     </xs:complexType>
-
 
 </xs:schema>

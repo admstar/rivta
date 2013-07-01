@@ -130,7 +130,7 @@
                                 <td></td>
                                 <td></td>
                                 <td>
-                                    <a href="#tns:{parent::*/parent::*/@name}"><xsl:value-of select="parent::*/parent::*/@name"/></a>.<xsl:value-of select="@name"/>
+                                    <a href="#{parent::*/parent::*/@name}"><xsl:value-of select="parent::*/parent::*/@name"/></a>.<xsl:value-of select="@name"/>
                                 </td>
                             </tr>
                         </xsl:if>
@@ -145,7 +145,7 @@
             <table>
                 <tr>
                     <td class="header" colspan="4">
-                        <a name="tns:{@name}"><xsl:value-of select="@name"/></a>
+                        <a name="{@name}"><xsl:value-of select="@name"/></a>
                     </td>
                 </tr>
                 <tr>
@@ -160,11 +160,18 @@
                             <td><xsl:value-of select="@name"/></td>
                             <td>
                                 <xsl:choose>
-                                    <xsl:when test="contains(@type, 'tns')">
-                                        <a href="#{@type}"><xsl:value-of select="@type"/></a>
+                                    <xsl:when test="not(contains(@type, 'xs'))">
+                                        <xsl:choose>
+                                            <xsl:when test="contains(@type, ':')">
+                                                <a href="#{substring-after(@type,':')}"><xsl:value-of select="substring-after(@type,':')"/></a>
+                                            </xsl:when>
+                                            <xsl:otherwise>
+                                                <a href="#{@type}"><xsl:value-of select="@type"/></a>
+                                            </xsl:otherwise>
+                                        </xsl:choose>
                                     </xsl:when>
                                     <xsl:otherwise>
-                                        <xsl:value-of select="@type"/>
+                                        <xsl:value-of select="substring-after(@type,':')"/>
                                     </xsl:otherwise>
                                 </xsl:choose>
                             </td>
@@ -180,11 +187,18 @@
                         <td><xsl:value-of select="@name"/></td>
                         <td>
                             <xsl:choose>
-                                <xsl:when test="contains(@type, 'tns')">
-                                    <a href="#{@type}"><xsl:value-of select="@type"/></a>
+                                <xsl:when test="not(contains(@type, 'xs'))">
+                                    <xsl:choose>
+                                        <xsl:when test="contains(@type, ':')">
+                                            <a href="#{substring-after(@type,':')}"><xsl:value-of select="substring-after(@type,':')"/></a>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <a href="#{@type}"><xsl:value-of select="@type"/></a>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
                                 </xsl:when>
                                 <xsl:otherwise>
-                                    <xsl:value-of select="@type"/>
+                                    <xsl:value-of select="substring-after(@type,':')"/>
                                 </xsl:otherwise>
                             </xsl:choose>
                         </td>
@@ -223,7 +237,7 @@
             <table>
                 <tr>
                     <td class="header" colspan="3">
-                        <a name="tns:{@name}"><xsl:value-of select="@name"/></a>
+                        <a name="{@name}"><xsl:value-of select="@name"/></a>
                     </td>
                 </tr>
                 <tr>
@@ -234,16 +248,16 @@
                 <tr>
                     <td><xsl:value-of select="@name"/></td>
                     <xsl:choose>
-                        <xsl:when test="contains(xs:restriction/@base, 'tns')">
-                            <td><a name="tns:{@base}"><xsl:value-of select="xs:restriction/@base"/></a></td>
+                        <xsl:when test="not(contains(xs:restriction/@base, 'xs'))">
+                            <td><a name="{substring-after(@base,':')}"><xsl:value-of select="substring-after(xs:restriction/@base,':')"/></a></td>
                         </xsl:when>
                         <xsl:otherwise>
-                            <td><xsl:value-of select="xs:restriction/@base"/></td>
+                            <td><xsl:value-of select="substring-after(xs:restriction/@base,':')"/></td>
                         </xsl:otherwise>
                     </xsl:choose>
                     <td>
                         <xsl:for-each select="xs:restriction/*">
-                            <xsl:value-of select="name()"/> = <xsl:value-of select="@*"/><br/>
+                            <xsl:value-of select="substring-after(name(),':')"/> = <xsl:value-of select="@*"/><br/>
                         </xsl:for-each>
                     </td>
                 </tr>
