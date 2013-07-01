@@ -20,7 +20,7 @@
  -->
 <xs:schema
         xmlns:xs='http://www.w3.org/2001/XMLSchema'
-        xmlns:tns='urn:riv:clinicalprocess:activityprescription:prescribe:1'
+        xmlns='urn:riv:clinicalprocess:activityprescription:prescribe:1'
         targetNamespace='urn:riv:clinicalprocess:activityprescription:prescribe:1'
         elementFormDefault='qualified'
         attributeFormDefault='unqualified'
@@ -31,6 +31,8 @@
             Beskrivning: 	    Informationsobjekt för ordinationsorsaker
             Revisionshistorik:  2013-05-03 Daniel Sundberg, Apotekens Service AB
                                 Separat xsd för ordinationsorsak.
+                                2013-06-28 Daniel Sundberg, Apotekens Service AB.
+                                Konsoliderat struktur och ordning för läsbarhet.
         </xs:documentation>
     </xs:annotation>
 
@@ -38,20 +40,26 @@
         <xs:sequence>
 
             <xs:element name="huvudorsak"
-                        type="tns:Insattningsorsak"
+                        type="Insattningsorsak"
                         minOccurs="1"
-                        maxOccurs="unbounded">
+                        maxOccurs="unbounded"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Huvudordinationsorsak för insättning.</xs:documentation>
+                    <xs:documentation>
+                        Huvudordinationsorsak för insättning.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="underorsak"
-                        type="tns:Insattningsorsak"
+                        type="Insattningsorsak"
                         minOccurs="0"
-                        maxOccurs="unbounded">
+                        maxOccurs="unbounded"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Underordinationsorsak för insättning.</xs:documentation>
+                    <xs:documentation>
+                        Underordinationsorsak för insättning.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -67,13 +75,16 @@
         <xs:sequence>
 
             <xs:element name="orsak"
-                        type="tns:Orsak"
+                        type="Orsak"
                         minOccurs="1"
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Ordinationsorsak till insättning. Snomed CT-kod används för vald ordinationsorsak.
-                        Koden valideras att den finns i angiven version av Socialstyrelsens kodsystem för ordinations-orsaker (NKOO).</xs:documentation>
+                    <xs:documentation>
+                        Ordinationsorsak till insättning. Snomed CT-kod används för vald ordinationsorsak.
+                        Koden valideras att den finns i angiven version av Socialstyrelsens
+                        kodsystem för ordinationsorsaker (NKOO).
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -83,7 +94,9 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Ordinationsorsak i fritext om ”Annan orsak” anges.</xs:documentation>
+                    <xs:documentation>
+                        Ordinationsorsak i fritext om ”Annan orsak” anges.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -104,10 +117,11 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Kod för orsaken.</xs:documentation>
+                    <xs:documentation>
+                        Kod för orsaken.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
-
 
             <xs:element name="text"
                         type="xs:string"
@@ -115,10 +129,11 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Textutläsning av kod.</xs:documentation>
+                    <xs:documentation>
+                        Textutläsning av kod.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
-
 
             <xs:element name="register"
                         type="xs:string"
@@ -126,10 +141,11 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Unikt id för det kodsystem som används.</xs:documentation>
+                    <xs:documentation>
+                        Unikt id för det kodsystem som används.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
-
 
             <xs:element name="version"
                         type="xs:string"
@@ -137,10 +153,11 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Version av det kodsystem som används.</xs:documentation>
+                    <xs:documentation>
+                        Version av det kodsystem som används.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
-
 
             <xs:any namespace="##other"
                     processContents="lax"

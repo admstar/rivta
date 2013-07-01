@@ -20,7 +20,7 @@
  -->
 <xs:schema
         xmlns:xs='http://www.w3.org/2001/XMLSchema'
-        xmlns:tns='urn:riv:clinicalprocess:activityprescription:prescribe:1'
+        xmlns='urn:riv:clinicalprocess:activityprescription:prescribe:1'
         targetNamespace='urn:riv:clinicalprocess:activityprescription:prescribe:1'
         elementFormDefault='qualified'
         attributeFormDefault='unqualified'
@@ -33,6 +33,8 @@
                                 Separat schema för doseringsmodell. Nya doseringstyper.
                                 2013-05-01 Daniel Sundberg, Apotekens Service AB
                                 Rensat objekt som inte skiljer sig in/ut.
+                                2013-06-28 Daniel Sundberg, Apotekens Service AB.
+                                Konsoliderat struktur och ordning för läsbarhet.
         </xs:documentation>
     </xs:annotation>
 
@@ -40,11 +42,14 @@
         <xs:sequence>
 
             <xs:element name="doseringssteg"
-                        type="tns:Doseringssteg"
-                        nillable="false"
-                        maxOccurs="unbounded">
+                        type="Doseringssteg"
+                        minOccurs="1"
+                        maxOccurs="unbounded"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Doseringssteg.</xs:documentation>
+                    <xs:documentation>
+                        Doseringssteg.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -60,12 +65,14 @@
         <xs:sequence>
 
             <xs:element name="behandlingstid"
-                        type="tns:Tidsperiod"
+                        type="Tidsperiod"
                         minOccurs="0"
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Den tid under vilket läkemedlet ska användas enligt ordination, t.ex. 4 veckor, 5–6 veckor.</xs:documentation>
+                    <xs:documentation>
+                        Den tid under vilket läkemedlet ska användas enligt ordination, t.ex. 4 veckor, 5–6 veckor.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -75,19 +82,23 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Den enhet som doseringen avser, t.ex. tablett, ml eller dropp</xs:documentation>
+                    <xs:documentation>
+                        Den enhet som doseringen avser, t.ex. tablett, ml eller dropp.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="fastdosering"
-                        type="tns:Dosering"
+                        type="Dosering"
                         minOccurs="0"
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Dosering där ordinatören har bestämt mängd och periodicitet, t.ex. 2 tabletter 3 gånger dagligen.
-                        Kan vara av valfri doseringstyp.
-                        Obligatorisk parameter om Villkorsdosering saknas.</xs:documentation>
+                    <xs:documentation>
+                        Dosering där ordinatören har bestämt mängd och periodicitet,
+                        t.ex. 2 tabletter 3 gånger dagligen. Kan vara av valfri doseringstyp.
+                        Obligatorisk parameter om Villkorsdosering saknas.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -97,18 +108,22 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Angiven kortnotation som beskriver doseringen.</xs:documentation>
+                    <xs:documentation>
+                        Angiven kortnotation som beskriver doseringen.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="maxdosering"
-                        type="tns:Dosering"
+                        type="Dosering"
                         minOccurs="0"
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Dosering som anger den högsta tillåtna mängden under en viss period, t.ex. högst 5 tabletter per vecka.
-                        Kan vara av valfri doseringstyp.</xs:documentation>
+                    <xs:documentation>
+                        Dosering som anger den högsta tillåtna mängden under en viss period,
+                        t.ex. högst 5 tabletter per vecka. Kan vara av valfri doseringstyp.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -118,20 +133,24 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Indikerar om behandlingstid avser den maximala tid som läkemedlet får användas.
-                        Obligatorisk parameter om behandlingstid anges. Får ej anges om behandlingstid saknas.</xs:documentation>
+                    <xs:documentation>
+                        Indikerar om behandlingstid avser den maximala tid som läkemedlet får användas.
+                        Obligatorisk parameter om behandlingstid anges. Får ej anges om behandlingstid saknas.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="villkorsdosering"
-                        type="tns:Dosering"
+                        type="Dosering"
                         minOccurs="0"
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Ordinerad mängd och periodicitet som gäller om ett visst villkor är uppfyllt, t.ex. 1-2 tabletter till natten.
-                        Kan vara av valfri doseringstyp.
-                        Obligatorisk parameter om Fast dosering saknas.</xs:documentation>
+                    <xs:documentation>
+                        Ordinerad mängd och periodicitet som gäller om ett visst villkor är uppfyllt,
+                        t.ex. 1-2 tabletter till natten. Kan vara av valfri doseringstyp.
+                        Obligatorisk parameter om Fast dosering saknas.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -141,8 +160,10 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Text som anger villkor kopplat till en villkorsdosering,t.ex. "vid behov".
-                        Kan anges endast om Villkorsdosering används.</xs:documentation>
+                    <xs:documentation>
+                        Text som anger villkor kopplat till en villkorsdosering,t.ex. "vid behov".
+                        Kan anges endast om Villkorsdosering används.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -158,18 +179,26 @@
         <xs:sequence>
 
             <xs:element name="tidsintervall"
-                        type="tns:Intervall"
+                        type="Intervall"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Tidsperiodens intervall</xs:documentation>
+                    <xs:documentation>
+                        Tidsperiodens intervall.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="tidsenhet"
-                        type="tns:tidsenhet"
+                        type="tidsenhet"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Tidsperiodens tidsenhet.</xs:documentation>
+                    <xs:documentation>
+                        Tidsperiodens tidsenhet.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -183,54 +212,81 @@
 
     <xs:complexType name="Dosering">
         <xs:sequence>
+
             <xs:choice>
+
                 <xs:element name="fritextdosering"
-                            type="tns:Fritextdosering"
-                            minOccurs="0">
+                            type="Fritextdosering"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="false">
                     <xs:annotation>
-                        <xs:documentation>Eventuell fritextdosering</xs:documentation>
+                        <xs:documentation>
+                            Eventuell fritextdosering.
+                        </xs:documentation>
                     </xs:annotation>
                 </xs:element>
 
                 <xs:element name="tillfallesdosering"
-                            type="tns:Tillfallesdosering"
-                            minOccurs="0">
+                            type="Tillfallesdosering"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="false">
                     <xs:annotation>
-                        <xs:documentation>Eventuell tillfällesdosering</xs:documentation>
+                        <xs:documentation>
+                            Eventuell tillfällesdosering.
+                        </xs:documentation>
                     </xs:annotation>
                 </xs:element>
 
                 <xs:element name="engangsdosering"
-                            type="tns:Engangsdosering"
-                            minOccurs="0">
+                            type="Engangsdosering"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="false">
                     <xs:annotation>
-                        <xs:documentation>Eventuell engångsdosering</xs:documentation>
+                        <xs:documentation>
+                            Eventuell engångsdosering.
+                        </xs:documentation>
                     </xs:annotation>
                 </xs:element>
 
                 <xs:element name="frekvensdosering"
-                            type="tns:Frekvensdosering"
-                            minOccurs="0">
+                            type="Frekvensdosering"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="false">
                     <xs:annotation>
-                        <xs:documentation>Eventuell frekvensdosering</xs:documentation>
+                        <xs:documentation>
+                            Eventuell frekvensdosering.
+                        </xs:documentation>
                     </xs:annotation>
                 </xs:element>
 
                 <xs:element name="perioddosering"
-                            type="tns:Perioddosering"
-                            minOccurs="0">
+                            type="Perioddosering"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="false">
                     <xs:annotation>
-                        <xs:documentation>Eventuell perioddosering</xs:documentation>
+                        <xs:documentation>
+                            Eventuell perioddosering.
+                        </xs:documentation>
                     </xs:annotation>
                 </xs:element>
 
                 <xs:element name="rampdosering"
-                            type="tns:Rampdosering"
-                            minOccurs="0">
+                            type="Rampdosering"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="false">
                     <xs:annotation>
-                        <xs:documentation>Eventuell rampdosering</xs:documentation>
+                        <xs:documentation>
+                            Eventuell rampdosering.
+                        </xs:documentation>
                     </xs:annotation>
                 </xs:element>
+
             </xs:choice>
 
             <xs:any namespace="##other"
@@ -246,9 +302,13 @@
 
             <xs:element name="fritextdosering"
                         type="xs:string"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Dosering angiven i klartext</xs:documentation>
+                    <xs:documentation>
+                        Dosering angiven i klartext.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -264,18 +324,26 @@
         <xs:sequence>
 
             <xs:element name="doseringstillfallen"
-                        type="tns:Doseringstillfalle"
-                        nillable="false"
-                        maxOccurs="unbounded">
+                        type="Doseringstillfalle"
+                        minOccurs="1"
+                        maxOccurs="unbounded"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Det eller de doseringstillfällen som anger mängd och tidpunkt för intag inom perioden.</xs:documentation>
+                    <xs:documentation>
+                        Det eller de doseringstillfällen som anger mängd och tidpunkt för intag inom perioden.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="periodlangd"
-                        type="xs:int">
+                        type="xs:int"
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Periodtid i dagar.</xs:documentation>
+                    <xs:documentation>
+                        Periodtid i dagar.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -289,23 +357,28 @@
 
     <xs:complexType name="Engangsdosering">
         <xs:sequence>
+
             <xs:element name="dos"
-                        type="tns:Intervall"
+                        type="Intervall"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Den mängd läkemedel som ska
-                        intas eller appliceras, t.ex. 20
-                        ml.</xs:documentation>
+                    <xs:documentation>
+                        Den mängd läkemedel som ska intas eller appliceras, t.ex. 20 ml.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="tid"
-                        type="tns:Tidpunkt"
-                        minOccurs="0">
+                        type="Tidpunkt"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Den tid eller det tillfälle under
-                        dygnet när läkemedlet ska
-                        intas eller appliceras.</xs:documentation>
+                    <xs:documentation>
+                        Den tid eller det tillfälle under dygnet när läkemedlet ska intas eller appliceras.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -319,51 +392,68 @@
 
     <xs:complexType name="Frekvensdosering">
         <xs:sequence>
+
             <xs:element name="dos"
-                        type="tns:Intervall"
+                        type="Intervall"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Den mängd läkemedel som ska
+                    <xs:documentation>
+                        Den mängd läkemedel som ska
                         intas eller appliceras vid varje
-                        tillfälle, t.ex. 2 tabletter</xs:documentation>
+                        tillfälle, t.ex. 2 tabletter.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="frekvens"
-                        type="tns:Frekvens"
+                        type="Frekvens"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Periodicitet för intaget eller appliceringen uttryck som antal
-                        gånger per tidsenhet, t.ex. 3 gånger dagligen</xs:documentation>
+                    <xs:documentation>
+                        Periodicitet för intaget eller appliceringen uttryck som antal
+                        gånger per tidsenhet, t.ex. 3 gånger dagligen.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
-
 
             <xs:any namespace="##other"
                     processContents="lax"
                     minOccurs="0"
                     maxOccurs="unbounded"/>
+
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="Perioddosering">
         <xs:sequence>
+
             <xs:element name="dos"
-                        type="tns:Intervall"
+                        type="Intervall"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Den mängd läkemedel som ska intas eller appliceras vid varje
-                        tillfälle, t.ex. 2 tabletter</xs:documentation>
+                    <xs:documentation>
+                        Den mängd läkemedel som ska intas eller appliceras vid varje
+                        tillfälle, t.ex. 2 tabletter.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="tidsperiod"
-                        type="tns:Tidsperiod"
+                        type="Tidsperiod"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Periodicitet för intaget eller appliceringen uttryck som
-                        förfluten tid mellan varje intag eller applicering, t.ex. var 6:e
-                        timme</xs:documentation>
+                    <xs:documentation>
+                        Periodicitet för intaget eller appliceringen uttryck som
+                        förfluten tid mellan varje intag eller applicering, t.ex. var 6:e timme.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -371,52 +461,62 @@
                     processContents="lax"
                     minOccurs="0"
                     maxOccurs="unbounded"/>
+
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="Rampdosering">
         <xs:sequence>
+
             <xs:element name="startDosering"
-                        type="tns:Dosering"
+                        type="Dosering"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Den dosering som gäller vid Doseringsstegets start.
+                    <xs:documentation>
+                        Den dosering som gäller vid Doseringsstegets start.
                         Kan vara av valfri doseringstyp förutom av typen rampdosering.
-                        timme</xs:documentation>
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
-
 
             <xs:element name="slutDosering"
-                        type="tns:Dosering"
+                        type="Dosering"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Den dosering som gäller vid Doseringsstegets slut.
+                    <xs:documentation>
+                        Den dosering som gäller vid Doseringsstegets slut.
                         slutDosering ska vara samma doseringstyp som startDosering.
-                        timme</xs:documentation>
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
-
 
             <xs:element name="dossteg"
-                        type="tns:Intervall"
+                        type="Intervall"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Den mängd som dosen ska ökas eller minskas med vid varje tidssteg.
-                        timme</xs:documentation>
+                    <xs:documentation>
+                        Den mängd som dosen ska ökas eller minskas med vid varje tidssteg.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
-
 
             <xs:element name="tidssteg"
-                        type="tns:Tidsperiod"
+                        type="Tidsperiod"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Den tid som ska förflyta mellan varje ändring av dosen.
-                        timme</xs:documentation>
+                    <xs:documentation>
+                        Den tid som ska förflyta mellan varje ändring av dosen.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
-
 
             <xs:any namespace="##other"
                     processContents="lax"
@@ -428,19 +528,28 @@
 
     <xs:complexType name="Tidpunkt">
         <xs:sequence>
+
             <xs:element name="dag"
-                        type="tns:Dag"
-                        minOccurs="0">
+                        type="Dag"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Dag.</xs:documentation>
+                    <xs:documentation>
+                        Dag för tidpunkt.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="tidInomDygnet"
-                        type="tns:TidInomDygnet"
+                        type="TidInomDygnet"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Tid inom dygnet.</xs:documentation>
+                    <xs:documentation>
+                        Tid inom dygnet.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -448,22 +557,48 @@
                     processContents="lax"
                     minOccurs="0"
                     maxOccurs="unbounded"/>
+
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="Dag">
         <xs:sequence>
+
             <xs:choice>
+
                 <xs:element name="datum"
-                             type="xs:dateTime"/>
+                            type="xs:dateTime"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Datum för dag.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
 
                 <xs:element name="veckodag"
-                             type="tns:veckodag"/>
+                            type="veckodag"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Veckodag för dag.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
 
                 <xs:element name="dagNr"
-                            type="xs:int">
+                            type="xs:int"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="false">
                     <xs:annotation>
-                        <xs:documentation>Antal dagar från Doseringsstegets början.</xs:documentation>
+                        <xs:documentation>
+                            Antal dagar från Doseringsstegets början.
+                        </xs:documentation>
                     </xs:annotation>
                 </xs:element>
 
@@ -473,17 +608,37 @@
                     processContents="lax"
                     minOccurs="0"
                     maxOccurs="unbounded"/>
+
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="Frekvens">
         <xs:sequence>
+
             <xs:element name="varde"
-                        type="tns:Intervall"
-                        nillable="false"/>
+                        type="Intervall"
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Värdet för frekvensen.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
             <xs:element name="tidsenhet"
-                        type="tns:tidsenhet"
-                        nillable="false"/>
+                        type="tidsenhet"
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Tidsenheten för frekvensen.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
         </xs:sequence>
     </xs:complexType>
 
@@ -491,27 +646,39 @@
         <xs:sequence>
 
             <xs:element name="dos"
-                        type="tns:Intervall"
+                        type="Intervall"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Den mängd läkemedel som ska intas eller appliceras.</xs:documentation>
+                    <xs:documentation>
+                        Den mängd läkemedel som ska intas eller appliceras.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="tid"
-                        type="tns:TidInomDygnet"
+                        type="TidInomDygnet"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Den tid eller det tillfälle under dygnet när läkemedlet ska
-                        intas eller appliceras.</xs:documentation>
+                    <xs:documentation>
+                        Den tid eller det tillfälle under dygnet när läkemedlet ska
+                        intas eller appliceras.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="dagIPeriod"
                         type="xs:int"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Dag i perioden när intag skall ske.</xs:documentation>
+                    <xs:documentation>
+                        Dag i perioden när intag skall ske.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -527,18 +694,26 @@
         <xs:sequence>
 
             <xs:element name="handelse"
-                        type="tns:Handelse"
-                        minOccurs="0">
+                        type="Handelse"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Eventuell händelse</xs:documentation>
+                    <xs:documentation>
+                        Eventuell händelse.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="klockslag"
-                        type="tns:Klockslag"
-                        minOccurs="0">
+                        type="Klockslag"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Eventuellt klockslag</xs:documentation>
+                    <xs:documentation>
+                        Eventuellt klockslag.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -555,17 +730,25 @@
 
             <xs:element name="minut"
                         type="xs:int"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Minut inom timme</xs:documentation>
+                    <xs:documentation>
+                        Minut inom timme.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="timme"
                         type="xs:int"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Timme inom dygnet.</xs:documentation>
+                    <xs:documentation>
+                        Timme inom dygnet.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -582,9 +765,13 @@
 
             <xs:element name="beskrivning"
                         type="xs:string"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Beskrivning av händelsen.</xs:documentation>
+                    <xs:documentation>
+                        Beskrivning av händelsen.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -600,18 +787,26 @@
         <xs:sequence>
 
             <xs:element name="max"
-                        type="tns:NumerisktVarde"
-                        minOccurs="0">
+                        type="NumerisktVarde"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Intervallets maxvärde</xs:documentation>
+                    <xs:documentation>
+                        Intervallets maxvärde.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="min"
-                        type="tns:NumerisktVarde"
+                        type="NumerisktVarde"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Intervallets minvärde</xs:documentation>
+                    <xs:documentation>
+                        Intervallets minvärde.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -625,23 +820,68 @@
 
     <xs:complexType name="NumerisktVarde">
         <xs:sequence>
+
             <xs:choice>
-                <xs:element name="decimaltal" type="tns:doseringsdecimaltal" nillable="false"/>
-                <xs:element name="braktal" type="tns:Braktal" nillable="false"/>
+
+                <xs:element name="decimaltal"
+                            type="decimaltal"
+                            minOccurs="1"
+                            maxOccurs="1"
+                            nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Decimaltalsangivelse av numeriskt värde.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+                <xs:element name="braktal"
+                            type="Braktal"
+                            minOccurs="1"
+                            maxOccurs="1"
+                            nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Bråktalsangivelse för numeriskt värde.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
             </xs:choice>
 
             <xs:any namespace="##other"
                     processContents="lax"
                     minOccurs="0"
                     maxOccurs="unbounded"/>
+
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="Braktal">
         <xs:sequence>
-            <xs:element name="taljare"  type="xs:integer" nillable="false"/>
+            <xs:element name="taljare"
+                        type="xs:integer"
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Täljare i bråktal.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
 
-            <xs:element name="namnare" type="xs:integer" nillable="false"/>
+            <xs:element name="namnare"
+                        type="xs:integer"
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Nämnare i bråktal.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
 
             <xs:any namespace="##other"
                     processContents="lax"
@@ -671,12 +911,6 @@
             <xs:enumeration value="VECKOR"/>
             <xs:enumeration value="MANADER"/>
             <xs:enumeration value="AR"/>
-        </xs:restriction>
-    </xs:simpleType>
-
-    <xs:simpleType name="doseringsdecimaltal" >
-        <xs:restriction base="xs:decimal">
-            <xs:fractionDigits value="3"/>
         </xs:restriction>
     </xs:simpleType>
 

@@ -20,7 +20,7 @@
  -->
 <xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'
            xmlns='urn:riv:clinicalprocess:activityprescription:prescribe:GetUnconfirmedPrescriptionsResponder:1'
-           xmlns:tns='urn:riv:clinicalprocess:activityprescription:prescribe:1'
+           xmlns:prescribe='urn:riv:clinicalprocess:activityprescription:prescribe:1'
            targetNamespace='urn:riv:clinicalprocess:activityprescription:prescribe:GetUnconfirmedPrescriptionsResponder:1'
            elementFormDefault='qualified'
            attributeFormDefault='unqualified'
@@ -39,35 +39,52 @@
         <xs:sequence>
 
             <xs:element name="patient"
-                        type="tns:Patient"
+                        type="prescribe:Patient"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Patient att hämta ej verifierade ordinationer för.</xs:documentation>
+                    <xs:documentation>
+                        Patient att hämta ej verifierade ordinationer för.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
 
             <xs:element name="franDatum"
                         type="xs:dateTime"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Hämta ej verifierade ordinationer med förskrivningstidpunkt &gt;= franDatum.</xs:documentation>
+                    <xs:documentation>
+                        Hämta ej verifierade ordinationer med förskrivningstidpunkt &gt;= franDatum.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="tillDatum"
                         type="xs:dateTime"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Hämta ej verifierade ordinationer förskrivningstidpunkt &lt;= tillDatum.</xs:documentation>
+                    <xs:documentation>
+                        Hämta ej verifierade ordinationer förskrivningstidpunkt &lt;= tillDatum.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="svarsurval"
-                        type="tns:Svarsurval"
-                        minOccurs="0">
+                        type="prescribe:Svarsurval"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Urval som begränsar antal returnerade poster. Om svarsurval ej är angivet begränsas antal poster till de 100 första.</xs:documentation>
+                    <xs:documentation>
+                        Urval som begränsar antal returnerade poster.
+                        Om svarsurval ej är angivet begränsas antal poster till de 100 första.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -81,44 +98,65 @@
 
     <xs:complexType name='GetUnconfirmedPrescriptionsResponseType'>
         <xs:sequence>
+
             <xs:element name="ejVerifieradOrdination"
-                        type="tns:EjVerifieradOrdination"
+                        type="prescribe:EjVerifieradOrdination"
                         minOccurs="0"
-                        maxOccurs="unbounded">
+                        maxOccurs="unbounded"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Ej verifierade ordinationer.</xs:documentation>
+                    <xs:documentation>
+                        Ej verifierade ordinationer.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="svarsurval"
-                        type="tns:Svarsurval"
-                        minOccurs="0">
+                        type="prescribe:Svarsurval"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Svarsurval returneras om svarsurval är angivet i begäran eller om svarsurval inte är angivet och totalt antal poster är större än 100.</xs:documentation>
+                    <xs:documentation>
+                        Svarsurval returneras om svarsurval är angivet i begäran eller om svarsurval
+                        inte är angivet och totalt antal poster är större än 100.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="totaltAntalPoster"
                         type="xs:int"
                         minOccurs="0"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Totalt antal poster inom angiven tidsperiod.</xs:documentation>
+                    <xs:documentation>
+                        Totalt antal poster inom angiven tidsperiod.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name='resultCode'
-                        type='tns:resultCodeEnum'>
+                        type='prescribe:resultCodeEnum'
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Resultatkod för anropet.</xs:documentation>
+                    <xs:documentation>
+                        Resultatkod för anropet.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name='comment'
                         type='xs:string'
-                        minOccurs='0'>
+                        minOccurs='0'
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Kommentar till eventuella fel eller varningar.</xs:documentation>
+                    <xs:documentation>
+                        Kommentar till eventuella fel eller varningar.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 

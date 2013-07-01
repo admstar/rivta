@@ -20,7 +20,7 @@
  -->
 <xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'
            xmlns='urn:riv:clinicalprocess:activityprescription:prescribe:ConfirmPrescriptionResponder:1'
-           xmlns:tns='urn:riv:clinicalprocess:activityprescription:prescribe:1'
+           xmlns:prescribe='urn:riv:clinicalprocess:activityprescription:prescribe:1'
            targetNamespace='urn:riv:clinicalprocess:activityprescription:prescribe:ConfirmPrescriptionResponder:1'
            elementFormDefault='qualified'
            attributeFormDefault='unqualified'
@@ -37,46 +37,29 @@
 
     <xs:complexType name='ConfirmPrescriptionType'>
         <xs:sequence>
+
             <xs:element name="aktuellUnderlagstidpunkt"
                         type="xs:dateTime"
-                        minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation>Tidpunkt för senast uppläst underlag för patient.
-                        Anges för patienter med befintligt underlag.</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-
-            <xs:element name="insattning"
-                        type="tns:Insattning"
-                        nillable="false"
-                        minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation>Insättning av ej verifierad ordiantion.</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-
-            <xs:element name="verifikation"
-                        type="tns:Verifikation"
-                        nillable="false"
-                        minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation>Verifiering av ej verifierad ordiantion.</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-
-            <xs:element name="ordination"
-                        type="tns:Lakemedelsordination"
+                        minOccurs="0"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Ej verifierad ordination som skall journalföras.</xs:documentation>
+                    <xs:documentation>
+                        Tidpunkt för senast uppläst underlag för patient.
+                        Anges för patienter med befintligt underlag.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="patient"
-                        type="tns:Patient"
+                        type="prescribe:Patient"
+                        minOccurs="1"
+                        maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Patientens identifikationsobjekt.</xs:documentation>
+                    <xs:documentation>
+                        Patientens identifikationsobjekt.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -86,7 +69,61 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Förskrivningens id.</xs:documentation>
+                    <xs:documentation>
+                        Förskrivningens id.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="notat"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Ordinationsnotat.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:choice>
+
+                <xs:element name="insattningsinformation"
+                            type="prescribe:Insattningsinformation"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Insättning av ej verifierad ordination.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+                <xs:element name="utsattningsinformation"
+                            type="prescribe:Utsattningsinformation"
+                            minOccurs="0"
+                            maxOccurs="1"
+                            nillable="false">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Utsättning av ej verifierad ordination.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+            </xs:choice>
+
+            <xs:element name="ordination"
+                        type="prescribe:Lakemedelsordinationsunderlag"
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Ej verifierad ordination som skall journalföras.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -103,44 +140,62 @@
 
             <xs:element name="ordinationsId"
                         type="xs:string"
-                        nillable="false"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Referens till ordination som verifierats.</xs:documentation>
+                    <xs:documentation>
+                        Referens till ordination som verifierats.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="uppdateradUnderlagstidpunkt"
                         type="xs:dateTime"
-                        nillable="false"
-                        minOccurs="0">
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Tidpunkt för uppdaterat underlag för patient.</xs:documentation>
+                    <xs:documentation>
+                        Tidpunkt för uppdaterat underlag för patient.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name="vokresultat"
-                        type="tns:VOKResultat"
-                        nillable="false"
-                        minOccurs="0">
+                        type="prescribe:VOKResultat"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Resultat från VOK-VER.</xs:documentation>
+                    <xs:documentation>
+                        Resultat från VOK-VER.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
             <xs:element name='resultCode'
-                        type='tns:resultCodeEnum'>
+                        type='prescribe:resultCodeEnum'
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Resultatkod för anropet.</xs:documentation>
+                    <xs:documentation>
+                        Resultatkod för anropet.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
 
             <xs:element name='comment'
                         type='xs:string'
-                        minOccurs='0'>
+                        minOccurs='0'
+                        maxOccurs="1"
+                        nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Kommentar till eventuella fel eller varningar.</xs:documentation>
+                    <xs:documentation>
+                        Kommentar till eventuella fel eller varningar.
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -151,4 +206,5 @@
 
         </xs:sequence>
     </xs:complexType>
+
 </xs:schema>
