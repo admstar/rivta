@@ -68,6 +68,31 @@ def source = new XmlDataReader(context, dataFile)
 source.load("Date_Boundaries")
 }}}
 
+Den fil som innehåller testdata (i ovanstående exempel med namnet "data.xml") innehåller dels global data och dessutom data som är specifik för varje testfall (i ovanstående exempel med namnet "Date_Boundaries"). Om samma fält finns i både det globala och testfallsspecifika datat, kommer det testfallsspecifika fältet att skriva över det globala värdet. Innehållet i filen ska ha format enligt:
+{{{
+<testsuite>
+    <id>GetVaccinationHistory</id>
+    <description>Beskrivning av testsuiten.</description>
+    <globaldata>
+        <webServiceUrl>http://localhost:8088/services</webServiceUrl>
+    </globaldata>
+    <testcase id="Date_Boundaries">
+        <description>Beskrivning av testfallet</description>
+        <data>
+            <httpHeaderHsaId>112233</httpHeaderHsaId>
+            <logicalAddress>112233</logicalAddress>
+        </data>
+    </testcase>
+    <testcase id="CareUnitHsaId_Filter">
+        <description>Beskrivning av testfallet</description>
+        <data>
+            <httpHeaderHsaId>112234</httpHeaderHsaId>
+            <logicalAddress>112235</logicalAddress>
+        </data>
+    </testcase>
+}}}
+De element som anges inom elementen "globaldata" eller "data" kan sedan refereras antingen genom att ange t ex '${httpHeaderHsaId}' i ett webservice-request, eller 'context.httpHeaderHsaId' i ett script-block.
+
 ===Schematron-validering===
 {{{
 import se.skl.rivta.testsupport.soapui.validation.SchematronValidator
