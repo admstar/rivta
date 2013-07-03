@@ -326,6 +326,26 @@
     </xs:sequence>
   </xs:complexType>
 </xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://acrend-u36j:8088/mockGetVaccinationHistoryResponderBinding</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:clinicalprocess:activityprescription:actoutcome:GetVaccinationHistoryResponder:2:GetVaccinationHistory" name="GetVaccinationHistory" bindingOperationName="GetVaccinationHistory" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation></con:interface><con:mockService port="8088" path="/mockGetVaccinationHistoryResponderBinding" host="acrend-u36j" name="GetVaccinationHistoryResponderBinding MockService"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="GetVaccinationHistory" interface="GetVaccinationHistoryResponderBinding" operation="GetVaccinationHistory"><con:settings/><con:dispatchPath>import com.eviware.soapui.support.XmlHolder
+import com.eviware.soapui.impl.wsdl.support.wsdl.WsdlContext
+import com.eviware.soapui.impl.wsdl.support.wsdl.WsdlValidator
+import com.eviware.soapui.impl.wsdl.panels.mockoperation.WsdlMockRequestMessageExchange
+
+def mockService = mockOperation.mockService
+
+def wsdlcontext = new WsdlContext("http://localhost:${mockService.port}/${mockService.path}?WSDL");
+def validator = new WsdlValidator(wsdlcontext);
+def msgExchange = new WsdlMockRequestMessageExchange(mockRequest, mockOperation); 
+def errors = validator.assertRequest(msgExchange, false);
+
+def msg = ""
+if (errors.length > 0) {
+	errors.each {
+		log.error("Incoming request contains error ${it.toString()}")
+		msg += "${it.toString()}\n"
+	}
+	context.validationMessages = msg
+	return "SoapFault-Request"
+}
 
 def holder = new XmlHolder( mockRequest.requestContent )
 holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
@@ -530,4 +550,146 @@ return responseName</con:dispatchPath><con:dispatchStyle>SCRIPT</con:dispatchSty
       <urn:GetVaccinationHistoryResponse>
       </urn:GetVaccinationHistoryResponse>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:activityprescription:actoutcome:GetVaccinationHistoryResponder:2:GetVaccinationHistory"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:properties/><con:wssContainer/></con:soapui-project>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:activityprescription:actoutcome:GetVaccinationHistoryResponder:2:GetVaccinationHistory"/></con:response><con:response name="Only CareContactId" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:activityprescription:actoutcome:GetVaccinationHistoryResponder:1" xmlns:urn1="urn:riv:clinicalprocess:activityprescription:actoutcome:1">
+   <soapenv:Header/>
+   <!-- Only careContactId -->
+   <soapenv:Body>
+      <urn:GetVaccinationHistoryResponse>
+         <urn:vaccinationMedicalRecord>
+            <urn1:vaccinationMedicalRecordHeader>
+               <urn1:documentId>5566770</urn1:documentId>
+               <urn1:sourceSystemHSAid>112233</urn1:sourceSystemHSAid>
+               <urn1:documentTitle>?</urn1:documentTitle>
+               <urn1:documentTime>20130628100000</urn1:documentTime>
+               <urn1:patientId>
+                  <urn1:id>${patientId}</urn1:id>
+                  <urn1:type>${patientIdType}</urn1:type>
+               </urn1:patientId>
+               <urn1:author>
+                  <urn1:authorTime>20130618100000</urn1:authorTime>
+                  <urn1:authorName>Testare</urn1:authorName>
+                  <urn1:authorOrgUnitName>?</urn1:authorOrgUnitName>
+                  <urn1:careUnitHSAid>${careUnitHSAid}</urn1:careUnitHSAid>
+               </urn1:author>
+               <urn1:legalAuthenticator>
+                  <urn1:signatureTime>20130619100000</urn1:signatureTime>
+                  <urn1:legalAuthenticatorName>?</urn1:legalAuthenticatorName>
+               </urn1:legalAuthenticator>
+               <urn1:approvedForPatient>true</urn1:approvedForPatient>
+               <urn1:careContactId>566710</urn1:careContactId>
+            </urn1:vaccinationMedicalRecordHeader>
+            <urn1:vaccinationMedicalRecordBody>
+               <urn1:registrationRecord>
+                  <urn1:date>20130617</urn1:date>
+               </urn1:registrationRecord>
+            </urn1:vaccinationMedicalRecordBody>
+         </urn:vaccinationMedicalRecord>
+         <urn:vaccinationMedicalRecord>
+            <urn1:vaccinationMedicalRecordHeader>
+               <urn1:documentId>5566771</urn1:documentId>
+               <urn1:sourceSystemHSAid>112233</urn1:sourceSystemHSAid>
+               <urn1:documentTitle>?</urn1:documentTitle>
+               <urn1:documentTime>20130528100000</urn1:documentTime>
+               <urn1:patientId>
+                  <urn1:id>${patientId}</urn1:id>
+                  <urn1:type>${patientIdType}</urn1:type>
+               </urn1:patientId>
+               <urn1:author>
+                  <urn1:authorTime>20130618100000</urn1:authorTime>
+                  <urn1:authorName>Testare</urn1:authorName>
+                  <urn1:authorOrgUnitName>?</urn1:authorOrgUnitName>
+                  <urn1:careUnitHSAid>${careUnitHSAid}</urn1:careUnitHSAid>
+               </urn1:author>
+               <urn1:approvedForPatient>true</urn1:approvedForPatient>
+               <urn1:careContactId>566710</urn1:careContactId>
+            </urn1:vaccinationMedicalRecordHeader>
+            <urn1:vaccinationMedicalRecordBody>
+               <urn1:registrationRecord>
+                  <urn1:date>20130617</urn1:date>
+               </urn1:registrationRecord>
+            </urn1:vaccinationMedicalRecordBody>
+         </urn:vaccinationMedicalRecord>
+      </urn:GetVaccinationHistoryResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:activityprescription:actoutcome:GetVaccinationHistoryResponder:2:GetVaccinationHistory"/></con:response><con:response name="Http-header filter" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:activityprescription:actoutcome:GetVaccinationHistoryResponder:1" xmlns:urn1="urn:riv:clinicalprocess:activityprescription:actoutcome:1">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetVaccinationHistoryResponse>
+         <urn:vaccinationMedicalRecord>
+            <urn1:vaccinationMedicalRecordHeader>
+               <urn1:documentId>5566770</urn1:documentId>
+               <urn1:sourceSystemHSAid>1234</urn1:sourceSystemHSAid>
+               <urn1:documentTitle>?</urn1:documentTitle>
+               <urn1:documentTime>20130628100000</urn1:documentTime>
+               <urn1:patientId>
+                  <urn1:id>${patientId}</urn1:id>
+                  <urn1:type>${patientIdType}</urn1:type>
+               </urn1:patientId>
+               <urn1:author>
+                  <urn1:authorTime>20130618100000</urn1:authorTime>
+                  <urn1:authorName>Testare</urn1:authorName>
+                  <urn1:authorOrgUnitName>?</urn1:authorOrgUnitName>
+                  <urn1:careUnitHSAid>${careUnitHSAid}</urn1:careUnitHSAid>
+               </urn1:author>
+               <urn1:legalAuthenticator>
+                  <urn1:signatureTime>20130619100000</urn1:signatureTime>
+                  <urn1:legalAuthenticatorName>?</urn1:legalAuthenticatorName>
+               </urn1:legalAuthenticator>
+               <urn1:approvedForPatient>true</urn1:approvedForPatient>
+               <urn1:careContactId>556710</urn1:careContactId>
+            </urn1:vaccinationMedicalRecordHeader>
+            <urn1:vaccinationMedicalRecordBody>
+               <urn1:registrationRecord>
+                  <urn1:date>20130617</urn1:date>
+               </urn1:registrationRecord>
+            </urn1:vaccinationMedicalRecordBody>
+         </urn:vaccinationMedicalRecord>
+         <urn:vaccinationMedicalRecord>
+            <urn1:vaccinationMedicalRecordHeader>
+               <urn1:documentId>5566771</urn1:documentId>
+               <urn1:sourceSystemHSAid>1234</urn1:sourceSystemHSAid>
+               <urn1:documentTitle>?</urn1:documentTitle>
+               <urn1:documentTime>20130528100000</urn1:documentTime>
+               <urn1:patientId>
+                  <urn1:id>${patientId}</urn1:id>
+                  <urn1:type>${patientIdType}</urn1:type>
+               </urn1:patientId>
+               <urn1:author>
+                  <urn1:authorTime>20130618100000</urn1:authorTime>
+                  <urn1:authorName>Testare</urn1:authorName>
+                  <urn1:authorOrgUnitName>?</urn1:authorOrgUnitName>
+                  <urn1:careUnitHSAid>${careUnitHSAid}</urn1:careUnitHSAid>
+               </urn1:author>
+               <urn1:approvedForPatient>true</urn1:approvedForPatient>
+               <urn1:careContactId>556710</urn1:careContactId>
+            </urn1:vaccinationMedicalRecordHeader>
+            <urn1:vaccinationMedicalRecordBody>
+               <urn1:registrationRecord>
+                  <urn1:date>20130617</urn1:date>
+               </urn1:registrationRecord>
+            </urn1:vaccinationMedicalRecordBody>
+         </urn:vaccinationMedicalRecord>
+      </urn:GetVaccinationHistoryResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:activityprescription:actoutcome:GetVaccinationHistoryResponder:2:GetVaccinationHistory"/></con:response><con:response name="SoapFault" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+  <soapenv:Body>
+    <soapenv:Fault>
+      <faultcode>server</faultcode>
+      <faultstring xml:lang="SWE">Error!</faultstring>
+      <detail>
+      	<description>This is an error!</description>
+      </detail>
+    </soapenv:Fault>
+  </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:activityprescription:actoutcome:GetVaccinationHistoryResponder:2:GetVaccinationHistory"/></con:response><con:response name="SoapFault-Request" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+  <soapenv:Body>
+    <soapenv:Fault>
+      <faultcode>request</faultcode>
+      <faultstring xml:lang="SWE">Illegal request</faultstring>
+      <detail>
+      	<description>Validation errors:
+      	${validationMessages}</description>
+      </detail>
+    </soapenv:Fault>
+  </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:activityprescription:actoutcome:GetVaccinationHistoryResponder:2:GetVaccinationHistory"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:properties/><con:wssContainer/><con:sensitiveInformation/></con:soapui-project>

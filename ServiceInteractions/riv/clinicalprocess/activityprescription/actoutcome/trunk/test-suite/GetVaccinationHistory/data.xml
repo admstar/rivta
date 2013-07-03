@@ -43,15 +43,15 @@ under the License.
             The DocumentId's of case 1-7 should be added as a comma-separated list in the
                 expectedDocumentIds field.
             The DocumentId's of case 8 should be added in the unexpectedDocumentIds field.
-            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of CareContacts.
+            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of VaccinationMedicalRecords.
         </description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
             <logicalAddress>112233</logicalAddress>
             <patientId>7601011212</patientId>
             <patientIdType>1.2.752.129.2.1.3.1</patientIdType>
-            <timePeriodStart>20130601100000</timePeriodStart>
-            <timePeriodEnd>20130630180000</timePeriodEnd>
+            <timePeriodStart>20130601</timePeriodStart>
+            <timePeriodEnd>20130630</timePeriodEnd>
             <!-- Add a list of comma-separated ids that at least should be included in the response -->
             <expectedDocumentIds>5566770,5566771</expectedDocumentIds>
             <!-- Add a list of comma-separated ids that should not be included in the response -->
@@ -82,9 +82,9 @@ under the License.
     <testcase id="Only_PatientId">
         <description>Verifies that the result only contains information with correct PatientId.
             Enter a PatientId that is stored in the source system.
-            The DocumentId's of the expected CareContacts should be added as a comma-separated list in the
+            The DocumentId's of the expected VaccinationMedicalRecords should be added as a comma-separated list in the
             expectedDocumentIds field.
-            The DocumentId's of CareContacts from other CareUnit's should be added as a comma-separated list in the
+            The DocumentId's of VaccinationMedicalRecords from other CareUnit's should be added as a comma-separated list in the
             unexpectedDocumentIds field.
         </description>
         <data>
@@ -116,7 +116,7 @@ under the License.
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
             <logicalAddress>112233</logicalAddress>
-            <careContactId>1122334455</careContactId>
+            <careContactId>566710</careContactId>
             <sourceSystemHSAid>112233</sourceSystemHSAid>
         </data>
     </testcase>
@@ -134,11 +134,11 @@ under the License.
     </testcase>
     <testcase id="Http-header Filter">
         <description>Verifies that the result only contains information with correct PatientId, and that the source
-            system should filter CareContacts based on the HttpHeader 'x-rivta-original-serviceconsumer-hsaid'.
-            Enter a PatientId that has more than one CareContact in the source system.
-            Add one or more DocumentId's of contacts that should be included in the response based on the
+            system should filter VaccinationMedicalRecords based on the HttpHeader 'x-rivta-original-serviceconsumer-hsaid'.
+            Enter a PatientId that has more than one VaccinationMedicalRecord in the source system.
+            Add one or more DocumentId's of records that should be included in the response based on the
             filtering rules to the field 'expectedDocumentIds'.
-            Add one or more DocumentId's of contacts that should not be included in the response based on the
+            Add one or more DocumentId's of records that should not be included in the response based on the
             filtering rules to the field 'unexpectedDocumentIds'.
         </description>
         <data>
@@ -147,7 +147,7 @@ under the License.
             <patientId>7601021212</patientId>
             <patientIdType>1.2.752.129.2.1.3.1</patientIdType>
             <!-- Add a list of comma-separated ids that at least should be included in the response -->
-            <expectedDocumentIds>987654321</expectedDocumentIds>
+            <expectedDocumentIds>5566770,5566771</expectedDocumentIds>
             <!-- Add a list of comma-separated ids that should not be included in the response -->
             <unexpectedDocumentIds>123456</unexpectedDocumentIds>
         </data>
