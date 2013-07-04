@@ -449,6 +449,25 @@
     </xs:sequence>
   </xs:complexType>
 </xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://tempuri.org</con:endpoint><con:endpoint>http://Acrend-Admin:8088/mockGetCareContactsResponderBinding</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:ehr:patientsummary:GetCareContactsResponder:2:GetCareContacts" name="GetCareContacts" bindingOperationName="GetCareContacts" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/></con:operation></con:interface><con:mockService port="8088" path="/mockGetCareContactsResponderBinding" host="Acrend-Admin" name="GetCareContactsResponderBinding MockService"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="GetCareContacts" interface="GetCareContactsResponderBinding" operation="GetCareContacts"><con:settings/><con:dispatchPath>import com.eviware.soapui.support.XmlHolder
+import com.eviware.soapui.impl.wsdl.support.wsdl.WsdlContext
+import com.eviware.soapui.impl.wsdl.support.wsdl.WsdlValidator
+import com.eviware.soapui.impl.wsdl.panels.mockoperation.WsdlMockRequestMessageExchange
+
+def mockService = mockOperation.mockService
+
+def wsdlcontext = new WsdlContext("http://localhost:${mockService.port}/${mockService.path}?WSDL");
+def validator = new WsdlValidator(wsdlcontext);
+def msgExchange = new WsdlMockRequestMessageExchange(mockRequest, mockOperation); 
+def errors = validator.assertRequest(msgExchange, false);
+def msg = ""
+if (errors.length > 0) {
+	errors.each {
+		log.error("Incoming request contains error ${it.toString()}")
+		msg += "${it.toString()}\n"
+	}
+	context.validationMessages = msg
+	return "SoapFault-Request"
+}
 
 def holder = new XmlHolder( mockRequest.requestContent )
 holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
@@ -456,12 +475,7 @@ holder.namespaces['urn'] = 'urn:riv:itintegration:registry:1'
 holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:2'
 holder.namespaces['urn2'] = 'urn:riv:clinicalprocess:logistics:logistics:2'
 
-def logicalAddress = holder.getNodeValue('/soapenv:Envelope/soapenv:Header/urn:LogicalAddress')
 def careUnitHSAid = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetCareContacts/urn1:careUnitHSAid')
-def careContactId = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetCareContacts/urn1:careContactId')
-def sourceSystemHSAid = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetCareContacts/urn1:sourceSystemHSAid')
-def datePeriodStart = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetCareContacts/urn1:timePeriod/urn2:start')
-def datePeriodEnd = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetCareContacts/urn1:timePeriod/urn2:end')
 def patientId = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetCareContacts/urn1:patientId/urn2:id')
 def patientIdType = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetCareContacts/urn1:patientId/urn2:type')
 
@@ -968,6 +982,20 @@ xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:2">
          <!--You may enter ANY elements at this point-->
       </urn:GetCareContactsResponse>
    </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:ehr:patientsummary:GetCareContactsResponder:2:GetCareContacts"/></con:response><con:response name="SoapFault-Request" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+  <soapenv:Body>
+    <soapenv:Fault>
+      <faultcode>server</faultcode>
+      <faultstring xml:lang="SE">That's an error!</faultstring>
+      <!--Optional:-->
+      <faultactor>1</faultactor>
+      <!--Optional:-->
+      <detail>
+      	<text>Illegal values:
+      	${validationMessages}</text>
+      </detail>
+    </soapenv:Fault>
+  </soapenv:Body>
 </soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:ehr:patientsummary:GetCareContactsResponder:2:GetCareContacts"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/><con:onRequestScript>import java.text.SimpleDateFormat
 
 def sdf = new SimpleDateFormat("yyyyMMddHHmmss")
