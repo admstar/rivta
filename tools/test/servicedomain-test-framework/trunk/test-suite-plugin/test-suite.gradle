@@ -1,0 +1,33 @@
+ext.builddir = file(projectDir.absolutePath + '/build')
+ext.distdir = builddir.absolutePath + '/dist'
+
+task clean(type: Delete) {
+    delete builddir
+}
+
+task copyTask(type: Copy) {
+    from projectDir
+    into distdir
+    include '**/*.xml', '**/*.docx'
+
+    doLast {
+        delete "${distdir}/build"
+		delete "${distdir}/.gradle"
+    }
+}
+
+task copyDependencies(type: Sync) {
+    from configurations.support
+    into distdir
+}
+
+task createZip(type: Zip, description: 'Creates an archive for the testsuite.', dependsOn: [copyTask, copyDependencies]) {
+    appendix = 'test-suite'
+	baseName = project.name
+	version = project.version
+    from distdir
+    destinationDir builddir
+    include '**/*.*'
+}
+
+task build(dependsOn: createZip) {}
