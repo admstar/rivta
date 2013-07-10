@@ -65,6 +65,7 @@ under the License.
             expectedDocumentIds field.
             The DocumentId's of VaccinationMedicalRecords from other CareUnit's should be added as a comma-separated list in the
             unexpectedDocumentIds field.
+            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of VaccinationMedicalRecords.
         </description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
@@ -86,6 +87,7 @@ under the License.
             expectedDocumentIds field.
             The DocumentId's of VaccinationMedicalRecords from other CareUnit's should be added as a comma-separated list in the
             unexpectedDocumentIds field.
+            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of VaccinationMedicalRecords.
         </description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
@@ -111,7 +113,8 @@ under the License.
     </testcase>
     <testcase id="Only_CareContactId">
         <description>Verifies that the result only contains information for a single CareContact.
-            Enter a CareContactId that is stored in the source system.
+            Enter a PatientId, CareContactId and SourceSystemHSAid that is stored in the source system.
+            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of VaccinationMedicalRecords.
         </description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
@@ -123,7 +126,8 @@ under the License.
     <testcase id="Non_Existing_CareContactId">
         <description>Verifies that the service returns an empty result instead of a Soap Fault if a non-existing
             CareContactId is given.
-            Enter a careContactId and sourceSystemHSAid that is not found in the source system.
+            Enter a PatientId that exists in the source system and a CareContactId and sourceSystemHSAid that is not found in the source system.
+            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of VaccinationMedicalRecords.
         </description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
@@ -140,6 +144,7 @@ under the License.
             filtering rules to the field 'expectedDocumentIds'.
             Add one or more DocumentId's of records that should not be included in the response based on the
             filtering rules to the field 'unexpectedDocumentIds'.
+            The field logicalAddress should contain a value that does not affect the list of CareContacts.
         </description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
@@ -154,7 +159,9 @@ under the License.
     </testcase>
     <testcase id="CareContactId_And_SourceSystemHsaId">
         <description>The test verifies that the source system returns a Soap Fault if the sourceSystemHSAid
-            is empty when careContactId has a value.</description>
+            is empty when careContactId has a value.
+            Enter a CareContactId of a CareContact that should be found in the source system.
+            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of CareContacts.</description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
             <logicalAddress>112233</logicalAddress>
@@ -163,7 +170,10 @@ under the License.
     </testcase>
     <testcase id="SourceSystemHsaId_And_LogicalAddress">
         <description>The test verifies that the source system returns a Soap Fault if the logicalAddress and
-            sourceSystemHSAid doesn't match.</description>
+            sourceSystemHSAid doesn't match.
+            Enter a CareContactId and the correct SourceSystemHSAid of a CareContact that should be found in the source system.
+            The field logicalAddress should not match SourceSystemHSAid.
+            The field httpHeaderHsaId should contain a value that does not affect the list of records.</description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
             <logicalAddress>987654321</logicalAddress>
