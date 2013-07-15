@@ -23,11 +23,9 @@ under the License.
         queryBinding='xslt2'
         schemaVersion='ISO19757-3'>
 
-    <iso:title>Validation for GetCareContacts</iso:title>
-    <iso:ns prefix='urn' uri='urn:riv:clinicalprocess:activityprescription:actoutcome:GetVaccinationHistoryResponder:1' />
-    <iso:ns prefix='urn1' uri='urn:riv:clinicalprocess:activityprescription:actoutcome:1' />
-
-    <!-- Rules for Request -->
+    <iso:title>Validation for GetMaternityMedicalHistory</iso:title>
+    <iso:ns prefix='urn' uri='urn:riv:clinicalprocess:healthcond:actoutcome:GetMaternityMedicalHistoryResponder:2' />
+    <iso:ns prefix='urn1' uri='urn:riv:clinicalprocess:healthcond:actoutcome:2' />
 
     <!-- Rules for Response -->
     <iso:pattern name="Verify author">
@@ -36,25 +34,5 @@ under the License.
                 Either one of authorRoleCode or authorOtherRole must be given for <iso:name />.</iso:assert>
         </iso:rule>
     </iso:pattern>
-
-    <iso:rule abstract="true" id="rule.actor">
-        <iso:assert test="count(urn1:hsaid) +  count(urn1:name) = 1">
-            Either one of hsaid or name must be given for <iso:name />.</iso:assert>
-    </iso:rule>
-
-
-    <iso:pattern name="Verify prescriberPerson">
-        <iso:rule context="urn1:prescriberPerson" >
-            <iso:extends rule="rule.actor" />
-        </iso:rule>
-    </iso:pattern>
-
-    <iso:pattern name="Verify performer">
-        <iso:rule context="urn1:performer" >
-            <iso:extends rule="rule.actor" />
-        </iso:rule>
-    </iso:pattern>
-
-
 
 </iso:schema>
