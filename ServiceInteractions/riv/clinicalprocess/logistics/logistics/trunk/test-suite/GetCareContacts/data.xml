@@ -116,23 +116,29 @@ under the License.
     </testcase>
     <testcase id="Only_CareContactId">
         <description>Verifies that the result only contains information for a single CareContactId.
-            Enter a CareContactId that is stored in the source system.
+            Enter a PatientId, CareContactId and sourceSystemHSAid that exists in the source system.
+            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of CareContacts.
         </description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
             <logicalAddress>112233</logicalAddress>
+            <patientId>7601021212</patientId>
+            <patientIdType>1.2.752.129.2.1.3.1</patientIdType>
             <careContactId>1122334455</careContactId>
             <sourceSystemHSAid>112233</sourceSystemHSAid>
         </data>
     </testcase>
     <testcase id="Non_Existing_CareContactId">
         <description>Verifies that the service returns an empty result instead of a Soap Fault if a non-existing
-            CareContactId is given.
-            Enter a careContactId and sourceSystemHSAid that is not found in the source system.
+            CareContactId is given
+			Enter a PatientId that exists in the source system and a CareContactId and sourceSystemHSAid that is not found in the source system.
+            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of CareContacts.
         </description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
             <logicalAddress>112233</logicalAddress>
+            <patientId>7601021212</patientId>
+            <patientIdType>1.2.752.129.2.1.3.1</patientIdType>
             <careContactId>1122334455</careContactId>
             <sourceSystemHSAid>112233</sourceSystemHSAid>
         </data>
