@@ -862,10 +862,7 @@ def source = new XmlDataReader(context, dataFile)
 source.load("Non_Existing_CareContactId")</script></con:config></con:testStep><con:testStep type="request" name="Call GetCareContacts"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetCareContactsResponderBinding</con:interface><con:operation>GetCareContacts</con:operation><con:request name="Call GetCareContacts"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
   &lt;con:entry key="x-mock-response" value="Empty Response"/>
   &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
-&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
-	xmlns:urn="urn:riv:itintegration:registry:1" 
-	xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:2" 
-	xmlns:urn2="urn:riv:clinicalprocess:logistics:logistics:2">
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:2" xmlns:urn2="urn:riv:clinicalprocess:logistics:logistics:2">
    <soapenv:Header>
       <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
    </soapenv:Header>
@@ -875,6 +872,8 @@ source.load("Non_Existing_CareContactId")</script></con:config></con:testStep><c
             <urn2:id>${patientId}</urn2:id>
             <urn2:type>${patientIdType}</urn2:type>
          </urn1:patientId>
+         <urn1:sourceSystemHSAid>${sourceSystemHSAid}</urn1:sourceSystemHSAid>
+         <urn1:careContactId>${careContactId}</urn1:careContactId>
       </urn1:GetCareContacts>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:assertion type="Response SLA Assertion" name="Response SLA"><con:configuration><SLA>15000</SLA></con:configuration></con:assertion><con:assertion type="Schema Compliance" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="SOAP Response" name="SOAP Response"/><con:assertion type="GroovyScriptAssertion" name="Assert Schematron"><con:configuration><scriptText>import se.skl.rivta.testsupport.soapui.validation.SchematronValidator
