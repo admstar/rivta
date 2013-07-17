@@ -151,6 +151,7 @@ under the License.
             filtering rules to the field 'expectedCareContactIds'.
             Add one or more CareContactId's of contacts that should not be included in the response based on the
             filtering rules to the field 'unexpectedCareContactIds'.
+			The field logicalAddress should contain a value that does not affect the list of CareContacts.
         </description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
@@ -165,7 +166,10 @@ under the License.
     </testcase>
     <testcase id="CareContactId_And_SourceSystemHsaId">
         <description>The test verifies that the source system returns a Soap Fault if the sourceSystemHSAid
-            is empty when careContactId has a value.</description>
+            is empty when careContactId has a value.
+            Enter a PatientId and a CareContactId of a CareContact that should be found in the source system.
+            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of CareContacts.
+		</description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
             <logicalAddress>112233</logicalAddress>
@@ -176,7 +180,11 @@ under the License.
     </testcase>
     <testcase id="SourceSystemHsaId_And_LogicalAddress">
         <description>The test verifies that the source system returns a Soap Fault if the logicalAddress and
-            sourceSystemHSAid doesn't match.</description>
+            sourceSystemHSAid doesn't match.
+            Enter PatientId and a CareContactId and the correct SourceSystemHSAid of a CareContact that should be found in the source system.
+            The field logicalAddress should not match SourceSystemHSAid.
+            The field httpHeaderHsaId should contain a value that does not affect the list of records.
+		</description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
             <logicalAddress>987654321</logicalAddress>
