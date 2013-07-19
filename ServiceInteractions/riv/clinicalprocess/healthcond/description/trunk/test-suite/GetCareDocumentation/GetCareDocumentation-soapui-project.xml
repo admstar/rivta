@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project activeEnvironment="Default" name="GetCareDocumentation" resourceRoot="${projectDir}" soapui-version="4.5.2" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetCareDocumentationResponderBinding" type="wsdl" bindingName="{urn:riv:clinicalprocess:healthcond:description:GetCareDocumentation:2:rivtabp21}GetCareDocumentationResponderBinding" soapVersion="1_1" anonymous="optional" definition="../../schemas/interactions/GetCareDocumentationInteraction/GetCareDocumentationInteraction_2.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:\C:\projekt\rivta\ServiceInteractions\riv\clinicalprocess\healthcond\description\trunk\schemas\interactions\GetCareDocumentationInteraction\GetCareDocumentationInteraction_2.0_RIVTABP21.wsdl"><con:part><con:url>file:\C:\projekt\rivta\ServiceInteractions\riv\clinicalprocess\healthcond\description\trunk\schemas\interactions\GetCareDocumentationInteraction\GetCareDocumentationInteraction_2.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+<con:soapui-project activeEnvironment="Default" name="GetCareDocumentation" resourceRoot="${projectDir}" soapui-version="4.5.2" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetCareDocumentationResponderBinding" type="wsdl" bindingName="{urn:riv:clinicalprocess:healthcond:description:GetCareDocumentation:2:rivtabp21}GetCareDocumentationResponderBinding" soapVersion="1_1" anonymous="optional" definition="../../schemas/interactions/GetCareDocumentationInteraction/GetCareDocumentationInteraction_2.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:\C:\projekt\rivta\ServiceInteractions\riv\clinicalprocess\healthcond\description\trunk\schemas\interactions\GetCareDocumentationInteraction\GetCareDocumentationInteraction_2.0_RIVTABP21.wsdl"><con:part><con:url>file:\C:\projekt\rivta\ServiceInteractions\riv\clinicalprocess\healthcond\description\trunk\schemas\interactions\GetCareDocumentationInteraction\GetCareDocumentationInteraction_2.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
@@ -559,4 +559,102 @@
          <!--You may enter ANY elements at this point-->
       </urn1:GetCareDocumentation>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2:GetCareDocumentation"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/></con:soapui-project>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2:GetCareDocumentation"/></con:call></con:operation></con:interface><con:testSuite name="TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Date boundaries" searchProperties="true" id="ceabba30-bf87-4c03-9396-a27a635cf23d"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def dataFile = new File(utils.projectPath + "/data.xml")
+def source = new XmlDataReader(context, dataFile)
+
+source.load("Date_Boundaries")</script></con:config></con:testStep><con:testStep type="request" name="Call GetCareDocumentation"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetCareDocumentationResponderBinding</con:interface><con:operation>GetCareDocumentation</con:operation><con:request name="Call GetCareDocumentation"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="x-mock-response" value="Response DateBoundaries"/>
+  &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:description:2">
+   <soapenv:Header>
+      <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn1:GetCareDocumentation>
+         <urn1:patientId>
+            <urn2:id>${patientId}</urn2:id>
+            <urn2:type>${patientIdType}</urn2:type>
+         </urn1:patientId>
+         <urn1:timePeriod>
+            <urn2:start>${timePeriodStart}</urn2:start>
+            <urn2:end>${timePeriodEnd}</urn2:end>
+         </urn1:timePeriod>
+      </urn1:GetCareDocumentation>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion"/><con:assertion type="Response SLA Assertion" name="Response SLA"><con:configuration><SLA>15000</SLA></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Assert Schematron"><con:configuration><scriptText>import se.skl.rivta.testsupport.soapui.validation.SchematronValidator
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def contextHelper = new ContextHelper(context)
+def validator = new SchematronValidator()
+
+def failures = validator.validateMessage(messageExchange.response.responseContent,
+	new File(utils.projectPath + "/constraints.xml"))
+
+failures.each { failure -> contextHelper.fail(failure.text) }</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Assert date range"><con:configuration><scriptText><![CDATA[import com.eviware.soapui.support.XmlHolder
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def contextHelper = new ContextHelper(context)
+
+def holder = new XmlHolder( messageExchange.response.responseContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:GetMaternityMedicalHistoryResponder:2'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:2'
+
+def records = holder.getDomNodes('/soapenv:Envelope/soapenv:Body/urn:GetMaternityMedicalHistoryResponse/urn:maternityMedicalRecord')
+
+records.each {c -> 
+	def recordHolder = new XmlHolder( c )
+	holder.namespaces.each {key, value -> recordHolder.namespaces[key] = value}
+	
+
+	def documentId = recordHolder.getNodeValue('/urn:maternityMedicalRecord/urn1:maternityMedicalRecordHeader/urn1:documentId')
+	def documentTime = recordHolder.getNodeValue('/urn:maternityMedicalRecord/urn1:maternityMedicalRecordHeader/urn1:documentTime')
+	def authorTime = recordHolder.getNodeValue('/urn:maternityMedicalRecord/urn1:maternityMedicalRecordHeader/urn1:author/urn1:authorTime')
+	def signatureTime = recordHolder.getNodeValue('/urn:maternityMedicalRecord/urn1:maternityMedicalRecordHeader/urn1:legalAuthenticator/urn1:signatureTime')
+
+	if (context.timePeriodStart < documentTime && documentTime < context.timePeriodEnd) {
+		return
+	}
+	if (context.timePeriodStart < authorTime && authorTime < context.timePeriodEnd) {
+		return
+	}
+	if (signatureTime != null && context.timePeriodStart < signatureTime && signatureTime < context.timePeriodEnd) {
+		return
+	}
+
+	contextHelper.fail("Response contains a record outside given date range ${context.timePeriodStart} - ${context.timePeriodEnd}. DocumentId: $documentId")
+}]]></scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Assert DocumentId's"><con:configuration><scriptText>import com.eviware.soapui.support.XmlHolder
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def contextHelper = new ContextHelper(context)
+
+def holder = new XmlHolder( messageExchange.response.responseContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:GetMaternityMedicalHistoryResponder:2'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:2'
+
+def documentIds = holder.getNodeValues('/soapenv:Envelope/soapenv:Body/urn:GetMaternityMedicalHistoryResponse/urn:maternityMedicalRecord/urn1:maternityMedicalRecordHeader/urn1:documentId') as List
+
+def expectedDocumentIds = context.expectedDocumentIds ? context.expectedDocumentIds.tokenize(',') : []
+def unexpectedDocumentIds = context.unexpectedDocumentIds ? context.unexpectedDocumentIds.tokenize(',') : []
+
+documentIds.each {id -> 
+	if (unexpectedDocumentIds.contains(id)) {
+		contextHelper.fail("Response contains a unexpected record. DocumentId: $id")
+	}
+}
+expectedDocumentIds.each {id -> 
+	if (!documentIds.contains(id)) {
+		contextHelper.fail("Response does not contain a expected record. DocumentId: $id")
+	}
+}</scriptText></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/></con:soapui-project>
