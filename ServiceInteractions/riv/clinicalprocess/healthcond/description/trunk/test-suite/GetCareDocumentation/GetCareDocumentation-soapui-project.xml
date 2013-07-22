@@ -608,17 +608,17 @@ holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
 holder.namespaces['urn'] = 'urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2'
 holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:description:2'
 
-def records = holder.getDomNodes('/soapenv:Envelope/soapenv:Body/urn:GetCareDocumentationResponse/urn:careDocumentation')
+def documents = holder.getDomNodes('/soapenv:Envelope/soapenv:Body/urn:GetCareDocumentationResponse/urn:careDocumentation')
 
-records.each {c -> 
-	def recordHolder = new XmlHolder( c )
-	holder.namespaces.each {key, value -> recordHolder.namespaces[key] = value}
+documents.each { doc -> 
+	def docHolder = new XmlHolder( doc )
+	holder.namespaces.each {key, value -> docHolder.namespaces[key] = value}
 	
 
-	def documentId = recordHolder.getNodeValue('/urn:careDocumentation/urn1:careDocumentationHeader/urn1:documentId')
-	def documentTime = recordHolder.getNodeValue('/urn:careDocumentation/urn1:careDocumentationHeader/urn1:documentTime')
-	def authorTime = recordHolder.getNodeValue('/urn:careDocumentation/urn1:careDocumentationHeader/urn1:author/urn1:authorTime')
-	def signatureTime = recordHolder.getNodeValue('/urn:careDocumentation/urn1:careDocumentationHeader/urn1:legalAuthenticator/urn1:signatureTime')
+	def documentId = docHolder.getNodeValue('/urn:careDocumentation/urn1:careDocumentationHeader/urn1:documentId')
+	def documentTime = docHolder.getNodeValue('/urn:careDocumentation/urn1:careDocumentationHeader/urn1:documentTime')
+	def authorTime = docHolder.getNodeValue('/urn:careDocumentation/urn1:careDocumentationHeader/urn1:author/urn1:authorTime')
+	def signatureTime = docHolder.getNodeValue('/urn:careDocumentation/urn1:careDocumentationHeader/urn1:legalAuthenticator/urn1:signatureTime')
 
 	if (context.timePeriodStart < documentTime && documentTime < context.timePeriodEnd) {
 		return
@@ -632,6 +632,304 @@ records.each {c ->
 
 	contextHelper.fail("Response contains a record outside given date range ${context.timePeriodStart} - ${context.timePeriodEnd}. DocumentId: $documentId")
 }]]></scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Assert DocumentId's"><con:configuration><scriptText>import com.eviware.soapui.support.XmlHolder
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def contextHelper = new ContextHelper(context)
+
+def holder = new XmlHolder( messageExchange.response.responseContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:description:2'
+
+def documentIds = holder.getNodeValues('/soapenv:Envelope/soapenv:Body/urn:GetCareDocumentationResponse/urn:careDocumentation/urn1:careDocumentationHeader/urn1:documentId') as List
+
+def expectedDocumentIds = context.expectedDocumentIds ? context.expectedDocumentIds.tokenize(',') : []
+def unexpectedDocumentIds = context.unexpectedDocumentIds ? context.unexpectedDocumentIds.tokenize(',') : []
+
+documentIds.each {id -> 
+	if (unexpectedDocumentIds.contains(id)) {
+		contextHelper.fail("Response contains a unexpected record. DocumentId: $id")
+	}
+}
+expectedDocumentIds.each {id -> 
+	if (!documentIds.contains(id)) {
+		contextHelper.fail("Response does not contain a expected record. DocumentId: $id")
+	}
+}</scriptText></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="CareUnitHSAid Filter" searchProperties="true" id="99202dba-188d-44d2-9aec-7bc206afebf1"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def dataFile = new File(utils.projectPath + "/data.xml")
+def source = new XmlDataReader(context, dataFile)
+
+source.load("CareUnitHsaId_Filter")</script></con:config></con:testStep><con:testStep type="request" name="Call GetCareDocumentation"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetCareDocumentationResponderBinding</con:interface><con:operation>GetCareDocumentation</con:operation><con:request name="Call GetCareDocumentation"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="x-mock-response" value="Response CareUnitHsaId"/>
+  &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:description:2">
+   <soapenv:Header>
+      <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn1:GetCareDocumentation>
+         <urn1:careUnitHSAid>${careUnitHSAid}</urn1:careUnitHSAid>
+         <urn1:patientId>
+            <urn2:id>${patientId}</urn2:id>
+            <urn2:type>${patientIdType}</urn2:type>
+         </urn1:patientId>
+      </urn1:GetCareDocumentation>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion"/><con:assertion type="Response SLA Assertion" name="Response SLA"><con:configuration><SLA>15000</SLA></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Assert Schematron"><con:configuration><scriptText>import se.skl.rivta.testsupport.soapui.validation.SchematronValidator
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def contextHelper = new ContextHelper(context)
+def validator = new SchematronValidator()
+
+def failures = validator.validateMessage(messageExchange.response.responseContent,
+	new File(utils.projectPath + "/constraints.xml"))
+
+failures.each { failure -> contextHelper.fail(failure.text) }</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Assert CareUnitHSAid"><con:configuration><scriptText>import com.eviware.soapui.support.XmlHolder
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def contextHelper = new ContextHelper(context)
+
+def holder = new XmlHolder( messageExchange.response.responseContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:description:2'
+
+def documents = holder.getDomNodes('/soapenv:Envelope/soapenv:Body/urn:GetCareDocumentationResponse/urn:careDocumentation')
+
+documents.each { doc -> 
+	def docHolder = new XmlHolder( doc )
+	holder.namespaces.each {key, value -> docHolder.namespaces[key] = value}
+	
+
+	def documentId = docHolder.getNodeValue('/urn:careDocumentation/urn1:careDocumentationHeader/urn1:documentId')
+	def careUnitHSAid = docHolder.getNodeValue('/urn:careDocumentation/urn1:careDocumentationHeader/urn1:author/urn1:careUnitHSAid')
+	
+	if (careUnitHSAid != context.careUnitHSAid) {
+		contextHelper.fail("Response contains a document with other CareUnitHSAid. CareUnitHSAid: ${careUnitHSAid} DocumentId: ${documentId}")
+	}
+}</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Assert DocumentId's"><con:configuration><scriptText>import com.eviware.soapui.support.XmlHolder
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def contextHelper = new ContextHelper(context)
+
+def holder = new XmlHolder( messageExchange.response.responseContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:description:2'
+
+def documentIds = holder.getNodeValues('/soapenv:Envelope/soapenv:Body/urn:GetCareDocumentationResponse/urn:careDocumentation/urn1:careDocumentationHeader/urn1:documentId') as List
+
+def expectedDocumentIds = context.expectedDocumentIds ? context.expectedDocumentIds.tokenize(',') : []
+def unexpectedDocumentIds = context.unexpectedDocumentIds ? context.unexpectedDocumentIds.tokenize(',') : []
+
+documentIds.each {id -> 
+	if (unexpectedDocumentIds.contains(id)) {
+		contextHelper.fail("Response contains a unexpected record. DocumentId: $id")
+	}
+}
+expectedDocumentIds.each {id -> 
+	if (!documentIds.contains(id)) {
+		contextHelper.fail("Response does not contain a expected record. DocumentId: $id")
+	}
+}</scriptText></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Only PatientId" searchProperties="true" id="726e1d53-f58c-44dd-8908-66e8776a159c"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def dataFile = new File(utils.projectPath + "/data.xml")
+def source = new XmlDataReader(context, dataFile)
+
+source.load("Only_PatientId")</script></con:config></con:testStep><con:testStep type="request" name="Call GetCareDocumentation"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetCareDocumentationResponderBinding</con:interface><con:operation>GetCareDocumentation</con:operation><con:request name="Call GetCareDocumentation"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="x-mock-response" value="Only PatientId"/>
+  &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:description:2">
+   <soapenv:Header>
+      <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn1:GetCareDocumentation>
+         <urn1:patientId>
+            <urn2:id>${patientId}</urn2:id>
+            <urn2:type>${patientIdType}</urn2:type>
+         </urn1:patientId>
+      </urn1:GetCareDocumentation>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion"/><con:assertion type="Response SLA Assertion" name="Response SLA"><con:configuration><SLA>15000</SLA></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Assert Schematron"><con:configuration><scriptText>import se.skl.rivta.testsupport.soapui.validation.SchematronValidator
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def contextHelper = new ContextHelper(context)
+def validator = new SchematronValidator()
+
+def failures = validator.validateMessage(messageExchange.response.responseContent,
+	new File(utils.projectPath + "/constraints.xml"))
+
+failures.each { failure -> contextHelper.fail(failure.text) }</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Assert PatientId"><con:configuration><scriptText>import com.eviware.soapui.support.XmlHolder
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def contextHelper = new ContextHelper(context)
+
+def holder = new XmlHolder( messageExchange.response.responseContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:description:2'
+
+def documents = holder.getDomNodes('/soapenv:Envelope/soapenv:Body/urn:GetCareDocumentationResponse/urn:careDocumentation')
+
+documents.each {doc -> 
+	def docHolder = new XmlHolder( doc )
+	holder.namespaces.each {key, value -> docHolder.namespaces[key] = value}
+	
+
+	def documentId = docHolder.getNodeValue('/urn:careDocumentation/urn1:careDocumentationHeader/urn1:documentId')
+	def patientId = docHolder.getNodeValue('/urn:careDocumentation/urn1:careDocumentationHeader/urn1:patientId/urn1:id')
+	def patientIdType = docHolder.getNodeValue('/urn:careDocumentation/urn1:careDocumentationHeader/urn1:patientId/urn1:type')
+
+	if (patientId != context.patientId || patientIdType != context.patientIdType) {
+		contextHelper.fail("Response contains a record with other PatientId. PatientId: ${patientId}, Type: ${patientIdType} DocumentId: ${documentId}")
+	}
+}</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Assert DocumentId's"><con:configuration><scriptText>import com.eviware.soapui.support.XmlHolder
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def contextHelper = new ContextHelper(context)
+
+def holder = new XmlHolder( messageExchange.response.responseContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:description:2'
+
+def documentIds = holder.getNodeValues('/soapenv:Envelope/soapenv:Body/urn:GetCareDocumentationResponse/urn:careDocumentation/urn1:careDocumentationHeader/urn1:documentId') as List
+
+def expectedDocumentIds = context.expectedDocumentIds ? context.expectedDocumentIds.tokenize(',') : []
+def unexpectedDocumentIds = context.unexpectedDocumentIds ? context.unexpectedDocumentIds.tokenize(',') : []
+
+documentIds.each {id -> 
+	if (unexpectedDocumentIds.contains(id)) {
+		contextHelper.fail("Response contains a unexpected record. DocumentId: $id")
+	}
+}
+expectedDocumentIds.each {id -> 
+	if (!documentIds.contains(id)) {
+		contextHelper.fail("Response does not contain a expected record. DocumentId: $id")
+	}
+}</scriptText></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="NonExisting PatientId" searchProperties="true" id="619cb2e9-99a9-4b0e-9d1c-033a369f473f"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def dataFile = new File(utils.projectPath + "/data.xml")
+def source = new XmlDataReader(context, dataFile)
+
+source.load("Non_Existing_PatientId")</script></con:config></con:testStep><con:testStep type="request" name="Call GetCareDocumentation"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetCareDocumentationResponderBinding</con:interface><con:operation>GetCareDocumentation</con:operation><con:request name="Call GetCareDocumentation"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="x-mock-response" value="Empty Response"/>
+  &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:description:2">
+   <soapenv:Header>
+      <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn1:GetCareDocumentation>
+         <urn1:patientId>
+            <urn2:id>${patientId}</urn2:id>
+            <urn2:type>${patientIdType}</urn2:type>
+         </urn1:patientId>
+      </urn1:GetCareDocumentation>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion"/><con:assertion type="Response SLA Assertion" name="Response SLA"><con:configuration><SLA>15000</SLA></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Assert Empty Response"><con:configuration><scriptText>import com.eviware.soapui.support.XmlHolder
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def contextHelper = new ContextHelper(context)
+
+def holder = new XmlHolder( messageExchange.response.responseContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:description:2'
+
+def documents = holder.getNodeValues('/soapenv:Envelope/soapenv:Body/urn:GetCareDocumentationResponse/urn:careDocumentation')
+
+if (documents.length != 0) {
+	contextHelper.fail("Response should be empty for PatientId: ${context.patientId} PatientIdType: ${context.patientIdType}")
+}</scriptText></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="CareContactId Filter" searchProperties="true" id="79083793-e02e-4e68-a0ee-00759a8eb403"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def dataFile = new File(utils.projectPath + "/data.xml")
+def reader = new XmlDataReader(context, dataFile)
+
+reader.load("CareContactId_Filter")</script></con:config></con:testStep><con:testStep type="request" name="Call GetCareDocumentation"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetCareDocumentationResponderBinding</con:interface><con:operation>GetCareDocumentation</con:operation><con:request name="Call GetCareDocumentation"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="x-mock-response" value="CareContactId Filter"/>
+  &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:description:2">
+   <soapenv:Header>
+      <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn1:GetCareDocumentation>
+         <urn1:patientId>
+            <urn2:id>${patientId}</urn2:id>
+            <urn2:type>${patientIdType}</urn2:type>
+         </urn1:patientId>
+      </urn1:GetCareDocumentation>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion"/><con:assertion type="Response SLA Assertion" name="Response SLA"><con:configuration><SLA>15000</SLA></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Assert Schematron"><con:configuration><scriptText>import se.skl.rivta.testsupport.soapui.validation.SchematronValidator
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def contextHelper = new ContextHelper(context)
+def validator = new SchematronValidator()
+
+def failures = validator.validateMessage(messageExchange.response.responseContent,
+	new File(utils.projectPath + "/constraints.xml"))
+
+failures.each { failure -> contextHelper.fail(failure.text) }</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Assert CareContactId"><con:configuration><scriptText>import com.eviware.soapui.support.XmlHolder
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def contextHelper = new ContextHelper(context)
+
+def holder = new XmlHolder( messageExchange.response.responseContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:description:2'
+
+def documents = holder.getDomNodes('/soapenv:Envelope/soapenv:Body/urn:GetCareDocumentationResponse/urn:careDocumentation')
+
+if (documents.length == 0) {
+	contextHelper.fail("Response contains no documents.")
+	return
+}
+
+documents.each {doc -> 
+	def docHolder = new XmlHolder( doc )
+	holder.namespaces.each {key, value -> docHolder.namespaces[key] = value}
+	
+
+	def documentId = docHolder.getNodeValue('/urn:careDocumentation/urn1:careDocumentationHeader/urn1:documentId')
+	def sourceSystemHSAid = docHolder.getNodeValue('/urn:careDocumentation/urn1:careDocumentationHeader/urn1:sourceSystemHSAid')
+	def careContactId = docHolder.getNodeValue('/urn:careDocumentation/urn1:careDocumentationHeader/urn1:careContactId')
+
+	if (sourceSystemHSAid != context.sourceSystemHSAid || careContactId != context.careContactId) {
+		contextHelper.fail("Response contains a document with other CareContactId. CareContactId: ${careContactId}, SourceSystemHSAid: ${sourceSystemHSAid} DocumentId: ${documentId}")
+	}
+}</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Assert DocumentId's"><con:configuration><scriptText>import com.eviware.soapui.support.XmlHolder
 import se.skl.rivta.testsupport.soapui.ContextHelper
 import com.eviware.soapui.support.GroovyUtils
 
