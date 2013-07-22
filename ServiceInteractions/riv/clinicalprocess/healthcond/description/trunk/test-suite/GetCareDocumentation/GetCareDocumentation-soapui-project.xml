@@ -605,20 +605,20 @@ def contextHelper = new ContextHelper(context)
 
 def holder = new XmlHolder( messageExchange.response.responseContent )
 holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
-holder.namespaces['urn'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:GetMaternityMedicalHistoryResponder:2'
-holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:2'
+holder.namespaces['urn'] = 'urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:description:2'
 
-def records = holder.getDomNodes('/soapenv:Envelope/soapenv:Body/urn:GetMaternityMedicalHistoryResponse/urn:maternityMedicalRecord')
+def records = holder.getDomNodes('/soapenv:Envelope/soapenv:Body/urn:GetCareDocumentationResponse/urn:careDocumentation')
 
 records.each {c -> 
 	def recordHolder = new XmlHolder( c )
 	holder.namespaces.each {key, value -> recordHolder.namespaces[key] = value}
 	
 
-	def documentId = recordHolder.getNodeValue('/urn:maternityMedicalRecord/urn1:maternityMedicalRecordHeader/urn1:documentId')
-	def documentTime = recordHolder.getNodeValue('/urn:maternityMedicalRecord/urn1:maternityMedicalRecordHeader/urn1:documentTime')
-	def authorTime = recordHolder.getNodeValue('/urn:maternityMedicalRecord/urn1:maternityMedicalRecordHeader/urn1:author/urn1:authorTime')
-	def signatureTime = recordHolder.getNodeValue('/urn:maternityMedicalRecord/urn1:maternityMedicalRecordHeader/urn1:legalAuthenticator/urn1:signatureTime')
+	def documentId = recordHolder.getNodeValue('/urn:careDocumentation/urn1:careDocumentationHeader/urn1:documentId')
+	def documentTime = recordHolder.getNodeValue('/urn:careDocumentation/urn1:careDocumentationHeader/urn1:documentTime')
+	def authorTime = recordHolder.getNodeValue('/urn:careDocumentation/urn1:careDocumentationHeader/urn1:author/urn1:authorTime')
+	def signatureTime = recordHolder.getNodeValue('/urn:careDocumentation/urn1:careDocumentationHeader/urn1:legalAuthenticator/urn1:signatureTime')
 
 	if (context.timePeriodStart < documentTime && documentTime < context.timePeriodEnd) {
 		return
@@ -640,10 +640,10 @@ def contextHelper = new ContextHelper(context)
 
 def holder = new XmlHolder( messageExchange.response.responseContent )
 holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
-holder.namespaces['urn'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:GetMaternityMedicalHistoryResponder:2'
-holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:2'
+holder.namespaces['urn'] = 'urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:description:2'
 
-def documentIds = holder.getNodeValues('/soapenv:Envelope/soapenv:Body/urn:GetMaternityMedicalHistoryResponse/urn:maternityMedicalRecord/urn1:maternityMedicalRecordHeader/urn1:documentId') as List
+def documentIds = holder.getNodeValues('/soapenv:Envelope/soapenv:Body/urn:GetCareDocumentationResponse/urn:careDocumentation/urn1:careDocumentationHeader/urn1:documentId') as List
 
 def expectedDocumentIds = context.expectedDocumentIds ? context.expectedDocumentIds.tokenize(',') : []
 def unexpectedDocumentIds = context.unexpectedDocumentIds ? context.unexpectedDocumentIds.tokenize(',') : []
