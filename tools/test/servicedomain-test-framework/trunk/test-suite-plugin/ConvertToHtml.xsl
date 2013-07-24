@@ -67,7 +67,7 @@ under the License.
                     <article>
                         <h2>Tools</h2>
                         <h3>SoapUI</h3>
-                        The testsuite uses SoapUI to verify the implementation. Documentation of SoapUI can be found at http://www.soapui.org/<br/>
+                        The testsuite uses SoapUI to verify the implementation. Documentation of SoapUI can be found at <a href="http://www.soapui.org/" target="_blank">http://www.soapui.org/</a><br/>
                         Link to download site: <a href="http://sourceforge.net/projects/soapui/files/soapui/4.5.2/" target="_blank">http://sourceforge.net/projects/soapui/files/soapui/4.5.2/</a><br/>
                         Install SoapUI according to the documentation.
 
