@@ -35,6 +35,10 @@ artifacts {
 }
 
 task downloadStylesheet << {
+    def destDir = new File("$buildDir")
+    if (!destDir.exists()) {
+        destDir.mkdirs()
+    }
     ant.get(src: "https://rivta.googlecode.com/svn/tools/test/servicedomain-test-framework/trunk/test-suite-plugin/ConvertToHtml.xsl",
             dest: "$buildDir")
 }
