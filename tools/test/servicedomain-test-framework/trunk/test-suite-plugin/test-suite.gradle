@@ -1,33 +1,56 @@
-ext.builddir = file(projectDir.absolutePath + '/build')
-ext.distdir = builddir.absolutePath + '/dist'
+apply plugin: 'base'
+apply plugin: 'distribution'
 
-task clean(type: Delete) {
-    delete builddir
+repositories {
+    mavenLocal()
 }
 
-task copyTask(type: Copy) {
-    from projectDir
-    into distdir
-    include '**/*.xml', '**/*.docx'
+configurations {
+    support {
+		transitive = false
+	}
+}
 
-    doLast {
-        delete "${distdir}/build"
-		delete "${distdir}/.gradle"
+dependencies {
+	support 'rivta.tools.test.servicedomaintestframework:soapui-support:1.0.0'
+}
+
+distributions {
+    main {
+        contents {
+            from { configurations.support }
+            from(projectDir) {
+                include '**/*.xml', '**/*.docx'
+                exclude 'build', '.gradle'
+            }
+            from(buildDir) {
+                include '*.html'
+            }
+        }
     }
 }
 
-task copyDependencies(type: Sync) {
-    from configurations.support
-    into distdir
+artifacts {
+    archives distZip
 }
 
-task createZip(type: Zip, description: 'Creates an archive for the testsuite.', dependsOn: [copyTask, copyDependencies]) {
-    appendix = 'test-suite'
-	baseName = project.name
-	version = project.version
-    from distdir
-    destinationDir builddir
-    include '**/*.*'
+task downloadStylesheet << {
+    ant.get(src: "https://rivta.googlecode.com/svn/tools/test/servicedomain-test-framework/trunk/test-suite-plugin/ConvertToHtml.xsl",
+            dest: "$buildDir")
 }
 
-task build(dependsOn: createZip) {}
+task createDocumentation(dependsOn: downloadStylesheet) {
+    ext.dataFile = "data.xml"
+    ext.stylesheet = "$buildDir/ConvertToHtml.xsl"
+    ext.outFile = "$buildDir/TestSuite-Documentation.html"
+    inputs.files dataFile, stylesheet
+    outputs.file outFile
+    doLast {
+        ant.xslt(in: dataFile,
+                style: stylesheet,
+                out: outFile)
+    }
+}
+
+assemble.dependsOn distZip
+distZip.dependsOn createDocumentation
