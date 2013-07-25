@@ -33,27 +33,39 @@ under the License.
                         font-family: sans-serif;
                         width: 800px;
                         margin: 16px;
+                        counter-reset: section
                     }
-                    body{counter-reset: section}
-                    h1{counter-reset: sub-section}
-                    h2{counter-reset: composite}
-                    h3{counter-reset: detail}
+                    p {
+                        margin: 0.2em;
+                    }
+                    h1 {
+                        counter-reset: sub-section;
+                        margin-bottom: 5px;
+                    }
+                    h2 {
+                        counter-reset: composite;
+                        margin-bottom: 5px;
+                    }
+                    h3 {
+                        counter-reset: detail;
+                        margin-bottom: 5px;
+                    }
 
                     h1:before{
-                    counter-increment: section;
-                    content: counter(section) " ";
+                        counter-increment: section;
+                        content: counter(section) " ";
                     }
                     h2:before{
-                    counter-increment: sub-section;
-                    content: counter(section) "." counter(sub-section) " ";
+                        counter-increment: sub-section;
+                        content: counter(section) "." counter(sub-section) " ";
                     }
                     h3:before{
-                    counter-increment: composite;
-                    content: counter(section) "." counter(sub-section) "." counter(composite) " ";
+                        counter-increment: composite;
+                        content: counter(section) "." counter(sub-section) "." counter(composite) " ";
                     }
                     h4:before{
-                    counter-increment: detail;
-                    content: counter(section) "." counter(sub-section) "." counter(composite) "." counter(detail) " ";
+                        counter-increment: detail;
+                        content: counter(section) "." counter(sub-section) "." counter(composite) "." counter(detail) " ";
                     }
                 </style>
             </head>
@@ -67,7 +79,7 @@ under the License.
                     <article>
                         <h2>Tools</h2>
                         <h3>SoapUI</h3>
-                        The testsuite uses SoapUI to verify the implementation. Documentation of SoapUI can be found at <a href="http://www.soapui.org/" target="_blank">http://www.soapui.org/</a><br/>
+                        The testsuite uses SoapUI to verify the implementation. Documentation of SoapUI can be found at http://www.soapui.org/<br/>
                         Link to download site: <a href="http://sourceforge.net/projects/soapui/files/soapui/4.5.2/" target="_blank">http://sourceforge.net/projects/soapui/files/soapui/4.5.2/</a><br/>
                         Install SoapUI according to the documentation.
 
@@ -102,9 +114,17 @@ under the License.
     </xsl:template>
 
     <xsl:template match="description//*">
-        <xsl:value-of select="concat('&lt;',local-name(),'&gt;')" disable-output-escaping="yes"/>
-        <xsl:apply-templates/>
-        <xsl:value-of select="concat('&lt;/',local-name(),'&gt;')" disable-output-escaping="yes"/>
+        <xsl:choose>
+            <xsl:when test="local-name() = 'br'">
+                <xsl:value-of select="concat('&lt;',local-name(),'&gt;')" disable-output-escaping="yes"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="concat('&lt;',local-name(),'&gt;')" disable-output-escaping="yes"/>
+                <xsl:apply-templates/>
+                <xsl:value-of select="concat('&lt;/',local-name(),'&gt;')" disable-output-escaping="yes"/>
+            </xsl:otherwise>
+        </xsl:choose>
+
     </xsl:template>
 
     <xsl:template match="data">
