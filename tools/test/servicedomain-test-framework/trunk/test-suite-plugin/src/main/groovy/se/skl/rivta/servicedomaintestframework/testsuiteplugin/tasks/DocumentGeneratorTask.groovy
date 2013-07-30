@@ -3,7 +3,6 @@ package se.skl.rivta.servicedomaintestframework.testsuiteplugin.tasks
 import org.gradle.api.DefaultTask
 import org.gradle.api.InvalidUserDataException
 import org.gradle.api.tasks.InputFile
-import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 
 class DocumentGeneratorTask extends DefaultTask {
@@ -44,15 +43,17 @@ class DocumentGeneratorTask extends DefaultTask {
         }
     }
 
-    @OutputFile
+
     File getOutFile() {
         def file = project.file(outFile)
-        try {
-            if (!file.createNewFile()) {
-                throw new InvalidUserDataException("Could not create outFile at ${file.absolutePath}")
+        if (!file.exists()) {
+            try {
+                if (!file.createNewFile()) {
+                    throw new InvalidUserDataException("Could not create outFile at ${file.absolutePath}")
+                }
+            } catch (IOException e) {
+                throw new InvalidUserDataException("Could not create outFile at ${file.absolutePath}", e)
             }
-        } catch (IOException e) {
-            throw new InvalidUserDataException("Could not create outFile at ${file.absolutePath}", e)
         }
         if (!file.canWrite()) {
             throw new InvalidUserDataException("Could not write to outFile at ${file.absolutePath}")
@@ -64,7 +65,8 @@ class DocumentGeneratorTask extends DefaultTask {
     def generate() {
         ant.xslt(in: getDataFile(),
                 style: getStylesheet(),
-                out: getOutFile())
+                out: getOutFile(),
+                force: true)
     }
 
 }
