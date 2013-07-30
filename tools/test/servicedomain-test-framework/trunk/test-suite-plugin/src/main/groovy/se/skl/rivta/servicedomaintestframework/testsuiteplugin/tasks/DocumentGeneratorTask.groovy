@@ -3,6 +3,7 @@ package se.skl.rivta.servicedomaintestframework.testsuiteplugin.tasks
 import org.gradle.api.DefaultTask
 import org.gradle.api.InvalidUserDataException
 import org.gradle.api.tasks.InputFile
+import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 
 class DocumentGeneratorTask extends DefaultTask {
@@ -43,7 +44,7 @@ class DocumentGeneratorTask extends DefaultTask {
         }
     }
 
-
+    @OutputFile
     File getOutFile() {
         def file = project.file(outFile)
         if (!file.exists()) {
