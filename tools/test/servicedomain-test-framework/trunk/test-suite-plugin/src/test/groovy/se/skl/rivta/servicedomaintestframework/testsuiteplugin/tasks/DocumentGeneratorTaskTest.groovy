@@ -32,7 +32,6 @@ class DocumentGeneratorTaskTest {
 
     @Test
     void testGenerate() {
-        task.dataFile = "data.xml"
         task.outFile = "build/testGenerate.html"
 
         task.generate();
@@ -49,12 +48,25 @@ class DocumentGeneratorTaskTest {
         task.generate();
     }
     @Test(expected = InvalidUserDataException)
-    void testGenerateInvalidOutFile() {
-        task.dataFile = "data.xml"
+    void testGenerateInvalidOutFilePath() {
         def myFile = project.file('myFile')
         myFile.createNewFile()
         task.outFile = "myFile/testGenerate.html"
 
         task.generate();
+    }
+    @Test
+    void testGenerateOutFileExists() {
+        def myFile = project.file('build/testGenerate.html')
+        myFile.parentFile.mkdirs()
+        myFile.createNewFile()
+
+        task.outFile = "build/testGenerate.html"
+
+        task.generate();
+
+        def result = project.file("build/testGenerate.html")
+        assertEquals(true, result.exists())
+        assertEquals(true, result.length() > 0)
     }
 }
