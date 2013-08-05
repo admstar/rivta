@@ -1,5 +1,13 @@
-apply plugin: 'base'
-apply plugin: 'distribution'
+buildscript {
+    repositories {
+        mavenLocal()
+    }
+    dependencies {
+        classpath 'rivta.tools.test.servicedomaintestframework:test-suite-plugin:1.0.0'
+    }
+}
+apply plugin: 'maven-publish'
+apply plugin: 'test-suite'
 
 version = '1.0.0'
 group = 'riv.clinicalprocess.healthcon.description'
@@ -8,31 +16,6 @@ repositories {
     mavenLocal()
 }
 
-configurations {
-    support {
-		transitive = false
-	}
-}
-
 dependencies {
-	support 'rivta.tools.test.servicedomaintestframework:soapui-support:1.0.0'
+    support 'rivta.tools.test.servicedomaintestframework:soapui-support:1.0.0'
 }
-
-distributions {
-    main {
-        contents {
-            from { configurations.support }
-            from(projectDir) {
-                include '**/*.xml', '**/*.docx'
-                exclude 'build', '.gradle'
-            }
-
-        }
-    }
-}
-
-artifacts {
-    archives distZip
-}
-assemble.dependsOn distZip
-
