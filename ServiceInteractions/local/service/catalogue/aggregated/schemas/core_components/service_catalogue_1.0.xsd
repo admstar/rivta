@@ -33,7 +33,7 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="capacity" type="tns:CapacityType"/>
+  <xs:element name="maxLength" type="tns:CapacityType"/>
 
   <!-- -->
   <xs:complexType name="OfferType">
@@ -204,17 +204,40 @@
       <xs:enumeration value="INFO"/>
     </xs:restriction>
   </xs:simpleType>
-  
+
   <!-- -->
   <xs:complexType name="ProductType">
     <xs:annotation>
       <xs:documentation>Product information</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="displayName" type="xs:string"/>
+      <xs:element name="name" type="xs:string"/>
       <xs:element name="description" type="xs:string"/>
       <xs:element name="code" type="tns:CodeType" maxOccurs="unbounded"/>
       <xs:element name="price" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ProductCapacityType">
+    <xs:annotation>
+      <xs:documentation>Product information</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="capacity" type="tns:CapacitType" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CapacitType">
+    <xs:annotation>
+      <xs:documentation>CodeSystem information</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="validTo" type="xs:string"/>
+      <xs:element name="value" type="xs:string"/>
+      <xs:element name="description" type="xs:string"/>
+      <xs:element name="code" type="xs:string"/>
+      <xs:element name="codeSystem" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -227,6 +250,14 @@
       <xs:element name="description" type="xs:string"/>
       <xs:element name="code" type="xs:string"/>
       <xs:element name="codeSystem" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CareUnitCapacityType">
+    <xs:sequence>
+      <xs:element name="careUnitId" type="xs:string"/>
+      <xs:element name="careUnitName" type="xs:string"/>
+      <xs:element name="product" type="tns:ProductCapacityType" maxOccurs="unbounded" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
