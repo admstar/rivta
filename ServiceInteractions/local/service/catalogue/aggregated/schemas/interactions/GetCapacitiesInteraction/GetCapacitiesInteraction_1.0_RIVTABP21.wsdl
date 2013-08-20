@@ -17,13 +17,13 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<wsdl:definitions name='GetCapacitiesInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/'
-  xmlns:xs='http://www.w3.org/2001/XMLSchema'
+<wsdl:definitions name='GetCapacitiesInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema'
   xmlns:tjsr='urn:riv:service:catalogue:GetCapacitiesResponder:1'
   xmlns:tjsi='urn:riv:service:catalogue:GetCapacitiesInitiator:1'
   xmlns:tns='urn:riv:service:catalogue:GetCapacities:1:rivtabp21'
   targetNamespace='urn:riv:service:catalogue:GetCapacities:1:rivtabp21'
   xmlns:itr='urn:riv:itintegration:registry:1'>
+
   <xs:annotation>
     <xs:documentation>
 			 Tjänsteinteraktionens namn: GetCapacitiesInteraction
@@ -42,14 +42,15 @@
       <xs:import schemaLocation='../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
     </xs:schema>
   </wsdl:types>
+    
   <wsdl:message name='GetCapacitiesRequest'>
     <wsdl:part name='LogicalAddress' element='itr:LogicalAddress'>
       <wsdl:documentation>The organization id of the organization owning the targeted caregiver catalogue.</wsdl:documentation>
     </wsdl:part>
-    <wsdl:part name='parameters' element='tjsr:GetCapacitiesType' />
+    <wsdl:part name='parameters' element='tjsr:GetCapacities' />
   </wsdl:message>
   <wsdl:message name='GetCapacitiesResponse'>
-    <wsdl:part name='parameters' element='tjsr:GetCapacitiesResponseType' />
+    <wsdl:part name='parameters' element='tjsr:GetCapacitiesResponse' />
   </wsdl:message>
   <wsdl:portType name='GetCapacitiesResponderInterface'>
     <wsdl:operation name='GetCapacities'>
