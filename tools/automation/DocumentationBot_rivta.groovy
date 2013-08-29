@@ -370,11 +370,11 @@ excel.eachLine {
             vifodomainenglish:"${cell(5)}".trim(),
             rivtaname:"${cell(6)}".trim(),
             rivtaservicedomain:"${cell(7)}".trim(),
-            domaincategory:"${cell(8)}".trim(),
-            domaincontact:"${cell(9)}".trim(),
-            version:"${cell(10)}".trim(),
-            rivtabp20:"${cell(11)}".trim(),
-            rivtabp21:"${cell(12)}".trim()
+            version:"${cell(8)}".trim(),
+            rivtabp20:"${cell(9)}".trim(),
+            rivtabp21:"${cell(10)}".trim(),
+            domaincategory:"${cell(11)}".trim(),
+            domaincontact:"${cell(12)}".trim()
     ]
     log(loglevelDebug, "excelMasterFile[index]: " + excelMasterFile[index])
     index += 1
