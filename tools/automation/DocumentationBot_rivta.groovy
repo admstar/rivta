@@ -135,11 +135,14 @@ outputVIFOStructure = "VIFO"
 codeStructureLevel1 = "Published Service contracts"
 output2All = "all"
 output2Mindmap = "mindmap"
-output2HtmlTableVifo = "htmlTable"
+output2HtmlTableVifo = "htmlTableVifo"
+output2HtmlTableRIVTA = "htmlTabelRIVTA"
+output2WikiTableRIVTA = "wikiTableRIVTA"
 publishStatus4Wsdl = ['GetAllHealthcareFacilitiesInteraction_1.1_RIVTABP21.wsdl':true, 'DiscontinuePrescriptionInteraction_1.0_RIVTABP21.wsdl':true]
 RIVTADomainFolder = "http://rivta.googlecode.com/svn/ServiceInteractions/riv/"
 RIVTACheckoutCommand = "svn checkout " + RIVTADomainFolder + " "
 trunkDocsSubPath = "/trunk/docs/"
+wikiTableFileRIVTA = "/_WikiTableRIVTA.txt"
 wsdlList = []
 
 
@@ -150,7 +153,7 @@ downloadTKFiles = false                      //--- (true, false)
 excelFile = "/Users/peterhernfalk/Desktop/_Peter_Files/HOS-projekt/AL/Aktiviteter/Landskap med TP och TK/Groovyscript/Underlag/MasterTest.xls"
 //excelFile = "/Users/peterhernfalk/Desktop/_Peter_Files/HOS-projekt/AL/Aktiviteter/Landskap med TP och TK/Groovyscript/Underlag/MasterTest_0.4.xls"
 mindmapStructure = outputCodeStructure       //--- (outputCodeStructure, outputVIFOStructure)
-outputType = output2All                  //--- (output2All, output2Mindmap,output2HtmlTableRIVTA,output2HtmlTableVifo)
+outputType = output2All                  //--- (output2All, output2Mindmap,output2HtmlTableRIVTA,output2WikiTableRIVTA,output2HtmlTableVifo)
 localRIVTATargetFolder = "/Users/peterhernfalk/Desktop/_Peter_Files/rivta/"
 useAndVerifyDocumentationURL = false           //--- (true, false)
 useStatusFilter = false                      //--- (true, false)
@@ -493,7 +496,7 @@ if ((outputType == output2HtmlTableVifo) || (outputType == output2All)) {
 
 }
 
-if ((outputType == output2HtmlTableVifo) || (outputType == output2All)) {
+if ((outputType == output2HtmlTableRIVTA) || (outputType == output2All)) {
 
     /**
      ///////////////////////////////////////////////////////////////////////////////////
@@ -502,7 +505,48 @@ if ((outputType == output2HtmlTableVifo) || (outputType == output2All)) {
      ///////////////////////////////////////////////////////////////////////////////////
      ///////////////////////////////////////////////////////////////////////////////////
      */
-    //-----Write a Html Table file, containing all Service Contract descriptions
+
+    //-----Create HTML contents, save them to a temporary map and sort the map
+    tempHtmlContentsRIVTA = []
+    def lastLevel2 = ""
+    def lastLevel3 = ""
+    wsdlListSize.times {
+        def ext = wsdlList[it].tokenize(delimiterToken)
+        def newLevel2 = ext[1]
+        def newLevel3 = ext[2]
+        def newLevel6 = ext[5]
+
+        userfriendlyServiceDomainName = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.swedishsubdomain" }
+        if (userfriendlyServiceDomainName == null) { userfriendlyServiceDomainName = " " }
+        serviceDomainName = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.rivtaservicedomain" }.toString()
+        version = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.version" }
+        rivtaBP20 = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.rivtabp20" }
+        rivtaBP21 = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.rivtabp21" }
+        serviceContractCategory = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.contractcategory" }
+        downloadLink = "Saknas i Excel"
+
+        //-----Write HTML table, using available data
+        if ((newLevel2 != lastLevel2) || (newLevel3 != lastLevel3)) {
+            if (userfriendlyServiceDomainName.trim().length() > 0 ) {
+                tempHtmlContentsRIVTA <<
+                        "<tr>" + "\n" +
+                        tdStringRIVTA(userfriendlyServiceDomainName) + "\n" +
+                        tdStringRIVTA(serviceDomainName) + "\n" +
+                        tdStringRIVTA(version) + "\n" +
+                        tdStringRIVTA(rivtaBP20) + "\n" +
+                        tdStringRIVTA(rivtaBP21) + "\n" +
+                        tdStringRIVTA(serviceContractCategory) + "\n" +
+                        tdStringRIVTA(downloadLink) + "\n" +
+                        "</tr>" + "\n"
+            }
+        }
+        lastLevel2 = newLevel2
+        lastLevel3 = newLevel3
+    }
+    tempHtmlContentsRIVTA.sort()
+
+
+    //-----Write the beginning of the Html file (RIVTA)
     new File(localRIVTATargetFolder + htmlTableFileRIVTA).newOutputStream().withWriter(charset) {
         writer -> htbSizeRIVTA.times { writer.write HtmlTableRIVTABeginning[it] + "\n" }
         writer.write tdStringRIVTA("<strong>Populärnamn</strong>") + "\n"
@@ -514,50 +558,96 @@ if ((outputType == output2HtmlTableVifo) || (outputType == output2All)) {
         writer.write tdStringRIVTA(" ") + "\n"
     }
 
-    def lastLevel2 = ""
-    def lastLevel3 = ""
-
-    //-----Write a Html Table file, containing all Service Contract descriptions
+    //-----Use the sorted map as input, write the map contents to the Html file (RIVTA)
     new File(localRIVTATargetFolder + htmlTableFileRIVTA).withWriterAppend(charset) {
-        writer -> wsdlListSize.times {
-            def ext = wsdlList[it].tokenize(delimiterToken)
-            def newLevel2 = ext[1]
-            def newLevel3 = ext[2]
-            def newLevel6 = ext[5]
-
-            userfriendlyServiceDomainName = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.swedishsubdomain" }
-            if (userfriendlyServiceDomainName == null) { userfriendlyServiceDomainName = " " }
-            serviceDomainName = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.rivtaservicedomain" }.toString()
-            version = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.version" }
-            rivtaBP20 = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.rivtabp20" }
-            rivtaBP21 = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.rivtabp21" }
-            serviceContractCategory = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.contractcategory" }
-            downloadLink = "Saknas i Excel"
-
-            //-----Write HTML table, using available data
-            if ((newLevel2 != lastLevel2) || (newLevel3 != lastLevel3)) {
-                if (userfriendlyServiceDomainName.trim().length() > 0 ) {
-                    writer.write "<tr>" + "\n"
-                    writer.write tdStringRIVTA(userfriendlyServiceDomainName) + "\n"
-                    writer.write tdStringRIVTA(serviceDomainName) + "\n"
-                    writer.write tdStringRIVTA(version) + "\n"
-                    writer.write tdStringRIVTA(rivtaBP20) + "\n"
-                    writer.write tdStringRIVTA(rivtaBP21) + "\n"
-                    writer.write tdStringRIVTA(serviceContractCategory) + "\n"
-                    writer.write tdStringRIVTA(downloadLink) + "\n"
-                    writer.write "</tr>" + "\n"
-
-                }
-            }
-
-            lastLevel2 = newLevel2
-            lastLevel3 = newLevel3
+        out ->  tempHtmlContentsRIVTA.each {
+            out.println it
         }
     }
 
-            //-----Write the last part of the Html file
+    //-----Write the end of the Html file
     new File(localRIVTATargetFolder + htmlTableFileRIVTA).withWriterAppend(charset) {
         writer -> hteSizeRIVTA.times { writer.write HtmlTableRIVTAEnd[it] + "\n" }
+    }
+
+}
+
+
+if ((outputType == output2WikiTableRIVTA) || (outputType == output2All)) {
+
+    /**
+     ///////////////////////////////////////////////////////////////////////////////////
+     ///////////////////////////////////////////////////////////////////////////////////
+     ///////////////////////////// Write Wiki file RIVTA //////////////////////////////
+     ///////////////////////////////////////////////////////////////////////////////////
+     ///////////////////////////////////////////////////////////////////////////////////
+     */
+
+    //-----Create HTML contents, save them to a temporary map and sort the map
+    tempWikiContentsRIVTA = []
+    def lastLevel2 = ""
+    def lastLevel3 = ""
+    wsdlListSize.times {
+        def ext = wsdlList[it].tokenize(delimiterToken)
+        def newLevel2 = ext[1]
+        def newLevel3 = ext[2]
+        def newLevel6 = ext[5]
+
+        userfriendlyServiceDomainName = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.swedishsubdomain" }
+        if (userfriendlyServiceDomainName == null) { userfriendlyServiceDomainName = " " }
+        serviceDomainName = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.rivtaservicedomain" }.toString()
+        version = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.version" }
+        rivtaBP20 = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.rivtabp20" }
+        rivtaBP21 = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.rivtabp21" }
+        serviceContractCategory = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.contractcategory" }
+
+        //-----2do: fetch link from the download page at the RIVTA site
+        downloadLink = "[cehis.se Saknas i Excel]"
+
+        //-----Write Wiki table, using available data
+        if ((newLevel2 != lastLevel2) || (newLevel3 != lastLevel3)) {
+            if (userfriendlyServiceDomainName.trim().length() > 0 ) {
+                tempWikiContentsRIVTA <<
+                        wikiTableStringRIVTA(userfriendlyServiceDomainName) +
+                        wikiTableStringRIVTA(serviceDomainName) +
+                        wikiTableStringRIVTA(version) +
+                        wikiTableStringRIVTA(rivtaBP20) +
+                        wikiTableStringRIVTA(rivtaBP21) +
+                        wikiTableStringRIVTA(serviceContractCategory) +
+                        wikiTableStringRIVTA(downloadLink) +
+                        wikiTableStringRIVTA(" ")
+            }
+        }
+        lastLevel2 = newLevel2
+        lastLevel3 = newLevel3
+    }
+    tempWikiContentsRIVTA.sort()
+
+
+    //-----Write the beginning of the Wiki file (RIVTA)
+    new File(localRIVTATargetFolder + wikiTableFileRIVTA).newOutputStream().withWriter(charset) {
+        writer -> htbSizeRIVTA.times { //writer.write HtmlTableRIVTABeginning[it] + "\n" }
+        }
+        writer.write wikiTableStringRIVTA("*Populärnamn*")
+        writer.write wikiTableStringRIVTA("*Tjänstedomän*")
+        writer.write wikiTableStringRIVTA("*Version*")
+        writer.write wikiTableStringRIVTA("*RIV-TA BP 2.0*")
+        writer.write wikiTableStringRIVTA("*RIV-TA BP 2.1*")
+        writer.write wikiTableStringRIVTA("*[CehisKategorier Cehis kategori]*")
+        writer.write wikiTableStringRIVTA(" ")
+        writer.write wikiTableStringRIVTA(" ") + "\n"
+    }
+
+    //-----Use the sorted map as input, write the map contents to the Wiki file (RIVTA)
+    new File(localRIVTATargetFolder + wikiTableFileRIVTA).withWriterAppend(charset) {
+        out ->  tempWikiContentsRIVTA.each {
+            out.println it
+        }
+    }
+
+    //-----Write the end of the Wiki file
+    new File(localRIVTATargetFolder + wikiTableFileRIVTA).withWriterAppend(charset) {
+        //writer -> hteSizeRIVTA.times { writer.write wikiTableFileRIVTA[it] + "\n" }
     }
 
 }
@@ -585,6 +675,10 @@ def tdStringRIVTA (String stringContent) {
     "<td style=\"border: 1px solid #ccc; padding: 5px;\">" + stringContent + "</td>"
 }
 
+def wikiTableStringRIVTA (String stringContent) {
+    "|| " + stringContent + " "
+}
+
 /** Adds "mailto:" to a valid e-mail address */
 def addMailto(lastServiceDomainContact) {
     if (lastServiceDomainContact != null && lastServiceDomainContact.indexOf('@') >= 0) {
@@ -601,6 +695,7 @@ def log(level, text) {
 }
 
 /** Verifies if the URL is working or not */
+//-----This method should be rewritten so it becomes a Groovy method instead of a Java method
 public static int getResponseCode(String urlString) throws MalformedURLException, IOException {
     URL u = new URL(urlString); 
     HttpURLConnection huc =  (HttpURLConnection) u.openConnection(); 
@@ -622,7 +717,8 @@ def ShowExecutionStatistics() {
 }
 
 
-/** Decides wether a service contract is apporved to be published or not */
+/** Decides wether a service contract is approved to be published or not */
+//-----This method should be rewritten so it becomes a Groovy method instead of a Java method
 private boolean IsContractPublished(String level1, level2, level3, level4, level5) {
   isPublished = false
 
