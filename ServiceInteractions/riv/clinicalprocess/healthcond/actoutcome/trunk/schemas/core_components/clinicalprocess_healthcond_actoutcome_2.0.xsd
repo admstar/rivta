@@ -37,7 +37,6 @@
             <xs:element name="legalAuthenticator" type="tns:LegalAuthenticatorType" minOccurs="0"/>
             <xs:element name="approvedForPatient" type="xs:boolean"/>
             <xs:element name="careContactId" type="xs:string" minOccurs="0"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -118,7 +117,6 @@
             <xs:element name="referralOrganizationAddress" type="xs:string" minOccurs="0"
                 maxOccurs="1"/>
             <xs:element name="careContactId" type="xs:string" minOccurs="0" maxOccurs="1"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -394,9 +392,8 @@
 
     <xs:complexType name="LaboratoryOutcomeType">
         <xs:sequence>
-            <xs:element name="LaboratoryOutcomeHeader" type="tns:PatientSummaryHeaderType"/>
-            <xs:element name="LaboratoryOutcomeBody" type="tns:LaboratoryOutcomeBodyType"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="laboratoryOutcomeHeader" type="tns:PatientSummaryHeaderType"/>
+            <xs:element name="laboratoryOutcomeBody" type="tns:LaboratoryOutcomeBodyType"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -411,7 +408,6 @@
                 type="tns:HealthcareProfessionalType"/>
             <xs:element name="analysis" type="tns:AnalysisType"/>
             <xs:element name="referral" type="tns:ReferralType"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -445,10 +441,9 @@
                 minOccurs="0"/>
             <xs:element name="name" type="xs:string" minOccurs="0"/>
             <xs:element name="orgUnit" type="tns:OrgUnitType"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
-    
+
     <xs:complexType name="OrgUnitType">
         <xs:annotation>
             <xs:documentation>
@@ -470,7 +465,7 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="careContactOrgUnitHsaId" type="tns:HSAIdType"/>
-            <xs:element name="careContactOrgUnitName" type="xs:string" />
+            <xs:element name="careContactOrgUnitName" type="xs:string"/>
             <xs:element name="careContactOrgUnitTelecom" type="xs:string" minOccurs="0"/>
             <xs:element name="careContactOrgUnitEmail" type="xs:string" minOccurs="0"/>
             <xs:element name="careContactOrgUnitAddress" type="xs:string" minOccurs="0"/>
@@ -492,14 +487,13 @@
     <xs:complexType name="AnalysisType">
         <xs:sequence>
             <xs:element name="analysisId" type="xs:string"/>
-            <xs:element name="analysisTime" type="tns:TimeStampType"/>
-            <xs:element name="analysisCode" type="xs:string"/>
-            <xs:element name="analysisText" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="analysisStatus" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="analysisComment" type="xs:string"/>
-            <xs:element name="specimen" type="xs:string"/>
-            <xs:element name="method" type="xs:string"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="analysisTime" type="tns:TimeStampType" minOccurs="0"/>
+            <xs:element name="analysisCode" type="xs:string" minOccurs="0"/>
+            <xs:element name="analysisText" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="analysisStatus" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="analysisComment" type="xs:string" minOccurs="0"/>
+            <xs:element name="specimen" type="xs:string" minOccurs="0"/>
+            <xs:element name="method" type="xs:string" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>
