@@ -537,7 +537,7 @@ careContacts.each {c ->
 	def datePeriodStart = contactHolder.getNodeValue('/urn:careContact/urn1:careContactBody/urn1:careContactTimePeriod/urn1:start')
 	def datePeriodEnd = contactHolder.getNodeValue('/urn:careContact/urn1:careContactBody/urn1:careContactTimePeriod/urn1:end')
 
-	if (context.timePeriodStart < documentTime[0..7] && documentTime[0..7] <= context.timePeriodEnd) {
+	if (context.timePeriodStart <= documentTime[0..7] && documentTime[0..7] <= context.timePeriodEnd) {
 		return
 	}
 	if (datePeriodStart != null && datePeriodStart[0..7] > context.timePeriodEnd) {
