@@ -54,7 +54,7 @@
 
 SET XCORE=%SCHEMADIR%\core_components\*.xsd
 
-SET SCHEMAS=%XCORE% %W0% %X0% %W1% %X1% 
+SET SCHEMAS=%XCORE% %W0% %X0% %W1% %X1% %W2% %X2% %W3% %X3% %W4% %X4% %W5% %X5% %W6% %X6% %W7% %X7% %W8% %X8%
 
 SET OUTFILE=/out:wcf\generated-src\ItintegrationRegistryInteractions.cs
 SET APPCONFIG=/config:wcf\generated-src\app.config
