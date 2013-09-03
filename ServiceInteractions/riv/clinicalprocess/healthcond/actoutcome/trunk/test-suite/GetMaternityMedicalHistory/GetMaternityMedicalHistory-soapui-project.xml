@@ -694,7 +694,7 @@ def utils = new GroovyUtils(context)
 def dataFile = new File(utils.projectPath + "/data.xml")
 def source = new XmlDataReader(context, dataFile)
 
-source.load("Date_Boundaries")</script></con:config></con:testStep><con:testStep type="request" name="Call GetMaternityMedicalHistory"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetMaternityMedicalHistoryResponderBinding</con:interface><con:operation>GetMaternityMedicalHistory</con:operation><con:request name="Call GetMaternityMedicalHistory"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+source.load("Date Boundaries")</script></con:config></con:testStep><con:testStep type="request" name="Call GetMaternityMedicalHistory"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetMaternityMedicalHistoryResponderBinding</con:interface><con:operation>GetMaternityMedicalHistory</con:operation><con:request name="Call GetMaternityMedicalHistory"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
   &lt;con:entry key="x-mock-response" value="Response DateBoundaries"/>
   &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
 &lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:GetMaternityMedicalHistoryResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:actoutcome:2">
@@ -748,13 +748,13 @@ records.each {c ->
 	def authorTime = recordHolder.getNodeValue('/urn:maternityMedicalRecord/urn1:maternityMedicalRecordHeader/urn1:author/urn1:authorTime')
 	def signatureTime = recordHolder.getNodeValue('/urn:maternityMedicalRecord/urn1:maternityMedicalRecordHeader/urn1:legalAuthenticator/urn1:signatureTime')
 
-	if (context.timePeriodStart < documentTime && documentTime < context.timePeriodEnd) {
+	if (context.timePeriodStart <= documentTime[0..7] && documentTime[0..7] <= context.timePeriodEnd) {
 		return
 	}
-	if (context.timePeriodStart < authorTime && authorTime < context.timePeriodEnd) {
+	if (context.timePeriodStart <= authorTime[0..7] && authorTime[0..7] <= context.timePeriodEnd) {
 		return
 	}
-	if (signatureTime != null && context.timePeriodStart < signatureTime && signatureTime < context.timePeriodEnd) {
+	if (signatureTime != null && context.timePeriodStart <= signatureTime[0..7] && signatureTime[0..7] <= context.timePeriodEnd) {
 		return
 	}
 
@@ -792,7 +792,7 @@ def utils = new GroovyUtils(context)
 def dataFile = new File(utils.projectPath + "/data.xml")
 def source = new XmlDataReader(context, dataFile)
 
-source.load("CareUnitHsaId_Filter")</script></con:config></con:testStep><con:testStep type="request" name="Call GetMaternityMedicalHistory"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetMaternityMedicalHistoryResponderBinding</con:interface><con:operation>GetMaternityMedicalHistory</con:operation><con:request name="Call GetMaternityMedicalHistory"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+source.load("CareUnitHsaId Filter")</script></con:config></con:testStep><con:testStep type="request" name="Call GetMaternityMedicalHistory"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetMaternityMedicalHistoryResponderBinding</con:interface><con:operation>GetMaternityMedicalHistory</con:operation><con:request name="Call GetMaternityMedicalHistory"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
   &lt;con:entry key="x-mock-response" value="Response CareUnitHsaId"/>
   &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
 &lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:GetMaternityMedicalHistoryResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:actoutcome:2">
@@ -877,7 +877,7 @@ def utils = new GroovyUtils(context)
 def dataFile = new File(utils.projectPath + "/data.xml")
 def source = new XmlDataReader(context, dataFile)
 
-source.load("Only_PatientId")</script></con:config></con:testStep><con:testStep type="request" name="Call GetMaternityMedicalHistory"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetMaternityMedicalHistoryResponderBinding</con:interface><con:operation>GetMaternityMedicalHistory</con:operation><con:request name="Call GetMaternityMedicalHistory"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+source.load("Only PatientId")</script></con:config></con:testStep><con:testStep type="request" name="Call GetMaternityMedicalHistory"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetMaternityMedicalHistoryResponderBinding</con:interface><con:operation>GetMaternityMedicalHistory</con:operation><con:request name="Call GetMaternityMedicalHistory"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
   &lt;con:entry key="x-mock-response" value="Only PatientId"/>
   &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
 &lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:GetMaternityMedicalHistoryResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:actoutcome:2">
@@ -967,7 +967,7 @@ def utils = new GroovyUtils(context)
 def dataFile = new File(utils.projectPath + "/data.xml")
 def source = new XmlDataReader(context, dataFile)
 
-source.load("Non_Existing_PatientId")</script></con:config></con:testStep><con:testStep type="request" name="Call GetMaternityMedicalHistory"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetMaternityMedicalHistoryResponderBinding</con:interface><con:operation>GetMaternityMedicalHistory</con:operation><con:request name="Call GetMaternityMedicalHistory"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+source.load("NonExisting PatientId")</script></con:config></con:testStep><con:testStep type="request" name="Call GetMaternityMedicalHistory"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetMaternityMedicalHistoryResponderBinding</con:interface><con:operation>GetMaternityMedicalHistory</con:operation><con:request name="Call GetMaternityMedicalHistory"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
   &lt;con:entry key="x-mock-response" value="Empty Response"/>
   &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
 &lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:GetMaternityMedicalHistoryResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:actoutcome:2">
@@ -998,15 +998,15 @@ def records = holder.getDomNodes('/soapenv:Envelope/soapenv:Body/urn:GetMaternit
 
 if (records.length != 0) {
 	contextHelper.fail("Response should be empty for PatientId: ${context.patientId} PatientIdType: ${context.patientIdType}")
-}</scriptText></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Only CareContactId" searchProperties="true" id="ee463264-e309-47ea-9175-8a846c23fde3"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+}</scriptText></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="CareContactId Filter" searchProperties="true" id="ee463264-e309-47ea-9175-8a846c23fde3"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
 
 def utils = new GroovyUtils(context)
 def dataFile = new File(utils.projectPath + "/data.xml")
 def source = new XmlDataReader(context, dataFile)
 
-source.load("Only_CareContactId")</script></con:config></con:testStep><con:testStep type="request" name="Call GetMaternityMedicalHistory"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetMaternityMedicalHistoryResponderBinding</con:interface><con:operation>GetMaternityMedicalHistory</con:operation><con:request name="Call GetMaternityMedicalHistory"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
-  &lt;con:entry key="x-mock-response" value="Only CareContactId"/>
+source.load("CareContactId Filter")</script></con:config></con:testStep><con:testStep type="request" name="Call GetMaternityMedicalHistory"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetMaternityMedicalHistoryResponderBinding</con:interface><con:operation>GetMaternityMedicalHistory</con:operation><con:request name="Call GetMaternityMedicalHistory"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="x-mock-response" value="CareContactId Filter"/>
   &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
 &lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:GetMaternityMedicalHistoryResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:actoutcome:2">
    <soapenv:Header>
@@ -1097,7 +1097,7 @@ def utils = new GroovyUtils(context)
 def dataFile = new File(utils.projectPath + "/data.xml")
 def source = new XmlDataReader(context, dataFile)
 
-source.load("Non_Existing_CareContactId")</script></con:config></con:testStep><con:testStep type="request" name="Call GetMaternityMedicalHistory"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetMaternityMedicalHistoryResponderBinding</con:interface><con:operation>GetMaternityMedicalHistory</con:operation><con:request name="Call GetMaternityMedicalHistory"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+source.load("NonExisting CareContactId")</script></con:config></con:testStep><con:testStep type="request" name="Call GetMaternityMedicalHistory"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetMaternityMedicalHistoryResponderBinding</con:interface><con:operation>GetMaternityMedicalHistory</con:operation><con:request name="Call GetMaternityMedicalHistory"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
   &lt;con:entry key="x-mock-response" value="Empty Response"/>
   &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
 &lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:GetMaternityMedicalHistoryResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:actoutcome:2">
@@ -1238,7 +1238,7 @@ def utils = new GroovyUtils(context)
 def dataFile = new File(utils.projectPath + "/data.xml")
 def source = new XmlDataReader(context, dataFile)
 
-source.load("CareContactId_And_SourceSystemHsaId")</script></con:config></con:testStep><con:testStep type="request" name="Call GetVaccinationHistory"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetMaternityMedicalHistoryResponderBinding</con:interface><con:operation>GetMaternityMedicalHistory</con:operation><con:request name="Call GetVaccinationHistory"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+source.load("CareContactId and SourceSystemHsaId")</script></con:config></con:testStep><con:testStep type="request" name="Call GetVaccinationHistory"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetMaternityMedicalHistoryResponderBinding</con:interface><con:operation>GetMaternityMedicalHistory</con:operation><con:request name="Call GetVaccinationHistory"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
   &lt;con:entry key="x-mock-response" value="SoapFault"/>
   &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
 &lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:GetMaternityMedicalHistoryResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:actoutcome:2">
@@ -1262,7 +1262,7 @@ def utils = new GroovyUtils(context)
 def dataFile = new File(utils.projectPath + "/data.xml")
 def source = new XmlDataReader(context, dataFile)
 
-source.load("SourceSystemHsaId_And_LogicalAddress")</script></con:config></con:testStep><con:testStep type="request" name="Call GetVaccinationHistory"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetMaternityMedicalHistoryResponderBinding</con:interface><con:operation>GetMaternityMedicalHistory</con:operation><con:request name="Call GetVaccinationHistory"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+source.load("SourceSystemHsaId and LogicalAddress")</script></con:config></con:testStep><con:testStep type="request" name="Call GetVaccinationHistory"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetMaternityMedicalHistoryResponderBinding</con:interface><con:operation>GetMaternityMedicalHistory</con:operation><con:request name="Call GetVaccinationHistory"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
   &lt;con:entry key="x-mock-response" value="SoapFault"/>
   &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
 &lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:GetMaternityMedicalHistoryResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:actoutcome:2">
