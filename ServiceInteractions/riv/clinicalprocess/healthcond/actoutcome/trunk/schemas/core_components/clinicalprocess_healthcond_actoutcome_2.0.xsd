@@ -396,4 +396,42 @@
         	<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
+    
+    <xs:complexType name="LaboratoryOutcomeType">
+        <xs:sequence>
+            <xs:element name="LaboratoryOutcomeHeader" type="tns:PatientSummaryHeaderType"/>
+            <xs:element name="LaboratoryOutcomeBody" type="tns:LaboratoryOutcomeBodyType"/>		
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="LaboratoryOutcomeBodyType">
+        <xs:sequence>
+            <xs:element name="resultType" type="xs:string"/>
+            <xs:element name="registrationTime" type="tns:TimeStampType"/>
+            <xs:element name="discipline" type="xs:string"/>
+            <xs:element name="resultReport" type="xs:string" minOccurs="0"
+                maxOccurs="unbounded"/>
+            <xs:element name="resultComment" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="accountableHeathcareProfessional" type="tns:HealthcareProfessionalType"/>
+            <xs:element name="analysis" type="tns:AnalysisType"/>
+            <xs:element name="referral" type="tns:ReferralType"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="AnalysisType">
+        <xs:sequence>
+            <xs:element name="analysisId" type="xs:string"/>
+            <xs:element name="analysisTime" type="tns:TimeStampType"/>
+            <xs:element name="analysisCode" type="xs:string"/>
+            <xs:element name="analysisText" type="xs:string" minOccurs="0"
+                maxOccurs="unbounded"/>
+            <xs:element name="analysisStatus" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="analysisComment" type="xs:string"/>
+            <xs:element name="specimen" type="xs:string"/>
+            <xs:element name="method" type="xs:string"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
 </xs:schema>
