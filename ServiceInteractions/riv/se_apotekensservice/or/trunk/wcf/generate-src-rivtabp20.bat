@@ -2,6 +2,8 @@
 	@REM ---------------------------------------------------------------------------------
 	@REM Generates c# WCF service contracts (interface), client proxies and wcf config
 	@REM file for the WSDLs + XML Schemas of the service domain, using .Net WCF tool svcuti.exe
+	@REM !!!! The following interactins are not yet included in this script: AvregistreraEpsosSamtycke,
+	$REM !!!! HamtaEpsosSamtycke,HamtaOrdinationerPrivatperson,RegistreraEpsosSamtycke,SkrivUtMinaSparadeRecept
 	@REM ---------------------------------------------------------------------------------
 	@REM Licensed to the Apache Software Foundation (ASF) under one
 	@REM or more contributor license agreements. See the NOTICE file
