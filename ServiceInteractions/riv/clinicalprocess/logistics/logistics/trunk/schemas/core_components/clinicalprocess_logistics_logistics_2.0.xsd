@@ -56,15 +56,14 @@
         <xs:sequence>
             <xs:element name="careContactCode" type="codes:CareContactCodeEnum" minOccurs="0"/>
             <xs:element name="careContactReason" type="xs:string" minOccurs="0"/>
-            <xs:element name="careContactOrgUnit" type="tns:CareContactUnitType" />
-			<xs:element name="careContactTimePeriod" type="tns:TimePeriodType" />
-			<xs:element name="careContactStatus" type="codes:CareContactStatusEnum" minOccurs="0"
+            <xs:element name="careContactOrgUnit" type="tns:CareContactOrgUnitType"/>
+            <xs:element name="careContactTimePeriod" type="tns:TimePeriodType"/>
+            <xs:element name="careContactStatus" type="codes:CareContactStatusEnum" minOccurs="0"
                 maxOccurs="1"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="CareContactUnitType">
+    <xs:complexType name="CareContactOrgUnitType">
         <xs:annotation>
             <xs:documentation>
                 careContactOrgUnitId:
@@ -85,11 +84,10 @@
         <xs:sequence>
             <xs:element name="careContactOrgUnitId" type="tns:HSAIdType"/>
             <xs:element name="careContactOrgUnitName" type="xs:string"/>
-            <xs:element name="careContactOrgUnitTelecom" type="xs:string" minOccurs="0" />
-            <xs:element name="careContactOrgUnitEmail" type="xs:string"  minOccurs="0"/>
+            <xs:element name="careContactOrgUnitTelecom" type="xs:string" minOccurs="0"/>
+            <xs:element name="careContactOrgUnitEmail" type="xs:string" minOccurs="0"/>
             <xs:element name="careContactOrgUnitAddress" type="xs:string" minOccurs="0"/>
-            <xs:element name="careContactOrgUnitLocation" type="xs:string" minOccurs="0" />
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="careContactOrgUnitLocation" type="xs:string" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -123,10 +121,10 @@
             <xs:element name="sourceSystemHSAid" type="tns:HSAIdType"/>
             <xs:element name="documentTime" type="tns:TimeStampType"/>
             <xs:element name="patientId" type="tns:PatientIdType"/>
-            <xs:element name="accountableHealthcareProfessional" type="tns:HealthcareProfessionalType"/>
+            <xs:element name="accountableHealthcareProfessional"
+                type="tns:HealthcareProfessionalType"/>
             <xs:element name="accountableHealthcareProfessionalOrgUnit" type="tns:OrgUnitType"/>
             <xs:element name="approvedForPatient" type="xs:boolean"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -155,16 +153,16 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="healthcareProfessionalHsaId" type="tns:HSAIdType"/>
-            <xs:element name="healthcareProfessionalName" type="xs:string" />
+            <xs:element name="healthcareProfessionalName" type="xs:string"/>
             <xs:element name="healthcareProfessionalRoleCode" type="xs:string" minOccurs="0"/>
-            <xs:element name="healthcareProfessionalOtherRoleCode" type="tns:HealthcareProfessionalOtherRoleType" minOccurs="0"/>
+            <xs:element name="healthcareProfessionalOtherRoleCode"
+                type="tns:HealthcareProfessionalOtherRoleType" minOccurs="0"/>
             <xs:element name="healthcareProfessionalCareUnitHSAid" type="tns:HSAIdType"/>
             <xs:element name="healthcareProfessionalCareGiverHSAid" type="tns:HSAIdType"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
- <xs:complexType name="OrgUnitType">
+    <xs:complexType name="OrgUnitType">
         <xs:annotation>
             <xs:documentation>
 				Information om en organisationsenhet
@@ -185,12 +183,11 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="careContactOrgUnitHsaId" type="tns:HSAIdType"/>
-            <xs:element name="careContactOrgUnitName" type="xs:string" />
+            <xs:element name="careContactOrgUnitName" type="xs:string"/>
             <xs:element name="careContactOrgUnitTelecom" type="xs:string" minOccurs="0"/>
             <xs:element name="careContactOrgUnitEmail" type="xs:string" minOccurs="0"/>
             <xs:element name="careContactOrgUnitAddress" type="xs:string" minOccurs="0"/>
             <xs:element name="careContactOrgUnitLocation" type="xs:string" minOccurs="0"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
