@@ -17,6 +17,9 @@
  * @author Peter Hernfalk
  */
 
+
+import groovy.util.slurpersupport.GPathResult
+
 import static groovy.io.FileType.FILES
 
 //-----Definitions
@@ -146,6 +149,156 @@ wikiTableFileRIVTA = "/_WikiTableRIVTA.txt"
 wsdlList = []
 
 
+/**
+ //////////////////////////////////////////////////////////
+ //////////////////////////////////////////////////////////
+ //////////////////// Methods /////////////////////////////
+ //////////////////////////////////////////////////////////
+ //////////////////////////////////////////////////////////
+ */
+
+def tdStringVifo (String stringContent) {
+    "<td><p>" + stringContent + "</p></td>"
+}
+
+def tdStringRIVTA (String stringContent) {
+    "<td style=\"border: 1px solid #ccc; padding: 5px;\">" + stringContent + "</td>"
+}
+
+def wikiTableStringRIVTA (String stringContent) {
+    "|| " + stringContent + " "
+}
+
+/** Adds "mailto:" to a valid e-mail address */
+def addMailto(lastServiceDomainContact) {
+    if (lastServiceDomainContact != null && lastServiceDomainContact.indexOf('@') >= 0) {
+        lastServiceDomainContact = "mailto:" + lastServiceDomainContact
+    } else {
+        lastServiceDomainContact = " "
+    }
+}
+
+/** Logs text */
+def log(level, text) {
+    //-----2do: add logic that directs the output to configured target
+    println text
+}
+
+/** Verifies if the URL is working or not */
+//-----This method should be rewritten so it becomes a Groovy method instead of a Java method
+public static int getResponseCode(String urlString) throws MalformedURLException, IOException {
+    URL u = new URL(urlString);
+    HttpURLConnection huc =  (HttpURLConnection) u.openConnection();
+    huc.setRequestMethod("GET");
+    huc.connect();
+    if (huc.getResponseCode() != 200) {
+        log("INFO", "Broken link: " + urlString)
+    }
+
+    return huc.getResponseCode();
+}
+
+
+/** Displays execution statistics */
+def ShowExecutionStatistics() {
+    log("INFO", "")
+    log("INFO", "----- Execution statistics -----")
+    log("INFO", wsdlList.size + " WSDL files, excisting in trunk directories, were listed")
+}
+
+
+/** Decides wether a service contract is approved to be published or not */
+//-----This method should be rewritten so it becomes a Groovy method instead of a Java method
+private boolean IsContractPublished(String level1, level2, level3, level4, level5) {
+    isPublished = false
+
+    if (useStatusFilter == true) {
+        //-----Look up status for the wsdl file
+        isPublished = publishStatus4Wsdl.get(level5)
+    } else {
+        isPublished = true
+    }
+
+    return isPublished
+}
+
+
+def getDownloadLinkFromRIVTA(String filterValue) {
+    urlToRIVTADownloadBegin = "http://code.google.com/p/rivta/downloads/list?can=2"
+    urlToRIVTADownloadFilter = "&q=TD%3D"
+    urlToRIVTADownloadEnd = "&colspec=Filename+TD+Summary+Uploaded+ReleaseDate+Size+DownloadCount"
+
+    urlToZipFiles = urlToRIVTADownloadBegin
+    if (filterValue.isEmpty() == false) {
+        adjustedFilterValue = filterValue.replaceAll(":", ".")
+        adjustedFilterValue = adjustedFilterValue.replaceAll(" ", "")
+        urlToZipFiles += urlToRIVTADownloadFilter + adjustedFilterValue
+        if (adjustedFilterValue.indexOf(" ") > 0) {
+            println "   Filtervalue: before, after: " + filterValue + " " + adjustedFilterValue
+        }
+    }
+    urlToZipFiles += urlToRIVTADownloadEnd
+
+    @Grab(group='org.ccil.cowan.tagsoup', module='tagsoup', version='1.2' )
+    XmlSlurper slurper = new XmlSlurper(new org.ccil.cowan.tagsoup.Parser());
+    GPathResult nodes = slurper.parse(urlToZipFiles)
+
+    //println "************** Download link(s) ***************"
+    println "   Download URL: " + urlToZipFiles
+
+    numberOfZipFiles = 0
+    //-----Extracts proper URL:s from the table at the RIVTA download page
+    new URL(urlToZipFiles).eachLine{
+        (it =~ /.*<a href="(.*?)">/).each{
+            //parsedURL = parseFilteredURLFromHref(it.toString(), "")
+            parsedURL = parseFilteredURLFromHref(it.toString(), ".zip")
+            if (parsedURL != null) {
+                println "parsedURL: " + parsedURL
+                numberOfZipFiles ++
+            }
+        }
+    }
+    //println "***********************************************"
+    if (numberOfZipFiles > 1) {
+        returnURL = urlToZipFiles
+    } else {
+        returnURL = parsedURL
+    }
+    returnURL
+}
+
+
+def parseFilteredURLFromHref(String hrefString, String filterValue) {
+    if (hrefString.trim().length() > 0) {
+        if ((filterValue.trim().length() > 0) && (hrefString.indexOf(filterValue) >= 0)) {
+            extractURLFromString(hrefString)
+        } else if (filterValue.trim().length() == 0) {
+            extractURLFromString(hrefString)
+        }
+    }
+}
+
+
+def extractURLFromString(String urlString) {
+    urlStartString = "<a"
+    urlEndString = ".zip"
+    urlStartOffset = urlString.indexOf(urlStartString) + urlStartString.length()
+    urlEndOffset = urlString.indexOf(urlEndString) + urlEndString.length()
+    newString = "https://code.google.com/p/rivta/downloads/" + urlString.substring(urlStartOffset,urlEndOffset)
+}
+
+//---------------------------------------- End of method section ----------------------------------------//
+
+
+
+/**
+ /////////////////////////////////////////////////////////////////////
+ /////////////////////////////////////////////////////////////////////
+ //////////////////// Executing sections /////////////////////////////
+ /////////////////////////////////////////////////////////////////////
+ /////////////////////////////////////////////////////////////////////
+ */
+
 //---------------------------------------- Usage settings ----------------------------------------//
 charset = "ISO-8859-1"                        //--- ("ISO-8859-1", "UTF-8")
 delimiterToken = '/'                         //--- (mac = '/', windows = '.')
@@ -159,7 +312,6 @@ useAndVerifyDocumentationURL = false           //--- (true, false)
 useStatusFilter = false                      //--- (true, false)
 useVIFOLevel1ForCodeStructure = false         //--- (true, false)
 //-----------------------------------------------------------------------------------------------//
-
 
 //-----Downloads all TK files from the RIV-TA site
 RIVTACheckoutCommandToFolder = RIVTACheckoutCommand + localRIVTATargetFolder
@@ -496,6 +648,10 @@ if ((outputType == output2HtmlTableVifo) || (outputType == output2All)) {
 
 }
 
+
+
+
+
 if ((outputType == output2HtmlTableRIVTA) || (outputType == output2All)) {
 
     /**
@@ -523,7 +679,13 @@ if ((outputType == output2HtmlTableRIVTA) || (outputType == output2All)) {
         rivtaBP20 = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.rivtabp20" }
         rivtaBP21 = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.rivtabp21" }
         serviceContractCategory = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.contractcategory" }
-        downloadLink = "Saknas i Excel"
+
+        downloadURL = getDownloadLinkFromRIVTA(serviceDomainName)
+        if (downloadURL != null) {
+            downloadLink = '<a href="' + getDownloadLinkFromRIVTA(serviceDomainName) + '">Ladda ner</a>'
+        } else {
+            downloadLink = ""
+        }
 
         //-----Write HTML table, using available data
         if ((newLevel2 != lastLevel2) || (newLevel3 != lastLevel3)) {
@@ -601,8 +763,12 @@ if ((outputType == output2WikiTableRIVTA) || (outputType == output2All)) {
         rivtaBP21 = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.rivtabp21" }
         serviceContractCategory = excelMasterFile.find { it.contract.toLowerCase() == newLevel6.toLowerCase() }?.with { map -> "$map.contractcategory" }
 
-        //-----2do: fetch link from the download page at the RIVTA site
-        downloadLink = "[cehis.se Saknas i Excel]"
+        downloadURL = getDownloadLinkFromRIVTA(serviceDomainName)
+        if (downloadURL != null) {
+            downloadLink = "[" + getDownloadLinkFromRIVTA(serviceDomainName) + " Ladda ner]"
+        } else {
+            downloadLink = ""
+        }
 
         //-----Write Wiki table, using available data
         if ((newLevel2 != lastLevel2) || (newLevel3 != lastLevel3)) {
@@ -663,71 +829,3 @@ lstFile.withWriter{
 
 //-----Show execution statistics
 ShowExecutionStatistics()
-
-
-//-------------------- Methods --------------------//
-
-def tdStringVifo (String stringContent) {
-    "<td><p>" + stringContent + "</p></td>"
-}
-
-def tdStringRIVTA (String stringContent) {
-    "<td style=\"border: 1px solid #ccc; padding: 5px;\">" + stringContent + "</td>"
-}
-
-def wikiTableStringRIVTA (String stringContent) {
-    "|| " + stringContent + " "
-}
-
-/** Adds "mailto:" to a valid e-mail address */
-def addMailto(lastServiceDomainContact) {
-    if (lastServiceDomainContact != null && lastServiceDomainContact.indexOf('@') >= 0) {
-        lastServiceDomainContact = "mailto:" + lastServiceDomainContact
-    } else {
-        lastServiceDomainContact = " "
-    }
-}
-
-/** Logs text */
-def log(level, text) {
-    //-----2do: add logic that directs the output to configured target
-    println text
-}
-
-/** Verifies if the URL is working or not */
-//-----This method should be rewritten so it becomes a Groovy method instead of a Java method
-public static int getResponseCode(String urlString) throws MalformedURLException, IOException {
-    URL u = new URL(urlString); 
-    HttpURLConnection huc =  (HttpURLConnection) u.openConnection(); 
-    huc.setRequestMethod("GET"); 
-    huc.connect(); 
-    if (huc.getResponseCode() != 200) {
-        log("INFO", "Broken link: " + urlString)
-    }
-    
-    return huc.getResponseCode();
-}
-
-
-/** Displays execution statistics */
-def ShowExecutionStatistics() {
-    log("INFO", "")
-    log("INFO", "----- Execution statistics -----")
-    log("INFO", wsdlList.size + " WSDL files, excisting in trunk directories, were listed")
-}
-
-
-/** Decides wether a service contract is approved to be published or not */
-//-----This method should be rewritten so it becomes a Groovy method instead of a Java method
-private boolean IsContractPublished(String level1, level2, level3, level4, level5) {
-  isPublished = false
-
-  if (useStatusFilter == true) {
-      //-----Look up status for the wsdl file
-      isPublished = publishStatus4Wsdl.get(level5)
-  } else { 
-      isPublished = true
-  }
-  
-  return isPublished
-}
