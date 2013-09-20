@@ -6,11 +6,12 @@
  * ///////////////////////////////////////////////////////////////////////////////////////////
  *
  * Information sources used by this script:
- * - RIV TA (http://code.google.com/p/rivta/)
- * - An Excel document (Master.xls)
+ * - Main source: the Excel document describing service domains (Master.xls)
+ * - Download links from RIV TA (http://code.google.com/p/rivta/)
  *
  *
  * @author Peter Hernfalk
+ * Last update: 2013-09-20
  */
 
 
@@ -173,6 +174,12 @@ def mapIndex = 0
 def excel = new ExcelReader(excelFile)
 
 excel.eachLine {
+
+    log(loglevelDebug, "Excel: " + "${cell(0)}".trim() + "\t" + "${cell(1)}".trim() + "\t" + "${cell(2)}".trim() + "\t" + "${cell(3)}".trim()
+     + "\t" + "${cell(4)}".trim() + "\t" + "${cell(5)}".trim() + "\t" + "${cell(6)}".trim() + "\t" + "${cell(7)}".trim()
+     + "\t" + "${cell(8)}".trim() + "\t" + "${cell(9)}".trim() + "\t" + "${cell(10)}".trim() + "\t" + "${cell(11)}".trim()
+     + "\t" + "${cell(12)}".trim() + "\t" + "${cell(13)}".trim())
+
     //-----Empty Excel rows are not used
     if (("${index}" > 0) && ("${cell(2)}".length() > 0)  && ("${cell(2)}" != "null")) {
 
@@ -191,12 +198,13 @@ excel.eachLine {
                         vifodomainswedish:"${cell(4)}".trim(),
                         vifodomainenglish:"${cell(5)}".trim(),
                         rivtaname:"${cell(6)}".trim(),
-                        rivtaservicedomain:"${cell(7)}".trim(),
-                        version:"${cell(8)}".trim(),
-                        rivtabp20:"${cell(9)}".trim(),
-                        rivtabp21:"${cell(10)}".trim(),
-                        domaincategory:"${cell(11)}".trim(),
-                        domaincontact:"${cell(12)}".trim()
+                        rivtacommonname:"${cell(7)}".trim(),
+                        rivtaservicedomain:"${cell(8)}".trim(),
+                        version:"${cell(9)}".trim(),
+                        rivtabp20:"${cell(10)}".trim(),
+                        rivtabp21:"${cell(11)}".trim(),
+                        domaincategory:"${cell(12)}".trim(),
+                        domaincontact:"${cell(13)}".trim()
                 ]
                 mapIndex += 1
             }
@@ -224,7 +232,7 @@ if ((outputType == output2WikiTableRIVTA) || (outputType == output2All)) {
     excelMasterFileSize.times {
 
         def thisIndex = it+1
-        userfriendlyServiceDomainName = replaceNullWithSpace(excelMasterFile[thisIndex].swedishsubdomain)
+        userfriendlyServiceDomainName = replaceNullWithSpace(excelMasterFile[thisIndex].rivtacommonname)
         serviceDomainName             = replaceNullWithSpace(excelMasterFile[thisIndex].rivtaservicedomain)
         version                       = replaceNullWithSpace(excelMasterFile[thisIndex].version)
         rivtaBP20                     = replaceNullWithSpace(excelMasterFile[thisIndex].rivtabp20)
