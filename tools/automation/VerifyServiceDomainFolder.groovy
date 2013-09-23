@@ -11,13 +11,17 @@
  * Om det finns fel skall detta skrivas ut till stderror samt scriptet avslutas med rc=1. Om allt ok avslutas med rc=0
  */
 
-import groovy.lang.Binding;
+import groovy.lang.Binding
+import groovy.io.FileType
 
+domainFolderStructure = []
+//domainSubfolder = []
 localRIVTATargetFolder = "/Users/peterhernfalk/Desktop/_Peter_Files/rivtadomain/"
 loglevelDebug = "DEBUG"
 loglevelError = "ERROR"
 loglevelInfo = "INFO"
 loglevelWarning = "WARNING"
+returnCode = 0
 RIVTADomainFolder = "http://rivta.googlecode.com/svn/ServiceInteractions/riv/"
 RIVTACheckoutCommand = "svn checkout "
 usedDomain = ""
@@ -74,11 +78,41 @@ def downloadFileStructureFromRivtaSite(String domainNameRivta) {
 
 
 /* Verifies that that the service domains structure and contents are correct on the rivta site */
-def verifyServiceDomainStructure() {
+def verifyServiceDomainStructure(String domainStructure) {
     //-----2do: add logic that verifies the downloaded domain file structure
+    log(loglevelDebug, "Domain structure, root: " + domainStructure)
 
-    //-----2do: remove this hard setting of returnCode. It should be
-    returnCode = 0
+    //-----Extract subdirectories and make a call to the verification method for each subdirectory
+    def dir = new File(domainStructure)
+    dir.eachDir { subDir ->
+        if ((subDir.name.contains('.svn')) == false) {
+            //domainSubfolder << subDir
+            log(loglevelDebug,  "Subdir: " + subDir.name )
+            if (verifySubDomainStructure(domainStructure, subDir.name) == false) {
+               return
+            }
+        }
+    }
+
+    //-----Failed verification sets the return code to: 1
+    //returnCode = 1
+}
+
+
+/* Verifies that that the service domains structure and contents are correct on the rivta site */
+def verifySubDomainStructure(String domainStructure, String subDomain) {
+
+    def dir = new File(domainStructure+subDomain)
+    dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
+        //-----Filter out all directories except the '.svn' directories
+        if ((file.toString().contains('.svn')) == false) {
+            log(loglevelDebug,  "\tFile: " + file )
+
+            //-----The found file should be verified against the directory template
+        }
+    }
+
+    return true
 }
 
 
@@ -99,7 +133,7 @@ log(loglevelDebug, "Domain name = " + usedDomain)
 downloadFileStructureFromRivtaSite(usedDomain)
 
 //-----Iterate through the downloaded structure and verify that it's correct
-verifyServiceDomainStructure()
+verifyServiceDomainStructure(localRIVTATargetFolder)
 
 //-----Exit the script execution and return the return code to the caller
 return returnCode
