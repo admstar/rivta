@@ -17,46 +17,48 @@
  specific language governing permissions and limitations
  under the License.
  -->
-<xs:schema 
-	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-	xmlns:tns="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2" 
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2"
 	xmlns:core="urn:riv:clinicalprocess:healthcond:description:2"
-	xmlns:codes="urn:riv:clinicalprocess:healthcond:description:enums:2" 
-	targetNamespace="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2" 
-	elementFormDefault="qualified" 
-	attributeFormDefault="unqualified" 
-	version="2.0">
+	xmlns:codes="urn:riv:clinicalprocess:healthcond:description:enums:2"
+	targetNamespace="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2"
+	elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
 
-    <xs:import schemaLocation="../../core_components/clinicalprocess_healthcond_description_2.0.xsd" namespace="urn:riv:clinicalprocess:healthcond:description:2"/>
-    <xs:import schemaLocation="../../core_components/clinicalprocess_healthcond_description_enum_2.0.xsd" namespace="urn:riv:clinicalprocess:healthcond:description:enums:2"/>
+	<xs:import schemaLocation="../../core_components/clinicalprocess_healthcond_description_2.0.xsd"
+		namespace="urn:riv:clinicalprocess:healthcond:description:2"/>
+	<xs:import
+		schemaLocation="../../core_components/clinicalprocess_healthcond_description_enum_2.0.xsd"
+		namespace="urn:riv:clinicalprocess:healthcond:description:enums:2"/>
 
 	<xs:element name="GetCareDocumentation" type="tns:GetCareDocumentationType"/>
 	<xs:element name="GetCareDocumentationResponse" type="tns:GetCareDocumentationResponseType"/>
 
 	<xs:complexType name="GetCareDocumentationType">
-	    <xs:sequence>
-	        <xs:element name="careUnitHSAid" type="core:HSAIdType" minOccurs="0" maxOccurs="unbounded"/>
-	        <xs:element name="patientId" type="core:PatientIdType"/>
-	        <xs:element name="timePeriod" type="core:DatePeriodType" minOccurs="0"/>
-	        <xs:element name="sourceSystemHSAid" type="core:HSAIdType" minOccurs="0"/>
-		    <xs:element name="careContactId" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-	        <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
-	    </xs:sequence>
+		<xs:sequence>
+			<xs:element name="careUnitHSAid" type="core:HSAIdType" minOccurs="0"
+				maxOccurs="unbounded"/>
+			<xs:element name="patientId" type="core:PersonIdType"/>
+			<xs:element name="timePeriod" type="core:DatePeriodType" minOccurs="0"/>
+			<xs:element name="sourceSystemHSAid" type="core:HSAIdType" minOccurs="0"/>
+			<xs:element name="careContactId" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
 	</xs:complexType>
-	
+
 	<xs:complexType name="GetCareDocumentationResponseType">
 		<xs:annotation>
 			<xs:documentation>
 				careDocumentation: 
 					De vårddokument som matchar begäran.
 			</xs:documentation>
-		</xs:annotation>	
+		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="careDocumentation" type="core:CareDocumentationType" minOccurs="0" maxOccurs="unbounded"/>
-		    <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="careDocumentation" type="core:CareDocumentationType" minOccurs="0"
+				maxOccurs="unbounded"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-    
-  
-    
+
+
+
 </xs:schema>
