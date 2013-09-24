@@ -257,7 +257,8 @@
     <xs:complexType name="MaternityMedicalRecordType">
         <xs:sequence>
             <xs:element name="maternityMedicalRecordHeader" type="tns:PatientSummaryHeaderType"/>
-            <xs:element name="maternityMedicalRecordBody" type="tns:MaternityMedicalRecordBodyType"/>
+            <xs:element name="maternityMedicalRecordBody" type="tns:MaternityMedicalRecordBodyType"
+            />
         </xs:sequence>
     </xs:complexType>
 
@@ -292,7 +293,8 @@
             <xs:element name="diseasesDiabetesMellitus" type="xs:boolean" minOccurs="0"/>
             <xs:element name="medicationDuringPregnacy" type="tns:MedicationType" minOccurs="0"
                 maxOccurs="unbounded"/>
-            <xs:element name="assessmentAtFirstContactStandardCare" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="assessmentAtFirstContactStandardCare" type="xs:boolean" minOccurs="0"
+            />
         </xs:sequence>
     </xs:complexType>
 
@@ -361,10 +363,22 @@
         <xs:sequence>
             <xs:element name="ordinalNumber" type="xs:int"/>
             <xs:element name="weight" type="tns:PQType" minOccurs="0"/>
-            <xs:element name="apgarScore1" type="xs:int" minOccurs="0"><xs:annotation><xs:documentation>Apgar (0..10) efter 1 minut</xs:documentation></xs:annotation></xs:element>
-            
-            <xs:element name="apgarScore5" type="xs:int" minOccurs="0"><xs:annotation><xs:documentation>Apgar (0..10) efter 5 minut</xs:documentation></xs:annotation></xs:element>
-            <xs:element name="apgarScore10" type="xs:int" minOccurs="0"><xs:annotation><xs:documentation>Apgar (0..10) efter 10 minut</xs:documentation></xs:annotation></xs:element>
+            <xs:element name="apgarScore1" type="xs:int" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Apgar (0..10) efter 1 minut</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="apgarScore5" type="xs:int" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Apgar (0..10) efter 5 minut</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="apgarScore10" type="xs:int" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Apgar (0..10) efter 10 minut</xs:documentation>
+                </xs:annotation>
+            </xs:element>
             <xs:element name="breastfeeding" type="xs:boolean" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
@@ -385,7 +399,7 @@
             <xs:element name="resultComment" type="xs:string" minOccurs="0" maxOccurs="1"/>
             <xs:element name="accountableHeathcareProfessional"
                 type="tns:HealthcareProfessionalType"/>
-            <xs:element name="analysis" type="tns:AnalysisType"/>
+            <xs:element name="analysis" type="tns:AnalysisType" maxOccurs="unbounded" minOccurs="0"/>
             <xs:element name="referral" type="tns:ReferralType"/>
         </xs:sequence>
     </xs:complexType>
