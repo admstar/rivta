@@ -11,7 +11,7 @@
  *
  *
  * @author Peter Hernfalk
- * Last update: 2013-09-20
+ * Last update: 2013-09-24
  */
 
 
@@ -164,7 +164,7 @@ delimiterToken = '/'                     //--- (mac = '/', windows = '.')
 excelFile = "/Users/peterhernfalk/Desktop/_Peter_Files/HOS-projekt/AL/Aktiviteter/Landskap med TP och TK/Groovyscript/Underlag/MasterTest.xls"
 outputType = output2All                  //--- (output2All, output2WikiTableRIVTA)
 localRIVTATargetFolder = "/Users/peterhernfalk/Desktop/_Peter_Files/rivta/"
-useLogging = false                        //--- (true, false)
+useLogging = true                        //--- (true, false)
 //-----------------------------------------------------------------------------------------------//
 
 
@@ -176,35 +176,28 @@ def excel = new ExcelReader(excelFile)
 excel.eachLine {
 
     log(loglevelDebug, "Excel: " + "${cell(0)}".trim() + "\t" + "${cell(1)}".trim() + "\t" + "${cell(2)}".trim() + "\t" + "${cell(3)}".trim()
-     + "\t" + "${cell(4)}".trim() + "\t" + "${cell(5)}".trim() + "\t" + "${cell(6)}".trim() + "\t" + "${cell(7)}".trim()
-     + "\t" + "${cell(8)}".trim() + "\t" + "${cell(9)}".trim() + "\t" + "${cell(10)}".trim() + "\t" + "${cell(11)}".trim()
-     + "\t" + "${cell(12)}".trim() + "\t" + "${cell(13)}".trim())
+            + "\t" + "${cell(4)}".trim() + "\t" + "${cell(5)}".trim() + "\t" + "${cell(6)}".trim())
+
 
     //-----Empty Excel rows are not used
-    if (("${index}" > 0) && ("${cell(2)}".length() > 0)  && ("${cell(2)}" != "null")) {
+    if (("${index}" > 0) && ("${cell(0)}".length() > 0)  && ("${cell(0)}" != "null")) {
+
 
         //-----The name variable is used when deciding if the current domain is already stored in the target map or not
-        def name = "${cell(2)}".trim()
-        def domainExistenceInTargetMap = excelMasterFile.find {it.swedishsubdomain == name}
+        def name = "${cell(0)}".trim()
+        def domainExistenceInTargetMap = excelMasterFile.find {it.rivtacommonname == name}
 
-        if (("${cell(2)}".trim().isEmpty() == false) || (mapIndex == 0)) {
+        if (("${cell(0)}".trim().isEmpty() == false) || (mapIndex == 0)) {
             //-----Add domain to the target map
             if (domainExistenceInTargetMap == null) {
                 excelMasterFile[mapIndex] = [
-                        contract:"${cell(0)}".trim(),
-                        contractcategory:"${cell(1)}".trim(),
-                        swedishsubdomain:"${cell(2)}".trim(),
-                        englishsubdomain:"${cell(3)}".trim(),
-                        vifodomainswedish:"${cell(4)}".trim(),
-                        vifodomainenglish:"${cell(5)}".trim(),
-                        rivtaname:"${cell(6)}".trim(),
-                        rivtacommonname:"${cell(7)}".trim(),
-                        rivtaservicedomain:"${cell(8)}".trim(),
-                        version:"${cell(9)}".trim(),
-                        rivtabp20:"${cell(10)}".trim(),
-                        rivtabp21:"${cell(11)}".trim(),
-                        domaincategory:"${cell(12)}".trim(),
-                        domaincontact:"${cell(13)}".trim()
+                        rivtacommonname:"${cell(0)}".trim(),
+                        rivtaservicedomain:"${cell(1)}".trim(),
+                        version:"${cell(2)}".trim(),
+                        rivtabp20:"${cell(3)}".trim(),
+                        rivtabp21:"${cell(4)}".trim(),
+                        domaincategory:"${cell(5)}".trim(),
+                        domaincontact:"${cell(6)}".trim()
                 ]
                 mapIndex += 1
             }
@@ -237,7 +230,7 @@ if ((outputType == output2WikiTableRIVTA) || (outputType == output2All)) {
         version                       = replaceNullWithSpace(excelMasterFile[thisIndex].version)
         rivtaBP20                     = replaceNullWithSpace(excelMasterFile[thisIndex].rivtabp20)
         rivtaBP21                     = replaceNullWithSpace(excelMasterFile[thisIndex].rivtabp21)
-        serviceContractCategory       = replaceNullWithSpace(excelMasterFile[it+1].contractcategory)
+        serviceContractCategory       = replaceNullWithSpace(excelMasterFile[it+1].domaincategory)
 
         log(loglevelDebug, "userfriendlyServiceDomainName: " + userfriendlyServiceDomainName)
         log(loglevelDebug, "serviceDomainName: " + serviceDomainName)
