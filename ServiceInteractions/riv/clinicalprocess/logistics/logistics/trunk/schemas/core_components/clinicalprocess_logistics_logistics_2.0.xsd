@@ -118,15 +118,11 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="documentId" type="xs:string"/>
-            <xs:element name="sourceSystemHSAid" type="tns:HSAIdType"/>
-            <xs:element minOccurs="0" name="documentTitle" type="xs:string"/>
-            <xs:element name="documentTime" type="tns:TimeStampType" minOccurs="0"/>
-            <xs:element name="patientId" type="tns:PatientIdType"/>
+            <xs:element name="sourceSystemHSAId" type="tns:HSAIdType"/>
+            <xs:element name="patientId" type="tns:PersonIdType"/>
             <xs:element name="accountableHealthcareProfessional"
-                type="tns:HealthcareProfessionalType"/>
-            <xs:element name="legalAuthenticator" type="tns:LegalAuthenticatorType" minOccurs="0"/>
+                type="tns:HealthcareProfessionalType" minOccurs="0"/>
             <xs:element name="approvedForPatient" type="xs:boolean"/>
-            <xs:element minOccurs="0" name="careContactId" type="xs:string"/>
             <xs:element minOccurs="0" name="nullified" type="xs:boolean"/>
             <xs:element minOccurs="0" name="nullifiedReason" type="xs:string"/>
         </xs:sequence>
@@ -157,13 +153,13 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="authorTime" type="tns:TimeStampType"/>
-            <xs:element name="healthcareProfessionalHsaId" type="tns:HSAIdType" minOccurs="0"/>
-            <xs:element name="healthcareProfessionalName" type="xs:string" minOccurs="0"/>
+            <xs:element name="healthcareProfessionalHSAId" type="tns:HSAIdType" minOccurs="1"/>
+            <xs:element name="healthcareProfessionalName" type="xs:string" minOccurs="1"/>
             <xs:element name="healthcareProfessionalRoleCode" type="tns:CVType" minOccurs="0"/>
-            <xs:element name="healthCareProfessionalOrgUnit" type="tns:OrgUnitType" minOccurs="0"/>
+            <xs:element name="healthCareProfessionalOrgUnit" type="tns:OrgUnitType" minOccurs="1"/>
             <xs:element name="healthcareProfessionalCareUnitHSAId" type="tns:HSAIdType"
-                minOccurs="0"/>
-            <xs:element minOccurs="0" name="healthcareProfessionalCareGiverHSAId"
+                minOccurs="1"/>
+            <xs:element minOccurs="1" name="healthcareProfessionalCareGiverHSAId"
                 type="tns:HSAIdType"/>
         </xs:sequence>
     </xs:complexType>
@@ -188,8 +184,8 @@
 			</xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="orgUnitHSAId" type="tns:HSAIdType" minOccurs="0"/>
-            <xs:element name="orgUnitName" type="xs:string" minOccurs="0"/>
+            <xs:element name="orgUnitHSAId" type="tns:HSAIdType" minOccurs="1"/>
+            <xs:element name="orgUnitName" type="xs:string" minOccurs="1"/>
             <xs:element name="orgUnitTelecom" type="xs:string" minOccurs="0"/>
             <xs:element name="orgUnitEmail" type="xs:string" minOccurs="0"/>
             <xs:element name="orgUnitAddress" type="xs:string" minOccurs="0"/>
@@ -237,7 +233,7 @@
         <xs:restriction base="xs:string"/>
     </xs:simpleType>
 
-    <xs:complexType name="PatientIdType">
+    <xs:complexType name="PersonIdType">
         <xs:sequence>
             <xs:element name="id" type="xs:string"/>
             <xs:element name="type" type="xs:string"/>
@@ -279,16 +275,6 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:complexType name="HealthcareProfessionalOtherRoleType">
-        <xs:annotation>
-            <xs:documentation/>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="authorOtherRoleCode" type="xs:string"/>
-            <xs:element name="authorOtherRoleCodeOID" type="xs:string"/>
-        </xs:sequence>
-    </xs:complexType>
-
     <xs:complexType name="CVType">
         <xs:annotation>
             <xs:documentation/>
@@ -313,6 +299,5 @@
             <xs:element name="legalAuthenticatorName" type="xs:string" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
-
 
 </xs:schema>
