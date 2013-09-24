@@ -44,7 +44,6 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="clinicalDocumentNote" type="tns:ClinicalDocumentNoteType"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -73,8 +72,9 @@
                 minOccurs="0" maxOccurs="1"/>
             <xs:element name="clinicalDocumentNoteTitle" type="xs:string" minOccurs="0"/>
             <xs:element name="clinicalDocumentNoteText" type="xs:string" maxOccurs="1" minOccurs="0"/>
-            <xs:element name="multimediaEntry" type="tns:MultimediaType" minOccurs="0" maxOccurs="1"
-            />
+            <xs:element name="multimediaEntry" type="tns:MultimediaType" minOccurs="0" maxOccurs="1"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="dissentintOpinion"
+                type="tns:DissentingOpinionType"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -115,11 +115,80 @@
             <xs:element name="sourceSystemHSAid" type="tns:HSAIdType"/>
             <xs:element name="documentTitle" type="xs:string" minOccurs="0"/>
             <xs:element name="documentTime" type="tns:TimeStampType"/>
-            <xs:element name="patientId" type="tns:PatientIdType"/>
-            <xs:element name="author" type="tns:AuthorType"/>
+            <xs:element name="patientId" type="tns:PersonIdType"/>
+            <xs:element name="accountableHealthcareProfessional"
+                type="tns:HealthcareProfessionalType"/>
             <xs:element name="legalAuthenticator" type="tns:LegalAuthenticatorType" minOccurs="0"/>
             <xs:element name="approvedForPatient" type="xs:boolean"/>
             <xs:element name="careContactId" type="xs:string" minOccurs="0"/>
+            <xs:element minOccurs="0" name="nullified" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="nullifiedReason" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="HealthcareProfessionalType">
+        <xs:annotation>
+            <xs:documentation>
+                Information om hälso- och omsorgspesonal
+                
+                healthcareProfessionalHsaId: 
+                HSA-id för vård- och omsorgspersonal 
+                healthcareProfessionalName
+                Namn på vård- och omsorgspersonal
+                healthcareProfessionalRoleCode: 
+                Information om personens befattning om annat kodverk än KV Befattning används. 
+                Ska anges om healthcareProfessionalOtherRoleCode saknas. Kan inte anges 
+                samtidigt med healthcareProfessionalOtherRoleCode.
+                healthcareProfessionalOtherRoleCode: 
+                Information om författarens befattning om annat kodverk än KV Befattning 
+                används. Ska anges om healthcareProfessionalRoleCode saknas. Kan inte anges 
+                samtidigt med healthcareProfessionalRoleCode.
+                healthcareProfessionalCareUnitHSAid: 
+                HSA-id för PDL-enhet som vård- och omsorgspersonen är uppdragstagare för
+                healthcareProfessionalCareGiverHSAid: 
+                HSA-id för vårdgivaren, som är vårdgivare för den enhet som författaren är uppdragstagare för
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="authorTime" type="tns:TimeStampType"/>
+            <xs:element name="healthcareProfessionalHSAId" type="tns:HSAIdType" minOccurs="1"/>
+            <xs:element name="healthcareProfessionalName" type="xs:string" minOccurs="0"/>
+            <xs:element name="healthcareProfessionalRoleCode" type="tns:CVType" minOccurs="0"/>
+            <xs:element name="healthCareProfessionalOrgUnit" type="tns:OrgUnitType" minOccurs="1"/>
+            <xs:element name="healthcareProfessionalCareUnitHSAId" type="tns:HSAIdType"
+                minOccurs="0"/>
+            <xs:element minOccurs="0" name="healthcareProfessionalCareGiverHSAId"
+                type="tns:HSAIdType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="OrgUnitType">
+        <xs:annotation>
+            <xs:documentation>
+                Information om en organisationsenhet
+                
+                careContactOrgUnitHsaId: 
+                HSA-id för organisationsenhet
+                careContactOrgUnitName
+                Namn på organisationsenhet
+                careContactOrgUnitTelecom: 
+                Telefon till organisationsenhet
+                careContactOrgUnitEmail: 
+                Epost till enhet
+                careContactOrgUnitAddress: 
+                Postadress till enhet
+                careContactOrgUnitLocation: 
+                Text som anger namnet på plats eller ort för enhetens eller funktionens fysiska placering
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="orgUnitHSAId" type="tns:HSAIdType" minOccurs="1"/>
+            <xs:element name="orgUnitName" type="xs:string" minOccurs="1"/>
+            <xs:element name="orgUnitTelecom" type="xs:string" minOccurs="0"/>
+            <xs:element name="orgUnitEmail" type="xs:string" minOccurs="0"/>
+            <xs:element name="orgUnitAddress" type="xs:string" minOccurs="0"/>
+            <xs:element name="orgUnitLocation" type="xs:string" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -151,30 +220,12 @@
             <xs:element name="authorTime" type="tns:TimeStampType"/>
             <xs:element name="authorHSAid" type="tns:HSAIdType"/>
             <xs:element name="authorRoleCode" type="xs:string" minOccurs="0"/>
-            <xs:element minOccurs="0" name="authorOtherRole" type="tns:AuthorOtherRoleType"/>
             <xs:element name="authorName" type="xs:string" minOccurs="0"/>
             <xs:element name="authorOrgUnitHSAid" type="tns:HSAIdType"/>
             <xs:element name="authorOrgUnitName" type="xs:string"/>
             <xs:element name="authorOrgUnitAddress" type="xs:string" minOccurs="0"/>
             <xs:element name="careUnitHSAid" type="tns:HSAIdType"/>
             <xs:element name="careGiverHSAid" type="tns:HSAIdType"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="LegalAuthenticatorType">
-        <xs:annotation>
-            <xs:documentation>
-                Information om signering
-                
-                signatureTime: 
-                    Tidpunkt för signering, format ÅÅÅÅMMDDttmmss. 
-                assignedEntity: 
-                    Information om person som signerat dokumentet
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="signatureTime" type="tns:TimeStampType"/>
-            <xs:element name="legalAuthenticatorHSAid" type="tns:HSAIdType" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -220,19 +271,11 @@
 
     <xs:complexType name="MultimediaType">
         <xs:sequence>
-            <xs:element name="id" type="xs:string" minOccurs="1"/>
             <xs:element name="mediaType" type="codes:MediaTypeEnum"/>
             <xs:sequence>
                 <xs:element name="value" type="xs:base64Binary" minOccurs="0"/>
                 <xs:element name="reference" type="xs:anyURI" minOccurs="0"/>
             </xs:sequence>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="PatientIdType">
-        <xs:sequence>
-            <xs:element name="id" type="xs:string"/>
-            <xs:element name="type" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -271,13 +314,73 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:complexType name="AuthorOtherRoleType">
+    <xs:complexType name="CVType">
         <xs:annotation>
             <xs:documentation/>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="authorOtherRoleCode" type="xs:string"/>
-            <xs:element name="authorOtherRoleCodeOID" type="xs:string"/>
+            <xs:element name="code" type="xs:string" minOccurs="0"/>
+            <xs:element name="codeSystem" type="xs:string" minOccurs="0"/>
+            <xs:element name="codeSystemName" type="xs:string" minOccurs="0"/>
+            <xs:element name="codeSystemVersion" type="xs:string" minOccurs="0"/>
+            <xs:element name="displayName" type="xs:string" minOccurs="0"/>
+            <xs:element name="originalText" type="xs:string" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
+
+    <xs:complexType name="LegalAuthenticatorType">
+        <xs:annotation>
+            <xs:documentation>
+            Information om signering
+            
+            signatureTime: 
+            Tidpunkt för signering, format ÅÅÅÅMMDDttmmss. 
+            legalAuthenticatorHSAId: 
+            Information om person som signerat dokumentet
+            legalAuthenticatorName:
+            Information om person som signerat dokumentet
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="signatureTime" type="tns:TimeStampType"/>
+            <xs:element name="legalAuthenticatorHSAId" type="tns:HSAIdType" minOccurs="0"/>
+            <xs:element name="legalAuthenticatorName" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DissentingOpinionType">
+        <xs:annotation>
+            <xs:documentation>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="opinionId" type="tns:IIType" minOccurs="0"/>
+            <xs:element name="authorTime" type="tns:TimeStampType" minOccurs="1"/>
+            <xs:element name="opinion" type="xs:string"/>
+            <xs:element name="personId" type="tns:PersonIdType"/>
+            <xs:element name="personName" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="IIType">
+        <xs:annotation>
+            <xs:documentation/>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="root" type="xs:string"/>
+            <xs:element name="extension" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PersonIdType">
+        <xs:annotation>
+            <xs:documentation/>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="id" type="xs:string"/>
+            <xs:element name="type" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
 </xs:schema>
