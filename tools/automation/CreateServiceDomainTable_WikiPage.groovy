@@ -11,7 +11,7 @@
  *
  *
  * @author Peter Hernfalk
- * Last update: 2013-09-24
+ * Last update: 2013-09-26
  */
 
 
@@ -73,7 +73,7 @@ def ShowExecutionStatistics() {
 
 
 //-----2do: modify this method so that it uses the version when deciding if to return a link to the zip file or to the doomains download page
-def getDownloadLinkFromRIVTA(String filterValue) {
+def getDownloadLinkFromRIVTA(String filterValue, String version) {
     urlToRIVTADownloadBegin = "http://code.google.com/p/rivta/downloads/list?can=2"
     urlToRIVTADownloadFilter = "&q=TD%3D"
     urlToRIVTADownloadEnd = "&colspec=Filename+TD+Summary+Uploaded+ReleaseDate+Size+DownloadCount"
@@ -88,6 +88,8 @@ def getDownloadLinkFromRIVTA(String filterValue) {
         }
     }
     urlToZipFiles += urlToRIVTADownloadEnd
+
+    //-----2do: add version as a url parameter
 
     @Grab(group='org.ccil.cowan.tagsoup', module='tagsoup', version='1.2' )
     XmlSlurper slurper = new XmlSlurper(new org.ccil.cowan.tagsoup.Parser());
@@ -161,7 +163,7 @@ def replaceNullWithSpace(String value) {
 //---------------------------------------- Usage settings ----------------------------------------//
 charset = "ISO-8859-1"                   //--- ("ISO-8859-1", "UTF-8")
 delimiterToken = '/'                     //--- (mac = '/', windows = '.')
-excelFile = "/Users/peterhernfalk/Desktop/_Peter_Files/HOS-projekt/AL/Aktiviteter/Landskap med TP och TK/Groovyscript/Underlag/MasterTest.xls"
+excelFile = "/Users/peterhernfalk/Desktop/_Peter_Files/HOS-projekt/AL/Aktiviteter/Landskap med TP och TK/Groovyscript/Underlag/MasterFlikad.xls"
 outputType = output2All                  //--- (output2All, output2WikiTableRIVTA)
 localRIVTATargetFolder = "/Users/peterhernfalk/Desktop/_Peter_Files/rivta/"
 useLogging = true                        //--- (true, false)
@@ -180,28 +182,24 @@ excel.eachLine {
 
 
     //-----Empty Excel rows are not used
-    if (("${index}" > 0) && ("${cell(0)}".length() > 0)  && ("${cell(0)}" != "null")) {
+    if (("${index}" > 0) && ("${cell(2)}".length() > 0)  && ("${cell(2)}" != "null")) {
 
 
         //-----The name variable is used when deciding if the current domain is already stored in the target map or not
-        def name = "${cell(0)}".trim()
-        def domainExistenceInTargetMap = excelMasterFile.find {it.rivtacommonname == name}
-
-        if (("${cell(0)}".trim().isEmpty() == false) || (mapIndex == 0)) {
+        if (("${cell(2)}".trim().isEmpty() == false) || (mapIndex == 0)) {
             //-----Add domain to the target map
-            if (domainExistenceInTargetMap == null) {
+
                 excelMasterFile[mapIndex] = [
-                        rivtacommonname:"${cell(0)}".trim(),
-                        rivtaservicedomain:"${cell(1)}".trim(),
-                        version:"${cell(2)}".trim(),
-                        rivtabp20:"${cell(3)}".trim(),
-                        rivtabp21:"${cell(4)}".trim(),
-                        domaincategory:"${cell(5)}".trim(),
-                        domaincontact:"${cell(6)}".trim()
+                        subdomainswedish:"${cell(0)}".trim(),
+                        subdomainenglish:"${cell(1)}".trim(),
+                        rivtacommonname:"${cell(2)}".trim(),
+                        rivtaservicedomain:"${cell(3)}".trim(),
+                        version:"${cell(4)}".trim(),
+                        rivtabp20:"${cell(5)}".trim(),
+                        rivtabp21:"${cell(6)}".trim(),
+                        domaincategory:"${cell(7)}".trim()
                 ]
                 mapIndex += 1
-            }
-
         }
     }
     index += 1
@@ -221,16 +219,16 @@ if ((outputType == output2WikiTableRIVTA) || (outputType == output2All)) {
     //-----Create HTML contents, save them to a temporary map and sort the map
     tempWikiContentsRIVTA = []
 
-    excelMasterFileSize = excelMasterFile.size()-1
+    excelMasterFileSize = excelMasterFile.size()
     excelMasterFileSize.times {
 
-        def thisIndex = it+1
+        def thisIndex = it
         userfriendlyServiceDomainName = replaceNullWithSpace(excelMasterFile[thisIndex].rivtacommonname)
         serviceDomainName             = replaceNullWithSpace(excelMasterFile[thisIndex].rivtaservicedomain)
         version                       = replaceNullWithSpace(excelMasterFile[thisIndex].version)
         rivtaBP20                     = replaceNullWithSpace(excelMasterFile[thisIndex].rivtabp20)
         rivtaBP21                     = replaceNullWithSpace(excelMasterFile[thisIndex].rivtabp21)
-        serviceContractCategory       = replaceNullWithSpace(excelMasterFile[it+1].domaincategory)
+        serviceContractCategory       = replaceNullWithSpace(excelMasterFile[thisIndex].domaincategory)
 
         log(loglevelDebug, "userfriendlyServiceDomainName: " + userfriendlyServiceDomainName)
         log(loglevelDebug, "serviceDomainName: " + serviceDomainName)
@@ -239,9 +237,9 @@ if ((outputType == output2WikiTableRIVTA) || (outputType == output2All)) {
         log(loglevelDebug, "rivtaBP21: " + rivtaBP21)
         log(loglevelDebug, "serviceContractCategory: " + serviceContractCategory)
 
-        downloadURL = getDownloadLinkFromRIVTA(serviceDomainName)
+        downloadURL = getDownloadLinkFromRIVTA(serviceDomainName, version)
         if (downloadURL != null) {
-            downloadLink = "[" + getDownloadLinkFromRIVTA(serviceDomainName) + " Ladda ner]"
+            downloadLink = "[" + getDownloadLinkFromRIVTA(serviceDomainName, version) + " Ladda ner]"
         } else {
             downloadLink = ""
         }
