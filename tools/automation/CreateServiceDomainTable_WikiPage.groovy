@@ -7,13 +7,17 @@
  *
  * Information sources used by this script:
  * - Main source: the Excel document describing service domains (Master.xls)
- * - Download links from RIV TA (http://code.google.com/p/rivta/)
+ * - Download links from RIV TA (http://rivta.se/)
  *
  *
  * @author Peter Hernfalk
  * Last update: 2013-09-26
  */
 
+//------------------------------ 2do -------------------------------//
+// -Verify that the download links are correct                      //
+// -Verify that all generated table contents match the Excel source //
+//------------------------------------------------------------------//
 
 import groovy.util.slurpersupport.GPathResult
 import static groovy.io.FileType.FILES
@@ -26,7 +30,7 @@ loglevelError = "ERROR"
 loglevelInfo = "INFO"
 loglevelWarning = "WARNING"
 output2All = "all"
-output2WikiTableRIVTA = "wikiTableRIVTA"
+output2WikiPageRIVTA = "wikiPageRIVTA"
 serviceDomains = []
 useLogging = true
 wikiTableFileRIVTA = "/_WikiTableRIVTA.txt"
@@ -164,7 +168,7 @@ def replaceNullWithSpace(String value) {
 charset = "ISO-8859-1"                   //--- ("ISO-8859-1", "UTF-8")
 delimiterToken = '/'                     //--- (mac = '/', windows = '.')
 excelFile = "/Users/peterhernfalk/Desktop/_Peter_Files/HOS-projekt/AL/Aktiviteter/Landskap med TP och TK/Groovyscript/Underlag/MasterFlikad.xls"
-outputType = output2All                  //--- (output2All, output2WikiTableRIVTA)
+outputType = output2All                  //--- (output2All, output2WikiPageRIVTA)
 localRIVTATargetFolder = "/Users/peterhernfalk/Desktop/_Peter_Files/rivta/"
 useLogging = true                        //--- (true, false)
 //-----------------------------------------------------------------------------------------------//
@@ -206,7 +210,7 @@ excel.eachLine {
 }
 
 
-if ((outputType == output2WikiTableRIVTA) || (outputType == output2All)) {
+if ((outputType == output2WikiPageRIVTA) || (outputType == output2All)) {
 
     /**
      ///////////////////////////////////////////////////////////////////////////////////
