@@ -23,34 +23,56 @@ under the License.
         queryBinding='xslt2'
         schemaVersion='ISO19757-3'>
 
-    <iso:title>Validation for GetMaternityMedicalHistory</iso:title>
+    <iso:title>Validation for GetCareDocumentation</iso:title>
 
     <iso:ns prefix='urn' uri='urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2' />
     <iso:ns prefix='urn1' uri='urn:riv:clinicalprocess:healthcond:description:2' />
-
+	
+	<iso:pattern abstract="true" id="pattern.CvType">
+		<iso:rule context="$path/urn1:code">
+			<iso:assert test="count(../urn1:codeSystem) + count(../urn1:displayName) = 2">
+				In $path if <iso:name/> is given, codeSystem and displayName must be given.</iso:assert>
+			<iso:assert test="count(../urn1:originalText)= 0">
+				In $path if <iso:name/> is given, originalText must not be given.</iso:assert>
+		</iso:rule>
+		<iso:rule context="$path/urn1:codeSystem">
+			<iso:assert test="count(../urn1:code) + count(../urn1:displayName) = 2">
+				In $path if <iso:name/> is given, code and displayName must be given.</iso:assert>
+			<iso:assert test="count(../urn1:originalText)= 0">
+				In $path if <iso:name/> is given, originalText must not be given.</iso:assert>
+		</iso:rule>
+		<iso:rule context="$path/urn1:displayName">
+			<iso:assert test="count(../urn1:code) + count(../urn1:codeSystem) = 2">
+				In $path if <iso:name/> is given, code and codeSystem must be given.</iso:assert>
+			<iso:assert test="count(../urn1:originalText)= 0">
+				In $path if <iso:name/> is given, originalText must not be given.</iso:assert>
+		</iso:rule>
+		<iso:rule context="$path/urn1:originalText">
+			<iso:assert test="count(../urn1:code) + count(../urn1:codeSystem) + count(../urn1:displayName) = 0">
+				In $path if <iso:name/> is given, code, codeSystem and displayName must not be given.</iso:assert>
+		</iso:rule>
+	</iso:pattern>
+	
     <!-- Rules for Response -->
-    <iso:pattern name="Verify author">
-        <iso:rule context="urn1:author">
-            <iso:assert test="count(urn1:authorRoleCode) + count(urn1:authorOtherRole) = 1">
-                Either one of authorRoleCode or authorOtherRole must be given for <iso:name />.</iso:assert>
-        </iso:rule>
+    <iso:pattern id="Verify healthcareProfessionalRoleCode" is-a="pattern.CvType">
+		<iso:param name="path" value="urn1:healthcareProfessionalRoleCode" />
     </iso:pattern>
 
-    <iso:pattern name="Verify clinicalDocumentNote">
+    <iso:pattern id="Verify clinicalDocumentNote">
         <iso:rule context="urn1:clinicalDocumentNote">
             <iso:assert test="count(urn1:clinicalDocumentNoteCode) + count(urn1:clinicalDocumentTypeCode) = 1">
                 Either one of clinicalDocumentNoteCode or clinicalDocumentTypeCode must be given for <iso:name />.</iso:assert>
         </iso:rule>
     </iso:pattern>
 
-    <iso:pattern name="Verify careDocumentationBody">
+    <iso:pattern id="Verify careDocumentationBody">
         <iso:rule context="urn1:careDocumentationBody">
             <iso:assert test="count(urn1:clinicalDocumentNote/urn1:clinicalDocumentNoteText) + count(urn1:multimediaEntry) = 1">
                 Either one of clinicalDocumentNoteText or multimediaEntry must be given for <iso:name />.</iso:assert>
         </iso:rule>
     </iso:pattern>
 
-    <iso:pattern name="Verify mediaType">
+    <iso:pattern id="Verify mediaType">
         <iso:rule context="urn1:mediaType">
             <iso:assert test="count(urn1:value) + count(urn1:reference) = 1">
                 Either one of value or reference must be given for <iso:name />.</iso:assert>
