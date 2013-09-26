@@ -22,11 +22,11 @@
 	CD ..
 	
 	SET SCHEMADIR=schemas
-SET W0=%SCHEMADIR%\.\interactions\LookupResidentForFullProfileInteraction\LookupResidentForFullProfileInteraction_1.0_RIVTABP21.wsdl
+SET W0=%SCHEMADIR%\.\interactions\LookupResidentForFullProfileInteraction\LookupResidentForFullProfileInteraction_1.1_RIVTABP21.wsdl
 SET X0=%SCHEMADIR%\interactions\LookupResidentForFullProfileInteraction\*.xsd
 
 SET SCHEMADIR=schemas
-SET W1=%SCHEMADIR%\.\interactions\UpdateResidentInteraction\UpdateResidentInteraction_1.0_RIVTABP21.wsdl
+SET W1=%SCHEMADIR%\.\interactions\UpdateResidentInteraction\UpdateResidentInteraction_1.1_RIVTABP21.wsdl
 SET X1=%SCHEMADIR%\interactions\UpdateResidentInteraction\*.xsd
 
 SET XCORE=%SCHEMADIR%\core_components\*.xsd
