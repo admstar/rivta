@@ -47,9 +47,9 @@ under the License.
                 no end time.</li>
             </ol>
             The CareContactId's of case 1-6 should be added as a comma-separated list in the
-                expectedCareContactIds field.<br/>
+                expectedDocumentIds field.<br/>
             The CareContactId's of case 7, 8 and 9 should be added as a comma-separated list in the
-                unexpectedCareContactIds field.<br/>
+                unexpectedDocumentIds field.<br/>
             The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of CareContacts.
         </description>
         <data>
@@ -60,18 +60,18 @@ under the License.
             <timePeriodStart>20130501</timePeriodStart>
             <timePeriodEnd>20130531</timePeriodEnd>
             <!-- Add a list of comma-separated ids that at least should be included in the response -->
-            <expectedCareContactIds>5566770,5566771</expectedCareContactIds>
+            <expectedDocumentIds>5566770,5566771</expectedDocumentIds>
             <!-- Add a list of comma-separated ids that should not be included in the response -->
-            <unexpectedCareContactIds>11,12,13</unexpectedCareContactIds>
+            <unexpectedDocumentIds>11,12,13</unexpectedDocumentIds>
         </data>
     </testcase>
     <testcase id="CareUnitHsaId Filter">
         <description>Verifies that the result only contains information with correct CareUnitHsaId for the given patient.<br/>
             The patient should have several CareContacts, with at least one CareContact from the given CareUnitHsaId.<br/>
             The CareContactId's of the expected CareContacts should be added as a comma-separated list in the
-            expectedCareContactIds field.<br/>
+            expectedDocumentIds field.<br/>
             The CareContactId's of CareContacts from other CareUnit's should be added as a comma-separated list in the
-            unexpectedCareContactIds field.
+            unexpectedDocumentIds field.
         </description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
@@ -81,18 +81,18 @@ under the License.
             <patientIdType>1.2.752.129.2.1.3.1</patientIdType>
             <sourceSystemHSAid>112233</sourceSystemHSAid>
             <!-- Add a list of comma-separated ids that at least should be included in the response -->
-            <expectedCareContactIds></expectedCareContactIds>
+            <expectedDocumentIds></expectedDocumentIds>
             <!-- Add a list of comma-separated ids that should not be included in the response -->
-            <unexpectedCareContactIds>123456</unexpectedCareContactIds>
+            <unexpectedDocumentIds>123456</unexpectedDocumentIds>
         </data>
     </testcase>
     <testcase id="Only PatientId">
         <description>Verifies that the result only contains information with correct PatientId.<br/>
             Enter a PatientId that is stored in the source system.<br/>
             The CareContactId's of the expected CareContacts should be added as a comma-separated list in the
-            expectedCareContactIds field.<br/>
+            expectedDocumentIds field.<br/>
             The CareContactId's of CareContacts from other CareUnit's should be added as a comma-separated list in the
-            unexpectedCareContactIds field.
+            unexpectedDocumentIds field.
         </description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
@@ -100,9 +100,9 @@ under the License.
             <patientId>7601021212</patientId>
             <patientIdType>1.2.752.129.2.1.3.1</patientIdType>
             <!-- Add a list of comma-separated ids that at least should be included in the response -->
-            <expectedCareContactIds></expectedCareContactIds>
+            <expectedDocumentIds></expectedDocumentIds>
             <!-- Add a list of comma-separated ids that should not be included in the response -->
-            <unexpectedCareContactIds>123456</unexpectedCareContactIds>
+            <unexpectedDocumentIds>123456</unexpectedDocumentIds>
         </data>
     </testcase>
     <testcase id="NonExisting PatientId">
@@ -150,9 +150,9 @@ under the License.
             system should filter CareContacts based on the HttpHeader 'x-rivta-original-serviceconsumer-hsaid'.<br/>
             Enter a PatientId that has more than one CareContact in the source system.<br/>
             Add one or more CareContactId's of contacts that should be included in the response based on the
-            filtering rules to the field 'expectedCareContactIds'.<br/>
+            filtering rules to the field 'expectedDocumentIds'.<br/>
             Add one or more CareContactId's of contacts that should not be included in the response based on the
-            filtering rules to the field 'unexpectedCareContactIds'.<br/>
+            filtering rules to the field 'unexpectedDocumentIds'.<br/>
 			The field logicalAddress should contain a value that does not affect the list of CareContacts.
         </description>
         <data>
@@ -161,9 +161,9 @@ under the License.
             <patientId>7601021212</patientId>
             <patientIdType>1.2.752.129.2.1.3.1</patientIdType>
             <!-- Add a list of comma-separated ids that at least should be included in the response -->
-            <expectedCareContactIds>987654321</expectedCareContactIds>
+            <expectedDocumentIds>987654321</expectedDocumentIds>
             <!-- Add a list of comma-separated ids that should not be included in the response -->
-            <unexpectedCareContactIds>123456</unexpectedCareContactIds>
+            <unexpectedDocumentIds>123456</unexpectedDocumentIds>
         </data>
     </testcase>
     <testcase id="CareContactId and SourceSystemHsaId">

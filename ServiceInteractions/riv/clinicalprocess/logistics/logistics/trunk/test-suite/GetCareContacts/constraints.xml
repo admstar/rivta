@@ -24,23 +24,39 @@ under the License.
         schemaVersion='ISO19757-3'>
 
     <iso:title>Validation for GetCareContacts</iso:title>
-    <iso:ns prefix='urn2' uri='urn:riv:clinicalprocess:logistics:logistics:2'/>
-    <iso:ns prefix='urn1' uri='urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:2'/>
+    <iso:ns prefix='urn1' uri='urn:riv:clinicalprocess:logistics:logistics:2'/>
+    <iso:ns prefix='urn' uri='urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:2'/>
 
-    <!-- Rules for Request -->
-    <iso:pattern name="Verify request">
-        <iso:rule context="urn1:GetCareContacts" >
-            <iso:assert test="(careContactId and not(sourceSystemHSAid))">If careContactId is given, sourceSystemHSAid must be given.</iso:assert>
-        </iso:rule>
-    </iso:pattern>
+	<iso:pattern abstract="true" id="pattern.CvType">
+		<iso:rule context="$path/urn1:code">
+			<iso:assert test="count(../urn1:codeSystem) + count(../urn1:displayName) = 2">
+				In $path if <iso:name/> is given, codeSystem and displayName must be given.</iso:assert>
+			<iso:assert test="count(../urn1:originalText)= 0">
+				In $path if <iso:name/> is given, originalText must not be given.</iso:assert>
+		</iso:rule>
+		<iso:rule context="$path/urn1:codeSystem">
+			<iso:assert test="count(../urn1:code) + count(../urn1:displayName) = 2">
+				In $path if <iso:name/> is given, code and displayName must be given.</iso:assert>
+			<iso:assert test="count(../urn1:originalText)= 0">
+				In $path if <iso:name/> is given, originalText must not be given.</iso:assert>
+		</iso:rule>
+		<iso:rule context="$path/urn1:displayName">
+			<iso:assert test="count(../urn1:code) + count(../urn1:codeSystem) = 2">
+				In $path if <iso:name/> is given, code and codeSystem must be given.</iso:assert>
+			<iso:assert test="count(../urn1:originalText)= 0">
+				In $path if <iso:name/> is given, originalText must not be given.</iso:assert>
+		</iso:rule>
+		<iso:rule context="$path/urn1:originalText">
+			<iso:assert test="count(../urn1:code) + count(../urn1:codeSystem) + count(../urn1:displayName) = 0">
+				In $path if <iso:name/> is given, code, codeSystem and displayName must not be given.</iso:assert>
+		</iso:rule>
+	</iso:pattern>
 
     <!-- Rules for Response -->
-    <iso:pattern name="Verify careContactHeader">
-        <iso:rule context="urn2:accountableHealthcareProfessional">
-            <iso:assert test="count(urn2:healthcareProfessionalRoleCode) +  count(urn2:healthcareProfessionalOtherRoleCode) = 1">
-                Either one of healthcareProfessionalRoleCode or healthcareProfessionalOtherRoleCode must be given.</iso:assert>
-        </iso:rule>
+	<iso:pattern id="Verify accountableHealthcareProfessional" is-a="pattern.CvType">
+		<iso:param name="path" value="urn1:accountableHealthcareProfessional" />
     </iso:pattern>
+
 
 
 
