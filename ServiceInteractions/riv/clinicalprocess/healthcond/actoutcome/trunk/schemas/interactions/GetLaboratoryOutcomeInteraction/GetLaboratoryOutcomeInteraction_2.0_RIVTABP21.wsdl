@@ -18,10 +18,10 @@
  under the License.
  -->		
 <wsdl:definitions name='GetLaboratoryOutcomenteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema'
-  xmlns:tjsr='urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcomeResponder:2'
+  xmlns:tjsr='urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOutcomeResponder:2'
   xmlns:tjsi='urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOutcomenitiator:2'
-  xmlns:tns='urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcome:2:rivtabp21'
-  targetNamespace='urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcome:2:rivtabp21'
+  xmlns:tns='urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOutcome:2:rivtabp21'
+  targetNamespace='urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOutcome:2:rivtabp21'
   xmlns:itr='urn:riv:itintegration:registry:1'>
   <xs:annotation>
     <xs:documentation>
@@ -36,12 +36,12 @@
 			 </xs:documentation>
   </xs:annotation>
   <wsdl:types>
-    <xs:schema targetNamespace='urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcome:2:rivtabp21'>
-      <xs:import schemaLocation='GetReferralOutcomeResponder_2.0.xsd' namespace='urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcomeResponder:2' />
+    <xs:schema targetNamespace='urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOutcome:2:rivtabp21'>
+      <xs:import schemaLocation='GetLaboratoryOutcomeResponder_2.0.xsd' namespace='urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOutcomeResponder:2' />
       <xs:import schemaLocation='../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
     </xs:schema>
   </wsdl:types>
-  <wsdl:message name='GetReferralOutcomeRequest'>
+  <wsdl:message name='GetLaboratoryOutcomeRequest'>
     <wsdl:part name='LogicalAddress' element='itr:LogicalAddress'>
 	  	<wsdl:documentation>
 			National: The HSA-id of Inera AB ("national" aggregation service)
@@ -49,23 +49,23 @@
 			Specific Source system: The HSA-id of the source system
 		</wsdl:documentation>
     </wsdl:part>
-    <wsdl:part name='parameters' element='tjsr:GetReferralOutcome' />
+    <wsdl:part name='parameters' element='tjsr:GetLaboratoryOutcome' />
   </wsdl:message>
-  <wsdl:message name='GetReferralOutcomeResponse'>
-    <wsdl:part name='parameters' element='tjsr:GetReferralOutcomeResponse' />
+  <wsdl:message name='GetLaboratoryOutcomeResponse'>
+    <wsdl:part name='parameters' element='tjsr:GetLaboratoryOutcomeResponse' />
   </wsdl:message>
-  <wsdl:portType name='GetReferralOutcomeResponderInterface'>
-    <wsdl:operation name='GetReferralOutcome'>
-      <wsdl:input message='tns:GetReferralOutcomeRequest' />
-      <wsdl:output message='tns:GetReferralOutcomeResponse' />
+  <wsdl:portType name='GetLaboratoryOutcomeResponderInterface'>
+    <wsdl:operation name='GetLaboratoryOutcome'>
+      <wsdl:input message='tns:GetLaboratoryOutcomeRequest' />
+      <wsdl:output message='tns:GetLaboratoryOutcomeResponse' />
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name='GetReferralOutcomeResponderBinding' type='tns:GetReferralOutcomeResponderInterface'>
+  <wsdl:binding name='GetLaboratoryOutcomeResponderBinding' type='tns:GetLaboratoryOutcomeResponderInterface'>
     <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
-    <wsdl:operation name='GetReferralOutcome'>
-      <soap:operation soapAction='urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcomeResponder:2:GetReferralOutcome' style='document' />
+    <wsdl:operation name='GetLaboratoryOutcome'>
+      <soap:operation soapAction='urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOutcomeResponder:2:GetLaboratoryOutcome' style='document' />
       <wsdl:input>
-        <soap:header use='literal' message='tns:GetReferralOutcomeRequest' part='LogicalAddress' />
+        <soap:header use='literal' message='tns:GetLaboratoryOutcomeRequest' part='LogicalAddress' />
         <soap:body use='literal' parts='parameters' />
       </wsdl:input>
       <wsdl:output>
@@ -73,8 +73,8 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name='GetReferralOutcomeResponderService'>
-    <wsdl:port name='GetReferralOutcomeResponderPort' binding='tns:GetReferralOutcomeResponderBinding'>
+  <wsdl:service name='GetLaboratoryOutcomeResponderService'>
+    <wsdl:port name='GetLaboratoryOutcomeResponderPort' binding='tns:GetLaboratoryOutcomeResponderBinding'>
       <soap:address location='http://tempuri.org' />
     </wsdl:port>
   </wsdl:service>

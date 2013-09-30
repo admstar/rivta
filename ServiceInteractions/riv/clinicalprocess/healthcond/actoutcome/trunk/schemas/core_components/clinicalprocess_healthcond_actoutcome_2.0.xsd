@@ -30,10 +30,24 @@
         <xs:sequence>
             <xs:element name="documentId" type="xs:string"/>
             <xs:element name="sourceSystemHSAId" type="tns:HSAIdType"/>
-            <xs:element name="documentTitle" type="xs:string" minOccurs="0"/>
-            <xs:element name="documentTime" type="tns:TimeStampType"/>
+            <xs:element name="documentTitle" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="documentTime" type="tns:TimeStampType" maxOccurs="1" minOccurs="1"/>
             <xs:element name="patientId" type="tns:PatientIdType"/>
             <xs:element name="author" type="tns:AuthorType"/>
+            <xs:element name="legalAuthenticator" type="tns:LegalAuthenticatorType" minOccurs="0"/>
+            <xs:element name="approvedForPatient" type="xs:boolean"/>
+            <xs:element name="careContactId" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PatientSummaryHeaderType_LaboratoryOutcome">
+        <xs:sequence>
+            <xs:element name="documentId" type="xs:string"/>
+            <xs:element name="sourceSystemHSAId" type="tns:HSAIdType"/>
+            <xs:element name="documentTime" type="tns:TimeStampType" maxOccurs="1" minOccurs="1"/>
+            <xs:element name="patientId" type="tns:PatientIdType"/>
+            <xs:element name="accountableHealthcareProfessional"
+                type="tns:HealthcareProfessionalType"/>
             <xs:element name="legalAuthenticator" type="tns:LegalAuthenticatorType" minOccurs="0"/>
             <xs:element name="approvedForPatient" type="xs:boolean"/>
             <xs:element name="careContactId" type="xs:string" minOccurs="0"/>
@@ -100,17 +114,7 @@
     <xs:complexType name="ReferralType">
         <xs:sequence>
             <xs:element name="referralId" type="xs:string"/>
-            <xs:element name="referralText" type="xs:string"/>
-            <xs:element name="referralTime" type="tns:TimeStampType"/>
-            <xs:element name="referralAuthorId" type="tns:HSAIdType"/>
-            <xs:element name="referralAuthorName" type="xs:string" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="referralOrganizationHSAId" type="tns:HSAIdType"/>
-            <xs:element name="referralOrganizationName" type="xs:string" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="referralOrganizationTelecom" type="xs:string" minOccurs="0"
-                maxOccurs="1"/>
-            <xs:element name="referralOrganizationAddress" type="xs:string" minOccurs="0"
-                maxOccurs="1"/>
-            <xs:element name="careContactId" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="referralReason" type="xs:string" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -385,7 +389,8 @@
 
     <xs:complexType name="LaboratoryOutcomeType">
         <xs:sequence>
-            <xs:element name="laboratoryOutcomeHeader" type="tns:PatientSummaryHeaderType"/>
+            <xs:element name="laboratoryOutcomeHeader"
+                type="tns:PatientSummaryHeaderType_LaboratoryOutcome"/>
             <xs:element name="laboratoryOutcomeBody" type="tns:LaboratoryOutcomeBodyType"/>
         </xs:sequence>
     </xs:complexType>
@@ -404,6 +409,87 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="HealthcareProfessionalType">
+        <xs:annotation>
+            <xs:documentation>
+                Information om hälso- och omsorgspesonal
+                
+                healthcareProfessionalHsaId: 
+                HSA-id för vård- och omsorgspersonal 
+                healthcareProfessionalName
+                Namn på vård- och omsorgspersonal
+                healthcareProfessionalRoleCode: 
+                Information om personens befattning om annat kodverk än KV Befattning används. 
+                Ska anges om healthcareProfessionalOtherRoleCode saknas. Kan inte anges 
+                samtidigt med healthcareProfessionalOtherRoleCode.
+                healthcareProfessionalOtherRoleCode: 
+                Information om författarens befattning om annat kodverk än KV Befattning 
+                används. Ska anges om healthcareProfessionalRoleCode saknas. Kan inte anges 
+                samtidigt med healthcareProfessionalRoleCode.
+                healthcareProfessionalCareUnitHSAid: 
+                HSA-id för PDL-enhet som vård- och omsorgspersonen är uppdragstagare för
+                healthcareProfessionalCareGiverHSAid: 
+                HSA-id för vårdgivaren, som är vårdgivare för den enhet som författaren är uppdragstagare för
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="authorTime" type="tns:TimeStampType"/>
+            <xs:element name="healthcareProfessionalHSAId" type="tns:HSAIdType" minOccurs="1"/>
+            <xs:element name="healthcareProfessionalName" type="xs:string" minOccurs="0"/>
+            <xs:element name="healthcareProfessionalRoleCode" type="tns:CVType" minOccurs="0"/>
+            <xs:element name="healthcareProfessionalOrgUnit" type="tns:OrgUnitType" minOccurs="1"/>
+            <xs:element name="healthcareProfessionalCareUnitHSAId" type="tns:HSAIdType"
+                minOccurs="0"/>
+            <xs:element minOccurs="0" name="healthcareProfessionalCareGiverHSAId"
+                type="tns:HSAIdType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="OrgUnitType">
+        <xs:annotation>
+            <xs:documentation>
+                Information om en organisationsenhet
+                
+                careContactOrgUnitHsaId: 
+                HSA-id för organisationsenhet
+                careContactOrgUnitName
+                Namn på organisationsenhet
+                careContactOrgUnitTelecom: 
+                Telefon till organisationsenhet
+                careContactOrgUnitEmail: 
+                Epost till enhet
+                careContactOrgUnitAddress: 
+                Postadress till enhet
+                careContactOrgUnitLocation: 
+                Text som anger namnet på plats eller ort för enhetens eller funktionens fysiska placering
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="orgUnitHSAId" type="tns:HSAIdType" minOccurs="1"/>
+            <xs:element name="orgUnitName" type="xs:string" minOccurs="1"/>
+            <xs:element name="orgUnitTelecom" type="xs:string" minOccurs="0"/>
+            <xs:element name="orgUnitEmail" type="xs:string" minOccurs="0"/>
+            <xs:element name="orgUnitAddress" type="xs:string" minOccurs="0"/>
+            <xs:element name="orgUnitLocation" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CVType">
+        <xs:annotation>
+            <xs:documentation/>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="code" type="xs:string" minOccurs="0"/>
+            <xs:element name="codeSystem" type="xs:string" minOccurs="0"/>
+            <xs:element name="codeSystemName" type="xs:string" minOccurs="0"/>
+            <xs:element name="codeSystemVersion" type="xs:string" minOccurs="0"/>
+            <xs:element name="displayName" type="xs:string" minOccurs="0"/>
+            <xs:element name="originalText" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!--
     <xs:complexType name="HealthcareProfessionalType">
         <xs:annotation>
             <xs:documentation>
@@ -436,46 +522,50 @@
             <xs:element name="orgUnit" type="tns:OrgUnitType"/>
         </xs:sequence>
     </xs:complexType>
+    -->
 
-    <xs:complexType name="OrgUnitType">
-        <xs:annotation>
-            <xs:documentation>
-                Information om en organisationsenhet
-                
-                careContactOrgUnitHSAId:
-                HSA-id för organisationsenhet
-                careContactOrgUnitName
-                Namn på organisationsenhet
-                careContactOrgUnitTelecom:
-                Telefon till organisationsenhet
-                careContactOrgUnitEmail:
-                Epost till enhet
-                careContactOrgUnitAddress:
-                Postadress till enhet
-                careContactOrgUnitLocation:
-                Text som anger namnet på plats eller ort för enhetens eller funktionens fysiska placering
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="careContactOrgUnitHSAId" type="tns:HSAIdType"/>
-            <xs:element name="careContactOrgUnitName" type="xs:string"/>
-            <xs:element name="careContactOrgUnitTelecom" type="xs:string" minOccurs="0"/>
-            <xs:element name="careContactOrgUnitEmail" type="xs:string" minOccurs="0"/>
-            <xs:element name="careContactOrgUnitAddress" type="xs:string" minOccurs="0"/>
-            <xs:element name="careContactOrgUnitLocation" type="xs:string" minOccurs="0"/>
-        </xs:sequence>
-    </xs:complexType>
 
     <xs:complexType name="AnalysisType">
         <xs:sequence>
-            <xs:element name="analysisId" type="xs:string"/>
-            <xs:element name="analysisTime" type="tns:TimeStampType" minOccurs="0"/>
-            <xs:element name="analysisCode" type="xs:string" minOccurs="0"/>
+            <xs:element name="analysisId" type="tns:IIType"/>
+            <xs:element name="analysisTime" type="tns:TimePeriodType" minOccurs="0"/>
+            <xs:element name="analysisCode" type="tns:CVType" minOccurs="0"/>
             <xs:element name="analysisText" type="xs:string" minOccurs="0" maxOccurs="1"/>
             <xs:element name="analysisStatus" type="xs:string" minOccurs="0" maxOccurs="1"/>
             <xs:element name="analysisComment" type="xs:string" minOccurs="0"/>
             <xs:element name="specimen" type="xs:string" minOccurs="0"/>
             <xs:element name="method" type="xs:string" minOccurs="0"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="relationToAnalysis"
+                type="tns:RelationToAnalysisType"/>
         </xs:sequence>
     </xs:complexType>
+
+    <xs:complexType name="IIType">
+        <xs:sequence>
+            <xs:element name="root" type="xs:string"/>
+            <xs:element name="extension" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RelationToAnalysisType">
+        <xs:sequence>
+            <xs:element name="analysisId" type="tns:IIType"/>
+            <xs:element name="analysisTime" type="tns:TimePeriodType" minOccurs="0"/>
+            <xs:element name="analysisOutcome" type="tns:AnalysisOutcomeType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AnalysisOutcomeType">
+        <xs:sequence>
+            <xs:element name="outcomeValue" type="xs:string"/>
+            <xs:element name="outcomeUnit" type="xs:string" minOccurs="0"/>
+            <xs:element name="observationTime" type="tns:TimeStampType" minOccurs="0"/>
+            <xs:element name="pathologicalFlag" type="xs:boolean"/>
+            <xs:element name="outcomeDescription" type="xs:string"/>
+            <xs:element name="referenceInterval" type="xs:string"/>
+            <xs:element name="referencePopulation" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
 </xs:schema>
