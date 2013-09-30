@@ -29,6 +29,11 @@ under the License.
     <iso:ns prefix='urn1' uri='urn:riv:clinicalprocess:healthcond:description:2' />
 	
 	<iso:pattern abstract="true" id="pattern.CvType">
+		<iso:rule context="$path">
+			<iso:assert test="count(urn1:code) + count(urn1:originalText) = 1">
+				In $path, either code or origialText must be given.</iso:assert>
+		</iso:rule>
+		
 		<iso:rule context="$path/urn1:code">
 			<iso:assert test="count(../urn1:codeSystem) + count(../urn1:displayName) = 2">
 				In $path if <iso:name/> is given, codeSystem and displayName must be given.</iso:assert>
