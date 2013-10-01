@@ -30,7 +30,7 @@ För annan användning av koder, exempelvis för lokala kodverk utan OID, skall 
 ||displayName	||string	||Koden i klartext, under vilket det producerande systemet visar koden för sina användare. Om separat displayName inte finns i producerande system skall det ange samma värde som för code. ||	0..1||
 ||originalText	||string	|| originalText ska användas vid överföring av värden som kommer från lokala kodverk som ej är identifierade med OID eller när kod helt saknas. I sådana fall skall en beskrivande text anges i originalText. Om originalText anges kan ingen av de övriga elementen anges.	||0..1||
 
-===DatePeriodType===
+===[DatePeriodType DatePeriodType]===
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
 ||start	||DateType	||Periodens startdatum. Minst ett av start och end skall anges.	||0..1||
 ||end	||DateType	||Periodens slutdatum. Minst ett av start och end skall anges.	||0..1||
@@ -41,7 +41,7 @@ Datum anges alltid på formatet ”ÅÅÅÅMMDD”, vilket motsvarar den ISO 882
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
 ||date	||string	||Datum uttrycks med formatet ”ÅÅÅÅMMDD”	||1..1||
 
-===HealthcareProfessionalType===
+===[HealthcareProfessionalType HealthcareProfessionalType]===
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
 ||authorTime	||TimeStampType	||Den tidpunkt då dokumentet skapades.	||1..1||
 ||healthcareProfessionalHSAId	||HSAIdType	||HSA-id för vård- och omsorgspersonal. Skall anges om tillgänglig.	||0..1||
@@ -51,31 +51,31 @@ Datum anges alltid på formatet ”ÅÅÅÅMMDD”, vilket motsvarar den ISO 882
 ||healthcareProfessionalCareUnitHSAId||	HSAIdType||	HSA-id för PDL-enhet som vård- och omsorgspersonen är uppdragstagare för. Skall anges om tillgänglig. ||	0..1 ||
 ||healthcareProfessionalCareGiverHSAId	||HSAIdType|| 	HSA-id för vårdgivaren, som är vårdgivare för den enhet som författaren är uppdragstagare för. Skall anges om tillgänglig.||0..1||
 
-===HSAIdType ===
+===[HSAIdType HSAIdType]===
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
 ||hsaId	||string	||HSA-id enligt definition från Inera AB	||1..1||
 
-===IIType===
+===[IIType IIType]===
 En universellt unik identifierare.
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
 ||root	||string	||En universellt unik identifierare eller en identifierare som tillsammans med värdet för ”extention” ger en universellt unik identifierare.	||1..1||
 ||extension	||string	||En textsträng som tillsammans med värdet för "root" bildar en unik identifierare. Används om värdet på "root" inte är universellt unikt. ||0..1||
 
-===LegalAuthenticatorType===
+===[LegalAuthenticatorType LegalAuthenticatorType]===
 Används för att representera en signatur i samband med journalhandlingar.
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
 ||signatureTime||	TimeStampType||	Tidpunkt för signering||	1..1||
 ||legalAuthenticatorHSAId	||HSAIdType	||HSA-id för person som signerat dokumentet	||0..1||
 ||legalAuthenticatorName	||string	||Namnen i klartext för signerande person	||0..1||
 
-===MultimediaType===
+===[MultimediaType MultimediaType]===
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
 ||id	||string	||Identitet på multimediaobjekt som används vid referenser inom multimediadokument.	||0..1||
 ||mediaType	||MediaTypeEnum	||Mediatyper enligt HL7	||1..1||
 ||value	||base64Binary	||Value är binärdata som representerar objektet. Ett och endast ett av value och reference ska anges. 	||0..1||
 ||reference	||anyURI	||Referens till extern bild i form av en URL. Ett och endast ett av value och reference ska anges.	||0..1||
 
-===OrgUnitType===
+===[OrgUnitType OrgUnitType]===
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
 ||orgUnitHSAId	||HSAIdType	||HSA-id för organisationsenhet. Om tillgängligt skall detta anges.	||0..1||
 ||orgUnitName	||string	||Namn på organisationsenhet. Om tillgängligt skall detta anges.	||0..1||
@@ -84,7 +84,7 @@ Används för att representera en signatur i samband med journalhandlingar.
 ||orgUnitAddress	||string	||Postadress till enhet	||0..1||
 ||orgUnitLocation	||string	||Text som anger namnet på plats eller ort för enhetens eller funktionens fysiska placering	||0..1||
 
-===PatientSummaryHeaderType===
+===[PatientSummaryHeaderType PatientSummaryHeaderType]===
 Innehåller basinformation om ett dokument. Används för tjänstekontrakt som tillverkas enligt HL7-metoden "Green CDA".
 
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
@@ -105,19 +105,19 @@ Innehåller basinformation om ett dokument. Används för tjänstekontrakt som t
 ||id	||string	||Identiteten enligt den identitetstyp (type) som angivits. Anges med 12 tecken utan bindestreck.	||1..1||
 ||type	||string ||OID för typ av identifierare. För personnummer ska Skatteverkets personnummer (1.2.752.129.2.1.3.1). För samordningsnummer ska Skatteverkets samordningsnummer (1.2.752.129.2.1.3.3). För reservnummer används lokalt definierade reservnummer, exempelvis SLL reservnummer (1.2.752.97.3.1.3)	||1..1||
 
-===PQType===
+===[PQType PQType]===
 Typ som baseras på datatypen PQ enligt HL7, och som beskriver överföring av uppmätta värden (”Physical Quantity”). Tillåtna värden för ”unit” bestäms av http://unitsofmeasure.org/ucum.html. Dimension ska preciseras av fältregel vid tillämpning (ex. ”Massa”). Typen är till för presentation av givna mätvärden. Vaksamhet skall iakttagas vid konvertering mellan enheter.
 
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
 ||value	||double	||Mätetal mätt i enheten som anges av ”unit”	||1..1||
 ||unit	||string	||Enhet enligt standard http://unitsofmeasure.org/ucum.html	||1..1||
 
-===TimePeriodType===
+===[TimePeriodType TimePeriodType]===
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
 ||start	||TimeStampType	||Periodens starttid. Minst ett av start och end skall anges.	||0..1||
 ||end	||TimeStampType	||Periodens sluttid. Minst ett av start och end skall anges.	||0..1||
 
-===TimeStampType===
+===[TimeStampType TimeStampType]===
 Tidpunkter anges alltid på formatet ”ÅÅÅÅMMDDttmmss”, vilket motsvarar den ISO 8824-kompatibla formatbeskrivningen ”YYYYMMDDhhmmss”.
 Tidszon anges inte i meddelandeformaten. All information om datum och tidpunkter som utbyts via tjänsterna ska ange datum och tidpunkter i den tidszon som gäller/gällde i Sverige vid den tidpunkt som respektive datum- eller tidpunktsfält bär information om. Såväl tjänstekonsumenter som tjänsteproducenter skall med andra ord förutsätta att datum och tidpunkter som utbyts är i tidszonerna CET (svensk normaltid) respektive CEST (svensk normaltid med justering för sommartid).
 
