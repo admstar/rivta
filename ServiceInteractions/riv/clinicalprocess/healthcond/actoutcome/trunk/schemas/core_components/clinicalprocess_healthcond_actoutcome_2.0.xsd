@@ -32,7 +32,7 @@
             <xs:element name="sourceSystemHSAId" type="tns:HSAIdType"/>
             <xs:element name="documentTitle" type="xs:string" minOccurs="0" maxOccurs="1"/>
             <xs:element name="documentTime" type="tns:TimeStampType" maxOccurs="1" minOccurs="1"/>
-            <xs:element name="patientId" type="tns:PatientIdType"/>
+            <xs:element name="patientId" type="tns:PersonIdType"/>
             <xs:element name="author" type="tns:AuthorType"/>
             <xs:element name="legalAuthenticator" type="tns:LegalAuthenticatorType" minOccurs="0"/>
             <xs:element name="approvedForPatient" type="xs:boolean"/>
@@ -45,7 +45,7 @@
             <xs:element name="documentId" type="xs:string"/>
             <xs:element name="sourceSystemHSAId" type="tns:HSAIdType"/>
             <xs:element name="documentTime" type="tns:TimeStampType" maxOccurs="1" minOccurs="1"/>
-            <xs:element name="patientId" type="tns:PatientIdType"/>
+            <xs:element name="patientId" type="tns:PersonIdType"/>
             <xs:element name="accountableHealthcareProfessional"
                 type="tns:HealthcareProfessionalType"/>
             <xs:element name="legalAuthenticator" type="tns:LegalAuthenticatorType" minOccurs="0"/>
@@ -209,7 +209,7 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="PatientIdType">
+    <xs:complexType name="PersonIdType">
         <xs:sequence>
             <xs:element name="id" type="xs:string"/>
             <xs:element name="type" type="xs:string"/>
@@ -551,6 +551,16 @@
             <xs:element name="analysisId" type="tns:IIType"/>
             <xs:element name="analysisTime" type="tns:TimePeriodType" minOccurs="0"/>
             <xs:element name="analysisOutcome" type="tns:AnalysisOutcomeType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ActorType">
+        <xs:sequence>
+            <xs:element name="hsaId" type="tns:HSAIdType" minOccurs="0"/>
+            <xs:element name="name" type="xs:string" minOccurs="0"/>
+            <xs:element name="personTelecom" type="xs:string" minOccurs="0"/>
+            <xs:element name="personEmail" type="xs:string" minOccurs="0"/>
+            <xs:element name="personAddress" type="xs:string" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
