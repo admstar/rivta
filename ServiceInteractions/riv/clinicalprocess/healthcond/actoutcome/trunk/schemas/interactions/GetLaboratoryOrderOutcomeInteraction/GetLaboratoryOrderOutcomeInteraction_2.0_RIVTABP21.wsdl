@@ -17,15 +17,15 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<wsdl:definitions name='GetLaboratoryOutcomenteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema'
-  xmlns:tjsr='urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOutcomeResponder:2'
-  xmlns:tjsi='urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOutcomenitiator:2'
-  xmlns:tns='urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOutcome:2:rivtabp21'
-  targetNamespace='urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOutcome:2:rivtabp21'
+<wsdl:definitions name='GetLaboratoryOrderOutcomenteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema'
+  xmlns:tjsr='urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2'
+  xmlns:tjsi='urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomenitiator:2'
+  xmlns:tns='urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcome:2:rivtabp21'
+  targetNamespace='urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcome:2:rivtabp21'
   xmlns:itr='urn:riv:itintegration:registry:1'>
   <xs:annotation>
     <xs:documentation>
-      Tjänsteinteraktionens namn: GetLaboratoryOutcome
+      Tjänsteinteraktionens namn: GetLaboratoryOrderOutcome
 			 Beskrivning: 
 			 Returnerar svar på en förfrågan om kemilaboratoriesvar för en patient
 			 Revisioner: 
@@ -36,12 +36,12 @@
 			 </xs:documentation>
   </xs:annotation>
   <wsdl:types>
-    <xs:schema targetNamespace='urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOutcome:2:rivtabp21'>
-      <xs:import schemaLocation='GetLaboratoryOutcomeResponder_2.0.xsd' namespace='urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOutcomeResponder:2' />
+    <xs:schema targetNamespace='urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcome:2:rivtabp21'>
+      <xs:import schemaLocation='GetLaboratoryOrderOutcomeResponder_2.0.xsd' namespace='urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2' />
       <xs:import schemaLocation='../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
     </xs:schema>
   </wsdl:types>
-  <wsdl:message name='GetLaboratoryOutcomeRequest'>
+  <wsdl:message name='GetLaboratoryOrderOutcomeRequest'>
     <wsdl:part name='LogicalAddress' element='itr:LogicalAddress'>
 	  	<wsdl:documentation>
 			National: The HSA-id of Inera AB ("national" aggregation service)
@@ -49,23 +49,23 @@
 			Specific Source system: The HSA-id of the source system
 		</wsdl:documentation>
     </wsdl:part>
-    <wsdl:part name='parameters' element='tjsr:GetLaboratoryOutcome' />
+    <wsdl:part name='parameters' element='tjsr:GetLaboratoryOrderOutcome' />
   </wsdl:message>
-  <wsdl:message name='GetLaboratoryOutcomeResponse'>
-    <wsdl:part name='parameters' element='tjsr:GetLaboratoryOutcomeResponse' />
+  <wsdl:message name='GetLaboratoryOrderOutcomeResponse'>
+    <wsdl:part name='parameters' element='tjsr:GetLaboratoryOrderOutcomeResponse' />
   </wsdl:message>
-  <wsdl:portType name='GetLaboratoryOutcomeResponderInterface'>
-    <wsdl:operation name='GetLaboratoryOutcome'>
-      <wsdl:input message='tns:GetLaboratoryOutcomeRequest' />
-      <wsdl:output message='tns:GetLaboratoryOutcomeResponse' />
+  <wsdl:portType name='GetLaboratoryOrderOutcomeResponderInterface'>
+    <wsdl:operation name='GetLaboratoryOrderOutcome'>
+      <wsdl:input message='tns:GetLaboratoryOrderOutcomeRequest' />
+      <wsdl:output message='tns:GetLaboratoryOrderOutcomeResponse' />
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name='GetLaboratoryOutcomeResponderBinding' type='tns:GetLaboratoryOutcomeResponderInterface'>
+  <wsdl:binding name='GetLaboratoryOrderOutcomeResponderBinding' type='tns:GetLaboratoryOrderOutcomeResponderInterface'>
     <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
-    <wsdl:operation name='GetLaboratoryOutcome'>
-      <soap:operation soapAction='urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOutcomeResponder:2:GetLaboratoryOutcome' style='document' />
+    <wsdl:operation name='GetLaboratoryOrderOutcome'>
+      <soap:operation soapAction='urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2:GetLaboratoryOrderOutcome' style='document' />
       <wsdl:input>
-        <soap:header use='literal' message='tns:GetLaboratoryOutcomeRequest' part='LogicalAddress' />
+        <soap:header use='literal' message='tns:GetLaboratoryOrderOutcomeRequest' part='LogicalAddress' />
         <soap:body use='literal' parts='parameters' />
       </wsdl:input>
       <wsdl:output>
@@ -73,8 +73,8 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name='GetLaboratoryOutcomeResponderService'>
-    <wsdl:port name='GetLaboratoryOutcomeResponderPort' binding='tns:GetLaboratoryOutcomeResponderBinding'>
+  <wsdl:service name='GetLaboratoryOrderOutcomeResponderService'>
+    <wsdl:port name='GetLaboratoryOrderOutcomeResponderPort' binding='tns:GetLaboratoryOrderOutcomeResponderBinding'>
       <soap:address location='http://tempuri.org' />
     </wsdl:port>
   </wsdl:service>
