@@ -38,43 +38,29 @@
   <!-- -->
   <xs:complexType name="OfferType">
     <xs:sequence>
-      <xs:element name="careUnit" type="tns:CareUnitType"/>
-      <xs:element name="validFrom" type="tns:DateType">
+      <xs:element name="hsaObject" type="tns:HsaObjectType"/>
+      <xs:element name="validContractDatePeriod" type="tns:DatePeriodType">
         <xs:annotation>
           <xs:documentation>Valid date from when this care unit starts handling type of cares.</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="validTo" type="tns:DateType">
-        <xs:annotation>
-          <xs:documentation>Date when this care unit stops handling type of cares.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
       <xs:element name="supportedInteractions" type="tns:SupportedInteractionsType"/>
-      <xs:element name="product" type="tns:ProductType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="products" type="tns:ProductType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="comment" type="xs:string" maxOccurs="1"/>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
-  <!-- Date format SSYYMMDD -->
-  <xs:simpleType name="DateType">
-    <xs:annotation>
-      <xs:documentation>Date format SSYYMMDD</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"/>
-    </xs:restriction>
-  </xs:simpleType>
-
   <!-- -->
-  <xs:complexType name="CareUnitType">
+  <xs:complexType name="HsaObjectType">
     <xs:annotation>
       <xs:documentation>careUnitId == HSAid, careUnitName, careUnitAddress</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="careUnitId" type="tns:HsaIdType"/>
-      <xs:element name="careUnitName" type="tns:CareUnitNameType"/>
-      <xs:element name="careUnitAddress" type="tns:CareUnitAddressType"/>
+      <xs:element name="hsaId" type="tns:HsaIdType"/>
+      <xs:element name="relativeDistinguishedName" type="xs:string"/>
+      <xs:element minOccurs="1" name="postlAddress" type="xs:string"/>
+      <xs:element minOccurs="0" name="postalCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="streetAddress" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -154,24 +140,14 @@
 
   <!-- -->
   <xs:complexType name="SupportedInteractionsType">
-    <xs:annotation>
-      <xs:documentation>When electronic is set to true each supported interactions must be listed.</xs:documentation>
-    </xs:annotation>
     <xs:sequence>
-      <xs:element name="electronic" type="xs:boolean">
-        <xs:annotation>
-          <xs:documentation>Set to true if the given care unit can handle electronic requests.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:sequence>
-        <xs:annotation>
-          <xs:documentation>Each service domain that can be used for the given care unit id.
+      <xs:annotation>
+        <xs:documentation>Each service domain that can be used for the given care unit id.
             For example set interaction to urn:clinicalprocess:requestflow:ProcessRequest and urn:clinicalprocess:requestflow:ProcessRequestOutcome
             if the care unit can recieve requests and send request answers.
           </xs:documentation>
-        </xs:annotation>
-        <xs:element name="interaction" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
-      </xs:sequence>
+      </xs:annotation>
+      <xs:element name="interaction" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -212,10 +188,38 @@
     <xs:sequence>
       <xs:element name="name" type="xs:string"/>
       <xs:element name="description" type="xs:string"/>
-      <xs:element name="code" type="tns:CodeType" maxOccurs="unbounded"/>
+      <xs:element name="typeOfProduct" type="tns:CVType" maxOccurs="unbounded"/>
       <xs:element name="price" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+
+  <xs:complexType name="DatePeriodType">
+    <xs:annotation>
+      <xs:documentation>
+        Används för att specificera ett datumintervall
+        med hjälp av start- och slutdatum.
+        
+        start: 
+        Startdatum på formatet ÅÅÅÅMMDD
+        end: 
+        Slutdatum på formatet ÅÅÅÅMMDD
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="start" type="tns:DateType"/>
+      <xs:element name="end" type="tns:DateType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Date format SSYYMMDD -->
+  <xs:simpleType name="DateType">
+    <xs:annotation>
+      <xs:documentation>Date format SSYYMMDD</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"/>
+    </xs:restriction>
+  </xs:simpleType>
 
   <xs:complexType name="ProductCapacityType">
     <xs:annotation>
@@ -260,5 +264,55 @@
       />
     </xs:sequence>
   </xs:complexType>
+
+  <xs:complexType name="TimePeriodType">
+    <xs:annotation>
+      <xs:documentation>
+        Används för att specificera ett datumintervall
+        med hjälp av start- och slutdatum.
+        
+        start: 
+        Startdatum på formatet YYYYMMDDhhmmss
+        end: 
+        Slutdatum på formatet YYYYMMDDhhmmss
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="start" type="tns:TimeStampType"/>
+      <xs:element name="end" type="tns:TimeStampType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="TimeStampType">
+    <xs:annotation>
+      <xs:documentation>
+        A quantity specifying a point on the axis of natural time.
+        A point in time is most often represented as a calendar
+        expression.
+        
+        The time has the format YYYYMMDDhhmmss
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern
+        value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])(0[0-9]|1[0-9]|2[0123])([0-5])([0-9])([0-5])([0-9])"
+      />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="CVType">
+    <xs:annotation>
+      <xs:documentation/>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="code" type="xs:string" minOccurs="0"/>
+      <xs:element name="codeSystem" type="xs:string" minOccurs="0"/>
+      <xs:element name="codeSystemName" type="xs:string" minOccurs="0"/>
+      <xs:element name="codeSystemVersion" type="xs:string" minOccurs="0"/>
+      <xs:element name="displayName" type="xs:string" minOccurs="0"/>
+      <xs:element name="originalText" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
 
 </xs:schema>
