@@ -26,7 +26,7 @@ SET W0=%SCHEMADIR%\interactions\FindOffersInteraction\FindOffersInteraction_1.0_
 SET X0=%SCHEMADIR%\interactions\FindOffersInteraction\*.xsd
 
 SET SCHEMADIR=schemas
-SET W2=%SCHEMADIR%\interactions\UpdateOffersInteraction\UpdateOffersInteraction_1.0_RIVTABP21.wsdl
+SET W2=%SCHEMADIR%\interactions\UpdateOffersInteraction\GetCapacitiesInteraction_1.0_RIVTABP21.wsdl
 SET X2=%SCHEMADIR%\interactions\UpdateOffersInteraction\*.xsd
 
 SET SCHEMADIR=schemas
