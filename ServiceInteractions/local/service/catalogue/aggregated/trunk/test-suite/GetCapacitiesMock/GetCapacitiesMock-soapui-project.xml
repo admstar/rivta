@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="GetCapacitiesMock" resourceRoot="" soapui-version="4.6.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetCapacitiesResponderBinding" type="wsdl" bindingName="{urn:riv:service:catalogue:GetCapacities:1:rivtabp21}GetCapacitiesResponderBinding" soapVersion="1_1" anonymous="optional" definition="file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/interactions/GetCapacitiesInteraction/GetCapacitiesInteraction_1.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/interactions/GetCapacitiesInteraction/GetCapacitiesInteraction_1.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/interactions/GetCapacitiesInteraction/GetCapacitiesInteraction_1.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.-->
+<wsdl:definitions name="GetCapacitiesInteraction" targetNamespace="urn:riv:service:catalogue:GetCapacities:1:rivtabp21" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tjsr="urn:riv:service:catalogue:GetCapacitiesResponder:1" xmlns:tjsi="urn:riv:service:catalogue:GetCapacitiesInitiator:1" xmlns:tns="urn:riv:service:catalogue:GetCapacities:1:rivtabp21" xmlns:itr="urn:riv:itintegration:registry:1">
+  <xs:annotation>
+    <xs:documentation>Tjänsteinteraktionens namn: GetCapacitiesInteraction
+			 Beskrivning: 
+			   Hämta kapaciteter som är kopplade till en utbudspunkt(vårdgivarenhet), t.ex väntetider.
+			 Revisioner: 
+			 Tjänstedomän: service:catalogue
+			 Tjänsteinteraktionstyp: Fråga-Svar
+			 WS-profil: RIVTABP21
+			 Förvaltas av: Stockholms Läns Landsting</xs:documentation>
+  </xs:annotation>
+  <wsdl:types>
+    <xs:schema targetNamespace="urn:riv:service:catalogue:GetCapacities:1:rivtabp21">
+      <xs:import schemaLocation="GetCapacitiesResponder_1.0.xsd" namespace="urn:riv:service:catalogue:GetCapacitiesResponder:1"/>
+      <xs:import schemaLocation="../../core_components/itintegration_registry_1.0.xsd" namespace="urn:riv:itintegration:registry:1"/>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="GetCapacitiesRequest">
+    <wsdl:part name="LogicalAddress" element="itr:LogicalAddress">
+      <wsdl:documentation>The organization id of the organization owning the targeted caregiver catalogue.</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="parameters" element="tjsr:GetCapacities"/>
+  </wsdl:message>
+  <wsdl:message name="GetCapacitiesResponse">
+    <wsdl:part name="parameters" element="tjsr:GetCapacitiesResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="GetCapacitiesResponderInterface">
+    <wsdl:operation name="GetCapacities">
+      <wsdl:input message="tns:GetCapacitiesRequest"/>
+      <wsdl:output message="tns:GetCapacitiesResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GetCapacitiesResponderBinding" type="tns:GetCapacitiesResponderInterface">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetCapacities">
+      <soap:operation soapAction="urn:riv:service:catalogue:GetCapacitiesResponder:1:GetCapacities" style="document"/>
+      <wsdl:input>
+        <soap:header use="literal" message="tns:GetCapacitiesRequest" part="LogicalAddress"/>
+        <soap:body use="literal" parts="parameters"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GetCapacitiesResponderService">
+    <wsdl:port name="GetCapacitiesResponderPort" binding="tns:GetCapacitiesResponderBinding">
+      <soap:address location="http://tempuri.org"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/interactions/GetCapacitiesInteraction/GetCapacitiesResponder_1.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.-->
+<xs:schema targetNamespace="urn:riv:service:catalogue:GetCapacitiesResponder:1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:service:catalogue:GetCapacitiesResponder:1" xmlns:core="urn:riv:service:catalogue:1">
+  <xs:import schemaLocation="../../core_components/service_catalogue_1.0.xsd" namespace="urn:riv:service:catalogue:1"/>
+  <xs:element name="GetCapacities" type="tns:GetCapacitiesType"/>
+  <xs:element name="GetCapacitiesResponse" type="tns:GetCapacitiesResponseType"/>
+  <xs:complexType name="GetCapacitiesType">
+    <xs:annotation>
+      <xs:documentation>Get capacities for a given hsaID.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="careUnitId" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Get capacities for a given hsaID</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetCapacitiesResponseType">
+    <xs:sequence>
+      <xs:element name="careUnit" type="core:CareUnitCapacityType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/core_components/service_catalogue_1.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.-->
+<xs:schema targetNamespace="urn:riv:service:catalogue:1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:service:catalogue:1">
+  <!---->
+  <xs:complexType name="OffersTransactionType">
+    <xs:annotation>
+      <xs:documentation>When deleteFlag is set to true, the given careUnitId will be deleted from the catalogue.
+        When set to false a create or update will be performed.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="deleteFlag" type="xs:boolean"/>
+      <xs:element name="offer" type="tns:OfferType" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="maxLength" type="tns:CapacityType"/>
+  <!---->
+  <xs:complexType name="OfferType">
+    <xs:sequence>
+      <xs:element name="hsaObject" type="tns:HsaObjectType"/>
+      <xs:element name="validContractDatePeriod" type="tns:DatePeriodType">
+        <xs:annotation>
+          <xs:documentation>Valid date from when this care unit starts handling type of cares.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="supportedInteractions" type="tns:SupportedInteractionsType"/>
+      <xs:element name="products" type="tns:ProductType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="comment" type="xs:string" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!---->
+  <xs:complexType name="HsaObjectType">
+    <xs:annotation>
+      <xs:documentation>careUnitId == HSAid, careUnitName, careUnitAddress</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="hsaId" type="tns:HsaIdType"/>
+      <xs:element name="relativeDistinguishedName" type="xs:string"/>
+      <xs:element minOccurs="1" name="postlAddress" type="xs:string"/>
+      <xs:element minOccurs="0" name="postalCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="streetAddress" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!---->
+  <xs:simpleType name="CareUnitNameType">
+    <xs:annotation>
+      <xs:documentation>Care unit name, corresponds to ... in HSA</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1024"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!---->
+  <xs:complexType name="CapacityType">
+    <xs:annotation>
+      <xs:documentation>Product information</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="displayName" type="xs:string"/>
+      <xs:element name="description" type="xs:string"/>
+      <xs:element name="code" type="xs:string"/>
+      <xs:element name="codeSystem" type="xs:string"/>
+      <xs:element name="value" type="xs:string"/>
+      <xs:element name="validTo" type="tns:TS"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!---->
+  <xs:complexType name="CareUnitAddressType">
+    <xs:sequence>
+      <xs:element name="streetName1">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="35"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="streetName2" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="35"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="streetName3" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="35"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="postalCode">
+        <xs:annotation>
+          <xs:documentation>Postal code is always represented as 3 numbers and 2 numbers separated with a space 
+          For example: 123 45</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]{3,3}\s[0-9]{2,2}"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="postalCity">
+        <xs:annotation>
+          <xs:documentation>Postal city, maxlength 27 characters.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="27"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!---->
+  <xs:complexType name="SupportedInteractionsType">
+    <xs:sequence>
+      <xs:annotation>
+        <xs:documentation>Each service domain that can be used for the given care unit id.
+            For example set interaction to urn:clinicalprocess:requestflow:ProcessRequest and urn:clinicalprocess:requestflow:ProcessRequestOutcome
+            if the care unit can recieve requests and send request answers.</xs:documentation>
+      </xs:annotation>
+      <xs:element name="interaction" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!---->
+  <xs:simpleType name="HsaIdType">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="64"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TS">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[1-9]{1}[0-9]{3}(0[1-9]{1}|1[0-2]{1})([0-2]{1}[0-9]{1}|3[0-1]{1})([0-1]{1}[0-9]{1}|2[0-3]{1})[0-5]{1}[0-9]{1}[0-5]{1}[0-9]{1}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DT">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[1-9]{1}[0-9]{3}(0[1-9]{1}|1[0-2]{1})([0-2]{1}[0-9]{1}|3[0-1]{1})"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ResultCodeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="OK"/>
+      <xs:enumeration value="ERROR"/>
+      <xs:enumeration value="INFO"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!---->
+  <xs:complexType name="ProductType">
+    <xs:annotation>
+      <xs:documentation>Product information</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="description" type="xs:string"/>
+      <xs:element name="typeOfProduct" type="tns:CVType" maxOccurs="unbounded"/>
+      <xs:element name="price" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DatePeriodType">
+    <xs:annotation>
+      <xs:documentation>Används för att specificera ett datumintervall
+        med hjälp av start- och slutdatum.
+        
+        start: 
+        Startdatum på formatet ÅÅÅÅMMDD
+        end: 
+        Slutdatum på formatet ÅÅÅÅMMDD</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="start" type="tns:DateType"/>
+      <xs:element name="end" type="tns:DateType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!--Date format SSYYMMDD-->
+  <xs:simpleType name="DateType">
+    <xs:annotation>
+      <xs:documentation>Date format SSYYMMDD</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ProductCapacityType">
+    <xs:annotation>
+      <xs:documentation>Product information</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="capacity" type="tns:CapacitType" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CapacitType">
+    <xs:annotation>
+      <xs:documentation>CodeSystem information</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="validTo" type="xs:string"/>
+      <xs:element name="value" type="xs:string"/>
+      <xs:element name="description" type="xs:string"/>
+      <xs:element name="code" type="xs:string"/>
+      <xs:element name="codeSystem" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CodeType">
+    <xs:annotation>
+      <xs:documentation>CodeSystem information</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="displayName" type="xs:string"/>
+      <xs:element name="description" type="xs:string"/>
+      <xs:element name="code" type="xs:string"/>
+      <xs:element name="codeSystem" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CareUnitCapacityType">
+    <xs:sequence>
+      <xs:element name="careUnitId" type="xs:string"/>
+      <xs:element name="careUnitName" type="xs:string"/>
+      <xs:element name="product" type="tns:ProductCapacityType" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TimePeriodType">
+    <xs:annotation>
+      <xs:documentation>Används för att specificera ett datumintervall
+        med hjälp av start- och slutdatum.
+        
+        start: 
+        Startdatum på formatet YYYYMMDDhhmmss
+        end: 
+        Slutdatum på formatet YYYYMMDDhhmmss</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="start" type="tns:TimeStampType"/>
+      <xs:element name="end" type="tns:TimeStampType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="TimeStampType">
+    <xs:annotation>
+      <xs:documentation>A quantity specifying a point on the axis of natural time.
+        A point in time is most often represented as a calendar
+        expression.
+        
+        The time has the format YYYYMMDDhhmmss</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])(0[0-9]|1[0-9]|2[0123])([0-5])([0-9])([0-5])([0-9])"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="CVType">
+    <xs:annotation>
+      <xs:documentation/>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="code" type="xs:string" minOccurs="0"/>
+      <xs:element name="codeSystem" type="xs:string" minOccurs="0"/>
+      <xs:element name="codeSystemName" type="xs:string" minOccurs="0"/>
+      <xs:element name="codeSystemVersion" type="xs:string" minOccurs="0"/>
+      <xs:element name="displayName" type="xs:string" minOccurs="0"/>
+      <xs:element name="originalText" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/core_components/itintegration_registry_1.0.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="urn:riv:itintegration:registry:1" elementFormDefault="qualified" version="1.0" xmlns="urn:riv:itintegration:registry:1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:annotation>
+    <xs:documentation>Beskrivning: 	Grundl��ggande informationsobjekt f��r dom��nen itintegration:registry (adressering av tj��nster)
+			
+			Revisionshistorik: 2011-06-27 Mats Ekhammar, Callista Enterprise AB
+				Added ServiceContractType
+			
+			Datum:			2011-05-04
+			Beskrivning:	Initial version
+			F��rfattare:		marcus.krantz@callistaenterprise.se</xs:documentation>
+  </xs:annotation>
+  <xs:element name="LogicalAddress" type="LogicalAddressType"/>
+  <xs:element name="ServiceContract" type="ServiceContractType"/>
+  <xs:simpleType name="LogicalAddressType">
+    <xs:annotation>
+      <xs:documentation>Defines the type for logical address according to national reference architecture.
+				Superseeds wsa:To as type for logical address header in RIVTA 2.1.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:complexType name="ServiceContractType">
+    <xs:annotation>
+      <xs:documentation>Type which describes a service contract. Used in interaction GetSupportedServiceContracts.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ServiceContractNamespace" type="xs:anyURI"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://tempuri.org</con:endpoint><con:endpoint>http://Khaleds-MacBook-Pro.local:8088/mockGetCapacitiesResponderBinding</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:service:catalogue:GetCapacitiesResponder:1:GetCapacities" name="GetCapacities" bindingOperationName="GetCapacities" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation></con:interface><con:mockService port="8088" path="/mockGetCapacitiesResponderBinding" host="Khaleds-MacBook-Pro.local" name="MockService"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="GetCapacities" interface="GetCapacitiesResponderBinding" operation="GetCapacities"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="Response 1" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:service:catalogue:GetCapacitiesResponder:1" xmlns:urn1="urn:riv:service:catalogue:1">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetCapacitiesResponse>
+         <!--Zero or more repetitions:-->
+         <urn:careUnit>
+            <urn1:careUnitId>?</urn1:careUnitId>
+            <urn1:careUnitName>?</urn1:careUnitName>
+            <!--Zero or more repetitions:-->
+            <urn1:product>
+               <urn1:name>?</urn1:name>
+               <!--Zero or more repetitions:-->
+               <urn1:capacity>
+                  <urn1:validTo>?</urn1:validTo>
+                  <urn1:value>?</urn1:value>
+                  <urn1:description>?</urn1:description>
+                  <urn1:code>?</urn1:code>
+                  <urn1:codeSystem>?</urn1:codeSystem>
+               </urn1:capacity>
+            </urn1:product>
+         </urn:careUnit>
+         <!--You may enter ANY elements at this point-->
+      </urn:GetCapacitiesResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:service:catalogue:GetCapacitiesResponder:1:GetCapacities"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:requirements/><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:reporting><con:reportTemplates/><con:xmlTemplates/><con:parameters/></con:reporting><con:sensitiveInformation/></con:soapui-project>
