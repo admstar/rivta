@@ -409,7 +409,8 @@ source.load("Simple search")</script></con:config></con:testStep><con:testStep t
    </soapenv:Header>
    <soapenv:Body>
       <urn1:FindOffers>
-         <urn1:hsaId>${hsaId}</urn1:hsaId></urn1:FindOffers>
+         <urn1:hsaId>${hsaId}</urn1:hsaId>
+      </urn1:FindOffers>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:assertion type="Response SLA Assertion" name="Response SLA"><con:configuration><SLA>15000</SLA></con:configuration></con:assertion><con:assertion type="XPath Match" name="XPath Match"><con:configuration><path>declare namespace urn='urn:riv:service:catalogue:FindOffersResponder:1';
 declare namespace urn1='urn:riv:service:catalogue:1';
@@ -420,7 +421,8 @@ matches(//urn1:hsaObject/urn1:hsaId/text(), "SE-TEST1")</path><content>true</con
    </soapenv:Header>
    <soapenv:Body>
       <urn1:FindOffers>
-         <urn1:relativeDistinguishedName>${relativeDistinguishedName}</urn1:relativeDistinguishedName></urn1:FindOffers>
+         <urn1:relativeDistinguishedName>${relativeDistinguishedName}</urn1:relativeDistinguishedName>
+      </urn1:FindOffers>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:assertion type="Response SLA Assertion" name="Response SLA"><con:configuration><SLA>15000</SLA></con:configuration></con:assertion><con:assertion type="XPath Match" name="XPath Match"><con:configuration><path>declare namespace urn='urn:riv:service:catalogue:FindOffersResponder:1';
 declare namespace urn1='urn:riv:service:catalogue:1';
@@ -431,7 +433,11 @@ matches(//urn1:hsaObject/urn1:hsaId/text(), "SE-TEST1")</path><content>true</con
    </soapenv:Header>
    <soapenv:Body>
       <urn1:FindOffers>
-         <urn1:productCode><urn2:code>${code}</urn2:code><urn2:codeSystem>${codeSystem}</urn2:codeSystem></urn1:productCode></urn1:FindOffers>
+         <urn1:productCode>
+            <urn2:code>${code}</urn2:code>
+            <urn2:codeSystem>${codeSystem}</urn2:codeSystem>
+         </urn1:productCode>
+      </urn1:FindOffers>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:assertion type="Response SLA Assertion" name="Response SLA"><con:configuration><SLA>15000</SLA></con:configuration></con:assertion><con:assertion type="XPath Match" name="XPath Match"><con:configuration><path>declare namespace urn='urn:riv:service:catalogue:FindOffersResponder:1';
 declare namespace urn1='urn:riv:service:catalogue:1';
@@ -458,4 +464,18 @@ matches(//urn1:hsaObject/urn1:hsaId/text(), "SE-TEST1")</path><content>true</con
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:assertion type="Response SLA Assertion" name="Response SLA"><con:configuration><SLA>15000</SLA></con:configuration></con:assertion><con:assertion type="XPath Match" name="XPath Match"><con:configuration><path>declare namespace urn='urn:riv:service:catalogue:FindOffersResponder:1';
 declare namespace urn1='urn:riv:service:catalogue:1';
 declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
-matches(//urn1:hsaObject/urn1:hsaId/text(), "SE-TEST1")</path><content>true</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:service:catalogue:FindOffersResponder:1:FindOffers" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/><con:reportParameters/><con:breakPoints><con:testStepId>cc9afaa3-4755-4995-b971-f1ef85a2d56f</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>a318e226-7e2c-4b25-8267-f5dfa5467cfb</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>6c8f41f0-72bc-476f-a1ec-846fb513e17a</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>2a988c54-2087-4d87-a4c9-f86f62e78b45</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>cd46e141-5039-4639-b6e6-72f9aa14b59d</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>85eac504-a5d2-4345-835b-1c4e6598e51f</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Empty search" searchProperties="true" id="71ce1565-bfbc-4eed-95ce-73dda498e69f"><con:settings/><con:properties/><con:reportParameters/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Multiple search" searchProperties="true" id="bb428a45-df61-4c5c-be3d-e5dbd469c642"><con:settings/><con:properties/><con:reportParameters/></con:testCase><con:properties/><con:reportParameters/></con:testSuite><con:testSuite name="Fault tests"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:properties/><con:reportParameters/></con:testSuite><con:requirements/><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:reporting><con:reportTemplates/><con:xmlTemplates/><con:parameters/></con:reporting><con:sensitiveInformation/></con:soapui-project>
+matches(//urn1:hsaObject/urn1:hsaId/text(), "SE-TEST1")</path><content>true</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:service:catalogue:FindOffersResponder:1:FindOffers" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/><con:reportParameters/><con:breakPoints><con:testStepId>cc9afaa3-4755-4995-b971-f1ef85a2d56f</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>a318e226-7e2c-4b25-8267-f5dfa5467cfb</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>6c8f41f0-72bc-476f-a1ec-846fb513e17a</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>2a988c54-2087-4d87-a4c9-f86f62e78b45</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>cd46e141-5039-4639-b6e6-72f9aa14b59d</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>85eac504-a5d2-4345-835b-1c4e6598e51f</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Empty search" searchProperties="true" id="71ce1565-bfbc-4eed-95ce-73dda498e69f"><con:settings/><con:testStep type="groovy" name="Read data" id="8c6930c3-2f6e-4cc7-9092-d46bde89bee0"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def dataFile = new File(utils.projectPath + "/data.xml")
+def source = new XmlDataReader(context, dataFile)
+
+source.load("Empty search")</script></con:config></con:testStep><con:testStep type="request" name="FindOffers - empty"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>FindOffersResponderBinding</con:interface><con:operation>FindOffers</con:operation><con:request name="FindOffers - empty"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:service:catalogue:FindOffersResponder:1">
+   <soapenv:Header>
+      <urn:LogicalAddress>?</urn:LogicalAddress>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn1:FindOffers/>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/><con:reportParameters/><con:breakPoints><con:testStepId>8c6930c3-2f6e-4cc7-9092-d46bde89bee0</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Multiple search" searchProperties="true" id="bb428a45-df61-4c5c-be3d-e5dbd469c642"><con:settings/><con:properties/><con:reportParameters/></con:testCase><con:properties/><con:reportParameters/></con:testSuite><con:testSuite name="Fault tests"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:properties/><con:reportParameters/></con:testSuite><con:requirements/><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:reporting><con:reportTemplates/><con:xmlTemplates/><con:parameters/></con:reporting><con:sensitiveInformation/></con:soapui-project>
