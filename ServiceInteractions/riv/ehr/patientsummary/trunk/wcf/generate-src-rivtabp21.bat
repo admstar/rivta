@@ -30,8 +30,32 @@ SET XCORE=%SCHEMADIR%\core_components\*.xsd
 
 SET SCHEMAS=%XCORE% %W0% %X0% 
 
-SET OUTFILE=/out:wcf\generated-src\EhrPatientsummaryInteractions.cs
-SET APPCONFIG=/config:wcf\generated-src\app.config
+SET OUTFILE=/out:wcf\generated-src\get-ehr-extract\GetEhrPatientsummaryInteractions.cs
+SET APPCONFIG=/config:wcf\generated-src\get-ehr-extract\app.config
+SET NAMESPACE=/namespace:*,Riv.Ehr.Patientsummary.Schemas.v1
+SET SVCUTIL="svcutil.exe"
+%SVCUTIL% /language:cs %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
+
+
+
+SET W1=%SCHEMADIR%\interactions\ReceiveEhrExtractInteraction\ReceiveEhrExtractInteraction_1.0_RIVTABP21.wsdl
+SET X1=%SCHEMADIR%\interactions\ReceiveEhrExtractInteraction\*.xsd
+SET SCHEMAS=%XCORE% %W1% %X1% 
+
+SET OUTFILE=/out:wcf\generated-src\receive-ehr-extract\ReceiveEhrPatientsummaryInteractionsnummer.cs
+SET APPCONFIG=/config:wcf\generated-src\receive-ehr-extract\app.config
+SET NAMESPACE=/namespace:*,Riv.Ehr.Patientsummary.Schemas.v1
+SET SVCUTIL="svcutil.exe"
+%SVCUTIL% /language:cs %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
+
+
+
+SET W2=%SCHEMADIR%\interactions\DeleteEhrExtractInteraction\DeleteEhrExtractInteraction_1.0_RIVTABP21.wsdl
+SET X2=%SCHEMADIR%\interactions\DeleteEhrExtractInteraction\*.xsd
+SET SCHEMAS=%XCORE% %W2% %X2% 
+
+SET OUTFILE=/out:wcf\generated-src\delete-ehr-extract\DeleteEhrPatientsummaryInteractionsnummer.cs
+SET APPCONFIG=/config:wcf\generated-src\delete-ehr-extract\app.config
 SET NAMESPACE=/namespace:*,Riv.Ehr.Patientsummary.Schemas.v1
 SET SVCUTIL="svcutil.exe"
 %SVCUTIL% /language:cs %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%

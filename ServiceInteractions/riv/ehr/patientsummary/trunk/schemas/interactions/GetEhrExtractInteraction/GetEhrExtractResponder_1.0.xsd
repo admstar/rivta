@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <!-- 
  Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
@@ -34,16 +34,16 @@
 
   <xs:complexType name='GetEhrExtractType'>
     <xs:sequence>
-			<xs:element name="subject_of_care_id" type="core:II"/>
-			<xs:element name="purpose" type="core:CD" minOccurs="0"/>
-			<xs:element name="rc_ids" type="core:II" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="time_period" type="core:IVL_TS" minOccurs="0"/>
-			<xs:element name="max_sensitivity" type="core:INT" minOccurs="0"/>
-			<xs:element name="all_versions" type="core:BL" minOccurs="0"/>
-			<xs:element name="multimedia_included" type="core:BL" minOccurs="0"/>
-			<xs:element name="archetype_ids" type="core:II" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="meanings" type="core:CD" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="max_records" type="core:INT" minOccurs="0"/>
+			<xs:element name="subject_of_care_id" type="II"/>
+			<xs:element name="purpose" type="CD" minOccurs="0"/>
+			<xs:element name="rc_ids" type="II" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="time_period" type="IVL_TS" minOccurs="0"/>
+			<xs:element name="max_sensitivity" type="INT" minOccurs="0"/>
+			<xs:element name="all_versions" type="BL" minOccurs="0"/>
+			<xs:element name="multimedia_included" type="BL" minOccurs="0"/>
+			<xs:element name="archetype_ids" type="II" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="meanings" type="CD" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="max_records" type="INT" minOccurs="0"/>
 			<xs:element name="parameters" type="tns:ParameterType" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -51,23 +51,23 @@
   <xs:complexType name='GetEhrExtractResponseType'>
     <xs:sequence>
 			<xs:element name="ehr_extract" type="core:EHR_EXTRACT" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="continuation_token" type="core:ST" minOccurs="0"/>
+			<xs:element name="continuation_token" type="ST" minOccurs="0"/>
 			<xs:element name="response_detail" type="tns:ResponseDetailType" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
  	<xs:complexType name="ParameterType">
 		<xs:sequence>
-			<xs:element name="code" type="core:CD" minOccurs="0"/>
-			<xs:element name="name" type="core:ST"/>
-			<xs:element name="value" type="core:ST"/>
+			<xs:element name="code" type="CD" minOccurs="0"/>
+			<xs:element name="name" type="ST"/>
+			<xs:element name="value" type="ST"/>
 		</xs:sequence>
 	</xs:complexType>
 
 	<xs:complexType name="ResponseDetailType">
 		<xs:sequence>
-			<xs:element name="code" type="core:CD" minOccurs="0"/>
-			<xs:element name="text" type="core:ST"/>
+			<xs:element name="code" type="CD" minOccurs="0"/>
+			<xs:element name="text" type="ST"/>
 		</xs:sequence>
 		<xs:attribute name="type_code" type="tns:ResponseDetailTypeCodes"/>
 	</xs:complexType>
