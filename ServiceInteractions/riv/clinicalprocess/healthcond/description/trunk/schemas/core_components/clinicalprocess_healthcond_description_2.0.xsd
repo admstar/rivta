@@ -30,6 +30,7 @@
         <xs:sequence>
             <xs:element name="careDocumentationHeader" type="tns:PatientSummaryHeaderType"/>
             <xs:element name="careDocumentationBody" type="tns:CareDocumentationBodyType"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -44,6 +45,7 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="clinicalDocumentNote" type="tns:ClinicalDocumentNoteType"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -75,6 +77,7 @@
             <xs:element name="multimediaEntry" type="tns:MultimediaType" minOccurs="0" maxOccurs="1"/>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="dissentintOpinion"
                 type="tns:DissentingOpinionType"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -123,6 +126,7 @@
             <xs:element name="careContactId" type="xs:string" minOccurs="0"/>
             <xs:element minOccurs="0" name="nullified" type="xs:boolean"/>
             <xs:element minOccurs="0" name="nullifiedReason" type="xs:string"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -136,13 +140,8 @@
                 healthcareProfessionalName
                 Namn på vård- och omsorgspersonal
                 healthcareProfessionalRoleCode: 
-                Information om personens befattning om annat kodverk än KV Befattning används. 
-                Ska anges om healthcareProfessionalOtherRoleCode saknas. Kan inte anges 
-                samtidigt med healthcareProfessionalOtherRoleCode.
-                healthcareProfessionalOtherRoleCode: 
-                Information om författarens befattning om annat kodverk än KV Befattning 
-                används. Ska anges om healthcareProfessionalRoleCode saknas. Kan inte anges 
-                samtidigt med healthcareProfessionalRoleCode.
+                Information om personens befattning. Om möjligt skall KV Befattning (OID 1.2.752.129.2.2.1.4), se 
+                http://www.inera.se/Documents/TJANSTER_PROJEKT/Katalogtjanst_HSA/Innehall/hsa_innehall_befattning.pdf
                 healthcareProfessionalCareUnitHSAid: 
                 HSA-id för PDL-enhet som vård- och omsorgspersonen är uppdragstagare för
                 healthcareProfessionalCareGiverHSAid: 
@@ -151,7 +150,7 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="authorTime" type="tns:TimeStampType"/>
-            <xs:element name="healthcareProfessionalHSAId" type="tns:HSAIdType" minOccurs="1"/>
+            <xs:element name="healthcareProfessionalHSAId" type="tns:HSAIdType" minOccurs="0"/>
             <xs:element name="healthcareProfessionalName" type="xs:string" minOccurs="0"/>
             <xs:element name="healthcareProfessionalRoleCode" type="tns:CVType" minOccurs="0"/>
             <xs:element name="healthcareProfessionalOrgUnit" type="tns:OrgUnitType" minOccurs="1"/>
@@ -159,6 +158,7 @@
                 minOccurs="0"/>
             <xs:element minOccurs="0" name="healthcareProfessionalCareGiverHSAId"
                 type="tns:HSAIdType"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -189,6 +189,7 @@
             <xs:element name="orgUnitEmail" type="xs:string" minOccurs="0"/>
             <xs:element name="orgUnitAddress" type="xs:string" minOccurs="0"/>
             <xs:element name="orgUnitLocation" type="xs:string" minOccurs="0"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -226,6 +227,7 @@
             <xs:element name="authorOrgUnitAddress" type="xs:string" minOccurs="0"/>
             <xs:element name="careUnitHSAid" type="tns:HSAIdType"/>
             <xs:element name="careGiverHSAid" type="tns:HSAIdType"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -251,6 +253,7 @@
         <xs:sequence>
             <xs:element name="start" type="tns:DateType"/>
             <xs:element name="end" type="tns:DateType"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -275,6 +278,7 @@
             <xs:sequence>
                 <xs:element name="value" type="xs:base64Binary" minOccurs="0"/>
                 <xs:element name="reference" type="xs:anyURI" minOccurs="0"/>
+                <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:sequence>
     </xs:complexType>
@@ -294,6 +298,7 @@
         <xs:sequence>
             <xs:element name="start" type="tns:TimeStampType"/>
             <xs:element name="end" type="tns:TimeStampType"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -325,6 +330,7 @@
             <xs:element name="codeSystemVersion" type="xs:string" minOccurs="0"/>
             <xs:element name="displayName" type="xs:string" minOccurs="0"/>
             <xs:element name="originalText" type="xs:string" minOccurs="0"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -345,6 +351,7 @@
             <xs:element name="signatureTime" type="tns:TimeStampType"/>
             <xs:element name="legalAuthenticatorHSAId" type="tns:HSAIdType" minOccurs="0"/>
             <xs:element name="legalAuthenticatorName" type="xs:string" minOccurs="0"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -359,6 +366,7 @@
             <xs:element name="opinion" type="xs:string"/>
             <xs:element name="personId" type="tns:PersonIdType"/>
             <xs:element name="personName" type="xs:string"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -370,6 +378,7 @@
         <xs:sequence>
             <xs:element name="root" type="xs:string"/>
             <xs:element name="extension" type="xs:string" minOccurs="0"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -380,7 +389,7 @@
         <xs:sequence>
             <xs:element name="id" type="xs:string"/>
             <xs:element name="type" type="xs:string"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
-
 </xs:schema>
