@@ -42,7 +42,7 @@ SET W1=%SCHEMADIR%\interactions\ReceiveEhrExtractInteraction\ReceiveEhrExtractIn
 SET X1=%SCHEMADIR%\interactions\ReceiveEhrExtractInteraction\*.xsd
 SET SCHEMAS=%XCORE% %W1% %X1% 
 
-SET OUTFILE=/out:wcf\generated-src\receive-ehr-extract\ReceiveEhrPatientsummaryInteractionsnummer.cs
+SET OUTFILE=/out:wcf\generated-src\receive-ehr-extract\ReceiveEhrPatientsummaryInteractions.cs
 SET APPCONFIG=/config:wcf\generated-src\receive-ehr-extract\app.config
 SET NAMESPACE=/namespace:*,Riv.Ehr.Patientsummary.Schemas.v1
 SET SVCUTIL="svcutil.exe"
@@ -54,7 +54,7 @@ SET W2=%SCHEMADIR%\interactions\DeleteEhrExtractInteraction\DeleteEhrExtractInte
 SET X2=%SCHEMADIR%\interactions\DeleteEhrExtractInteraction\*.xsd
 SET SCHEMAS=%XCORE% %W2% %X2% 
 
-SET OUTFILE=/out:wcf\generated-src\delete-ehr-extract\DeleteEhrPatientsummaryInteractionsnummer.cs
+SET OUTFILE=/out:wcf\generated-src\delete-ehr-extract\DeleteEhrPatientsummaryInteractions.cs
 SET APPCONFIG=/config:wcf\generated-src\delete-ehr-extract\app.config
 SET NAMESPACE=/namespace:*,Riv.Ehr.Patientsummary.Schemas.v1
 SET SVCUTIL="svcutil.exe"
