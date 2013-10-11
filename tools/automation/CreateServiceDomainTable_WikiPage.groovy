@@ -11,16 +11,14 @@
  *
  *
  * @author Peter Hernfalk
- * Last update: 2013-09-26
+ * Last update: 2013-10-11
  */
 
 //------------------------------ 2do -------------------------------//
-// -Verify that the download links are correct                      //
-// -Verify that all generated table contents match the Excel source //
 //------------------------------------------------------------------//
-
 import groovy.util.slurpersupport.GPathResult
 import static groovy.io.FileType.FILES
+
 
 //-----Definitions
 cehisCategoriesLink = "http://code.google.com/p/rivta/wiki/CehisKategorier"
@@ -75,51 +73,18 @@ def ShowExecutionStatistics() {
     log(loglevelInfo, serviceDomains.size + " service domains were used")
 }
 
-
-//-----2do: modify this method so that it uses the version when deciding if to return a link to the zip file or to the doomains download page
-def getDownloadLinkFromRIVTA(String filterValue, String version) {
-    urlToRIVTADownloadBegin = "http://code.google.com/p/rivta/downloads/list?can=2"
-    urlToRIVTADownloadFilter = "&q=TD%3D"
-    urlToRIVTADownloadEnd = "&colspec=Filename+TD+Summary+Uploaded+ReleaseDate+Size+DownloadCount"
-
-    urlToZipFiles = urlToRIVTADownloadBegin
+def buildloadLinks(String filterValue, String version) {
     if (filterValue.isEmpty() == false) {
-        adjustedFilterValue = filterValue.replaceAll(":", ".")
+        adjustedFilterValue = filterValue.replaceAll(":", "_")
         adjustedFilterValue = adjustedFilterValue.replaceAll(" ", "")
-        urlToZipFiles += urlToRIVTADownloadFilter + adjustedFilterValue
-        if (adjustedFilterValue.indexOf(" ") > 0) {
-            log(loglevelDebug, "   Filtervalue: before, after: " + filterValue + " " + adjustedFilterValue)
-        }
     }
-    urlToZipFiles += urlToRIVTADownloadEnd
-
-    //-----2do: add version as a url parameter
-
-    @Grab(group='org.ccil.cowan.tagsoup', module='tagsoup', version='1.2' )
-    XmlSlurper slurper = new XmlSlurper(new org.ccil.cowan.tagsoup.Parser());
-    GPathResult nodes = slurper.parse(urlToZipFiles)
-
-    log(loglevelDebug, "   Download URL: " + urlToZipFiles)
-
-    numberOfZipFiles = 0
-    //-----Extracts proper URL:s from the table at the RIVTA download page
-    new URL(urlToZipFiles).eachLine{
-        (it =~ /.*<a href="(.*?)">/).each{
-            //parsedURL = parseFilteredURLFromHref(it.toString(), "")
-            parsedURL = parseFilteredURLFromHref(it.toString(), ".zip")
-            if (parsedURL != null) {
-                log(loglevelDebug, "parsedURL: " + parsedURL)
-                numberOfZipFiles ++
-            }
-        }
+    returnURL = "https://rivta.googlecode.com/files/ServiceContracts_" + adjustedFilterValue + "_" + version + ".zip"
+    if (verifyURL(returnURL) == false) {
+        returnURL = ""
     }
-    if (numberOfZipFiles > 1) {
-        returnURL = urlToZipFiles
-    } else {
-        returnURL = parsedURL
-    }
-    returnURL
+    return returnURL
 }
+
 
 
 def parseFilteredURLFromHref(String hrefString, String filterValue) {
@@ -134,7 +99,7 @@ def parseFilteredURLFromHref(String hrefString, String filterValue) {
 
 
 def extractURLFromString(String urlString) {
-    urlStartString = "<a"
+    urlStartString = '<a href="'
     urlEndString = ".zip"
     urlStartOffset = urlString.indexOf(urlStartString) + urlStartString.length()
     urlEndOffset = urlString.indexOf(urlEndString) + urlEndString.length()
@@ -152,6 +117,16 @@ def replaceNullWithSpace(String value) {
     return newValue
 }
 
+def verifyURL(String urlString) {
+    result = true
+    try {
+        String html = urlString.toURL().text
+    } catch (FileNotFoundException) {
+        result = false
+    }
+    return result
+}
+
 //---------------------------------------- End of method section ----------------------------------------//
 
 
@@ -167,7 +142,7 @@ def replaceNullWithSpace(String value) {
 //---------------------------------------- Usage settings ----------------------------------------//
 charset = "ISO-8859-1"                   //--- ("ISO-8859-1", "UTF-8")
 delimiterToken = '/'                     //--- (mac = '/', windows = '.')
-excelFile = "/Users/peterhernfalk/Desktop/_Peter_Files/HOS-projekt/AL/Aktiviteter/Landskap med TP och TK/Groovyscript/Underlag/MasterFlikad.xls"
+excelFile = "/Users/peterhernfalk/Desktop/_Peter_Files/HOS-projekt/AL/Aktiviteter/Landskap med TP och TK/Groovyscript/Underlag/MasterFlikad2.xls"
 outputType = output2All                  //--- (output2All, output2WikiPageRIVTA)
 localRIVTATargetFolder = "/Users/peterhernfalk/Desktop/_Peter_Files/rivta/"
 useLogging = true                        //--- (true, false)
@@ -241,9 +216,9 @@ if ((outputType == output2WikiPageRIVTA) || (outputType == output2All)) {
         log(loglevelDebug, "rivtaBP21: " + rivtaBP21)
         log(loglevelDebug, "serviceContractCategory: " + serviceContractCategory)
 
-        downloadURL = getDownloadLinkFromRIVTA(serviceDomainName, version)
-        if (downloadURL != null) {
-            downloadLink = "[" + getDownloadLinkFromRIVTA(serviceDomainName, version) + " Ladda ner]"
+        downloadURL = buildloadLinks(serviceDomainName, version)
+        if (downloadURL != "") {
+            downloadLink = "[" + downloadURL + " Ladda ner]"
         } else {
             downloadLink = ""
         }
