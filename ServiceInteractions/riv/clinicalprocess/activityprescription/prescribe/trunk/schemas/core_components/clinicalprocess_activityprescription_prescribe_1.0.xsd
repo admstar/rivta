@@ -44,150 +44,6 @@
     <!-- Inkludera ordinationsorsak -->
     <xs:include schemaLocation='clinicalprocess_activityprescription_prescribe-cause_1.0.xsd'/>
 
-    <xs:complexType name="Produktinformation">
-        <xs:sequence>
-            <xs:element name="atcKlartext"
-                        type="xs:string"
-                        minOccurs="0"
-                        maxOccurs="1"
-                        nillable="false">
-                <xs:annotation>
-                    <xs:documentation>
-                        Verksamt ämne enligt ATC-kod. Exempel: "Atenolol".
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-
-            <xs:element name="atcKod"
-                        type="xs:string"
-                        minOccurs="0"
-                        maxOccurs="1"
-                        nillable="false">
-                <xs:annotation>
-                    <xs:documentation>
-                        ATC-kod. Exempel: "C07AB03”.
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-
-            <xs:element name="intressentnamn"
-                        type="xs:string"
-                        minOccurs="0"
-                        maxOccurs="1"
-                        nillable="false">
-                <xs:annotation>
-                    <xs:documentation>
-                        Ansvarigt företag för produkten. Typ av företag kan variera,
-                        t.ex kan företaget vara innehavare av godkännande/registrering av försäljning eller parallellimportör.
-                        Exempel: "AstraZeneca AB".
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-
-            <xs:element name="lakemedelsformKlartext"
-                        type="xs:string"
-                        minOccurs="0"
-                        maxOccurs="1"
-                        nillable="false">
-                <xs:annotation>
-                    <xs:documentation>
-                        Läkemedelsform. Exempel: "Filmdragerad tablett".
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-
-            <xs:element name="lakemedelsformkod"
-                        type="xs:string"
-                        minOccurs="0"
-                        maxOccurs="1"
-                        nillable="false">
-                <xs:annotation>
-                    <xs:documentation>
-                        Kod för läkemedelsform (beredningsformkod). Exempel: "FICOTA".
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-
-            <xs:element name="produktnamn"
-                        type="xs:string"
-                        minOccurs="0"
-                        maxOccurs="1"
-                        nillable="false">
-                <xs:annotation>
-                    <xs:documentation>
-                        Läkemedelsnamn.
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-
-            <xs:element name="produkttyp"
-                        type="xs:string"
-                        minOccurs="0"
-                        maxOccurs="1"
-                        nillable="false">
-                <xs:annotation>
-                    <xs:documentation>
-                        Produktens typkod.
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-
-            <xs:element name="produkttypKlartext"
-                        type="xs:string"
-                        minOccurs="0"
-                        maxOccurs="1"
-                        nillable="false">
-                <xs:annotation>
-                    <xs:documentation>
-                        Produktens typ i klartext.
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-
-            <xs:element name="styrka"
-                        type="decimaltal"
-                        minOccurs="0"
-                        maxOccurs="1"
-                        nillable="false">
-                <xs:annotation>
-                    <xs:documentation>
-                        Numerisk styrka. Exempel 20.0.
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-
-            <xs:element name="styrkaEnhet"
-                        type="xs:string"
-                        minOccurs="0"
-                        maxOccurs="1"
-                        nillable="false">
-                <xs:annotation>
-                    <xs:documentation>
-                        Styrkans enhet. Exempel: "mg".
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-
-            <xs:element name="styrkaKlartext"
-                        type="xs:string"
-                        minOccurs="0"
-                        maxOccurs="1"
-                        nillable="false">
-                <xs:annotation>
-                    <xs:documentation>
-                        Styrka i klartext. Exempel: "20.0 mg".
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-
-            <xs:any namespace="##other"
-                    processContents="lax"
-                    minOccurs="0"
-                    maxOccurs="unbounded"/>
-
-        </xs:sequence>
-    </xs:complexType>
-
     <xs:complexType name="Patientidentifikation">
         <xs:sequence>
 
@@ -350,8 +206,21 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="Artikelinformation">
+
+    <xs:complexType name="Lakemedelsartikelinformation">
         <xs:sequence>
+
+            <xs:element name="nplPackId"
+                        type="xs:string"
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Artikelns NPLPack-ID.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
 
             <xs:element name="alternativtAntalKlartext"
                         type="xs:string"
@@ -603,6 +472,428 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="Handelsvaruinformation">
+        <xs:sequence>
+
+            <xs:element name="varunummer"
+                        type="xs:string"
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Handelsvarans varunummer.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="alternativtAntalKlartext"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Alternativ antal i klartext.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="antalKlartext"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Artikelns innehållsantal i klartext.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="artikelbenamning"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Artikelns artikelbenämning.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="forpackningsantalEnhet"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Förpackningens enhet för antal.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="forpackningsantalMultipel1"
+                        type="xs:int"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Förpackningsantal multipel 1.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="forpackningsantalMultipel2"
+                        type="xs:int"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Förpacknings antal multipel 2.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="forpackningsantalNumerisk"
+                        type="decimaltal"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Förpacknings antal numerisk.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="forpackningsenhet"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Artikelns förpackningsenhet.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="forpackningsinnehall"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Artikelns förpackningsinnehåll.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="forpackningsmangd"
+                        type="decimaltal"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Artikelns förpackningsmängd.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="forpackningstyp"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Artikelns förpackningstyp.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="intressentnamn"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Ansvarigt företag för artikel. Typ av företag kan variera,
+                        t.ex kan företaget vara innehavare av godkännande/registrering av försäljning eller parallellimportör.
+                        Exempel: "AstraZeneca AB".
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="intressentroll"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Artikelns intressentroll.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="isLakemedel"
+                        type="xs:boolean"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Representerar om artikeln är läkemedelsklassad.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="narkotikaklass"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Artikelns narkotikaklasskod.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="narkotikaklassKlartext"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Artikelns narkotikaklass i klartext.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="produktnamn"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Artikelns produktnamn.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="produkttyp"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Artikelns produkttypkod.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="produkttypKlartext"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Artikelns produkttyp i klartext.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="substansnamnUtbytesgrupp"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Artikelns utbytesgrupp.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:any namespace="##other"
+                    processContents="lax"
+                    minOccurs="0"
+                    maxOccurs="unbounded"/>
+
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Lakemedelsproduktinformation">
+        <xs:sequence>
+
+            <xs:element name="nplId"
+                        type="xs:string"
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Läkemedelsproduktens NPL-ID.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="atcKlartext"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Verksamt ämne enligt ATC-kod. Exempel: "Atenolol".
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="atcKod"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        ATC-kod. Exempel: "C07AB03”.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="intressentnamn"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Ansvarigt företag för produkten. Typ av företag kan variera,
+                        t.ex kan företaget vara innehavare av godkännande/registrering av försäljning eller parallellimportör.
+                        Exempel: "AstraZeneca AB".
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="lakemedelsformKlartext"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Läkemedelsform. Exempel: "Filmdragerad tablett".
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="lakemedelsformkod"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Kod för läkemedelsform (beredningsformkod). Exempel: "FICOTA".
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="produktnamn"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Läkemedelsnamn.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="produkttyp"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Produktens typkod.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="produkttypKlartext"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Produktens typ i klartext.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="styrka"
+                        type="decimaltal"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Numerisk styrka. Exempel 20.0.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="styrkaEnhet"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Styrkans enhet. Exempel: "mg".
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="styrkaKlartext"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Styrka i klartext. Exempel: "20.0 mg".
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:any namespace="##other"
+                    processContents="lax"
+                    minOccurs="0"
+                    maxOccurs="unbounded"/>
+
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="Ordinationkedja">
         <xs:sequence>
 
@@ -811,7 +1102,7 @@
 
                 <xs:element name="lakemedelsprodukt"
                             type="Lakemedelsprodukt"
-                            minOccurs="0"
+                            minOccurs="1"
                             maxOccurs="1"
                             nillable="false">
                     <xs:annotation>
@@ -823,7 +1114,7 @@
 
                 <xs:element name="lakemedelsartikel"
                             type="Lakemedelsartikel"
-                            minOccurs="0"
+                            minOccurs="1"
                             maxOccurs="1"
                             nillable="false">
                     <xs:annotation>
@@ -835,7 +1126,7 @@
 
                 <xs:element name="handelsvara"
                             type="Handelsvara"
-                            minOccurs="0"
+                            minOccurs="1"
                             maxOccurs="1"
                             nillable="false">
                     <xs:annotation>
@@ -919,18 +1210,6 @@
                 </xs:annotation>
             </xs:element>
 
-            <xs:element name="kompletterandeArtikelinformation"
-                        type="Artikelinformation"
-                        minOccurs="0"
-                        maxOccurs="1"
-                        nillable="false">
-                <xs:annotation>
-                    <xs:documentation>
-                        Eventuell kompletterande artikelinformation.
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-
         </xs:sequence>
     </xs:complexType>
 
@@ -939,7 +1218,7 @@
 
             <xs:element name="varunummer"
                         type="xs:string"
-                        minOccurs="0"
+                        minOccurs="1"
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
@@ -973,18 +1252,6 @@
                 </xs:annotation>
             </xs:element>
 
-            <xs:element name="kompletterandeHandelsvaruinformation"
-                        type="Artikelinformation"
-                        minOccurs="0"
-                        maxOccurs="1"
-                        nillable="false">
-                <xs:annotation>
-                    <xs:documentation>
-                        Eventuell kompletterande artikelinformation.
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-
         </xs:sequence>
     </xs:complexType>
 
@@ -1011,18 +1278,6 @@
                 <xs:annotation>
                     <xs:documentation>
                         Namn på produkten vid det tillfälle ordinationen upprättades.
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-
-            <xs:element name="kompletterandeProduktinformation"
-                        type="Produktinformation"
-                        minOccurs="0"
-                        maxOccurs="1"
-                        nillable="false">
-                <xs:annotation>
-                    <xs:documentation>
-                        Eventuell kompletterande produktinformation.
                     </xs:documentation>
                 </xs:annotation>
             </xs:element>
@@ -1320,6 +1575,18 @@
                 </xs:annotation>
             </xs:element>
 
+            <xs:element name="uttagsstop"
+                        type="StoppaUttag"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Eventuella uttagsstop.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
             <xs:element name="aldrigAktiv"
                         type="xs:boolean"
                         minOccurs="1"
@@ -1551,7 +1818,7 @@
             <xs:choice>
                 <xs:element name="makulering"
                             type="Forskrivningsmakulering"
-                            minOccurs="0"
+                            minOccurs="1"
                             maxOccurs="1"
                             nillable="false">
                     <xs:annotation>
@@ -1563,7 +1830,7 @@
 
                 <xs:element name="utsattning"
                             type="Forskrivningsutsattning"
-                            minOccurs="0"
+                            minOccurs="1"
                             maxOccurs="1"
                             nillable="false">
                     <xs:annotation>
@@ -1581,7 +1848,6 @@
 
         </xs:sequence>
     </xs:complexType>
-
 
     <xs:complexType name="Utsattning">
         <xs:sequence>
@@ -2303,7 +2569,7 @@
             </xs:element>
 
             <xs:element name="bytesEj"
-                        type="xs:string"
+                        type="bytesEj"
                         minOccurs="0"
                         maxOccurs="1"
                         nillable="false">
@@ -2609,7 +2875,66 @@
                         nillable="false">
                 <xs:annotation>
                     <xs:documentation>
-                        Doseringstext.
+                        Förskriven dosering och användning.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="sprakkod"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Förskrivet främmande språk för doseringstext enligt ISO-639-1.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="doseringstext2"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Förskriven doserings beskrivning.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="doseringsschema"
+                        type="Tillfallesdosering"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Eventuellt förskrivet doseringsschema.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:any namespace="##other"
+                    processContents="lax"
+                    minOccurs="0"
+                    maxOccurs="unbounded"/>
+
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Forskrivningsdoseringsunderlag">
+        <xs:sequence>
+
+            <xs:element name="doseringstext"
+                        type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Dosering och använding att förskriva.
                     </xs:documentation>
                 </xs:annotation>
             </xs:element>
@@ -2626,14 +2951,14 @@
                 </xs:annotation>
             </xs:element>
 
-            <xs:element name="doseringstext2"
-                        type="xs:string"
+            <xs:element name="doseringsschema"
+                        type="Tillfallesdosering"
                         minOccurs="0"
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
                     <xs:documentation>
-                        Doseringstext 2.
+                        Eventuellt doseringsschema att förskriva.
                     </xs:documentation>
                 </xs:annotation>
             </xs:element>
@@ -2689,7 +3014,7 @@
 
                 <xs:element name="dispenseringsunderlag"
                             type="Dispenseringsunderlag"
-                            minOccurs="0"
+                            minOccurs="1"
                             maxOccurs="1"
                             nillable="false">
                     <xs:annotation>
@@ -2701,7 +3026,7 @@
 
                 <xs:element name="helforpackningsunderlag"
                             type="Helforpackningsunderlag"
-                            minOccurs="0"
+                            minOccurs="1"
                             maxOccurs="1"
                             nillable="false">
                     <xs:annotation>
@@ -2714,7 +3039,7 @@
             </xs:choice>
 
             <xs:element name="doseringAttForskriva"
-                        type="Forskrivningsdosering"
+                        type="Forskrivningsdoseringsunderlag"
                         minOccurs="0"
                         maxOccurs="1"
                         nillable="false">
@@ -3247,18 +3572,6 @@
                 <xs:annotation>
                     <xs:documentation>
                         Kontaktuppgifter för patienten.
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-
-            <xs:element name="personnummer"
-                        type="xs:string"
-                        minOccurs="0"
-                        maxOccurs="1"
-                        nillable="false">
-                <xs:annotation>
-                    <xs:documentation>
-                        Patientens personnummer.
                     </xs:documentation>
                 </xs:annotation>
             </xs:element>
