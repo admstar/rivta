@@ -32,7 +32,7 @@ under the License.
 			<iso:assert test="count(urn1:code) + count(urn1:originalText) = 1">
 				In $path, either code or origialText must be given.</iso:assert>
 		</iso:rule>
-	
+
 		<iso:rule context="$path/urn1:code">
 			<iso:assert test="count(../urn1:codeSystem) + count(../urn1:displayName) = 2">
 				In $path if <iso:name/> is given, codeSystem and displayName must be given.</iso:assert>
@@ -62,38 +62,43 @@ under the License.
 	<iso:pattern id="Verify riskCategory" is-a="pattern.CvType">
 		<iso:param name="path" value="urn1:riskCategory" />
     </iso:pattern>
-	
+
 	<iso:pattern id="Verify patientAdverseEffect in registrationRecord" is-a="pattern.CvType">
 		<iso:param name="path" value="urn1:registrationRecord/urn1:patientAdverseEffect" />
     </iso:pattern>
-	
+
 	<iso:pattern id="Verify vaccinationProgramName" is-a="pattern.CvType">
 		<iso:param name="path" value="urn1:vaccinationProgramName" />
     </iso:pattern>
-	
+
 	<iso:pattern id="Verify anatomicalSite" is-a="pattern.CvType">
 		<iso:param name="path" value="urn1:anatomicalSite" />
     </iso:pattern>
-	
+
 	<iso:pattern id="Verify route" is-a="pattern.CvType">
 		<iso:param name="path" value="urn1:route" />
     </iso:pattern>
-	
+
 	<iso:pattern id="Verify patientAdverseEffect in administrationRecord" is-a="pattern.CvType">
 		<iso:param name="path" value="urn1:administrationRecord/urn1:patientAdverseEffect" />
     </iso:pattern>
-	
+
 	<iso:pattern id="Verify vaccineType" is-a="pattern.CvType">
 		<iso:param name="path" value="urn1:vaccineType" />
     </iso:pattern>
-	
+
 	<iso:pattern id="Verify vaccineName" is-a="pattern.CvType">
 		<iso:param name="path" value="urn1:vaccineName" />
     </iso:pattern>
-	
+
 	<iso:pattern id="Verify vaccineTargetDisease" is-a="pattern.CvType">
 		<iso:param name="path" value="urn1:vaccineTargetDisease" />
     </iso:pattern>
 
+    <iso:pattern id="Verify vaccinationMedicalRecordHeader">
+        <iso:rule context="urn1:vaccinationMedicalRecordHeader">
+            <iso:assert test="count(urn1:nullified) = 1"><iso:name /> must contain nullified element.</iso:assert>
+        </iso:rule>
+    </iso:pattern>
 
 </iso:schema>
