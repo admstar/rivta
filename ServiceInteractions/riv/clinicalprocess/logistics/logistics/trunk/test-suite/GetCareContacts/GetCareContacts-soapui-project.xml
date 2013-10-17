@@ -126,6 +126,7 @@
     <xs:sequence>
       <xs:element name="careContactHeader" type="tns:PatientSummaryHeaderType"/>
       <xs:element name="careContactBody" type="tns:CareContactBodyType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="CareContactBodyType">
@@ -151,6 +152,7 @@
       <xs:element name="careContactOrgUnit" type="tns:OrgUnitType"/>
       <xs:element name="careContactTimePeriod" type="tns:TimePeriodType"/>
       <xs:element name="careContactStatus" type="codes:CareContactStatusEnum" minOccurs="0" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="CareContactOrgUnitType">
@@ -176,6 +178,7 @@
       <xs:element name="careContactOrgUnitEmail" type="xs:string" minOccurs="0"/>
       <xs:element name="careContactOrgUnitAddress" type="xs:string" minOccurs="0"/>
       <xs:element name="careContactOrgUnitLocation" type="xs:string" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="PatientSummaryHeaderType">
@@ -209,6 +212,7 @@
       <xs:element name="approvedForPatient" type="xs:boolean"/>
       <xs:element minOccurs="0" name="nullified" type="xs:boolean"/>
       <xs:element minOccurs="0" name="nullifiedReason" type="xs:string"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="HealthcareProfessionalType">
@@ -220,7 +224,8 @@
 				healthcareProfessionalName
 					Namn på vård- och omsorgspersonal
 				healthcareProfessionalRoleCode: 
-					Information om personens befattning om annat kodverk än KV Befattning används. 
+					Information om personens befattning. Om möjligt skall KV Befattning (OID 1.2.752.129.2.2.1.4), se 
+					http://www.inera.se/Documents/TJANSTER_PROJEKT/Katalogtjanst_HSA/Innehall/hsa_innehall_befattning.pdf  
 				healthcareProfessionalOrgUnit: 
 					HSA-id för PDL-enhet som vård- och omsorgspersonen är uppdragstagare för
 				healthcareProfessionalCareUnitHSAId: 
@@ -234,6 +239,7 @@
       <xs:element name="healthcareProfessionalOrgUnit" type="tns:OrgUnitType" minOccurs="1"/>
       <xs:element name="healthcareProfessionalCareUnitHSAId" type="tns:HSAIdType" minOccurs="1"/>
       <xs:element minOccurs="1" name="healthcareProfessionalCareGiverHSAId" type="tns:HSAIdType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="OrgUnitType">
@@ -260,6 +266,7 @@
       <xs:element name="orgUnitEmail" type="xs:string" minOccurs="0"/>
       <xs:element name="orgUnitAddress" type="xs:string" minOccurs="0"/>
       <xs:element name="orgUnitLocation" type="xs:string" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <!--Below: only helper types allowed.
@@ -279,6 +286,7 @@
     <xs:sequence>
       <xs:element name="start" type="tns:DateType"/>
       <xs:element name="end" type="tns:DateType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <!--YYYYMMDD-->
@@ -298,6 +306,7 @@
     <xs:sequence>
       <xs:element name="id" type="xs:string"/>
       <xs:element name="type" type="xs:string"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="TimePeriodType">
@@ -313,6 +322,7 @@
     <xs:sequence>
       <xs:element name="start" type="tns:TimeStampType"/>
       <xs:element name="end" type="tns:TimeStampType" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="TimeStampType">
@@ -338,6 +348,7 @@
       <xs:element name="codeSystemVersion" type="xs:string" minOccurs="0"/>
       <xs:element name="displayName" type="xs:string" minOccurs="0"/>
       <xs:element name="originalText" type="xs:string" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="LegalAuthenticatorType">
@@ -348,6 +359,7 @@
       <xs:element name="signatureTime" type="tns:TimeStampType"/>
       <xs:element name="legalAuthenticatorHSAId" type="tns:HSAIdType" minOccurs="0"/>
       <xs:element name="legalAuthenticatorName" type="xs:string" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:\C:\projekt\rivta\ServiceInteractions\riv\clinicalprocess\logistics\logistics\trunk\schemas\core_components\clinicalprocess_logistics_logistics_enum_2.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one

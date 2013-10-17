@@ -32,7 +32,7 @@ under the License.
 			<iso:assert test="count(urn1:code) + count(urn1:originalText) = 1">
 				In $path, either code or origialText must be given.</iso:assert>
 		</iso:rule>
-		
+
 		<iso:rule context="$path/urn1:code">
 			<iso:assert test="count(../urn1:codeSystem) + count(../urn1:displayName) = 2">
 				In $path if <iso:name/> is given, codeSystem and displayName must be given.</iso:assert>
@@ -62,6 +62,11 @@ under the License.
 		<iso:param name="path" value="urn1:healthcareProfessionalRoleCode" />
     </iso:pattern>
 
+    <iso:pattern id="Verify careContactHeader">
+        <iso:rule context="urn1:careContactHeader">
+            <iso:assert test="count(urn1:nullified) = 0"><iso:name /> must not contain nullified element.</iso:assert>
+        </iso:rule>
+    </iso:pattern>
 
 
 
