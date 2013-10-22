@@ -322,6 +322,7 @@
             <xs:element name="expectedDayOfDeliveryFromEmbryonicTransfer" type="tns:DateType"
                 minOccurs="0"/>
             <xs:element name="weight" type="tns:PQType" minOccurs="0"/>
+            <xs:element minOccurs="0" name="bodyMassIndex" type="tns:PQType"/>
             <xs:element name="infertility" type="xs:string" minOccurs="0"/>
             <xs:element name="previousGravidityAndParity" type="tns:PreviousGravidityAndParityType"
                 minOccurs="0" maxOccurs="unbounded"/>
@@ -366,16 +367,17 @@
         <xs:sequence>
             <xs:element name="completeWeeksOfGestation" type="xs:int" minOccurs="0"/>
             <xs:element name="weight" type="tns:PQType" minOccurs="0"/>
-            <xs:element minOccurs="0" name="BMI" type="tns:PQType"/>
             <xs:element name="symphysisFundalHeight" type="tns:PQType" minOccurs="0"/>
             <xs:element name="haemoglobin" type="tns:PQType" minOccurs="0"/>
             <xs:element name="bloodPressureSystolic" type="tns:PQType" minOccurs="0"/>
             <xs:element name="bloodPressureDiastolic" type="tns:PQType" minOccurs="0"/>
-            <xs:element name="fetalPosition" type="codes:FetalPositionCodeEnum" minOccurs="0"/>
+            <xs:element name="fetalPosition" type="codes:FetalPositionCodeEnum" minOccurs="0"
+                maxOccurs="unbounded"/>
             <xs:element name="fetalPresentation" type="codes:FetalPresentationCodeEnum"
-                minOccurs="0"/>
-            <xs:element name="fetalHeartRate" type="tns:PQType" minOccurs="0"/>
-            <xs:element name="typeOfLeave" type="codes:TypeOfLeaveCodeEnum" minOccurs="0"/>
+                minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="fetalHeartRate" type="tns:PQType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="typeOfLeave" type="codes:TypeOfLeaveCodeEnum" minOccurs="0"
+                maxOccurs="unbounded"/>
             <xs:element name="medicationSinceRegistration" type="tns:MedicationType" minOccurs="0"
                 maxOccurs="unbounded"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
