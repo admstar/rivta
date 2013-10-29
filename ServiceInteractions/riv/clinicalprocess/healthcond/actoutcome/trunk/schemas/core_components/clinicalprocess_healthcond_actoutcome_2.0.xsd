@@ -129,7 +129,10 @@
     <xs:complexType name="ReferralType">
         <xs:sequence>
             <xs:element name="referralId" type="xs:string"/>
-            <xs:element name="referralReason" type="xs:string" minOccurs="0"/>
+            <xs:element name="referralText" type="xs:string" minOccurs="1"/>
+            <xs:element name="referralTime" type="tns:TimeStampType"/>
+            <xs:element name="referralAuthor" type="tns:HealthcareProfessionalType"/>
+            <xs:element minOccurs="0" name="careContactId" type="xs:string"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 
         </xs:sequence>
@@ -486,7 +489,7 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="authorTime" type="tns:TimeStampType"/>
-            <xs:element name="healthcareProfessionalHSAId" type="tns:HSAIdType" minOccurs="1"/>
+            <xs:element name="healthcareProfessionalHSAId" type="tns:HSAIdType" minOccurs="0"/>
             <xs:element name="healthcareProfessionalName" type="xs:string" minOccurs="0"/>
             <xs:element name="healthcareProfessionalRoleCode" type="tns:CVType" minOccurs="0"/>
             <xs:element name="healthcareProfessionalOrgUnit" type="tns:OrgUnitType" minOccurs="1"/>
