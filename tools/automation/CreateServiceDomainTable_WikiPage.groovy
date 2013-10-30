@@ -10,7 +10,7 @@
  *
  *
  * @author Peter Hernfalk
- * Last update: 2013-10-16
+ * Last update: 2013-10-30
  */
 
 //------------------------------ 2do -------------------------------//
@@ -51,6 +51,49 @@ WikiTableRIVTAPageEnd[0] = '\n_OBS! Denna wiki-sida får enbart uppdateras av pe
  //////////////////////////////////////////////////////////
  */
 
+/** Fetches values from parameters, saves the values in variables */
+def getValuesFromParameters() {
+    me = this.class.name
+    mecall = me + ' [options]'
+    medesc = """\
+    \nThis script requires Groovy 1.8.1 or later.
+    It generates a wiki page, containing information about the current service domains and their status.
+    """
+
+    def cli = new CliBuilder(usage: mecall, header: 'Options:', footer: medesc)
+    cli.x(longOpt: 'excelfile', args:1, required:true, argName:'Excel file', 'Name and path to the Excel file')
+    cli.t(longOpt: 'targetdir', args:1, required:true, argName:'target directory', 'directory to which the generated wiki page file will be written')
+    cli.l(longOpt: 'uselogging', args:1, required:false, argName:'use logging', 'if the parmeter "-l" is used, then the script logs output to the console')
+
+    //-----Verify all parameters
+    def options = cli.parse(args)
+    if (!options) return
+
+    def argExcelFile=options.getProperty('excelfile')
+
+    if ( (argExcelFile =~ '.xls').count <1 ) {
+        log(loglevelInfo, '* The supplied file name \"' + argExcelFile + '\" does not seems to be an excel file (missing .xls)\n')
+        cli.usage()
+        return 1
+    }
+    excelFile = argExcelFile
+
+    def argTargetDir=options.getProperty('targetdir')
+    if (argTargetDir.toString().length() == 0) {
+        log(loglevelInfo, '* The supplied target directory name seems to be empty\n')
+        cli.usage()
+        return 1
+    }
+    targetFolder = argTargetDir
+
+    useLogging = false
+    def argUseLogging=options.getProperty('uselogging')
+    if (argUseLogging.asBoolean().booleanValue() == true) {
+        useLogging = true
+    }
+}
+
+
 def wikiTableStringRIVTA (String stringContent) {
     "|| " + stringContent + " "
 }
@@ -83,7 +126,6 @@ def buildloadLinks(String filterValue, String version) {
     }
     return returnURL
 }
-
 
 
 def parseFilteredURLFromHref(String hrefString, String filterValue) {
@@ -144,48 +186,7 @@ delimiterToken = '/'                     //--- (mac = '/', windows = '.')
 outputType = output2All                  //--- (output2All, output2WikiPageRIVTA)
 //-----------------------------------------------------------------------------------------------//
 
-
-//********************Implement parameter usage
-me = this.class.name
-mecall = me + ' [options]'
-medesc = """\
-\nThis script requires Groovy 1.8.1 or later.
-It generates a wiki page, containing information about the current service domains and their status.
-"""
-
-def cli = new CliBuilder(usage: mecall, header: 'Options:', footer: medesc)
-cli.x(longOpt: 'excelfile', args:1, required:true, argName:'Excel file', 'Name and path to the Excel file')
-cli.t(longOpt: 'targetdir', args:1, required:true, argName:'target directory', 'directory to which the generated wiki page file will be written')
-cli.l(longOpt: 'uselogging', args:1, required:false, argName:'use logging', 'if the parmeter "-l" is used, then the script logs output to the console')
-
-// Verify all parameters
-def options = cli.parse(args)
-if (!options) return
-
-def argExcelFile=options.getProperty('excelfile')
-
-if ( (argExcelFile =~ '.xls').count <1 ) {
-    log(loglevelInfo, '* The supplied file name \"' + argExcelFile + '\" does not seems to be an excel file (missing .xls)\n')
-    cli.usage()
-    return 1
-}
-def excelFile = argExcelFile
-
-def argTargetDir=options.getProperty('targetdir')
-if (argTargetDir.toString().length() == 0) {
-    log(loglevelInfo, '* The supplied target directory name seems to be empty\n')
-    cli.usage()
-    return 1
-}
-def targetFolder = argTargetDir
-
-useLogging = false
-def argUseLogging=options.getProperty('uselogging')
-if (argUseLogging.asBoolean().booleanValue() == true) {
-    useLogging = true
-}
-//********************Implement parameter usage
-
+getValuesFromParameters()
 
 //-----Fetch a copy of the contents of the Excel file. Store the data in a map that contains named attributes
 def index = 0
