@@ -2,9 +2,7 @@
 /**
  * Created with IntelliJ IDEA.
  * User: peterhernfalk
- * Date: 2013-09-20
- * Time: 07:52
- * To change this template use File | Settings | File Templates.
+ * Date: 2013-10-30
  *
  * LEO's description:
  * Skall skall använda scriptet "VerifyServiceDomainFolder" för att verifiera innehållet, och därefter skapa en zip-fil
@@ -16,6 +14,7 @@ loglevelInfo = "INFO"
 loglevelWarning = "WARNING"
 returnCode = 0
 returnCodeCalledScript = 0
+usedDomainName = ""
 useLogging = true
 
 
@@ -26,6 +25,32 @@ useLogging = true
  //////////////////////////////////////////////////////////
  //////////////////////////////////////////////////////////
  */
+
+/** Fetches values from parameters, saves the values in variables */
+def getValuesFromParameters() {
+    me = this.class.name
+    mecall = me + ' [options]'
+    medesc = """\
+    \nThis script requires Groovy 1.8.1 or later.
+    It generates a wiki page, containing information about the current service domains and their status.
+    """
+
+    def cli = new CliBuilder(usage: mecall, header: 'Options:', footer: medesc)
+    cli.d(longOpt: 'domainname', args:1, required:true, argName:'Domain name', 'Name of the domain')
+
+    //-----Verify all parameters
+    def options = cli.parse(args)
+    if (!options) return
+
+    def argDomainName=options.getProperty('domainname')
+    if (argDomainName.toString().length() == 0) {
+        log(loglevelInfo, '* The supplied domain name seems to be empty\n')
+        cli.usage()
+        return 1
+    }
+    usedDomainName = argDomainName
+}
+
 
 /** Logs text to standard output */
 def log(level, text) {
@@ -39,7 +64,7 @@ def log(level, text) {
 /* Verifies that that the service domains structure and contents are correct on the rivta site */
 def verifyServiceDomainFolder(String domainName) {
     //-----Create parameters to the "VerifyServiceDomainFolder" script
-    def args = ['-d', domainName] as String[]
+    def args = ['-d', domainName, '-t', '/Users/peterhernfalk/Desktop/_Peter_Files/rivtadomain/', '-l', 'true'] as String[]
     Binding context = new Binding(args)
 
     //-----Call the"VerifyServiceDomainFolder" script
@@ -80,12 +105,13 @@ def createArchiveFile() {
 useLogging = true
 //-----------------------------------------------------------------------------------------------//
 
+getValuesFromParameters()
 
 //-----Call other script to verify that the folder structure fully follows the rules in the configuration document
 
 //-----Create an archive file for the service domain
-        //---2do: fetch the domain name from a parameter to the script
-if (verifyServiceDomainFolder("itintegration") == 0) {
+        //---2do: fetch the domain name from a parameter to the script  itintegration  informatics
+if (verifyServiceDomainFolder(usedDomainName) == 0) {
     createArchiveFile()
 } else {
     log(loglevelDebug, "Verification failed")
@@ -96,4 +122,3 @@ if (verifyServiceDomainFolder("itintegration") == 0) {
 log(loglevelDebug, "\n")
 log(loglevelDebug, "ReturnCode = " + returnCode)
 System.exit(returnCode)
-
