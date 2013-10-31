@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->		
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' 
+           xmlns:tns='urn:riv:infrastructure:informationstructureservice:terminology:1' 
+           xmlns='urn:riv:infrastructure:informationstructureservice:terminology:GetConceptsResponder:1' 
+           targetNamespace='urn:riv:infrastructure:informationstructureservice:terminology:GetConceptsResponder:1' 
+           elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'>
+  <xs:import schemaLocation='../../core_components/infrastructure_informationstructureservice_terminology_1.0.xsd' namespace='urn:riv:infrastructure:informationstructureservice:terminology:1' />
+  <xs:element name='GetConcepts' type='GetConceptsRequestType' />
+  <xs:element name='GetConceptsResponse' type='GetConceptsResponseType' />
+  <xs:complexType name="GetConceptsRequestType">
+    <xs:sequence>
+      <xs:element name="SubsetIdentity" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Identifierare som representerar urvalet</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="LocalOrganizationExtensionId" type="tns:LocalOrganizationExtensionIdType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Id för system eller organisation</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="CodeSystem" type="tns:ConceptCodeSystemType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Kodsystem som sökt concept tillhör</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Code" type="tns:ConceptCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Kod för sökt concept</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Term" type="tns:ConceptTermType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Term för sökt concept</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ConceptsResponseThreshold" type="xs:int" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Antal concepts som maximalt returneras i svaret</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="TermType" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Type of term</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name='GetConceptsResponseType'>
+    <xs:sequence>
+      <xs:element name="Subset" type="tns:SubsetType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation/>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name='ResultCode' type='ResultCodeEnum' />
+      <xs:element name='comment' type='xs:string' minOccurs='0' />
+      <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name='ResultCodeEnum'>
+    <xs:restriction base='xs:string'>
+      <xs:enumeration value='OK' />
+      <xs:enumeration value='ERROR' />
+      <xs:enumeration value='INFO' />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

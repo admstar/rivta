@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="urn:riv:infrastructure:informationstructureservice:terminology:1" targetNamespace="urn:riv:infrastructure:informationstructureservice:terminology:1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<!-- Simple types -->
+  <xs:simpleType name="SubsetIdentityType">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="128"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SubsetNameType">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SubsetVersionType">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="32"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="LocalOrganizationExtensionIdType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="128"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ConceptCodeSystemType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ConceptCodeType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="1000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ConceptTermType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="1000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MetadataNameType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MetadataValueType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="1000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- end simple types -->
+	<!-- Complex types -->
+    <xs:complexType name="SubsetInformationType" >
+      <xs:sequence>
+        <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute name="SubsetIdentity" type="SubsetIdentityType" use="required">
+        <xs:annotation>
+          <xs:documentation>Identifierare av urval</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Name" type="SubsetNameType" use="required">
+        <xs:annotation>
+          <xs:documentation>Namn som representerar urval</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="Version" type="SubsetVersionType" use="required">
+        <xs:annotation>
+          <xs:documentation>Version för urval</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+  </xs:complexType>  
+  
+	<xs:complexType name="MetadataType">
+		<xs:sequence>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+    <xs:attribute name="Name" type="MetadataNameType" use="required">
+      <xs:annotation>
+        <xs:documentation>Identifierar typ av metadata</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+      <xs:attribute name="Value" type="MetadataValueType" use="required">
+      <xs:annotation>
+        <xs:documentation>Metadatavärde</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="LocalOrganizationExtensionId" type="LocalOrganizationExtensionIdType" use="optional">
+      <xs:annotation>
+        <xs:documentation>Id för system eller organisation</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+	</xs:complexType>
+  
+  <xs:complexType name="ConceptType">
+    <xs:sequence>
+      <xs:element name="Metadata" type="MetadataType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>0..* Metadata</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="CodeSystem" type="ConceptCodeSystemType" use="required">
+      <xs:annotation>
+        <xs:documentation>Identifierare av kodsystem</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="Code" type="ConceptCodeType" use="required">
+      <xs:annotation>
+        <xs:documentation>Kod för val i listan</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="Term" type="ConceptTermType" use="required">
+      <xs:annotation>
+        <xs:documentation>Term som visas upp i vallistan</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="LocalOrganizationExtensionId" type="LocalOrganizationExtensionIdType" use="optional">
+      <xs:annotation>
+        <xs:documentation>Id för system eller organisation</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="SubsetType" >
+    <xs:sequence>
+    <xs:element name="SubsetInformation" type="SubsetInformationType">
+      <xs:annotation>
+        <xs:documentation>Information om urval</xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:element name="Concept" type="ConceptType" minOccurs="0" maxOccurs="unbounded">
+      <xs:annotation>
+        <xs:documentation>Lista med concepts</xs:documentation>
+      </xs:annotation>
+    </xs:element>
+    <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+   </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
