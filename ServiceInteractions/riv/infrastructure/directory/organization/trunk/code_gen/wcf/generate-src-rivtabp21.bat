@@ -21,7 +21,7 @@
 	@REM ---------------------------------------------------------------------------------
 	CD ..
 	
-	SET SCHEMADIR=schemas
+	SET SCHEMADIR=..\schemas
 	
 	SET W0=%SCHEMADIR%\interactions\GetHealthCareUnitInteraction\GetHealthCareUnitInteraction_1.0_RIVTABP21.wsdl
 	SET X0=%SCHEMADIR%\interactions\GetHealthCareUnitInteraction\*.xsd
