@@ -21,7 +21,7 @@
 	@REM ---------------------------------------------------------------------------------
 	CD ..
 	
-	SET SCHEMADIR=schemas
+	SET SCHEMADIR=..\schemas
 	
 	SET W0=%SCHEMADIR%\interactions\GetPersonIncludingProtectedPersonInteraction\GetPersonIncludingProtectedPersonInteraction_1.0_RIVTABP21.wsdl
 	SET X0=%SCHEMADIR%\interactions\GetPersonIncludingProtectedPersonInteraction\*.xsd
@@ -34,12 +34,12 @@
 
 	SET SCHEMAS=%XCORE% %W0% %X0% %W1% %X1%
 
-	SET OUTFILE=/out:wcf\generated-src\InfrastructureDirectoryPersonInteractions.cs
+	SET OUTFILE=/out:wcf\generated-src\InfrastructureDirectoryEmployeeInteractions.cs
 	SET APPCONFIG=/config:wcf\generated-src\app.config
-	SET NAMESPACE=/namespace:*,Riv.Infrastructure.Directory.Person.Schemas.v1
+	SET NAMESPACE=/namespace:*,Riv.Infrastructure.Directory.Employee.Schemas.v1
 	SET SVCUTIL="svcutil.exe"
 	%SVCUTIL% /language:cs %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
 
 	CD wcf
-	ECHO Generating Service contract .Net Binding interfaces and classes for infrastructure:directory:person Release 1
+	ECHO Generating Service contract .Net Binding interfaces and classes for infrastructure:directory:employee Release 1
 	ECHO I DotNetprojektet ska du ta lagga till referens till System.ServiceModel
