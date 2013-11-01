@@ -2,7 +2,7 @@
 /**
  * Created with IntelliJ IDEA.
  * User: peterhernfalk
- * Date: 2013-10-30
+ * Date: 2013-11-01
  *
  * LEO's description:
  * Skall skall använda scriptet "VerifyServiceDomainFolder" för att verifiera innehållet, och därefter skapa en zip-fil
@@ -110,7 +110,6 @@ getValuesFromParameters()
 //-----Call other script to verify that the folder structure fully follows the rules in the configuration document
 
 //-----Create an archive file for the service domain
-        //---2do: fetch the domain name from a parameter to the script  itintegration  informatics
 if (verifyServiceDomainFolder(usedDomainName) == 0) {
     createArchiveFile()
 } else {
