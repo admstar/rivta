@@ -2,11 +2,32 @@
 /**
  * Created with IntelliJ IDEA.
  * User: peterhernfalk
- * Date: 2013-10-30
+ * Date: 2013-11-01
  *
  * LEO's description:
  * Denna skall verifiera att en utpekad mapp här rooten i en mappstruktur som till fullo följer (det nya) konfigurationsstyrningsdokumentet.
  * Om det finns fel skall detta skrivas ut till stderror samt scriptet avslutas med rc=1. Om allt ok avslutas med rc=0
+ */
+
+/*
+    To be done:
+    - Verify that all mandatory subpaths exists in the domains folder structure
+    - Verify that correct file (types) exists in the folders that requires certain contents
+ */
+
+/*
+•	WSDL: er och scheman ordnas i katalogen ”schemas”
+•	Tjänstekontraktsbeskrivningen ska ligga i docs katalogen
+•	I ”schemas” ska två underkataloger finnas: ”core_components” och ”interactions”.
+•	I ”core_components” ska scheman ligga som är generella för domänen (t.ex. domän-scheman och header-scheman).
+•	I ”interactions” ska scheman och tjänstebeskrivningar ligga som är specifika för tjänsteinteraktionen.
+•	I ”code_gen”-katalog ska det finnas bygg-script för att generera kod från WSDL-filerna, som stöd för utveckling av tjänstekonsumenter och tjänsteproducenter. Underkataloger till code_gen ska skapas för Javaplattformens standard (JAX-WS) och .Net.
+
+2do: add logic that verifies that the structure follows the rules
+
+Verify that the domainPath string exists in the mandatory parts of the structureTemplate map.
+If not, return false
+
  */
 
 import groovy.lang.Binding
@@ -27,15 +48,14 @@ structureTemplate = []
 structureTemplate[0]  = [subPath:"branches", mandatoryContent:"", optionalContent:""]
 structureTemplate[1]  = [subPath:"tags", mandatoryContent:"", optionalContent:""]
 structureTemplate[2]  = [subPath:"trunk", mandatoryContent:"", optionalContent:""]
-structureTemplate[3]  = [subPath:"trunk/docs", mandatoryContent:"*.doc", optionalContent:""]
-structureTemplate[4]  = [subPath:"trunk/code_gen", mandatoryContent:"", optionalContent:""]
-structureTemplate[5]  = [subPath:"trunk/code_gen/wcf", mandatoryContent:"", optionalContent:""]
-structureTemplate[6]  = [subPath:"trunk/code_gen/jaxws", mandatoryContent:"", optionalContent:""]
+structureTemplate[3]  = [subPath:"trunk/code_gen", mandatoryContent:"", optionalContent:""]
+structureTemplate[4]  = [subPath:"trunk/code_gen/wcf", mandatoryContent:"", optionalContent:""]
+structureTemplate[5]  = [subPath:"trunk/code_gen/jaxws", mandatoryContent:"", optionalContent:""]
+structureTemplate[6]  = [subPath:"trunk/docs", mandatoryContent:"*.doc", optionalContent:""]
 structureTemplate[7]  = [subPath:"trunk/schemas", mandatoryContent:"", optionalContent:""]
-
-//An empty folder is allowed for core_components but (probably) not for interactions
-structureTemplate[8]  = [subPath:"trunk/schemas/core_components", mandatoryContent:"*.xsd", optionalContent:""]
+structureTemplate[8]  = [subPath:"trunk/schemas/core_components", mandatoryContent:"*.xsd", optionalContent:""] //An empty folder is allowed for core_components but (probably) not for interactions
 structureTemplate[9]  = [subPath:"trunk/schemas/interactions", mandatoryContent:"*.wsdl,*.xsd", optionalContent:""]
+
 usedDomain = ""
 useLogging = true
 
@@ -125,7 +145,6 @@ def verifyServiceDomainStructure(String domainStructure) {
     def dir = new File(domainStructure)
     dir.eachDir { subDir ->
         if ((subDir.name.contains('.svn')) == false) {
-            //domainSubfolder << subDir
             log(loglevelDebug,  "Subdir: " + subDir.name )
             if (verifySubDomainStructure(domainStructure, subDir.name) == false) {
                return
@@ -134,46 +153,71 @@ def verifyServiceDomainStructure(String domainStructure) {
     }
 
     //-----Failed verification sets the return code to: 1
-    //returnCode = 1
+    returnCode = 1
 }
 
 
 /* Verifies that that the service domains structure and contents are correct on the rivta site */
-def verifySubDomainStructure(String domainStructure, String subDomain) {
+def verifySubDomainStructure(String domainStructure, String subDomainName) {
 
-    def dir = new File(domainStructure+subDomain)
+    verificationResult = [false, false, false, false, false, false, false, false, false, false]
+    log(1, "initial verificationResult: " + verificationResult)
+
+    def dir = new File(domainStructure+subDomainName)
     dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
         //-----Filter out all directories except the '.svn' directories
         if ((file.toString().contains('.svn')) == false) {
-            log(loglevelDebug,  "\tFile: " + file )
+            //log(loglevelDebug,  "\tFile: " + file )
 
             //-----The found directory should be verified against the directory template, maybe in a batch verification
             //-----The directory contents should also be verified, so that mandatory files exist in the directory
-            ruleVerificationResult = verifySubDomainAgainstStructureRules(file.name)
+            //ruleVerificationResult = verifySubDomainAgainstStructureRules(file.name, file)
+            verificationResult = verifySubDomainAgainstStructureRules(file.name, file, verificationResult)
+            //log(loglevelDebug, "verificationResult: " + verificationResult)
             //-----2do: use ruleVerificationResult
         }
     }
 
-    return true
+    //if (verificationResult.contains(false) == true)
+    log(loglevelDebug, "verificationResult: " + verificationResult)
+    structureTemplate.size.times {
+        if (verificationResult[it] == false) {
+            log(loglevelDebug, "Verification error regarding: " + structureTemplate[it].subPath)
+        }
+
+    }
+    return !verificationResult.contains(false)
 }
 
 
 /* Verifies that the given domain path has contents that follows the domain structure rules */
-def verifySubDomainAgainstStructureRules(String domainPath) {
+def verifySubDomainAgainstStructureRules(leafFolderName, folderPath, verificationResult) {
 
-    /*
-    •	WSDL: er och scheman ordnas i katalogen ”schemas”
-    •	Tjänstekontraktsbeskrivningen ska ligga i docs katalogen
-    •	I ”schemas” ska två underkataloger finnas: ”core_components” och ”interactions”.
-    •	I ”core_components” ska scheman ligga som är generella för domänen (t.ex. domän-scheman och header-scheman).
-    •	I ”interactions” ska scheman och tjänstebeskrivningar ligga som är specifika för tjänsteinteraktionen.
-    •	I ”code_gen”-katalog ska det finnas bygg-script för att generera kod från WSDL-filerna, som stöd för utveckling av tjänstekonsumenter och tjänsteproducenter. Underkataloger till code_gen ska skapas för Javaplattformens standard (JAX-WS) och .Net.
-     */
+    //-----2do: need to verify that all template paths exist in the domains subpaths
+    //-----At the moment this can only check if a certain subpath is listed in the template, which isn't enough
+    result = false
+    structureTemplate.size.times {
+        //-----if the templates subPath contains at least one "/" then verify the end of the folder path with the template's subpath
+        if (structureTemplate[it].subPath.indexOf("/") > 0) {
+            from = folderPath.toString().size()-structureTemplate[it].subPath.size()
+            to = folderPath.toString().size()-1
+            if (folderPath.toString().getAt(from..to) == structureTemplate[it].subPath) {
+                verificationResult[it] = true
+                result = true
+                true
+            }
+        }  else if (leafFolderName.toString() == structureTemplate[it].subPath) {
+            verificationResult[it] = true
+            result = true
+            true
+        }
+    }
+    if (result == true) {
+        log(loglevelDebug, "" + result + " folderPath: " + folderPath + " leafFolderName: " + leafFolderName)
+    }
 
-    //-----2do: add logic that verifies that the structure follows the rules
-    //---Rules exist in the structureTemplate map
-
-    return true
+    //return result
+    return verificationResult
 }
 
 
@@ -197,4 +241,5 @@ downloadFileStructureFromRivtaSite(usedDomain)
 verifyServiceDomainStructure(localRIVTATargetFolder)
 
 //-----Exit the script execution and return the return code to the caller
+log(1, "\n\nreturnCode: " + returnCode)
 return returnCode
