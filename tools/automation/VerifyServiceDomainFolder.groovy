@@ -161,7 +161,7 @@ def verifyServiceDomainStructure(String domainStructure) {
 def verifySubDomainStructure(String domainStructure, String subDomainName) {
 
     verificationResult = [false, false, false, false, false, false, false, false, false, false]
-    log(1, "initial verificationResult: " + verificationResult)
+    //log(1, "initial verificationResult: " + verificationResult)
 
     def dir = new File(domainStructure+subDomainName)
     dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
@@ -182,7 +182,7 @@ def verifySubDomainStructure(String domainStructure, String subDomainName) {
     log(loglevelDebug, "verificationResult: " + verificationResult)
     structureTemplate.size.times {
         if (verificationResult[it] == false) {
-            log(loglevelDebug, "Verification error regarding: " + structureTemplate[it].subPath)
+            log(loglevelDebug, "'" + subDomainName + "' has verification error regarding: " + structureTemplate[it].subPath)
         }
 
     }
