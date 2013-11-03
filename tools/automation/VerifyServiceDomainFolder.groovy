@@ -2,7 +2,7 @@
 /**
  * Created with IntelliJ IDEA.
  * User: peterhernfalk
- * Date: 2013-11-01
+ * Date: 2013-11-03
  *
  * LEO's description:
  * Denna skall verifiera att en utpekad mapp här rooten i en mappstruktur som till fullo följer (det nya) konfigurationsstyrningsdokumentet.
@@ -182,7 +182,7 @@ def verifySubDomainStructure(String domainStructure, String subDomainName) {
     log(loglevelDebug, "verificationResult: " + verificationResult)
     structureTemplate.size.times {
         if (verificationResult[it] == false) {
-            log(loglevelDebug, "'" + subDomainName + "' has verification error regarding: " + structureTemplate[it].subPath)
+            log(loglevelDebug, "'" + subDomainName + "' is missing the subfolder: '" + structureTemplate[it].subPath + "'")
         }
 
     }
@@ -235,7 +235,7 @@ log(loglevelDebug, "Domain name = " + usedDomain)
 
 //-----Download the domain structure that should be verified
 
-downloadFileStructureFromRivtaSite(usedDomain)
+////////////////downloadFileStructureFromRivtaSite(usedDomain)
 
 //-----Iterate through the downloaded structure and verify that it's correct
 verifyServiceDomainStructure(localRIVTATargetFolder)
