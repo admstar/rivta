@@ -17,19 +17,15 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:infrastructure:supportservices:forminteraction:GetFormsResponder:1' xmlns:core='urn:riv:infrastructure:supportservices:forminteraction:1' targetNamespace='urn:riv:infrastructure:supportservices:forminteraction:GetFormsResponder:1' elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'>
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:infrastructure:supportservices:forminteraction:SaveFormResponder:1' xmlns:core='urn:riv:infrastructure:supportservices:forminteraction:1' targetNamespace='urn:riv:infrastructure:supportservices:forminteraction:SaveFormResponder:1' elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'>
   <xs:import schemaLocation='../../core_components/infrastructure_supportservices_forminteraction_1.0.xsd' namespace='urn:riv:infrastructure:supportservices:forminteraction:1' />
-  <xs:element name='GetForms' type='tns:GetFormsType' />
-  <xs:element name='GetFormsResponse' type='tns:GetFormsResponseType' />
-  <xs:complexType name='GetFormsType'>
+  <xs:element name='SaveForm' type='tns:SaveFormType' />
+  <xs:element name='SaveFormResponse' type='tns:SaveFormResponseType' />
+  <xs:complexType name='SaveFormType'>
     <xs:sequence>
-    	<xs:element name="clinicalProcessInterestId"
-    		type="core:clinicalProcessInterestIdType" minOccurs="0"
-    		maxOccurs="unbounded">
-    	</xs:element>
-            <xs:element name="healthcare_facility_CareUnit" type="core:HsaIdType" minOccurs="0" maxOccurs="1"></xs:element>
+            <xs:element name="formId" type="core:FormIDType" minOccurs="1"></xs:element>
     	<xs:element name="subjectOfCare" type="core:SubjectOfCareIdType"
-    		minOccurs="0">
+    		maxOccurs="1" minOccurs="0">
     		<xs:annotation>
     			<xs:documentation>
     				Autentiserad invånare (personnummer).
@@ -39,19 +35,15 @@
     			</xs:documentation>
     		</xs:annotation>
     	</xs:element>
-    	<xs:element name="templateId" type="core:TemplateIdType"
-    		maxOccurs="unbounded" minOccurs="0">
-    	</xs:element>
     	<xs:any namespace='##other' processContents='lax' minOccurs='0'
     		maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name='GetFormsResponseType'>
+  <xs:complexType name='SaveFormResponseType'>
     <xs:sequence>
-
-            <xs:element name="forms" type="core:FormsType" maxOccurs="unbounded" minOccurs="0"></xs:element>
-            <xs:any namespace='##other' processContents='lax' minOccurs='0'
-    		maxOccurs='unbounded' />
+            <xs:element name="comment" type="xs:string" minOccurs="0" />
+            <xs:element name='resultCode' type='core:ResultCodeEnumType' maxOccurs="1"/>
+      <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
 

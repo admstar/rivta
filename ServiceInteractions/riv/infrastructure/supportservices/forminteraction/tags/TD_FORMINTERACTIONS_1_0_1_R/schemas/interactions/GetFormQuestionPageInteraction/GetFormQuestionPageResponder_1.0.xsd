@@ -17,17 +17,33 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:infrastructure:supportservices:forminteraction:GetFormsResponder:1' xmlns:core='urn:riv:infrastructure:supportservices:forminteraction:1' targetNamespace='urn:riv:infrastructure:supportservices:forminteraction:GetFormsResponder:1' elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'>
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:infrastructure:supportservices:forminteraction:GetFormQuestionPageResponder:1' xmlns:core='urn:riv:infrastructure:supportservices:forminteraction:1' targetNamespace='urn:riv:infrastructure:supportservices:forminteraction:GetFormQuestionPageResponder:1' elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'>
   <xs:import schemaLocation='../../core_components/infrastructure_supportservices_forminteraction_1.0.xsd' namespace='urn:riv:infrastructure:supportservices:forminteraction:1' />
-  <xs:element name='GetForms' type='tns:GetFormsType' />
-  <xs:element name='GetFormsResponse' type='tns:GetFormsResponseType' />
-  <xs:complexType name='GetFormsType'>
+  <xs:element name='GetFormQuestionPage' type='tns:GetFormQuestionPageType' />
+  <xs:element name='GetFormQuestionPageResponse' type='tns:GetFormQuestionPageResponseType' />
+  <xs:complexType name='GetFormQuestionPageType'>
     <xs:sequence>
-    	<xs:element name="clinicalProcessInterestId"
-    		type="core:clinicalProcessInterestIdType" minOccurs="0"
-    		maxOccurs="unbounded">
+    	<xs:element name="direction" minOccurs="1" maxOccurs="1">
+    		<xs:annotation>
+    			<xs:documentation>
+    				Begäran -Direction ”BACK” är inte tillåtet om
+    				objektet ”PagenumberBlockNumber” är 1. -Direction
+    				”FORWARD” är inte tillåtet om föregående objektets
+    				LastBlock är sant (true). Vid ovanstående fel
+    				genereras ett exception.
+    			</xs:documentation>
+    		</xs:annotation>
+    		<xs:simpleType>
+    			<xs:restriction base="xs:string">
+    				<xs:enumeration value="FORWARD"></xs:enumeration>
+    				<xs:enumeration value="BACK"></xs:enumeration>
+    			</xs:restriction>
+    		</xs:simpleType>
     	</xs:element>
-            <xs:element name="healthcare_facility_CareUnit" type="core:HsaIdType" minOccurs="0" maxOccurs="1"></xs:element>
+    	<xs:element name="formId" type="core:FormIDType"
+    		minOccurs="1">
+    	</xs:element>
+            <xs:element name="pageNumber" type="xs:int" minOccurs="1"></xs:element>
     	<xs:element name="subjectOfCare" type="core:SubjectOfCareIdType"
     		minOccurs="0">
     		<xs:annotation>
@@ -39,20 +55,16 @@
     			</xs:documentation>
     		</xs:annotation>
     	</xs:element>
-    	<xs:element name="templateId" type="core:TemplateIdType"
-    		maxOccurs="unbounded" minOccurs="0">
-    	</xs:element>
     	<xs:any namespace='##other' processContents='lax' minOccurs='0'
     		maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name='GetFormsResponseType'>
+  <xs:complexType name='GetFormQuestionPageResponseType'>
     <xs:sequence>
-
-            <xs:element name="forms" type="core:FormsType" maxOccurs="unbounded" minOccurs="0"></xs:element>
+            <xs:element name="form" type="core:FormType" maxOccurs="1" minOccurs="0"></xs:element>
             <xs:any namespace='##other' processContents='lax' minOccurs='0'
     		maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
-
+  
 </xs:schema>
