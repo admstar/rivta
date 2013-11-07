@@ -10,7 +10,7 @@
  *
  *
  * @author Peter Hernfalk
- * Last update: 2013-10-30
+ * Last update: 2013-11-07
  */
 
 //------------------------------ 2do -------------------------------//
@@ -122,7 +122,17 @@ def buildloadLinks(String filterValue, String version) {
     }
     returnURL = "https://rivta.googlecode.com/files/ServiceContracts_" + adjustedFilterValue + "_" + version + ".zip"
     if (verifyURL(returnURL) == false) {
-        returnURL = ""
+        newVersion = version.replaceAll("-", "_")
+        returnURL = "https://rivta.googlecode.com/files/ServiceContracts_" + adjustedFilterValue + "_" + newVersion + ".zip"
+        if (verifyURL(returnURL) == false) {
+            newVersion = version.replaceAll("\\.", "_")
+            log(loglevelDebug, "version: " + version + " newVersion: " + newVersion)
+            returnURL = "https://rivta.googlecode.com/files/ServiceContracts_" + adjustedFilterValue + "_" + newVersion + ".zip"
+            if (verifyURL(returnURL) == false) {
+                log(loglevelDebug, "Failed to build a correct URL: " + returnURL)
+                returnURL = ""
+            }
+        }
     }
     return returnURL
 }
