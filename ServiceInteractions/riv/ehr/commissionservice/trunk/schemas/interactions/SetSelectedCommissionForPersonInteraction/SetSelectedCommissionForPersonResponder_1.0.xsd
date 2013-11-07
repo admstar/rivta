@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Inera AB licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->	
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' 
+	xmlns:tns='urn:riv:ehr:commission:SetSelectedCommissionForPersonResponder:1'				
+	xmlns:commission='urn:riv:ehr:commission:1'
+	targetNamespace='urn:riv:ehr:commission:SetSelectedCommissionForPersonResponder:1'
+	elementFormDefault='qualified'
+	attributeFormDefault='unqualified'
+	version='1.0'>
+
+	<xs:import schemaLocation='../../core_components/ehr_commission_1.0.xsd' namespace='urn:riv:ehr:commission:1' />
+
+
+	<xs:element name='SetSelectedCommissionForPersonRequest' type='tns:SetSelectedCommissionForPersonRequestType'/>
+
+	<xs:complexType name='SetSelectedCommissionForPersonRequestType'>
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Tjänst för att välja medarbetaruppdrag till en person.
+		        Personen anges antingen med HSA-id eller personnummer. Om man inte anger något av dessa eller att personnummer/HSA-id inte är giltigt returneras statuskod VALIDATIONERROR.
+		        Om man inte anger något uppdrag, så har personen i fråga inte valt något uppdrag. 
+		        Det betyder att när man sedan autentiserar sig, så får man ett SAML-intyg utan uppdrag.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PersonalHsaId" type="commission:HsaId" minOccurs="0"/>
+			<xs:element name="PersonalIdentityNumber" type="commission:PersonalIdentityNumber" minOccurs="0"/>
+			<xs:element name="CommissionHsaId" type="commission:HsaId" minOccurs="0"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name='SetSelectedCommissionForPersonResponse' type='tns:SetSelectedCommissionForPersonResponseType'/>
+
+	<xs:complexType name='SetSelectedCommissionForPersonResponseType'>
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Tjänst för att välja medarbetaruppdrag till en person.
+		        Personen anges antingen med HSA-id eller personnummer. Om man inte anger något av dessa eller att personnummer/HSA-id inte är giltigt returneras statuskod VALIDATIONERROR.
+		        Om man inte anger något uppdrag, så har personen i fråga inte valt något uppdrag. 
+		        Det betyder att när man sedan autentiserar sig, så får man ett SAML-intyg utan uppdrag.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ResultType" type="commission:ResultType"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
