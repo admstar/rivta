@@ -883,40 +883,33 @@ context.each {key, value ->log.debug("$key = $value")} </script></con:config></c
          <!--You may enter ANY elements at this point-->
       </urn1:GetLaboratoryOrderOutcome>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion"/><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestcaseTemplate" searchProperties="true"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion"/><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestcaseTemplate" searchProperties="true" id="32ab2b0e-1898-4649-a224-a90c537a4446"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
 
 def utils = new GroovyUtils(context)
 def dataFile = new File(utils.projectPath + "/data.xml")
 def source = new XmlDataReader(context, dataFile)
 
-source.load("SimpleTestcase")</script></con:config></con:testStep><con:testStep type="request" name="Call GetLaboratoryOrderOutcome"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetLaboratoryOrderOutcomeResponderBinding</con:interface><con:operation>GetLaboratoryOrderOutcome</con:operation><con:request name="Call GetLaboratoryOrderOutcome"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:actoutcome:2">
+source.load("SimpleTestcase")</script></con:config></con:testStep><con:testStep type="request" name="Call GetLaboratoryOrderOutcome"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetLaboratoryOrderOutcomeResponderBinding</con:interface><con:operation>GetLaboratoryOrderOutcome</con:operation><con:request name="Call GetLaboratoryOrderOutcome"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="x-mock-response" value="TemplateResponse"/>
+  &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:actoutcome:2">
    <soapenv:Header>
-      <urn:LogicalAddress>?</urn:LogicalAddress>
+      <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
    </soapenv:Header>
    <soapenv:Body>
       <urn1:GetLaboratoryOrderOutcome>
-         <!--Zero or more repetitions:-->
-         <urn1:careUnitHSAid>?</urn1:careUnitHSAid>
          <urn1:patientId>
-            <urn2:id>?</urn2:id>
-            <urn2:type>?</urn2:type>
-            <!--You may enter ANY elements at this point-->
+            <urn2:id>${patientId}</urn2:id>
+            <urn2:type>${patientIdType}</urn2:type>
          </urn1:patientId>
-         <!--Optional:-->
-         <urn1:timePeriod>
-            <urn2:start>?</urn2:start>
-            <urn2:end>?</urn2:end>
-            <!--You may enter ANY elements at this point-->
+          <urn1:timePeriod>
+            <urn2:start>${timePeriodStart}</urn2:start>
+            <urn2:end>${timePeriodEnd}</urn2:end>
          </urn1:timePeriod>
-         <!--Optional:-->
-         <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
-         <!--Zero or more repetitions:-->
-         <urn1:careContactId>?</urn1:careContactId>
-         <!--You may enter ANY elements at this point-->
       </urn1:GetLaboratoryOrderOutcome>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion"/><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Date boundaries" searchProperties="true"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion"/><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Date boundaries" searchProperties="true" id="26a22344-c2db-4321-ba22-2fae2ed8af73" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword=""><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
 
 def utils = new GroovyUtils(context)
@@ -966,27 +959,90 @@ holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
 holder.namespaces['urn'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2'
 holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:2'
 
-def laboratoryOrderOutcome = holder.getDomNodes('/soapenv:Envelope/soapenv:Body/urn:GetLaboratoryOrderOutcomeResponse/urn:careContact')
+def laboratoryOrderOutcome = holder.getDomNodes('/soapenv:Envelope/soapenv:Body/urn:GetLaboratoryOrderOutcomeResponse/urn:laboratoryOutcome')
 
-laboratoryOrderOutcome.each {l -> 
-	def labHolder = new XmlHolder( l )
-	holder.namespaces.each {key, value -> labHolder.namespaces[key] = value}
-	
+log.debug("Starting date limits step with, timePeriodStart: $context.timePeriodStart, timePeriodEnd: $context.timePeriodEnd")
 
-	def careContactId = labHolder.getNodeValue('/urn:careContact/urn1:careContactHeader/urn1:careContactId')
-	def authorTime = labHolder.getNodeValue('/urn:careContact/urn1:careContactHeader/urn1:accountableHealthcareProfessional/urn1:authorTime')
-	def datePeriodStart = labHolder.getNodeValue('/urn:careContact/urn1:careContactBody/urn1:careContactTimePeriod/urn1:start')
-	def datePeriodEnd = labHolder.getNodeValue('/urn:careContact/urn1:careContactBody/urn1:careContactTimePeriod/urn1:end')
+//context.each {key, value -> log.debug("$key = $value")}
 
-	if (context.timePeriodStart <= authorTime[0..7] && authorTime[0..7] <= context.timePeriodEnd) {
-		return
-	}
-	if (datePeriodStart != null && datePeriodStart[0..7] > context.timePeriodEnd) {
-		contextHelper.fail('Response contains a contact after end time. CareContactId: ' + careContactId)
-	}
-	if (datePeriodEnd != null && datePeriodEnd[0..7] < context.timePeriodStart) {
-		contextHelper.fail('Response contains a contact before start time. CareContactId: ' + careContactId)
-	}
+def offending = []
+
+laboratoryOrderOutcome.each {l ->
+    def labHolder = new XmlHolder( l )
+    holder.namespaces.each {key, value -> labHolder.namespaces[key] = value}
+
+    def documentId = labHolder.getNodeValue('/urn:laboratoryOutcome/urn1:laboratoryOutcomeHeader/urn1:documentId')
+    def documentTime = labHolder.getNodeValue('/urn:laboratoryOutcome/urn1:laboratoryOutcomeHeader/urn1:documentTime')
+    documentTime = documentTime == null ? null : documentTime.substring(0,8)
+
+    def analysis = labHolder.getDomNodes('/urn:laboratoryOutcome/urn1:laboratoryOutcomeBody/urn1:analysis')
+    def useDocumentTime = true
+    def correct = false
+
+    log.debug ("Found a response with documentId = $documentId and documentTime = $documentTime")
+
+    for(a in analysis) {
+        def analysisHolder = new XmlHolder( a )
+        holder.namespaces.each {key, value -> analysisHolder.namespaces[key] = value}
+        def analysisTimeStart = analysisHolder.getNodeValue('/urn1:analysis/urn1:analysisTime/urn1:start')
+        def analysisTimeEnd = analysisHolder.getNodeValue('/urn1:analysis/urn1:analysisTime/urn1:end')
+        def analysisId = analysisHolder.getNodeValue('/urn1:analysis/urn1:analysisId/urn1:root')
+
+        analysisTimeStart = analysisTimeStart == null ? null : analysisTimeStart.substring(0, 8)
+        analysisTimeEnd = analysisTimeEnd == null ? null : analysisTimeEnd.substring(0, 8)
+
+        if (analysisTimeStart == null && analysisTimeEnd == null) {
+            log.debug ("Found an analysis result with analysisId = $analysisId without analysis time")
+            useDocumentTime = true
+            correct = true
+            return true
+        }
+
+        // Not possible with current schema
+        if (analysisTimeStart != null && analysisTimeEnd == null) {
+            log.debug ("Found an analysis result analysisId = $analysisId with only analysis time start: $analysisTimeStart")
+
+            useDocumentTime = false
+            if(analysisTimeStart >= context.timePeriodStart && analysisTimeStart <= context.timePeriodEnd)  {
+                correct = true
+                return true
+            }
+        }
+
+        // Not possible with current schema
+        if (analysisTimeStart == null && analysisTimeEnd != null) {
+            log.debug ("Found an analysis result analysisId = $analysisId with only analysis time end: $analysisTimeEnd")
+
+            useDocumentTime = false
+            if(analysisTimeEnd >= context.timePeriodStart && analysisTimeEnd <= context.timePeriodEnd)  {
+                correct = true
+                return true
+            }
+        }
+
+        if (analysisTimeStart != null && analysisTimeEnd != null) {
+            log.debug ("Found an analysis result analysisId = $analysisId with analysis time start: $analysisTimeStart and end: $analysisTimeEnd")
+
+            useDocumentTime = false
+            if((analysisTimeStart <= context.timePeriodStart && analysisTimeEnd >= context.timePeriodStart) ||
+                    (analysisTimeEnd >= context.timePeriodEnd && analysisTimeStart <= context.timePeriodEnd) ||
+                    (analysisTimeStart >= context.timePeriodStart && analysisTimeEnd <= context.timePeriodEnd)) {
+                correct = true
+                return true
+            }
+        }
+    }
+    if(useDocumentTime) {
+        correct = documentTime >= context.timePeriodStart && documentTime <= context.timePeriodEnd
+    }
+
+    if(!correct) {
+        offending.add(documentId)
+    }
+}
+if(!offending.isEmpty()) {
+    log.error("DocumentIds $offending do not contain dates within the specified interval")
+    assert(false)
 }]]></scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Assert documentIds"><con:configuration><scriptText>import com.eviware.soapui.support.XmlHolder
 import se.skl.rivta.testsupport.soapui.ContextHelper
 import com.eviware.soapui.support.GroovyUtils
