@@ -3,9 +3,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-      <groupId>org.sonatype.oss</groupId>
-      <artifactId>oss-parent</artifactId>
-      <version>5</version>
+    <groupId>se.rivta.tools</groupId>
+    <artifactId>rivta-parent-pom</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
   </parent>
 
   <groupId>se.rivta</groupId>
@@ -13,13 +13,10 @@
   <packaging>jar</packaging>
   <version>2.0-M5-SNAPSHOT</version>
   <name>itintegration-registry-schemas</name>
-  <url>http://maven.apache.org</url>
+  <url>http://rivta.se</url>
 
   <properties>
-	<!-- ML. Added 2013-10-22 -->
-    <docs.path>${basedir}/docs</docs.path>
     <schema.path>${basedir}/schemas</schema.path>
-    <cxf.version>2.2.2</cxf.version>
   </properties>
 
   <scm>
@@ -28,23 +25,20 @@
     <url>http://rivta.googlecode.com/svn/ServiceInteractions/riv/itintegration/registry/trunk/</url>
   </scm>
 
-  <dependencies />
-
   <build>
     <plugins>
       <plugin>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-codegen-plugin</artifactId>
-        <version>${cxf.version}</version>
         <executions>
           <execution>
             <id>generate-sources</id>
             <phase>generate-sources</phase>
             <configuration>
-              <sourceRoot>${basedir}/target/generated/src/main/java</sourceRoot>
+              <sourceRoot>${project.build.directory}/generated-sources/cxf</sourceRoot>
               <wsdlOptions>
 
-<!-- Deprecated v1 service contracts to be removed as soon as all consumers and producers has moved to v2 -->
+                <!-- Deprecated v1 service contracts to be removed as soon as all consumers and producers has moved to v2 -->
                 <wsdloption>
                   <wsdl>${schema.path}/interactions/GetLogicalAddresseesByServiceContractInteraction/GetLogicalAddresseesByServiceContractInteraction_1.0_RIVTABP21.wsdl</wsdl>
                   <extraargs>
@@ -75,7 +69,7 @@
                   </extraargs>
                 </wsdloption>
 
-<!-- END OF deprecated v1 service contracts -->
+                <!-- END OF deprecated v1 service contracts -->
 
                 <wsdloption>
                   <wsdl>${schema.path}/interactions/GetLogicalAddresseesByServiceContractInteraction/GetLogicalAddresseesByServiceContractInteraction_2.0_RIVTABP21.wsdl</wsdl>
@@ -115,24 +109,9 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
-        </configuration>
-      </plugin>
+      
     </plugins>
 
-	<!-- ML. Added 2013-10-22 -->
-    <resources>
-      <resource>
-        <directory>${docs.path}</directory>
-      </resource>
-      <resource>
-        <directory>${schema.path}</directory>
-      </resource>
-    </resources>
   </build>
 
 </project>
