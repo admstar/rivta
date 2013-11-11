@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project activeEnvironment="Default" name="FindOffersMock" resourceRoot="" soapui-version="4.6.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="FindOffersResponderBinding" type="wsdl" bindingName="{urn:riv:service:catalogue:FindOffers:1:rivtabp21}FindOffersResponderBinding" soapVersion="1_1" anonymous="optional" definition="file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/interactions/FindOffersInteraction/FindOffersInteraction_1.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/interactions/FindOffersInteraction/FindOffersInteraction_1.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/interactions/FindOffersInteraction/FindOffersInteraction_1.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+<con:soapui-project activeEnvironment="Default" name="FindOffersMock" resourceRoot="" soapui-version="4.6.1" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="FindOffersResponderBinding" type="wsdl" bindingName="{urn:riv:service:catalogue:FindOffers:1:rivtabp21}FindOffersResponderBinding" soapVersion="1_1" anonymous="optional" definition="file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/interactions/FindOffersInteraction/FindOffersInteraction_1.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/interactions/FindOffersInteraction/FindOffersInteraction_1.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/interactions/FindOffersInteraction/FindOffersInteraction_1.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
@@ -87,28 +87,43 @@
   <xs:element name="FindOffersResponse" type="tns:FindOffersResponseType"/>
   <xs:complexType name="FindOffersType">
     <xs:annotation>
-      <xs:documentation>One or all elements can be used to narrow down the search.</xs:documentation>
+      <xs:documentation>En eller flera sökparametrar kan anges för att hitta utbudspunkter.</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="careUnitName" type="xs:string" minOccurs="0">
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="hsaId" type="core:HsaIdType">
         <xs:annotation>
-          <xs:documentation>Search for offers based on a wildcard search on a care unit name.</xs:documentation>
+          <xs:documentation>HSA id.</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="codeName" type="core:CodeType" minOccurs="0" maxOccurs="unbounded">
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="countyCode" type="xs:string">
         <xs:annotation>
-          <xs:documentation>Search for offers based on code names, for example HSA.verksamhetskoder or KVÅ.name</xs:documentation>
+          <xs:documentation>Länskod enligt HSA.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="relativeDistinguishedName" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Wildcard-sökning baserat på RDN i HSA.
+          Exempel:
+            Ögonklinik
+            Stockholm
+            Göteborg</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="productCode" type="core:CVType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Sökning baserad på kod/kodverk, exempelvis HSA verksamhetskoder.</xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element minOccurs="0" name="productName" type="xs:string" maxOccurs="unbounded">
         <xs:annotation>
-          <xs:documentation>Search for offers based on product name.</xs:documentation>
+          <xs:documentation>Sökning baserad på produktnamn.</xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element name="supportedInteractions" type="core:SupportedInteractionsType" minOccurs="0">
         <xs:annotation>
-          <xs:documentation>Search for offers based on RIVTA interaction names, for example clinicalprocess:requestworkflow:ProcessRequest can be used to search
-            for all care units that can be adressed with that particular interaction.</xs:documentation>
+          <xs:documentation>Sökning baserad på RIVTA interaktioner,
+            Exempel: 
+              clinicalprocess:requestworkflow:ProcessRequest</xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
@@ -149,7 +164,6 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="maxLength" type="tns:CapacityType"/>
   <!---->
   <xs:complexType name="OfferType">
     <xs:sequence>
@@ -162,6 +176,7 @@
       <xs:element name="supportedInteractions" type="tns:SupportedInteractionsType"/>
       <xs:element name="products" type="tns:ProductType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="comment" type="xs:string" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <!---->
@@ -172,20 +187,12 @@
     <xs:sequence>
       <xs:element name="hsaId" type="tns:HsaIdType"/>
       <xs:element name="relativeDistinguishedName" type="xs:string"/>
-      <xs:element minOccurs="1" name="postlAddress" type="xs:string"/>
+      <xs:element minOccurs="1" name="postalAddress" type="xs:string"/>
       <xs:element minOccurs="0" name="postalCode" type="xs:string"/>
       <xs:element minOccurs="0" name="streetAddress" type="xs:string"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  <!---->
-  <xs:simpleType name="CareUnitNameType">
-    <xs:annotation>
-      <xs:documentation>Care unit name, corresponds to ... in HSA</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="1024"/>
-    </xs:restriction>
-  </xs:simpleType>
   <!---->
   <xs:complexType name="CapacityType">
     <xs:annotation>
@@ -198,53 +205,7 @@
       <xs:element name="codeSystem" type="xs:string"/>
       <xs:element name="value" type="xs:string"/>
       <xs:element name="validTo" type="tns:TS"/>
-    </xs:sequence>
-  </xs:complexType>
-  <!---->
-  <xs:complexType name="CareUnitAddressType">
-    <xs:sequence>
-      <xs:element name="streetName1">
-        <xs:simpleType>
-          <xs:restriction base="xs:string">
-            <xs:maxLength value="35"/>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-      <xs:element name="streetName2" minOccurs="0">
-        <xs:simpleType>
-          <xs:restriction base="xs:string">
-            <xs:maxLength value="35"/>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-      <xs:element name="streetName3" minOccurs="0">
-        <xs:simpleType>
-          <xs:restriction base="xs:string">
-            <xs:maxLength value="35"/>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-      <xs:element name="postalCode">
-        <xs:annotation>
-          <xs:documentation>Postal code is always represented as 3 numbers and 2 numbers separated with a space 
-          For example: 123 45</xs:documentation>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:string">
-            <xs:pattern value="[0-9]{3,3}\s[0-9]{2,2}"/>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-      <xs:element name="postalCity">
-        <xs:annotation>
-          <xs:documentation>Postal city, maxlength 27 characters.</xs:documentation>
-        </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:string">
-            <xs:maxLength value="27"/>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <!---->
@@ -256,8 +217,134 @@
             if the care unit can recieve requests and send request answers.</xs:documentation>
       </xs:annotation>
       <xs:element name="interaction" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
+  <!---->
+  <xs:complexType name="ProductType">
+    <xs:annotation>
+      <xs:documentation>Product information</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="productCode" type="tns:CVType"/>
+      <xs:element name="properties" type="tns:CVType" maxOccurs="unbounded"/>
+      <xs:element name="description" type="xs:string"/>
+      <xs:element name="price" type="xs:string" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DatePeriodType">
+    <xs:annotation>
+      <xs:documentation>Används för att specificera ett datumintervall
+        med hjälp av start- och slutdatum.
+        
+        start: 
+        Startdatum på formatet ÅÅÅÅMMDD
+        end: 
+        Slutdatum på formatet ÅÅÅÅMMDD</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="start" type="tns:DateType"/>
+      <xs:element name="end" type="tns:DateType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProductCapacityType">
+    <xs:annotation>
+      <xs:documentation>Product information</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="capacity" type="tns:CapacitType" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CapacitType">
+    <xs:annotation>
+      <xs:documentation>CodeSystem information</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="validTo" type="xs:string"/>
+      <xs:element name="value" type="xs:string"/>
+      <xs:element name="description" type="xs:string"/>
+      <xs:element name="code" type="tns:CVType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CareUnitCapacityType">
+    <xs:sequence>
+      <xs:element name="hsaId" type="tns:HsaIdType"/>
+      <xs:element name="relativeDistinguishedName" type="xs:string"/>
+      <xs:element name="product" type="tns:ProductCapacityType" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TimePeriodType">
+    <xs:annotation>
+      <xs:documentation>Används för att specificera ett datumintervall
+        med hjälp av start- och slutdatum.
+        
+        start: 
+        Startdatum på formatet YYYYMMDDhhmmss
+        end: 
+        Slutdatum på formatet YYYYMMDDhhmmss</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="start" type="tns:TimeStampType"/>
+      <xs:element name="end" type="tns:TimeStampType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CVType">
+    <xs:annotation>
+      <xs:documentation>code: Kod
+        codeSystem: Kodverkets oid
+        codeSystemName: Namn på kodverk
+        codeSystemVersion: Version av kodverk.
+        displayName: Namn på kod för visning
+        originalText:</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="code" type="xs:string" minOccurs="1"/>
+      <xs:element name="codeSystem" type="xs:string" minOccurs="1"/>
+      <xs:element name="codeSystemName" type="xs:string" minOccurs="0"/>
+      <xs:element name="codeSystemVersion" type="xs:string" minOccurs="0"/>
+      <xs:element name="displayName" type="xs:string" minOccurs="0"/>
+      <xs:element name="originalText" type="xs:string" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!--Simple data types-->
+  <!---->
+  <xs:simpleType name="CareUnitNameType">
+    <xs:annotation>
+      <xs:documentation>Care unit name, corresponds to RDN in HSA</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1024"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TimeStampType">
+    <xs:annotation>
+      <xs:documentation>A quantity specifying a point on the axis of natural time.
+        A point in time is most often represented as a calendar
+        expression.
+        
+        The time has the format YYYYMMDDhhmmss</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])(0[0-9]|1[0-9]|2[0123])([0-5])([0-9])([0-5])([0-9])"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!--Date format SSYYMMDD-->
+  <xs:simpleType name="DateType">
+    <xs:annotation>
+      <xs:documentation>Date format SSYYMMDD</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"/>
+    </xs:restriction>
+  </xs:simpleType>
   <!---->
   <xs:simpleType name="HsaIdType">
     <xs:restriction base="xs:string">
@@ -281,121 +368,6 @@
       <xs:enumeration value="INFO"/>
     </xs:restriction>
   </xs:simpleType>
-  <!---->
-  <xs:complexType name="ProductType">
-    <xs:annotation>
-      <xs:documentation>Product information</xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="name" type="xs:string"/>
-      <xs:element name="description" type="xs:string"/>
-      <xs:element name="typeOfProduct" type="tns:CVType" maxOccurs="unbounded"/>
-      <xs:element name="price" type="xs:string" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="DatePeriodType">
-    <xs:annotation>
-      <xs:documentation>Används för att specificera ett datumintervall
-        med hjälp av start- och slutdatum.
-        
-        start: 
-        Startdatum på formatet ÅÅÅÅMMDD
-        end: 
-        Slutdatum på formatet ÅÅÅÅMMDD</xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="start" type="tns:DateType"/>
-      <xs:element name="end" type="tns:DateType"/>
-    </xs:sequence>
-  </xs:complexType>
-  <!--Date format SSYYMMDD-->
-  <xs:simpleType name="DateType">
-    <xs:annotation>
-      <xs:documentation>Date format SSYYMMDD</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="ProductCapacityType">
-    <xs:annotation>
-      <xs:documentation>Product information</xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="name" type="xs:string"/>
-      <xs:element name="capacity" type="tns:CapacitType" maxOccurs="unbounded" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="CapacitType">
-    <xs:annotation>
-      <xs:documentation>CodeSystem information</xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="validTo" type="xs:string"/>
-      <xs:element name="value" type="xs:string"/>
-      <xs:element name="description" type="xs:string"/>
-      <xs:element name="code" type="xs:string"/>
-      <xs:element name="codeSystem" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="CodeType">
-    <xs:annotation>
-      <xs:documentation>CodeSystem information</xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="displayName" type="xs:string"/>
-      <xs:element name="description" type="xs:string"/>
-      <xs:element name="code" type="xs:string"/>
-      <xs:element name="codeSystem" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="CareUnitCapacityType">
-    <xs:sequence>
-      <xs:element name="careUnitId" type="xs:string"/>
-      <xs:element name="careUnitName" type="xs:string"/>
-      <xs:element name="product" type="tns:ProductCapacityType" maxOccurs="unbounded" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="TimePeriodType">
-    <xs:annotation>
-      <xs:documentation>Används för att specificera ett datumintervall
-        med hjälp av start- och slutdatum.
-        
-        start: 
-        Startdatum på formatet YYYYMMDDhhmmss
-        end: 
-        Slutdatum på formatet YYYYMMDDhhmmss</xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="start" type="tns:TimeStampType"/>
-      <xs:element name="end" type="tns:TimeStampType"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:simpleType name="TimeStampType">
-    <xs:annotation>
-      <xs:documentation>A quantity specifying a point on the axis of natural time.
-        A point in time is most often represented as a calendar
-        expression.
-        
-        The time has the format YYYYMMDDhhmmss</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])(0[0-9]|1[0-9]|2[0123])([0-5])([0-9])([0-5])([0-9])"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="CVType">
-    <xs:annotation>
-      <xs:documentation/>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="code" type="xs:string" minOccurs="0"/>
-      <xs:element name="codeSystem" type="xs:string" minOccurs="0"/>
-      <xs:element name="codeSystemName" type="xs:string" minOccurs="0"/>
-      <xs:element name="codeSystemVersion" type="xs:string" minOccurs="0"/>
-      <xs:element name="displayName" type="xs:string" minOccurs="0"/>
-      <xs:element name="originalText" type="xs:string" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
 </xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/core_components/itintegration_registry_1.0.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="urn:riv:itintegration:registry:1" elementFormDefault="qualified" version="1.0" xmlns="urn:riv:itintegration:registry:1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
     <xs:documentation>Beskrivning: 	Grundl��ggande informationsobjekt f��r dom��nen itintegration:registry (adressering av tj��nster)
@@ -425,7 +397,7 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://tempuri.org</con:endpoint><con:endpoint>http://Khaleds-MacBook-Pro.local:8088/mockFindOffersResponderBinding</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:service:catalogue:FindOffersResponder:1:FindOffers" name="FindOffers" bindingOperationName="FindOffers" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation></con:interface><con:mockService port="8088" path="/mockFindOffersResponderBinding" host="localhost" name="MockService" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="FindOffers" interface="FindOffersResponderBinding" operation="FindOffers"><con:settings/><con:dispatchStyle>QUERY_MATCH</con:dispatchStyle><con:defaultResponse>Single response</con:defaultResponse><con:response name="Single response" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:service:catalogue:FindOffersResponder:1" xmlns:urn1="urn:riv:service:catalogue:1">
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://tempuri.org</con:endpoint><con:endpoint>http://Khaleds-MacBook-Pro.local:8088/mockFindOffersResponderBinding</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:service:catalogue:FindOffersResponder:1:FindOffers" name="FindOffers" bindingOperationName="FindOffers" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/></con:operation></con:interface><con:mockService port="8088" path="/mockFindOffersResponderBinding" host="localhost" name="MockService" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="FindOffers" interface="FindOffersResponderBinding" operation="FindOffers"><con:settings/><con:dispatchStyle>QUERY_MATCH</con:dispatchStyle><con:defaultResponse>Single response</con:defaultResponse><con:response name="Single response" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:service:catalogue:FindOffersResponder:1" xmlns:urn1="urn:riv:service:catalogue:1">
    <soapenv:Header/>
    <soapenv:Body>
       <urn:FindOffersResponse>
