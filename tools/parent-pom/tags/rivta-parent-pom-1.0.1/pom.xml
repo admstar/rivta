@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>7</version>
+  </parent>
+
+  <groupId>se.rivta.tools</groupId>
+  <artifactId>rivta-parent-pom</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0.1</version>
+  <name>${artifactId}</name>
+  <url>http://rivta.se</url>
+
+  <properties>
+    <java.compiler.level>1.6</java.compiler.level>
+
+    <!-- plugin versions -->
+    <cxf-codegen-plugin.version>2.5.1</cxf-codegen-plugin.version>
+    <maven-antrun-plugin.version>1.7</maven-antrun-plugin.version>
+    <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
+    <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
+    <maven-deploy-plugin.version>2.5</maven-deploy-plugin.version>
+    <maven-enforcer-plugin.version>1.3.1</maven-enforcer-plugin.version>
+    <maven-install-plugin.version>2.5.1</maven-install-plugin.version>
+    <maven-jar-plugin.version>2.4</maven-jar-plugin.version>
+    <!-- maven-release-plugin: version 2.0 is tagging at the wrong level in SVN
+      (project level instead of trunk-level) due to bug:
+      http://jira.codehaus.org/browse/MRELEASE-526 -->
+    <maven-resources-plugin.version>2.6</maven-resources-plugin.version>
+    <maven-scm-plugin.version>1.8.1</maven-scm-plugin.version>
+    <maven-site-plugin.version>2.1.1</maven-site-plugin.version>
+    <maven-surefire-plugin.version>2.16</maven-surefire-plugin.version>
+    <maven-verifier-plugin.version>1.0</maven-verifier-plugin.version>
+  </properties>
+
+  <scm>
+    <connection>scm:svn:https://rivta.googlecode.com/svn/tools/parent-pom/tags/rivta-parent-pom-1.0.1</connection>
+    <developerConnection>scm:svn:https://rivta.googlecode.com/svn/tools/parent-pom/tags/rivta-parent-pom-1.0.1</developerConnection>
+    <url>http://rivta.googlecode.com/svn/tools/parent-pom/tags/rivta-parent-pom-1.0.1</url>
+  </scm>
+
+  <dependencies />
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.cxf</groupId>
+          <artifactId>cxf-codegen-plugin</artifactId>
+          <version>${cxf-codegen-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>${maven-antrun-plugin.version}</version>
+        </plugin>        
+        <plugin>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>${maven-clean-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${maven-compiler-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>${maven-deploy-plugin.version}</version>
+        </plugin>
+        <!--
+          Note: maven-enforcer-plugin version specified in sonatype parent
+          pluginManagement-section, we need to be explicit with version
+          where the plugin is declared since override of version here does
+          not seem to work (we pick up the older version from the parent).
+        -->        
+        <plugin>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <version>${maven-enforcer-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>${maven-install-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>${maven-jar-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>${maven-resources-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-scm-plugin</artifactId>
+          <version>${maven-scm-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>${maven-site-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>${maven-surefire-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-verifier-plugin</artifactId>
+          <version>${maven-verifier-plugin.version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    
+    <plugins>
+
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>${java.compiler.level}</source>
+          <target>${java.compiler.level}</target>
+        </configuration>
+      </plugin>
+      
+      <!--
+        Note: maven-enforcer-plugin version specified in sonatype parent
+        pluginManagement-section, we need to be explicit with version
+        where the plugin is declared since override of version here does
+        not seem to work (we pick up the older version from the parent).
+      -->
+      <plugin>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>${maven-enforcer-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>rivta: enforce-versions</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+
+                <requirePluginVersions>
+                  <message>### Best Practice is to always define plugin versions! ###</message>
+                </requirePluginVersions>
+
+                <requireMavenVersion>
+                  <version>[3.0.3,)</version>
+                </requireMavenVersion>
+                
+                <requireJavaVersion>
+                  <version>[1.6.0,)</version>
+                </requireJavaVersion>                
+                
+              </rules>
+              <failFast>false</failFast>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      
+      <!-- build the zip-artifact and attach it to the build -->
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>createZipFile</id>
+            <phase>package</phase>
+            <configuration>
+              <target>
+                <property name="zipFilename" value="${project.artifactId}-${project.version}.zip" />
+                <echo>${project.build.directory},docs,pom.xml</echo>
+                <zip destfile="${project.build.directory}/${zipFilename}" basedir="${basedir}" excludes="target/**" />
+                <attachartifact file="${project.build.directory}/${zipFilename}" type="zip" />
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.4.2</version>
+      </plugin>
+    </plugins>
+
+    <resources>
+      <resource>
+        <targetPath>schemas</targetPath>
+        <directory>schemas</directory>
+      </resource>
+    </resources>
+  </build>
+
+</project>
