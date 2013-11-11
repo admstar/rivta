@@ -11,7 +11,7 @@
   <groupId>se.rivta.tools</groupId>
   <artifactId>rivta-parent-pom</artifactId>
   <packaging>pom</packaging>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <name>${artifactId}</name>
   <url>http://rivta.se</url>
 
@@ -38,9 +38,9 @@
   </properties>
 
   <scm>
-    <connection>scm:svn:https://rivta.googlecode.com/svn/tools/parent-pom/trunk/</connection>
-    <developerConnection>scm:svn:https://rivta.googlecode.com/svn/tools/parent-pom/trunk/</developerConnection>
-    <url>http://rivta.googlecode.com/svn/tools/parent-pom/trunk/</url>
+    <connection>scm:svn:https://rivta.googlecode.com/svn/tools/parent-pom/tags/rivta-parent-pom-1.0.0</connection>
+    <developerConnection>scm:svn:https://rivta.googlecode.com/svn/tools/parent-pom/tags/rivta-parent-pom-1.0.0</developerConnection>
+    <url>http://rivta.googlecode.com/svn/tools/parent-pom/tags/rivta-parent-pom-1.0.0</url>
   </scm>
 
   <dependencies />
@@ -166,12 +166,10 @@
             <phase>package</phase>
             <configuration>
               <target>
-                <property name="zipFilename" value="${project.artifactId}-${project.version}.zip"/>
+                <property name="zipFilename" value="${project.artifactId}-${project.version}.zip" />
                 <echo>${project.build.directory},docs,pom.xml</echo>
-                <zip destfile="${project.build.directory}/${zipFilename}"
-                    basedir="${basedir}"
-                    excludes="target/**"/>
-                <attachartifact file="${project.build.directory}/${zipFilename}" type="zip"/>
+                <zip destfile="${project.build.directory}/${zipFilename}" basedir="${basedir}" excludes="target/**" />
+                <attachartifact file="${project.build.directory}/${zipFilename}" type="zip" />
               </target>
             </configuration>
             <goals>
