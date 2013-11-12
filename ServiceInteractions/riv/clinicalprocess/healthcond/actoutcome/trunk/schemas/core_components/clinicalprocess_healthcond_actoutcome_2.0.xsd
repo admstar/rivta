@@ -42,6 +42,22 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="PatientSummaryHeaderType_GetReferralOutcome">
+        <xs:sequence>
+            <xs:element name="documentId" type="xs:string"/>
+            <xs:element name="sourceSystemHSAId" type="tns:HSAIdType"/>
+            <xs:element name="documentTitle" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="documentTime" type="tns:TimeStampType" maxOccurs="1" minOccurs="1"/>
+            <xs:element name="patientId" type="tns:PersonIdType"/>
+            <xs:element name="accountableHealthcareProfessional"
+                type="tns:HealthcareProfessionalType_GetReferralOutcome"/>
+            <xs:element name="legalAuthenticator" type="tns:LegalAuthenticatorType" minOccurs="0"/>
+            <xs:element name="approvedForPatient" type="xs:boolean"/>
+            <xs:element name="careContactId" type="xs:string" minOccurs="0"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="PatientSummaryHeaderType_LaboratoryOutcome">
         <xs:sequence>
             <xs:element name="documentId" type="xs:string"/>
@@ -59,7 +75,8 @@
 
     <xs:complexType name="ReferralOutcomeType">
         <xs:sequence>
-            <xs:element name="referralOutcomeHeader" type="tns:PatientSummaryHeaderType"/>
+            <xs:element name="referralOutcomeHeader"
+                type="tns:PatientSummaryHeaderType_GetReferralOutcome"/>
             <xs:element name="referralOutcomeBody" type="tns:ReferralOutcomeBodyType"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 
@@ -127,6 +144,19 @@
     </xs:complexType>
 
     <xs:complexType name="ReferralType">
+        <xs:sequence>
+            <xs:element name="referralId" type="xs:string"/>
+            <xs:element name="referralText" type="xs:string" minOccurs="1"/>
+            <xs:element name="referralTime" type="tns:TimeStampType"/>
+            <xs:element name="referralAuthor"
+                type="tns:HealthcareProfessionalType_GetReferralOutcome"/>
+            <xs:element minOccurs="0" name="careContactId" type="xs:string"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="LaboratoryReferralType">
         <xs:sequence>
             <xs:element name="referralId" type="xs:string"/>
             <xs:element name="referralReason" type="xs:string" minOccurs="0"/>
@@ -459,7 +489,7 @@
             <xs:element name="accountableHeathcareProfessional"
                 type="tns:HealthcareProfessionalType_LaboratoryOrderOutcomeBody" minOccurs="0"/>
             <xs:element name="analysis" type="tns:AnalysisType" maxOccurs="unbounded" minOccurs="0"/>
-            <xs:element name="referral" type="tns:ReferralType"/>
+            <xs:element name="referral" type="tns:LaboratoryReferralType"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 
         </xs:sequence>
@@ -490,6 +520,39 @@
             <xs:element name="healthcareProfessionalRoleCode" type="tns:CVType" minOccurs="0"/>
             <xs:element name="healthcareProfessionalOrgUnit" type="tns:OrgUnitType" minOccurs="1"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="HealthcareProfessionalType_GetReferralOutcome">
+        <xs:annotation>
+            <xs:documentation>
+                Information om hälso- och omsorgspesonal
+                
+                healthcareProfessionalHsaId: 
+                HSA-id för vård- och omsorgspersonal 
+                healthcareProfessionalName
+                Namn på vård- och omsorgspersonal
+                healthcareProfessionalRoleCode: 
+                Information om personens befattning. Om möjligt skall KV Befattning (OID 1.2.752.129.2.2.1.4), se 
+                http://www.inera.se/Documents/TJANSTER_PROJEKT/Katalogtjanst_HSA/Innehall/hsa_innehall_befattning.pdf 
+                healthcareProfessionalCareUnitHSAid: 
+                HSA-id för PDL-enhet som vård- och omsorgspersonen är uppdragstagare för
+                healthcareProfessionalCareGiverHSAid: 
+                HSA-id för vårdgivaren, som är vårdgivare för den enhet som författaren är uppdragstagare för
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="authorTime" type="tns:TimeStampType"/>
+            <xs:element name="healthcareProfessionalHSAId" type="tns:HSAIdType" minOccurs="0"/>
+            <xs:element name="healthcareProfessionalName" type="xs:string" minOccurs="0"/>
+            <xs:element name="healthcareProfessionalRoleCode" type="tns:CVType" minOccurs="0"/>
+            <xs:element name="healthcareProfessionalOrgUnit" type="tns:OrgUnitType" minOccurs="0"/>
+            <xs:element name="healthcareProfessionalCareUnitHSAId" type="tns:HSAIdType"
+                minOccurs="0"/>
+            <xs:element minOccurs="0" name="healthcareProfessionalCareGiverHSAId"
+                type="tns:HSAIdType"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+
         </xs:sequence>
     </xs:complexType>
 
