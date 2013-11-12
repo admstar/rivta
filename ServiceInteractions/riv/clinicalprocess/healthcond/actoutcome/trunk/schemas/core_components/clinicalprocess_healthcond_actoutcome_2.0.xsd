@@ -439,7 +439,7 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="LaboratoryOutcomeType">
+    <xs:complexType name="LaboratoryOrderOutcomeType">
         <xs:sequence>
             <xs:element name="laboratoryOrderOutcomeHeader"
                 type="tns:PatientSummaryHeaderType_LaboratoryOutcome"/>
@@ -457,7 +457,7 @@
             <xs:element name="resultReport" type="xs:string" minOccurs="0" maxOccurs="1"/>
             <xs:element name="resultComment" type="xs:string" minOccurs="0" maxOccurs="1"/>
             <xs:element name="accountableHeathcareProfessional"
-                type="tns:HealthcareProfessionalType_LaboratoryOrderOutcomeBody"/>
+                type="tns:HealthcareProfessionalType_LaboratoryOrderOutcomeBody" minOccurs="0"/>
             <xs:element name="analysis" type="tns:AnalysisType" maxOccurs="unbounded" minOccurs="0"/>
             <xs:element name="referral" type="tns:ReferralType"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
@@ -573,7 +573,7 @@
 
     <xs:complexType name="AnalysisType">
         <xs:sequence>
-            <xs:element name="analysisId" type="tns:IIType" minOccurs="0"/>
+            <xs:element name="analysisId" type="tns:IIType" minOccurs="1"/>
             <xs:element name="analysisTime" type="tns:TimePeriodType" minOccurs="0"/>
             <xs:element name="analysisCode" type="tns:CVType" minOccurs="0"/>
             <xs:element name="analysisText" type="xs:string" minOccurs="0" maxOccurs="1"/>
@@ -583,6 +583,7 @@
             <xs:element name="method" type="xs:string" minOccurs="0"/>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="relationToAnalysis"
                 type="tns:RelationToAnalysisType"/>
+            <xs:element name="analysisOutcome" type="tns:AnalysisOutcomeType" minOccurs="0"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -598,8 +599,6 @@
     <xs:complexType name="RelationToAnalysisType">
         <xs:sequence>
             <xs:element name="analysisId" type="tns:IIType"/>
-            <xs:element name="analysisTime" type="tns:TimePeriodType" minOccurs="0"/>
-            <xs:element name="analysisOutcome" type="tns:AnalysisOutcomeType" minOccurs="0"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -621,9 +620,9 @@
             <xs:element name="outcomeUnit" type="xs:string" minOccurs="0"/>
             <xs:element name="observationTime" type="tns:TimeStampType" minOccurs="0"/>
             <xs:element name="pathologicalFlag" type="xs:boolean"/>
-            <xs:element name="outcomeDescription" type="xs:string"/>
-            <xs:element name="referenceInterval" type="xs:string"/>
-            <xs:element name="referencePopulation" type="xs:string"/>
+            <xs:element name="outcomeDescription" type="xs:string" minOccurs="0"/>
+            <xs:element name="referenceInterval" type="xs:string" minOccurs="0"/>
+            <xs:element name="referencePopulation" type="xs:string" minOccurs="0"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
