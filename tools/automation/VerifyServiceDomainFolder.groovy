@@ -1,4 +1,3 @@
-
 /**
  * ///////////////////////////////////////////////////////////////////////
  * //                                                                   //
@@ -220,7 +219,7 @@ log(loglevelDebug, "Domain name = " + usedDomain)
 
 //-----Download the domain structure that should be verified
 
-////////////////downloadFileStructureFromRivtaSite(usedDomain)
+downloadFileStructureFromRivtaSite(usedDomain)
 
 //-----Iterate through the downloaded structure and verify that it's correct
 verifyServiceDomainStructure(localRIVTATargetFolder)
