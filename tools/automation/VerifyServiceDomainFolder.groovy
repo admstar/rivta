@@ -70,7 +70,7 @@ def getValuesFromParameters() {
     def cli = new CliBuilder(usage: mecall, header: 'Options:', footer: medesc)
     cli.c(longOpt: 'checkoutfiles', args:1, required:false, argName:'Optional: true', 'If "true" then files will be downloaded to the target directory')
     cli.d(longOpt: 'domainname', args:1, required:true, argName:'Domain name', 'Name of the domain')
-    cli.l(longOpt: 'uselogging', args:1, required:false, argName:'Optional: true', 'If the parameter "-l" is used, then the script logs output to the console')
+    cli.l(longOpt: 'uselogging', args:1, required:false, argName:'Optional: true', 'If "true" then the script logs output to the console')
     cli.t(longOpt: 'targetdir', args:1, required:true, argName:'Target directory', 'Directory in which service domain files exists. If the checkoutfiles parameter is set to "y" then they will be downloaded to this folder')
 
     //-----Verify all parameters
@@ -79,7 +79,7 @@ def getValuesFromParameters() {
 
     checkoutFiles = false
     def argCheckoutFiles=options.getProperty('checkoutfiles')
-    if (argCheckoutFiles.asBoolean().booleanValue() == true) {
+    if (argCheckoutFiles.toString() == "true") {
         checkoutFiles = true
     }
 
@@ -93,7 +93,7 @@ def getValuesFromParameters() {
 
     useLogging = false
     def argUseLogging=options.getProperty('uselogging')
-    if (argUseLogging.asBoolean().booleanValue() == true) {
+    if (argUseLogging.toString() == "true") {
         useLogging = true
     }
 
@@ -155,7 +155,6 @@ def verifyServiceDomainStructure(String domainStructure) {
 def verifySubDomainStructure(String domainStructure, String subDomainName) {
 
     verificationResult = [false, false, false, false, false, false, false, false, false, false]
-    //log(1, "initial verificationResult: " + verificationResult)
 
     def dir = new File(domainStructure+subDomainName)
     dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
@@ -172,8 +171,7 @@ def verifySubDomainStructure(String domainStructure, String subDomainName) {
         }
     }
 
-    //if (verificationResult.contains(false) == true)
-    log(loglevelDebug, "verificationResult: " + verificationResult)
+    //log(loglevelDebug, "verificationResult: " + verificationResult)
     structureTemplate.size.times {
         if (verificationResult[it] == false) {
             log(loglevelDebug, "'" + subDomainName + "' is missing the subfolder: '" + structureTemplate[it].subPath + "'")
@@ -207,7 +205,7 @@ def verifySubDomainAgainstStructureRules(leafFolderName, folderPath, verificatio
         }
     }
     if (result == true) {
-        log(loglevelDebug, "" + result + " folderPath: " + folderPath + " leafFolderName: " + leafFolderName)
+        //log(loglevelDebug, "" + result + " folderPath: " + folderPath + " leafFolderName: " + leafFolderName)
     }
 
     //return result
