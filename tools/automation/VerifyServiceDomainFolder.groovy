@@ -1,3 +1,4 @@
+
 /**
  * ///////////////////////////////////////////////////////////////////////
  * //                                                                   //
@@ -17,6 +18,7 @@
 import groovy.lang.Binding
 import groovy.io.FileType
 
+checkoutFiles = false
 domainFolderStructure = []
 //domainSubfolder = []
 //localRIVTATargetFolder = "/Users/peterhernfalk/Desktop/_Peter_Files/rivtadomain/"
@@ -61,18 +63,25 @@ def getValuesFromParameters() {
     me = this.class.name
     mecall = me + ' [options]'
     medesc = """\
-    \nThis script requires Groovy 1.8.1 or later.
-    It generates a wiki page, containing information about the current service domains and their status.
+    This script requires Groovy 1.8.1 or later.
+    The purpose of the script is to verify the folder structure of a specific service domain.
     """
 
     def cli = new CliBuilder(usage: mecall, header: 'Options:', footer: medesc)
+    cli.c(longOpt: 'checkoutfiles', args:1, required:false, argName:'Optional: true', 'If "true" then files will be downloaded to the target directory')
     cli.d(longOpt: 'domainname', args:1, required:true, argName:'Domain name', 'Name of the domain')
-    cli.t(longOpt: 'targetdir', args:1, required:true, argName:'target directory', 'Directory to which the downloaded service domain files will be written')
-    cli.l(longOpt: 'uselogging', args:1, required:false, argName:'use logging', 'If the parameter "-l" is used, then the script logs output to the console')
+    cli.l(longOpt: 'uselogging', args:1, required:false, argName:'Optional: true', 'If the parameter "-l" is used, then the script logs output to the console')
+    cli.t(longOpt: 'targetdir', args:1, required:true, argName:'Target directory', 'Directory in which service domain files exists. If the checkoutfiles parameter is set to "y" then they will be downloaded to this folder')
 
     //-----Verify all parameters
     def options = cli.parse(args)
     if (!options) return
+
+    checkoutFiles = false
+    def argCheckoutFiles=options.getProperty('checkoutfiles')
+    if (argCheckoutFiles.asBoolean().booleanValue() == true) {
+        checkoutFiles = true
+    }
 
     def argDomainName=options.getProperty('domainname')
     if (argDomainName.toString().length() == 0) {
@@ -82,6 +91,12 @@ def getValuesFromParameters() {
     }
     usedDomain = argDomainName
 
+    useLogging = false
+    def argUseLogging=options.getProperty('uselogging')
+    if (argUseLogging.asBoolean().booleanValue() == true) {
+        useLogging = true
+    }
+
     def argTargetDir=options.getProperty('targetdir')
     if (argTargetDir.toString().length() == 0) {
         log(loglevelInfo, '* The supplied target directory name seems to be empty\n')
@@ -89,12 +104,7 @@ def getValuesFromParameters() {
         return 1
     }
     localRIVTATargetFolder = argTargetDir
-
-    useLogging = false
-    def argUseLogging=options.getProperty('uselogging')
-    if (argUseLogging.asBoolean().booleanValue() == true) {
-        useLogging = true
-    }
+    return true
 }
 
 /** Logs text to standard output */
@@ -214,15 +224,17 @@ def verifySubDomainAgainstStructureRules(leafFolderName, folderPath, verificatio
  */
 
 //-----Fetch the domain name from the script parameter
-getValuesFromParameters()
-log(loglevelDebug, "Domain name = " + usedDomain)
+if (getValuesFromParameters() == true) {
+    log(loglevelDebug, "Domain name = " + usedDomain)
 
-//-----Download the domain structure that should be verified
+    //-----Download the domain structure that should be verified
+    if (checkoutFiles == true) {
+        downloadFileStructureFromRivtaSite(usedDomain)
+    }
 
-downloadFileStructureFromRivtaSite(usedDomain)
-
-//-----Iterate through the downloaded structure and verify that it's correct
-verifyServiceDomainStructure(localRIVTATargetFolder)
+    //-----Iterate through the downloaded structure and verify that it's correct
+    verifyServiceDomainStructure(localRIVTATargetFolder)
+}
 
 //-----Exit the script execution and return the return code to the caller
 log(1, "\n\nreturnCode: " + returnCode)
