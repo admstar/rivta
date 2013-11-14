@@ -90,7 +90,7 @@
   <xs:element name="GetLaboratoryOrderOutcomeResponse" type="tns:GetLaboratoryOrderOutcomeResponseType"/>
   <xs:complexType name="GetLaboratoryOrderOutcomeType">
     <xs:sequence>
-      <xs:element name="careUnitHSAid" type="core:HSAIdType" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="careUnitHSAId" type="core:HSAIdType" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="patientId" type="core:PersonIdType"/>
       <xs:element name="timePeriod" type="core:DatePeriodType" minOccurs="0"/>
       <xs:element name="sourceSystemHSAId" type="core:HSAIdType" minOccurs="0"/>
@@ -100,7 +100,7 @@
   </xs:complexType>
   <xs:complexType name="GetLaboratoryOrderOutcomeResponseType">
     <xs:sequence>
-      <xs:element name="laboratoryOutcome" type="core:LaboratoryOutcomeType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="laboratoryOrderOutcome" type="core:LaboratoryOrderOutcomeType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -136,6 +136,20 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="PatientSummaryHeaderType_GetReferralOutcome">
+    <xs:sequence>
+      <xs:element name="documentId" type="xs:string"/>
+      <xs:element name="sourceSystemHSAId" type="tns:HSAIdType"/>
+      <xs:element name="documentTitle" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="documentTime" type="tns:TimeStampType" maxOccurs="1" minOccurs="1"/>
+      <xs:element name="patientId" type="tns:PersonIdType"/>
+      <xs:element name="accountableHealthcareProfessional" type="tns:HealthcareProfessionalType_GetReferralOutcome"/>
+      <xs:element name="legalAuthenticator" type="tns:LegalAuthenticatorType" minOccurs="0"/>
+      <xs:element name="approvedForPatient" type="xs:boolean"/>
+      <xs:element name="careContactId" type="xs:string" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="PatientSummaryHeaderType_LaboratoryOutcome">
     <xs:sequence>
       <xs:element name="documentId" type="xs:string"/>
@@ -151,7 +165,7 @@
   </xs:complexType>
   <xs:complexType name="ReferralOutcomeType">
     <xs:sequence>
-      <xs:element name="referralOutcomeHeader" type="tns:PatientSummaryHeaderType"/>
+      <xs:element name="referralOutcomeHeader" type="tns:PatientSummaryHeaderType_GetReferralOutcome"/>
       <xs:element name="referralOutcomeBody" type="tns:ReferralOutcomeBodyType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
@@ -208,8 +222,15 @@
       <xs:element name="referralId" type="xs:string"/>
       <xs:element name="referralText" type="xs:string" minOccurs="1"/>
       <xs:element name="referralTime" type="tns:TimeStampType"/>
-      <xs:element name="referralAuthor" type="tns:HealthcareProfessionalType"/>
+      <xs:element name="referralAuthor" type="tns:HealthcareProfessionalType_GetReferralOutcome"/>
       <xs:element minOccurs="0" name="careContactId" type="xs:string"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LaboratoryReferralType">
+    <xs:sequence>
+      <xs:element name="referralId" type="xs:string"/>
+      <xs:element name="referralReason" type="xs:string" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -250,7 +271,6 @@
     <xs:sequence>
       <xs:element name="signatureTime" type="tns:TimeStampType"/>
       <xs:element name="legalAuthenticatorHSAId" type="tns:HSAIdType" minOccurs="0"/>
-      <xs:element minOccurs="0" name="legalAuthenticatorName" type="xs:string"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -321,8 +341,8 @@
                 Slutdatum på formatet YYYYMMDDhhmmss</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="start" type="tns:TimeStampType" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="end" type="tns:TimeStampType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="start" type="tns:TimeStampType" minOccurs="0"/>
+      <xs:element name="end" type="tns:TimeStampType" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -455,23 +475,75 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="LaboratoryOutcomeType">
+  <xs:complexType name="LaboratoryOrderOutcomeType">
     <xs:sequence>
-      <xs:element name="laboratoryOutcomeHeader" type="tns:PatientSummaryHeaderType_LaboratoryOutcome"/>
-      <xs:element name="laboratoryOutcomeBody" type="tns:LaboratoryOutcomeBodyType"/>
+      <xs:element name="laboratoryOrderOutcomeHeader" type="tns:PatientSummaryHeaderType_LaboratoryOutcome"/>
+      <xs:element name="laboratoryOrderOutcomeBody" type="tns:LaboratoryOrderOutcomeBodyType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="LaboratoryOutcomeBodyType">
+  <xs:complexType name="LaboratoryOrderOutcomeBodyType">
     <xs:sequence>
       <xs:element name="resultType" type="xs:string"/>
       <xs:element name="registrationTime" type="tns:TimeStampType"/>
       <xs:element name="discipline" type="xs:string"/>
       <xs:element name="resultReport" type="xs:string" minOccurs="0" maxOccurs="1"/>
       <xs:element name="resultComment" type="xs:string" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="accountableHeathcareProfessional" type="tns:HealthcareProfessionalType"/>
+      <xs:element name="accountableHeathcareProfessional" type="tns:HealthcareProfessionalType_LaboratoryOrderOutcomeBody" minOccurs="0"/>
       <xs:element name="analysis" type="tns:AnalysisType" maxOccurs="unbounded" minOccurs="0"/>
-      <xs:element name="referral" type="tns:ReferralType"/>
+      <xs:element name="referral" type="tns:LaboratoryReferralType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HealthcareProfessionalType_LaboratoryOrderOutcomeBody">
+    <xs:annotation>
+      <xs:documentation>Information om hälso- och omsorgspesonal
+                
+                healthcareProfessionalHsaId: 
+                HSA-id för vård- och omsorgspersonal 
+                healthcareProfessionalName
+                Namn på vård- och omsorgspersonal
+                healthcareProfessionalRoleCode: 
+                Information om personens befattning. Om möjligt skall KV Befattning (OID 1.2.752.129.2.2.1.4), se 
+                http://www.inera.se/Documents/TJANSTER_PROJEKT/Katalogtjanst_HSA/Innehall/hsa_innehall_befattning.pdf 
+                healthcareProfessionalCareUnitHSAid: 
+                HSA-id för PDL-enhet som vård- och omsorgspersonen är uppdragstagare för
+                healthcareProfessionalCareGiverHSAid: 
+                HSA-id för vårdgivaren, som är vårdgivare för den enhet som författaren är uppdragstagare för</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="authorTime" type="tns:TimeStampType"/>
+      <xs:element name="healthcareProfessionalHSAId" type="tns:HSAIdType" minOccurs="1"/>
+      <xs:element name="healthcareProfessionalName" type="xs:string" minOccurs="0"/>
+      <xs:element name="healthcareProfessionalRoleCode" type="tns:CVType" minOccurs="0"/>
+      <xs:element name="healthcareProfessionalOrgUnit" type="tns:OrgUnitType" minOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="HealthcareProfessionalType_GetReferralOutcome">
+    <xs:annotation>
+      <xs:documentation>Information om hälso- och omsorgspesonal
+                
+                healthcareProfessionalHsaId: 
+                HSA-id för vård- och omsorgspersonal 
+                healthcareProfessionalName
+                Namn på vård- och omsorgspersonal
+                healthcareProfessionalRoleCode: 
+                Information om personens befattning. Om möjligt skall KV Befattning (OID 1.2.752.129.2.2.1.4), se 
+                http://www.inera.se/Documents/TJANSTER_PROJEKT/Katalogtjanst_HSA/Innehall/hsa_innehall_befattning.pdf 
+                healthcareProfessionalCareUnitHSAid: 
+                HSA-id för PDL-enhet som vård- och omsorgspersonen är uppdragstagare för
+                healthcareProfessionalCareGiverHSAid: 
+                HSA-id för vårdgivaren, som är vårdgivare för den enhet som författaren är uppdragstagare för</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="authorTime" type="tns:TimeStampType"/>
+      <xs:element name="healthcareProfessionalHSAId" type="tns:HSAIdType" minOccurs="0"/>
+      <xs:element name="healthcareProfessionalName" type="xs:string" minOccurs="0"/>
+      <xs:element name="healthcareProfessionalRoleCode" type="tns:CVType" minOccurs="0"/>
+      <xs:element name="healthcareProfessionalOrgUnit" type="tns:OrgUnitType" minOccurs="0"/>
+      <xs:element name="healthcareProfessionalCareUnitHSAId" type="tns:HSAIdType" minOccurs="0"/>
+      <xs:element minOccurs="0" name="healthcareProfessionalCareGiverHSAId" type="tns:HSAIdType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -493,12 +565,12 @@
     </xs:annotation>
     <xs:sequence>
       <xs:element name="authorTime" type="tns:TimeStampType"/>
-      <xs:element name="healthcareProfessionalHSAId" type="tns:HSAIdType" minOccurs="0"/>
+      <xs:element name="healthcareProfessionalHSAId" type="tns:HSAIdType" minOccurs="1"/>
       <xs:element name="healthcareProfessionalName" type="xs:string" minOccurs="0"/>
       <xs:element name="healthcareProfessionalRoleCode" type="tns:CVType" minOccurs="0"/>
       <xs:element name="healthcareProfessionalOrgUnit" type="tns:OrgUnitType" minOccurs="1"/>
-      <xs:element name="healthcareProfessionalCareUnitHSAId" type="tns:HSAIdType" minOccurs="0"/>
-      <xs:element minOccurs="0" name="healthcareProfessionalCareGiverHSAId" type="tns:HSAIdType"/>
+      <xs:element name="healthcareProfessionalCareUnitHSAId" type="tns:HSAIdType" minOccurs="1"/>
+      <xs:element minOccurs="1" name="healthcareProfessionalCareGiverHSAId" type="tns:HSAIdType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -545,7 +617,7 @@
   </xs:complexType>
   <xs:complexType name="AnalysisType">
     <xs:sequence>
-      <xs:element name="analysisId" type="tns:IIType"/>
+      <xs:element name="analysisId" type="tns:IIType" minOccurs="1"/>
       <xs:element name="analysisTime" type="tns:TimePeriodType" minOccurs="0"/>
       <xs:element name="analysisCode" type="tns:CVType" minOccurs="0"/>
       <xs:element name="analysisText" type="xs:string" minOccurs="0" maxOccurs="1"/>
@@ -554,6 +626,7 @@
       <xs:element name="specimen" type="xs:string" minOccurs="0"/>
       <xs:element name="method" type="xs:string" minOccurs="0"/>
       <xs:element maxOccurs="unbounded" minOccurs="0" name="relationToAnalysis" type="tns:RelationToAnalysisType"/>
+      <xs:element name="analysisOutcome" type="tns:AnalysisOutcomeType" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -567,8 +640,6 @@
   <xs:complexType name="RelationToAnalysisType">
     <xs:sequence>
       <xs:element name="analysisId" type="tns:IIType"/>
-      <xs:element name="analysisTime" type="tns:TimePeriodType" minOccurs="0"/>
-      <xs:element name="analysisOutcome" type="tns:AnalysisOutcomeType" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -588,9 +659,9 @@
       <xs:element name="outcomeUnit" type="xs:string" minOccurs="0"/>
       <xs:element name="observationTime" type="tns:TimeStampType" minOccurs="0"/>
       <xs:element name="pathologicalFlag" type="xs:boolean"/>
-      <xs:element name="outcomeDescription" type="xs:string"/>
-      <xs:element name="referenceInterval" type="xs:string"/>
-      <xs:element name="referencePopulation" type="xs:string"/>
+      <xs:element name="outcomeDescription" type="xs:string" minOccurs="0"/>
+      <xs:element name="referenceInterval" type="xs:string" minOccurs="0"/>
+      <xs:element name="referencePopulation" type="xs:string" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -890,15 +961,25 @@ context.careUnitHSAid = careUnitHSAid
 def responseName = mockRequest.requestHeaders['x-mock-response'][0]
 log.debug("responseName: ${responseName}")
 
-return responseName</con:dispatchPath><con:dispatchStyle>SCRIPT</con:dispatchStyle><con:defaultResponse>SoapFault</con:defaultResponse><con:response name="Response DateBoundaries" encoding="UTF-8"><con:settings/><con:script>context.documentId = 123456789
+return responseName</con:dispatchPath><con:dispatchStyle>SCRIPT</con:dispatchStyle><con:defaultResponse>SoapFault</con:defaultResponse><con:response name="DateBoundariesResponse" encoding="UTF-8"><con:settings/><con:script>context.documentId = 123456789
 context.analysisId = 4711
+
+// create XmlHolder for request content
+def holder = new com.eviware.soapui.support.XmlHolder( mockRequest.requestContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:itintegration:registry:1'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2'
+holder.namespaces['urn2'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:2'
+
+context.patientId = holder.getNodeValue('//urn1:patientId[1]/urn2:id')
+context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')
 </con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:2">
     <soapenv:Header/>
     <soapenv:Body>
         <urn:GetLaboratoryOrderOutcomeResponse>
             <!--Response with start and end on start-->
-            <urn:laboratoryOutcome>
-                <urn1:laboratoryOutcomeHeader>
+            <urn:laboratoryOrderOutcome>
+                <urn1:laboratoryOrderOutcomeHeader>
                     <urn1:documentId>${documentId}0</urn1:documentId>
                     <urn1:sourceSystemHSAId>1234</urn1:sourceSystemHSAId>
                     <urn1:documentTime>20131031000000</urn1:documentTime>
@@ -908,22 +989,26 @@ context.analysisId = 4711
                     </urn1:patientId>
                     <urn1:accountableHealthcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
                             <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
+                        <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                        <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                     </urn1:accountableHealthcareProfessional>
                     <urn1:approvedForPatient>false</urn1:approvedForPatient>
-                </urn1:laboratoryOutcomeHeader>
-                <urn1:laboratoryOutcomeBody>
+                </urn1:laboratoryOrderOutcomeHeader>
+                <urn1:laboratoryOrderOutcomeBody>
                     <urn1:resultType>?</urn1:resultType>
                     <urn1:registrationTime>20110101000000</urn1:registrationTime>
                     <urn1:discipline>?</urn1:discipline>
                     <urn1:accountableHeathcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                            <urn1:orgUnitName>20110101000000</urn1:orgUnitName>
+                            <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
                     </urn1:accountableHeathcareProfessional>
                     <urn1:analysis>
@@ -934,6 +1019,7 @@ context.analysisId = 4711
                             <urn1:start>20110101000000</urn1:start>
                             <urn1:end>20110101000000</urn1:end>
                         </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:analysis>
                         <urn1:analysisId>
@@ -943,24 +1029,16 @@ context.analysisId = 4711
                             <urn1:start>20130901000000</urn1:start>
                             <urn1:end>20130901000000</urn1:end>
                         </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:referral>
                         <urn1:referralId>?</urn1:referralId>
-                        <urn1:referralText>?</urn1:referralText>
-                        <urn1:referralTime>20110101000000</urn1:referralTime>
-                        <urn1:referralAuthor>
-                            <urn1:authorTime>20110101000000</urn1:authorTime>
-                            <urn1:healthcareProfessionalOrgUnit>
-                                <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                                <urn1:orgUnitName>?</urn1:orgUnitName>
-                            </urn1:healthcareProfessionalOrgUnit>
-                        </urn1:referralAuthor>
-                    </urn1:referral>
-                </urn1:laboratoryOutcomeBody>
-            </urn:laboratoryOutcome>
+                      </urn1:referral>
+                </urn1:laboratoryOrderOutcomeBody>
+            </urn:laboratoryOrderOutcome>
             <!--Response with start and end on end-->
-            <urn:laboratoryOutcome>
-                <urn1:laboratoryOutcomeHeader>
+            <urn:laboratoryOrderOutcome>
+                <urn1:laboratoryOrderOutcomeHeader>
                     <urn1:documentId>${documentId}1</urn1:documentId>
                     <urn1:sourceSystemHSAId>1234</urn1:sourceSystemHSAId>
                     <urn1:documentTime>20131031000000</urn1:documentTime>
@@ -970,22 +1048,26 @@ context.analysisId = 4711
                     </urn1:patientId>
                     <urn1:accountableHealthcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
                             <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
+                        <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                        <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                     </urn1:accountableHealthcareProfessional>
                     <urn1:approvedForPatient>false</urn1:approvedForPatient>
-                </urn1:laboratoryOutcomeHeader>
-                <urn1:laboratoryOutcomeBody>
+                </urn1:laboratoryOrderOutcomeHeader>
+                <urn1:laboratoryOrderOutcomeBody>
                     <urn1:resultType>?</urn1:resultType>
                     <urn1:registrationTime>20110101000000</urn1:registrationTime>
                     <urn1:discipline>?</urn1:discipline>
                     <urn1:accountableHeathcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                            <urn1:orgUnitName>20110101000000</urn1:orgUnitName>
+                            <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
                     </urn1:accountableHeathcareProfessional>
                     <urn1:analysis>
@@ -996,6 +1078,11 @@ context.analysisId = 4711
                             <urn1:start>20110101000000</urn1:start>
                             <urn1:end>20110101000000</urn1:end>
                         </urn1:analysisTime>
+                        <urn1:analysisCode>
+                            <urn1:code>DenHemligaKoden</urn1:code>
+                            <urn1:codeSystem>1.2.752.108.1</urn1:codeSystem>
+                            <urn1:displayName>NisseGurka</urn1:displayName>
+                        </urn1:analysisCode>
                     </urn1:analysis>
                     <urn1:analysis>
                         <urn1:analysisId>
@@ -1005,24 +1092,16 @@ context.analysisId = 4711
                             <urn1:start>20131031000000</urn1:start>
                             <urn1:end>20131031000000</urn1:end>
                         </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:referral>
                         <urn1:referralId>?</urn1:referralId>
-                        <urn1:referralText>?</urn1:referralText>
-                        <urn1:referralTime>20110101000000</urn1:referralTime>
-                        <urn1:referralAuthor>
-                            <urn1:authorTime>20110101000000</urn1:authorTime>
-                            <urn1:healthcareProfessionalOrgUnit>
-                                <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                                <urn1:orgUnitName>?</urn1:orgUnitName>
-                            </urn1:healthcareProfessionalOrgUnit>
-                        </urn1:referralAuthor>
                     </urn1:referral>
-                </urn1:laboratoryOutcomeBody>
-            </urn:laboratoryOutcome>
+                </urn1:laboratoryOrderOutcomeBody>
+            </urn:laboratoryOrderOutcome>
             <!--Response with start on start and end before end-->
-            <urn:laboratoryOutcome>
-                <urn1:laboratoryOutcomeHeader>
+            <urn:laboratoryOrderOutcome>
+                <urn1:laboratoryOrderOutcomeHeader>
                     <urn1:documentId>${documentId}2</urn1:documentId>
                     <urn1:sourceSystemHSAId>1234</urn1:sourceSystemHSAId>
                     <urn1:documentTime>20131031000000</urn1:documentTime>
@@ -1032,22 +1111,26 @@ context.analysisId = 4711
                     </urn1:patientId>
                     <urn1:accountableHealthcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
                             <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
+                        <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                        <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                     </urn1:accountableHealthcareProfessional>
                     <urn1:approvedForPatient>false</urn1:approvedForPatient>
-                </urn1:laboratoryOutcomeHeader>
-                <urn1:laboratoryOutcomeBody>
+                </urn1:laboratoryOrderOutcomeHeader>
+                <urn1:laboratoryOrderOutcomeBody>
                     <urn1:resultType>?</urn1:resultType>
                     <urn1:registrationTime>20110101000000</urn1:registrationTime>
                     <urn1:discipline>?</urn1:discipline>
                     <urn1:accountableHeathcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                            <urn1:orgUnitName>20110101000000</urn1:orgUnitName>
+                            <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
                     </urn1:accountableHeathcareProfessional>
                     <urn1:analysis>
@@ -1058,6 +1141,7 @@ context.analysisId = 4711
                             <urn1:start>20110101000000</urn1:start>
                             <urn1:end>20110101000000</urn1:end>
                         </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:analysis>
                         <urn1:analysisId>
@@ -1067,24 +1151,16 @@ context.analysisId = 4711
                             <urn1:start>20130901000000</urn1:start>
                             <urn1:end>20130930000000</urn1:end>
                         </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:referral>
                         <urn1:referralId>?</urn1:referralId>
-                        <urn1:referralText>?</urn1:referralText>
-                        <urn1:referralTime>20110101000000</urn1:referralTime>
-                        <urn1:referralAuthor>
-                            <urn1:authorTime>20110101000000</urn1:authorTime>
-                            <urn1:healthcareProfessionalOrgUnit>
-                                <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                                <urn1:orgUnitName>?</urn1:orgUnitName>
-                            </urn1:healthcareProfessionalOrgUnit>
-                        </urn1:referralAuthor>
                     </urn1:referral>
-                </urn1:laboratoryOutcomeBody>
-            </urn:laboratoryOutcome>
+                </urn1:laboratoryOrderOutcomeBody>
+            </urn:laboratoryOrderOutcome>
             <!--Response with start on start and end after end-->
-            <urn:laboratoryOutcome>
-                <urn1:laboratoryOutcomeHeader>
+            <urn:laboratoryOrderOutcome>
+                <urn1:laboratoryOrderOutcomeHeader>
                     <urn1:documentId>${documentId}3</urn1:documentId>
                     <urn1:sourceSystemHSAId>1234</urn1:sourceSystemHSAId>
                     <urn1:documentTime>20131031000000</urn1:documentTime>
@@ -1094,22 +1170,26 @@ context.analysisId = 4711
                     </urn1:patientId>
                     <urn1:accountableHealthcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
                             <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
+                        <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                        <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                     </urn1:accountableHealthcareProfessional>
                     <urn1:approvedForPatient>false</urn1:approvedForPatient>
-                </urn1:laboratoryOutcomeHeader>
-                <urn1:laboratoryOutcomeBody>
+                </urn1:laboratoryOrderOutcomeHeader>
+                <urn1:laboratoryOrderOutcomeBody>
                     <urn1:resultType>?</urn1:resultType>
                     <urn1:registrationTime>20110101000000</urn1:registrationTime>
                     <urn1:discipline>?</urn1:discipline>
                     <urn1:accountableHeathcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                            <urn1:orgUnitName>20110101000000</urn1:orgUnitName>
+                            <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
                     </urn1:accountableHeathcareProfessional>
                     <urn1:analysis>
@@ -1120,6 +1200,7 @@ context.analysisId = 4711
                             <urn1:start>20110101000000</urn1:start>
                             <urn1:end>20110101000000</urn1:end>
                         </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:analysis>
                         <urn1:analysisId>
@@ -1129,24 +1210,16 @@ context.analysisId = 4711
                             <urn1:start>20130901000000</urn1:start>
                             <urn1:end>20131130000000</urn1:end>
                         </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:referral>
                         <urn1:referralId>?</urn1:referralId>
-                        <urn1:referralText>?</urn1:referralText>
-                        <urn1:referralTime>20110101000000</urn1:referralTime>
-                        <urn1:referralAuthor>
-                            <urn1:authorTime>20110101000000</urn1:authorTime>
-                            <urn1:healthcareProfessionalOrgUnit>
-                                <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                                <urn1:orgUnitName>?</urn1:orgUnitName>
-                            </urn1:healthcareProfessionalOrgUnit>
-                        </urn1:referralAuthor>
                     </urn1:referral>
-                </urn1:laboratoryOutcomeBody>
-            </urn:laboratoryOutcome>
+                </urn1:laboratoryOrderOutcomeBody>
+            </urn:laboratoryOrderOutcome>
             <!--Response with start before start and end on end-->
-            <urn:laboratoryOutcome>
-                <urn1:laboratoryOutcomeHeader>
+            <urn:laboratoryOrderOutcome>
+                <urn1:laboratoryOrderOutcomeHeader>
                     <urn1:documentId>${documentId}4</urn1:documentId>
                     <urn1:sourceSystemHSAId>1234</urn1:sourceSystemHSAId>
                     <urn1:documentTime>20131031000000</urn1:documentTime>
@@ -1156,22 +1229,26 @@ context.analysisId = 4711
                     </urn1:patientId>
                     <urn1:accountableHealthcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
                             <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
+                        <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                        <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                     </urn1:accountableHealthcareProfessional>
                     <urn1:approvedForPatient>false</urn1:approvedForPatient>
-                </urn1:laboratoryOutcomeHeader>
-                <urn1:laboratoryOutcomeBody>
+                </urn1:laboratoryOrderOutcomeHeader>
+                <urn1:laboratoryOrderOutcomeBody>
                     <urn1:resultType>?</urn1:resultType>
                     <urn1:registrationTime>20110101000000</urn1:registrationTime>
                     <urn1:discipline>?</urn1:discipline>
                     <urn1:accountableHeathcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                            <urn1:orgUnitName>20110101000000</urn1:orgUnitName>
+                            <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
                     </urn1:accountableHeathcareProfessional>
                     <urn1:analysis>
@@ -1182,6 +1259,7 @@ context.analysisId = 4711
                             <urn1:start>20110101000000</urn1:start>
                             <urn1:end>20110101000000</urn1:end>
                         </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:analysis>
                         <urn1:analysisId>
@@ -1191,24 +1269,16 @@ context.analysisId = 4711
                             <urn1:start>20130801000000</urn1:start>
                             <urn1:end>20131031000000</urn1:end>
                         </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:referral>
                         <urn1:referralId>?</urn1:referralId>
-                        <urn1:referralText>?</urn1:referralText>
-                        <urn1:referralTime>20110101000000</urn1:referralTime>
-                        <urn1:referralAuthor>
-                            <urn1:authorTime>20110101000000</urn1:authorTime>
-                            <urn1:healthcareProfessionalOrgUnit>
-                                <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                                <urn1:orgUnitName>?</urn1:orgUnitName>
-                            </urn1:healthcareProfessionalOrgUnit>
-                        </urn1:referralAuthor>
                     </urn1:referral>
-                </urn1:laboratoryOutcomeBody>
-            </urn:laboratoryOutcome>
+                </urn1:laboratoryOrderOutcomeBody>
+            </urn:laboratoryOrderOutcome>
             <!--Response with start before start and and end before end-->
-            <urn:laboratoryOutcome>
-                <urn1:laboratoryOutcomeHeader>
+            <urn:laboratoryOrderOutcome>
+                <urn1:laboratoryOrderOutcomeHeader>
                     <urn1:documentId>${documentId}5</urn1:documentId>
                     <urn1:sourceSystemHSAId>1234</urn1:sourceSystemHSAId>
                     <urn1:documentTime>20131031000000</urn1:documentTime>
@@ -1218,22 +1288,26 @@ context.analysisId = 4711
                     </urn1:patientId>
                     <urn1:accountableHealthcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
                             <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
+                        <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                        <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                     </urn1:accountableHealthcareProfessional>
                     <urn1:approvedForPatient>false</urn1:approvedForPatient>
-                </urn1:laboratoryOutcomeHeader>
-                <urn1:laboratoryOutcomeBody>
+                </urn1:laboratoryOrderOutcomeHeader>
+                <urn1:laboratoryOrderOutcomeBody>
                     <urn1:resultType>?</urn1:resultType>
                     <urn1:registrationTime>20110101000000</urn1:registrationTime>
                     <urn1:discipline>?</urn1:discipline>
                     <urn1:accountableHeathcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                            <urn1:orgUnitName>20110101000000</urn1:orgUnitName>
+                            <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
                     </urn1:accountableHeathcareProfessional>
                     <urn1:analysis>
@@ -1244,6 +1318,7 @@ context.analysisId = 4711
                             <urn1:start>20110101000000</urn1:start>
                             <urn1:end>20110101000000</urn1:end>
                         </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:analysis>
                         <urn1:analysisId>
@@ -1253,24 +1328,16 @@ context.analysisId = 4711
                             <urn1:start>20130801000000</urn1:start>
                             <urn1:end>20130930000000</urn1:end>
                         </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:referral>
                         <urn1:referralId>?</urn1:referralId>
-                        <urn1:referralText>?</urn1:referralText>
-                        <urn1:referralTime>20110101000000</urn1:referralTime>
-                        <urn1:referralAuthor>
-                            <urn1:authorTime>20110101000000</urn1:authorTime>
-                            <urn1:healthcareProfessionalOrgUnit>
-                                <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                                <urn1:orgUnitName>?</urn1:orgUnitName>
-                            </urn1:healthcareProfessionalOrgUnit>
-                        </urn1:referralAuthor>
                     </urn1:referral>
-                </urn1:laboratoryOutcomeBody>
-            </urn:laboratoryOutcome>
+                </urn1:laboratoryOrderOutcomeBody>
+            </urn:laboratoryOrderOutcome>
             <!--Response with start before start and end after end-->
-            <urn:laboratoryOutcome>
-                <urn1:laboratoryOutcomeHeader>
+            <urn:laboratoryOrderOutcome>
+                <urn1:laboratoryOrderOutcomeHeader>
                     <urn1:documentId>${documentId}6</urn1:documentId>
                     <urn1:sourceSystemHSAId>1234</urn1:sourceSystemHSAId>
                     <urn1:documentTime>20131031000000</urn1:documentTime>
@@ -1280,22 +1347,26 @@ context.analysisId = 4711
                     </urn1:patientId>
                     <urn1:accountableHealthcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
                             <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
+                        <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                        <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                     </urn1:accountableHealthcareProfessional>
                     <urn1:approvedForPatient>false</urn1:approvedForPatient>
-                </urn1:laboratoryOutcomeHeader>
-                <urn1:laboratoryOutcomeBody>
+                </urn1:laboratoryOrderOutcomeHeader>
+                <urn1:laboratoryOrderOutcomeBody>
                     <urn1:resultType>?</urn1:resultType>
                     <urn1:registrationTime>20110101000000</urn1:registrationTime>
                     <urn1:discipline>?</urn1:discipline>
                     <urn1:accountableHeathcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                            <urn1:orgUnitName>20110101000000</urn1:orgUnitName>
+                            <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
                     </urn1:accountableHeathcareProfessional>
                     <urn1:analysis>
@@ -1306,6 +1377,7 @@ context.analysisId = 4711
                             <urn1:start>20110101000000</urn1:start>
                             <urn1:end>20110101000000</urn1:end>
                         </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:analysis>
                         <urn1:analysisId>
@@ -1315,24 +1387,16 @@ context.analysisId = 4711
                             <urn1:start>20130801000000</urn1:start>
                             <urn1:end>20131130000000</urn1:end>
                         </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:referral>
                         <urn1:referralId>?</urn1:referralId>
-                        <urn1:referralText>?</urn1:referralText>
-                        <urn1:referralTime>20110101000000</urn1:referralTime>
-                        <urn1:referralAuthor>
-                            <urn1:authorTime>20110101000000</urn1:authorTime>
-                            <urn1:healthcareProfessionalOrgUnit>
-                                <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                                <urn1:orgUnitName>?</urn1:orgUnitName>
-                            </urn1:healthcareProfessionalOrgUnit>
-                        </urn1:referralAuthor>
                     </urn1:referral>
-                </urn1:laboratoryOutcomeBody>
-            </urn:laboratoryOutcome>
+                </urn1:laboratoryOrderOutcomeBody>
+            </urn:laboratoryOrderOutcome>
             <!--Response with start after start and end on end-->
-            <urn:laboratoryOutcome>
-                <urn1:laboratoryOutcomeHeader>
+            <urn:laboratoryOrderOutcome>
+                <urn1:laboratoryOrderOutcomeHeader>
                     <urn1:documentId>${documentId}7</urn1:documentId>
                     <urn1:sourceSystemHSAId>1234</urn1:sourceSystemHSAId>
                     <urn1:documentTime>20131031000000</urn1:documentTime>
@@ -1342,22 +1406,26 @@ context.analysisId = 4711
                     </urn1:patientId>
                     <urn1:accountableHealthcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
                             <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
+                        <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                        <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                     </urn1:accountableHealthcareProfessional>
                     <urn1:approvedForPatient>false</urn1:approvedForPatient>
-                </urn1:laboratoryOutcomeHeader>
-                <urn1:laboratoryOutcomeBody>
+                </urn1:laboratoryOrderOutcomeHeader>
+                <urn1:laboratoryOrderOutcomeBody>
                     <urn1:resultType>?</urn1:resultType>
                     <urn1:registrationTime>20110101000000</urn1:registrationTime>
                     <urn1:discipline>?</urn1:discipline>
                     <urn1:accountableHeathcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                            <urn1:orgUnitName>20110101000000</urn1:orgUnitName>
+                            <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
                     </urn1:accountableHeathcareProfessional>
                     <urn1:analysis>
@@ -1368,6 +1436,7 @@ context.analysisId = 4711
                             <urn1:start>20130901000000</urn1:start>
                             <urn1:end>20131130000000</urn1:end>
                         </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:analysis>
                         <urn1:analysisId>
@@ -1377,6 +1446,7 @@ context.analysisId = 4711
                             <urn1:start>20110101000000</urn1:start>
                             <urn1:end>20110101000000</urn1:end>
                         </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:analysis>
                         <urn1:analysisId>
@@ -1386,24 +1456,16 @@ context.analysisId = 4711
                             <urn1:start>20131001000000</urn1:start>
                             <urn1:end>20131031000000</urn1:end>
                         </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:referral>
                         <urn1:referralId>?</urn1:referralId>
-                        <urn1:referralText>?</urn1:referralText>
-                        <urn1:referralTime>20110101000000</urn1:referralTime>
-                        <urn1:referralAuthor>
-                            <urn1:authorTime>20110101000000</urn1:authorTime>
-                            <urn1:healthcareProfessionalOrgUnit>
-                                <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                                <urn1:orgUnitName>?</urn1:orgUnitName>
-                            </urn1:healthcareProfessionalOrgUnit>
-                        </urn1:referralAuthor>
                     </urn1:referral>
-                </urn1:laboratoryOutcomeBody>
-            </urn:laboratoryOutcome>
+                </urn1:laboratoryOrderOutcomeBody>
+            </urn:laboratoryOrderOutcome>
             <!--Response with start after start and end before end-->
-            <urn:laboratoryOutcome>
-                <urn1:laboratoryOutcomeHeader>
+            <urn:laboratoryOrderOutcome>
+                <urn1:laboratoryOrderOutcomeHeader>
                     <urn1:documentId>${documentId}8</urn1:documentId>
                     <urn1:sourceSystemHSAId>1234</urn1:sourceSystemHSAId>
                     <urn1:documentTime>20131031000000</urn1:documentTime>
@@ -1413,22 +1475,26 @@ context.analysisId = 4711
                     </urn1:patientId>
                     <urn1:accountableHealthcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
                             <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
+                        <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                        <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                     </urn1:accountableHealthcareProfessional>
                     <urn1:approvedForPatient>false</urn1:approvedForPatient>
-                </urn1:laboratoryOutcomeHeader>
-                <urn1:laboratoryOutcomeBody>
+                </urn1:laboratoryOrderOutcomeHeader>
+                <urn1:laboratoryOrderOutcomeBody>
                     <urn1:resultType>?</urn1:resultType>
                     <urn1:registrationTime>20110101000000</urn1:registrationTime>
                     <urn1:discipline>?</urn1:discipline>
                     <urn1:accountableHeathcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                            <urn1:orgUnitName>20110101000000</urn1:orgUnitName>
+                            <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
                     </urn1:accountableHeathcareProfessional>
                     <urn1:analysis>
@@ -1439,6 +1505,7 @@ context.analysisId = 4711
                             <urn1:start>20110101000000</urn1:start>
                             <urn1:end>20110101000000</urn1:end>
                         </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:analysis>
                         <urn1:analysisId>
@@ -1448,6 +1515,7 @@ context.analysisId = 4711
                             <urn1:start>20131001000000</urn1:start>
                             <urn1:end>20131015000000</urn1:end>
                         </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:analysis>
                         <urn1:analysisId>
@@ -1457,24 +1525,16 @@ context.analysisId = 4711
                             <urn1:start>20131101000000</urn1:start>
                             <urn1:end>20131115000000</urn1:end>
                         </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:referral>
                         <urn1:referralId>?</urn1:referralId>
-                        <urn1:referralText>?</urn1:referralText>
-                        <urn1:referralTime>20110101000000</urn1:referralTime>
-                        <urn1:referralAuthor>
-                            <urn1:authorTime>20110101000000</urn1:authorTime>
-                            <urn1:healthcareProfessionalOrgUnit>
-                                <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                                <urn1:orgUnitName>?</urn1:orgUnitName>
-                            </urn1:healthcareProfessionalOrgUnit>
-                        </urn1:referralAuthor>
                     </urn1:referral>
-                </urn1:laboratoryOutcomeBody>
-            </urn:laboratoryOutcome>
+                </urn1:laboratoryOrderOutcomeBody>
+            </urn:laboratoryOrderOutcome>
             <!--Response with start after start and end after end-->
-            <urn:laboratoryOutcome>
-                <urn1:laboratoryOutcomeHeader>
+            <urn:laboratoryOrderOutcome>
+                <urn1:laboratoryOrderOutcomeHeader>
                     <urn1:documentId>${documentId}9</urn1:documentId>
                     <urn1:sourceSystemHSAId>1234</urn1:sourceSystemHSAId>
                     <urn1:documentTime>20131031000000</urn1:documentTime>
@@ -1484,22 +1544,26 @@ context.analysisId = 4711
                     </urn1:patientId>
                     <urn1:accountableHealthcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
                             <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
+                        <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                        <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                     </urn1:accountableHealthcareProfessional>
                     <urn1:approvedForPatient>false</urn1:approvedForPatient>
-                </urn1:laboratoryOutcomeHeader>
-                <urn1:laboratoryOutcomeBody>
+                </urn1:laboratoryOrderOutcomeHeader>
+                <urn1:laboratoryOrderOutcomeBody>
                     <urn1:resultType>?</urn1:resultType>
                     <urn1:registrationTime>20110101000000</urn1:registrationTime>
                     <urn1:discipline>?</urn1:discipline>
                     <urn1:accountableHeathcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                            <urn1:orgUnitName>20110101000000</urn1:orgUnitName>
+                            <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
                     </urn1:accountableHeathcareProfessional>
                     <urn1:analysis>
@@ -1510,6 +1574,7 @@ context.analysisId = 4711
                             <urn1:start>20110101000000</urn1:start>
                             <urn1:end>20110101000000</urn1:end>
                         </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:analysis>
                         <urn1:analysisId>
@@ -1519,24 +1584,16 @@ context.analysisId = 4711
                             <urn1:start>20131001000000</urn1:start>
                             <urn1:end>20131130000000</urn1:end>
                         </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:referral>
                         <urn1:referralId>?</urn1:referralId>
-                        <urn1:referralText>?</urn1:referralText>
-                        <urn1:referralTime>20110101000000</urn1:referralTime>
-                        <urn1:referralAuthor>
-                            <urn1:authorTime>20110101000000</urn1:authorTime>
-                            <urn1:healthcareProfessionalOrgUnit>
-                                <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                                <urn1:orgUnitName>?</urn1:orgUnitName>
-                            </urn1:healthcareProfessionalOrgUnit>
-                        </urn1:referralAuthor>
                     </urn1:referral>
-                </urn1:laboratoryOutcomeBody>
-            </urn:laboratoryOutcome>
+                </urn1:laboratoryOrderOutcomeBody>
+            </urn:laboratoryOrderOutcome>
             <!--Response with only start-->
-            <urn:laboratoryOutcome>
-                <urn1:laboratoryOutcomeHeader>
+            <urn:laboratoryOrderOutcome>
+                <urn1:laboratoryOrderOutcomeHeader>
                     <urn1:documentId>${documentId}10</urn1:documentId>
                     <urn1:sourceSystemHSAId>1234</urn1:sourceSystemHSAId>
                     <urn1:documentTime>20131031000000</urn1:documentTime>
@@ -1546,22 +1603,26 @@ context.analysisId = 4711
                     </urn1:patientId>
                     <urn1:accountableHealthcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
                             <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
+                        <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                        <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                     </urn1:accountableHealthcareProfessional>
                     <urn1:approvedForPatient>false</urn1:approvedForPatient>
-                </urn1:laboratoryOutcomeHeader>
-                <urn1:laboratoryOutcomeBody>
+                </urn1:laboratoryOrderOutcomeHeader>
+                <urn1:laboratoryOrderOutcomeBody>
                     <urn1:resultType>?</urn1:resultType>
                     <urn1:registrationTime>20110101000000</urn1:registrationTime>
                     <urn1:discipline>?</urn1:discipline>
                     <urn1:accountableHeathcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                            <urn1:orgUnitName>20110101000000</urn1:orgUnitName>
+                            <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
                     </urn1:accountableHeathcareProfessional>
                     <urn1:analysis>
@@ -1571,24 +1632,16 @@ context.analysisId = 4711
                         <urn1:analysisTime>
                             <urn1:start>20131001000000</urn1:start>
                         </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:referral>
                         <urn1:referralId>?</urn1:referralId>
-                        <urn1:referralText>?</urn1:referralText>
-                        <urn1:referralTime>20110101000000</urn1:referralTime>
-                        <urn1:referralAuthor>
-                            <urn1:authorTime>20110101000000</urn1:authorTime>
-                            <urn1:healthcareProfessionalOrgUnit>
-                                <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                                <urn1:orgUnitName>?</urn1:orgUnitName>
-                            </urn1:healthcareProfessionalOrgUnit>
-                        </urn1:referralAuthor>
                     </urn1:referral>
-                </urn1:laboratoryOutcomeBody>
-            </urn:laboratoryOutcome>
+                </urn1:laboratoryOrderOutcomeBody>
+            </urn:laboratoryOrderOutcome>
             <!--Response with only end-->
-            <urn:laboratoryOutcome>
-                <urn1:laboratoryOutcomeHeader>
+            <urn:laboratoryOrderOutcome>
+                <urn1:laboratoryOrderOutcomeHeader>
                     <urn1:documentId>${documentId}11</urn1:documentId>
                     <urn1:sourceSystemHSAId>1234</urn1:sourceSystemHSAId>
                     <urn1:documentTime>20131031000000</urn1:documentTime>
@@ -1598,22 +1651,26 @@ context.analysisId = 4711
                     </urn1:patientId>
                     <urn1:accountableHealthcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
                             <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
+                        <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                        <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                     </urn1:accountableHealthcareProfessional>
                     <urn1:approvedForPatient>false</urn1:approvedForPatient>
-                </urn1:laboratoryOutcomeHeader>
-                <urn1:laboratoryOutcomeBody>
+                </urn1:laboratoryOrderOutcomeHeader>
+                <urn1:laboratoryOrderOutcomeBody>
                     <urn1:resultType>?</urn1:resultType>
                     <urn1:registrationTime>20110101000000</urn1:registrationTime>
                     <urn1:discipline>?</urn1:discipline>
                     <urn1:accountableHeathcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                            <urn1:orgUnitName>20110101000000</urn1:orgUnitName>
+                            <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
                     </urn1:accountableHeathcareProfessional>
                     <urn1:analysis>
@@ -1624,6 +1681,7 @@ context.analysisId = 4711
                             <urn1:start>20110101000000</urn1:start>
                             <urn1:end>20110101000000</urn1:end>
                         </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:analysis>
                         <urn1:analysisId>
@@ -1632,84 +1690,16 @@ context.analysisId = 4711
                         <urn1:analysisTime>
                             <urn1:end>20131001000000</urn1:end>
                         </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:referral>
                         <urn1:referralId>?</urn1:referralId>
-                        <urn1:referralText>?</urn1:referralText>
-                        <urn1:referralTime>20110101000000</urn1:referralTime>
-                        <urn1:referralAuthor>
-                            <urn1:authorTime>20110101000000</urn1:authorTime>
-                            <urn1:healthcareProfessionalOrgUnit>
-                                <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                                <urn1:orgUnitName>?</urn1:orgUnitName>
-                            </urn1:healthcareProfessionalOrgUnit>
-                        </urn1:referralAuthor>
                     </urn1:referral>
-                </urn1:laboratoryOutcomeBody>
-            </urn:laboratoryOutcome>
-            <!--Response with empty time, but with matching documentId-->
-            <urn:laboratoryOutcome>
-                <urn1:laboratoryOutcomeHeader>
-                    <urn1:documentId>${documentId}12</urn1:documentId>
-                    <urn1:sourceSystemHSAId>1234</urn1:sourceSystemHSAId>
-                    <urn1:documentTime>20130915000000</urn1:documentTime>
-                    <urn1:patientId>
-                        <urn1:id>${patientId}</urn1:id>
-                        <urn1:type>${patientIdType}</urn1:type>
-                    </urn1:patientId>
-                    <urn1:accountableHealthcareProfessional>
-                        <urn1:authorTime>20110101000000</urn1:authorTime>
-                        <urn1:healthcareProfessionalOrgUnit>
-                            <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                            <urn1:orgUnitName>?</urn1:orgUnitName>
-                        </urn1:healthcareProfessionalOrgUnit>
-                    </urn1:accountableHealthcareProfessional>
-                    <urn1:approvedForPatient>false</urn1:approvedForPatient>
-                </urn1:laboratoryOutcomeHeader>
-                <urn1:laboratoryOutcomeBody>
-                    <urn1:resultType>?</urn1:resultType>
-                    <urn1:registrationTime>20110101000000</urn1:registrationTime>
-                    <urn1:discipline>?</urn1:discipline>
-                    <urn1:accountableHeathcareProfessional>
-                        <urn1:authorTime>20110101000000</urn1:authorTime>
-                        <urn1:healthcareProfessionalOrgUnit>
-                            <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                            <urn1:orgUnitName>20110101000000</urn1:orgUnitName>
-                        </urn1:healthcareProfessionalOrgUnit>
-                    </urn1:accountableHeathcareProfessional>
-                    <urn1:analysis>
-                        <urn1:analysisId>
-                            <urn1:root>${analysisId}.12.0</urn1:root>
-                        </urn1:analysisId>
-                        <urn1:analysisTime>
-                        </urn1:analysisTime>
-                    </urn1:analysis>
-                    <urn1:analysis>
-                        <urn1:analysisId>
-                            <urn1:root>${analysisId}.12.1</urn1:root>
-                        </urn1:analysisId>
-                        <urn1:analysisTime>
-                            <urn1:start>20110101000000</urn1:start>
-                            <urn1:end>20110101000000</urn1:end>
-                        </urn1:analysisTime>
-                    </urn1:analysis>
-                    <urn1:referral>
-                        <urn1:referralId>?</urn1:referralId>
-                        <urn1:referralText>?</urn1:referralText>
-                        <urn1:referralTime>20110101000000</urn1:referralTime>
-                        <urn1:referralAuthor>
-                            <urn1:authorTime>20110101000000</urn1:authorTime>
-                            <urn1:healthcareProfessionalOrgUnit>
-                                <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                                <urn1:orgUnitName>?</urn1:orgUnitName>
-                            </urn1:healthcareProfessionalOrgUnit>
-                        </urn1:referralAuthor>
-                    </urn1:referral>
-                </urn1:laboratoryOutcomeBody>
-            </urn:laboratoryOutcome>
+                </urn1:laboratoryOrderOutcomeBody>
+            </urn:laboratoryOrderOutcome>
             <!--Response without analysis time, but with matching documentId-->
-            <urn:laboratoryOutcome>
-                <urn1:laboratoryOutcomeHeader>
+            <urn:laboratoryOrderOutcome>
+                <urn1:laboratoryOrderOutcomeHeader>
                     <urn1:documentId>${documentId}13</urn1:documentId>
                     <urn1:sourceSystemHSAId>1234</urn1:sourceSystemHSAId>
                     <urn1:documentTime>20130915000000</urn1:documentTime>
@@ -1719,22 +1709,26 @@ context.analysisId = 4711
                     </urn1:patientId>
                     <urn1:accountableHealthcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
                             <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
+                        <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                        <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                     </urn1:accountableHealthcareProfessional>
                     <urn1:approvedForPatient>false</urn1:approvedForPatient>
-                </urn1:laboratoryOutcomeHeader>
-                <urn1:laboratoryOutcomeBody>
+                </urn1:laboratoryOrderOutcomeHeader>
+                <urn1:laboratoryOrderOutcomeBody>
                     <urn1:resultType>?</urn1:resultType>
                     <urn1:registrationTime>20110101000000</urn1:registrationTime>
                     <urn1:discipline>?</urn1:discipline>
                     <urn1:accountableHeathcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                            <urn1:orgUnitName>20110101000000</urn1:orgUnitName>
+                            <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
                     </urn1:accountableHeathcareProfessional>
                     <urn1:analysis>
@@ -1745,29 +1739,22 @@ context.analysisId = 4711
                             <urn1:start>20110101000000</urn1:start>
                             <urn1:end>20110101000000</urn1:end>
                         </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:analysis>
                         <urn1:analysisId>
                             <urn1:root>${analysisId}.13.1</urn1:root>
                         </urn1:analysisId>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:referral>
                         <urn1:referralId>?</urn1:referralId>
-                        <urn1:referralText>?</urn1:referralText>
-                        <urn1:referralTime>20110101000000</urn1:referralTime>
-                        <urn1:referralAuthor>
-                            <urn1:authorTime>20110101000000</urn1:authorTime>
-                            <urn1:healthcareProfessionalOrgUnit>
-                                <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                                <urn1:orgUnitName>?</urn1:orgUnitName>
-                            </urn1:healthcareProfessionalOrgUnit>
-                        </urn1:referralAuthor>
                     </urn1:referral>
-                </urn1:laboratoryOutcomeBody>
-            </urn:laboratoryOutcome>
+                </urn1:laboratoryOrderOutcomeBody>
+            </urn:laboratoryOrderOutcome>
             <!--Response without time, but with matching documentId-->
-            <urn:laboratoryOutcome>
-                <urn1:laboratoryOutcomeHeader>
+            <urn:laboratoryOrderOutcome>
+                <urn1:laboratoryOrderOutcomeHeader>
                     <urn1:documentId>${documentId}14</urn1:documentId>
                     <urn1:sourceSystemHSAId>1234</urn1:sourceSystemHSAId>
                     <urn1:documentTime>20130915000000</urn1:documentTime>
@@ -1777,22 +1764,26 @@ context.analysisId = 4711
                     </urn1:patientId>
                     <urn1:accountableHealthcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
                             <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
+                        <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                        <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                     </urn1:accountableHealthcareProfessional>
                     <urn1:approvedForPatient>false</urn1:approvedForPatient>
-                </urn1:laboratoryOutcomeHeader>
-                <urn1:laboratoryOutcomeBody>
+                </urn1:laboratoryOrderOutcomeHeader>
+                <urn1:laboratoryOrderOutcomeBody>
                     <urn1:resultType>?</urn1:resultType>
                     <urn1:registrationTime>20110101000000</urn1:registrationTime>
                     <urn1:discipline>?</urn1:discipline>
                     <urn1:accountableHeathcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                            <urn1:orgUnitName>20110101000000</urn1:orgUnitName>
+                            <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
                     </urn1:accountableHeathcareProfessional>
                     <urn1:analysis>
@@ -1803,29 +1794,22 @@ context.analysisId = 4711
                             <urn1:start>20110101000000</urn1:start>
                             <urn1:end>20110101000000</urn1:end>
                         </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:analysis>
                         <urn1:analysisId>
                             <urn1:root>${analysisId}.14.1</urn1:root>
                         </urn1:analysisId>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
                     </urn1:analysis>
                     <urn1:referral>
                         <urn1:referralId>?</urn1:referralId>
-                        <urn1:referralText>?</urn1:referralText>
-                        <urn1:referralTime>20110101000000</urn1:referralTime>
-                        <urn1:referralAuthor>
-                            <urn1:authorTime>20110101000000</urn1:authorTime>
-                            <urn1:healthcareProfessionalOrgUnit>
-                                <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                                <urn1:orgUnitName>?</urn1:orgUnitName>
-                            </urn1:healthcareProfessionalOrgUnit>
-                        </urn1:referralAuthor>
                     </urn1:referral>
-                </urn1:laboratoryOutcomeBody>
-            </urn:laboratoryOutcome>
+                </urn1:laboratoryOrderOutcomeBody>
+            </urn:laboratoryOrderOutcome>
             <!--Response without analysis, but matching documentTime-->
-            <urn:laboratoryOutcome>
-                <urn1:laboratoryOutcomeHeader>
+            <urn:laboratoryOrderOutcome>
+                <urn1:laboratoryOrderOutcomeHeader>
                     <urn1:documentId>${documentId}15</urn1:documentId>
                     <urn1:sourceSystemHSAId>1234</urn1:sourceSystemHSAId>
                     <urn1:documentTime>20131001000000</urn1:documentTime>
@@ -1835,38 +1819,33 @@ context.analysisId = 4711
                     </urn1:patientId>
                     <urn1:accountableHealthcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
                             <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
+                        <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                        <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                     </urn1:accountableHealthcareProfessional>
                     <urn1:approvedForPatient>false</urn1:approvedForPatient>
-                </urn1:laboratoryOutcomeHeader>
-                <urn1:laboratoryOutcomeBody>
+                </urn1:laboratoryOrderOutcomeHeader>
+                <urn1:laboratoryOrderOutcomeBody>
                     <urn1:resultType>?</urn1:resultType>
                     <urn1:registrationTime>20110101000000</urn1:registrationTime>
                     <urn1:discipline>?</urn1:discipline>
                     <urn1:accountableHeathcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                            <urn1:orgUnitName>20110101000000</urn1:orgUnitName>
+                            <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
                     </urn1:accountableHeathcareProfessional>
                     <urn1:referral>
                         <urn1:referralId>?</urn1:referralId>
-                        <urn1:referralText>?</urn1:referralText>
-                        <urn1:referralTime>20110101000000</urn1:referralTime>
-                        <urn1:referralAuthor>
-                            <urn1:authorTime>20110101000000</urn1:authorTime>
-                            <urn1:healthcareProfessionalOrgUnit>
-                                <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                                <urn1:orgUnitName>?</urn1:orgUnitName>
-                            </urn1:healthcareProfessionalOrgUnit>
-                        </urn1:referralAuthor>
                     </urn1:referral>
-                </urn1:laboratoryOutcomeBody>
-            </urn:laboratoryOutcome>
+                </urn1:laboratoryOrderOutcomeBody>
+            </urn:laboratoryOrderOutcome>
         </urn:GetLaboratoryOrderOutcomeResponse>
     </soapenv:Body>
 </soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2:GetLaboratoryOrderOutcome"/></con:response><con:response name="SoapFault" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
@@ -1882,564 +1861,214 @@ context.analysisId = 4711
       </detail>
     </soapenv:Fault>
   </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2:GetLaboratoryOrderOutcome"/></con:response><con:response name="SimpleResponse" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:2">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <urn:GetLaboratoryOrderOutcomeResponse>
-         <!--Zero or more repetitions:-->
-         <urn:laboratoryOutcome>
-            <urn1:laboratoryOutcomeHeader>
-               <urn1:documentId>${careContactId}0</urn1:documentId>
-               <urn1:sourceSystemHSAId>1234</urn1:sourceSystemHSAId>
-               <urn1:documentTime>20131031000000</urn1:documentTime>
-               <urn1:patientId>
-                  <urn1:id>${patientId}</urn1:id>
-                  <urn1:type>${patientIdType}</urn1:type>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:patientId>
-               <urn1:accountableHealthcareProfessional>
-                  <urn1:authorTime>20131031000000</urn1:authorTime>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalRoleCode>
-                     <!--Optional:-->
-                     <urn1:code>?</urn1:code>
-                     <!--Optional:-->
-                     <urn1:codeSystem>?</urn1:codeSystem>
-                     <!--Optional:-->
-                     <urn1:codeSystemName>?</urn1:codeSystemName>
-                     <!--Optional:-->
-                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                     <!--Optional:-->
-                     <urn1:displayName>?</urn1:displayName>
-                     <!--Optional:-->
-                     <urn1:originalText>?</urn1:originalText>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:healthcareProfessionalRoleCode>
-                  <urn1:healthcareProfessionalOrgUnit>
-                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                     <urn1:orgUnitName>?</urn1:orgUnitName>
-                     <!--Optional:-->
-                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                     <!--Optional:-->
-                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                     <!--Optional:-->
-                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                     <!--Optional:-->
-                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:healthcareProfessionalOrgUnit>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:accountableHealthcareProfessional>
-               <!--Optional:-->
-               <urn1:legalAuthenticator>
-                  <urn1:signatureTime>20131031000000</urn1:signatureTime>
-                  <!--Optional:-->
-                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
-                  <!--Optional:-->
-                  <urn1:legalAuthenticatorName>?</urn1:legalAuthenticatorName>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:legalAuthenticator>
-               <urn1:approvedForPatient>false</urn1:approvedForPatient>
-               <!--Optional:-->
-               <urn1:careContactId>?</urn1:careContactId>
-               <!--You may enter ANY elements at this point-->
-            </urn1:laboratoryOutcomeHeader>
-            <urn1:laboratoryOutcomeBody>
-               <urn1:resultType>?</urn1:resultType>
-               <urn1:registrationTime>20131031000000</urn1:registrationTime>
-               <urn1:discipline>?</urn1:discipline>
-               <!--Optional:-->
-               <urn1:resultReport>?</urn1:resultReport>
-               <!--Optional:-->
-               <urn1:resultComment>?</urn1:resultComment>
-               <urn1:accountableHeathcareProfessional>
-                  <urn1:authorTime>20131031000000</urn1:authorTime>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalRoleCode>
-                     <!--Optional:-->
-                     <urn1:code>?</urn1:code>
-                     <!--Optional:-->
-                     <urn1:codeSystem>?</urn1:codeSystem>
-                     <!--Optional:-->
-                     <urn1:codeSystemName>?</urn1:codeSystemName>
-                     <!--Optional:-->
-                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                     <!--Optional:-->
-                     <urn1:displayName>?</urn1:displayName>
-                     <!--Optional:-->
-                     <urn1:originalText>?</urn1:originalText>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:healthcareProfessionalRoleCode>
-                  <urn1:healthcareProfessionalOrgUnit>
-                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                     <urn1:orgUnitName>?</urn1:orgUnitName>
-                     <!--Optional:-->
-                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                     <!--Optional:-->
-                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                     <!--Optional:-->
-                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                     <!--Optional:-->
-                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:healthcareProfessionalOrgUnit>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:accountableHeathcareProfessional>
-               <!--Zero or more repetitions:-->
-               <urn1:analysis>
-                  <urn1:analysisId>
-                     <urn1:root>?</urn1:root>
-                     <!--Optional:-->
-                     <urn1:extension>?</urn1:extension>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:analysisId>
-                  <!--Optional:-->
-                  <urn1:analysisTime>
-                     <urn1:start>20131031000000</urn1:start>
-                     <urn1:end>20131031000000</urn1:end>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:analysisTime>
-                  <!--Optional:-->
-                  <urn1:analysisCode>
-                     <!--Optional:-->
-                     <urn1:code>?</urn1:code>
-                     <!--Optional:-->
-                     <urn1:codeSystem>?</urn1:codeSystem>
-                     <!--Optional:-->
-                     <urn1:codeSystemName>?</urn1:codeSystemName>
-                     <!--Optional:-->
-                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                     <!--Optional:-->
-                     <urn1:displayName>?</urn1:displayName>
-                     <!--Optional:-->
-                     <urn1:originalText>?</urn1:originalText>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:analysisCode>
-                  <!--Optional:-->
-                  <urn1:analysisText>?</urn1:analysisText>
-                  <!--Optional:-->
-                  <urn1:analysisStatus>?</urn1:analysisStatus>
-                  <!--Optional:-->
-                  <urn1:analysisComment>?</urn1:analysisComment>
-                  <!--Optional:-->
-                  <urn1:specimen>?</urn1:specimen>
-                  <!--Optional:-->
-                  <urn1:method>?</urn1:method>
-                  <!--Zero or more repetitions:-->
-                  <urn1:relationToAnalysis>
-                     <urn1:analysisId>
-                        <urn1:root>?</urn1:root>
-                        <!--Optional:-->
-                        <urn1:extension>?</urn1:extension>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:analysisId>
-                     <!--Optional:-->
-                     <urn1:analysisTime>
-                        <urn1:start>20131031000000</urn1:start>
-                        <urn1:end>20131031000000</urn1:end>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:analysisTime>
-                     <!--Optional:-->
-                     <urn1:analysisOutcome>
-                        <urn1:outcomeValue>?</urn1:outcomeValue>
-                        <!--Optional:-->
-                        <urn1:outcomeUnit>?</urn1:outcomeUnit>
-                        <!--Optional:-->
-                        <urn1:observationTime>20131031000000</urn1:observationTime>
-                        <urn1:pathologicalFlag>true</urn1:pathologicalFlag>
-                        <urn1:outcomeDescription>?</urn1:outcomeDescription>
-                        <urn1:referenceInterval>?</urn1:referenceInterval>
-                        <urn1:referencePopulation>?</urn1:referencePopulation>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:analysisOutcome>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:relationToAnalysis>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:analysis>
-               <urn1:referral>
-                  <urn1:referralId>?</urn1:referralId>
-                  <urn1:referralText>?</urn1:referralText>
-                  <urn1:referralTime>20131031000000</urn1:referralTime>
-                  <urn1:referralAuthor>
-                     <urn1:authorTime>20131031000000</urn1:authorTime>
-                     <!--Optional:-->
-                     <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                     <!--Optional:-->
-                     <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                     <!--Optional:-->
-                     <urn1:healthcareProfessionalRoleCode>
-                        <!--Optional:-->
-                        <urn1:code>?</urn1:code>
-                        <!--Optional:-->
-                        <urn1:codeSystem>?</urn1:codeSystem>
-                        <!--Optional:-->
-                        <urn1:codeSystemName>?</urn1:codeSystemName>
-                        <!--Optional:-->
-                        <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                        <!--Optional:-->
-                        <urn1:displayName>?</urn1:displayName>
-                        <!--Optional:-->
-                        <urn1:originalText>?</urn1:originalText>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:healthcareProfessionalRoleCode>
-                     <urn1:healthcareProfessionalOrgUnit>
-                        <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                        <urn1:orgUnitName>?</urn1:orgUnitName>
-                        <!--Optional:-->
-                        <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                        <!--Optional:-->
-                        <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                        <!--Optional:-->
-                        <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                        <!--Optional:-->
-                        <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:healthcareProfessionalOrgUnit>
-                     <!--Optional:-->
-                     <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
-                     <!--Optional:-->
-                     <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:referralAuthor>
-                  <!--Optional:-->
-                  <urn1:careContactId>?</urn1:careContactId>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:referral>
-               <!--You may enter ANY elements at this point-->
-            </urn1:laboratoryOutcomeBody>
-            <!--You may enter ANY elements at this point-->
-         </urn:laboratoryOutcome>
-         <!--You may enter ANY elements at this point-->
-      </urn:GetLaboratoryOrderOutcomeResponse>
-   </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2:GetLaboratoryOrderOutcome"/></con:response><con:response name="TemplateResponse" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:2">
-<soapenv:Header/>
-<soapenv:Body>
-    <urn:GetLaboratoryOrderOutcomeResponse>
-        <!--Zero or more repetitions:-->
-        <urn:laboratoryOutcome>
-            <urn1:laboratoryOutcomeHeader>
-                <urn1:documentId>${documentId}0</urn1:documentId>
-                <urn1:sourceSystemHSAId>1234</urn1:sourceSystemHSAId>
-                <urn1:documentTime>20131031000000</urn1:documentTime>
-                <urn1:patientId>
-                    <urn1:id>${patientId}</urn1:id>
-                    <urn1:type>${patientIdType}</urn1:type>
-                 </urn1:patientId>
-                <urn1:accountableHealthcareProfessional>
-                    <urn1:authorTime>20110101000000</urn1:authorTime>
-                     <urn1:healthcareProfessionalOrgUnit>
-                        <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                        <urn1:orgUnitName>?</urn1:orgUnitName>
-                    </urn1:healthcareProfessionalOrgUnit>
-                </urn1:accountableHealthcareProfessional>
-                <urn1:approvedForPatient>false</urn1:approvedForPatient>
-            </urn1:laboratoryOutcomeHeader>
-            <urn1:laboratoryOutcomeBody>
-                <urn1:resultType>?</urn1:resultType>
-                <urn1:registrationTime>20110101000000</urn1:registrationTime>
-                <urn1:discipline>?</urn1:discipline>
-                <urn1:accountableHeathcareProfessional>
-                    <urn1:authorTime>20110101000000</urn1:authorTime>
-                    <urn1:healthcareProfessionalOrgUnit>
-                        <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                        <urn1:orgUnitName>20110101000000</urn1:orgUnitName>
-                    </urn1:healthcareProfessionalOrgUnit>
-                </urn1:accountableHeathcareProfessional>
-                <!--Zero or more repetitions:-->
-                <urn1:analysis>
-                    <urn1:analysisId>
-                        <urn1:root>?</urn1:root>
-                    </urn1:analysisId>
-                    <!--Optional:-->
-                    <urn1:analysisTime>
-                        <urn1:start>20131031000000</urn1:start>
-                        <urn1:end>20131031000000</urn1:end>
-                        <!--You may enter ANY elements at this point-->
-                    </urn1:analysisTime>
-                </urn1:analysis>
-                <urn1:referral>
-                    <urn1:referralId>?</urn1:referralId>
-                    <urn1:referralText>?</urn1:referralText>
-                    <urn1:referralTime>20110101000000</urn1:referralTime>
-                    <urn1:referralAuthor>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2:GetLaboratoryOrderOutcome"/></con:response><con:response name="BasicResponse" encoding="UTF-8"><con:settings/><con:script>context.documentId = 123456789
+context.analysisId = 4711
+
+// create XmlHolder for request content
+def holder = new com.eviware.soapui.support.XmlHolder( mockRequest.requestContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:itintegration:registry:1'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2'
+holder.namespaces['urn2'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:2'
+
+context.patientId = holder.getNodeValue('//urn1:patientId[1]/urn2:id')
+context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')
+</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:2">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <urn:GetLaboratoryOrderOutcomeResponse>
+            <urn:laboratoryOrderOutcome>
+                <urn1:laboratoryOrderOutcomeHeader>
+                    <urn1:documentId>${documentId}</urn1:documentId>
+                    <urn1:sourceSystemHSAId>1234</urn1:sourceSystemHSAId>
+                    <urn1:documentTime>20111001000000</urn1:documentTime>
+                    <urn1:patientId>
+                        <urn1:id>${patientId}</urn1:id>
+                        <urn1:type>${patientIdType}</urn1:type>
+                    </urn1:patientId>
+                    <urn1:accountableHealthcareProfessional>
                         <urn1:authorTime>20110101000000</urn1:authorTime>
-                         <urn1:healthcareProfessionalOrgUnit>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                        <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
                             <urn1:orgUnitName>?</urn1:orgUnitName>
                         </urn1:healthcareProfessionalOrgUnit>
-                    </urn1:referralAuthor>
-                </urn1:referral>
-            </urn1:laboratoryOutcomeBody>
-        </urn:laboratoryOutcome>
-    </urn:GetLaboratoryOrderOutcomeResponse>
-</soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2:GetLaboratoryOrderOutcome"/></con:response><con:response name="MockResponse 5" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:2">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <urn:GetLaboratoryOrderOutcomeResponse>
-         <!--Zero or more repetitions:-->
-         <urn:laboratoryOutcome>
-            <urn1:laboratoryOutcomeHeader>
-               <urn1:documentId>?</urn1:documentId>
-               <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
-               <urn1:documentTime>?</urn1:documentTime>
-               <urn1:patientId>
-                  <urn1:id>?</urn1:id>
-                  <urn1:type>?</urn1:type>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:patientId>
-               <urn1:accountableHealthcareProfessional>
-                  <urn1:authorTime>?</urn1:authorTime>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalRoleCode>
-                     <!--Optional:-->
-                     <urn1:code>?</urn1:code>
-                     <!--Optional:-->
-                     <urn1:codeSystem>?</urn1:codeSystem>
-                     <!--Optional:-->
-                     <urn1:codeSystemName>?</urn1:codeSystemName>
-                     <!--Optional:-->
-                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                     <!--Optional:-->
-                     <urn1:displayName>?</urn1:displayName>
-                     <!--Optional:-->
-                     <urn1:originalText>?</urn1:originalText>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:healthcareProfessionalRoleCode>
-                  <urn1:healthcareProfessionalOrgUnit>
-                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                     <urn1:orgUnitName>?</urn1:orgUnitName>
-                     <!--Optional:-->
-                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                     <!--Optional:-->
-                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                     <!--Optional:-->
-                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                     <!--Optional:-->
-                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:healthcareProfessionalOrgUnit>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:accountableHealthcareProfessional>
-               <!--Optional:-->
-               <urn1:legalAuthenticator>
-                  <urn1:signatureTime>?</urn1:signatureTime>
-                  <!--Optional:-->
-                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
-                  <!--Optional:-->
-                  <urn1:legalAuthenticatorName>?</urn1:legalAuthenticatorName>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:legalAuthenticator>
-               <urn1:approvedForPatient>?</urn1:approvedForPatient>
-               <!--Optional:-->
-               <urn1:careContactId>?</urn1:careContactId>
-               <!--You may enter ANY elements at this point-->
-            </urn1:laboratoryOutcomeHeader>
-            <urn1:laboratoryOutcomeBody>
-               <urn1:resultType>?</urn1:resultType>
-               <urn1:registrationTime>?</urn1:registrationTime>
-               <urn1:discipline>?</urn1:discipline>
-               <!--Optional:-->
-               <urn1:resultReport>?</urn1:resultReport>
-               <!--Optional:-->
-               <urn1:resultComment>?</urn1:resultComment>
-               <urn1:accountableHeathcareProfessional>
-                  <urn1:authorTime>?</urn1:authorTime>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalRoleCode>
-                     <!--Optional:-->
-                     <urn1:code>?</urn1:code>
-                     <!--Optional:-->
-                     <urn1:codeSystem>?</urn1:codeSystem>
-                     <!--Optional:-->
-                     <urn1:codeSystemName>?</urn1:codeSystemName>
-                     <!--Optional:-->
-                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                     <!--Optional:-->
-                     <urn1:displayName>?</urn1:displayName>
-                     <!--Optional:-->
-                     <urn1:originalText>?</urn1:originalText>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:healthcareProfessionalRoleCode>
-                  <urn1:healthcareProfessionalOrgUnit>
-                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                     <urn1:orgUnitName>?</urn1:orgUnitName>
-                     <!--Optional:-->
-                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                     <!--Optional:-->
-                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                     <!--Optional:-->
-                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                     <!--Optional:-->
-                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:healthcareProfessionalOrgUnit>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:accountableHeathcareProfessional>
-               <!--Zero or more repetitions:-->
-               <urn1:analysis>
-                  <urn1:analysisId>
-                     <urn1:root>?</urn1:root>
-                     <!--Optional:-->
-                     <urn1:extension>?</urn1:extension>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:analysisId>
-                  <!--Optional:-->
-                  <urn1:analysisTime>
-                     <!--Optional:-->
-                     <urn1:start>?</urn1:start>
-                     <!--Optional:-->
-                     <urn1:end>?</urn1:end>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:analysisTime>
-                  <!--Optional:-->
-                  <urn1:analysisCode>
-                     <!--Optional:-->
-                     <urn1:code>?</urn1:code>
-                     <!--Optional:-->
-                     <urn1:codeSystem>?</urn1:codeSystem>
-                     <!--Optional:-->
-                     <urn1:codeSystemName>?</urn1:codeSystemName>
-                     <!--Optional:-->
-                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                     <!--Optional:-->
-                     <urn1:displayName>?</urn1:displayName>
-                     <!--Optional:-->
-                     <urn1:originalText>?</urn1:originalText>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:analysisCode>
-                  <!--Optional:-->
-                  <urn1:analysisText>?</urn1:analysisText>
-                  <!--Optional:-->
-                  <urn1:analysisStatus>?</urn1:analysisStatus>
-                  <!--Optional:-->
-                  <urn1:analysisComment>?</urn1:analysisComment>
-                  <!--Optional:-->
-                  <urn1:specimen>?</urn1:specimen>
-                  <!--Optional:-->
-                  <urn1:method>?</urn1:method>
-                  <!--Zero or more repetitions:-->
-                  <urn1:relationToAnalysis>
-                     <urn1:analysisId>
-                        <urn1:root>?</urn1:root>
-                        <!--Optional:-->
-                        <urn1:extension>?</urn1:extension>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:analysisId>
-                     <!--Optional:-->
-                     <urn1:analysisTime>
-                        <!--Optional:-->
-                        <urn1:start>?</urn1:start>
-                        <!--Optional:-->
-                        <urn1:end>?</urn1:end>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:analysisTime>
-                     <!--Optional:-->
-                     <urn1:analysisOutcome>
-                        <urn1:outcomeValue>?</urn1:outcomeValue>
-                        <!--Optional:-->
-                        <urn1:outcomeUnit>?</urn1:outcomeUnit>
-                        <!--Optional:-->
-                        <urn1:observationTime>?</urn1:observationTime>
-                        <urn1:pathologicalFlag>?</urn1:pathologicalFlag>
-                        <urn1:outcomeDescription>?</urn1:outcomeDescription>
-                        <urn1:referenceInterval>?</urn1:referenceInterval>
-                        <urn1:referencePopulation>?</urn1:referencePopulation>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:analysisOutcome>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:relationToAnalysis>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:analysis>
-               <urn1:referral>
-                  <urn1:referralId>?</urn1:referralId>
-                  <urn1:referralText>?</urn1:referralText>
-                  <urn1:referralTime>?</urn1:referralTime>
-                  <urn1:referralAuthor>
-                     <urn1:authorTime>?</urn1:authorTime>
-                     <!--Optional:-->
-                     <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                     <!--Optional:-->
-                     <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                     <!--Optional:-->
-                     <urn1:healthcareProfessionalRoleCode>
-                        <!--Optional:-->
-                        <urn1:code>?</urn1:code>
-                        <!--Optional:-->
-                        <urn1:codeSystem>?</urn1:codeSystem>
-                        <!--Optional:-->
-                        <urn1:codeSystemName>?</urn1:codeSystemName>
-                        <!--Optional:-->
-                        <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                        <!--Optional:-->
-                        <urn1:displayName>?</urn1:displayName>
-                        <!--Optional:-->
-                        <urn1:originalText>?</urn1:originalText>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:healthcareProfessionalRoleCode>
-                     <urn1:healthcareProfessionalOrgUnit>
-                        <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                        <urn1:orgUnitName>?</urn1:orgUnitName>
-                        <!--Optional:-->
-                        <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                        <!--Optional:-->
-                        <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                        <!--Optional:-->
-                        <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                        <!--Optional:-->
-                        <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:healthcareProfessionalOrgUnit>
-                     <!--Optional:-->
-                     <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
-                     <!--Optional:-->
-                     <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:referralAuthor>
-                  <!--Optional:-->
-                  <urn1:careContactId>?</urn1:careContactId>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:referral>
-               <!--You may enter ANY elements at this point-->
-            </urn1:laboratoryOutcomeBody>
-            <!--You may enter ANY elements at this point-->
-         </urn:laboratoryOutcome>
-         <!--You may enter ANY elements at this point-->
-      </urn:GetLaboratoryOrderOutcomeResponse>
-   </soapenv:Body>
+                        <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                        <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+                    </urn1:accountableHealthcareProfessional>
+                    <urn1:approvedForPatient>false</urn1:approvedForPatient>
+                </urn1:laboratoryOrderOutcomeHeader>
+                <urn1:laboratoryOrderOutcomeBody>
+                    <urn1:resultType>?</urn1:resultType>
+                    <urn1:registrationTime>20110101000000</urn1:registrationTime>
+                    <urn1:discipline>?</urn1:discipline>
+                    <urn1:accountableHeathcareProfessional>
+                        <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                        <urn1:healthcareProfessionalOrgUnit>
+                            <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                            <urn1:orgUnitName>?</urn1:orgUnitName>
+                        </urn1:healthcareProfessionalOrgUnit>
+                    </urn1:accountableHeathcareProfessional>
+                    <urn1:analysis>
+                        <urn1:analysisId>
+                            <urn1:root>${analysisId}.5.0</urn1:root>
+                        </urn1:analysisId>
+                        <urn1:analysisTime>
+                            <urn1:start>20110101000000</urn1:start>
+                            <urn1:end>20110101000000</urn1:end>
+                        </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
+                    </urn1:analysis>
+                    <urn1:analysis>
+                        <urn1:analysisId>
+                            <urn1:root>${analysisId}.5.1</urn1:root>
+                        </urn1:analysisId>
+                        <urn1:analysisTime>
+                            <urn1:start>20130801000000</urn1:start>
+                            <urn1:end>20130930000000</urn1:end>
+                        </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
+                    </urn1:analysis>
+                    <urn1:referral>
+                        <urn1:referralId>?</urn1:referralId>
+                    </urn1:referral>
+                </urn1:laboratoryOrderOutcomeBody>
+            </urn:laboratoryOrderOutcome>
+        </urn:GetLaboratoryOrderOutcomeResponse>
+    </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2:GetLaboratoryOrderOutcome"/></con:response><con:response name="CareContactIdFilterResponse" encoding="UTF-8"><con:settings/><con:script>// create XmlHolder for request content
+def holder = new com.eviware.soapui.support.XmlHolder( mockRequest.requestContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:itintegration:registry:1'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2'
+holder.namespaces['urn2'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:2'
+
+context.patientId = holder.getNodeValue('//urn1:patientId[1]/urn2:id')
+context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')
+context.sourceSystemHSAId = holder.getNodeValue('//urn1:sourceSystemHSAId')
+</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:2">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <urn:GetLaboratoryOrderOutcomeResponse>
+            <urn:laboratoryOrderOutcome>
+                <urn1:laboratoryOrderOutcomeHeader>
+                    <urn1:documentId>11</urn1:documentId>
+                    <urn1:sourceSystemHSAId>${sourceSystemHSAId}</urn1:sourceSystemHSAId>
+                    <urn1:documentTime>20131031000000</urn1:documentTime>
+                    <urn1:patientId>
+                        <urn1:id>${patientId}</urn1:id>
+                        <urn1:type>${patientIdType}</urn1:type>
+                    </urn1:patientId>
+                    <urn1:accountableHealthcareProfessional>
+                        <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                        <urn1:healthcareProfessionalOrgUnit>
+                            <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                            <urn1:orgUnitName>?</urn1:orgUnitName>
+                        </urn1:healthcareProfessionalOrgUnit>
+                        <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                        <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+                    </urn1:accountableHealthcareProfessional>
+                    <urn1:approvedForPatient>false</urn1:approvedForPatient>
+                    <urn1:careContactId>1122334455</urn1:careContactId>
+                </urn1:laboratoryOrderOutcomeHeader>
+                <urn1:laboratoryOrderOutcomeBody>
+                    <urn1:resultType>?</urn1:resultType>
+                    <urn1:registrationTime>20110101000000</urn1:registrationTime>
+                    <urn1:discipline>?</urn1:discipline>
+                    <urn1:accountableHeathcareProfessional>
+                        <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                        <urn1:healthcareProfessionalOrgUnit>
+                            <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                            <urn1:orgUnitName>?</urn1:orgUnitName>
+                        </urn1:healthcareProfessionalOrgUnit>
+                    </urn1:accountableHeathcareProfessional>
+                    <urn1:analysis>
+                        <urn1:analysisId>
+                            <urn1:root>1</urn1:root>
+                        </urn1:analysisId>
+                        <urn1:analysisTime>
+                            <urn1:start>20110101000000</urn1:start>
+                            <urn1:end>20110101000000</urn1:end>
+                        </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
+                    </urn1:analysis>
+                    <urn1:analysis>
+                        <urn1:analysisId>
+                            <urn1:root>1.2.3</urn1:root>
+                        </urn1:analysisId>
+                        <urn1:analysisTime>
+                            <urn1:start>20130901000000</urn1:start>
+                            <urn1:end>20130901000000</urn1:end>
+                        </urn1:analysisTime>
+                        <urn1:analysisText>an analysis text</urn1:analysisText>
+                    </urn1:analysis>
+                    <urn1:referral>
+                        <urn1:referralId>?</urn1:referralId>
+                      </urn1:referral>
+                </urn1:laboratoryOrderOutcomeBody>
+            </urn:laboratoryOrderOutcome>
+            <urn:laboratoryOrderOutcome>
+                <urn1:laboratoryOrderOutcomeHeader>
+                    <urn1:documentId>2</urn1:documentId>
+                    <urn1:sourceSystemHSAId>${sourceSystemHSAId}</urn1:sourceSystemHSAId>
+                    <urn1:documentTime>20131031000000</urn1:documentTime>
+                    <urn1:patientId>
+                        <urn1:id>${patientId}</urn1:id>
+                        <urn1:type>${patientIdType}</urn1:type>
+                    </urn1:patientId>
+                    <urn1:accountableHealthcareProfessional>
+                        <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                        <urn1:healthcareProfessionalOrgUnit>
+                            <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                            <urn1:orgUnitName>?</urn1:orgUnitName>
+                        </urn1:healthcareProfessionalOrgUnit>
+                        <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                        <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+                    </urn1:accountableHealthcareProfessional>
+                    <urn1:approvedForPatient>false</urn1:approvedForPatient>
+                    <urn1:careContactId>9876</urn1:careContactId>
+                </urn1:laboratoryOrderOutcomeHeader>
+                <urn1:laboratoryOrderOutcomeBody>
+                    <urn1:resultType>?</urn1:resultType>
+                    <urn1:registrationTime>20110101000000</urn1:registrationTime>
+                    <urn1:discipline>?</urn1:discipline>
+                    <urn1:accountableHeathcareProfessional>
+                        <urn1:authorTime>20110101000000</urn1:authorTime>
+                        <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                        <urn1:healthcareProfessionalOrgUnit>
+                            <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                            <urn1:orgUnitName>?</urn1:orgUnitName>
+                        </urn1:healthcareProfessionalOrgUnit>
+                    </urn1:accountableHeathcareProfessional>
+                    <urn1:referral>
+                        <urn1:referralId>?</urn1:referralId>
+                    </urn1:referral>
+                </urn1:laboratoryOrderOutcomeBody>
+            </urn:laboratoryOrderOutcome>
+        </urn:GetLaboratoryOrderOutcomeResponse>
+    </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2:GetLaboratoryOrderOutcome"/></con:response><con:response name="EmptyResponse" encoding="UTF-8"><con:settings/><con:script>context.documentId = 123456789
+context.analysisId = 4711
+
+// create XmlHolder for request content
+def holder = new com.eviware.soapui.support.XmlHolder( mockRequest.requestContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:itintegration:registry:1'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2'
+holder.namespaces['urn2'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:2'
+
+context.patientId = holder.getNodeValue('//urn1:patientId[1]/urn2:id')
+context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')
+</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:2">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <urn:GetLaboratoryOrderOutcomeResponse>
+        </urn:GetLaboratoryOrderOutcomeResponse>
+    </soapenv:Body>
 </soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2:GetLaboratoryOrderOutcome"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/><con:onRequestScript>import java.text.SimpleDateFormat
 
 def sdf = new SimpleDateFormat("yyyyMMddHHmmss")
