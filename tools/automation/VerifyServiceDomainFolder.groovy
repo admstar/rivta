@@ -1,32 +1,17 @@
 
 /**
- * Created with IntelliJ IDEA.
- * User: peterhernfalk
- * Date: 2013-11-03
+ * ///////////////////////////////////////////////////////////////////////
+ * //                                                                   //
+ * //   This script verifies the folder structure of a service domain   //
+ * //                                                                   //
+ * ///////////////////////////////////////////////////////////////////////
  *
- * LEO's description:
- * Denna skall verifiera att en utpekad mapp här rooten i en mappstruktur som till fullo följer (det nya) konfigurationsstyrningsdokumentet.
- * Om det finns fel skall detta skrivas ut till stderror samt scriptet avslutas med rc=1. Om allt ok avslutas med rc=0
- */
-
-/*
-    To be done:
-    - Verify that all mandatory subpaths exists in the domains folder structure
-    - Verify that correct file (types) exists in the folders that requires certain contents
- */
-
-/*
-•	WSDL: er och scheman ordnas i katalogen ”schemas”
-•	Tjänstekontraktsbeskrivningen ska ligga i docs katalogen
-•	I ”schemas” ska två underkataloger finnas: ”core_components” och ”interactions”.
-•	I ”core_components” ska scheman ligga som är generella för domänen (t.ex. domän-scheman och header-scheman).
-•	I ”interactions” ska scheman och tjänstebeskrivningar ligga som är specifika för tjänsteinteraktionen.
-•	I ”code_gen”-katalog ska det finnas bygg-script för att generera kod från WSDL-filerna, som stöd för utveckling av tjänstekonsumenter och tjänsteproducenter. Underkataloger till code_gen ska skapas för Javaplattformens standard (JAX-WS) och .Net.
-
-2do: add logic that verifies that the structure follows the rules
-
-Verify that the domainPath string exists in the mandatory parts of the structureTemplate map.
-If not, return false
+ * Information sources used by this script:
+ * - Main source: the Excel document describing service domains
+ *
+ *
+ * @author Peter Hernfalk
+ * Last update: 2013-11-14
 
  */
 
@@ -81,10 +66,14 @@ def getValuesFromParameters() {
     It generates a wiki page, containing information about the current service domains and their status.
     """
 
+
+    ////////////////////////////////
+    //  The Targetdir seems to be unneccesary. Can probably be removed
+    ////////////////////////////////
     def cli = new CliBuilder(usage: mecall, header: 'Options:', footer: medesc)
     cli.d(longOpt: 'domainname', args:1, required:true, argName:'Domain name', 'Name of the domain')
-    cli.t(longOpt: 'targetdir', args:1, required:true, argName:'target directory', 'directory to which the generated wiki page file will be written')
-    cli.l(longOpt: 'uselogging', args:1, required:false, argName:'use logging', 'if the parmeter "-l" is used, then the script logs output to the console')
+    cli.t(longOpt: 'targetdir', args:1, required:true, argName:'target directory', 'Directory to which the downloaded service domain files will be written')
+    cli.l(longOpt: 'uselogging', args:1, required:false, argName:'use logging', 'If the parameter "-l" is used, then the script logs output to the console')
 
     //-----Verify all parameters
     def options = cli.parse(args)
