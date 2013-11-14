@@ -66,10 +66,6 @@ def getValuesFromParameters() {
     It generates a wiki page, containing information about the current service domains and their status.
     """
 
-
-    ////////////////////////////////
-    //  The Targetdir seems to be unneccesary. Can probably be removed
-    ////////////////////////////////
     def cli = new CliBuilder(usage: mecall, header: 'Options:', footer: medesc)
     cli.d(longOpt: 'domainname', args:1, required:true, argName:'Domain name', 'Name of the domain')
     cli.t(longOpt: 'targetdir', args:1, required:true, argName:'target directory', 'Directory to which the downloaded service domain files will be written')
