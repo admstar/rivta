@@ -3,7 +3,6 @@ package se.skl.rivta.servicedomaintestframework.testsuiteplugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.Copy
-import org.gradle.api.tasks.Sync
 import org.gradle.api.tasks.bundling.Zip
 import se.skl.rivta.servicedomaintestframework.testsuiteplugin.tasks.DocumentGeneratorTask
 
@@ -27,18 +26,19 @@ class TestSuitePlugin implements Plugin<Project> {
         def distDir = project.file("${project.buildDir}/dist")
         distDir.mkdirs()
 
-        def createDocumentTask =  project.tasks.create('createDocument', DocumentGeneratorTask.class)
-        createDocumentTask.outFile "${project.buildDir}/dist/TestSuite-Documentation.html"
-
         def copyResourcesTask =  project.tasks.create('copyResources', Copy.class)
         copyResourcesTask.from project.projectDir
         copyResourcesTask.into distDir
         copyResourcesTask.include('**/*.xml', '**/*.html')
         copyResourcesTask.exclude('build', '.gradle')
 
-        def copyDependenciesTask =  project.tasks.create('copyDependencies', Sync.class)
+        def createDocumentTask =  project.tasks.create('createDocument', DocumentGeneratorTask.class)
+        createDocumentTask.outFile "${project.buildDir}/dist/TestSuite-Documentation.html"
+
+        def copyDependenciesTask =  project.tasks.create('copyDependencies', Copy.class)
         copyDependenciesTask.from supportConfiguration
         copyDependenciesTask.into distDir
+
 
         def archiveTask =  project.tasks.create('createArchive', Zip.class)
         archiveTask.from distDir
