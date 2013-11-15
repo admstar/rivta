@@ -11,7 +11,7 @@
  *
  *
  * @author Peter Hernfalk
- * Last update: 2013-11-14
+ * Last update: 2013-11-15
 
  */
 
@@ -20,13 +20,7 @@ import groovy.io.FileType
 
 checkoutFiles = false
 domainFolderStructure = []
-//domainSubfolder = []
-//localRIVTATargetFolder = "/Users/peterhernfalk/Desktop/_Peter_Files/rivtadomain/"
 localRIVTATargetFolder = ""
-loglevelDebug = "DEBUG"
-loglevelError = "ERROR"
-loglevelInfo = "INFO"
-loglevelWarning = "WARNING"
 returnCode = 0
 RIVTADomainFolder = "http://rivta.googlecode.com/svn/ServiceInteractions/riv/"
 RIVTACheckoutCommand = "svn checkout "
@@ -79,13 +73,13 @@ def getValuesFromParameters() {
 
     checkoutFiles = false
     def argCheckoutFiles=options.getProperty('checkoutfiles')
-    if (argCheckoutFiles.toString() == "true") {
+    if (argCheckoutFiles.toString().toLowerCase() == "true") {
         checkoutFiles = true
     }
 
     def argDomainName=options.getProperty('domainname')
     if (argDomainName.toString().length() == 0) {
-        log(loglevelInfo, '* The supplied domain name seems to be empty\n')
+        log('* The supplied domain name seems to be empty\n')
         cli.usage()
         return 1
     }
@@ -93,13 +87,13 @@ def getValuesFromParameters() {
 
     useLogging = false
     def argUseLogging=options.getProperty('uselogging')
-    if (argUseLogging.toString() == "true") {
+    if (argUseLogging.toString().toLowerCase() == "true") {
         useLogging = true
     }
 
     def argTargetDir=options.getProperty('targetdir')
     if (argTargetDir.toString().length() == 0) {
-        log(loglevelInfo, '* The supplied target directory name seems to be empty\n')
+        log('* The supplied target directory name seems to be empty\n')
         cli.usage()
         return 1
     }
@@ -108,7 +102,7 @@ def getValuesFromParameters() {
 }
 
 /** Logs text to standard output */
-def log(level, text) {
+def log(text) {
     //-----2do: add logic that directs the output to configured target
     if (useLogging == true) {
         println "VerifyServiceDomainFolder: " + text
@@ -118,14 +112,14 @@ def log(level, text) {
 def downloadFileStructureFromRivtaSite(String domainNameRivta) {
 
     RIVTACheckoutCommandToFolder = RIVTACheckoutCommand + RIVTADomainFolder + domainNameRivta.trim() + "/ " + localRIVTATargetFolder
-    log(loglevelDebug, RIVTACheckoutCommandToFolder)
+    log(RIVTACheckoutCommandToFolder)
 
     //-----Delete the local target folder before download
     new File(localRIVTATargetFolder).deleteDir()
 
     //-----Download files from the RIV-TA site to the local target folder
     def process = RIVTACheckoutCommandToFolder.execute()
-    process.in.eachLine { line -> log(loglevelDebug, "Downloading: " + line) }
+    process.in.eachLine { line -> log("Downloading: " + line) }
 
 }
 
@@ -133,13 +127,13 @@ def downloadFileStructureFromRivtaSite(String domainNameRivta) {
 /* Verifies that that the service domains structure and contents are correct on the rivta site */
 def verifyServiceDomainStructure(String domainStructure) {
     //-----2do: add logic that verifies the downloaded domain file structure
-    log(loglevelDebug, "Domain structure, root: " + domainStructure)
+    log("Domain structure, root: " + domainStructure)
 
     //-----Extract subdirectories and make a call to the verification method for each subdirectory
     def dir = new File(domainStructure)
     dir.eachDir { subDir ->
         if ((subDir.name.contains('.svn')) == false) {
-            log(loglevelDebug,  "Subdir: " + subDir.name )
+            log("\n\nSubdir: " + subDir.name )
             if (verifySubDomainStructure(domainStructure, subDir.name) == false) {
                return
             }
@@ -160,21 +154,19 @@ def verifySubDomainStructure(String domainStructure, String subDomainName) {
     dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
         //-----Filter out all directories except the '.svn' directories
         if ((file.toString().contains('.svn')) == false) {
-            //log(loglevelDebug,  "\tFile: " + file )
 
-            //-----The found directory should be verified against the directory template, maybe in a batch verification
+            //-----The found directory should be verified against the directory template
             //-----The directory contents should also be verified, so that mandatory files exist in the directory
             //ruleVerificationResult = verifySubDomainAgainstStructureRules(file.name, file)
             verificationResult = verifySubDomainAgainstStructureRules(file.name, file, verificationResult)
-            //log(loglevelDebug, "verificationResult: " + verificationResult)
+            //log("verificationResult: " + verificationResult)
             //-----2do: use ruleVerificationResult
         }
     }
 
-    //log(loglevelDebug, "verificationResult: " + verificationResult)
     structureTemplate.size.times {
         if (verificationResult[it] == false) {
-            log(loglevelDebug, "'" + subDomainName + "' is missing the subfolder: '" + structureTemplate[it].subPath + "'")
+            log("'" + subDomainName + "' is missing the subfolder: '" + structureTemplate[it].subPath + "'")
         }
 
     }
@@ -185,8 +177,6 @@ def verifySubDomainStructure(String domainStructure, String subDomainName) {
 /* Verifies that the given domain path has contents that follows the domain structure rules */
 def verifySubDomainAgainstStructureRules(leafFolderName, folderPath, verificationResult) {
 
-    //-----2do: need to verify that all template paths exist in the domains subpaths
-    //-----At the moment this can only check if a certain subpath is listed in the template, which isn't enough
     result = false
     structureTemplate.size.times {
         //-----if the templates subPath contains at least one "/" then verify the end of the folder path with the template's subpath
@@ -204,11 +194,6 @@ def verifySubDomainAgainstStructureRules(leafFolderName, folderPath, verificatio
             true
         }
     }
-    if (result == true) {
-        //log(loglevelDebug, "" + result + " folderPath: " + folderPath + " leafFolderName: " + leafFolderName)
-    }
-
-    //return result
     return verificationResult
 }
 
@@ -223,7 +208,7 @@ def verifySubDomainAgainstStructureRules(leafFolderName, folderPath, verificatio
 
 //-----Fetch the domain name from the script parameter
 if (getValuesFromParameters() == true) {
-    log(loglevelDebug, "Domain name = " + usedDomain)
+    log("Domain name = " + usedDomain)
 
     //-----Download the domain structure that should be verified
     if (checkoutFiles == true) {
@@ -235,5 +220,5 @@ if (getValuesFromParameters() == true) {
 }
 
 //-----Exit the script execution and return the return code to the caller
-log(1, "\n\nreturnCode: " + returnCode)
+log("\n\nreturnCode: " + returnCode)
 return returnCode
