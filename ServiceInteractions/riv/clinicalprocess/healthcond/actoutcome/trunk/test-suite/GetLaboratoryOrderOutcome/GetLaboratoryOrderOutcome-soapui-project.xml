@@ -1429,7 +1429,86 @@ failures.each { failure ->
 assert (failures.isEmpty())</scriptText></con:configuration></con:assertion><con:assertion type="XPath Match" name="XPath Match"><con:configuration><path>declare namespace urn='urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2';
 declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
 declare namespace urn1='urn:riv:clinicalprocess:healthcond:actoutcome:2';
-//urn:GetLaboratoryOrderOutcomeResponse</path><content>&lt;urn:GetLaboratoryOrderOutcomeResponse xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:2"/></content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:testSuite name="FaultTests"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="CareContactIdWithoutSourceSystemHSAId" searchProperties="true" id="d230a455-9271-4d49-b63f-0c2f99f57cb0"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+//urn:GetLaboratoryOrderOutcomeResponse</path><content>&lt;urn:GetLaboratoryOrderOutcomeResponse xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:2"/></content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="HttpHeaderFilter" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" id="fc77dfca-9389-4c70-a673-a572bff77420"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def dataFile = new File(utils.projectPath + "/data.xml")
+def source = new XmlDataReader(context, dataFile)
+
+source.load("HttpHeaderFilter")</script></con:config></con:testStep><con:testStep type="request" name="Call GetLaboratoryOrderOutcome"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetLaboratoryOrderOutcomeResponderBinding</con:interface><con:operation>GetLaboratoryOrderOutcome</con:operation><con:request name="Call GetLaboratoryOrderOutcome"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="x-mock-response" value="HttpHeaderFilterResponse"/>
+  &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:actoutcome:2">
+   <soapenv:Header>
+      <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn1:GetLaboratoryOrderOutcome>
+         <urn1:patientId>
+            <urn2:id>${patientId}</urn2:id>
+            <urn2:type>${patientIdType}</urn2:type>
+         </urn1:patientId>
+         </urn1:GetLaboratoryOrderOutcome>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:assertion type="Response SLA Assertion" name="Response SLA"><con:configuration><SLA>15000</SLA></con:configuration></con:assertion><con:assertion type="Schema Compliance" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="SOAP Response" name="SOAP Response"/><con:assertion type="GroovyScriptAssertion" name="Assert Schematron"><con:configuration><scriptText>import se.skl.rivta.testsupport.soapui.validation.SchematronValidator
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def contextHelper = new ContextHelper(context)
+def validator = new SchematronValidator()
+
+def failures = validator.validateMessage(messageExchange.response.getResponseContent(),
+        new File(utils.projectPath + "/constraints.xml"))
+
+failures.each { failure ->
+    log.error ("Failure $failure.text")
+}
+
+assert (failures.isEmpty())</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="AssertFiltering"><con:configuration><scriptText>import com.eviware.soapui.support.XmlHolder
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def contextHelper = new ContextHelper(context)
+
+def holder = new XmlHolder( messageExchange.response.responseContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:2'
+
+def careContactIds = holder.getNodeValues('/soapenv:Envelope/soapenv:Body/urn:GetLaboratoryOrderOutcomeResponse/urn:laboratoryOrderOutcome/urn1:laboratoryOrderOutcomeHeader/urn1:careContactId') as List
+
+def expectedCareContactIds = context.expectedCareContactIds? context.expectedCareContactIds.tokenize(',') : []
+def unexpectedCareContactIds = context.unexpectedCareContactIds ? context.unexpectedCareContactIds.tokenize(',') : []
+
+log.debug("Assert careContactIds, unexpectedCareContactIds:$unexpectedCareContactIds,expectedCareContactIds, $expectedCareContactIds,\nfound careContactIds $careContactIds")
+
+if(expectedCareContactIds.isEmpty()) {
+    log.error("Your test data is invalid, expectedCareContactIds may not be empty")
+    assert 0 > 1
+}
+
+def missingExpectedIds = []
+def extraUnexpectedIds= []
+
+careContactIds.each {id ->
+    if (unexpectedCareContactIds.contains(id)) {
+        extraUnexpectedIds.add(id)
+    }
+}
+
+expectedCareContactIds.each {id ->
+    if (!careContactIds.contains(id)) {
+        missingExpectedIds.add(id)
+    }
+}
+
+if(!missingExpectedIds.isEmpty() || !extraUnexpectedIds.isEmpty()) {
+    log.error("Response contains unexpected CareContactIds: $extraUnexpectedIds and/or does not contain  expected CareContactIds: $missingExpectedIds")
+    assert(false)
+}</scriptText></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:ehr:patientsummary:GetCareContactsResponder:2:GetCareContacts" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/><con:reportParameters/><con:breakPoints><con:testStepId>74fd6c8e-e3f8-4fb1-b45f-90a4ad24c35b</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints></con:testCase><con:properties/></con:testSuite><con:testSuite name="FaultTests"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="CareContactIdWithoutSourceSystemHSAId" searchProperties="true" id="d230a455-9271-4d49-b63f-0c2f99f57cb0"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
 
 def utils = new GroovyUtils(context)
