@@ -27,6 +27,7 @@ under the License.
         <xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html></xsl:text>
         <html>
             <head>
+                <meta charset="UTF-8"/>
                <title>TestSuite description <xsl:value-of select="/testsuite/id"/></title>
                 <style>
                     body {
@@ -74,22 +75,22 @@ under the License.
                 <h1>TestSuite description <xsl:value-of select="/testsuite/id"/></h1>
                 <summary>
                     <p>This document describes the testcases used to verify the implementation of <xsl:value-of select="/testsuite/id"/>
-                        before integration with the national platform.</p>
+                        prior to integration with the national platform.</p>
                 </summary>
                     <article>
                         <h2>Tools</h2>
                         <h3>SoapUI</h3>
                         The testsuite uses SoapUI to verify the implementation. Documentation of SoapUI can be found at <a href="http://www.soapui.org" target="_blank">http://www.soapui.org</a><br/>
-                        Link to download site: <a href="http://sourceforge.net/projects/soapui/files/soapui/4.5.2/" target="_blank">http://sourceforge.net/projects/soapui/files/soapui/4.5.2/</a><br/>
+                        Link to download site: <a href="http://sourceforge.net/projects/soapui/files/soapui/" target="_blank">http://sourceforge.net/projects/soapui/files/soapui/</a><br/>
                         Install SoapUI according to the documentation.
 
                         <h3>Setup instructions</h3>
                         <ol>
-                            <li>Unzip the testsuite package.</li>
+                            <li>Locate the test-suite/[contractName]-directory in your distribution.</li>
                             <li>Copy the jar-file ‘soapui-support.jar’ to &lt;SoapUI install dir&gt;/bin/ext</li>
-                            <li>Open SoapUI and import the testsuite project, choose ‘Import Project’ from the File-menu.</li>
+                            <li>Open SoapUI and import the SoapUI project from the above directory, choose ‘Import Project’ from the File-menu.</li>
                             <li>If your WebService endpoint requires a SSL Certificate, this can be configured from the Preferences (in the File menu). In the Preferences window  open the ‘SSL Settings’ tab and import the Keystore containing the Client Certificate.</li>
-                            <li>Update test-data to match the contents in your system.</li>
+                            <li>Update test-data in data.xml to match the contents in your system.</li>
                             <li>You should now be able to run the test suite!</li>
                         </ol>
                     </article>
