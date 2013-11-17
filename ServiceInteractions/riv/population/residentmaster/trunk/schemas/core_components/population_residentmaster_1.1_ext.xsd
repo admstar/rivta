@@ -21,20 +21,132 @@
 
  	<xs:import schemaLocation='population_residentmaster_1.1.xsd' namespace='urn:riv:population:residentmaster:1' /> <!-- (recursive import by itention) -->
 
-	<xs:element name="Relationer" type="core:RelationerTYPE" /> 
+	<xs:element name="Relationer" type="tns:RelationerTYPE" /> 
 	
-	<xs:element name="AvregistreringsorsakKodKomplett" type="core:AvregistreringsorsakKodKomplettTYPE" />
+	<xs:element name="AvregistreringsorsakKodKomplett" type="tns:AvregistreringsorsakKodKomplettTYPE" />
 	
-	<xs:element name="Utlandsadress" type="core:UtlandsadressTYPE" />
+	<xs:element name="Utlandsadress" type="tns:UtlandsadressTYPE" />
 	
 	<xs:element name="HanvisningsPersonNr" type="core:PersonIdTYPE" />
 	
-	<xs:element name="Folkbokforingsdatum" type="core:OfullstandigtDatumTYPE" />
+	<xs:element name="Folkbokforingsdatum" type="tns:OfullstandigtDatumTYPE" />
 	
-	<xs:element name="Fodelse" type="core:FodelseTYPE"/>
+	<xs:element name="Fodelse" type="tns:FodelseTYPE"/>
 	
-	<xs:element name="Civilstand" type="core:CivilstandTYPE" />
+	<xs:element name="Civilstand" type="tns:CivilstandTYPE" />
 	
-	<xs:element name="Invandring" type="core:InvandringTYPE"/>
-		
+	<xs:element name="Invandring" type="tns:InvandringTYPE"/>
+
+<xs:complexType name="RelationerTYPE">
+	<xs:sequence>
+		<xs:element name="Relation" minOccurs="0" maxOccurs="unbounded">
+			<xs:complexType>
+				<xs:sequence>
+					<xs:element name="RelationId" type="tns:RelationPersonIdTYPE"/>
+					<xs:element name="Relationstyp" type="tns:RelationstypTYPE"/>
+					<xs:element name="RelationFromdatum" type="tns:OfullstandigtDatumTYPE" minOccurs="0"/>
+					<xs:element name="RelationTomdatum" type="tns:OfullstandigtDatumTYPE" minOccurs="0"/>
+					<xs:element name="Namn" type="core:NamnTYPE" minOccurs="0"/>
+					<xs:element name="Avregistrering" type="core:AvregistreringTYPE" minOccurs="0"/>
+					<xs:element name="Status" type="tns:RelationStatusTYPE" minOccurs="0"/>
+					<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>						
+				</xs:sequence>
+			</xs:complexType>
+		</xs:element>
+	</xs:sequence>
+</xs:complexType>
+
+	
+	<xs:simpleType name="AvregistreringsorsakKodKomplettTYPE">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AV"/>
+			<xs:enumeration value="UV"/>
+			<xs:enumeration value="GN"/>
+			<xs:enumeration value="AN"/>
+			<xs:enumeration value="AS"/>
+			<xs:enumeration value="GS"/>
+			<xs:enumeration value="OB"/>
+			<xs:enumeration value="TA"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:complexType name="UtlandsadressTYPE">
+		<xs:sequence>
+			<xs:element name="Utdelningsadress1" type="core:Strang35TYPE"  minOccurs="0"/>
+			<xs:element name="Utdelningsadress2" type="core:Strang35TYPE"  minOccurs="0"/>
+			<xs:element name="Utdelningsadress3" type="core:Strang35TYPE"  minOccurs="0"/>
+			<xs:element name="Land" type="core:Strang35TYPE"  minOccurs="0"/>
+			<xs:element name="Utlandsadressdatum" type="tns:OfullstandigtDatumTYPE"  minOccurs="0"/>
+			<xs:element name="Rostrattsdatum" type="tns:OfullstandigtDatumTYPE" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>					
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:simpleType name="OfullstandigtDatumTYPE">
+		<xs:annotation>
+			<xs:documentation>Datum som kan vara ofullständiga</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="4"/>
+			<xs:maxLength value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:complexType name="FodelseTYPE">
+		<xs:sequence>
+			<xs:element name="HemortSverige" type="core:HemortSverigeTYPE" minOccurs="0"/>
+			<xs:element name="OrtUtlandet" type="core:OrtUtlandetTYPE" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	
+	<xs:complexType name="CivilstandTYPE">
+		<xs:sequence>
+			<xs:element name="CivilstandKod" type="core:CivilstandKodTYPE" minOccurs="0"/>
+			<xs:element name="Civilstandsdatum" type="tns:OfullstandigtDatumTYPE" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>		
+		</xs:sequence>
+	</xs:complexType>
+	
+	
+	<xs:complexType name="InvandringTYPE">
+		<xs:sequence>
+			<xs:element name="Invandringsdatum" type="tns:OfullstandigtDatumTYPE" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="RelationPersonIdTYPE">
+		<xs:sequence> <!-- xs:choice i navets chema - ett av värdena måsta vara satta, men inte båda -->
+			<xs:element name="PersonNr" type="core:PersonIdTYPE" minOccurs="0"/>
+			<xs:element name="FodelsetidNr" type="core:PersonIdTYPE" minOccurs="0" />
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>				
+		</xs:sequence>
+	</xs:complexType>	
+	
+	<xs:simpleType name="RelationstypTYPE">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="B"/>
+			<xs:enumeration value="MO"/>
+			<xs:enumeration value="FA"/>
+			<xs:enumeration value="F"/>
+			<xs:enumeration value="V"/>
+			<xs:enumeration value="VF"/>
+			<xs:enumeration value="M"/>
+			<xs:enumeration value="P"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="RelationStatusTYPE"> <!-- är attribut i navet-schema -->s
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NY"/>
+			<xs:enumeration value="PB"/>
+			<xs:enumeration value="RD"/>
+			<xs:enumeration value="AS"/>
+			<xs:enumeration value="AV"/>
+			<xs:enumeration value="IV"/>
+			<xs:enumeration value="AN"/>
+		</xs:restriction>
+	</xs:simpleType>	
 </xs:schema>
