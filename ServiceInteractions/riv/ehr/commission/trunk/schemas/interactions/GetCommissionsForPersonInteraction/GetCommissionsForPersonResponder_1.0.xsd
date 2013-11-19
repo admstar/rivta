@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Inera AB licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->	
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' 
+	xmlns:tns='urn:riv:ehr:commission:GetCommissionsForPersonResponder:1'				
+	xmlns:commission='urn:riv:ehr:commission:1'
+	targetNamespace='urn:riv:ehr:commission:GetCommissionsForPersonResponder:1'
+	elementFormDefault='qualified'
+	attributeFormDefault='unqualified'
+	version='1.0'>
+
+	<xs:import schemaLocation='../../core_components/ehr_commission_1.0.xsd' namespace='urn:riv:ehr:commission:1' />
+
+
+	<xs:element name='GetCommissionsForPersonRequest' type='tns:GetCommissionsForPersonRequestType'/>
+
+	<xs:complexType name='GetCommissionsForPersonRequestType'>
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Tjänst som hämtar alla aktiva medarbetaruppdrag som personen är kopplad till. Tjänsten returnerar även vilket uppdrag som redan är valt.
+		        Personen anges antingen med HSA-id eller personnummer. Om man inte anger något av dessa eller att personnummer/HSA-id inte är giltigt returneras statuskod VALIDATIONERROR.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PersonalHsaId" type="commission:HsaId" minOccurs="0"/>
+			<xs:element name="PersonalIdentityNumber" type="commission:PersonalIdentityNumber" minOccurs="0"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name='GetCommissionsForPersonResponse' type='tns:GetCommissionsForPersonResponseType'/>
+
+	<xs:complexType name='GetCommissionsForPersonResponseType'>
+		<xs:annotation>
+		    <xs:documentation xml:lang='sv'>
+		        Tjänst som hämtar alla aktiva medarbetaruppdrag som personen är kopplad till. Tjänsten returnerar även vilket uppdrag som redan är valt.
+		        Personen anges antingen med HSA-id eller personnummer. Om man inte anger något av dessa eller att personnummer/HSA-id inte är giltigt returneras statuskod VALIDATIONERROR.
+		    </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GetCommissionsForPersonResultType" type="commission:GetCommissionsForPersonResultType"/>
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
