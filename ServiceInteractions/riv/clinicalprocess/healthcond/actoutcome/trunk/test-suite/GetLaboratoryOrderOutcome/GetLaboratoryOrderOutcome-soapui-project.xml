@@ -1478,35 +1478,35 @@ holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
 holder.namespaces['urn'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2'
 holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:2'
 
-def careContactIds = holder.getNodeValues('/soapenv:Envelope/soapenv:Body/urn:GetLaboratoryOrderOutcomeResponse/urn:laboratoryOrderOutcome/urn1:laboratoryOrderOutcomeHeader/urn1:careContactId') as List
+def documentIds = holder.getNodeValues('/soapenv:Envelope/soapenv:Body/urn:GetLaboratoryOrderOutcomeResponse/urn:laboratoryOrderOutcome/urn1:laboratoryOrderOutcomeHeader/urn1:documentId') as List
 
-def expectedCareContactIds = context.expectedCareContactIds? context.expectedCareContactIds.tokenize(',') : []
-def unexpectedCareContactIds = context.unexpectedCareContactIds ? context.unexpectedCareContactIds.tokenize(',') : []
+def expectedDocumentIds = context.expectedDocumentIds? context.expectedDocumentIds.tokenize(',') : []
+def unexpectedDocumentIds = context.unexpectedDocumentIds ? context.unexpectedDocumentIds.tokenize(',') : []
 
-log.debug("Assert careContactIds, unexpectedCareContactIds:$unexpectedCareContactIds,expectedCareContactIds, $expectedCareContactIds,\nfound careContactIds $careContactIds")
+log.debug("Assert documentIds, unexpectedDocumentIds:$unexpectedDocumentIds,expectedDocumentIds, $expectedDocumentIds,\nfound documentIds $documentIds")
 
-if(expectedCareContactIds.isEmpty()) {
-    log.error("Your test data is invalid, expectedCareContactIds may not be empty")
+if(expectedDocumentIds.isEmpty()) {
+    log.error("Your test data is invalid, expectedDocumentIds may not be empty")
     assert 0 > 1
 }
 
 def missingExpectedIds = []
 def extraUnexpectedIds= []
 
-careContactIds.each {id ->
-    if (unexpectedCareContactIds.contains(id)) {
+documentIds.each {id ->
+    if (unexpectedDocumentIds.contains(id)) {
         extraUnexpectedIds.add(id)
     }
 }
 
-expectedCareContactIds.each {id ->
-    if (!careContactIds.contains(id)) {
+expectedDocumentIds.each {id ->
+    if (!documentIds.contains(id)) {
         missingExpectedIds.add(id)
     }
 }
 
 if(!missingExpectedIds.isEmpty() || !extraUnexpectedIds.isEmpty()) {
-    log.error("Response contains unexpected CareContactIds: $extraUnexpectedIds and/or does not contain  expected CareContactIds: $missingExpectedIds")
+    log.error("Response contains unexpected DocumntIDs: $extraUnexpectedIds and/or does not contain  expected DocumentIds: $missingExpectedIds")
     assert(false)
 }</scriptText></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:ehr:patientsummary:GetCareContactsResponder:2:GetCareContacts" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/><con:reportParameters/><con:breakPoints><con:testStepId>74fd6c8e-e3f8-4fb1-b45f-90a4ad24c35b</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints></con:testCase><con:properties/></con:testSuite><con:testSuite name="FaultTests"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="CareContactIdWithoutSourceSystemHSAId" searchProperties="true" id="d230a455-9271-4d49-b63f-0c2f99f57cb0"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
