@@ -26,57 +26,26 @@
     <xs:import schemaLocation="./clinicalprocess_healthcond_actoutcome_enum_2.0.xsd"
         namespace="urn:riv:clinicalprocess:healthcond:actoutcome:enums:2"/>
 
-    <xs:complexType name="PatientSummaryHeaderType">
-        <xs:sequence>
-            <xs:element name="documentId" type="xs:string"/>
-            <xs:element name="sourceSystemHSAId" type="tns:HSAIdType"/>
-            <xs:element name="documentTitle" type="xs:string" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="documentTime" type="tns:TimeStampType" maxOccurs="1" minOccurs="1"/>
-            <xs:element name="patientId" type="tns:PersonIdType"/>
-            <xs:element name="accountableHealthcareProfessional"
-                type="tns:HealthcareProfessionalType"/>
-            <xs:element name="legalAuthenticator" type="tns:LegalAuthenticatorType" minOccurs="0"/>
-            <xs:element name="approvedForPatient" type="xs:boolean"/>
-            <xs:element name="careContactId" type="xs:string" minOccurs="0"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="PatientSummaryHeaderType_GetReferralOutcome">
-        <xs:sequence>
-            <xs:element name="documentId" type="xs:string"/>
-            <xs:element name="sourceSystemHSAId" type="tns:HSAIdType"/>
-            <xs:element name="documentTitle" type="xs:string" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="documentTime" type="tns:TimeStampType" maxOccurs="1" minOccurs="1"/>
-            <xs:element name="patientId" type="tns:PersonIdType"/>
-            <xs:element name="accountableHealthcareProfessional"
-                type="tns:HealthcareProfessionalType_GetReferralOutcome"/>
-            <xs:element name="legalAuthenticator" type="tns:LegalAuthenticatorType" minOccurs="0"/>
-            <xs:element name="approvedForPatient" type="xs:boolean"/>
-            <xs:element name="careContactId" type="xs:string" minOccurs="0"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="PatientSummaryHeaderType_LaboratoryOutcome">
-        <xs:sequence>
-            <xs:element name="documentId" type="xs:string"/>
-            <xs:element name="sourceSystemHSAId" type="tns:HSAIdType"/>
-            <xs:element name="documentTime" type="tns:TimeStampType" maxOccurs="1" minOccurs="1"/>
-            <xs:element name="patientId" type="tns:PersonIdType"/>
-            <xs:element name="accountableHealthcareProfessional"
-                type="tns:HealthcareProfessionalType"/>
-            <xs:element name="legalAuthenticator" type="tns:LegalAuthenticatorType" minOccurs="0"/>
-            <xs:element name="approvedForPatient" type="xs:boolean"/>
-            <xs:element name="careContactId" type="xs:string" minOccurs="0"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
+		<xs:complexType name="PatientSummaryHeaderType">
+		        <xs:sequence>
+		            <xs:element name="documentId" type="xs:string"/>
+		            <xs:element name="sourceSystemHSAId" type="tns:HSAIdType"/>
+		            <xs:element name="documentTitle" type="xs:string" minOccurs="0" maxOccurs="1"/>
+		            <xs:element name="documentTime" type="tns:TimeStampType" maxOccurs="1" minOccurs="1"/>
+		            <xs:element name="patientId" type="tns:PersonIdType"/>
+		<xs:element name="accountableHealthcareProfessional" type="tns:HealthcareProfessionalType"/>
+		            <xs:element name="legalAuthenticator" type="tns:LegalAuthenticatorType" minOccurs="0"/>
+		            <xs:element name="approvedForPatient" type="xs:boolean"/>
+		            <xs:element name="nullified" type="xs:boolean" minOccurs="0"/>
+		            <xs:element name="nullifiedReason" type="xs:string" minOccurs="0"/>
+		            <xs:element name="careContactId" type="xs:string" minOccurs="0"/>
+		        </xs:sequence>
+		</xs:complexType>
+		
     <xs:complexType name="ReferralOutcomeType">
         <xs:sequence>
             <xs:element name="referralOutcomeHeader"
-                type="tns:PatientSummaryHeaderType_GetReferralOutcome"/>
+                type="tns:PatientSummaryHeaderType"/>
             <xs:element name="referralOutcomeBody" type="tns:ReferralOutcomeBodyType"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 
@@ -149,7 +118,7 @@
             <xs:element name="referralText" type="xs:string" minOccurs="1"/>
             <xs:element name="referralTime" type="tns:TimeStampType"/>
             <xs:element name="referralAuthor"
-                type="tns:HealthcareProfessionalType_GetReferralOutcome"/>
+                type="tns:HealthcareProfessionalType"/>
             <xs:element minOccurs="0" name="careContactId" type="xs:string"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 
@@ -472,7 +441,7 @@
     <xs:complexType name="LaboratoryOrderOutcomeType">
         <xs:sequence>
             <xs:element name="laboratoryOrderOutcomeHeader"
-                type="tns:PatientSummaryHeaderType_LaboratoryOutcome"/>
+                type="tns:PatientSummaryHeaderType"/>
             <xs:element name="laboratoryOrderOutcomeBody" type="tns:LaboratoryOrderOutcomeBodyType"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 
