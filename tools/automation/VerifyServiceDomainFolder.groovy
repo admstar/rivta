@@ -11,7 +11,7 @@
  *
  *
  * @author Peter Hernfalk
- * Last update: 2013-11-15
+ * Last update: 2013-11-22
 
  */
 
@@ -37,7 +37,7 @@ structureTemplate[8]  = [subPath:"trunk/schemas/core_components", mandatoryConte
 structureTemplate[9]  = [subPath:"trunk/schemas/interactions", mandatoryContent:"*.wsdl,*.xsd", optionalContent:""]
 
 usedDomain = ""
-useLogging = true
+useOptionalLogging = true
 
 
 /**
@@ -47,10 +47,6 @@ useLogging = true
  //////////////////////////////////////////////////////////
  //////////////////////////////////////////////////////////
  */
-
-//---------------------------------------- Usage settings ----------------------------------------//
-//useLogging = true
-//-----------------------------------------------------------------------------------------------//
 
 /** Fetches values from parameters, saves the values in variables */
 def getValuesFromParameters() {
@@ -64,7 +60,7 @@ def getValuesFromParameters() {
     def cli = new CliBuilder(usage: mecall, header: 'Options:', footer: medesc)
     cli.c(longOpt: 'checkoutfiles', args:1, required:false, argName:'Optional: true', 'If "true" then files will be downloaded to the target directory')
     cli.d(longOpt: 'domainname', args:1, required:true, argName:'Domain name', 'Name of the domain')
-    cli.l(longOpt: 'uselogging', args:1, required:false, argName:'Optional: true', 'If "true" then the script logs output to the console')
+    cli.l(longOpt: 'useOptionalLogging', args:1, required:false, argName:'Optional: true', 'If "true" then the script logs output to the console')
     cli.t(longOpt: 'targetdir', args:1, required:true, argName:'Target directory', 'Directory in which service domain files exists. If the checkoutfiles parameter is set to "y" then they will be downloaded to this folder')
 
     //-----Verify all parameters
@@ -79,40 +75,44 @@ def getValuesFromParameters() {
 
     def argDomainName=options.getProperty('domainname')
     if (argDomainName.toString().length() == 0) {
-        log('* The supplied domain name seems to be empty\n')
+        log('* The supplied domain name seems to be empty\n', true)
         cli.usage()
         return 1
     }
     usedDomain = argDomainName
 
-    useLogging = false
-    def argUseLogging=options.getProperty('uselogging')
-    if (argUseLogging.toString().toLowerCase() == "true") {
-        useLogging = true
+    useOptionalLogging = false
+    def arguseOptionalLogging=options.getProperty('useOptionalLogging')
+    if (arguseOptionalLogging.toString().toLowerCase() == "true") {
+        useOptionalLogging = true
     }
 
     def argTargetDir=options.getProperty('targetdir')
     if (argTargetDir.toString().length() == 0) {
-        log('* The supplied target directory name seems to be empty\n')
+        log('* The supplied target directory name seems to be empty\n', true)
         cli.usage()
         return 1
     }
     localRIVTATargetFolder = argTargetDir
+    if (localRIVTATargetFolder.endsWith("/") == false) {
+        localRIVTATargetFolder += "/"
+    }
     return true
 }
 
 /** Logs text to standard output */
-def log(text) {
-    //-----2do: add logic that directs the output to configured target
-    if (useLogging == true) {
-        println "VerifyServiceDomainFolder: " + text
+def log(String text, boolean logEntryIsMandatory) {
+    if (logEntryIsMandatory == true) {
+        println text
+    } else if (useOptionalLogging == true && logEntryIsMandatory == false) {
+        println text
     }
 }
 
 def downloadFileStructureFromRivtaSite(String domainNameRivta) {
 
     RIVTACheckoutCommandToFolder = RIVTACheckoutCommand + RIVTADomainFolder + domainNameRivta.trim() + "/ " + localRIVTATargetFolder
-    log(RIVTACheckoutCommandToFolder)
+    log(RIVTACheckoutCommandToFolder, false)
 
     //-----Delete the local target folder before download
     new File(localRIVTATargetFolder).deleteDir()
@@ -127,13 +127,14 @@ def downloadFileStructureFromRivtaSite(String domainNameRivta) {
 /* Verifies that that the service domains structure and contents are correct on the rivta site */
 def verifyServiceDomainStructure(String domainStructure) {
     //-----2do: add logic that verifies the downloaded domain file structure
-    log("Domain structure, root: " + domainStructure)
+    log("Domain structure, root: " + domainStructure, false)
 
     //-----Extract subdirectories and make a call to the verification method for each subdirectory
     def dir = new File(domainStructure)
     dir.eachDir { subDir ->
         if ((subDir.name.contains('.svn')) == false) {
-            log("\n\nSubdir: " + subDir.name )
+            log("\n", true)
+            log("\nSubdir: " + subDir.name, false)
             if (verifySubDomainStructure(domainStructure, subDir.name) == false) {
                return
             }
@@ -155,18 +156,15 @@ def verifySubDomainStructure(String domainStructure, String subDomainName) {
         //-----Filter out all directories except the '.svn' directories
         if ((file.toString().contains('.svn')) == false) {
 
-            //-----The found directory should be verified against the directory template
+            //-----Verification of the found directory against the directory template
             //-----The directory contents should also be verified, so that mandatory files exist in the directory
-            //ruleVerificationResult = verifySubDomainAgainstStructureRules(file.name, file)
             verificationResult = verifySubDomainAgainstStructureRules(file.name, file, verificationResult)
-            //log("verificationResult: " + verificationResult)
-            //-----2do: use ruleVerificationResult
         }
     }
 
     structureTemplate.size.times {
         if (verificationResult[it] == false) {
-            log("'" + subDomainName + "' is missing the subfolder: '" + structureTemplate[it].subPath + "'")
+            log("'" + subDomainName + "' is missing the subfolder: '" + structureTemplate[it].subPath + "'", true)
         }
 
     }
@@ -208,7 +206,7 @@ def verifySubDomainAgainstStructureRules(leafFolderName, folderPath, verificatio
 
 //-----Fetch the domain name from the script parameter
 if (getValuesFromParameters() == true) {
-    log("Domain name = " + usedDomain)
+    log("Domain name = " + usedDomain, false)
 
     //-----Download the domain structure that should be verified
     if (checkoutFiles == true) {
@@ -220,5 +218,5 @@ if (getValuesFromParameters() == true) {
 }
 
 //-----Exit the script execution and return the return code to the caller
-log("\n\nreturnCode: " + returnCode)
+log("\n\nreturnCode: " + returnCode, true)
 return returnCode
