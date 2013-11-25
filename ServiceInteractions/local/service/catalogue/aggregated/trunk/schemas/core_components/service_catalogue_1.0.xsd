@@ -59,25 +59,9 @@
       <xs:element name="hsaId" type="tns:HsaIdType"/>
       <xs:element name="relativeDistinguishedName" type="xs:string"/>
       <xs:element minOccurs="1" name="postalAddress" type="xs:string"/>
-      <xs:element minOccurs="1" name="countyCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="countyCode" type="xs:string"/>
       <xs:element minOccurs="0" name="postalCode" type="xs:string"/>
       <xs:element minOccurs="0" name="streetAddress" type="xs:string"/>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <!--  -->
-  <xs:complexType name="CapacityType">
-    <xs:annotation>
-      <xs:documentation>Product information</xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="displayName" type="xs:string"/>
-      <xs:element name="description" type="xs:string"/>
-      <xs:element name="code" type="xs:string"/>
-      <xs:element name="codeSystem" type="xs:string"/>
-      <xs:element name="value" type="xs:string"/>
-      <xs:element name="validTo" type="tns:TS"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -135,12 +119,12 @@
     </xs:annotation>
     <xs:sequence>
       <xs:element name="name" type="xs:string"/>
-      <xs:element name="capacity" type="tns:CapacitType" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="capacity" type="tns:CapacityType" maxOccurs="unbounded" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="CapacitType">
+  <xs:complexType name="CapacityType">
     <xs:annotation>
       <xs:documentation>CodeSystem information</xs:documentation>
     </xs:annotation>
