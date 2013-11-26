@@ -92,12 +92,12 @@
     <xs:sequence>
       <xs:element maxOccurs="unbounded" minOccurs="0" name="hsaId" type="core:HsaIdType">
         <xs:annotation>
-          <xs:documentation>HSA id.</xs:documentation>
+          <xs:documentation>Sökning baserad på exakt match av HSA id.</xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element maxOccurs="unbounded" minOccurs="0" name="countyCode" type="xs:string">
         <xs:annotation>
-          <xs:documentation>Länskod enligt HSA.</xs:documentation>
+          <xs:documentation>Länskod enligt SCB.</xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element name="relativeDistinguishedName" type="xs:string" minOccurs="0">
@@ -111,15 +111,15 @@
       </xs:element>
       <xs:element name="productCode" type="core:CVType" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation>
-          <xs:documentation>Sökning baserad på kod/kodverk, exempelvis HSA verksamhetskoder.</xs:documentation>
+          <xs:documentation>Sökning baserat på produktkod.</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element minOccurs="0" name="productName" type="xs:string" maxOccurs="unbounded">
+      <xs:element name="productProperties" type="core:CVType" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation>
-          <xs:documentation>Sökning baserad på produktnamn.</xs:documentation>
+          <xs:documentation>Sökning baserad på egenskaper som finns på produkter, kod/kodverk exempelvis HSA verksamhetskoder.</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="supportedInteractions" type="core:SupportedInteractionsType" minOccurs="0">
+      <xs:element name="interaction" type="core:SupportedInteractionsType" minOccurs="0">
         <xs:annotation>
           <xs:documentation>Sökning baserad på RIVTA interaktioner,
             Exempel: 
@@ -188,23 +188,9 @@
       <xs:element name="hsaId" type="tns:HsaIdType"/>
       <xs:element name="relativeDistinguishedName" type="xs:string"/>
       <xs:element minOccurs="1" name="postalAddress" type="xs:string"/>
+      <xs:element minOccurs="0" name="countyCode" type="xs:string"/>
       <xs:element minOccurs="0" name="postalCode" type="xs:string"/>
       <xs:element minOccurs="0" name="streetAddress" type="xs:string"/>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-  <!---->
-  <xs:complexType name="CapacityType">
-    <xs:annotation>
-      <xs:documentation>Product information</xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="displayName" type="xs:string"/>
-      <xs:element name="description" type="xs:string"/>
-      <xs:element name="code" type="xs:string"/>
-      <xs:element name="codeSystem" type="xs:string"/>
-      <xs:element name="value" type="xs:string"/>
-      <xs:element name="validTo" type="tns:TS"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -255,11 +241,11 @@
     </xs:annotation>
     <xs:sequence>
       <xs:element name="name" type="xs:string"/>
-      <xs:element name="capacity" type="tns:CapacitType" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="capacity" type="tns:CapacityType" maxOccurs="unbounded" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="CapacitType">
+  <xs:complexType name="CapacityType">
     <xs:annotation>
       <xs:documentation>CodeSystem information</xs:documentation>
     </xs:annotation>
@@ -397,7 +383,68 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>${webServiceUrl}</con:endpoint><con:endpoint>http://tempuri.org</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:service:catalogue:FindOffersResponder:1:FindOffers" name="FindOffers" bindingOperationName="FindOffers" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://tempuri.org</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:service:catalogue:FindOffersResponder:1" xmlns:urn2="urn:riv:service:catalogue:1">
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>${webServiceUrl}</con:endpoint><con:endpoint>http://localhost:8080/aggregated-1.0-SNAPSHOT/FindOffers</con:endpoint><con:endpoint>http://tempuri.org</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:service:catalogue:FindOffersResponder:1:FindOffers" name="FindOffers" bindingOperationName="FindOffers" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Search by care unit name"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://tempuri.org</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:service:catalogue:FindOffersResponder:1" xmlns:urn2="urn:riv:service:catalogue:1">
+   <soapenv:Header>
+      <urn:LogicalAddress>?</urn:LogicalAddress>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn1:FindOffers>
+         <!--Zero or more repetitions:-->
+         <urn1:hsaId>SE2321000016-3VGF</urn1:hsaId>
+         <!--Zero or more repetitions:-->
+         <urn1:countyCode>?</urn1:countyCode>
+         <!--Optional:-->
+         <urn1:relativeDistinguishedName>?</urn1:relativeDistinguishedName>
+         <!--Zero or more repetitions:-->
+         <urn1:productCode>
+            <urn2:code>?</urn2:code>
+            <urn2:codeSystem>?</urn2:codeSystem>
+            <!--Optional:-->
+            <urn2:codeSystemName>?</urn2:codeSystemName>
+            <!--Optional:-->
+            <urn2:codeSystemVersion>?</urn2:codeSystemVersion>
+            <!--Optional:-->
+            <urn2:displayName>?</urn2:displayName>
+            <!--Optional:-->
+            <urn2:originalText>?</urn2:originalText>
+            <!--You may enter ANY elements at this point-->
+         </urn1:productCode>
+         <!--Zero or more repetitions:-->
+         <urn1:productProperties>
+            <urn2:code>?</urn2:code>
+            <urn2:codeSystem>?</urn2:codeSystem>
+            <!--Optional:-->
+            <urn2:codeSystemName>?</urn2:codeSystemName>
+            <!--Optional:-->
+            <urn2:codeSystemVersion>?</urn2:codeSystemVersion>
+            <!--Optional:-->
+            <urn2:displayName>?</urn2:displayName>
+            <!--Optional:-->
+            <urn2:originalText>?</urn2:originalText>
+            <!--You may enter ANY elements at this point-->
+         </urn1:productProperties>
+         <!--Optional:-->
+         <urn1:interaction>
+            <!--1 or more repetitions:-->
+            <urn2:interaction>?</urn2:interaction>
+            <!--You may enter ANY elements at this point-->
+         </urn1:interaction>
+         <!--You may enter ANY elements at this point-->
+      </urn1:FindOffers>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:service:catalogue:FindOffersResponder:1:FindOffers"/><con:wsrmConfig version="1.2"/></con:call><con:call name="Search by product"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/aggregated-1.0-SNAPSHOT/FindOffers</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:service:catalogue:FindOffersResponder:1" xmlns:urn2="urn:riv:service:catalogue:1">
+   <soapenv:Header>
+      <urn:LogicalAddress>?</urn:LogicalAddress>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn1:FindOffers>
+          <urn1:productCode>
+            <urn2:code>Tonsillektomi, barn</urn2:code>
+            <urn2:codeSystem>?</urn2:codeSystem>
+         </urn1:productCode>
+      </urn1:FindOffers>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:service:catalogue:FindOffersResponder:1:FindOffers"/><con:wsrmConfig version="1.2"/></con:call><con:call name="Search by product properties"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:service:catalogue:FindOffersResponder:1" xmlns:urn2="urn:riv:service:catalogue:1">
    <soapenv:Header>
       <urn:LogicalAddress>?</urn:LogicalAddress>
    </soapenv:Header>
@@ -424,17 +471,29 @@
             <!--You may enter ANY elements at this point-->
          </urn1:productCode>
          <!--Zero or more repetitions:-->
-         <urn1:productName>?</urn1:productName>
+         <urn1:productProperties>
+            <urn2:code>?</urn2:code>
+            <urn2:codeSystem>?</urn2:codeSystem>
+            <!--Optional:-->
+            <urn2:codeSystemName>?</urn2:codeSystemName>
+            <!--Optional:-->
+            <urn2:codeSystemVersion>?</urn2:codeSystemVersion>
+            <!--Optional:-->
+            <urn2:displayName>?</urn2:displayName>
+            <!--Optional:-->
+            <urn2:originalText>?</urn2:originalText>
+            <!--You may enter ANY elements at this point-->
+         </urn1:productProperties>
          <!--Optional:-->
-         <urn1:supportedInteractions>
+         <urn1:interaction>
             <!--1 or more repetitions:-->
             <urn2:interaction>?</urn2:interaction>
             <!--You may enter ANY elements at this point-->
-         </urn1:supportedInteractions>
+         </urn1:interaction>
          <!--You may enter ANY elements at this point-->
       </urn1:FindOffers>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:service:catalogue:FindOffersResponder:1:FindOffers"/></con:call></con:operation></con:interface><con:testSuite name="TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Simple search" searchProperties="true" id="5d9e979f-ad10-4431-9198-73fa3657a70d"><con:settings/><con:testStep type="groovy" name="Read data" id="cc9afaa3-4755-4995-b971-f1ef85a2d56f"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:service:catalogue:FindOffersResponder:1:FindOffers"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite name="TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Simple search" searchProperties="true" id="5d9e979f-ad10-4431-9198-73fa3657a70d"><con:settings/><con:testStep type="groovy" name="Read data" id="cc9afaa3-4755-4995-b971-f1ef85a2d56f"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
 
 def utils = new GroovyUtils(context)
