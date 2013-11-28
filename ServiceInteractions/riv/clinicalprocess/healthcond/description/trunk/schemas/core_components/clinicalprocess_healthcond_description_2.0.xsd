@@ -250,9 +250,10 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="diagnosisType" type="codes:DiagnosisTypeEnum"/>
-            <xs:element name="diagnosisTime" type="tns:TimeStampType"/>
-            <xs:element name="diagnosisCode" type="tns:CVType"/>
-            <xs:element name="relatedDiagnosis" type="tns:RelatedDiagnosisType"/>
+            <xs:element name="diagnosisTime" type="tns:TimeStampType" minOccurs="0"/>
+            <xs:element name="diagnosisCode" type="tns:CVType" minOccurs="0"/>
+            <xs:element name="relatedDiagnosis" type="tns:RelatedDiagnosisType"
+                maxOccurs="unbounded" minOccurs="0"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
