@@ -38,6 +38,7 @@
 			<xs:element name="questionFormulation" type="QuestionFormulationType"/>
 			<!--erfordrar Betalningsförbindelse-->
 			<xs:element name="paymentCommitment" type="PaymentCommitmentType" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="RequestConfirmationType">
@@ -55,28 +56,9 @@
 			<xs:element name="author" type="AuthorType"/>
 			<xs:element name="recipient" type="RecipientType"/>
 			<xs:element name="outcome" type="RequestReceivedConfirmationOutcomeType"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-	<!--
-	<xs:complexType name="ReceivedConfirmationOutcomeType">
-		<xs:sequence> -->
-	<!--besvarar eRemiss.eRemiss-id 
-			<xs:element name="requestId" type="RequestIdType"/>
-				-->
-	<!--svars-id
-			<xs:element name="requestOutcomeId" type="RequestIdType"/>
-			-->
-	<!--svarsmeddelandetyp
-			<xs:element name="typeOfRequestOutcome" type="codes:codeRequestOutcomeType"/>
-			-->
-	<!--eRemiss.versions-id-
-			<xs:element name="requestVersionNumber" type="VersionNumberType"/>
-			<xs:element name="patient" type="PatientTypeOutcome"/>
-			<xs:element name="author" type="AuthorType"/>
-			<xs:element name="recipient" type="RecipientType"/>
-			<xs:element name="outcome" type="RequestReceivedConfirmationOutcomeType"/>
-		</xs:sequence>
-	</xs:complexType> -->
 	<xs:complexType name="RequestOutcomeType">
 		<xs:sequence>
 			<!--besvarar eRemiss.eRemiss-id-->
@@ -92,6 +74,7 @@
 			<xs:element name="author" type="AuthorType"/>
 			<xs:element name="recipient" type="RecipientType"/>
 			<xs:element name="outcome" type="OutcomeType"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<!-- Type for requestId and requestOutcomId -->
@@ -102,11 +85,6 @@
 					<xs:maxLength value="256"/>
 					<xs:pattern value="(.*)#(.*)"/>
 				</xs:restriction>
-			</xs:simpleType>
-		</xs:attribute>
-		<xs:attribute name="root" use="required" fixed="1.2.752.129.2.1.2.1">
-			<xs:simpleType>
-				<xs:restriction base="xs:string"/>
 			</xs:simpleType>
 		</xs:attribute>
 	</xs:complexType>
@@ -123,11 +101,13 @@
 		<xs:sequence>
 			<xs:element name="typeOfTelecom" type="codes:codeForTelecomType"/>
 			<xs:element name="number" type="TelecomNumberType"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ReasonForVersionType">
 		<xs:sequence>
 			<xs:element name="typeOfReason" type="codes:codeVersionReason"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<!-- Patient type -->
@@ -145,6 +125,7 @@
 			</xs:element>
 			<xs:element name="gender" type="codes:codeForGenderType" minOccurs="0"/>
 			<xs:element name="dateOfBirth" type="DateType" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<!-- -->
@@ -158,6 +139,7 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<!-- Version number only allows a number of 1 and higher. with leading 0
@@ -178,7 +160,7 @@ Examples: 1
 			<xs:pattern value="\+\d+-\d+"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<!-- Date format SSYYMMDD -->
+	<!-- Date format YYYYMMDD -->
 	<xs:complexType name="DateType">
 		<xs:attribute name="value" use="required">
 			<xs:simpleType>
@@ -270,6 +252,7 @@ Examples: 1
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="AuthorType">
@@ -281,17 +264,33 @@ Examples: 1
 			<xs:element name="typeOfHealthcareProfessional" type="codes:codeForProfession"/>
 			<!-- custodian + author.representedOrganisation-->
 			<xs:element name="healthcareProfessionalOrganisation" type="OrganisationType"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SimpleAuthorType">
+		<xs:sequence>
+			<xs:element name="healthcareProfessional" type="HealthcareProfessionalType"/>
+			<xs:element name="healthcareProfessionalOrganisation" type="FullOrganisationType"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="IntermediaryType">
 		<xs:sequence>
 			<xs:element name="healthcareProfessionalOrganisation" type="OrganisationType"/>
 			<!-- custodian -->
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="RecipientType">
 		<xs:sequence>
 			<xs:element name="organisation" type="OrganisationType"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FullRecipientType">
+		<xs:sequence>
+			<xs:element name="healthcareProfessionalOrganisation" type="FullOrganisationType"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<!-- healthcareProfessional id and healthcareProfessional name restrictions mirrors HSA -->
@@ -305,6 +304,7 @@ Examples: 1
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="HsaIdType">
@@ -315,23 +315,51 @@ Examples: 1
 				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>
-		<xs:attribute name="root" use="required" fixed="1.2.752.129.2.1.4.1">
-			<xs:simpleType>
-				<xs:restriction base="xs:string"/>
-			</xs:simpleType>
-		</xs:attribute>
 	</xs:complexType>
 	<xs:complexType name="OrganisationType">
 		<xs:sequence>
 			<xs:element name="careUnitId" type="HsaIdType"/>
-			<!--
-			<xs:element name="careUnitName">
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FullOrganisationType">
+		<xs:annotation>
+			<xs:documentation>
+                Information om en organisationsenhet.
+                Hämtad från http://rivta.googlecode.com
+				Anpassad (mestadels språkligt) till NeR.
+				
+				Anges careUnitId bör inga andra fält anges.
+				Anges inte careUnitId bör åtminstone careUnitName anges.
+                
+                careUnitId: 
+                HSA-id för enhet
+                careUnitName
+                Namn på enhet
+                careUnitTelephone: 
+                Telefon till enhet
+                careUnitEmail: 
+                Epost till enhet
+                careUnitAddress: 
+                Postadress till enhet
+                careUnitLocation: 
+                Text som anger namnet på plats eller ort för enhetens eller funktionens fysiska placering
+            </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="careUnitId" type="HsaIdType" minOccurs="0"/>
+			<xs:element name="careUnitName" minOccurs="0">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
 						<xs:maxLength value="64"/>
 					</xs:restriction>
 				</xs:simpleType>
-			</xs:element> -->
+			</xs:element>
+			<xs:element name="careUnitTelephone" type="xs:string" minOccurs="0"/>
+			<xs:element name="careUnitEmail" type="xs:string" minOccurs="0"/>
+			<xs:element name="careUnitAddress" type="xs:string" minOccurs="0"/>
+			<xs:element name="careUnitLocation" type="xs:string" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="AdditionalInformationType">
@@ -358,6 +386,7 @@ Examples: 1
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="AwarenessInformationType">
@@ -369,6 +398,7 @@ Examples: 1
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<!-- Question Formulation -->
@@ -387,6 +417,7 @@ Examples: 1
 			<xs:element name="condition" type="ConditionType" minOccurs="0" maxOccurs="unbounded"/>
 			<!-- Desired activities 0..* -->
 			<xs:element name="desiredActivity" type="ActivityType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ClinicalInformationType">
@@ -400,6 +431,7 @@ Examples: 1
 					</xs:simpleType>
 				</xs:element>
 			</xs:choice>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<!-- Condition Types -->
@@ -414,6 +446,7 @@ Examples: 1
 				</xs:simpleType>
 			</xs:element>
 			<xs:element name="code" type="codes:codeForCondition" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ConditionIdType">
@@ -424,7 +457,6 @@ Examples: 1
 				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>
-		<xs:attribute name="root" use="required" fixed="1.2.752.129.2.1.2.1"/>
 	</xs:complexType>
 	<!-- Activity types -->
 	<xs:complexType name="ActivityType">
@@ -438,6 +470,7 @@ Examples: 1
 				</xs:simpleType>
 			</xs:element>
 			<xs:element name="code" type="ActivityCodeType" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ActivityIdType">
@@ -448,7 +481,6 @@ Examples: 1
 				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>
-		<xs:attribute name="root" use="required" fixed="1.2.752.129.2.1.2.1"/>
 	</xs:complexType>
 	<!-- -->
 	<xs:complexType name="ActivityCodeType">
@@ -484,6 +516,7 @@ Examples: 1
 			</xs:element>
 			<xs:element name="condition" type="ConditionType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="accomplishedActivity" type="ActivityType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="RequestReceivedConfirmationOutcomeType">
@@ -495,6 +528,7 @@ Examples: 1
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<!-- Date type -->
@@ -541,12 +575,37 @@ Examples: 1
 			</xs:element>
 			<xs:element name="reimbursementInformation" type="ReimbursementInformationType" minOccurs="0"/>
 			<xs:element name="approvedBy" type="HealthcareProfessionalType" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CVType">
+		<xs:annotation>
+			<xs:documentation>
+				Hämtad från http://rivta.googlecode.com
+				
+				Typ som beskriver kodade värden med en struktur hämtad från HL7 v3 CV (”CodedValue”).
+				För implementering av attribut av slaget ”KTOV” i RIV. Kodade värden avser officiellt hanterade
+				kodverk som hänvisas till med CodeSystem OID/UUID.
+				
+				För annan användning av koder, exempelvis för lokala kodverk utan OID, skall originalText-attributet
+				användas för att ge kodens text i det lokala systemet, och övriga attribut lämnas tomma. 
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="code" type="xs:string" minOccurs="0"/>
+			<xs:element name="codeSystem" type="xs:string" minOccurs="0"/>
+			<xs:element name="codeSystemName" type="xs:string" minOccurs="0"/>
+			<xs:element name="codeSystemVersion" type="xs:string" minOccurs="0"/>
+			<xs:element name="displayName" type="xs:string" minOccurs="0"/>
+			<xs:element name="originalText" type="xs:string" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ReimbursementInformationType">
 		<xs:sequence>
 			<xs:element name="reimbursementType" type="codes:codeForReimbursementType"/>
 			<xs:element name="ownerOfInvokedContract" type="codes:codeForCountyCouncil"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PaymentCommitmentIdType">
@@ -557,9 +616,6 @@ Examples: 1
 				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>
-		<!--Not needed when fixed in greenCDA
-		<xs:attribute name="root" use="required" fixed="1.2.752.129.2.1.2.1"/>
-		-->
 	</xs:complexType>
 	<xs:simpleType name="ResponsibilityDescriptionType">
 		<xs:restriction base="xs:string">
@@ -568,12 +624,29 @@ Examples: 1
 	</xs:simpleType>
 	<xs:complexType name="RequestStatusType">
 		<xs:sequence>
-			<xs:element name="requestId" type="RequestIdType"/>
-			<xs:element name="patient" type="PatientTypeOutcome"/>
+			<!--RemissStatus-id-->
 			<xs:element name="requestStatusId" type="RequestStatusIdType"/>
+			<!--RemissStatus-->
 			<xs:element name="requestStatus" type="codes:kv_status_framstallan"/>
+			<!--RemissStatustid-->
 			<xs:element name="statusTime" type="TimeStampType"/>
-			<xs:element name="statusSetter" type="OrganisationType"/>
+			<!--RemissStatussättare-->
+			<xs:element name="statusSetter" type="SimpleAuthorType"/>
+			<!--eRemiss.id-->
+			<xs:element name="requestId" type="RequestIdType"/>
+			<!--eRemiss.versions-id-->
+			<xs:element name="requestVersionNumber" type="VersionNumberType"/>
+			<!--eRemisstyp-->
+			<xs:element name="typeOfRequest" type="CVType"/>
+			<!--eRemissmedium-->
+			<xs:element name="requestMedium" type="CVType"/>
+			<!--eRemiss.har remitterande HoS-personal och Organisatorisk enhet-->
+			<xs:element name="requestAuthor" type="SimpleAuthorType"/>
+			<!--eRemiss.berör Patient-->
+			<xs:element name="patient" type="PatientTypeOutcome"/>
+			<!--eRemiss.har remissmottagande Organisatorisk enhet-->
+			<xs:element name="recipient" type="FullRecipientType"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="RequestStatusIdType">
@@ -584,8 +657,5 @@ Examples: 1
 				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>
-		<!--Not needed when fixed in greenCDA
-		<xs:attribute name="root" use="required" fixed="1.2.752.129.2.1.2.1"/>
-		-->
 	</xs:complexType>
 </xs:schema>
