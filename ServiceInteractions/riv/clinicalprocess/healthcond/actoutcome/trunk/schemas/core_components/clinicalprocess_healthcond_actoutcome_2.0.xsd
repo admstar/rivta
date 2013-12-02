@@ -26,26 +26,26 @@
     <xs:import schemaLocation="./clinicalprocess_healthcond_actoutcome_enum_2.0.xsd"
         namespace="urn:riv:clinicalprocess:healthcond:actoutcome:enums:2"/>
 
-		<xs:complexType name="PatientSummaryHeaderType">
-		        <xs:sequence>
-		            <xs:element name="documentId" type="xs:string"/>
-		            <xs:element name="sourceSystemHSAId" type="tns:HSAIdType"/>
-		            <xs:element name="documentTitle" type="xs:string" minOccurs="0" maxOccurs="1"/>
-		            <xs:element name="documentTime" type="tns:TimeStampType" maxOccurs="1" minOccurs="1"/>
-		            <xs:element name="patientId" type="tns:PersonIdType"/>
-		<xs:element name="accountableHealthcareProfessional" type="tns:HealthcareProfessionalType"/>
-		            <xs:element name="legalAuthenticator" type="tns:LegalAuthenticatorType" minOccurs="0"/>
-		            <xs:element name="approvedForPatient" type="xs:boolean"/>
-		            <xs:element name="nullified" type="xs:boolean" minOccurs="0"/>
-		            <xs:element name="nullifiedReason" type="xs:string" minOccurs="0"/>
-		            <xs:element name="careContactId" type="xs:string" minOccurs="0"/>
-		        </xs:sequence>
-		</xs:complexType>
-		
+    <xs:complexType name="PatientSummaryHeaderType">
+        <xs:sequence>
+            <xs:element name="documentId" type="xs:string"/>
+            <xs:element name="sourceSystemHSAId" type="tns:HSAIdType"/>
+            <xs:element name="documentTitle" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="documentTime" type="tns:TimeStampType" maxOccurs="1" minOccurs="1"/>
+            <xs:element name="patientId" type="tns:PersonIdType"/>
+            <xs:element name="accountableHealthcareProfessional"
+                type="tns:HealthcareProfessionalType"/>
+            <xs:element name="legalAuthenticator" type="tns:LegalAuthenticatorType" minOccurs="0"/>
+            <xs:element name="approvedForPatient" type="xs:boolean"/>
+            <xs:element name="nullified" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="nullifiedReason" type="xs:string" minOccurs="0"/>
+            <xs:element name="careContactId" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="ReferralOutcomeType">
         <xs:sequence>
-            <xs:element name="referralOutcomeHeader"
-                type="tns:PatientSummaryHeaderType"/>
+            <xs:element name="referralOutcomeHeader" type="tns:PatientSummaryHeaderType"/>
             <xs:element name="referralOutcomeBody" type="tns:ReferralOutcomeBodyType"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 
@@ -117,8 +117,7 @@
             <xs:element name="referralId" type="xs:string"/>
             <xs:element name="referralText" type="xs:string" minOccurs="1"/>
             <xs:element name="referralTime" type="tns:TimeStampType"/>
-            <xs:element name="referralAuthor"
-                type="tns:HealthcareProfessionalType"/>
+            <xs:element name="referralAuthor" type="tns:HealthcareProfessionalType"/>
             <xs:element minOccurs="0" name="careContactId" type="xs:string"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 
@@ -440,8 +439,7 @@
 
     <xs:complexType name="LaboratoryOrderOutcomeType">
         <xs:sequence>
-            <xs:element name="laboratoryOrderOutcomeHeader"
-                type="tns:PatientSummaryHeaderType"/>
+            <xs:element name="laboratoryOrderOutcomeHeader" type="tns:PatientSummaryHeaderType"/>
             <xs:element name="laboratoryOrderOutcomeBody" type="tns:LaboratoryOrderOutcomeBodyType"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 
@@ -655,6 +653,110 @@
             <xs:element name="outcomeDescription" type="xs:string" minOccurs="0"/>
             <xs:element name="referenceInterval" type="xs:string" minOccurs="0"/>
             <xs:element name="referencePopulation" type="xs:string" minOccurs="0"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ECGType">
+        <xs:sequence>
+            <xs:element name="ECGHeader" type="tns:PatientSummaryHeaderType"/>
+            <xs:element name="ECGBody" type="tns:ECGBodyType" minOccurs="1"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ECGBodyType">
+        <xs:sequence>
+            <xs:element name="resultType" type="xs:string"/>
+            <xs:element name="resultTime" type="tns:TimeStampType" minOccurs="1"/>
+            <xs:element name="resultOpinion" type="xs:string" minOccurs="1"/>
+            <xs:element name="patientData" type="tns:PatientDataType" minOccurs="0"/>
+            <xs:element name="modalityData" type="tns:ModalityDataType" minOccurs="0"/>
+            <xs:element name="ecgRecording" type="tns:ECGRecordingType" minOccurs="0"/>
+            <xs:element name="referral" type="tns:ReferralType" minOccurs="0"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PatientDataType">
+        <xs:sequence>
+            <xs:element name="patientWeight" type="tns:PQType" minOccurs="0"/>
+            <xs:element name="patientLength" type="tns:PQType" minOccurs="0"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ModalityDataType">
+        <xs:sequence>
+            <xs:element name="manufacturer" type="xs:string" minOccurs="0"/>
+            <xs:element name="modelName" type="xs:string" minOccurs="0"/>
+            <xs:element name="equipmentId" type="xs:string" minOccurs="0"/>
+            <xs:element name="lineFilter" type="tns:PQType" minOccurs="0"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ECGRecordingType">
+        <xs:sequence>
+            <xs:element name="ecgID" type="xs:string"/>
+            <xs:element name="pacemaker" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="examTimePeriod" type="tns:TimePeriodType" minOccurs="1"/>
+            <xs:element name="ecgStructuredData" type="tns:ECGStructuredDataType" minOccurs="0"/>
+            <xs:element name="ecgDicomData" type="tns:ECGDicomDataType" minOccurs="0"/>
+            <xs:element name="ecgStaticData" type="tns:ECGStaticDataType" minOccurs="0"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ECGStructuredDataType">
+        <xs:sequence>
+            <xs:element name="usedFilter" type="tns:UsedFilterType" maxOccurs="unbounded"
+                minOccurs="0"/>
+            <xs:element name="heartRate" type="tns:PQType" minOccurs="0"/>
+            <xs:element name="QT" type="tns:PQType" minOccurs="0"/>
+            <xs:element name="QTc" type="tns:PQType" minOccurs="0"/>
+            <xs:element name="PR" type="tns:PQType" minOccurs="0"/>
+            <xs:element name="Paxis" type="tns:PQType" minOccurs="0"/>
+            <xs:element name="QRSAxis" type="tns:PQType" minOccurs="0"/>
+            <xs:element name="Taxis" type="tns:PQType" minOccurs="0"/>
+            <xs:element name="stType" type="tns:STType" minOccurs="0"/>
+            <xs:element name="interpretationAlgorithmName" type="xs:string" minOccurs="0"/>
+            <xs:element name="interpretation" type="xs:string" minOccurs="0"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ECGDicomDataType">
+        <xs:sequence>
+            <xs:element name="demSOP" type="xs:string"/>
+            <xs:element name="demValue" type="xs:base64Binary" minOccurs="0"/>
+            <xs:element name="demReference" type="xs:anyURI" minOccurs="0"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ECGStaticDataType">
+        <xs:sequence>
+            <xs:element name="mediaType" type="codes:MediaTypeEnum"/>
+            <xs:element name="value" type="xs:base64Binary" minOccurs="0"/>
+            <xs:element name="reference" type="xs:anyURI" minOccurs="0"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="STType">
+        <xs:sequence>
+            <xs:element name="leadName" type="xs:string"/>
+            <xs:element name="stLevel" type="tns:PQType" minOccurs="1"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="UsedFilterType">
+        <xs:sequence>
+            <xs:element name="filterName" type="xs:string" minOccurs="0"/>
+            <xs:element name="lowerFrequency" type="tns:PQType" minOccurs="0"/>
+            <xs:element name="upperFrequency" type="tns:PQType" minOccurs="0"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
