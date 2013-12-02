@@ -931,7 +931,7 @@ context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')
                             <!--You may enter ANY elements at this point-->
                         </urn1:healthcareProfessionalOrgUnit>
                         <!--Optional:-->
-                        <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                        <urn1:healthcareProfessionalCareUnitHSAId>565656</urn1:healthcareProfessionalCareUnitHSAId>
                         <!--Optional:-->
                         <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                     </urn1:accountableHealthcareProfessional>
@@ -963,6 +963,598 @@ context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')
         </urn:GetDiagnosisResponse>
     </soapenv:Body>
 </soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2:GetDiagnosis"/></con:response><con:response name="DateResponse" encoding="UTF-8"><con:settings/><con:script>context.documentId = 123456789
+
+// create XmlHolder for request content
+def holder = new com.eviware.soapui.support.XmlHolder( mockRequest.requestContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:itintegration:registry:1'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2'
+holder.namespaces['urn2'] = 'urn:riv:clinicalprocess:healthcond:description:2'
+
+context.patientId = holder.getNodeValue('//urn1:patientId[1]/urn2:id')
+context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')
+</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:2">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <urn:GetDiagnosisResponse>
+            <urn:diagnosis>
+                <urn1:diagnosisHeader>
+                    <urn1:documentId>${documentId}0</urn1:documentId>
+                    <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
+                    <!--Optional:-->
+                    <urn1:documentTitle>?</urn1:documentTitle>
+                    <urn1:patientId>
+                        <urn1:id>${patientId}</urn1:id>
+                        <urn1:type>${patientIdType}</urn1:type>
+                    </urn1:patientId>
+                    <urn1:accountableHealthcareProfessional>
+                        <urn1:authorTime>20131108103000</urn1:authorTime>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalHSAId>12345</urn1:healthcareProfessionalHSAId>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                        <urn1:healthcareProfessionalRoleCode>
+                            <urn1:code>102510</urn1:code>
+                            <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                            <urn1:codeSystemName>Befattning</urn1:codeSystemName>
+                            <urn1:codeSystemVersion>3.1</urn1:codeSystemVersion>
+                            <urn1:displayName>Ledning, tandvård</urn1:displayName>
+                        </urn1:healthcareProfessionalRoleCode>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalOrgUnit>
+                            <urn1:orgUnitHSAId>9999</urn1:orgUnitHSAId>
+                            <urn1:orgUnitName>Karolinska Huddinge</urn1:orgUnitName>
+                            <!--Optional:-->
+                            <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                            <!--Optional:-->
+                            <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                            <!--Optional:-->
+                            <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                            <!--Optional:-->
+                            <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                            <!--You may enter ANY elements at this point-->
+                        </urn1:healthcareProfessionalOrgUnit>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+                    </urn1:accountableHealthcareProfessional>
+                    <!--Optional:-->
+                    <urn1:legalAuthenticator>
+                        <urn1:signatureTime>20111212121212</urn1:signatureTime>
+                        <!--Optional:-->
+                        <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+                        <!--Optional:-->
+                        <urn1:legalAuthenticatorName>?</urn1:legalAuthenticatorName>
+                        <!--You may enter ANY elements at this point-->
+                    </urn1:legalAuthenticator>
+                    <urn1:approvedForPatient>true</urn1:approvedForPatient>
+                    <!--Optional:-->
+                    <urn1:careContactId>?</urn1:careContactId>
+                </urn1:diagnosisHeader>
+                <urn1:diagnosisBody>
+                    <urn1:diagnosisType>Huvuddiagnos</urn1:diagnosisType>
+                    <!--Optional:-->
+                    <urn1:diagnosisTime>20120101131415</urn1:diagnosisTime>
+                    <urn1:diagnosisCode>
+                        <urn1:code>123456</urn1:code>
+                        <urn1:codeSystem>a.b.c.d</urn1:codeSystem>
+                        <urn1:codeSystemName>KSH97</urn1:codeSystemName>
+                        <urn1:displayName>Någon</urn1:displayName>
+                    </urn1:diagnosisCode>
+                </urn1:diagnosisBody>
+            </urn:diagnosis>
+            <urn:diagnosis>
+            <urn1:diagnosisHeader>
+                <urn1:documentId>${documentId}1</urn1:documentId>
+                <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
+                <!--Optional:-->
+                <urn1:documentTitle>?</urn1:documentTitle>
+                <urn1:patientId>
+                    <urn1:id>${patientId}</urn1:id>
+                    <urn1:type>${patientIdType}</urn1:type>
+                </urn1:patientId>
+                <urn1:accountableHealthcareProfessional>
+                    <urn1:authorTime>20131030235959</urn1:authorTime>
+                    <!--Optional:-->
+                    <urn1:healthcareProfessionalHSAId>12345</urn1:healthcareProfessionalHSAId>
+                    <!--Optional:-->
+                    <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                    <urn1:healthcareProfessionalRoleCode>
+                        <urn1:code>102510</urn1:code>
+                        <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                        <urn1:codeSystemName>Befattning</urn1:codeSystemName>
+                        <urn1:codeSystemVersion>3.1</urn1:codeSystemVersion>
+                        <urn1:displayName>Ledning, tandvård</urn1:displayName>
+                    </urn1:healthcareProfessionalRoleCode>
+                    <!--Optional:-->
+                    <urn1:healthcareProfessionalOrgUnit>
+                        <urn1:orgUnitHSAId>9999</urn1:orgUnitHSAId>
+                        <urn1:orgUnitName>Karolinska Huddinge</urn1:orgUnitName>
+                        <!--Optional:-->
+                        <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                        <!--Optional:-->
+                        <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                        <!--Optional:-->
+                        <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                        <!--Optional:-->
+                        <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                        <!--You may enter ANY elements at this point-->
+                    </urn1:healthcareProfessionalOrgUnit>
+                    <!--Optional:-->
+                    <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                    <!--Optional:-->
+                    <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+                </urn1:accountableHealthcareProfessional>
+                <!--Optional:-->
+                <urn1:legalAuthenticator>
+                    <urn1:signatureTime>20131110235959</urn1:signatureTime>
+                    <!--Optional:-->
+                    <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+                    <!--Optional:-->
+                    <urn1:legalAuthenticatorName>?</urn1:legalAuthenticatorName>
+                    <!--You may enter ANY elements at this point-->
+                </urn1:legalAuthenticator>
+                <urn1:approvedForPatient>true</urn1:approvedForPatient>
+                <!--Optional:-->
+                <urn1:careContactId>?</urn1:careContactId>
+            </urn1:diagnosisHeader>
+            <urn1:diagnosisBody>
+                <urn1:diagnosisType>Bidiagnos</urn1:diagnosisType>
+                <!--Optional:-->
+                <urn1:diagnosisTime>20120101131415</urn1:diagnosisTime>
+                <urn1:diagnosisCode>
+                    <urn1:code>123456</urn1:code>
+                    <urn1:codeSystem>a.b.c.d</urn1:codeSystem>
+                    <urn1:codeSystemName>KSH97</urn1:codeSystemName>
+                    <urn1:displayName>Någon</urn1:displayName>
+                </urn1:diagnosisCode>
+            </urn1:diagnosisBody>
+        </urn:diagnosis>
+            <urn:diagnosis>
+            <urn1:diagnosisHeader>
+                <urn1:documentId>${documentId}2</urn1:documentId>
+                <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
+                <!--Optional:-->
+                <urn1:documentTitle>?</urn1:documentTitle>
+                <urn1:patientId>
+                    <urn1:id>${patientId}</urn1:id>
+                    <urn1:type>${patientIdType}</urn1:type>
+                </urn1:patientId>
+                <urn1:accountableHealthcareProfessional>
+                    <urn1:authorTime>20131116000000</urn1:authorTime>
+                    <!--Optional:-->
+                    <urn1:healthcareProfessionalHSAId>12345</urn1:healthcareProfessionalHSAId>
+                    <!--Optional:-->
+                    <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                    <urn1:healthcareProfessionalRoleCode>
+                        <urn1:code>102510</urn1:code>
+                        <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                        <urn1:codeSystemName>Befattning</urn1:codeSystemName>
+                        <urn1:codeSystemVersion>3.1</urn1:codeSystemVersion>
+                        <urn1:displayName>Ledning, tandvård</urn1:displayName>
+                    </urn1:healthcareProfessionalRoleCode>
+                    <!--Optional:-->
+                    <urn1:healthcareProfessionalOrgUnit>
+                        <urn1:orgUnitHSAId>9999</urn1:orgUnitHSAId>
+                        <urn1:orgUnitName>Karolinska Huddinge</urn1:orgUnitName>
+                        <!--Optional:-->
+                        <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                        <!--Optional:-->
+                        <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                        <!--Optional:-->
+                        <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                        <!--Optional:-->
+                        <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                        <!--You may enter ANY elements at this point-->
+                    </urn1:healthcareProfessionalOrgUnit>
+                    <!--Optional:-->
+                    <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                    <!--Optional:-->
+                    <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+                </urn1:accountableHealthcareProfessional>
+                <!--Optional:-->
+                <urn1:legalAuthenticator>
+                    <urn1:signatureTime>20111212121212</urn1:signatureTime>
+                    <!--Optional:-->
+                    <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+                    <!--Optional:-->
+                    <urn1:legalAuthenticatorName>?</urn1:legalAuthenticatorName>
+                    <!--You may enter ANY elements at this point-->
+                </urn1:legalAuthenticator>
+                <urn1:approvedForPatient>true</urn1:approvedForPatient>
+                <!--Optional:-->
+                <urn1:careContactId>?</urn1:careContactId>
+            </urn1:diagnosisHeader>
+            <urn1:diagnosisBody>
+                <urn1:diagnosisType>Huvuddiagnos</urn1:diagnosisType>
+                <!--Optional:-->
+                <urn1:diagnosisTime>20131108175603</urn1:diagnosisTime>
+                <urn1:diagnosisCode>
+                    <urn1:code>123456</urn1:code>
+                    <urn1:codeSystem>a.b.c.d</urn1:codeSystem>
+                    <urn1:codeSystemName>ICD-10-SE</urn1:codeSystemName>
+                    <urn1:displayName>Någon</urn1:displayName>
+                </urn1:diagnosisCode>
+            </urn1:diagnosisBody>
+        </urn:diagnosis>
+            <urn:diagnosis>
+                <urn1:diagnosisHeader>
+                    <urn1:documentId>${documentId}3</urn1:documentId>
+                    <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
+                    <!--Optional:-->
+                    <urn1:documentTitle>?</urn1:documentTitle>
+                    <urn1:patientId>
+                        <urn1:id>${patientId}</urn1:id>
+                        <urn1:type>${patientIdType}</urn1:type>
+                    </urn1:patientId>
+                    <urn1:accountableHealthcareProfessional>
+                        <urn1:authorTime>20131101103000</urn1:authorTime>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalHSAId>12345</urn1:healthcareProfessionalHSAId>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                        <urn1:healthcareProfessionalRoleCode>
+                            <urn1:code>102510</urn1:code>
+                            <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                            <urn1:codeSystemName>Befattning</urn1:codeSystemName>
+                            <urn1:codeSystemVersion>3.1</urn1:codeSystemVersion>
+                            <urn1:displayName>Ledning, tandvård</urn1:displayName>
+                        </urn1:healthcareProfessionalRoleCode>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalOrgUnit>
+                            <urn1:orgUnitHSAId>9999</urn1:orgUnitHSAId>
+                            <urn1:orgUnitName>Karolinska Huddinge</urn1:orgUnitName>
+                            <!--Optional:-->
+                            <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                            <!--Optional:-->
+                            <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                            <!--Optional:-->
+                            <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                            <!--Optional:-->
+                            <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                            <!--You may enter ANY elements at this point-->
+                        </urn1:healthcareProfessionalOrgUnit>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+                    </urn1:accountableHealthcareProfessional>
+                    <!--Optional:-->
+                    <urn1:legalAuthenticator>
+                        <urn1:signatureTime>20111212121212</urn1:signatureTime>
+                        <!--Optional:-->
+                        <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+                        <!--Optional:-->
+                        <urn1:legalAuthenticatorName>?</urn1:legalAuthenticatorName>
+                        <!--You may enter ANY elements at this point-->
+                    </urn1:legalAuthenticator>
+                    <urn1:approvedForPatient>true</urn1:approvedForPatient>
+                    <!--Optional:-->
+                    <urn1:careContactId>?</urn1:careContactId>
+                </urn1:diagnosisHeader>
+                <urn1:diagnosisBody>
+                    <urn1:diagnosisType>Huvuddiagnos</urn1:diagnosisType>
+                    <!--Optional:-->
+                    <urn1:diagnosisTime>20120101131415</urn1:diagnosisTime>
+                    <urn1:diagnosisCode>
+                        <urn1:code>123456</urn1:code>
+                        <urn1:codeSystem>a.b.c.d</urn1:codeSystem>
+                        <urn1:codeSystemName>KSH97</urn1:codeSystemName>
+                        <urn1:displayName>Någon</urn1:displayName>
+                    </urn1:diagnosisCode>
+                </urn1:diagnosisBody>
+            </urn:diagnosis>
+            <urn:diagnosis>
+                <urn1:diagnosisHeader>
+                    <urn1:documentId>${documentId}4</urn1:documentId>
+                    <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
+                    <!--Optional:-->
+                    <urn1:documentTitle>?</urn1:documentTitle>
+                    <urn1:patientId>
+                        <urn1:id>${patientId}</urn1:id>
+                        <urn1:type>${patientIdType}</urn1:type>
+                    </urn1:patientId>
+                    <urn1:accountableHealthcareProfessional>
+                        <urn1:authorTime>20121101103000</urn1:authorTime>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalHSAId>12345</urn1:healthcareProfessionalHSAId>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                        <urn1:healthcareProfessionalRoleCode>
+                            <urn1:code>102510</urn1:code>
+                            <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                            <urn1:codeSystemName>Befattning</urn1:codeSystemName>
+                            <urn1:codeSystemVersion>3.1</urn1:codeSystemVersion>
+                            <urn1:displayName>Ledning, tandvård</urn1:displayName>
+                        </urn1:healthcareProfessionalRoleCode>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalOrgUnit>
+                            <urn1:orgUnitHSAId>9999</urn1:orgUnitHSAId>
+                            <urn1:orgUnitName>Karolinska Huddinge</urn1:orgUnitName>
+                            <!--Optional:-->
+                            <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                            <!--Optional:-->
+                            <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                            <!--Optional:-->
+                            <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                            <!--Optional:-->
+                            <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                            <!--You may enter ANY elements at this point-->
+                        </urn1:healthcareProfessionalOrgUnit>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+                    </urn1:accountableHealthcareProfessional>
+                    <!--Optional:-->
+                    <urn1:legalAuthenticator>
+                        <urn1:signatureTime>20131115235959</urn1:signatureTime>
+                        <!--Optional:-->
+                        <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+                        <!--Optional:-->
+                        <urn1:legalAuthenticatorName>?</urn1:legalAuthenticatorName>
+                        <!--You may enter ANY elements at this point-->
+                    </urn1:legalAuthenticator>
+                    <urn1:approvedForPatient>true</urn1:approvedForPatient>
+                    <!--Optional:-->
+                    <urn1:careContactId>?</urn1:careContactId>
+                </urn1:diagnosisHeader>
+                <urn1:diagnosisBody>
+                    <urn1:diagnosisType>Huvuddiagnos</urn1:diagnosisType>
+                    <!--Optional:-->
+                    <urn1:diagnosisTime>20120101131415</urn1:diagnosisTime>
+                    <urn1:diagnosisCode>
+                        <urn1:code>123456</urn1:code>
+                        <urn1:codeSystem>a.b.c.d</urn1:codeSystem>
+                        <urn1:codeSystemName>KSH97</urn1:codeSystemName>
+                        <urn1:displayName>Någon</urn1:displayName>
+                    </urn1:diagnosisCode>
+                </urn1:diagnosisBody>
+            </urn:diagnosis>
+        </urn:GetDiagnosisResponse>
+    </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2:GetDiagnosis"/></con:response><con:response name="CareUnitResponse" encoding="UTF-8"><con:settings/><con:script>context.documentId = 123456789
+
+// create XmlHolder for request content
+def holder = new com.eviware.soapui.support.XmlHolder( mockRequest.requestContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:itintegration:registry:1'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2'
+holder.namespaces['urn2'] = 'urn:riv:clinicalprocess:healthcond:description:2'
+
+context.patientId = holder.getNodeValue('//urn1:patientId[1]/urn2:id')
+context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')
+context.careUnitId1 = holder.getNodeValue('//urn1:careUnitHSAId[1]')
+context.careUnitId2 = holder.getNodeValue('//urn1:careUnitHSAId[2]')
+</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:2">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <urn:GetDiagnosisResponse>
+            <urn:diagnosis>
+                <urn1:diagnosisHeader>
+                    <urn1:documentId>${documentId}0</urn1:documentId>
+                    <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
+                    <!--Optional:-->
+                    <urn1:documentTitle>?</urn1:documentTitle>
+                    <urn1:patientId>
+                        <urn1:id>${patientId}</urn1:id>
+                        <urn1:type>${patientIdType}</urn1:type>
+                    </urn1:patientId>
+                    <urn1:accountableHealthcareProfessional>
+                        <urn1:authorTime>20111111111111</urn1:authorTime>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalHSAId>12345</urn1:healthcareProfessionalHSAId>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                        <urn1:healthcareProfessionalRoleCode>
+                            <urn1:code>102510</urn1:code>
+                            <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                            <urn1:codeSystemName>Befattning</urn1:codeSystemName>
+                            <urn1:codeSystemVersion>3.1</urn1:codeSystemVersion>
+                            <urn1:displayName>Ledning, tandvård</urn1:displayName>
+                        </urn1:healthcareProfessionalRoleCode>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalOrgUnit>
+                            <urn1:orgUnitHSAId>9999</urn1:orgUnitHSAId>
+                            <urn1:orgUnitName>Karolinska Huddinge</urn1:orgUnitName>
+                            <!--Optional:-->
+                            <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                            <!--Optional:-->
+                            <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                            <!--Optional:-->
+                            <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                            <!--Optional:-->
+                            <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                            <!--You may enter ANY elements at this point-->
+                        </urn1:healthcareProfessionalOrgUnit>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalCareUnitHSAId>${careUnitId1}</urn1:healthcareProfessionalCareUnitHSAId>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+                    </urn1:accountableHealthcareProfessional>
+                    <!--Optional:-->
+                    <urn1:legalAuthenticator>
+                        <urn1:signatureTime>20111212121212</urn1:signatureTime>
+                        <!--Optional:-->
+                        <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+                        <!--Optional:-->
+                        <urn1:legalAuthenticatorName>?</urn1:legalAuthenticatorName>
+                        <!--You may enter ANY elements at this point-->
+                    </urn1:legalAuthenticator>
+                    <urn1:approvedForPatient>true</urn1:approvedForPatient>
+                    <!--Optional:-->
+                    <urn1:careContactId>?</urn1:careContactId>
+                </urn1:diagnosisHeader>
+                <urn1:diagnosisBody>
+                    <urn1:diagnosisType>Huvuddiagnos</urn1:diagnosisType>
+                    <!--Optional:-->
+                    <urn1:diagnosisTime>20120101131415</urn1:diagnosisTime>
+                    <urn1:diagnosisCode>
+                            <urn1:code>123456</urn1:code>
+                            <urn1:codeSystem>a.b.c.d</urn1:codeSystem>
+                            <urn1:codeSystemName>KSH97</urn1:codeSystemName>
+                            <urn1:displayName>Någon</urn1:displayName>
+</urn1:diagnosisCode>
+                </urn1:diagnosisBody>
+            </urn:diagnosis>
+            <urn:diagnosis>
+                <urn1:diagnosisHeader>
+                    <urn1:documentId>${documentId}1</urn1:documentId>
+                    <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
+                    <!--Optional:-->
+                    <urn1:documentTitle>?</urn1:documentTitle>
+                    <urn1:patientId>
+                        <urn1:id>${patientId}</urn1:id>
+                        <urn1:type>${patientIdType}</urn1:type>
+                    </urn1:patientId>
+                    <urn1:accountableHealthcareProfessional>
+                        <urn1:authorTime>20111111111111</urn1:authorTime>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalHSAId>12345</urn1:healthcareProfessionalHSAId>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                        <urn1:healthcareProfessionalRoleCode>
+                            <urn1:code>102510</urn1:code>
+                            <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                            <urn1:codeSystemName>Befattning</urn1:codeSystemName>
+                            <urn1:codeSystemVersion>3.1</urn1:codeSystemVersion>
+                            <urn1:displayName>Ledning, tandvård</urn1:displayName>
+                        </urn1:healthcareProfessionalRoleCode>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalOrgUnit>
+                            <urn1:orgUnitHSAId>9999</urn1:orgUnitHSAId>
+                            <urn1:orgUnitName>Karolinska Huddinge</urn1:orgUnitName>
+                            <!--Optional:-->
+                            <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                            <!--Optional:-->
+                            <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                            <!--Optional:-->
+                            <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                            <!--Optional:-->
+                            <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                            <!--You may enter ANY elements at this point-->
+                        </urn1:healthcareProfessionalOrgUnit>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalCareUnitHSAId>${careUnitId2}</urn1:healthcareProfessionalCareUnitHSAId>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+                    </urn1:accountableHealthcareProfessional>
+                    <!--Optional:-->
+                    <urn1:legalAuthenticator>
+                        <urn1:signatureTime>20111212121212</urn1:signatureTime>
+                        <!--Optional:-->
+                        <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+                        <!--Optional:-->
+                        <urn1:legalAuthenticatorName>?</urn1:legalAuthenticatorName>
+                        <!--You may enter ANY elements at this point-->
+                    </urn1:legalAuthenticator>
+                    <urn1:approvedForPatient>true</urn1:approvedForPatient>
+                    <!--Optional:-->
+                    <urn1:careContactId>?</urn1:careContactId>
+                </urn1:diagnosisHeader>
+                <urn1:diagnosisBody>
+                    <urn1:diagnosisType>Huvuddiagnos</urn1:diagnosisType>
+                    <!--Optional:-->
+                    <urn1:diagnosisTime>20120101131415</urn1:diagnosisTime>
+                    <urn1:diagnosisCode>
+                            <urn1:code>123456</urn1:code>
+                            <urn1:codeSystem>a.b.c.d</urn1:codeSystem>
+                            <urn1:codeSystemName>KSH97</urn1:codeSystemName>
+                            <urn1:displayName>Någon</urn1:displayName>
+</urn1:diagnosisCode>
+                </urn1:diagnosisBody>
+            </urn:diagnosis>
+        </urn:GetDiagnosisResponse>
+    </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2:GetDiagnosis"/></con:response><con:response name="CareContactResponse" encoding="UTF-8"><con:settings/><con:script>context.documentId = 123456789
+
+// create XmlHolder for request content
+def holder = new com.eviware.soapui.support.XmlHolder( mockRequest.requestContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:itintegration:registry:1'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2'
+holder.namespaces['urn2'] = 'urn:riv:clinicalprocess:healthcond:description:2'
+
+context.patientId = holder.getNodeValue('//urn1:patientId[1]/urn2:id')
+context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')
+context.sourceSystemHSAId = holder.getNodeValue('//urn1:sourceSystemHSAId')
+context.careContactId1 = holder.getNodeValue('//urn1:careContactId[1]')
+context.careContactId2 = holder.getNodeValue('//urn1:careContactId[2]')
+</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:2">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <urn:GetDiagnosisResponse>
+            <urn:diagnosis>
+                <urn1:diagnosisHeader>
+                    <urn1:documentId>${documentId}</urn1:documentId>
+                    <urn1:sourceSystemHSAId>${sourceSystemHSAId}</urn1:sourceSystemHSAId>
+                    <!--Optional:-->
+                    <urn1:documentTitle>?</urn1:documentTitle>
+                    <urn1:patientId>
+                        <urn1:id>${patientId}</urn1:id>
+                        <urn1:type>${patientIdType}</urn1:type>
+                    </urn1:patientId>
+                    <urn1:accountableHealthcareProfessional>
+                        <urn1:authorTime>20111111111111</urn1:authorTime>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalHSAId>12345</urn1:healthcareProfessionalHSAId>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                        <urn1:healthcareProfessionalRoleCode>
+                            <urn1:code>102510</urn1:code>
+                            <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                            <urn1:codeSystemName>Befattning</urn1:codeSystemName>
+                            <urn1:codeSystemVersion>3.1</urn1:codeSystemVersion>
+                            <urn1:displayName>Ledning, tandvård</urn1:displayName>
+                        </urn1:healthcareProfessionalRoleCode>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalOrgUnit>
+                            <urn1:orgUnitHSAId>9999</urn1:orgUnitHSAId>
+                            <urn1:orgUnitName>Karolinska Huddinge</urn1:orgUnitName>
+                            <!--Optional:-->
+                            <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                            <!--Optional:-->
+                            <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                            <!--Optional:-->
+                            <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                            <!--Optional:-->
+                            <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                            <!--You may enter ANY elements at this point-->
+                        </urn1:healthcareProfessionalOrgUnit>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+                    </urn1:accountableHealthcareProfessional>
+                    <!--Optional:-->
+                    <urn1:legalAuthenticator>
+                        <urn1:signatureTime>20111212121212</urn1:signatureTime>
+                        <!--Optional:-->
+                        <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+                        <!--Optional:-->
+                        <urn1:legalAuthenticatorName>?</urn1:legalAuthenticatorName>
+                        <!--You may enter ANY elements at this point-->
+                    </urn1:legalAuthenticator>
+                    <urn1:approvedForPatient>true</urn1:approvedForPatient>
+                    <!--Optional:-->
+                    <urn1:careContactId>${careContactId2}</urn1:careContactId>
+                </urn1:diagnosisHeader>
+                <urn1:diagnosisBody>
+                    <urn1:diagnosisType>Huvuddiagnos</urn1:diagnosisType>
+                    <!--Optional:-->
+                    <urn1:diagnosisTime>20120101131415</urn1:diagnosisTime>
+                    <urn1:diagnosisCode>
+                            <urn1:code>123456</urn1:code>
+                            <urn1:codeSystem>a.b.c.d</urn1:codeSystem>
+                            <urn1:codeSystemName>KSH97</urn1:codeSystemName>
+                            <urn1:displayName>Någon</urn1:displayName>
+</urn1:diagnosisCode>
+                </urn1:diagnosisBody>
+            </urn:diagnosis>
+        </urn:GetDiagnosisResponse>
+    </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2:GetDiagnosis"/></con:response><con:response name="HTTPHeaderResponse" encoding="UTF-8"><con:settings/><con:script>context.documentId = 123456789
 
 // create XmlHolder for request content
 def holder = new com.eviware.soapui.support.XmlHolder( mockRequest.requestContent )
@@ -1015,7 +1607,7 @@ context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')
                             <!--You may enter ANY elements at this point-->
                         </urn1:healthcareProfessionalOrgUnit>
                         <!--Optional:-->
-                        <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                        <urn1:healthcareProfessionalCareUnitHSAId>565656</urn1:healthcareProfessionalCareUnitHSAId>
                         <!--Optional:-->
                         <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                     </urn1:accountableHealthcareProfessional>
@@ -1041,9 +1633,94 @@ context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')
                             <urn1:codeSystem>a.b.c.d</urn1:codeSystem>
                             <urn1:codeSystemName>KSH97</urn1:codeSystemName>
                             <urn1:displayName>Någon</urn1:displayName>
-</urn1:diagnosisCode>
+                     </urn1:diagnosisCode>
                 </urn1:diagnosisBody>
             </urn:diagnosis>
+            <urn:diagnosis>
+                <urn1:diagnosisHeader>
+                    <urn1:documentId>${documentId}</urn1:documentId>
+                    <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
+                    <!--Optional:-->
+                    <urn1:documentTitle>?</urn1:documentTitle>
+                    <urn1:patientId>
+                        <urn1:id>${patientId}</urn1:id>
+                        <urn1:type>${patientIdType}</urn1:type>
+                    </urn1:patientId>
+                    <urn1:accountableHealthcareProfessional>
+                        <urn1:authorTime>20111111111111</urn1:authorTime>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalHSAId>12345</urn1:healthcareProfessionalHSAId>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                        <urn1:healthcareProfessionalRoleCode>
+                            <urn1:code>102510</urn1:code>
+                            <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                            <urn1:codeSystemName>Befattning</urn1:codeSystemName>
+                            <urn1:codeSystemVersion>3.1</urn1:codeSystemVersion>
+                            <urn1:displayName>Ledning, tandvård</urn1:displayName>
+                        </urn1:healthcareProfessionalRoleCode>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalOrgUnit>
+                            <urn1:orgUnitHSAId>9999</urn1:orgUnitHSAId>
+                            <urn1:orgUnitName>Karolinska Huddinge</urn1:orgUnitName>
+                            <!--Optional:-->
+                            <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                            <!--Optional:-->
+                            <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                            <!--Optional:-->
+                            <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                            <!--Optional:-->
+                            <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                            <!--You may enter ANY elements at this point-->
+                        </urn1:healthcareProfessionalOrgUnit>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalCareUnitHSAId>777777</urn1:healthcareProfessionalCareUnitHSAId>
+                        <!--Optional:-->
+                        <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+                    </urn1:accountableHealthcareProfessional>
+                    <!--Optional:-->
+                    <urn1:legalAuthenticator>
+                        <urn1:signatureTime>20111212121212</urn1:signatureTime>
+                        <!--Optional:-->
+                        <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+                        <!--Optional:-->
+                        <urn1:legalAuthenticatorName>?</urn1:legalAuthenticatorName>
+                        <!--You may enter ANY elements at this point-->
+                    </urn1:legalAuthenticator>
+                    <urn1:approvedForPatient>true</urn1:approvedForPatient>
+                    <!--Optional:-->
+                    <urn1:careContactId>?</urn1:careContactId>
+                </urn1:diagnosisHeader>
+                <urn1:diagnosisBody>
+                    <urn1:diagnosisType>Huvuddiagnos</urn1:diagnosisType>
+                    <!--Optional:-->
+                    <urn1:diagnosisTime>20120101131415</urn1:diagnosisTime>
+                    <urn1:diagnosisCode>
+                            <urn1:code>123456</urn1:code>
+                            <urn1:codeSystem>a.b.c.d</urn1:codeSystem>
+                            <urn1:codeSystemName>KSH97</urn1:codeSystemName>
+                            <urn1:displayName>Någon</urn1:displayName>
+                     </urn1:diagnosisCode>
+                </urn1:diagnosisBody>
+            </urn:diagnosis>        </urn:GetDiagnosisResponse>
+    </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2:GetDiagnosis"/></con:response><con:response name="EmptyResponse" encoding="UTF-8"><con:settings/><con:script/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:2">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <urn:GetDiagnosisResponse>
         </urn:GetDiagnosisResponse>
     </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2:GetDiagnosis"/></con:response><con:response name="SoapFault" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+  <soapenv:Body>
+    <soapenv:Fault>
+      <faultcode>server</faultcode>
+      <faultstring xml:lang="SE">That's an error!</faultstring>
+      <!--Optional:-->
+      <faultactor>1</faultactor>
+      <!--Optional:-->
+      <detail>
+      	<text>Illegal values!</text>
+      </detail>
+    </soapenv:Fault>
+  </soapenv:Body>
 </soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2:GetDiagnosis"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:properties/><con:wssContainer/><con:sensitiveInformation/></con:soapui-project>
