@@ -74,8 +74,7 @@ under the License.
                 <section>
                 <h1>TestSuite description <xsl:value-of select="/testsuite/id"/></h1>
                 <summary>
-                    <p>This document describes the testcases used to verify the implementation of <xsl:value-of select="/testsuite/id"/>
-                        prior to integration with the national platform.</p>
+                    <xsl:apply-templates select="/testsuite"/>
                 </summary>
                     <article>
                         <h2>Tools</h2>
@@ -94,11 +93,23 @@ under the License.
                             <li>You should now be able to run the test suite!</li>
                         </ol>
                     </article>
-                    <h2>Testcase description</h2>
+                    <h2>Testcases</h2>
                     <xsl:apply-templates select="testsuite/testcase"/>
                 </section>
             </body>
         </html>
+    </xsl:template>
+
+    <xsl:template match="testsuite">
+        <article>
+            <p>
+                <xsl:apply-templates select="description" />
+            </p>
+            <details>
+                <summary>Global variables used</summary>
+                <xsl:apply-templates select="globaldata" />
+            </details>
+        </article>
     </xsl:template>
 
     <xsl:template match="testcase">
@@ -129,6 +140,14 @@ under the License.
     </xsl:template>
 
     <xsl:template match="data">
+        <ul>
+            <xsl:for-each select="descendant::*">
+                <li><xsl:value-of select="local-name()" /></li>
+            </xsl:for-each>
+        </ul>
+    </xsl:template>
+
+    <xsl:template match="globaldata">
         <ul>
             <xsl:for-each select="descendant::*">
                 <li><xsl:value-of select="local-name()" /></li>
