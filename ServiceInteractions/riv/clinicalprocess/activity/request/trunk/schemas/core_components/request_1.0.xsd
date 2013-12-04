@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2009 sp1 (http://www.altova.com) by Viktor Jernelöv (Mawell Svenska AB) -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="urn:riv:clinicalprocess:activity:request:request" xmlns:codes="urn:riv:clinicalprocess:activity:request:codes" targetNamespace="urn:riv:clinicalprocess:activity:request:request" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="urn:riv:clinicalprocess:activity:request:request:1" xmlns:codes="urn:riv:clinicalprocess:activity:request:codes" targetNamespace="urn:riv:clinicalprocess:activity:request:request:1" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:import namespace="urn:riv:clinicalprocess:activity:request:codes" schemaLocation="codes.xsd"/>
 	<xs:element name="request" type="RequestType"/>
 	<!-- Remiss -->
@@ -657,5 +657,14 @@ Examples: 1
 				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="OriginalRequestType">
+		<xs:sequence>
+			<!-- Specifies version of request schema -->
+			<xs:element name="requestSchemaTargetNamespace" type="xs:anyURI">
+			</xs:element>
+			<!-- Original request of the type requestType in base64Binary format -->
+			<xs:element name="request" type="xs:base64Binary"></xs:element>
+		</xs:sequence>
 	</xs:complexType>
 </xs:schema>

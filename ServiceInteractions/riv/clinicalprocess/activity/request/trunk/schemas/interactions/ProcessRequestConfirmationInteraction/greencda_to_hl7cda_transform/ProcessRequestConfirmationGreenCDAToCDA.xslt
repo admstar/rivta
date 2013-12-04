@@ -8,7 +8,7 @@ OVERWRITTEN WHEN YOU RE-RUN CODE GENERATION.
 Refer to the Altova MapForce Documentation for further details.
 http://www.altova.com/mapforce
 -->
-<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:ns0="urn:riv:clinicalprocess:activity:request:1" xmlns:ns1="urn:riv:clinicalprocess:activity:request:ProcessRequestConfirmationResponder:1" xmlns:ns2="urn:riv:clinicalprocess:activity:request:request" exclude-result-prefixes="xs fn ns0 ns1 ns2">
+<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:ns0="urn:riv:clinicalprocess:activity:request:1" xmlns:ns1="urn:riv:clinicalprocess:activity:request:ProcessRequestConfirmationResponder:1" xmlns:ns2="urn:riv:clinicalprocess:activity:request:request:1" exclude-result-prefixes="xs fn ns0 ns1 ns2">
 	<xsl:output method="xml" encoding="UTF-8" indent="yes"/>
 	<xsl:template match="/">
 		<ClinicalDocument xmlns="urn:hl7-org:v3">
