@@ -11,7 +11,7 @@
  *
  *
  * @author Peter Hernfalk
- * Last update: 2013-11-22
+ * Last update: 2013-12-06
 
  */
 
@@ -58,10 +58,10 @@ def getValuesFromParameters() {
     """
 
     def cli = new CliBuilder(usage: mecall, header: 'Options:', footer: medesc)
-    cli.c(longOpt: 'checkoutfiles', args:1, required:false, argName:'Optional: true', 'If "true" then files will be downloaded to the target directory')
-    cli.d(longOpt: 'domainname', args:1, required:true, argName:'Domain name', 'Name of the domain')
-    cli.l(longOpt: 'useOptionalLogging', args:1, required:false, argName:'Optional: true', 'If "true" then the script logs output to the console')
-    cli.t(longOpt: 'targetdir', args:1, required:true, argName:'Target directory', 'Directory in which service domain files exists. If the checkoutfiles parameter is set to "y" then they will be downloaded to this folder')
+    cli.cf(longOpt: 'checkoutfiles', args:1, required:true, argName:'Optional: true', 'If "true" then files will be downloaded to the target directory')
+    cli.dd(longOpt: 'domaindir', args:1, required:true, argName:'Domain directory', 'Directory in which service domain files exists. If the checkoutfiles parameter is set to "y" then they will be downloaded to this folder')
+    cli.dn(longOpt: 'domainname', args:1, required:true, argName:'Domain name', 'Name of the domain')
+    cli.l(longOpt: 'useOptionalLogging', args:1, required:false, argName:'Optional: true', 'If "true" then the script logs extra output to the console')
 
     //-----Verify all parameters
     def options = cli.parse(args)
@@ -86,7 +86,7 @@ def getValuesFromParameters() {
     if (arguseOptionalLogging.toString().toLowerCase() == "true") {
         useOptionalLogging = true
     }
-
+    /*
     def argTargetDir=options.getProperty('targetdir')
     if (argTargetDir.toString().length() == 0) {
         log('* The supplied target directory name seems to be empty\n', true)
@@ -97,15 +97,27 @@ def getValuesFromParameters() {
     if (localRIVTATargetFolder.endsWith("/") == false) {
         localRIVTATargetFolder += "/"
     }
+    */
+    def argDomainDir=options.getProperty('domaindir')
+    if (argDomainDir.toString().length() == 0) {
+        log('* The supplied domain directory name seems to be empty\n', true)
+        cli.usage()
+        return 1
+    }
+    localRIVTATargetFolder = argDomainDir
+    if (localRIVTATargetFolder.endsWith("/") == false) {
+        localRIVTATargetFolder += "/"
+    }
+
     return true
 }
 
 /** Logs text to standard output */
 def log(String text, boolean logEntryIsMandatory) {
     if (logEntryIsMandatory == true) {
-        println text
+        println this.class.name + " - " + text
     } else if (useOptionalLogging == true && logEntryIsMandatory == false) {
-        println text
+        println this.class.name + " - " + text
     }
 }
 
@@ -119,7 +131,7 @@ def downloadFileStructureFromRivtaSite(String domainNameRivta) {
 
     //-----Download files from the RIV-TA site to the local target folder
     def process = RIVTACheckoutCommandToFolder.execute()
-    process.in.eachLine { line -> log("Downloading: " + line) }
+    process.in.eachLine { line -> log("Downloading: " + line, false) }
 
 }
 
@@ -206,7 +218,10 @@ def verifySubDomainAgainstStructureRules(leafFolderName, folderPath, verificatio
 
 //-----Fetch the domain name from the script parameter
 if (getValuesFromParameters() == true) {
-    log("Domain name = " + usedDomain, false)
+    log("checkoutFiles: " + checkoutFiles, false)
+    log("localRIVTATargetFolder: " + localRIVTATargetFolder, false)
+    log("usedDomain: " + usedDomain, false)
+    log("useOptionalLogging: " + useOptionalLogging, false)
 
     //-----Download the domain structure that should be verified
     if (checkoutFiles == true) {
@@ -218,5 +233,9 @@ if (getValuesFromParameters() == true) {
 }
 
 //-----Exit the script execution and return the return code to the caller
+
+//*********Temporary test setting
+//returnCode = 0
+//*********Temporary test setting
 log("\n\nreturnCode: " + returnCode, true)
 return returnCode
