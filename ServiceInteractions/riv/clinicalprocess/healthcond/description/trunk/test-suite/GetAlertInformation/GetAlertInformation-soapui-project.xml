@@ -1062,4 +1062,502 @@ expectedDocumentIds.each {id ->
 if(!missingExpectedIds.isEmpty() || !extraUnexpectedIds.isEmpty()) {
     log.error("Response contains unexpected DocumentIds: $extraUnexpectedIds and/or does not contain  expected DocumentIds: $missingExpectedIds")
     assert(false)
-}</scriptText></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>constraintsPath</con:name><con:value>/</con:value></con:property></con:properties><con:wssContainer/><con:sensitiveInformation/></con:soapui-project>
+}</scriptText></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="CareUnitIdFilter" searchProperties="true" id="6ad875ee-dbe9-4c04-8947-3fbf65622d72" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword=""><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def dataFile = new File(utils.projectPath + "/data.xml")
+def source = new XmlDataReader(context, dataFile)
+
+source.load("CareUnitIdFilter")</script></con:config></con:testStep><con:testStep type="request" name="Call GetAlertInformation"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetAlertInformationResponderBinding</con:interface><con:operation>GetAlertInformation</con:operation><con:request name="Call GetAlertInformation"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="x-mock-response" value="CareUnitResponse"/>
+  &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:GetAlertInformationResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:description:2">
+   <soapenv:Header>
+      <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn1:GetAlertInformation>
+         <urn1:careUnitHSAId>${careUnitId1}</urn1:careUnitHSAId>
+         <urn1:careUnitHSAId>${careUnitId2}</urn1:careUnitHSAId>
+         <urn1:patientId>
+            <urn2:id>${patientId}</urn2:id>
+            <urn2:type>${patientIdType}</urn2:type>
+         </urn1:patientId>
+      </urn1:GetAlertInformation>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion"/><con:assertion type="GroovyScriptAssertion" name="Assert Schematron"><con:configuration><scriptText>import se.skl.rivta.testsupport.soapui.validation.SchematronValidator
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def contextHelper = new ContextHelper(context)
+def validator = new SchematronValidator()
+
+def constraintsPath = messageExchange.modelItem.testStep.testCase.testSuite.project.getPropertyValue( "constraintsPath" )
+
+def failures = validator.validateMessage(messageExchange.response.responseContent,
+	new File(utils.projectPath + constraintsPath + "constraints.xml"))
+
+failures.each { failure ->
+    log.error ("Failure $failure.text")
+}
+
+assert (failures.isEmpty())</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Assert SchematronNPO"><con:configuration><scriptText>import se.skl.rivta.testsupport.soapui.validation.SchematronValidator
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def validator = new SchematronValidator()
+
+if(context.validateNPO != "true") {
+	log.info("Not validating NPO-rules, validateNPO is false")
+	return
+}
+
+def constraintsPath = messageExchange.modelItem.testStep.testCase.testSuite.project.getPropertyValue( "constraintsPath" )
+
+def failures = validator.validateMessage(messageExchange.response.responseContent,
+	new File(utils.projectPath + constraintsPath + "constraintsNPO.xml"))
+
+failures.each { failure ->
+    log.error ("Failure $failure.text")
+}
+
+assert (failures.isEmpty())</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Assert PatientId"><con:configuration><scriptText>import com.eviware.soapui.support.XmlHolder
+
+def holder = new XmlHolder( messageExchange.response.responseContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:clinicalprocess:healthcond:description:GetAlertInformationResponder:2'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:description:2'
+
+def alertInformation = holder.getDomNodes('/soapenv:Envelope/soapenv:Body/urn:GetAlertInformationResponse/urn:alertInformation')
+
+assert alertInformation.size() > 0
+
+alertInformation.each {l ->
+    def infoHolder = new XmlHolder( l )
+    holder.namespaces.each {key, value -> infoHolder.namespaces[key] = value}
+
+    def patientId = infoHolder.getNodeValue('/urn:alertInformation/urn1:alertInformationHeader/urn1:patientId/urn1:id')
+    def patientIdType = infoHolder.getNodeValue('/urn:alertInformation/urn1:alertInformationHeader/urn1:patientId/urn1:type')
+
+    assert patientId == context.patientId
+    assert patientIdType == context.patientIdType
+}
+</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Assert CareUnitId"><con:configuration><scriptText>import com.eviware.soapui.support.XmlHolder
+
+def holder = new XmlHolder( messageExchange.response.responseContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:clinicalprocess:healthcond:description:GetAlertInformationResponder:2'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:description:2'
+
+def alerts = holder.getDomNodes('/soapenv:Envelope/soapenv:Body/urn:GetAlertInformationResponse/urn:alertInformation')
+
+if (alerts.length == 0) {
+    log.error("Your testdata is incorrect, response contains no alert information.")
+    assert(false)
+}
+
+def offending = []
+
+alerts.each { alert ->
+    def alertHolder = new XmlHolder( alert )
+    holder.namespaces.each {key, value -> alertHolder.namespaces[key] = value}
+
+
+    def documentId = alertHolder.getNodeValue('/urn:alertInformation/urn1:alertInformationHeader/urn1:documentId')
+    def careUnitHSAId = alertHolder.getNodeValue('/urn:alertInformation/urn1:alertInformationHeader/urn1:accountableHealthcareProfessional/urn1:healthcareProfessionalCareUnitHSAId')
+
+    if (careUnitHSAId != context.careUnitId1 &amp;&amp; careUnitHSAId != context.careUnitId2) {
+        offending.add("&lt;documentId: ${documentId} careUnitHSAId: ${careUnitHSAId}>")
+    }
+}
+
+if(!offending.isEmpty()) {
+    log.error("Response contains alertInformation with unexpected CareUnitHSAId: ${offending}")
+    assert(false)
+}</scriptText></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="CareContactIdFilter" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" id="9eae2777-592f-496d-8a41-0e8a1f0058d3"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def dataFile = new File(utils.projectPath + "/data.xml")
+def source = new XmlDataReader(context, dataFile)
+
+source.load("CareContactIdFilter")</script></con:config></con:testStep><con:testStep type="request" name="CallWithCareContactId"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetAlertInformationResponderBinding</con:interface><con:operation>GetAlertInformation</con:operation><con:request name="CallWithCareContactId"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="x-mock-response" value="CareContactResponse"/>
+  &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:GetAlertInformationResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:description:2">
+   <soapenv:Header>
+      <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn1:GetAlertInformation>
+         <urn1:patientId>
+            <urn2:id>${patientId}</urn2:id>
+            <urn2:type>${patientIdType}</urn2:type>
+         </urn1:patientId>
+         <urn1:sourceSystemHSAId>${sourceSystemHSAId}</urn1:sourceSystemHSAId>
+         <urn1:careContactId>${careContactId2}</urn1:careContactId>
+         <urn1:careContactId>${careContactId1}</urn1:careContactId>
+      </urn1:GetAlertInformation>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion"/><con:assertion type="GroovyScriptAssertion" name="Assert Schematron"><con:configuration><scriptText>import se.skl.rivta.testsupport.soapui.validation.SchematronValidator
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def contextHelper = new ContextHelper(context)
+def validator = new SchematronValidator()
+
+def constraintsPath = messageExchange.modelItem.testStep.testCase.testSuite.project.getPropertyValue( "constraintsPath" )
+
+def failures = validator.validateMessage(messageExchange.response.responseContent,
+	new File(utils.projectPath + constraintsPath + "constraints.xml"))
+
+failures.each { failure ->
+    log.error ("Failure $failure.text")
+}
+
+assert (failures.isEmpty())</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Assert SchematronNPO"><con:configuration><scriptText>import se.skl.rivta.testsupport.soapui.validation.SchematronValidator
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def validator = new SchematronValidator()
+
+if(context.validateNPO != "true") {
+	log.info("Not validating NPO-rules, validateNPO is false")
+	return
+}
+
+def constraintsPath = messageExchange.modelItem.testStep.testCase.testSuite.project.getPropertyValue( "constraintsPath" )
+
+def failures = validator.validateMessage(messageExchange.response.responseContent,
+	new File(utils.projectPath + constraintsPath + "constraintsNPO.xml"))
+
+failures.each { failure ->
+    log.error ("Failure $failure.text")
+}
+
+assert (failures.isEmpty())</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Assert CareContactId"><con:configuration><scriptText>import com.eviware.soapui.support.XmlHolder
+
+def responseHolder = new XmlHolder( messageExchange.response.responseContent )
+responseHolder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+responseHolder.namespaces['urn'] = 'urn:riv:clinicalprocess:healthcond:description:GetAlertInformationResponder:2'
+responseHolder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:description:2'
+
+def requestHolder =  new XmlHolder( messageExchange.request.requestContent )
+requestHolder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+requestHolder.namespaces['urn'] = 'urn:riv:itintegration:registry:1'
+requestHolder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:description:GetAlertInformationResponder:2'
+requestHolder.namespaces['urn2'] = 'urn:riv:clinicalprocess:healthcond:description:2'
+
+// This is so stupid, I get ${sourceSystemHSAId}, not the actual value
+def requestSourceSystemHSAId = requestHolder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetAlertInformation/urn1:sourceSystemHSAId')
+def requestCareContactId = requestHolder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetAlertInformation/urn1:careContactId[1]')
+log.debug("requestSourceSystemHSAId: $requestSourceSystemHSAId")
+log.debug("requestCareContactId: $requestCareContactId")
+
+def alerts = responseHolder.getDomNodes('/soapenv:Envelope/soapenv:Body/urn:GetAlertInformationResponse/urn:alertInformation')
+
+assert alerts.size() != 0
+
+alerts.each {l ->
+    def alertHolder = new XmlHolder( l )
+    responseHolder.namespaces.each {key, value -> alertHolder.namespaces[key] = value}
+
+    def sourceSystemHSAId = alertHolder.getNodeValue('/urn:alertInformation/urn1:alertInformationHeader/urn1:sourceSystemHSAId')
+    def careContactId = alertHolder.getNodeValue('/urn:alertInformation/urn1:alertInformationHeader/urn1:careContactId')
+
+    assert sourceSystemHSAId == context.sourceSystemHSAId
+    if(requestCareContactId != null) {
+        log.debug("asserting CareContactId")
+        assert careContactId == context.careContactId1 || careContactId == context.careContactId2
+    }
+}</scriptText></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="CallWithoutCareContactId"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetAlertInformationResponderBinding</con:interface><con:operation>GetAlertInformation</con:operation><con:request name="CallWithoutCareContactId"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="x-mock-response" value="CareContactResponse"/>
+  &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:GetAlertInformationResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:description:2">
+   <soapenv:Header>
+      <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn1:GetAlertInformation>
+         <urn1:patientId>
+            <urn2:id>${patientId}</urn2:id>
+            <urn2:type>${patientIdType}</urn2:type>
+         </urn1:patientId>
+         <urn1:sourceSystemHSAId>${sourceSystemHSAId}</urn1:sourceSystemHSAId>
+      </urn1:GetAlertInformation>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion"/><con:assertion type="GroovyScriptAssertion" name="Assert Schematron"><con:configuration><scriptText>import se.skl.rivta.testsupport.soapui.validation.SchematronValidator
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def contextHelper = new ContextHelper(context)
+def validator = new SchematronValidator()
+
+def constraintsPath = messageExchange.modelItem.testStep.testCase.testSuite.project.getPropertyValue( "constraintsPath" )
+
+def failures = validator.validateMessage(messageExchange.response.responseContent,
+	new File(utils.projectPath + constraintsPath + "constraints.xml"))
+
+failures.each { failure ->
+    log.error ("Failure $failure.text")
+}
+
+assert (failures.isEmpty())</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Assert SchematronNPO"><con:configuration><scriptText>import se.skl.rivta.testsupport.soapui.validation.SchematronValidator
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def validator = new SchematronValidator()
+
+if(context.validateNPO != "true") {
+	log.info("Not validating NPO-rules, validateNPO is false")
+	return
+}
+
+def constraintsPath = messageExchange.modelItem.testStep.testCase.testSuite.project.getPropertyValue( "constraintsPath" )
+
+def failures = validator.validateMessage(messageExchange.response.responseContent,
+	new File(utils.projectPath + constraintsPath + "constraintsNPO.xml"))
+
+failures.each { failure ->
+    log.error ("Failure $failure.text")
+}
+
+assert (failures.isEmpty())</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Assert CareContactId"><con:configuration><scriptText>import com.eviware.soapui.support.XmlHolder
+
+def responseHolder = new XmlHolder( messageExchange.response.responseContent )
+responseHolder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+responseHolder.namespaces['urn'] = 'urn:riv:clinicalprocess:healthcond:description:GetAlertInformationResponder:2'
+responseHolder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:description:2'
+
+def requestHolder =  new XmlHolder( messageExchange.request.requestContent )
+requestHolder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+requestHolder.namespaces['urn'] = 'urn:riv:itintegration:registry:1'
+requestHolder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:description:GetAlertInformationResponder:2'
+requestHolder.namespaces['urn2'] = 'urn:riv:clinicalprocess:healthcond:description:2'
+
+// This is so stupid, I get ${sourceSystemHSAId}, not the actual value
+def requestSourceSystemHSAId = requestHolder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetAlertInformation/urn1:sourceSystemHSAId')
+def requestCareContactId = requestHolder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetAlertInformation/urn1:careContactId[1]')
+log.debug("requestSourceSystemHSAId: $requestSourceSystemHSAId")
+log.debug("requestCareContactId: $requestCareContactId")
+
+def alerts = responseHolder.getDomNodes('/soapenv:Envelope/soapenv:Body/urn:GetAlertInformationResponse/urn:alertInformation')
+
+assert alerts.size() != 0
+
+alerts.each {l ->
+    def alertHolder = new XmlHolder( l )
+    responseHolder.namespaces.each {key, value -> alertHolder.namespaces[key] = value}
+
+    def sourceSystemHSAId = alertHolder.getNodeValue('/urn:alertInformation/urn1:alertInformationHeader/urn1:sourceSystemHSAId')
+    def careContactId = alertHolder.getNodeValue('/urn:alertInformation/urn1:alertInformationHeader/urn1:careContactId')
+
+    assert sourceSystemHSAId == context.sourceSystemHSAId
+    if(requestCareContactId != null) {
+        log.debug("asserting CareContactId")
+        assert careContactId == context.careContactId1 || careContactId == context.careContactId2
+    }
+}</scriptText></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="HTTPFilter" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" id="3efa2207-3f4e-4bc3-9121-c0a570182034"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def dataFile = new File(utils.projectPath + "/data.xml")
+def source = new XmlDataReader(context, dataFile)
+
+source.load("HttpHeaderFilter")</script></con:config></con:testStep><con:testStep type="request" name="Call GetAlertInformation"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetAlertInformationResponderBinding</con:interface><con:operation>GetAlertInformation</con:operation><con:request name="Call GetAlertInformation"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="x-mock-response" value="HTTPHeaderResponse"/>
+  &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:GetAlertInformationResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:description:2">
+   <soapenv:Header>
+      <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn1:GetAlertInformation>
+         <urn1:patientId>
+            <urn2:id>${patientId}</urn2:id>
+            <urn2:type>${patientIdType}</urn2:type>
+         </urn1:patientId>
+      </urn1:GetAlertInformation>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion"/><con:assertion type="GroovyScriptAssertion" name="Assert Schematron"><con:configuration><scriptText>import se.skl.rivta.testsupport.soapui.validation.SchematronValidator
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def contextHelper = new ContextHelper(context)
+def validator = new SchematronValidator()
+
+def constraintsPath = messageExchange.modelItem.testStep.testCase.testSuite.project.getPropertyValue( "constraintsPath" )
+
+def failures = validator.validateMessage(messageExchange.response.responseContent,
+	new File(utils.projectPath + constraintsPath + "constraints.xml"))
+
+failures.each { failure ->
+    log.error ("Failure $failure.text")
+}
+
+assert (failures.isEmpty())</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Assert SchematronNPO"><con:configuration><scriptText>import se.skl.rivta.testsupport.soapui.validation.SchematronValidator
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def validator = new SchematronValidator()
+
+if(context.validateNPO != "true") {
+	log.info("Not validating NPO-rules, validateNPO is false")
+	return
+}
+
+def constraintsPath = messageExchange.modelItem.testStep.testCase.testSuite.project.getPropertyValue( "constraintsPath" )
+
+def failures = validator.validateMessage(messageExchange.response.responseContent,
+	new File(utils.projectPath + constraintsPath + "constraintsNPO.xml"))
+
+failures.each { failure ->
+    log.error ("Failure $failure.text")
+}
+
+assert (failures.isEmpty())</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="Assert PatientId"><con:configuration><scriptText>import com.eviware.soapui.support.XmlHolder
+
+def holder = new XmlHolder( messageExchange.response.responseContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:clinicalprocess:healthcond:description:GetAlertInformationResponder:2'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:description:2'
+
+def alertInformation = holder.getDomNodes('/soapenv:Envelope/soapenv:Body/urn:GetAlertInformationResponse/urn:alertInformation')
+
+assert alertInformation.size() > 0
+
+alertInformation.each {l ->
+    def infoHolder = new XmlHolder( l )
+    holder.namespaces.each {key, value -> infoHolder.namespaces[key] = value}
+
+    def patientId = infoHolder.getNodeValue('/urn:alertInformation/urn1:alertInformationHeader/urn1:patientId/urn1:id')
+    def patientIdType = infoHolder.getNodeValue('/urn:alertInformation/urn1:alertInformationHeader/urn1:patientId/urn1:type')
+
+    assert patientId == context.patientId
+    assert patientIdType == context.patientIdType
+}
+</scriptText></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="NonExistentPatientId" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" id="22bd817f-ca01-4dac-b6b2-f060c7295480"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def dataFile = new File(utils.projectPath + "/data.xml")
+def source = new XmlDataReader(context, dataFile)
+
+source.load("NonExistentCareContactId")</script></con:config></con:testStep><con:testStep type="request" name="Call GetAlertInformation"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetAlertInformationResponderBinding</con:interface><con:operation>GetAlertInformation</con:operation><con:request name="Call GetAlertInformation"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="x-mock-response" value="EmptyResponse"/>
+  &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:GetAlertInformationResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:description:2">
+   <soapenv:Header>
+      <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn1:GetAlertInformation>
+         <urn1:patientId>
+            <urn2:id>${patientId}</urn2:id>
+            <urn2:type>${patientIdType}</urn2:type>
+         </urn1:patientId>
+         <urn1:sourceSystemHSAId>${sourceSystemHSAId}</urn1:sourceSystemHSAId>
+         <urn1:careContactId>${careContactId}</urn1:careContactId>
+      </urn1:GetAlertInformation>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion"/><con:assertion type="XPath Match" name="XPath Match"><con:configuration><path>declare namespace urn='urn:riv:clinicalprocess:healthcond:description:GetAlertInformationResponder:2';
+declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace urn1='urn:riv:clinicalprocess:healthcond:description:2';
+//urn:GetAlertInformationResponse</path><content>&lt;urn:GetAlertInformationResponse xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:description:GetAlertInformationResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:2"/></content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>true</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="NonExistentCareContactd" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" id="1a51de69-b608-4686-ae88-78c8948b4d41"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def dataFile = new File(utils.projectPath + "/data.xml")
+def source = new XmlDataReader(context, dataFile)
+
+source.load("NonExistentPatientId")</script></con:config></con:testStep><con:testStep type="request" name="Call GetAlertInformation"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetAlertInformationResponderBinding</con:interface><con:operation>GetAlertInformation</con:operation><con:request name="Call GetAlertInformation"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="x-mock-response" value="EmptyResponse"/>
+  &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:GetAlertInformationResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:description:2">
+   <soapenv:Header>
+      <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn1:GetAlertInformation>
+         <urn1:patientId>
+            <urn2:id>${patientId}</urn2:id>
+            <urn2:type>${patientIdType}</urn2:type>
+         </urn1:patientId>
+      </urn1:GetAlertInformation>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion"/><con:assertion type="XPath Match" name="XPath Match"><con:configuration><path>declare namespace urn='urn:riv:clinicalprocess:healthcond:description:GetAlertInformationResponder:2';
+declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace urn1='urn:riv:clinicalprocess:healthcond:description:2';
+//urn:GetAlertInformationResponse</path><content>&lt;urn:GetAlertInformationResponse xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:description:GetAlertInformationResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:2"/></content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>true</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:testSuite name="FaultTests"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="CareContactWithoutSourceSystemHSAId" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" id="89125c36-8366-4199-92f0-bfc4c720244d"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def dataFile = new File(utils.projectPath + "/data.xml")
+def source = new XmlDataReader(context, dataFile)
+
+source.load("CareContactIdWithoutSourceSystemHSAId")</script></con:config></con:testStep><con:testStep type="request" name="CareContactWithoutSourceSystem"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetAlertInformationResponderBinding</con:interface><con:operation>GetAlertInformation</con:operation><con:request name="CareContactWithoutSourceSystem"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="x-mock-response" value="FaultResponse"/>
+  &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:GetAlertInformationResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:description:2">
+   <soapenv:Header>
+      <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn1:GetAlertInformation>
+         <urn1:patientId>
+            <urn2:id>${patientId}</urn2:id>
+            <urn2:type>${patientIdType}</urn2:type>
+         </urn1:patientId>
+         <urn1:careContactId>${careContactId}</urn1:careContactId>
+      </urn1:GetAlertInformation>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="Not SOAP Fault Assertion" name="SOAP Fault"/><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="CareContactWithEmptySourceSystem"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetAlertInformationResponderBinding</con:interface><con:operation>GetAlertInformation</con:operation><con:request name="CareContactWithEmptySourceSystem"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="x-mock-response" value="FaultResponse"/>
+  &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:GetAlertInformationResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:description:2">
+   <soapenv:Header>
+      <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn1:GetAlertInformation>
+         <urn1:patientId>
+            <urn2:id>${patientId}</urn2:id>
+            <urn2:type>${patientIdType}</urn2:type>
+         </urn1:patientId>
+         <urn1:sourceSystemHSAId></urn1:sourceSystemHSAId>
+         <urn1:careContactId>${careContactId}</urn1:careContactId>
+      </urn1:GetAlertInformation>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="Not SOAP Fault Assertion" name="SOAP Fault"/><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="SourceSystemAndLogicalAddress" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" id="af53133e-7068-4301-904b-099d5ae7e86e"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def dataFile = new File(utils.projectPath + "/data.xml")
+def source = new XmlDataReader(context, dataFile)
+
+source.load("SourceSystemHSAIdAndLogicalAddress")</script></con:config></con:testStep><con:testStep type="request" name="Call GetAlertInformation"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetAlertInformationResponderBinding</con:interface><con:operation>GetAlertInformation</con:operation><con:request name="Call GetAlertInformation"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="x-mock-response" value="FaultResponse"/>
+  &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:GetAlertInformationResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:description:2">
+   <soapenv:Header>
+      <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn1:GetAlertInformation>
+         <urn1:patientId>
+            <urn2:id>${patientId}</urn2:id>
+            <urn2:type>${patientIdType}</urn2:type>
+         </urn1:patientId>
+         <urn1:sourceSystemHSAId>${sourceSystemHSAId}</urn1:sourceSystemHSAId>
+      </urn1:GetAlertInformation>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="Not SOAP Fault Assertion" name="SOAP Fault"/><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>constraintsPath</con:name><con:value>/</con:value></con:property></con:properties><con:wssContainer/><con:sensitiveInformation/></con:soapui-project>
