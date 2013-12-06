@@ -1,21 +1,26 @@
 
 /**
- * Created with IntelliJ IDEA.
- * User: peterhernfalk
- * Date: 2013-11-01
+ * /////////////////////////////////////////////////////////////////////////////
+ * //                                                                         //
+ * //   This script creates an archive file containing service domain files   //
+ * //                                                                         //
+ * ////////////////////////////////////////////////////////////////////////////
  *
- * LEO's description:
- * Skall skall använda scriptet "VerifyServiceDomainFolder" för att verifiera innehållet, och därefter skapa en zip-fil
+ *
+ * @author Peter Hernfalk
+ * Last update: 2013-12-06
+
  */
 
-loglevelDebug = "DEBUG"
-loglevelError = "ERROR"
-loglevelInfo = "INFO"
-loglevelWarning = "WARNING"
+import java.util.zip.ZipOutputStream
+import java.util.zip.ZipEntry
+import java.nio.channels.FileChannel
+
+localArchiveTargetFolder = ""
+localRIVTASourceFolder = ""
 returnCode = 0
-returnCodeCalledScript = 0
 usedDomainName = ""
-useLogging = true
+useOptionalLogging = true
 
 
 /**
@@ -32,64 +37,76 @@ def getValuesFromParameters() {
     mecall = me + ' [options]'
     medesc = """\
     \nThis script requires Groovy 1.8.1 or later.
-    It generates a wiki page, containing information about the current service domains and their status.
+    The purpose of the script is to create an archive file (.zip), containing the folder structure of a specific service domain.
     """
 
     def cli = new CliBuilder(usage: mecall, header: 'Options:', footer: medesc)
-    cli.d(longOpt: 'domainname', args:1, required:true, argName:'Domain name', 'Name of the domain')
+    cli.ad(longOpt: 'archivedir', args:1, required:true, argName:'Target directory', 'Directory in which the archive file will be stored.')
+    cli.dn(longOpt: 'domainname', args:1, required:true, argName:'Domain name', 'Name of the domain')
+    cli.l(longOpt: 'useoptionallogging', args:1, required:false, argName:'Optional: true', 'If "true" then the script logs extra output to the console')
+    cli.sd(longOpt: 'sourcedir', args:1, required:true, argName:'Source directory', 'Directory in which the service domain files exists.')
 
     //-----Verify all parameters
     def options = cli.parse(args)
     if (!options) return
 
+    def argArchiveDir=options.getProperty('archivedir')
+    if (argArchiveDir.toString().length() == 0) {
+        log('* The supplied directory name for the archive file seems to be empty\n', true)
+        cli.usage()
+        return 1
+    }
+    localArchiveTargetFolder = argArchiveDir
+    if (localArchiveTargetFolder.endsWith("/") == false) {
+        localArchiveTargetFolder += "/"
+    }
+
     def argDomainName=options.getProperty('domainname')
     if (argDomainName.toString().length() == 0) {
-        log(loglevelInfo, '* The supplied domain name seems to be empty\n')
+        log('* The supplied domain name seems to be empty\n', true)
         cli.usage()
         return 1
     }
     usedDomainName = argDomainName
+
+    useOptionalLogging = false
+    def arguseOptionalLogging=options.getProperty('useoptionallogging')
+    if (arguseOptionalLogging.toString().toLowerCase() == "true") {
+        useOptionalLogging = true
+    }
+
+    def argSourceDir=options.getProperty('sourcedir')
+    if (argSourceDir.toString().length() == 0) {
+        log('* The supplied source directory name seems to be empty\n', true)
+        cli.usage()
+        return 1
+    }
+    localRIVTASourceFolder = argSourceDir
+    if (localRIVTASourceFolder.endsWith("/") == false) {
+        localRIVTASourceFolder += "/"
+    }
+
+    return true
 }
 
 
 /** Logs text to standard output */
-def log(level, text) {
-    //-----2do: add logic that directs the output to configured target
-    if (useLogging == true) {
-        println "CreateServiceDomainArchive: " + text
-    }
-}
-
-
-/* Verifies that that the service domains structure and contents are correct on the rivta site */
-def verifyServiceDomainFolder(String domainName) {
-    //-----Create parameters to the "VerifyServiceDomainFolder" script
-    def args = ['-d', domainName, '-t', '/Users/peterhernfalk/Desktop/_Peter_Files/rivtadomain/', '-l', 'true'] as String[]
-    Binding context = new Binding(args)
-
-    //-----Call the"VerifyServiceDomainFolder" script
-    returnCodeCalledScript = new GroovyShell(context).evaluate(new File("VerifyServiceDomainFolder.groovy"))
-
-    //-----Take care of the return code from the "VerifyServiceDomainFolder" script
-    if (returnCodeCalledScript == 0) {
-        log(loglevelDebug, "\n")
-        log(loglevelDebug, "Succesful verification")
-        returnCode = returnCodeCalledScript
-    } else {
-        log(loglevelDebug, "\n")
-        log(loglevelDebug, "**************************************************")
-        log(loglevelDebug, "**************************************************")
-        log(loglevelDebug, "Verification failed with return code: " + returnCodeCalledScript)
-        log(loglevelDebug, "**************************************************")
-        log(loglevelDebug, "**************************************************")
-        returnCode = 1
+def log(String text, boolean logEntryIsMandatory) {
+    if (logEntryIsMandatory == true) {
+        println this.class.name + " - " + text
+    } else if (useOptionalLogging == true && logEntryIsMandatory == false) {
+        println this.class.name + " - " + text
     }
 }
 
 /* Creates an archive file, containing files belonging to one service domain */
 def createArchiveFile() {
-    //-----2do
-    log(loglevelDebug, "CreateArchiveFile")
+    def ant = new AntBuilder()
+    ant.zip(
+            destfile: localArchiveTargetFolder + "_" + usedDomainName + ".zip",
+            basedir: localRIVTASourceFolder
+    )
+    log(localArchiveTargetFolder + "_" + usedDomainName + ".zip", true)
 }
 
 
@@ -101,23 +118,18 @@ def createArchiveFile() {
  ////////////////////////////////////////////////////////////////////
  */
 
-//---------------------------------------- Usage settings ----------------------------------------//
-useLogging = true
-//-----------------------------------------------------------------------------------------------//
+if (getValuesFromParameters() == true) {
+    log("localArchiveTargetFolder: " + localArchiveTargetFolder, false)
+    log("usedDomainName: " + usedDomainName, false)
+    log("useOptionalLogging: " + useOptionalLogging, false)
+    log("localRIVTASourceFolder: " + localRIVTASourceFolder, false)
 
-getValuesFromParameters()
-
-//-----Call other script to verify that the folder structure fully follows the rules in the configuration document
-
-//-----Create an archive file for the service domain
-if (verifyServiceDomainFolder(usedDomainName) == 0) {
+    //-----Create an archive file for the service domain
     createArchiveFile()
-} else {
-    log(loglevelDebug, "Verification failed")
 }
 
 
 //-----Exit the script execution
-log(loglevelDebug, "\n")
-log(loglevelDebug, "ReturnCode = " + returnCode)
-System.exit(returnCode)
+log("\n", true)
+log("ReturnCode = " + returnCode, true)
+return returnCode
