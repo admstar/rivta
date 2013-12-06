@@ -1,3 +1,4 @@
+
 /**
  * ///////////////////////////////////////////////////////////////////////////////////////////
  * //                                                                                       //
@@ -10,26 +11,23 @@
  *
  *
  * @author Peter Hernfalk
- * Last update: 2013-11-07
+ * Last update: 2013-12-06
  */
 
-//------------------------------ 2do -------------------------------//
-//------------------------------------------------------------------//
+
 import groovy.util.slurpersupport.GPathResult
 import static groovy.io.FileType.FILES
 
 
 //-----Definitions
 cehisCategoriesLink = "http://code.google.com/p/rivta/wiki/CehisKategorier"
+excelFile = ""
 excelMasterFile = []
-loglevelDebug = "DEBUG"
-loglevelError = "ERROR"
-loglevelInfo = "INFO"
-loglevelWarning = "WARNING"
 output2All = "all"
 output2WikiPageRIVTA = "wikiPageRIVTA"
+returnCode = 0
 serviceDomains = []
-useLogging = true
+useOptionalLogging = true
 wikiTableFileRIVTA = "/_WikiTableRIVTA.txt"
 WikiTableRIVTAPageBeginning = []
 WikiTableRIVTAPageBeginning[0] = '#summary Tabell över godkända tjänstedomäner\n'
@@ -61,36 +59,40 @@ def getValuesFromParameters() {
     """
 
     def cli = new CliBuilder(usage: mecall, header: 'Options:', footer: medesc)
-    cli.x(longOpt: 'excelfile', args:1, required:true, argName:'Excel file', 'Name and path to the Excel file')
-    cli.t(longOpt: 'targetdir', args:1, required:true, argName:'target directory', 'directory to which the generated wiki page file will be written')
-    cli.l(longOpt: 'uselogging', args:1, required:false, argName:'use logging', 'if the parmeter "-l" is used, then the script logs output to the console')
+    cli.l(longOpt: 'useoptionallogging', args:1, required:false, argName:'use logging', 'if the parmeter "-l" is used, then the script logs output to the console')
+    cli.td(longOpt: 'targetdirwiki', args:1, required:true, argName:'target directory', 'directory to which the generated wiki page file will be written')
+    cli.xf(longOpt: 'excelfile', args:1, required:true, argName:'Excel file', 'Name and path to the Excel file')
 
     //-----Verify all parameters
     def options = cli.parse(args)
     if (!options) return
 
-    def argExcelFile=options.getProperty('excelfile')
+    useOptionalLogging = false
+    def arguseOptionalLogging=options.getProperty('useoptionallogging')
+    if (arguseOptionalLogging.toString().toLowerCase() == "true") {
+        useOptionalLogging = true
+    }
 
+    def argTargetDirWiki=options.getProperty('targetdirwiki')
+    if (argTargetDirWiki.toString().length() == 0) {
+        log('* The supplied target directory name seems to be empty\n', true)
+        cli.usage()
+        return 1
+    }
+    targetDirWiki = argTargetDirWiki
+
+    def argExcelFile=options.getProperty('excelfile')
     if ( (argExcelFile =~ '.xls').count <1 ) {
-        log(loglevelInfo, '* The supplied file name \"' + argExcelFile + '\" does not seems to be an excel file (missing .xls)\n')
+        log('* The supplied file name \"' + argExcelFile + '\" does not seems to be an excel file (missing .xls)\n', true)
         cli.usage()
         return 1
     }
     excelFile = argExcelFile
+    log("useOptionalLogging: " + useOptionalLogging, true)
+    log("excelFile: " + excelFile, true)
+    log("targetDirWiki: " + targetDirWiki, true)
 
-    def argTargetDir=options.getProperty('targetdir')
-    if (argTargetDir.toString().length() == 0) {
-        log(loglevelInfo, '* The supplied target directory name seems to be empty\n')
-        cli.usage()
-        return 1
-    }
-    targetFolder = argTargetDir
-
-    useLogging = false
-    def argUseLogging=options.getProperty('uselogging')
-    if (argUseLogging.asBoolean().booleanValue() == true) {
-        useLogging = true
-    }
+    return true
 }
 
 
@@ -99,23 +101,24 @@ def wikiTableStringRIVTA (String stringContent) {
 }
 
 
-/** Logs text */
-def log(level, text) {
-    //-----2do: add logic that directs the output to configured target
-    if (useLogging == true) {
-        println text
+/** Logs text to standard output */
+def log(String text, boolean logEntryIsMandatory) {
+    if (logEntryIsMandatory == true) {
+        println this.class.name + " - " + text
+    } else if (useOptionalLogging == true && logEntryIsMandatory == false) {
+        println this.class.name + " - " + text
     }
 }
 
 
 /** Displays execution statistics */
 def ShowExecutionStatistics() {
-    log(loglevelInfo, "")
-    log(loglevelInfo, "----- Execution statistics -----")
-    log(loglevelInfo, serviceDomains.size + " service domains were used")
+    log("", true)
+    log("----- Execution statistics -----", true)
+    log(serviceDomains.size + " service domains were used", true)
 }
 
-def buildloadLinks(String filterValue, String version) {
+def buildloadLinks(String filterValue, String version, String altLink) {
     if (filterValue.isEmpty() == false) {
         adjustedFilterValue = filterValue.replaceAll(":", "_")
         adjustedFilterValue = adjustedFilterValue.replaceAll(" ", "")
@@ -125,12 +128,20 @@ def buildloadLinks(String filterValue, String version) {
         newVersion = version.replaceAll("-", "_")
         returnURL = "https://rivta.googlecode.com/files/ServiceContracts_" + adjustedFilterValue + "_" + newVersion + ".zip"
         if (verifyURL(returnURL) == false) {
+            log("Failed to build a correct URL: " + returnURL, true)
             newVersion = version.replaceAll("\\.", "_")
-            log(loglevelDebug, "version: " + version + " newVersion: " + newVersion)
+            log("version: " + version + " newVersion: " + newVersion, false)
             returnURL = "https://rivta.googlecode.com/files/ServiceContracts_" + adjustedFilterValue + "_" + newVersion + ".zip"
             if (verifyURL(returnURL) == false) {
-                log(loglevelDebug, "Failed to build a correct URL: " + returnURL)
-                returnURL = ""
+                log("Failed to build a correct URL: " + returnURL, true)
+                //-----Last chance to crea a working link; use the edited link from the altlink column
+                if (altLink.trim().length() > 0) {
+                    returnURL = altLink
+                    if (verifyURL(returnURL) == false) {
+                        log("Failed to build a correct URL: " + returnURL, true)
+                        returnURL = ""
+                    }
+                }
             }
         }
     }
@@ -196,128 +207,138 @@ delimiterToken = '/'                     //--- (mac = '/', windows = '.')
 outputType = output2All                  //--- (output2All, output2WikiPageRIVTA)
 //-----------------------------------------------------------------------------------------------//
 
-getValuesFromParameters()
+if (getValuesFromParameters() == true) {
 
-//-----Fetch a copy of the contents of the Excel file. Store the data in a map that contains named attributes
-def index = 0
-def mapIndex = 0
-def excel = new ExcelReader(excelFile)
+    //-----Fetch a copy of the contents of the Excel file. Store the data in a map that contains named attributes
+    def index = 0
+    def mapIndex = 0
+    def excel = new ExcelReader(excelFile)
 
-excel.eachLine {
+    excel.eachLine {
 
-    log(loglevelDebug, "Excel: " + "${cell(0)}".trim() + "\t" + "${cell(1)}".trim() + "\t" + "${cell(2)}".trim() + "\t" + "${cell(3)}".trim()
-            + "\t" + "${cell(4)}".trim() + "\t" + "${cell(5)}".trim() + "\t" + "${cell(6)}".trim())
-
-
-    //-----Empty Excel rows are not used
-    if (("${index}" > 0) && ("${cell(2)}".length() > 0)  && ("${cell(2)}" != "null")) {
+        log("Excel: " + "${cell(0)}".trim() + "\t" + "${cell(1)}".trim() + "\t" + "${cell(2)}".trim() + "\t" + "${cell(3)}".trim()
+                + "\t" + "${cell(4)}".trim() + "\t" + "${cell(5)}".trim() + "\t" + "${cell(6)}".trim(), false)
 
 
-        //-----The name variable is used when deciding if the current domain is already stored in the target map or not
-        if (("${cell(2)}".trim().isEmpty() == false) || (mapIndex == 0)) {
-            //-----Add domain to the target map
-                excelMasterFile[mapIndex] = [
-                        subdomainswedish:"${cell(0)}".trim(),
-                        subdomainenglish:"${cell(1)}".trim(),
-                        rivtacommonname:"${cell(2)}".trim(),
-                        rivtaservicedomain:"${cell(3)}".trim(),
-                        version:"${cell(4)}".trim(),
-                        rivtabp20:"${cell(5)}".trim(),
-                        rivtabp21:"${cell(6)}".trim(),
-                        domaincategory:"${cell(7)}".trim()
-                ]
-                mapIndex += 1
+        //-----Empty Excel rows are not used
+        if (("${index}" > 0) && ("${cell(2)}".length() > 0)  && ("${cell(2)}" != "null")) {
+
+
+            //-----The name variable is used when deciding if the current domain is already stored in the target map or not
+            if (("${cell(2)}".trim().isEmpty() == false) || (mapIndex == 0)) {
+                //-----Add domain to the target map
+                    excelMasterFile[mapIndex] = [
+                            subdomainswedish:"${cell(0)}".trim(),
+                            subdomainenglish:"${cell(1)}".trim(),
+                            rivtacommonname:"${cell(2)}".trim(),
+                            rivtaservicedomain:"${cell(3)}".trim(),
+                            version:"${cell(4)}".trim(),
+                            rivtabp20:"${cell(5)}".trim(),
+                            rivtabp21:"${cell(6)}".trim(),
+                            domaincategory:"${cell(7)}".trim(),
+                            altlink:"${cell(8)}".trim()
+                    ]
+                    mapIndex += 1
+            }
+        }
+        index += 1
+    }
+
+
+    if ((outputType == output2WikiPageRIVTA) || (outputType == output2All)) {
+
+        /**
+         ///////////////////////////////////////////////////////////////////////////////////
+         ///////////////////////////////////////////////////////////////////////////////////
+         ///////////////////////////// Write Wiki file RIVTA //////////////////////////////
+         ///////////////////////////////////////////////////////////////////////////////////
+         ///////////////////////////////////////////////////////////////////////////////////
+         */
+
+        //-----Create HTML contents, save them to a temporary map and sort the map
+        tempWikiContentsRIVTA = []
+
+        excelMasterFileSize = excelMasterFile.size()
+        excelMasterFileSize.times {
+
+            def thisIndex = it
+            userfriendlyServiceDomainName = replaceNullWithSpace(excelMasterFile[thisIndex].rivtacommonname)
+            serviceDomainName             = replaceNullWithSpace(excelMasterFile[thisIndex].rivtaservicedomain)
+            version                       = replaceNullWithSpace(excelMasterFile[thisIndex].version)
+            altLink                       = replaceNullWithSpace(excelMasterFile[thisIndex].altlink)
+            rivtaBP20                     = replaceNullWithSpace(excelMasterFile[thisIndex].rivtabp20)
+            rivtaBP21                     = replaceNullWithSpace(excelMasterFile[thisIndex].rivtabp21)
+            serviceContractCategory       = replaceNullWithSpace(excelMasterFile[thisIndex].domaincategory)
+
+            log("userfriendlyServiceDomainName: " + userfriendlyServiceDomainName, false)
+            log("serviceDomainName: " + serviceDomainName, false)
+            log("version: " + version, false)
+            log("rivtaBP20: " + rivtaBP20, false)
+            log("rivtaBP21: " + rivtaBP21, false)
+            log("serviceContractCategory: " + serviceContractCategory, false)
+
+            downloadURL = buildloadLinks(serviceDomainName, version, altLink)
+            if (downloadURL != "") {
+                downloadLink = "[" + downloadURL + " Ladda ner]"
+            } else {
+                downloadLink = ""
+            }
+
+            //-----Write Wiki table, using available data
+            //**************2do: version should be replaced when alternate version (from Excel) has been used
+            if (userfriendlyServiceDomainName.trim().length() > 0 ) {
+                tempWikiContentsRIVTA <<
+                        wikiTableStringRIVTA(userfriendlyServiceDomainName) +
+                        wikiTableStringRIVTA(serviceDomainName) +
+                        wikiTableStringRIVTA(version) +
+                        wikiTableStringRIVTA(rivtaBP20) +
+                        wikiTableStringRIVTA(rivtaBP21) +
+                        wikiTableStringRIVTA(serviceContractCategory) +
+                        wikiTableStringRIVTA(downloadLink) +
+                        wikiTableStringRIVTA(" ")
+            }
+        }
+        tempWikiContentsRIVTA.sort()
+
+
+        //-----Write the beginning of the Wiki file (RIVTA)
+        pageHeaderLines = WikiTableRIVTAPageBeginning.size()
+        new File(targetDirWiki + wikiTableFileRIVTA).newOutputStream().withWriter(charset) {
+            writer -> pageHeaderLines.times {
+                writer.write WikiTableRIVTAPageBeginning[it] + "\n"
+            }
+            writer.write wikiTableStringRIVTA("*Populärnamn*")
+            writer.write wikiTableStringRIVTA("*Tjänstedomän*")
+            writer.write wikiTableStringRIVTA("*Version*")
+            writer.write wikiTableStringRIVTA("*RIV-TA BP 2.0*")
+            writer.write wikiTableStringRIVTA("*RIV-TA BP 2.1*")
+            writer.write wikiTableStringRIVTA("*[CehisKategorier Cehis kategori]*")
+            writer.write wikiTableStringRIVTA(" ")
+            writer.write wikiTableStringRIVTA(" ") + "\n"
+        }
+
+        //-----Use the sorted map as input, write the map contents to the Wiki file (RIVTA)
+        new File(targetDirWiki + wikiTableFileRIVTA).withWriterAppend(charset) {
+            out ->  tempWikiContentsRIVTA.each {
+                out.println it
+            }
+        }
+
+        //-----Write the end of the Wiki file
+        pageFooterLines = WikiTableRIVTAPageEnd.size()
+        new File(targetDirWiki + wikiTableFileRIVTA).withWriterAppend(charset) {
+            writer -> pageFooterLines.times {
+                writer.write WikiTableRIVTAPageEnd[it] + "\n"
+            }
         }
     }
-    index += 1
+
+    //-----Show execution statistics
+    ShowExecutionStatistics()
 }
 
 
-if ((outputType == output2WikiPageRIVTA) || (outputType == output2All)) {
-
-    /**
-     ///////////////////////////////////////////////////////////////////////////////////
-     ///////////////////////////////////////////////////////////////////////////////////
-     ///////////////////////////// Write Wiki file RIVTA //////////////////////////////
-     ///////////////////////////////////////////////////////////////////////////////////
-     ///////////////////////////////////////////////////////////////////////////////////
-     */
-
-    //-----Create HTML contents, save them to a temporary map and sort the map
-    tempWikiContentsRIVTA = []
-
-    excelMasterFileSize = excelMasterFile.size()
-    excelMasterFileSize.times {
-
-        def thisIndex = it
-        userfriendlyServiceDomainName = replaceNullWithSpace(excelMasterFile[thisIndex].rivtacommonname)
-        serviceDomainName             = replaceNullWithSpace(excelMasterFile[thisIndex].rivtaservicedomain)
-        version                       = replaceNullWithSpace(excelMasterFile[thisIndex].version)
-        rivtaBP20                     = replaceNullWithSpace(excelMasterFile[thisIndex].rivtabp20)
-        rivtaBP21                     = replaceNullWithSpace(excelMasterFile[thisIndex].rivtabp21)
-        serviceContractCategory       = replaceNullWithSpace(excelMasterFile[thisIndex].domaincategory)
-
-        log(loglevelDebug, "userfriendlyServiceDomainName: " + userfriendlyServiceDomainName)
-        log(loglevelDebug, "serviceDomainName: " + serviceDomainName)
-        log(loglevelDebug, "version: " + version)
-        log(loglevelDebug, "rivtaBP20: " + rivtaBP20)
-        log(loglevelDebug, "rivtaBP21: " + rivtaBP21)
-        log(loglevelDebug, "serviceContractCategory: " + serviceContractCategory)
-
-        downloadURL = buildloadLinks(serviceDomainName, version)
-        if (downloadURL != "") {
-            downloadLink = "[" + downloadURL + " Ladda ner]"
-        } else {
-            downloadLink = ""
-        }
-
-        //-----Write Wiki table, using available data
-        if (userfriendlyServiceDomainName.trim().length() > 0 ) {
-            tempWikiContentsRIVTA <<
-                    wikiTableStringRIVTA(userfriendlyServiceDomainName) +
-                    wikiTableStringRIVTA(serviceDomainName) +
-                    wikiTableStringRIVTA(version) +
-                    wikiTableStringRIVTA(rivtaBP20) +
-                    wikiTableStringRIVTA(rivtaBP21) +
-                    wikiTableStringRIVTA(serviceContractCategory) +
-                    wikiTableStringRIVTA(downloadLink) +
-                    wikiTableStringRIVTA(" ")
-        }
-    }
-    tempWikiContentsRIVTA.sort()
-
-
-    //-----Write the beginning of the Wiki file (RIVTA)
-    pageHeaderLines = WikiTableRIVTAPageBeginning.size()
-    new File(targetFolder + wikiTableFileRIVTA).newOutputStream().withWriter(charset) {
-        writer -> pageHeaderLines.times {
-            writer.write WikiTableRIVTAPageBeginning[it] + "\n"
-        }
-        writer.write wikiTableStringRIVTA("*Populärnamn*")
-        writer.write wikiTableStringRIVTA("*Tjänstedomän*")
-        writer.write wikiTableStringRIVTA("*Version*")
-        writer.write wikiTableStringRIVTA("*RIV-TA BP 2.0*")
-        writer.write wikiTableStringRIVTA("*RIV-TA BP 2.1*")
-        writer.write wikiTableStringRIVTA("*[CehisKategorier Cehis kategori]*")
-        writer.write wikiTableStringRIVTA(" ")
-        writer.write wikiTableStringRIVTA(" ") + "\n"
-    }
-
-    //-----Use the sorted map as input, write the map contents to the Wiki file (RIVTA)
-    new File(targetFolder + wikiTableFileRIVTA).withWriterAppend(charset) {
-        out ->  tempWikiContentsRIVTA.each {
-            out.println it
-        }
-    }
-
-    //-----Write the end of the Wiki file
-    pageFooterLines = WikiTableRIVTAPageEnd.size()
-    new File(targetFolder + wikiTableFileRIVTA).withWriterAppend(charset) {
-        writer -> pageFooterLines.times {
-            writer.write WikiTableRIVTAPageEnd[it] + "\n"
-        }
-    }
-}
-
-//-----Show execution statistics
-ShowExecutionStatistics()
+//-----Exit the script execution
+log("\n", true)
+log("ReturnCode = " + returnCode, true)
+return returnCode
