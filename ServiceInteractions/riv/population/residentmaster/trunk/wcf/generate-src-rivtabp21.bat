@@ -25,13 +25,9 @@
 SET W0=%SCHEMADIR%\.\interactions\LookupResidentForFullProfileInteraction\LookupResidentForFullProfileInteraction_1.1_RIVTABP21.wsdl
 SET X0=%SCHEMADIR%\interactions\LookupResidentForFullProfileInteraction\*.xsd
 
-SET SCHEMADIR=schemas
-SET W1=%SCHEMADIR%\.\interactions\UpdateResidentInteraction\UpdateResidentInteraction_1.1_RIVTABP21.wsdl
-SET X1=%SCHEMADIR%\interactions\UpdateResidentInteraction\*.xsd
-
 SET XCORE=%SCHEMADIR%\core_components\*.xsd
 
-SET SCHEMAS=%XCORE% %W0% %X0% %W1% %X1% 
+SET SCHEMAS=%XCORE% %W0% %X0%
 
 SET OUTFILE=/out:wcf\generated-src\PopulationResidentmasterInteractions.cs
 SET APPCONFIG=/config:wcf\generated-src\app.config
