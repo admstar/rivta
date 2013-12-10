@@ -9,9 +9,11 @@
  * Information sources used by this script:
  * - Main source: the Excel document describing service domains
  *
+ * Not ready yet:
+ * - Verification that necessary files exists in certain directories
  *
  * @author Peter Hernfalk
- * Last update: 2013-12-06
+ * Last update: 2013-12-10
 
  */
 
@@ -67,37 +69,14 @@ def getValuesFromParameters() {
     def options = cli.parse(args)
     if (!options) return
 
+    //-----Parameter: cf (checkoutfiles)
     checkoutFiles = false
     def argCheckoutFiles=options.getProperty('checkoutfiles')
     if (argCheckoutFiles.toString().toLowerCase() == "true") {
         checkoutFiles = true
     }
 
-    def argDomainName=options.getProperty('domainname')
-    if (argDomainName.toString().length() == 0) {
-        log('* The supplied domain name seems to be empty\n', true)
-        cli.usage()
-        return 1
-    }
-    usedDomain = argDomainName
-
-    useOptionalLogging = false
-    def arguseOptionalLogging=options.getProperty('useOptionalLogging')
-    if (arguseOptionalLogging.toString().toLowerCase() == "true") {
-        useOptionalLogging = true
-    }
-    /*
-    def argTargetDir=options.getProperty('targetdir')
-    if (argTargetDir.toString().length() == 0) {
-        log('* The supplied target directory name seems to be empty\n', true)
-        cli.usage()
-        return 1
-    }
-    localRIVTATargetFolder = argTargetDir
-    if (localRIVTATargetFolder.endsWith("/") == false) {
-        localRIVTATargetFolder += "/"
-    }
-    */
+    //-----Parameter: dd (domaindir)
     def argDomainDir=options.getProperty('domaindir')
     if (argDomainDir.toString().length() == 0) {
         log('* The supplied domain directory name seems to be empty\n', true)
@@ -107,6 +86,22 @@ def getValuesFromParameters() {
     localRIVTATargetFolder = argDomainDir
     if (localRIVTATargetFolder.endsWith("/") == false) {
         localRIVTATargetFolder += "/"
+    }
+
+    //-----Parameter: dn (domainname)
+    def argDomainName=options.getProperty('domainname')
+    if (argDomainName.toString().length() == 0) {
+        log('* The supplied domain name seems to be empty\n', true)
+        cli.usage()
+        return 1
+    }
+    usedDomain = argDomainName
+
+    //-----Parameter: l (useOptionalLogging)
+    useOptionalLogging = false
+    def arguseOptionalLogging=options.getProperty('useOptionalLogging')
+    if (arguseOptionalLogging.toString().toLowerCase() == "true") {
+        useOptionalLogging = true
     }
 
     return true
@@ -138,23 +133,23 @@ def downloadFileStructureFromRivtaSite(String domainNameRivta) {
 
 /* Verifies that that the service domains structure and contents are correct on the rivta site */
 def verifyServiceDomainStructure(String domainStructure) {
-    //-----2do: add logic that verifies the downloaded domain file structure
     log("Domain structure, root: " + domainStructure, false)
 
     //-----Extract subdirectories and make a call to the verification method for each subdirectory
     def dir = new File(domainStructure)
     dir.eachDir { subDir ->
         if ((subDir.name.contains('.svn')) == false) {
-            log("\n", true)
-            log("\nSubdir: " + subDir.name, false)
+            log("", true)
+            log("Verifying subdir: " + subDir.name, true)
             if (verifySubDomainStructure(domainStructure, subDir.name) == false) {
+               returnCode = 1
                return
             }
         }
     }
 
     //-----Failed verification sets the return code to: 1
-    returnCode = 1
+    //returnCode = 1
 }
 
 
@@ -233,9 +228,6 @@ if (getValuesFromParameters() == true) {
 }
 
 //-----Exit the script execution and return the return code to the caller
-
-//*********Temporary test setting
-//returnCode = 0
-//*********Temporary test setting
-log("\n\nreturnCode: " + returnCode, true)
+log("", true)
+log("Return code from the script: " + returnCode, true)
 return returnCode
