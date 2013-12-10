@@ -11,7 +11,7 @@
  *
  *
  * @author Peter Hernfalk
- * Last update: 2013-12-06
+ * Last update: 2013-12-10
  */
 
 
@@ -28,7 +28,7 @@ output2WikiPageRIVTA = "wikiPageRIVTA"
 returnCode = 0
 serviceDomains = []
 useOptionalLogging = true
-wikiTableFileRIVTA = "/_WikiTableRIVTA.txt"
+wikiTableFileRIVTA = "/WikiTableRIVTA.txt"
 WikiTableRIVTAPageBeginning = []
 WikiTableRIVTAPageBeginning[0] = '#summary Tabell över godkända tjänstedomäner\n'
 WikiTableRIVTAPageBeginning[1] = '=Tabell över godkända tjänstedomäner=\n'
@@ -67,12 +67,14 @@ def getValuesFromParameters() {
     def options = cli.parse(args)
     if (!options) return
 
+    //-----Parameter: l (useOptionalLogging)
     useOptionalLogging = false
     def arguseOptionalLogging=options.getProperty('useoptionallogging')
     if (arguseOptionalLogging.toString().toLowerCase() == "true") {
         useOptionalLogging = true
     }
 
+    //-----Parameter: td (targetdirwiki)
     def argTargetDirWiki=options.getProperty('targetdirwiki')
     if (argTargetDirWiki.toString().length() == 0) {
         log('* The supplied target directory name seems to be empty\n', true)
@@ -81,6 +83,7 @@ def getValuesFromParameters() {
     }
     targetDirWiki = argTargetDirWiki
 
+    //-----Parameter: xf (excelfile)
     def argExcelFile=options.getProperty('excelfile')
     if ( (argExcelFile =~ '.xls').count <1 ) {
         log('* The supplied file name \"' + argExcelFile + '\" does not seems to be an excel file (missing .xls)\n', true)
