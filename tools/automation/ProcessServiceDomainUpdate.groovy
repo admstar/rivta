@@ -8,7 +8,7 @@
  *
  *
  * @author Peter Hernfalk
- * Last update: 2013-12-06
+ * Last update: 2013-12-10
  */
 
 archiveFile = ""
@@ -63,8 +63,8 @@ def getValuesFromParameters() {
     cli.up(longOpt: 'userpassword', args:1, required:true, argName:'User password', 'Password for the user that will be responsible for the upload.')
 
     //-----Specific parameters used by the wiki page update script
-    cli.xf(longOpt: 'excelfile', args:1, required:true, argName:'Excel file', 'Name and path to the Excel file')
     cli.td(longOpt: 'targetdirwiki', args:1, required:true, argName:'target directory', 'directory to which the generated wiki page file will be written')
+    cli.xf(longOpt: 'excelfile', args:1, required:true, argName:'Excel file', 'Name and path to the Excel file')
 
     //-----Verify all parameters
     def options = cli.parse(args)
@@ -160,15 +160,6 @@ def getValuesFromParameters() {
     }
     userPassword = argUserPassword
 
-    //-----Parameter: xf (excelfile)
-    def argExcelFile=options.getProperty('excelfile')
-    if ( (argExcelFile =~ '.xls').count <1 ) {
-        log(loglevelInfo, '* The supplied file name \"' + argExcelFile + '\" does not seems to be an excel file (missing .xls)\n')
-        cli.usage()
-        return 1
-    }
-    excelFile = argExcelFile
-
     //-----Parameter: td (targetdirwiki)
     def argTargetDirWiki=options.getProperty('targetdirwiki')
     if (argTargetDirWiki.toString().length() == 0) {
@@ -178,12 +169,21 @@ def getValuesFromParameters() {
     }
     targetDirWiki = argTargetDirWiki
 
+    //-----Parameter: xf (excelfile)
+    def argExcelFile=options.getProperty('excelfile')
+    if ( (argExcelFile =~ '.xls').count <1 ) {
+        log(loglevelInfo, '* The supplied file name \"' + argExcelFile + '\" does not seems to be an excel file (missing .xls)\n')
+        cli.usage()
+        return 1
+    }
+    excelFile = argExcelFile
+
     /*
         ===== Script parameters for this script, used for test purposes =====
-        -dn "itintegration" -l true -cf true -dd "/Users/peterhernfalk/Desktop/_Peter_Files/rivtadomain/
-        -sd "/Users/peterhernfalk/Desktop/_Peter_Files/rivtadomain/monitoring/" -ad "/Users/peterhernfalk/Desktop/__CeHisscript/"
-        -af "_itintegration.monitoring.zip" -un "peter.hernfalk" -up "abc123"
-        -xf "/Users/peterhernfalk/Desktop/_Peter_Files/HOS-projekt/AL/Aktiviteter/Landskap med TP och TK/Groovyscript/Underlag/MasterFlikad5_peter.xls"
+        -dn "itintegration" -l true -cf true -dd "/Users/peterhernfalk/Desktop/_Peter_Files/rivtadomain_test/"
+        -sd "/Users/peterhernfalk/Desktop/_Peter_Files/rivtadomain_test/monitoring/" -ad "/Users/peterhernfalk/Desktop/__CeHisscript/"
+        -af "itintegration.monitoring.zip" -un "peter.hernfalk" -up "abc123"
+        -xf "/Users/peterhernfalk/Desktop/__CeHisscript/MasterFlikad5_peter.xls"
         -td "/Users/peterhernfalk/Desktop/__CeHisscript/"
      */
     log("usedDomainName: " + usedDomainName, false)
@@ -213,8 +213,8 @@ def verifyServiceDomainFolder(String domainName) {
 
     //-----Take care of the return code from the called script
     if (returnCodeCalledScript == 0) {
-        log("\n", true)
-        log("Successful verification", true)
+        //log("\n", true)
+        log("--- OK --- Successful verification of service domain structure", true)
         returnCode = returnCodeCalledScript
     } else {
         log("\n", true)
@@ -232,17 +232,19 @@ def verifyServiceDomainFolder(String domainName) {
 /* Creates an archive file, containing service domain files */
 def createArchiveFile() {
     //-----Create parameters tha will be used when calling the script
-    def args = ['-ad', localArchiveTargetFolder, '-dn', usedDomainName, '-l', useOptionalLogging, '-sd', localRIVTASourceFolder] as String[]
+    //def args = ['-ad', localArchiveTargetFolder, '-dn', usedDomainName, '-l', useOptionalLogging, '-sd', localRIVTASourceFolder] as String[]
+    def args = ['-ad', localArchiveTargetFolder, '-af', archiveFile, '-l', useOptionalLogging, '-sd', localRIVTASourceFolder] as String[]
     Binding context = new Binding(args)
 
     //-----Call the script
+    log("", true)
     log("Call the \"CreateServiceDomainArchive\" script", true)
     returnCodeCalledScript = new GroovyShell(context).evaluate(new File("CreateServiceDomainArchive.groovy"))
 
     //-----Take care of the return code from the script
     if (returnCodeCalledScript == 0) {
-        log("\n", true)
-        log("Successful creation of archive file", true)
+        //log("\n", true)
+        log("--- OK --- Successful creation of archive file", true)
         returnCode = returnCodeCalledScript
     } else {
         log("\n", true)
@@ -264,13 +266,14 @@ def uploadArchiveFile() {
     Binding context = new Binding(args)
 
     //-----Call the script
+    log("", true)
     log("Call the \"UploadServiceDomainArchive\" script", true)
     returnCodeCalledScript = new GroovyShell(context).evaluate(new File("UploadServiceDomainArchive.groovy"))
 
     //-----Take care of the return code from the script
     if (returnCodeCalledScript == 0) {
-        log("\n", true)
-        log("Successful upload of archive file to the rivta site", true)
+        //log("\n", true)
+        log("--- OK --- Successful upload of archive file to the rivta site", true)
         returnCode = returnCodeCalledScript
     } else {
         log("\n", true)
@@ -292,13 +295,14 @@ def updateWikiPage() {
     Binding context = new Binding(args)
 
     //-----Call the script
+    log("", true)
     log("Call the \"CreateServiceDomainTable_WikiPage\" script", true)
     returnCodeCalledScript = new GroovyShell(context).evaluate(new File("CreateServiceDomainTable_WikiPage.groovy"))
 
     //-----Take care of the return code from the script
     if (returnCodeCalledScript == 0) {
-        log("\n", true)
-        log("Successful creation of the wiki page, containing an updated service domain table", true)
+        //log("\n", true)
+        log("--- OK --- Successful creation of the wiki page, containing an updated service domain table", true)
         returnCode = returnCodeCalledScript
     } else {
         log("\n", true)
@@ -335,18 +339,19 @@ def log(String text, boolean logEntryIsMandatory) {
 if (getValuesFromParameters() == true) {
 
     //-----Execute the scripts in correct order
+    log("", true)
     verifyServiceDomainFolder(usedDomainName)
     if (returnCode == 0) {
-        log("Successful verification of service domain structure", true)
+        //log("Successful verification of service domain structure", true)
         createArchiveFile()
         if (returnCode == 0) {
-            log("Successful creation of archive file", true)
+            //log("Successful creation of archive file", true)
             uploadArchiveFile()
             if (returnCode == 0) {
                 log("Successful upload of archive file", true)
                 updateWikiPage()
                 if (returnCode == 0) {
-                    log("Successful update of the wiki page at the rivta site", true)
+                    //log("Successful update of the wiki page at the rivta site", true)
                 } else {
                     log("Failed to update the wiki page at the rivta site. Process aborted", true)
                 }
