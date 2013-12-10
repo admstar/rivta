@@ -8,13 +8,15 @@
  *
  *
  * @author Peter Hernfalk
- * Last update: 2013-12-06
-
+ * Last update: 2013-12-10
+ *
+ *  * Not ready yet:
+ * - Call Google Codes API and upload the file
+ *
  * LEO:s önskemål (2013-12-04)
  Man skall ju zippa ihop en TAGgad map, dvs en mappstruktur under en undermap till tags i Subversion.
  Skulle behöva läsa på konfig-styrning, men har för mig att vi sagt att zipfilnamnet skall innehålla, förutom domännamnet, tagens namn.
  Man borde alltså kunna skapa sätta namnet automatiskt.
-
  */
 
 archiveFile = ""
@@ -65,6 +67,7 @@ def getValuesFromParameters() {
         localArchiveTargetFolder += "/"
     }
 
+    //-----Parameter: af (archivefile)
     def argArchiveFile=options.getProperty('archivefile')
     if (argArchiveFile.toString().length() == 0) {
         log('* The supplied name of the archive file seems to be empty\n', true)
@@ -77,12 +80,14 @@ def getValuesFromParameters() {
     }*/
     archiveFile = argArchiveFile
 
+    //-----Parameter: l (useOptionalLogging)
     useOptionalLogging = false
     def arguseOptionalLogging=options.getProperty('useoptionallogging')
     if (arguseOptionalLogging.toString().toLowerCase() == "true") {
         useOptionalLogging = true
     }
 
+    //-----Parameter: un (username)
     def argUserName=options.getProperty('username')
     if (argUserName.toString().length() == 0) {
         log('* The supplied user name seems to be empty\n', true)
@@ -91,6 +96,7 @@ def getValuesFromParameters() {
     }
     userName = argUserName
 
+    //-----Parameter: up (userpassword)
     def argUserPassword=options.getProperty('userpassword')
     if (argUserPassword.toString().length() == 0) {
         log('* The supplied user password seems to be empty\n', true)
@@ -118,7 +124,6 @@ def uploadArchiveFile() {
     log("This script is NOT ready yet", true)
     log("2do: create code that calls the rivta site's API for uploading files", true)
     log("--------------------------------------------------------------------", true)
-    log("", true)
 
     //connection details for the rivta site's API: ??
     //Authentication: userName + userPassword
@@ -146,7 +151,7 @@ if (getValuesFromParameters() == true) {
 
 
 //-----Exit the script execution
-log("\n", true)
+log("", true)
 log("ReturnCode = " + returnCode, true)
 //System.exit(returnCode)
 return returnCode
