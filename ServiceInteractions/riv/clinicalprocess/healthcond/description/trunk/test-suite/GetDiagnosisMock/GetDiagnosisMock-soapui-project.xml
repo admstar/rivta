@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project activeEnvironment="Default" name="GetDiagnosisMock" resourceRoot="${projectDir}" soapui-version="4.6.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetDiagnosisResponderBinding" type="wsdl" bindingName="{urn:riv:clinicalprocess:healthcond:description:GetDiagnosis:2:rivtabp21}GetDiagnosisResponderBinding" soapVersion="1_1" anonymous="optional" definition="../../schemas/interactions/GetDiagnosisInteraction/GetDiagnosisInteraction_2.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/catrin/cehis/svn/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/description/trunk/schemas/interactions/GetDiagnosisInteraction/GetDiagnosisInteraction_2.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/catrin/cehis/svn/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/description/trunk/schemas/interactions/GetDiagnosisInteraction/GetDiagnosisInteraction_2.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+<con:soapui-project activeEnvironment="Default" name="GetDiagnosisMock" resourceRoot="${projectDir}" soapui-version="4.6.2" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetDiagnosisResponderBinding" type="wsdl" bindingName="{urn:riv:clinicalprocess:healthcond:description:GetDiagnosis:2:rivtabp21}GetDiagnosisResponderBinding" soapVersion="1_1" anonymous="optional" definition="../../schemas/interactions/GetDiagnosisInteraction/GetDiagnosisInteraction_2.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/catrin/cehis/svn/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/description/trunk/schemas/interactions/GetDiagnosisInteraction/GetDiagnosisInteraction_2.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/catrin/cehis/svn/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/description/trunk/schemas/interactions/GetDiagnosisInteraction/GetDiagnosisInteraction_2.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
@@ -323,7 +323,8 @@
       <xs:documentation></xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="diagnosisType" type="codes:DiagnosisTypeEnum"/>
+      <xs:element name="typeOfDiagnosis" type="codes:DiagnosisTypeEnum"/>
+      <xs:element minOccurs="0" name="chronicDiagnosis" type="xs:boolean"/>
       <xs:element name="diagnosisTime" type="tns:TimeStampType" minOccurs="0"/>
       <xs:element name="diagnosisCode" type="tns:CVType" minOccurs="0"/>
       <xs:element name="relatedDiagnosis" type="tns:RelatedDiagnosisType" maxOccurs="unbounded" minOccurs="0"/>
@@ -345,7 +346,7 @@
       <xs:documentation></xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="diagnosisId" type="xs:string"/>
+      <xs:element name="documentId" type="xs:string"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -420,7 +421,7 @@
       <xs:documentation></xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="treatment" type="xs:string"/>
+      <xs:element name="treatmentDescription" type="xs:string"/>
       <xs:element name="treatmentCode" type="tns:CVType" minOccurs="0"/>
       <xs:element name="pharmaceuticalTreatment" type="tns:CVType" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
@@ -431,7 +432,7 @@
       <xs:documentation></xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="communicableDisease" type="tns:CVType"/>
+      <xs:element name="communicableDiseaseCode" type="tns:CVType"/>
       <xs:element name="routeOfTransmission" type="tns:CVType" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
@@ -441,7 +442,7 @@
       <xs:documentation></xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="restrictionOfCare" type="xs:string"/>
+      <xs:element name="restrictionOfCareComment" type="xs:string"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -520,8 +521,8 @@
                 Slutdatum på formatet YYYYMMDDhhmmss</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="start" type="tns:TimeStampType"/>
-      <xs:element name="end" type="tns:TimeStampType"/>
+      <xs:element name="start" type="tns:TimeStampType" minOccurs="0"/>
+      <xs:element name="end" type="tns:TimeStampType" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -764,7 +765,7 @@
   </xs:simpleType>
   <xs:simpleType name="DiagnosisTypeEnum">
     <xs:annotation>
-      <xs:documentation>Anges som "Huvuddiagnos", "Bidiagnos" eller "Kronisk diagnos".</xs:documentation>
+      <xs:documentation>Anges som "Huvuddiagnos", "Bidiagnos".</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:enumeration value="Huvuddiagnos">
@@ -775,11 +776,6 @@
       <xs:enumeration value="Bidiagnos">
         <xs:annotation>
           <xs:documentation>Bidiagnos</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Kronisk diagnos">
-        <xs:annotation>
-          <xs:documentation>Kronisk diagnos</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>
@@ -813,7 +809,7 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://tempuri.org</con:endpoint><con:endpoint>http://Catrin-Johnsons-new-MacBook-Air.local:8088/mockGetDiagnosisResponderBinding</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2:GetDiagnosis" name="GetDiagnosis" bindingOperationName="GetDiagnosis" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://tempuri.org</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:description:2">
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://Catrin-Johnsons-new-MacBook-Air.local:8088/mockGetDiagnosisResponderBinding</con:endpoint><con:endpoint>http://tempuri.org</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2:GetDiagnosis" name="GetDiagnosis" bindingOperationName="GetDiagnosis" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://tempuri.org</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:description:2">
    <soapenv:Header>
       <urn:LogicalAddress>?</urn:LogicalAddress>
    </soapenv:Header>
@@ -878,7 +874,7 @@ context.careUnitHSAid = careUnitHSAid
 def responseName = mockRequest.requestHeaders['x-mock-response'][0]
 log.debug("responseName: ${responseName}")
 
-return responseName</con:dispatchPath><con:dispatchStyle>SCRIPT</con:dispatchStyle><con:defaultResponse>BasicResponse</con:defaultResponse><con:response name="BasicResponse" encoding="UTF-8"><con:settings/><con:script>context.documentId = 123456789
+return responseName</con:dispatchPath><con:dispatchStyle>SCRIPT</con:dispatchStyle><con:defaultResponse>SoapFault</con:defaultResponse><con:response name="BasicResponse" encoding="UTF-8"><con:settings/><con:script>context.documentId = 123456789
 
 // create XmlHolder for request content
 def holder = new com.eviware.soapui.support.XmlHolder( mockRequest.requestContent )
@@ -920,15 +916,10 @@ context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')
                         <urn1:healthcareProfessionalOrgUnit>
                             <urn1:orgUnitHSAId>9999</urn1:orgUnitHSAId>
                             <urn1:orgUnitName>Karolinska Huddinge</urn1:orgUnitName>
-                            <!--Optional:-->
                             <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                            <!--Optional:-->
                             <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                            <!--Optional:-->
                             <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                            <!--Optional:-->
                             <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                            <!--You may enter ANY elements at this point-->
                         </urn1:healthcareProfessionalOrgUnit>
                         <!--Optional:-->
                         <urn1:healthcareProfessionalCareUnitHSAId>565656</urn1:healthcareProfessionalCareUnitHSAId>
@@ -949,7 +940,7 @@ context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')
                     <urn1:careContactId>?</urn1:careContactId>
                 </urn1:diagnosisHeader>
                 <urn1:diagnosisBody>
-                    <urn1:diagnosisType>Huvuddiagnos</urn1:diagnosisType>
+                    <urn1:typeOfDiagnosis>Huvuddiagnos</urn1:typeOfDiagnosis>
                     <!--Optional:-->
                     <urn1:diagnosisTime>20120101131415</urn1:diagnosisTime>
                     <urn1:diagnosisCode>
@@ -1033,7 +1024,7 @@ context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')
                     <urn1:careContactId>?</urn1:careContactId>
                 </urn1:diagnosisHeader>
                 <urn1:diagnosisBody>
-                    <urn1:diagnosisType>Huvuddiagnos</urn1:diagnosisType>
+                    <urn1:typeOfDiagnosis>Huvuddiagnos</urn1:typeOfDiagnosis>
                     <!--Optional:-->
                     <urn1:diagnosisTime>20120101131415</urn1:diagnosisTime>
                     <urn1:diagnosisCode>
@@ -1100,7 +1091,7 @@ context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')
                 <urn1:careContactId>?</urn1:careContactId>
             </urn1:diagnosisHeader>
             <urn1:diagnosisBody>
-                <urn1:diagnosisType>Bidiagnos</urn1:diagnosisType>
+                <urn1:typeOfDiagnosis>Bidiagnos</urn1:typeOfDiagnosis>
                 <!--Optional:-->
                 <urn1:diagnosisTime>20120101131415</urn1:diagnosisTime>
                 <urn1:diagnosisCode>
@@ -1167,7 +1158,7 @@ context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')
                 <urn1:careContactId>?</urn1:careContactId>
             </urn1:diagnosisHeader>
             <urn1:diagnosisBody>
-                <urn1:diagnosisType>Huvuddiagnos</urn1:diagnosisType>
+                <urn1:typeOfDiagnosis>Huvuddiagnos</urn1:typeOfDiagnosis>
                 <!--Optional:-->
                 <urn1:diagnosisTime>20131108175603</urn1:diagnosisTime>
                 <urn1:diagnosisCode>
@@ -1234,7 +1225,7 @@ context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')
                     <urn1:careContactId>?</urn1:careContactId>
                 </urn1:diagnosisHeader>
                 <urn1:diagnosisBody>
-                    <urn1:diagnosisType>Huvuddiagnos</urn1:diagnosisType>
+                    <urn1:typeOfDiagnosis>Huvuddiagnos</urn1:typeOfDiagnosis>
                     <!--Optional:-->
                     <urn1:diagnosisTime>20120101131415</urn1:diagnosisTime>
                     <urn1:diagnosisCode>
@@ -1301,8 +1292,9 @@ context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')
                     <urn1:careContactId>?</urn1:careContactId>
                 </urn1:diagnosisHeader>
                 <urn1:diagnosisBody>
-                    <urn1:diagnosisType>Huvuddiagnos</urn1:diagnosisType>
-                    <!--Optional:-->
+                    <urn1:typeOfDiagnosis>Bidiagnos</urn1:typeOfDiagnosis>
+                <urn1:chronicDiagnosis>true</urn1:chronicDiagnosis>
+                   <!--Optional:-->
                     <urn1:diagnosisTime>20120101131415</urn1:diagnosisTime>
                     <urn1:diagnosisCode>
                         <urn1:code>123456</urn1:code>
@@ -1314,19 +1306,19 @@ context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')
             </urn:diagnosis>
         </urn:GetDiagnosisResponse>
     </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2:GetDiagnosis"/></con:response><con:response name="CareUnitResponse" encoding="UTF-8"><con:settings/><con:script>context.documentId = 123456789
-
-// create XmlHolder for request content
-def holder = new com.eviware.soapui.support.XmlHolder( mockRequest.requestContent )
-holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
-holder.namespaces['urn'] = 'urn:riv:itintegration:registry:1'
-holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2'
-holder.namespaces['urn2'] = 'urn:riv:clinicalprocess:healthcond:description:2'
-
-context.patientId = holder.getNodeValue('//urn1:patientId[1]/urn2:id')
-context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')
-context.careUnitId1 = holder.getNodeValue('//urn1:careUnitHSAId[1]')
-context.careUnitId2 = holder.getNodeValue('//urn1:careUnitHSAId[2]')
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2:GetDiagnosis"/></con:response><con:response name="CareUnitResponse" encoding="UTF-8"><con:settings/><con:script>																		context.documentId = 123456789
+																		
+																		// create XmlHolder for request content
+																		def holder = new com.eviware.soapui.support.XmlHolder( mockRequest.requestContent )
+																		holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+																		holder.namespaces['urn'] = 'urn:riv:itintegration:registry:1'
+																		holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2'
+																		holder.namespaces['urn2'] = 'urn:riv:clinicalprocess:healthcond:description:2'
+																		
+																		context.patientId = holder.getNodeValue('//urn1:patientId[1]/urn2:id')
+																		context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')
+																		context.careUnitId1 = holder.getNodeValue('//urn1:careUnitHSAId[1]')
+																		context.careUnitId2 = holder.getNodeValue('//urn1:careUnitHSAId[2]')
 </con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:2">
     <soapenv:Header/>
     <soapenv:Body>
@@ -1387,7 +1379,7 @@ context.careUnitId2 = holder.getNodeValue('//urn1:careUnitHSAId[2]')
                     <urn1:careContactId>?</urn1:careContactId>
                 </urn1:diagnosisHeader>
                 <urn1:diagnosisBody>
-                    <urn1:diagnosisType>Huvuddiagnos</urn1:diagnosisType>
+                    <urn1:typeOfDiagnosis>Huvuddiagnos</urn1:typeOfDiagnosis>
                     <!--Optional:-->
                     <urn1:diagnosisTime>20120101131415</urn1:diagnosisTime>
                     <urn1:diagnosisCode>
@@ -1454,7 +1446,7 @@ context.careUnitId2 = holder.getNodeValue('//urn1:careUnitHSAId[2]')
                     <urn1:careContactId>?</urn1:careContactId>
                 </urn1:diagnosisHeader>
                 <urn1:diagnosisBody>
-                    <urn1:diagnosisType>Huvuddiagnos</urn1:diagnosisType>
+                    <urn1:typeOfDiagnosis>Huvuddiagnos</urn1:typeOfDiagnosis>
                     <!--Optional:-->
                     <urn1:diagnosisTime>20120101131415</urn1:diagnosisTime>
                     <urn1:diagnosisCode>
@@ -1541,7 +1533,7 @@ context.careContactId2 = holder.getNodeValue('//urn1:careContactId[2]')
                     <urn1:careContactId>${careContactId2}</urn1:careContactId>
                 </urn1:diagnosisHeader>
                 <urn1:diagnosisBody>
-                    <urn1:diagnosisType>Huvuddiagnos</urn1:diagnosisType>
+                    <urn1:typeOfDiagnosis>Huvuddiagnos</urn1:typeOfDiagnosis>
                     <!--Optional:-->
                     <urn1:diagnosisTime>20120101131415</urn1:diagnosisTime>
                     <urn1:diagnosisCode>
@@ -1625,7 +1617,7 @@ context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')
                     <urn1:careContactId>?</urn1:careContactId>
                 </urn1:diagnosisHeader>
                 <urn1:diagnosisBody>
-                    <urn1:diagnosisType>Huvuddiagnos</urn1:diagnosisType>
+                    <urn1:typeOfDiagnosis>Huvuddiagnos</urn1:typeOfDiagnosis>
                     <!--Optional:-->
                     <urn1:diagnosisTime>20120101131415</urn1:diagnosisTime>
                     <urn1:diagnosisCode>
@@ -1692,7 +1684,7 @@ context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')
                     <urn1:careContactId>?</urn1:careContactId>
                 </urn1:diagnosisHeader>
                 <urn1:diagnosisBody>
-                    <urn1:diagnosisType>Huvuddiagnos</urn1:diagnosisType>
+                    <urn1:typeOfDiagnosis>Huvuddiagnos</urn1:typeOfDiagnosis>
                     <!--Optional:-->
                     <urn1:diagnosisTime>20120101131415</urn1:diagnosisTime>
                     <urn1:diagnosisCode>
@@ -1723,4 +1715,116 @@ context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')
       </detail>
     </soapenv:Fault>
   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2:GetDiagnosis"/></con:response><con:response name="MockResponse 8" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:2">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetDiagnosisResponse>
+         <!--Zero or more repetitions:-->
+         <urn:diagnosis>
+            <urn1:diagnosisHeader>
+               <urn1:documentId>?</urn1:documentId>
+               <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
+               <!--Optional:-->
+               <urn1:documentTitle>?</urn1:documentTitle>
+               <!--Optional:-->
+               <urn1:documentTime>?</urn1:documentTime>
+               <urn1:patientId>
+                  <urn1:id>?</urn1:id>
+                  <urn1:type>?</urn1:type>
+                  <!--You may enter ANY elements at this point-->
+               </urn1:patientId>
+               <urn1:accountableHealthcareProfessional>
+                  <urn1:authorTime>?</urn1:authorTime>
+                  <!--Optional:-->
+                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                  <!--Optional:-->
+                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                  <!--Optional:-->
+                  <urn1:healthcareProfessionalRoleCode>
+                     <!--Optional:-->
+                     <urn1:code>?</urn1:code>
+                     <!--Optional:-->
+                     <urn1:codeSystem>?</urn1:codeSystem>
+                     <!--Optional:-->
+                     <urn1:codeSystemName>?</urn1:codeSystemName>
+                     <!--Optional:-->
+                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
+                     <!--Optional:-->
+                     <urn1:displayName>?</urn1:displayName>
+                     <!--Optional:-->
+                     <urn1:originalText>?</urn1:originalText>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:healthcareProfessionalRoleCode>
+                  <!--Optional:-->
+                  <urn1:healthcareProfessionalOrgUnit>
+                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                     <urn1:orgUnitName>?</urn1:orgUnitName>
+                     <!--Optional:-->
+                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                     <!--Optional:-->
+                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                     <!--Optional:-->
+                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                     <!--Optional:-->
+                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:healthcareProfessionalOrgUnit>
+                  <!--Optional:-->
+                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                  <!--Optional:-->
+                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+                  <!--You may enter ANY elements at this point-->
+               </urn1:accountableHealthcareProfessional>
+               <!--Optional:-->
+               <urn1:legalAuthenticator>
+                  <urn1:signatureTime>?</urn1:signatureTime>
+                  <!--Optional:-->
+                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+                  <!--Optional:-->
+                  <urn1:legalAuthenticatorName>?</urn1:legalAuthenticatorName>
+                  <!--You may enter ANY elements at this point-->
+               </urn1:legalAuthenticator>
+               <urn1:approvedForPatient>?</urn1:approvedForPatient>
+               <!--Optional:-->
+               <urn1:careContactId>?</urn1:careContactId>
+               <!--Optional:-->
+               <urn1:nullified>?</urn1:nullified>
+               <!--Optional:-->
+               <urn1:nullifiedReason>?</urn1:nullifiedReason>
+               <!--You may enter ANY elements at this point-->
+            </urn1:diagnosisHeader>
+            <urn1:diagnosisBody>
+               <urn1:typeOfDiagnosis>?</urn1:typeOfDiagnosis>
+               <!--Optional:-->
+               <urn1:chronicDiagnosis>?</urn1:chronicDiagnosis>
+               <!--Optional:-->
+               <urn1:diagnosisTime>?</urn1:diagnosisTime>
+               <!--Optional:-->
+               <urn1:diagnosisCode>
+                  <!--Optional:-->
+                  <urn1:code>?</urn1:code>
+                  <!--Optional:-->
+                  <urn1:codeSystem>?</urn1:codeSystem>
+                  <!--Optional:-->
+                  <urn1:codeSystemName>?</urn1:codeSystemName>
+                  <!--Optional:-->
+                  <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
+                  <!--Optional:-->
+                  <urn1:displayName>?</urn1:displayName>
+                  <!--Optional:-->
+                  <urn1:originalText>?</urn1:originalText>
+                  <!--You may enter ANY elements at this point-->
+               </urn1:diagnosisCode>
+               <!--Zero or more repetitions:-->
+               <urn1:relatedDiagnosis>
+                  <urn1:documentId>?</urn1:documentId>
+                  <!--You may enter ANY elements at this point-->
+               </urn1:relatedDiagnosis>
+               <!--You may enter ANY elements at this point-->
+            </urn1:diagnosisBody>
+            <!--You may enter ANY elements at this point-->
+         </urn:diagnosis>
+         <!--You may enter ANY elements at this point-->
+      </urn:GetDiagnosisResponse>
+   </soapenv:Body>
 </soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2:GetDiagnosis"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:properties/><con:wssContainer/><con:sensitiveInformation/></con:soapui-project>
