@@ -8,8 +8,9 @@
  *
  *
  * @author Peter Hernfalk
- * Last update: 2013-12-10
-
+ * Last update: 2013-12-11
+ *
+ * Script status: ready for acceptance test
  */
 
 import java.util.zip.ZipOutputStream
@@ -64,16 +65,12 @@ def getValuesFromParameters() {
     }
 
     //-----Parameter: af (archivefile)
-    def argArchiveFile=options.getProperty('archivefile')
+    def argArchiveFile = options.getProperty('archivefile')
     if (argArchiveFile.toString().length() == 0) {
         log('* The supplied name of the archive file seems to be empty\n', true)
         cli.usage()
         return 1
-    } /*else if (***filen finns ej på angiven sökväg***) {
-        log('* The supplied file does not exist in the supplied path\n', true)
-        cli.usage()
-        return 1
-    }*/
+    }
     archiveFile = argArchiveFile
 
     //-----Parameter: l (useOptionalLogging)
@@ -110,11 +107,19 @@ def log(String text, boolean logEntryIsMandatory) {
 
 /* Creates an archive file, containing files belonging to one service domain */
 def createArchiveFile() {
+    log("Creating the archive file: " + localArchiveTargetFolder + archiveFile, true)
     def ant = new AntBuilder()
     ant.zip(
             destfile: localArchiveTargetFolder + archiveFile,
             basedir: localRIVTASourceFolder
     )
+
+    //-----Verify that the archive file exists
+    def namedArchiveFile = new File(localArchiveTargetFolder + archiveFile)
+    if (namedArchiveFile.exists() == false) {
+        log('* The archive file (.zip) was not created in: ' + localArchiveTargetFolder, true)
+    }
+
     log(localArchiveTargetFolder + archiveFile, false)
 }
 
