@@ -322,7 +322,8 @@
       <xs:documentation></xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="diagnosisType" type="codes:DiagnosisTypeEnum"/>
+      <xs:element name="typeOfDiagnosis" type="codes:DiagnosisTypeEnum"/>
+      <xs:element minOccurs="0" name="chronicDiagnosis" type="xs:boolean"/>
       <xs:element name="diagnosisTime" type="tns:TimeStampType" minOccurs="0"/>
       <xs:element name="diagnosisCode" type="tns:CVType" minOccurs="0"/>
       <xs:element name="relatedDiagnosis" type="tns:RelatedDiagnosisType" maxOccurs="unbounded" minOccurs="0"/>
@@ -344,7 +345,7 @@
       <xs:documentation></xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="diagnosisId" type="xs:string"/>
+      <xs:element name="documentId" type="xs:string"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -419,7 +420,7 @@
       <xs:documentation></xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="treatment" type="xs:string"/>
+      <xs:element name="treatmentDescription" type="xs:string"/>
       <xs:element name="treatmentCode" type="tns:CVType" minOccurs="0"/>
       <xs:element name="pharmaceuticalTreatment" type="tns:CVType" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
@@ -430,7 +431,7 @@
       <xs:documentation></xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="communicableDisease" type="tns:CVType"/>
+      <xs:element name="communicableDiseaseCode" type="tns:CVType"/>
       <xs:element name="routeOfTransmission" type="tns:CVType" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
@@ -440,7 +441,7 @@
       <xs:documentation></xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="restrictionOfCare" type="xs:string"/>
+      <xs:element name="restrictionOfCareComment" type="xs:string"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -519,8 +520,8 @@
                 Slutdatum på formatet YYYYMMDDhhmmss</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="start" type="tns:TimeStampType"/>
-      <xs:element name="end" type="tns:TimeStampType"/>
+      <xs:element name="start" type="tns:TimeStampType" minOccurs="0"/>
+      <xs:element name="end" type="tns:TimeStampType" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -763,7 +764,7 @@
   </xs:simpleType>
   <xs:simpleType name="DiagnosisTypeEnum">
     <xs:annotation>
-      <xs:documentation>Anges som "Huvuddiagnos", "Bidiagnos" eller "Kronisk diagnos".</xs:documentation>
+      <xs:documentation>Anges som "Huvuddiagnos", "Bidiagnos".</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:enumeration value="Huvuddiagnos">
@@ -774,11 +775,6 @@
       <xs:enumeration value="Bidiagnos">
         <xs:annotation>
           <xs:documentation>Bidiagnos</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Kronisk diagnos">
-        <xs:annotation>
-          <xs:documentation>Kronisk diagnos</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>
@@ -812,7 +808,7 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>${webServiceUrl}</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:clinicalprocess:healthcond:description:GetAlertInformationResponder:2:GetAlertInformation" name="GetAlertInformation" bindingOperationName="GetAlertInformation" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:GetAlertInformationResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:description:2">
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>${webServiceUrl}</con:endpoint><con:endpoint>http://tempuri.org</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:clinicalprocess:healthcond:description:GetAlertInformationResponder:2:GetAlertInformation" name="GetAlertInformation" bindingOperationName="GetAlertInformation" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:GetAlertInformationResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:description:2">
    <soapenv:Header>
       <urn:LogicalAddress>?</urn:LogicalAddress>
    </soapenv:Header>
@@ -1006,17 +1002,18 @@ alerts.each { doc ->
     def validityTimeStart = alertHolder.getNodeValue('urn:alertInformation/urn1:alertInformationBody/urn1:validityTimePeriod/urn1:start')
     validityTimeStart = validityTimeStart.substring(0, 8)
     def validityTimeEnd = alertHolder.getNodeValue('urn:alertInformation/urn1:alertInformationBody/urn1:validityTimePeriod/urn1:end')
-    validityTimeEnd = validityTimeEnd.substring(0, 8)
+    validityTimeEnd = validityTimeEnd == null ? null : validityTimeEnd.substring(0, 8)
     def obsoleteTime = alertHolder.getNodeValue('/urn:alertInformation/urn1:alertInformationBody/urn1:obsoleteTime')
     obsoleteTime = obsoleteTime == null ? null : obsoleteTime.substring(0, 8)
 
-    if (obsoleteTime != null && obsoleteTime < validityTimeEnd) {
+    if (obsoleteTime != null && ((validityTimeEnd == null) || (obsoleteTime < validityTimeEnd))) {
         validityTimeEnd = obsoleteTime
     }
 
-    if(!((validityTimeStart <= context.timePeriodStart && validityTimeEnd >= context.timePeriodStart) ||
-            (validityTimeEnd >= context.timePeriodEnd && validityTimeStart <= context.timePeriodEnd) ||
-            (validityTimeStart >= context.timePeriodStart && validityTimeEnd <= context.timePeriodEnd))) {
+    if((validityTimeEnd == null && validityTimeStart > context.timePeriodEnd) ||
+            ((validityTimeEnd != null) && !((validityTimeStart <= context.timePeriodStart && validityTimeEnd >= context.timePeriodStart) ||
+                    (validityTimeEnd >= context.timePeriodEnd && validityTimeStart <= context.timePeriodEnd) ||
+                    (validityTimeStart >= context.timePeriodStart && validityTimeEnd <= context.timePeriodEnd)))) {
         offending.add(documentId)
     }
 }

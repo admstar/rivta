@@ -18,9 +18,8 @@ specific language governing permissions and limitations
 under the License.
 -->
 <testsuite>
-    <id>GetDiagnosis</id>
+    <id>GetAlertInformation</id>
     <description><p>This testsuite is used to verify the implementation of GetAlertInformation prior to integration with the national platform.</p><br/>
-        <p><b>Note! The testsuite is not ready for use.</b></p>
         <ul>
             <li>For testing NPÖ-compliant systems, set &lt;validateNPO&gt; to true, else false.</li>
             <li>If a testcase, e.g. the HTTPHeader-filtering testcase, is deemed not applicable for a certain producer, note it as N/A with an explanatory comment.</li>
@@ -44,24 +43,26 @@ under the License.
     </testcase>
     <testcase id="DateBoundaries">
         <description>Verifies that the result only contains information that was valid within the date boundaries for the given patient.
-            The rule is <br/><br/><i>"Begränsning av sökningen i tid, vilket innebär att endast svar returneras där det finns i en tidpunkt
-                angiven i validityTimePeriod, som ligger helt eller delvis inom det sökta tidsintervallet." (Obs, obs, obs! hänsyn även tagen till obsoleteTime)</i><br/><br/>
+            The rule is: <br/><br/><i>"Begränsning av sökningen i tid, vilket innebär att endast svar där giltighetsintervallet ligger helt eller delvis inom efterfrågat tidsintervall returneras.
+            Giltighetsintervallet startar vid validityTimePeriod.start och slutar vid tidigaste datum av obsoleteTime och validityTimePeriod.end om någon av dessa är satta, annars tills vidare.”</i><br/><br/>
             Additional information about failed assertions can be found in the script log.
             The following AlertInformation-elements are recommended:
             <ol>
-                <li>An element with validityTimeStart before the given range, validityTimeEnd within the given range, no obsoleteTime.</li>
-                <li>An element with validityTimeStart before the given range, validityTimeEnd after the given range, no obsoleteTime.</li>
-                <li>An element with validityTimeStart within the given range, validityTimeEnd within the given range, no obsoleteTime.</li>
-                <li>An element with validityTimeStart within the given range, validityTimeEnd after the given range, no obsoleteTime.</li>
-                <li>An element with validityTimeStart within the given range, validityTimeEnd within the given range, obsoleteTime within the given range and before validityTimeEnd.</li>
-                <li>An element with validityTimeStart and validityTimeEnd after the given range, no obsoleteTime.</li>
-                <li>An element with validityTimeStart and validityTimeEnd before the given range, no obsoleteTime.</li>
-                <li>An element with validityTimeStart before the given range, validityTimeEnd after the given range and obsoleteTime before the given range.</li>
+                <li>An element with validityTimePeriod.start before the given range, no validityTimePeriod.end, no obsoleteTime.</li>
+                <li>An element with validityTimePeriod.start within the given range, no validityTimePeriod.end, no obsoleteTime.</li>
+                <li>An element with validityTimePeriod.start before the given range, validityTimePeriod.end within the given range, no obsoleteTime.</li>
+                <li>An element with validityTimePeriod.start before the given range, validityTimePeriod.end.end after the given range, no obsoleteTime.</li>
+                <li>An element with validityTimePeriod.start within the given range, validityTimePeriod.end within the given range, no obsoleteTime.</li>
+                <li>An element with validityTimePeriod.start within the given range, validityTimePeriod.end after the given range, no obsoleteTime.</li>
+                <li>An element with validityTimePeriod.start within the given range, validityTimePeriod.end within the given range, obsoleteTime within the given range and before validityTimeEnd.</li>
+                <li>An element with validityTimePeriod.start and validityTimePeriod.end.end after the given range, no obsoleteTime.</li>
+                <li>An element with validityTimePeriod.start and validityTimeEnd before the given range, no obsoleteTime.</li>
+                <li>An element with validityTimePeriod.start before the given range, validityTimePeriod.end after the given range and obsoleteTime before the given range.</li>
             </ol>
             It is possible to have several elements for one case, e.g. to test dates exactly at the start or end of the given range, and also to skip cases that are not applicable.<br/>
-            The expected DocumentId's, case 1-5 above, must be added as a comma-separated list in the
+            The expected DocumentId's, case 1-7 above, must be added as a comma-separated list in the
             expectedDocumentIds field.<br/>
-            The unexpected DocumentId's, case 6-9 above, must be added as a comma-separated list in the
+            The unexpected DocumentId's, case 8-10 above, must be added as a comma-separated list in the
             unexpectedDocumentIds field.<br/>
             The fields httpHeaderHsaId and logicalAddress must contain values that do not limit the response.
         </description>
