@@ -1,4 +1,3 @@
-
 /**
  * /////////////////////////////////////////////////////////////////////////////
  * //                                                                         //
@@ -10,7 +9,7 @@
  * @author Peter Hernfalk
  * Last update: 2013-12-11
  *
- * Script status: ready for acceptance test
+ * Script status: one thing remains: add tag name to the archive file. After that the script will be ready for acceptance test
  */
 
 import java.util.zip.ZipOutputStream
