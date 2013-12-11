@@ -23,57 +23,9 @@ under the License.
         queryBinding='xslt2'
         schemaVersion='ISO19757-3'>
 
-    <iso:title>Validation for GetDiagnosis</iso:title>
+    <iso:title>Validation of NPÖ-rules for GetDiagnosis</iso:title>
     <iso:ns prefix='urn1' uri='urn:riv:clinicalprocess:healthcond:description:2'/>
     <iso:ns prefix='urn' uri='urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2'/>
-
-    <iso:pattern abstract="true" id="pattern.CvType">
-        <iso:rule context="$path">
-            <iso:assert test="count(urn1:code) + count(urn1:originalText) = 1">
-                In $path, either code or origialText must be given.</iso:assert>
-        </iso:rule>
-
-        <iso:rule context="$path/urn1:code">
-            <iso:assert test="count(../urn1:codeSystem) + count(../urn1:displayName) = 2">
-                In $path if <iso:name/> is given, codeSystem and displayName must be given.</iso:assert>
-            <iso:assert test="count(../urn1:originalText)= 0">
-                In $path if <iso:name/> is given, originalText must not be given.</iso:assert>
-        </iso:rule>
-        <iso:rule context="$path/urn1:codeSystem">
-            <iso:assert test="count(../urn1:code) + count(../urn1:displayName) = 2">
-                In $path if <iso:name/> is given, code and displayName must be given.</iso:assert>
-            <iso:assert test="count(../urn1:originalText)= 0">
-                In $path if <iso:name/> is given, originalText must not be given.</iso:assert>
-        </iso:rule>
-        <iso:rule context="$path/urn1:displayName">
-            <iso:assert test="count(../urn1:code) + count(../urn1:codeSystem) = 2">
-                In $path if <iso:name/> is given, code and codeSystem must be given.</iso:assert>
-            <iso:assert test="count(../urn1:originalText)= 0">
-                In $path if <iso:name/> is given, originalText must not be given.</iso:assert>
-        </iso:rule>
-        <iso:rule context="$path/urn1:originalText">
-            <iso:assert test="count(../urn1:code) + count(../urn1:codeSystem) + count(../urn1:displayName) = 0">
-                In $path if <iso:name/> is given, code, codeSystem and displayName must not be given.</iso:assert>
-        </iso:rule>
-    </iso:pattern>
-
-    <!-- Rules for Response -->
-    <iso:pattern id="Verify healthcareProfessionalRoleCode" is-a="pattern.CvType">
-        <iso:param name="path" value="urn1:healthcareProfessionalRoleCode" />
-    </iso:pattern>
-
-    <iso:pattern id="Verify diagnosisCode" is-a="pattern.CvType">
-        <iso:param name="path" value="urn1:diagnosisCode" />
-    </iso:pattern>
-
-    <iso:pattern id="Verify diagnosisHeader">
-        <iso:rule context="urn1:diagnosisHeader">
-            <iso:assert test="count(urn1:nullified) = 0"><iso:name /> must not contain nullified element.</iso:assert>
-            <iso:assert test="count(urn1:nullifiedReason) = 0"><iso:name /> must not contain nullifiedReason element.</iso:assert>
-            <iso:assert test="count(urn1:documentTime) = 0"><iso:name /> must not contain documentTime element.</iso:assert>
-            <iso:assert test="count(urn1:documentType) = 0"><iso:name /> must not contain documentType element.</iso:assert>
-        </iso:rule>
-    </iso:pattern>
 
     <!-- NPÖ rules -->
     <iso:pattern id="Verify accountableHealthcareProfessional">
@@ -97,12 +49,4 @@ under the License.
             <iso:assert test="string-length(normalize-space(urn1:orgUnitName)) > 0"><iso:name /> orgUnitName must have a value for NPÖ-compatibility.</iso:assert>
         </iso:rule>
     </iso:pattern>
-
-    <!-- Rules need to be clarified -->
-    <iso:pattern id="Verify diagnosisCode">
-        <iso:rule context="urn1:diagnosisCode">
-            <iso:assert test="normalize-space(urn1:codeSystemName) = 'ICD-10-SE' or normalize-space(urn1:codeSystemName) = 'KSH97'"><iso:name /> codeSystemName must be set to ICD-10-SE or KSH97 for NPÖ-compatibility.</iso:assert>
-        </iso:rule>
-    </iso:pattern>
-
 </iso:schema>
