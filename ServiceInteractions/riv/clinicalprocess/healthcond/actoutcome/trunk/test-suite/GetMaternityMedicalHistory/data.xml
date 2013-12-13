@@ -19,7 +19,7 @@ under the License.
 -->
 <testsuite>
     <id>GetMaternityMedicalHistory</id>
-    <description>This testsuite is designed to verify the GetMaternityMedicalHistory contract.</description>
+    <description>This testsuite is designed to verify the GetMaternityMedicalHistory contract prior to integration with the national platform.</description>
     <globaldata>
         <webServiceUrl>http://localhost:8088/mockGetMaternityMedicalHistoryResponderBinding</webServiceUrl>
     </globaldata>
@@ -27,25 +27,24 @@ under the License.
         <description>Verifies that the result only contains information within the date boundaries for the given patient.<br/>
             This test will require at least eight MaternityMedicalRecords:
             <ol>
-                <li>A record with DocumentTime within the given range, the AuthorTime and SignatureTime should
+                <li>A record with DocumentTime within the given range, the AuthorTime and SignatureTime
                 before or after the given range.</li>
-                <li>A record with AuthorTime within the given range, the DocumentTime and SignatureTime should
+                <li>A record with AuthorTime within the given range, the DocumentTime and SignatureTime
                 before or after the given range.</li>
-                <li>A record with SignatureTime within the given range, the DocumentTime and AuthorTime should
+                <li>A record with SignatureTime within the given range, the DocumentTime and AuthorTime
                 before or after the given range.</li>
-                <li>A record with DocumentTime and AuthorTime within the given range, the SignatureTime should
+                <li>A record with DocumentTime and AuthorTime within the given range, the SignatureTime
                 before or after the given range.</li>
-                <li>A record with DocumentTime and SignatureTime within the given range, the AuthorTime should
+                <li>A record with DocumentTime and SignatureTime within the given range, the AuthorTime
                 before or after the given range.</li>
-                <li>A record with SignatureTime and AuthorTime within the given range, the DocumentTime should
+                <li>A record with SignatureTime and AuthorTime within the given range, the DocumentTime
                 before or after the given range.</li>
                 <li>A record with SignatureTime, DocumentTime and AuthorTime within the given range.</li>
                 <li>A record with SignatureTime, DocumentTime and AuthorTime outside the given range.</li>
             </ol>
-            The DocumentId's of case 1-7 should be added as a comma-separated list in the
-                expectedDocumentIds field.<br/>
-            The DocumentId's of case 8 should be added in the unexpectedDocumentIds field.<br/>
-            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of MaternityMedicalRecords.
+            Add he DocumentId's of case 1-7 as a comma-separated list in the expectedDocumentIds field.<br/>
+            Add the DocumentId's of case 8 in the unexpectedDocumentIds field.<br/>
+            The fields httpHeaderHsaId and logicalAddress must contain values that do not affect the list of MaternityMedicalRecords.
         </description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
@@ -54,20 +53,20 @@ under the License.
             <patientIdType>1.2.752.129.2.1.3.1</patientIdType>
             <timePeriodStart>20130701</timePeriodStart>
             <timePeriodEnd>20130731</timePeriodEnd>
-            <!-- Add a list of comma-separated ids that at least should be included in the response -->
+            <!-- Add a list of comma-separated ids that will be included in the response -->
             <expectedDocumentIds>774411,774412</expectedDocumentIds>
-            <!-- Add a list of comma-separated ids that should not be included in the response -->
+            <!-- Add a list of comma-separated ids that will not be included in the response -->
             <unexpectedDocumentIds>11,12,13</unexpectedDocumentIds>
         </data>
     </testcase>
     <testcase id="CareUnitHsaId Filter">
         <description>Verifies that the result only contains information with correct CareUnitHsaId for the given patient.<br/>
             The patient should have several MaternityMedicalRecords, with at least one record from the given CareUnitHsaId.<br/>
-            The DocumentId's of the expected MaternityMedicalRecords should be added as a comma-separated list in the
+            The DocumentId's of the expected MaternityMedicalRecords must be added as a comma-separated list in the
             expectedDocumentIds field.<br/>
-            The DocumentId's of MaternityMedicalRecords from other CareUnit's should be added as a comma-separated list in the
+            The DocumentId's of MaternityMedicalRecords from other CareUnit's must be added as a comma-separated list in the
             unexpectedDocumentIds field.<br/>
-            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of MaternityMedicalRecords.
+            The fields httpHeaderHsaId and logicalAddress must contain values that do not affect the list of MaternityMedicalRecords.
         </description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
@@ -76,29 +75,29 @@ under the License.
             <patientId>7601021212</patientId>
             <patientIdType>1.2.752.129.2.1.3.1</patientIdType>
             <sourceSystemHSAid>112233</sourceSystemHSAid>
-            <!-- Add a list of comma-separated ids that at least should be included in the response -->
+            <!-- Add a list of comma-separated ids that will be included in the response -->
             <expectedDocumentIds>774411,774412</expectedDocumentIds>
-            <!-- Add a list of comma-separated ids that should not be included in the response -->
+            <!-- Add a list of comma-separated ids that will not be included in the response -->
             <unexpectedDocumentIds>123456</unexpectedDocumentIds>
         </data>
     </testcase>
     <testcase id="Only PatientId">
         <description>Verifies that the result only contains information with correct PatientId.
             Enter a PatientId that is stored in the source system.<br/>
-            The DocumentId's of the expected MaternityMedicalRecords should be added as a comma-separated list in the
+            Add the DocumentId's of the expected MaternityMedicalRecords as a comma-separated list in the
             expectedDocumentIds field.<br/>
-            The DocumentId's of MaternityMedicalRecords from other CareUnit's should be added as a comma-separated list in the
+            Add the DocumentId's of MaternityMedicalRecords from other CareUnit's as a comma-separated list in the
             unexpectedDocumentIds field.<br/>
-            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of MaternityMedicalRecords.
+            The fields httpHeaderHsaId and logicalAddress must contain values that do not affect the list of MaternityMedicalRecords.
         </description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
             <logicalAddress>112233</logicalAddress>
             <patientId>7601021212</patientId>
             <patientIdType>1.2.752.129.2.1.3.1</patientIdType>
-            <!-- Add a list of comma-separated ids that at least should be included in the response -->
+            <!-- Add a list of comma-separated ids that will be included in the response -->
             <expectedDocumentIds>774411,774412</expectedDocumentIds>
-            <!-- Add a list of comma-separated ids that should not be included in the response -->
+            <!-- Add a list of comma-separated ids that will not be included in the response -->
             <unexpectedDocumentIds>123456</unexpectedDocumentIds>
         </data>
     </testcase>
@@ -116,7 +115,7 @@ under the License.
     <testcase id="CareContactId Filter">
         <description>Verifies that the result only contains information for a single CareContact.<br/>
             Enter a PatientId, CareContactId and SourceSystemHSAid that is stored in the source system.<br/>
-            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of MaternityMedicalRecords.
+            The fields httpHeaderHsaId and logicalAddress must contain values that do not affect the list of MaternityMedicalRecords.
         </description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
@@ -131,7 +130,7 @@ under the License.
         <description>Verifies that the service returns an empty result instead of a Soap Fault if a non-existing
             CareContactId is given.<br/>
             Enter a PatientId that exists in the source system and a CareContactId and sourceSystemHSAid that is not found in the source system.<br/>
-            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of MaternityMedicalRecords.
+            The fields httpHeaderHsaId and logicalAddress must contain values that do not affect the list of MaternityMedicalRecords.
         </description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
@@ -144,30 +143,31 @@ under the License.
     </testcase>
     <testcase id="Http-header Filter">
         <description>Verifies that the result only contains information with correct PatientId, and that the source
-            system should filter MaternityMedicalRecords based on the HttpHeader 'x-rivta-original-serviceconsumer-hsaid'.<br/>
+            system filters MaternityMedicalRecords based on the HttpHeader 'x-rivta-original-serviceconsumer-hsaid'.<br/>
+            This testcase can be recorded as not applicable if this kind of filtering does not take place in the tested system.<br/>
             Enter a PatientId that has more than one MaternityMedicalRecord in the source system.<br/>
-            Add one or more DocumentId's of records that should be included in the response based on the
-            filtering rules to the field 'expectedDocumentIds'.<br/>
-            Add one or more DocumentId's of records that should not be included in the response based on the
-            filtering rules to the field 'unexpectedDocumentIds'.<br/>
-            The field logicalAddress should contain a value that does not affect the list of MaternityMedicalRecords.
+            Add one or more CareUnitIds that must be included in the response based on the
+            filtering rules to the field 'expectedCareUnitIds'.<br/>
+            Add one or more CareUnitIds of records that must not be included in the response based on the
+            filtering rules to the field 'unexpectedCareUnitIds'.<br/>
+            The field logicalAddress must contain a value that does not affect the list of MaternityMedicalRecords.
         </description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
             <logicalAddress>112233</logicalAddress>
             <patientId>7601021212</patientId>
             <patientIdType>1.2.752.129.2.1.3.1</patientIdType>
-            <!-- Add a list of comma-separated ids that at least should be included in the response -->
-            <expectedDocumentIds>774411,774412</expectedDocumentIds>
-            <!-- Add a list of comma-separated ids that should not be included in the response -->
-            <unexpectedDocumentIds>123456</unexpectedDocumentIds>
+            <!-- Add a list of comma-separated ids that will be included in the response -->
+            <expectedCareUnitIds>4711,4712</expectedCareUnitIds>
+            <!-- Add a list of comma-separated ids that will not be included in the response -->
+            <unexpectedCareUnitIds>123456</unexpectedCareUnitIds>
         </data>
     </testcase>
     <testcase id="CareContactId and SourceSystemHsaId">
         <description>The test verifies that the source system returns a Soap Fault if the sourceSystemHSAid
             is empty when careContactId has a value.<br/>
-            Enter a PatientId and a CareContactId of a CareContact that should be found in the source system.<br/>
-            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of MaternityMedicalRecords.</description>
+            Enter a PatientId and a CareContactId of a CareContact that is found in the source system.<br/>
+            The fields httpHeaderHsaId and logicalAddress must contain values that do not affect the list of MaternityMedicalRecords.</description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
             <logicalAddress>112233</logicalAddress>
@@ -179,9 +179,9 @@ under the License.
     <testcase id="SourceSystemHsaId and LogicalAddress">
         <description>The test verifies that the source system returns a Soap Fault if the logicalAddress and
             sourceSystemHSAid doesn't match.<br/>
-            Enter PatientId and a CareContactId and the correct SourceSystemHSAid of a CareContact that should be found in the source system.<br/>
-            The field logicalAddress should not match SourceSystemHSAid.<br/>
-            The field httpHeaderHsaId should contain a value that does not affect the list of records.</description>
+            Enter PatientId and a CareContactId and the correct SourceSystemHSAid of a CareContact that is found in the source system.<br/>
+            The field logicalAddress must not match SourceSystemHSAid.<br/>
+            The field httpHeaderHsaId must contain a value that does not affect the list of records.</description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
             <logicalAddress>987654321</logicalAddress>
