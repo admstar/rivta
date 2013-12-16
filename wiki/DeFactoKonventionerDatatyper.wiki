@@ -1,5 +1,6 @@
 || *Version* || *Datum* || *Ändringar* || *Person* ||
 || 1 || 2013-10-22 || - || Björn Genfors ||
+|| 2 || 2013-12-16 || Justerat beskrivningen av HSAIdType och orgUnitHSAId (enligt issue 221) || Björn Genfors ||
 
 =Här dokumenteras informella best-practices för datatypshantering i tjänstekontrakt=
 
@@ -50,13 +51,13 @@ Datum anges alltid på formatet ”ÅÅÅÅMMDD”, vilket motsvarar den ISO 882
 ||healthcareProfessionalHSAId	||HSAIdType	||HSA-id för vård- och omsorgspersonal. Skall anges om tillgänglig.	||0..1||
 ||healthcareProfessionalName	||string	||Namn på vård- och omsorgspersonal. Om tillgängligt skall detta anges.	||0..1||
 ||healthcareProfessionalRoleCode	||CVType	||Information om personens befattning. Om möjligt skall KV Befattning (OID 1.2.752.129.2.2.1.4) användas.	||0..1||
-||healthCareProfessionalOrgUnit	||OrgUnitType	||Den organisation som angiven vård- och omsorgsperson är uppdragstagare på. Om tillgängligt skall detta anges.	||0..1||
-||healthcareProfessionalCareUnitHSAId||	HSAIdType||	HSA-id för PDL-enhet som vård- och omsorgspersonen är uppdragstagare för. Skall anges om tillgänglig. ||	0..1 ||
+||healthCareProfessionalOrgUnit	||OrgUnitType	||Den organisation som angiven vård- och omsorgsperson är uppdragstagare på. Om tillgängligt skall detta anges.||0..1||
+||healthcareProfessionalCareUnitHSAId||	HSAIdType||	HSA-id för PDL-enhet som vård- och omsorgspersonen är uppdragstagare för. Skall anges om tillgänglig. ||0..1 ||
 ||healthcareProfessionalCareGiverHSAId	||HSAIdType|| 	HSA-id för vårdgivaren, som är vårdgivare för den enhet som författaren är uppdragstagare för. Skall anges om tillgänglig.||0..1||
 
 ===[HSAIdType HSAIdType]===
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
-||hsaId	||string	||HSA-id enligt definition från Inera AB	||1..1||
+||hsaId	||string	||HSA-id enligt definition från Inera AB. I de fall då HSA-id inte finns tillgängligt ska ett för källsystemet lokalt id användas. Lokala id:n får enbart användas i OrgUnitType, och då endast i undantagsfall.	||1..1||
 
 ===[IIType IIType]===
 En universellt unik identifierare.
@@ -80,7 +81,7 @@ Används för att representera en signatur i samband med journalhandlingar.
 
 ===[OrgUnitType OrgUnitType]===
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
-||orgUnitHSAId	||HSAIdType	||HSA-id för organisationsenhet. Om tillgängligt skall detta anges.	||0..1||
+||orgUnitHSAId	||HSAIdType	||HSA-id för organisationsenhet. Om tillgängligt skall detta anges. I de fall HSA-id saknas kan ett för källsystemet unikt id användas.	||0..1||
 ||orgUnitName	||string	||Namn på organisationsenhet. Om tillgängligt skall detta anges.	||0..1||
 ||orgUnitTelecom	||string	||Telefon till organisationsenhet.	||0..1||
 ||orgUnitEmail	||string	||Epost till organisationsenhet.	||0..1||
