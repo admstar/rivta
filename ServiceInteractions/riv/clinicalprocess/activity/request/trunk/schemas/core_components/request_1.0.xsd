@@ -29,7 +29,7 @@
 			<!--har remissmottagande Organisatorisk enhet-->
 			<xs:element name="recipient" type="RecipientType"/>
 			<!--har vidareskickande-->
-			<xs:element name="intermediaryParticipant" type="IntermediaryType" minOccurs="0"/>
+			<xs:element name="intermediaryParticipant" type="IntermediaryType" minOccurs="0" maxOccurs="unbounded"/>
 			<!--kompletterande administrativ information-->
 			<xs:element name="additionalInformation" type="AdditionalInformationType"/>
 			<!--Borde ligga under PatientType?-->
@@ -38,6 +38,8 @@
 			<xs:element name="questionFormulation" type="QuestionFormulationType"/>
 			<!--erfordrar Betalningsförbindelse-->
 			<xs:element name="paymentCommitment" type="PaymentCommitmentType" minOccurs="0"/>
+			<!--bilaga-->
+			<xs:element name="attachment" type="AttachmentType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -276,8 +278,9 @@ Examples: 1
 	</xs:complexType>
 	<xs:complexType name="IntermediaryType">
 		<xs:sequence>
-			<xs:element name="healthcareProfessionalOrganisation" type="OrganisationType"/>
 			<!-- custodian -->
+			<xs:element name="healthcareProfessionalOrganisation" type="OrganisationType"/>
+			<xs:element name="time" type="TimeStampType"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -660,11 +663,26 @@ Examples: 1
 	</xs:complexType>
 	<xs:complexType name="OriginalRequestType">
 		<xs:sequence>
-			<!-- Specifies version of request schema -->
-			<xs:element name="requestSchemaTargetNamespace" type="xs:anyURI">
-			</xs:element>
-			<!-- Original request of the type requestType in base64Binary format -->
-			<xs:element name="request" type="xs:base64Binary"></xs:element>
+			<xs:element name="request" type="RequestType" minOccurs="0" maxOccurs="1"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:complexType name="AttachmentType">
+		<xs:sequence>
+			<xs:element name="urn" type="URNType"></xs:element>
+			<xs:element name="id" type="xs:string"></xs:element>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="URNType">
+		<xs:annotation>
+			<xs:documentation>
+				Regular expression to validate RFC 2141 URN syntax.
+				"urn:[a-zA-Z0-9][a-zA-Z0-9-]{1,31}:([a-zA-Z0-9()+,.:=@;$_!*'-]|%[0-9A-Fa-f]{2})+"
+      		</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:anyURI">
+			<xs:pattern value="urn:[a-zA-Z0-9][a-zA-Z0-9-]{1,31}:([a-zA-Z0-9()+,.:=@;$_!*'-]|%[0-9A-Fa-f]{2})+"/>
+		</xs:restriction>
+	</xs:simpleType>
 </xs:schema>
