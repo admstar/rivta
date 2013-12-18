@@ -39,7 +39,7 @@
         <xs:sequence>
 
             <xs:element name="ordinationskedjeid"
-                        type="xs:long"
+                        type="prescribe:UUID"
                         minOccurs="1"
                         maxOccurs="1"
                         nillable="false">
@@ -85,6 +85,21 @@
                     <xs:documentation>
                         Urval som begränsar antal returnerade poster. Om svarsurval ej är angivet
                         begränsas antal poster till de 100 första.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="varainformation"
+                        type="xs:boolean"
+                        default="true"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Anger om svaret ska kompletteras med information från Produkt- och artikelregistret.
+                        Se kompletterandeHandelsvaruinformation, kompletterandeLakemedelsartikelinformation
+                        och kompletterandeLakemedelsproduktinformation.
                     </xs:documentation>
                 </xs:annotation>
             </xs:element>

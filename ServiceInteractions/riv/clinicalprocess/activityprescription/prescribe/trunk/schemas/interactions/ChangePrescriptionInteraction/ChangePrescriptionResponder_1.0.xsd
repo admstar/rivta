@@ -50,17 +50,75 @@
                 </xs:annotation>
             </xs:element>
 
-            <xs:element name="forskrivningsinformation"
-                        type="prescribe:Forskrivningsinformation"
+            <xs:element name="underlagsversion"
+                        type="xs:int"
                         minOccurs="0"
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
                     <xs:documentation>
-                        Förskrivningens underlagsversion från receptdepån.
+                        Underlagsversion från receptdepå för dospatienter.
                     </xs:documentation>
                 </xs:annotation>
             </xs:element>
+
+            <xs:element name="beslutstidpunkt"
+                                type="xs:dateTime"
+                                minOccurs="0"
+                                maxOccurs="1"
+                                nillable="false">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Tidpunkt för uprättande av beslut.
+                                Om ej angiven antas momentan tidpunkt.
+                                Skall ej anges i samband med verifiering.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+
+            <xs:element name="vardpersonal"
+                        type="prescribe:VardpersonalInformation"
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Information om registrerande och ordinerande vårdpersonal.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="forandrandeForskrivare"
+                        type="prescribe:Forskrivareinformation"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Förändrande förskrivare.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="forskrivarensKontaktuppgift"
+                        type="prescribe:Kontaktuppgift"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>
+                        Förskrivarens kontaktuppgifter.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:choice  minOccurs = "0"
+                        maxOccurs = "1">
+                <xs:element name = "forskrivningsmakulering"
+                            type = "prescribe:ForskrivningsmakuleringsunderlagBas"/>
+                <xs:element name = "forskrivningsutsattning"
+                            type = "prescribe:ForskrivningsutsattningsunderlagBas"/>
+            </xs:choice>
 
             <xs:element name="ordinationsId"
                         type="xs:string"
@@ -75,7 +133,7 @@
             </xs:element>
 
             <xs:element name="utsattning"
-                        type="prescribe:Utsattning"
+                        type="prescribe:UtsattningsunderlagBas"
                         minOccurs="1"
                         maxOccurs="1"
                         nillable="false">
@@ -87,7 +145,7 @@
             </xs:element>
 
             <xs:element name="expeditionsunderlag"
-                        type="prescribe:Forskrivningsinsattning"
+                        type="prescribe:ForskrivningsinsattningBas"
                         minOccurs="0"
                         maxOccurs="1"
                         nillable="false">
@@ -99,7 +157,7 @@
             </xs:element>
 
             <xs:element name="insattning"
-                        type="prescribe:Insattning"
+                        type="prescribe:InsattningsunderlagBas"
                         minOccurs="1"
                         maxOccurs="1"
                         nillable="false">
@@ -111,7 +169,7 @@
             </xs:element>
 
             <xs:element name="ordination"
-                        type="prescribe:Lakemedelsordinationsunderlag"
+                        type="prescribe:LakemedelsordinationsunderlagBas"
                         minOccurs="1"
                         maxOccurs="1"
                         nillable="false">
