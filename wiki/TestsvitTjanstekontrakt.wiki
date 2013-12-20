@@ -12,7 +12,7 @@ För varje tjänstekontrakt måste man skapa två SoapUI-projekt, där det förs
 För att på enklast sätt få mock-tjänsten att returnera rätt svar på en Request används en HttpHeader (“x-mock-response”) som innehåller namnet på det svar som ska användas, varje Request i testsviten måste därför innehålla denna HttpHeader.
 
 ==Referensimplementation==
-För att visa hur en testsvit kan se ut finns det en referensimplementation under https://code.google.com/p/rivta/source/browse/#svn%2Ftools%2Ftest%2Freference-suite. Denna testsvit innehåller samtliga delar som beskrivs nedan och kan med fördel användas som mall för en ny testsvit.
+För en inblick i hur en testsvit kan se ut är det enklast att titta på en av de befintliga testsviterna i, som du hittar under testsuites i katalogen för respektive kontrakt.
 
 ==Schematron-validering==
 För vissa affärsregler räcker det inte att använda XML Schema, och då är rekommendationen att skapa Schematron-regler som kan validera meddelanden ytterligare. För att hitta de konstruktioner där Schematron behövs får man jämföra Schema-definitionen av kontraktet med dess fältregler och se om det finns avvikande definitioner.
@@ -51,14 +51,17 @@ return responseName
  # Lägg till ytterligare valideringar med Script, Xpath eller XQuery.
 
 ==Dokumentation==
-Dokumentation över testfallen genereras som en html-fil av det Gradle-script som kopieras från referens-sviten.
-För att kunna bygga den zip-fil som är leverabel från testsviten måste man först bygga de projekt som finns under "rivta/tools/test/servicedomain-test-framework/trunk", så att man har dels support-logiken och test-suite-pluginen i sitt lokala repository. Därefter kan man bygga ihop den testsvit man är intresserad av.
+Dokumentation över testfallen genereras som en html-fil av build.gradle, som kan kopieras från annan testsvit.
+För att kunna bygga måste man först bygga de projekt som finns under "rivta/tools/test/servicedomain-test-framework/trunk", så att man har dels support-logiken och test-suite-pluginen i sitt lokala repository. 
+(Lite oklart om detta gäller, men man måste i alla fall bygga en soapui-support-nnn.jar och checka in den i testsvitens root-katalog.)
+
+För att bygga dokumentationen skriver man:
+{{{gradle createDocument copyDependencies}}}
+
+Resultatet hamnar i build/dist och filen TestSuiteDocumentation.html skall kopieras till testsvites root-katalog.
 
 ==Releasehantering==
-För att göra en release av en tjänstedomän där det ingår testsviter måste man bygga testsviten med Gradle-scriptet och därefter checka in den genererade dokumentationen och de beroenden (troligtvis endast "soapui-support.jar") som testsviten har. När detta är gjort kan man skapa den zip-fil som innehåller en release av en tjänstedomän.
-
-För att köra Gradle-scriptet skriver man:
-{{{gradle createDocument copyDependencies}}}
+De genererade artefakterna soapui-support-nnn.jar och TestSuiteDocumentation.html skall checkas in, så att en release av tjänstekontraktet kan skapas utan att något bygg-steg utförs.
 
 ==Script==
 Här visas exempel på script som kan användas för att skapa en testsvit.
