@@ -47,8 +47,15 @@
 <section>
 <h1>TestSuite description GetLaboratoryOrderOutcome</h1>
 <summary>
-<p>This document describes the testcases used to verify the implementation of GetLaboratoryOrderOutcome
-                        prior to integration with the national platform.</p>
+<article>
+<p>This testsuite is designed to verify the GetLaboratoryOrderOutcome contract prior to integration with the national platform.</p>
+<details>
+<summary>Global variables used</summary>
+<ul>
+<li>webServiceUrl</li>
+</ul>
+</details>
+</article>
 </summary>
 <article>
 <h2>Tools</h2>
@@ -69,7 +76,7 @@
 <li>You should now be able to run the test suite!</li>
 </ol>
 </article>
-<h2>Testcase description</h2>
+<h2>Testcases</h2>
 <article>
 <h3>BasicTestcase</h3>
 <p>Verifies that the response is schema- and schematron- valid and contains data for the requested patient only.<br>
@@ -91,10 +98,11 @@
 <p>Verifies that the result only contains information within the date boundaries for the given patient.
             The rule is <br><br><i>"Begränsning av sökningen i tid, vilket innebär att endast svar returneras där det finns i en
             tidpunkt angiven i någon av i svaret ingående analysis/analysisTime, eller om sådan tid ej finns i svaret
-            (beroende på att det inte inkluderar analyssvar) tidpunkten angiven i documentTime, som liger helt eller delvis
+            (beroende på att det inte inkluderar analyssvar) tidpunkten angiven i documentTime, som ligger helt eller delvis
             inom det sökta tidsintervallet."</i><br><br>
             Additional information about failed assertions can be found in the script log.
-            The test is best performed for a patient that has the following LaboratoryOutcome-elements:
+            The LaboratoryOutcome-elements below are recommended for the test, but you may skip those that are not applicable, e.g if the tested system does not
+            support start AND end time. You may also supply several elements of the same type, e.g. to test dates exactly on the boundary.
             <ol>
                 <li>A laboratoryOutcome with DocumentTime outside the given range, and at least one Analysis where
                     AnalysisTime starts before and ends after the given range.</li>
@@ -154,6 +162,24 @@
 </details>
 </article>
 <article>
+<h3>CareUnitIdFilter</h3>
+<p>Verifies that the result only contains information for the requested CareUnitIds.<br>
+            Enter a PatientId and two CareUnitIds that exist in the source system.<br>
+            The fields httpHeaderHsaId and logicalAddress must contain values that do not affect the returned list.
+        </p>
+<details>
+<summary>Variables used</summary>
+<ul>
+<li>httpHeaderHsaId</li>
+<li>logicalAddress</li>
+<li>patientId</li>
+<li>patientIdType</li>
+<li>careUnitId1</li>
+<li>careUnitId2</li>
+</ul>
+</details>
+</article>
+<article>
 <h3>NonExistentPatientId</h3>
 <p>Verifies that the service returns an empty result instead of a Soap Fault if a nonexistent PatientId is given.<br>
             Enter a PatientId that is not found in the source system and valid values for httpHeaderHsaId and logical adress.
@@ -189,12 +215,15 @@
 </article>
 <article>
 <h3>HttpHeaderFilter</h3>
-<p>Verifies that the source system filters the response based on the HttpHeader 'x-rivta-original-serviceconsumer-hsaid'.<br>
-            Enter a PatientId that has data with more than one CareContactId in the source system.<br>
-            One or more CareContactIds must pass the Http-header-filtering. Add these to expectedCareContactIds below.<br>
-            One or more CareContactIds must NOT pass the Http-header-filtering. Add these to unexpectedCareContactIds below.<br>
-            The field logicalAddress must be set to a value that does not affect the returned list.
-            <br>
+<p>Verifies that the result only contains information with correct PatientId, and that the source
+            system filters returned data based on the HttpHeader 'x-rivta-original-serviceconsumer-hsaid'.<br>
+            This testcase can be recorded as not applicable if this kind of filtering does not take place in the tested system.<br>
+            Enter a PatientId that has more than one LaboratoryorderOutcome-record in the source system.<br>
+            Add one or more CareUnitIds that must be included in the response based on the
+            filtering rules to the field 'expectedCareUnitIds'.<br>
+            Add one or more CareUnitIds of records that must not be included in the response based on the
+            filtering rules to the field 'unexpectedCareUnitIds'.<br>
+            The field logicalAddress must contain a value that does not affect the list.
         </p>
 <details>
 <summary>Variables used</summary>
@@ -203,8 +232,8 @@
 <li>logicalAddress</li>
 <li>patientId</li>
 <li>patientIdType</li>
-<li>expectedCareContactIds</li>
-<li>unexpectedCareContactIds</li>
+<li>expectedCareUnitIds</li>
+<li>unexpectedCareUnitIds</li>
 </ul>
 </details>
 </article>
