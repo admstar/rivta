@@ -1,16 +1,9 @@
-
 /**
  * ///////////////////////////////////////////////////////////////////////
  * //                                                                   //
  * //   This script verifies the folder structure of a service domain   //
  * //                                                                   //
  * ///////////////////////////////////////////////////////////////////////
- *
- * Information sources used by this script:
- * - Main source: the Excel document describing service domains
- *
- * Not ready yet:
- * - Verification that necessary files exists in certain directories
  *
  * @author Peter Hernfalk
  * Last update: 2014-01-11
