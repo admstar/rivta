@@ -13,7 +13,7 @@
  * - Verification that necessary files exists in certain directories
  *
  * @author Peter Hernfalk
- * Last update: 2013-12-10
+ * Last update: 2014-01-11
 
  */
 
@@ -27,16 +27,16 @@ returnCode = 0
 RIVTADomainFolder = "http://rivta.googlecode.com/svn/ServiceInteractions/riv/"
 RIVTACheckoutCommand = "svn checkout "
 structureTemplate = []
-structureTemplate[0]  = [subPath:"branches", mandatoryContent:"", optionalContent:""]
-structureTemplate[1]  = [subPath:"tags", mandatoryContent:"", optionalContent:""]
-structureTemplate[2]  = [subPath:"trunk", mandatoryContent:"", optionalContent:""]
-structureTemplate[3]  = [subPath:"trunk/code_gen", mandatoryContent:"", optionalContent:""]
-structureTemplate[4]  = [subPath:"trunk/code_gen/wcf", mandatoryContent:"", optionalContent:""]
-structureTemplate[5]  = [subPath:"trunk/code_gen/jaxws", mandatoryContent:"", optionalContent:""]
-structureTemplate[6]  = [subPath:"trunk/docs", mandatoryContent:"*.doc", optionalContent:""]
-structureTemplate[7]  = [subPath:"trunk/schemas", mandatoryContent:"", optionalContent:""]
-structureTemplate[8]  = [subPath:"trunk/schemas/core_components", mandatoryContent:"*.xsd", optionalContent:""] //An empty folder is allowed for core_components but (probably) not for interactions
-structureTemplate[9]  = [subPath:"trunk/schemas/interactions", mandatoryContent:"*.wsdl,*.xsd", optionalContent:""]
+structureTemplate[0]  = [subPath:"branches", mandatoryContent:""]
+structureTemplate[1]  = [subPath:"tags", mandatoryContent:""]
+structureTemplate[2]  = [subPath:"trunk", mandatoryContent:""]
+structureTemplate[3]  = [subPath:"trunk/code_gen", mandatoryContent:""]
+structureTemplate[4]  = [subPath:"trunk/code_gen/wcf", mandatoryContent:""]
+structureTemplate[5]  = [subPath:"trunk/code_gen/jaxws", mandatoryContent:""]
+structureTemplate[6]  = [subPath:"trunk/docs", mandatoryContent:".doc*"]
+structureTemplate[7]  = [subPath:"trunk/schemas", mandatoryContent:""]
+structureTemplate[8]  = [subPath:"trunk/schemas/core_components", mandatoryContent:".xsd"] //An empty folder is allowed for core_components but (probably) not for interactions
+structureTemplate[9]  = [subPath:"trunk/schemas/interactions", mandatoryContent:".wsdl,.xsd"]
 
 usedDomain = ""
 useOptionalLogging = true
@@ -191,6 +191,22 @@ def verifySubDomainAgainstStructureRules(leafFolderName, folderPath, verificatio
             if (folderPath.toString().getAt(from..to) == structureTemplate[it].subPath) {
                 verificationResult[it] = true
                 result = true
+
+                /////////////////////////////////////////////////////////////////////////
+                //log("..folderPath: " + folderPath.toString().getAt(from..to), true)
+                //log("..mandatoryContent: " + structureTemplate[it].mandatoryContent, true)
+                if (structureTemplate[it].mandatoryContent.size() > 0) {
+                    log("..verifying mandatoryContent: " + structureTemplate[it].mandatoryContent + " in " + folderPath.toString().getAt(from..to), true)
+                }
+                if (structureTemplate[it].mandatoryContent != "") {
+                    if (verifyFolderContentsAgainstStructureRules(folderPath, structureTemplate[it].mandatoryContent) == false) {
+                        log("....failed verification of folder contents for " + folderPath.toString().getAt(from..to), true)
+                        verificationResult[it] = false
+                        result = false
+                    }
+                }
+                /////////////////////////////////////////////////////////////////////////
+
                 true
             }
         }  else if (leafFolderName.toString() == structureTemplate[it].subPath) {
@@ -200,6 +216,30 @@ def verifySubDomainAgainstStructureRules(leafFolderName, folderPath, verificatio
         }
     }
     return verificationResult
+}
+
+
+/* Verifies that the given domain path has contents that follows the domain structure rules */
+def verifyFolderContentsAgainstStructureRules(folderPath, mandatoryContentInFolder) {
+    returnValue = false
+
+    //-----Splits mandatoryContentInFolder into an array and verifies each entry
+    patternArray = mandatoryContentInFolder.tokenize(',')
+    List<File> files
+    if (patternArray.size() > 0) {
+        patternArray.size().times() {
+            index = it
+            files = new File(folderPath.toString()).listFiles().findAll { it.name =~ patternArray[index] }
+        }
+    }
+
+    if (files.size() >= patternArray.size()) {
+        returnValue = true
+    }
+
+    log(".... " + returnValue + " Rule: " + mandatoryContentInFolder + " folder: " + folderPath + " files: " + files, true)
+
+    return returnValue
 }
 
 
@@ -224,7 +264,7 @@ if (getValuesFromParameters() == true) {
     }
 
     //-----Iterate through the downloaded structure and verify that it's correct
-    verifyServiceDomainStructure(localRIVTATargetFolder)
+    verifyServiceDomainStructure(localRIVTATargetFolder+"/"+usedDomain+"/")
 }
 
 //-----Exit the script execution and return the return code to the caller
