@@ -1,3 +1,4 @@
+
 /**
  * ///////////////////////////////////////////////////////////////////////
  * //                                                                   //
@@ -6,11 +7,10 @@
  * ///////////////////////////////////////////////////////////////////////
  *
  * @author Peter Hernfalk
- * Last update: 2014-01-11
+ * Last update: 2014-01-12
 
  */
 
-import groovy.lang.Binding
 import groovy.io.FileType
 
 checkoutFiles = false
@@ -110,8 +110,9 @@ def log(String text, boolean logEntryIsMandatory) {
 }
 
 def downloadFileStructureFromRivtaSite(String domainNameRivta) {
+    log("Downloading folders and files for '" + domainNameRivta + "' ...", true)
 
-    RIVTACheckoutCommandToFolder = RIVTACheckoutCommand + RIVTADomainFolder + domainNameRivta.trim() + "/ " + localRIVTATargetFolder
+    RIVTACheckoutCommandToFolder = RIVTACheckoutCommand + RIVTADomainFolder + domainNameRivta.trim() + "/ " + localRIVTATargetFolder + "/" + domainNameRivta.trim()
     log(RIVTACheckoutCommandToFolder, false)
 
     //-----Delete the local target folder before download
@@ -140,9 +141,6 @@ def verifyServiceDomainStructure(String domainStructure) {
             }
         }
     }
-
-    //-----Failed verification sets the return code to: 1
-    //returnCode = 1
 }
 
 
@@ -156,8 +154,7 @@ def verifySubDomainStructure(String domainStructure, String subDomainName) {
         //-----Filter out all directories except the '.svn' directories
         if ((file.toString().contains('.svn')) == false) {
 
-            //-----Verification of the found directory against the directory template
-            //-----The directory contents should also be verified, so that mandatory files exist in the directory
+            //-----Verification of the found directory, and its contents, against the directory template
             verificationResult = verifySubDomainAgainstStructureRules(file.name, file, verificationResult)
         }
     }
@@ -185,11 +182,9 @@ def verifySubDomainAgainstStructureRules(leafFolderName, folderPath, verificatio
                 verificationResult[it] = true
                 result = true
 
-                /////////////////////////////////////////////////////////////////////////
-                //log("..folderPath: " + folderPath.toString().getAt(from..to), true)
-                //log("..mandatoryContent: " + structureTemplate[it].mandatoryContent, true)
+                //-----Verify the folder contents
                 if (structureTemplate[it].mandatoryContent.size() > 0) {
-                    log("..verifying mandatoryContent: " + structureTemplate[it].mandatoryContent + " in " + folderPath.toString().getAt(from..to), true)
+                    log("..verifying mandatoryContent: " + structureTemplate[it].mandatoryContent + " in " + folderPath.toString().getAt(from..to), false)
                 }
                 if (structureTemplate[it].mandatoryContent != "") {
                     if (verifyFolderContentsAgainstStructureRules(folderPath, structureTemplate[it].mandatoryContent) == false) {
@@ -198,7 +193,6 @@ def verifySubDomainAgainstStructureRules(leafFolderName, folderPath, verificatio
                         result = false
                     }
                 }
-                /////////////////////////////////////////////////////////////////////////
 
                 true
             }
@@ -214,23 +208,35 @@ def verifySubDomainAgainstStructureRules(leafFolderName, folderPath, verificatio
 
 /* Verifies that the given domain path has contents that follows the domain structure rules */
 def verifyFolderContentsAgainstStructureRules(folderPath, mandatoryContentInFolder) {
-    returnValue = false
+    returnValue = true //false
+    contentVerificationResult = []
 
     //-----Splits mandatoryContentInFolder into an array and verifies each entry
     patternArray = mandatoryContentInFolder.tokenize(',')
     List<File> files
+
     if (patternArray.size() > 0) {
         patternArray.size().times() {
             index = it
+            contentVerificationResult[index] = false
             files = new File(folderPath.toString()).listFiles().findAll { it.name =~ patternArray[index] }
+            if (files.size() > 0) {
+                contentVerificationResult[index] = true
+            }
         }
     }
 
-    if (files.size() >= patternArray.size()) {
-        returnValue = true
+    //-----Inspects the verification result
+    contentVerificationResult.size.times {
+        if (contentVerificationResult[it] == false) {
+            returnValue = false
+        }
     }
-
-    log(".... " + returnValue + " Rule: " + mandatoryContentInFolder + " folder: " + folderPath + " files: " + files, true)
+    if (returnValue == false) {
+        log(".... Unsuccessful file verification (" + mandatoryContentInFolder + " of folder: " + folderPath + ". Found files: " + files, true)
+    } else {
+        log(".... Successful file verification (" + mandatoryContentInFolder + " of folder: " + folderPath + ". Found files: " + files, false)
+    }
 
     return returnValue
 }
