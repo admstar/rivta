@@ -7,7 +7,7 @@
  * ///////////////////////////////////////////////////////////////////////
  *
  * @author Peter Hernfalk
- * Last update: 2014-01-12
+ * Last update: 2014-01-13
 
  */
 
@@ -147,7 +147,8 @@ def verifyServiceDomainStructure(String domainStructure) {
 /* Verifies that that the service domains structure and contents are correct on the rivta site */
 def verifySubDomainStructure(String domainStructure, String subDomainName) {
 
-    verificationResult = [false, false, false, false, false, false, false, false, false, false]
+    verificationResult = []
+    structureTemplate.size().times() { verificationResult[it] = false }
 
     def dir = new File(domainStructure+subDomainName)
     dir.eachFileRecurse (FileType.DIRECTORIES) { file ->
