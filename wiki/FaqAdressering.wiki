@@ -70,6 +70,67 @@ den vill koppla sig till, och i praktiken känner konsumenten över huvud taget 
 I stället används logiska adresser som representerar en verksamhet (verksamhetsadressering) eller ett system (systemadressering). 
 I båda dessa fall används HSA-id som logisk adress (med något undantag).
 
+==Vad menar vi med "verksamhetsadressering"?==
+Tjänstekontrakt som är verksamhetsadrsserade använder ett HSA-id som representerar en organisatorisk enhet som logisk adress.
 
+==Vad menar vi med "systemadressering"?==
+Vid systemadressering används ett HSA-id som representerar ett källsystem som logisk adress. 
+Ett källsystem kan t ex vara ett journalsystem. I normalfallet är källsystemet inte samma sak som tjänsteproducenten.
 
+==Var hanteras mappningen mellan logiska adresser och "verkliga"?==
+Tjänsteplattformen måste mappa en logisk adress till den teknisak adressen för ett producentsystem, 
+och skicka ett anrop vidare till producenten. Det är alltså inte producentsystemet som adresseras, 
+istället en bakomliggande verksamhet eller ett bakomliggande källsystem. 
+Producentsystemet kan sägas representera verksamheten eller källsystemet. 
+Mappningen mellan logisk adress och adress till producent lagras i Tjänsteadresseringskatalogen (TAK) i Tjänsteplattformen.
 
+=Behörighetshantering=
+
+==Får en konsument anropa alla producenter?==
+Nej, i normalfallet måste verksamheten eller systemägare för källsystemet explicit godkänna varje konsument innan anrop tillåts.
+
+==Var finns behörighetsinformationen?==
+Denna information lagras i Tjänsteadresseringskatalaogen i Tjänsteplattformen.
+
+=Tjänsteadresseringskatalogen (TAK)=
+
+==Vad är TAK?==
+Tjänsteadresseringskatalogen är en databas med nio tabeller som innehåller den grundinformation som 
+Tjänsteplattformen behöver för att hantera virtuella tjänster (tjänstekontrakt), 
+anslutningar av konsumenter och producenter, logiska adresser samt behörigheter.
+
+==Vilken information relaterat till tjänster och tjänstekontrakt lagras i TAK?==
+Namnet på tjänstekontraktet (hela namnrymden), version samt vilken version av RIVTA det bygger på.
+
+==Vilken information relaterat till konsumenter lagras i TAK?==
+HSA-id (från SITHS-funktionscertifikat) som konsumenten har. Dessutom IP-adressen till konsumenten.
+
+==Vilken information relaterat till producenter lagras i TAK?==
+HSA-id (från SITHS-funktionscertifikat) som producenten har. Dessutom IP-adressen till producenten.
+
+==Vilken information relaterat till logiska adresser lagras i TAK?==
+Logiska adresser lagras i en tabell tillsammans med uppgifter om adressens gilitighetsperiod. 
+De logiska adresserna kopplas samman med tjänstekontrakt och producentsystem på ett sådan sätt att 
+Tjänsteplattformen utifrån ett anrop mot ett specifikt tjänstekontrakt och logisk adress kan se vilken 
+producent som skall adresseras.
+
+==Vilken information relaterat till behörighet lagras i TAK?==
+Anropsbehörigheter lagras i en tabell tillsammans med uppgifter om  gilitighetsperiod. 
+En uppgift om behörighet kopplas samman med logisk adress, tjänstekontrakt och konsumentsystem. 
+Tjänsteplattformen kan utifrån denna information avgöra huruvida en viss konsument får anropa en 
+specifik tjänst (tjänstekontrakt) på en specifik logisk adress.
+
+==Hur administreras informationen i TAK?==
+Det är naturligtvis av yttersta vikt att information i Tjänsteadresseringskatalogen är korrekt, 
+samt att det finns en spårbarhet på vem som tillhandahållit vilken information. 
+Inom förvaltningen för den gemensamma Tjänsteplattformen använder man för närvarande ett system med 
+fyra olika Word-blanketter (A, B, C och D) för att inhämta informationen. 
+Dessa ligger till grund för uppdateringar av databasen, och arkiveras. 
+Det finns planer på att ta fram ett administrativt gränssnitt för att delegera ut administrationen av TAK närmare 
+verksamheterna.
+
+==Vad används de fyra blanketterna till?==
+* A - Information om tjänster (tjänstekontrakt), version osv. 
+* B - Information om konsumentsystem 
+* C - Information om producentsystem och logiska adresser 
+* D - Information om anropsbehörighet
