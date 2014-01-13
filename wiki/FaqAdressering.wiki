@@ -83,9 +83,9 @@ Tillsammans utgår det ett sk "fully-qualified host name" (FQHN). I Ineras fall 
 
 ==Vad menar vi med en "logisk adress"?==
 En viktig effekt av konceptet med tjänsteplattformen är att frikoppla konsumenter och producenter så långt det är möjligt. 
-Vi vill inte tvinga alla konsumenter att direkt administera den tekniska adressen till samtliga producentsystem som 
+Vi vill inte tvinga alla konsumenter att direkt administrera den tekniska adressen till samtliga producentsystem som 
 den vill koppla sig till, och i praktiken känner konsumenten över huvud taget inte till producentsystemet. 
-I stället används logiska adresser som representerar en verksamhet (verksamhetsadressering) eller ett system (systemadressering). 
+I stället används virtuella tjänster och logiska adresser som representerar en verksamhet (verksamhetsadressering) eller ett system (systemadressering). 
 I båda dessa fall används HSA-id som logisk adress (med något undantag).
 
 ==Vad menar vi med "verksamhetsadressering"?==
@@ -153,7 +153,7 @@ verksamheterna.
  * C - Information om producentsystem och logiska adresser 
  * D - Information om anropsbehörighet
 
- =Adressering i praktiken"
+=Adressering i praktiken=
  
 ==Kan TPs seriekopplas?==
 Den nationella arkitekturen som den är beskriven i T-boken och detaljerad i RIV TA utgår ifrån att flera 
@@ -166,7 +166,7 @@ Det innebär att det kommer att vara ett visst överlapp av information mellan r
 Dock måste även adresser till angränsande plattformar finnas med.
 
 ==Hur kopplas praktisk tre plattformar in i serie?==
-Låt oss anta att tre plattformar kopplas samman, K1 - RTP1 - NTP - RTP2 - P1 - V1. 
+Låt oss anta att en konsument kopplas samman med en producent (som representerar en verksamhet) via tre plattformar; K1 - RTP1 - NTP - RTP2 - P1 - V1. 
 
 http://rivta.googlecode.com/svn/wiki/images/IllustrationerTAK.png
 
@@ -175,7 +175,8 @@ En klient på VGR, K1, är ansluten till VGRs regionala plattform,
 RTP1. När en journal skall hämtas från Karolinska sjukhuset inom SLL kommer anropet att routas via den gemensamma plattformen, NTP,
 och sedan vidare till SLLs regionala, RTP2. 
 Därefter går till den producent, P1, som representerar den verksamhet, V1, som äger journalinformationen.  
-FFör att detta exempel skall fungera så måste TAK-RTP1 (dvs den TAK som används av RTP1) innehålla information om:     
+
+För att detta exempel skall fungera så måste TAK-RTP1 (dvs den TAK som används av RTP1) innehålla information om:     
  
  *  Den aktuella tjänsten (tjänstekontraktet)    
  *  K1 - dvs de anslutna konsumenterna    
@@ -186,9 +187,9 @@ FFör att detta exempel skall fungera så måste TAK-RTP1 (dvs den TAK som anvä
  
 Det är alltså den första plattformen i kedjan som ansvarar för behörighetskontrollen. 
 Behörighetskontroll baseras på den logiska adressen, V1. RTP1 känner inte till varken RTP2 eller P1.  
- 
- 
-TAK-NTP kommer att ha information om:     
+  
+TAK-NTP kommer att ha information om: 
+    
  *  Den aktuella tjänsten (tjänstekontraktet)    
  *  RTP1 - dvs att RTP1 är en konsument för det aktuella kontraktet    
  *  RTP2 - dvs att RTP2 är producent för det aktuella kontraktet    
@@ -198,8 +199,9 @@ TAK-NTP kommer att ha information om:
 Ingen behörighetskontroll i NTP. NTP känner alltså inte till K1 eller P1. 
 Eftersom RTP1 agerar konsument och kan sägas representera alla verkliga konsumenter KX så kommer adresseringen 
 att bli densamma för alla konsumenter som adresserar samma kontrakt och verksamhet.  
- 
-TAK-RTP2 innehåller:     
+  
+TAK-RTP2 innehåller:   
+  
  *  Den aktuella tjänsten (tjänstekontraktet)    
  *  NTP - dvs att NTP är en konsument för det aktuella kontraktet    
  *  P1 - dvs att P1 är producent för det aktuella kontraktet    
