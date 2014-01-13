@@ -29,14 +29,14 @@ eller informationsbehov grupperas. En sådan gruppering benämns Tjänstedomän.
 
 ==Tjänsteplattformen (TP)==
 
-===Vad är en TP (enligt T-boken)===
+===Vad är en TP (enligt T-boken)?===
 Tjänsteplattform är ett samlingsnamn för de komponenter som utgör plattform för tjänstebaserad integration över huvudmannagränser. 
 Varje samverkansdomän i en federation (se senare avsnitt) kan ha en egen instans eller ingå i den överordnade domänens plattform. 
 Den nationella samverkansdomänen har en instans som publicerar virtuella tjänster och aggregerande tjänster för 
 alla nationella tjänstekontrakt (aggregerande tjänster och virtuella tjänster beskrivs i informationssystemvyn). 
 All samverkan mellan samverkansdomäner och inom den nationella domänen sker via tjänster i den nationella tjänsteplattformen.
 
-===Vad är en virtualiseringsplattform (enligt T-boken)===
+===Vad är en virtualiseringsplattform (enligt T-boken)?===
 Virtualiseringsplattformen är en central komponent i TP.  
 Den erbjuder infrastruktur för virtuella tjänster. 
 Dess primära syfte är systematisk realisering av virtuella tjänster. 
@@ -44,18 +44,31 @@ Som en effekt kan generella aspekter av virtualisering förändras i plattformen
 enskilda tjänster behöver förändras. Det ger gemensam hantering av gemensamma behov, så som felhantering, 
 åtkomstkontroll, övervakning, vägval. loggning, uppdatering av engagemangsindex, SLA-uppföljning mot tjänsteproducenter m.m.
 
-===Vad menas med vägval i TP===
+===Vad menas med vägval i TP?===
 En anropande konsument behöver inte hålla reda på den tekniska adressen (IP-adress, FQHN) till alla de 
 producenter som den anropar. Istället skickar konsumenten med en sk logisk adress till TP. TP översätter den 
 logiska adressen och skickar meddelandet vidare till rätt mottagare. 
 På detta sätt uppnås sk "lös koppling" mellan de system som är integrerade via TP. 
 Ett adressbyte kan genomföras en gång i TP, inte i potentiellt hundratals konsumentsystem.
 
-===Vad menas med åtkomstkontroll i TP===
+===Vad menas med åtkomstkontroll i TP?===
 En konsument har inte automatiskt rätt att anropa producentsystem via TP. 
 Informationsägaren/systemägaren måste explicit ge tillstånd för varje anropande system. 
 Dessa godkännanden lagras i TP och är en förutsättning för att ett anrop skall skickas vidare.
 
+=Adresseringsmekanismer=
+
+==Hur adresseras system i ett IP-nätverk?==
+Adressering sker i normalfallet baserat på IP-adress. Som exempel, IP-adressen till Ineras hemsida är 79.136.112.108. 
+I normallet används dock host- och domännamn som representerar de tekniska adresserna. 
+Tillsammans utgår det ett sk "fully-qualified host name" (FQHN). I Ineras fall är det namnet "www.inera.se".
+
+==Vad menar vi med en "logisk adress"?==
+En viktig effekt av konceptet med tjänsteplattformen är att frikoppla konsumenter och producenter så långt det är möjligt. 
+Vi vill inte tvinga alla konsumenter att direkt administera den tekniska adressen till samtliga producentsystem som 
+den vill koppla sig till, och i praktiken känner konsumenten över huvud taget inte till producentsystemet. 
+I stället används logiska adresser som representerar en verksamhet (verksamhetsadressering) eller ett system (systemadressering). 
+I båda dessa fall används HSA-id som logisk adress (med något undantag).
 
 
 
