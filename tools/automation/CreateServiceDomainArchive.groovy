@@ -8,7 +8,7 @@
  *
  *
  * @author Peter Hernfalk
- * Last update: 2013-12-11
+ * Last update: 2013-12-14
  *
  * Script status: one thing remains: add tag name to the archive file. After that the script will be ready for acceptance test
  *
@@ -50,13 +50,17 @@ def getValuesFromParameters() {
     medesc = """\
     \nThis script requires Groovy 1.8.1 or later.
     The purpose of the script is to create an archive file (.zip), containing the folder structure of a specific service domain.
-    """
+
+    Usage example:
+    groovy ./CreateServiceDomainArchive.groovy -ad . -af itintegration.engagementindex_1.2.zip -sd ./rivta/itintegration/engagementindex -l true
+"""
 
     def cli = new CliBuilder(usage: mecall, header: 'Options:', footer: medesc)
     cli.ad(longOpt: 'archivedir', args:1, required:true, argName:'Target directory', 'Directory in which the archive file will be stored.')
     cli.af(longOpt: 'archivefile', args:1, required:true, argName:'Archive file', 'The file name of the archive file (.zip) that will be uploaded to the rivta site.')
     cli.l(longOpt: 'useoptionallogging', args:1, required:false, argName:'Optional: true', 'If "true" then the script logs extra output to the console')
     cli.sd(longOpt: 'sourcedir', args:1, required:true, argName:'Source directory', 'Directory in which the service domain files exists.')
+
 
     //-----Will probably need more parameters so that a correct file name can be used for the archive file
     //cli.??(longOpt: 'tagname??', args:1, required:true, argName:'Tag name', 'The tag name, which is a part of the archive file name.')
@@ -100,7 +104,12 @@ def getValuesFromParameters() {
         cli.usage()
         return 1
     }
-    localRIVTASourceFolder = argSourceDir
+    //localRIVTASourceFolder = argSourceDir
+    localRIVTASourceFolder = argSourceDir.toString().replaceAll("\\.", "/")
+    if (argSourceDir[0] == '.') {
+        localRIVTASourceFolder = '.' + localRIVTASourceFolder.subSequence(1,localRIVTASourceFolder.length())
+    }
+
     if (localRIVTASourceFolder.endsWith("/") == false) {
         localRIVTASourceFolder += "/"
     }
