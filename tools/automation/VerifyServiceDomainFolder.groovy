@@ -7,7 +7,7 @@
  * ///////////////////////////////////////////////////////////////////////
  *
  * @author Peter Hernfalk
- * Last update: 2014-01-13
+ * Last update: 2014-01-14
 
  */
 
@@ -50,11 +50,14 @@ def getValuesFromParameters() {
     medesc = """\
     This script requires Groovy 1.8.1 or later.
     The purpose of the script is to verify the folder structure of a specific service domain.
+
+    Usage example:
+    groovy ./VerifyServiceDomainFolder.groovy -dd ./rivta -dn clinicalprocess.activityprescription.logistics -cf true -l false
     """
 
     def cli = new CliBuilder(usage: mecall, header: 'Options:', footer: medesc)
     cli.cf(longOpt: 'checkoutfiles', args:1, required:true, argName:'Optional: true', 'If "true" then files will be downloaded to the target directory')
-    cli.dd(longOpt: 'domaindir', args:1, required:true, argName:'Domain directory', 'Directory in which service domain files exists. If the checkoutfiles parameter is set to "y" then they will be downloaded to this folder')
+    cli.dd(longOpt: 'domaindir', args:1, required:true, argName:'Domain directory', 'Local file directory in which the service domain files exists. If the checkoutfiles parameter is set to "y" then they will be downloaded to this folder')
     cli.dn(longOpt: 'domainname', args:1, required:true, argName:'Domain name', 'Name of the domain')
     cli.l(longOpt: 'useOptionalLogging', args:1, required:false, argName:'Optional: true', 'If "true" then the script logs extra output to the console')
 
@@ -88,7 +91,7 @@ def getValuesFromParameters() {
         cli.usage()
         return 1
     }
-    usedDomain = argDomainName
+    usedDomain = argDomainName.toString().replaceAll("\\.", "/")
 
     //-----Parameter: l (useOptionalLogging)
     useOptionalLogging = false
