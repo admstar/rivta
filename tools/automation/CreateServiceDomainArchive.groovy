@@ -8,19 +8,19 @@
  *
  *
  * @author Peter Hernfalk
- * Last update: 2013-12-14
- *
- * Script status: one thing remains: add tag name to the archive file. After that the script will be ready for acceptance test
- *
+ * Last update: 2013-12-15
  *
  * Namnsättning av Zip-fil
  * Zip-filen ska alltid ges samma version som den taggning den motsvarar i Subversion. När en Zipfil
  * skapas utifrån taggen i Subversion ska prefixet ”ServiceContracts” adderas namnet:
+ *
  * Release:
  * ServiceContracts_<tjänstedomän>_<major_version>.<minor_version>.zip
  * Ex. ServiceContracts_clinicalprocess_activityprescription_actoutcome_2.1.zip
+ *
  * Release candidate:
- * ServiceContracts_<tjänstedomän>_<major_version>.<minor_version>_RC<RC-nummer>.
+ * ServiceContracts_<tjänstedomän>_<major_version>.<minor_version>_RC<RC-nummer>.zip
+ * Ex. clinicalprocess_activityprescription_actoutcome_2.1_RC3
  */
 
 import java.util.zip.ZipOutputStream
@@ -52,18 +52,15 @@ def getValuesFromParameters() {
     The purpose of the script is to create an archive file (.zip), containing the folder structure of a specific service domain.
 
     Usage example:
-    groovy ./CreateServiceDomainArchive.groovy -ad . -af itintegration.engagementindex_1.2.zip -sd ./rivta/itintegration/engagementindex -l true
+    groovy ./CreateServiceDomainArchive.groovy -sd ./rivta/itintegration/engagementindex/tags/TD_ENGAGEMENTINDEX_1_0_RC11 -ad . -l true
 """
+    //Previous example: groovy ./CreateServiceDomainArchive.groovy -ad . -af itintegration.engagementindex_1.2.zip -sd ./rivta/itintegration/engagementindex/tags/TD_ENGAGEMENTINDEX_1_0_RC11 -l true
 
     def cli = new CliBuilder(usage: mecall, header: 'Options:', footer: medesc)
     cli.ad(longOpt: 'archivedir', args:1, required:true, argName:'Target directory', 'Directory in which the archive file will be stored.')
-    cli.af(longOpt: 'archivefile', args:1, required:true, argName:'Archive file', 'The file name of the archive file (.zip) that will be uploaded to the rivta site.')
+    //cli.af(longOpt: 'archivefile', args:1, required:true, argName:'Archive file', 'The file name of the archive file (.zip) that will be uploaded to the rivta site.')
     cli.l(longOpt: 'useoptionallogging', args:1, required:false, argName:'Optional: true', 'If "true" then the script logs extra output to the console')
     cli.sd(longOpt: 'sourcedir', args:1, required:true, argName:'Source directory', 'Directory in which the service domain files exists.')
-
-
-    //-----Will probably need more parameters so that a correct file name can be used for the archive file
-    //cli.??(longOpt: 'tagname??', args:1, required:true, argName:'Tag name', 'The tag name, which is a part of the archive file name.')
 
     //-----Verify all parameters
     def options = cli.parse(args)
@@ -82,13 +79,13 @@ def getValuesFromParameters() {
     }
 
     //-----Parameter: af (archivefile)
-    def argArchiveFile = options.getProperty('archivefile')
+    /*def argArchiveFile = options.getProperty('archivefile')
     if (argArchiveFile.toString().length() == 0) {
         log('* The supplied name of the archive file seems to be empty\n', true)
         cli.usage()
         return 1
     }
-    archiveFile = argArchiveFile
+    archiveFile = argArchiveFile*/
 
     //-----Parameter: l (useOptionalLogging)
     useOptionalLogging = false
@@ -127,8 +124,25 @@ def log(String text, boolean logEntryIsMandatory) {
     }
 }
 
+/* Sets the archive file name according to the rules that are described in the document "konfigurationsstyrning" (rivta.se/documents/ARK_0007) */
+def setCorrectArchiveFileName() {
+    tagsIndex = localRIVTASourceFolder.indexOf("tags/")
+    endIndex = localRIVTASourceFolder.length()
+    if (localRIVTASourceFolder.toString().endsWith("/") == true) {
+        endIndex -= 1
+    }
+    if (tagsIndex >= 0) {
+        archiveFile = localRIVTASourceFolder.subSequence(tagsIndex+5, endIndex)
+    }
+    archiveFile = archiveFile.toString().replaceAll("-", "_")
+    archiveFile += ".zip"
+    println "--- archiveFile: " + archiveFile
+}
+
 /* Creates an archive file, containing files belonging to one service domain */
 def createArchiveFile() {
+    setCorrectArchiveFileName()
+
     log("Creating the archive file: " + localArchiveTargetFolder + archiveFile, true)
     def ant = new AntBuilder()
     ant.zip(
