@@ -271,6 +271,18 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="RheumatoidArthritisDataType">
+        <xs:annotation>
+            <xs:documentation>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="rheumatoidArthritisDataHeader" type="tns:PatientSummaryHeaderType"/>
+            <xs:element name="rheumatoidArthritisDataBody" type="tns:RheumatoidArthritisBodyType"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="RelatedDiagnosisType">
         <xs:annotation>
             <xs:documentation>
@@ -304,6 +316,20 @@
                 type="tns:UnstructuredAlertInformationType"/>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="relatedAlertInformation"
                 type="tns:RelatedAlertInformationType"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RheumatoidArthritisBodyType">
+        <xs:annotation>
+            <xs:documentation>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="patientVariables" type="tns:PatientVariablesType" minOccurs="0"/>
+            <xs:element name="doctorsVariables" type="codes:DoctorsGlobalEnum" minOccurs="0"/>
+            <xs:element name="labVariables" type="tns:LabVariablesType" minOccurs="0"/>
+            <xs:element name="drug" type="tns:DrugType" maxOccurs="unbounded" minOccurs="0"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -425,6 +451,68 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="PatientVariablesType">
+        <xs:annotation>
+            <xs:documentation>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="workability" type="xs:integer" minOccurs="0"/>
+            <xs:element name="globalHealth" type="xs:integer" minOccurs="0"/>
+            <xs:element name="pain" type="xs:integer" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="eq5d" type="xs:float" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="healthAssessmentQuestionnaire" type="xs:float" maxOccurs="1"
+                minOccurs="0"/>
+            <xs:element name="tenderJoints28" type="xs:integer" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="swollenJoints28" type="xs:integer" maxOccurs="1" minOccurs="0"/>
+
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DoctorsVariablesType">
+        <xs:annotation>
+            <xs:documentation>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="doctorsGlobal" type="codes:DoctorsGlobalEnum" minOccurs="0"/>
+            <xs:element name="tenderJoints28" type="xs:integer" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="swollenJoints28" type="xs:integer" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="diseaseActivityScore28" type="xs:float" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="diseaseActivityScore28CRP" type="xs:float" maxOccurs="1" minOccurs="0"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="LabVariablesType">
+        <xs:annotation>
+            <xs:documentation>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="sedimentationRate" type="xs:integer" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="cReactiveProtein" type="xs:integer" maxOccurs="1" minOccurs="0"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DrugType">
+        <xs:annotation>
+            <xs:documentation>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="name" type="xs:string" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="dose" type="xs:float" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="datePeriod" type="tns:DatePeriodType" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="endCause" type="xs:string" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="type" type="xs:string" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="interval" type="xs:string" maxOccurs="1" minOccurs="0"/>
+
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
 
 
 
@@ -569,7 +657,6 @@
         </xs:sequence>
     </xs:complexType>
 
-
     <xs:complexType name="IIType">
         <xs:annotation>
             <xs:documentation/>
@@ -591,4 +678,5 @@
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
+    <xs:element name="communicableDisease" type="tns:CommunicableDiseaseType"/>
 </xs:schema>
