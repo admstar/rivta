@@ -461,7 +461,7 @@
             <xs:element name="globalHealth" type="xs:integer" minOccurs="0"/>
             <xs:element name="pain" type="xs:integer" maxOccurs="1" minOccurs="0"/>
             <xs:element name="eq5d" type="xs:float" maxOccurs="1" minOccurs="0"/>
-            <xs:element name="healthAssessmentQuestionnaire" type="xs:float" maxOccurs="1"
+            <xs:element name="healthAssessmentQuestionnaireScore" type="xs:float" maxOccurs="1"
                 minOccurs="0"/>
             <xs:element name="tenderJoints28" type="xs:integer" maxOccurs="1" minOccurs="0"/>
             <xs:element name="swollenJoints28" type="xs:integer" maxOccurs="1" minOccurs="0"/>
@@ -491,8 +491,8 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="sedimentationRate" type="xs:integer" maxOccurs="1" minOccurs="0"/>
-            <xs:element name="cReactiveProtein" type="xs:integer" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="sedimentationRate" type="tns:PQType" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="cReactiveProtein" type="tns:PQType" maxOccurs="1" minOccurs="0"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -504,12 +504,12 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="name" type="xs:string" maxOccurs="1" minOccurs="0"/>
-            <xs:element name="dose" type="xs:float" maxOccurs="1" minOccurs="0"/>
-            <xs:element name="datePeriod" type="tns:DatePeriodType" maxOccurs="1" minOccurs="0"/>
-            <xs:element name="endCause" type="xs:string" maxOccurs="1" minOccurs="0"/>
             <xs:element name="type" type="xs:string" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="dose" type="tns:PQType" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="datePeriod" type="tns:DatePeriodType" maxOccurs="1" minOccurs="0"/>
             <xs:element name="interval" type="xs:string" maxOccurs="1" minOccurs="0"/>
 
+            <xs:element name="endCause" type="xs:string" maxOccurs="1" minOccurs="0"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -653,6 +653,14 @@
             <xs:element name="opinion" type="xs:string"/>
             <xs:element name="personId" type="tns:PersonIdType"/>
             <xs:element name="personName" type="xs:string"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PQType">
+        <xs:sequence>
+            <xs:element name="value" type="xs:double"/>
+            <xs:element name="unit" type="xs:string"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
