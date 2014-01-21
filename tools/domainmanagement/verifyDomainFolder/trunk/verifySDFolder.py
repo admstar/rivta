@@ -1,5 +1,9 @@
 #!/usr/bin/python
 
+#
+# LEO 2014-01-20
+#
+
 import os
 import argparse
 import glob
