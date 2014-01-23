@@ -459,12 +459,47 @@
         <xs:sequence>
             <xs:element name="workability" type="xs:integer" minOccurs="0"/>
             <xs:element name="globalHealth" type="xs:integer" minOccurs="0"/>
-            <xs:element name="pain" type="xs:integer" maxOccurs="1" minOccurs="0"/>
-            <xs:element name="eq5dIndexValue" type="xs:float" maxOccurs="1" minOccurs="0"/>
-            <xs:element name="healthAssessmentQuestionnaireScore" type="xs:float" maxOccurs="1"
-                minOccurs="0"/>
-            <xs:element name="tenderJoints28" type="xs:integer" maxOccurs="1" minOccurs="0"/>
-            <xs:element name="swollenJoints28" type="xs:integer" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="pain" maxOccurs="1" minOccurs="0" >
+                <xs:simpleType>
+                    <xs:restriction base="xs:integer">
+                        <xs:minInclusive value="0"/>
+                        <xs:maxInclusive value="100"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="eq5dIndexValue" maxOccurs="1" minOccurs="0">
+                <xs:simpleType>
+                    <xs:restriction base="xs:float">
+                        <xs:minInclusive value="-0.594"/>
+                        <xs:maxInclusive value="1.000"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="healthAssessmentQuestionnaireScore" maxOccurs="1"
+                minOccurs="0">
+                <xs:simpleType>
+                    <xs:restriction base="xs:float">
+                        <xs:minInclusive value="0.000"/>
+                        <xs:maxInclusive value="3.000"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="tenderJoints28" maxOccurs="1" minOccurs="0">
+                <xs:simpleType>
+                    <xs:restriction base="xs:integer">
+                        <xs:minInclusive value="0"/>
+                        <xs:maxInclusive value="28"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="swollenJoints28" maxOccurs="1" minOccurs="0">
+                <xs:simpleType>
+                    <xs:restriction base="xs:integer">
+                        <xs:minInclusive value="0"/>
+                        <xs:maxInclusive value="28"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
 
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
@@ -477,8 +512,22 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="doctorsGlobal" type="codes:DoctorsGlobalEnum" minOccurs="0"/>
-            <xs:element name="tenderJoints28" type="xs:integer" maxOccurs="1" minOccurs="0"/>
-            <xs:element name="swollenJoints28" type="xs:integer" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="tenderJoints28" maxOccurs="1" minOccurs="0">
+                <xs:simpleType>
+                    <xs:restriction base="xs:integer">
+                        <xs:minInclusive value="0"/>
+                        <xs:maxInclusive value="28"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="swollenJoints28" maxOccurs="1" minOccurs="0">
+                <xs:simpleType>
+                    <xs:restriction base="xs:integer">
+                        <xs:minInclusive value="0"/>
+                        <xs:maxInclusive value="28"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
             <xs:element name="diseaseActivityScore28" type="xs:float" maxOccurs="1" minOccurs="0"/>
             <xs:element name="diseaseActivityScore28CRP" type="xs:float" maxOccurs="1" minOccurs="0"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
