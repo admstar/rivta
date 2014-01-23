@@ -23,16 +23,16 @@
 	
 	SET SCHEMADIR=..\schemas
 	
-	SET W0=%SCHEMADIR%\interactions\GetHealthCareUnitInteraction\GetHealthCareUnitInteraction_1.0_RIVTABP21.wsdl
+	SET W0=%SCHEMADIR%\interactions\GetHealthCareUnitInteraction\GetHealthCareUnitInteraction_1.1_RIVTABP21.wsdl
 	SET X0=%SCHEMADIR%\interactions\GetHealthCareUnitInteraction\*.xsd
 
-	SET W1=%SCHEMADIR%\interactions\GetHealthCareUnitListInteraction\GetHealthCareUnitListInteraction_1.0_RIVTABP21.wsdl
+	SET W1=%SCHEMADIR%\interactions\GetHealthCareUnitListInteraction\GetHealthCareUnitListInteraction_1.1_RIVTABP21.wsdl
 	SET X1=%SCHEMADIR%\interactions\GetHealthCareUnitListInteraction\*.xsd
 
-	SET W2=%SCHEMADIR%\interactions\GetHealthCareUnitMembersInteraction\GetHealthCareUnitMembersInteraction_1.0_RIVTABP21.wsdl
+	SET W2=%SCHEMADIR%\interactions\GetHealthCareUnitMembersInteraction\GetHealthCareUnitMembersInteraction_1.1_RIVTABP21.wsdl
 	SET X2=%SCHEMADIR%\interactions\GetHealthCareUnitMembersInteraction\*.xsd
 
-	SET W3=%SCHEMADIR%\interactions\GetUnitInteraction\GetUnitInteraction_1.0_RIVTABP21.wsdl
+	SET W3=%SCHEMADIR%\interactions\GetUnitInteraction\GetUnitInteraction_1.1_RIVTABP21.wsdl
 	SET X3=%SCHEMADIR%\interactions\GetUnitInteraction\*.xsd
 
 

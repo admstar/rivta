@@ -17,7 +17,7 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:infrastructure:directory:1' targetNamespace='urn:riv:infrastructure:directory:1' elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'>
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:infrastructure:directory:1' targetNamespace='urn:riv:infrastructure:directory:1' elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.1'>
   <xs:simpleType name="TS">
     <xs:annotation>
       <xs:documentation>Regexp declaration for timestamp in the format: YYYYMMDDHHMMSS</xs:documentation>
@@ -97,7 +97,8 @@
       <xs:element name="languageKnowledgeCode" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="title" type="xs:string" minOccurs="0" />
       <xs:element name="healthCareProfessionalLicence" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element name="speciality" type="tns:SpecialityType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="specialityCode" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="specialityName" type="xs:string"  minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="dn" type="tns:DNType" />
 	  <xs:element name="protectedPerson" type="xs:boolean" minOccurs="0" />	
       <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
@@ -122,7 +123,8 @@
         <xs:element name="languageKnowledgeCode" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="title" type="xs:string" minOccurs="0" />
         <xs:element name="healthCareProfessionalLicence" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="speciality" type="tns:SpecialityType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="specialityCode" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="specialityName" type="xs:string"  minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="hsaSystemRole" type="tns:HsaSystemRoleType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="dn" type="tns:DNType" />
         <xs:element name="protectedPerson" type="xs:boolean" minOccurs="0" />	    
@@ -181,19 +183,11 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="SpecialityType">
-    <xs:sequence>  
-      <xs:element name="specialityCode" type="xs:string" />
-      <xs:element name="specialityName" type="xs:string" />
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-  
     <xs:complexType name="CredentialInformationType">
     <xs:sequence>
       <xs:element name="givenName" type="xs:string"/>
       <xs:element name="middleAndSurName" type="xs:string"/>
-      <xs:element name="hsaIdentityPerson" type="xs:string"/>
+      <xs:element name="personHsaId" type="xs:string"/>
       <xs:element name="healthCareProfessionalLicence" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="personalPrescriptionCode" type="xs:string" minOccurs="0"/>
       <xs:element name="groupPrescriptionCode" type="xs:string" minOccurs="0" maxOccurs="unbounded" />

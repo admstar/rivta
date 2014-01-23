@@ -17,46 +17,46 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<wsdl:definitions name='GetPersonInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tjsr='urn:riv:infrastructure:directory:employee:GetPersonResponder:1' xmlns:tjsi='urn:riv:infrastructure:directory:employee:GetPersonInitiator:1' xmlns:tns='urn:riv:infrastructure:directory:employee:GetPerson:1:rivtabp21' targetNamespace='urn:riv:infrastructure:directory:employee:GetPerson:1:rivtabp21' xmlns:itr='urn:riv:itintegration:registry:1'>
+<wsdl:definitions name='GetUnitInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tjsr='urn:riv:infrastructure:directory:organization:GetUnitResponder:1' xmlns:tjsi='urn:riv:infrastructure:directory:organization:GetUnitInitiator:1' xmlns:tns='urn:riv:infrastructure:directory:organization:GetUnit:1:rivtabp21' targetNamespace='urn:riv:infrastructure:directory:organization:GetUnit:1:rivtabp21' xmlns:itr='urn:riv:itintegration:registry:1'>
   <xs:annotation>
     <xs:documentation>
-			 Tjänsteinteraktionens namn: GetPersonInteraction
+			 Tjänsteinteraktionens namn: GetUnitInteraction
 			 Beskrivning: 
-			   Used to search for information about a specified unit or function
+			   Submission of medical health reports to the Swedish social insurance institutions
 			 Revisioner: 
-			 Tjänstedomän: infrastructure:directory:employee
+			 Tjänstedomän: infrastructure:directory:organization
 			 Tjänsteinteraktionstyp: Fråga-Svar
 			 WS-profil: RIVTABP21
 			 Förvaltas av: Sveriges Kommuner och Landsting
 			 </xs:documentation>
   </xs:annotation>
   <wsdl:types>
-    <xs:schema targetNamespace='urn:riv:infrastructure:directory:employee:GetPerson:1:rivtabp21'>
-      <xs:import schemaLocation='GetPersonResponder_1.0.xsd' namespace='urn:riv:infrastructure:directory:employee:GetPersonResponder:1' />
+    <xs:schema targetNamespace='urn:riv:infrastructure:directory:organization:GetUnit:1:rivtabp21'>
+      <xs:import schemaLocation='GetUnitResponder_1.1.xsd' namespace='urn:riv:infrastructure:directory:organization:GetUnitResponder:1' />
       <xs:import schemaLocation='../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
     </xs:schema>
   </wsdl:types>
-  <wsdl:message name='GetPersonRequest'>
+  <wsdl:message name='GetUnitRequest'>
     <wsdl:part name='LogicalAddress' element='itr:LogicalAddress'>
       <wsdl:documentation>The HSA-id of the source system</wsdl:documentation>
     </wsdl:part>
-    <wsdl:part name='parameters' element='tjsr:GetPerson' />
+    <wsdl:part name='parameters' element='tjsr:GetUnit' />
   </wsdl:message>
-  <wsdl:message name='GetPersonResponse'>
-    <wsdl:part name='parameters' element='tjsr:GetPersonResponse' />
+  <wsdl:message name='GetUnitResponse'>
+    <wsdl:part name='parameters' element='tjsr:GetUnitResponse' />
   </wsdl:message>
-  <wsdl:portType name='GetPersonResponderInterface'>
-    <wsdl:operation name='GetPerson'>
-      <wsdl:input message='tns:GetPersonRequest' />
-      <wsdl:output message='tns:GetPersonResponse' />
+  <wsdl:portType name='GetUnitResponderInterface'>
+    <wsdl:operation name='GetUnit'>
+      <wsdl:input message='tns:GetUnitRequest' />
+      <wsdl:output message='tns:GetUnitResponse' />
      </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name='GetPersonResponderBinding' type='tns:GetPersonResponderInterface'>
+  <wsdl:binding name='GetUnitResponderBinding' type='tns:GetUnitResponderInterface'>
     <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
-    <wsdl:operation name='GetPerson'>
-      <soap:operation soapAction='urn:riv:infrastructure:directory:employee:GetPersonResponder:1:GetPerson' style='document' />
+    <wsdl:operation name='GetUnit'>
+      <soap:operation soapAction='urn:riv:infrastructure:directory:organization:GetUnitResponder:1:GetUnit' style='document' />
       <wsdl:input>
-        <soap:header use='literal' message='tns:GetPersonRequest' part='LogicalAddress' />
+        <soap:header use='literal' message='tns:GetUnitRequest' part='LogicalAddress' />
         <soap:body use='literal' parts='parameters' />
       </wsdl:input>
       <wsdl:output>
@@ -64,8 +64,8 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name='GetPersonResponderService'>
-    <wsdl:port name='GetPersonResponderPort' binding='tns:GetPersonResponderBinding'>
+  <wsdl:service name='GetUnitResponderService'>
+    <wsdl:port name='GetUnitResponderPort' binding='tns:GetUnitResponderBinding'>
       <soap:address location='http://tempuri.org' />
     </wsdl:port>
   </wsdl:service>
