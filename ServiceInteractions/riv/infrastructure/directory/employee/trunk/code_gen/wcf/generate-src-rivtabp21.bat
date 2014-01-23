@@ -23,10 +23,10 @@
 	
 	SET SCHEMADIR=..\schemas
 	
-	SET W0=%SCHEMADIR%\interactions\GetPersonIncludingProtectedPersonInteraction\GetPersonIncludingProtectedPersonInteraction_1.0_RIVTABP21.wsdl
+	SET W0=%SCHEMADIR%\interactions\GetPersonIncludingProtectedPersonInteraction\GetPersonIncludingProtectedPersonInteraction_1.1_RIVTABP21.wsdl
 	SET X0=%SCHEMADIR%\interactions\GetPersonIncludingProtectedPersonInteraction\*.xsd
 
-	SET W1=%SCHEMADIR%\interactions\GetPersonInteraction\GetPersonInteraction_1.0_RIVTABP21.wsdl
+	SET W1=%SCHEMADIR%\interactions\GetPersonInteraction\GetPersonInteraction_1.1_RIVTABP21.wsdl
 	SET X1=%SCHEMADIR%\interactions\GetPersonInteraction\*.xsd
 
 
