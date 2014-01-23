@@ -271,18 +271,6 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="RheumatoidArthritisDataType">
-        <xs:annotation>
-            <xs:documentation>
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="rheumatoidArthritisDataHeader" type="tns:PatientSummaryHeaderType"/>
-            <xs:element name="rheumatoidArthritisDataBody" type="tns:RheumatoidArthritisBodyType"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
     <xs:complexType name="RelatedDiagnosisType">
         <xs:annotation>
             <xs:documentation>
@@ -320,21 +308,7 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="RheumatoidArthritisBodyType">
-        <xs:annotation>
-            <xs:documentation>
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="patientVariables" type="tns:PatientVariablesType" minOccurs="0"/>
-            <xs:element name="doctorsVariables" type="codes:DoctorsGlobalEnum" minOccurs="0"/>
-            <xs:element name="labVariables" type="tns:LabVariablesType" minOccurs="0"/>
-            <xs:element name="drug" type="tns:DrugType" maxOccurs="unbounded" minOccurs="0"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="HyperSensitivityType">
+      <xs:complexType name="HyperSensitivityType">
         <xs:annotation>
             <xs:documentation>
             </xs:documentation>
@@ -451,122 +425,7 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="PatientVariablesType">
-        <xs:annotation>
-            <xs:documentation>
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="workability" type="xs:integer" minOccurs="0"/>
-            <xs:element name="globalHealth" type="xs:integer" minOccurs="0"/>
-            <xs:element name="pain" maxOccurs="1" minOccurs="0" >
-                <xs:simpleType>
-                    <xs:restriction base="xs:integer">
-                        <xs:minInclusive value="0"/>
-                        <xs:maxInclusive value="100"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="eq5dIndexValue" maxOccurs="1" minOccurs="0">
-                <xs:simpleType>
-                    <xs:restriction base="xs:float">
-                        <xs:minInclusive value="-0.594"/>
-                        <xs:maxInclusive value="1.000"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="healthAssessmentQuestionnaireScore" maxOccurs="1"
-                minOccurs="0">
-                <xs:simpleType>
-                    <xs:restriction base="xs:float">
-                        <xs:minInclusive value="0.000"/>
-                        <xs:maxInclusive value="3.000"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="tenderJoints28" maxOccurs="1" minOccurs="0">
-                <xs:simpleType>
-                    <xs:restriction base="xs:integer">
-                        <xs:minInclusive value="0"/>
-                        <xs:maxInclusive value="28"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="swollenJoints28" maxOccurs="1" minOccurs="0">
-                <xs:simpleType>
-                    <xs:restriction base="xs:integer">
-                        <xs:minInclusive value="0"/>
-                        <xs:maxInclusive value="28"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="DoctorsVariablesType">
-        <xs:annotation>
-            <xs:documentation>
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="doctorsGlobal" type="codes:DoctorsGlobalEnum" minOccurs="0"/>
-            <xs:element name="tenderJoints28" maxOccurs="1" minOccurs="0">
-                <xs:simpleType>
-                    <xs:restriction base="xs:integer">
-                        <xs:minInclusive value="0"/>
-                        <xs:maxInclusive value="28"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="swollenJoints28" maxOccurs="1" minOccurs="0">
-                <xs:simpleType>
-                    <xs:restriction base="xs:integer">
-                        <xs:minInclusive value="0"/>
-                        <xs:maxInclusive value="28"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="diseaseActivityScore28" type="xs:float" maxOccurs="1" minOccurs="0"/>
-            <xs:element name="diseaseActivityScore28CRP" type="xs:float" maxOccurs="1" minOccurs="0"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="LabVariablesType">
-        <xs:annotation>
-            <xs:documentation>
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="sedimentationRate" type="tns:PQType" maxOccurs="1" minOccurs="0"/>
-            <xs:element name="cReactiveProtein" type="tns:PQType" maxOccurs="1" minOccurs="0"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="DrugType">
-        <xs:annotation>
-            <xs:documentation>
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="name" type="xs:string" maxOccurs="1" minOccurs="0"/>
-            <xs:element name="type" type="xs:string" maxOccurs="1" minOccurs="0"/>
-            <xs:element name="dose" type="tns:PQType" maxOccurs="1" minOccurs="0"/>
-            <xs:element name="datePeriod" type="tns:DatePeriodType" maxOccurs="1" minOccurs="0"/>
-            <xs:element name="interval" type="xs:string" maxOccurs="1" minOccurs="0"/>
-
-            <xs:element name="endCause" type="xs:string" maxOccurs="1" minOccurs="0"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-
-
-
-    <!-- 
+	<!-- 
         Below: only helper types allowed.
         
         A helper type is a type used in one ore more of the domain schema common types.
