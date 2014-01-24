@@ -24,8 +24,8 @@ under the License.
         schemaVersion='ISO19757-3'>
 
     <iso:title>Validation for GetRhematoidArthritisData</iso:title>
-    <iso:ns prefix='urn1' uri='urn:riv:clinicalprocess:healthcond:description:2'/>
-    <iso:ns prefix='urn' uri='urn:riv:clinicalprocess:healthcond:description:GetRhematoidArthritisResponder:1'/>
+    <iso:ns prefix='urn1' uri='urn:riv:clinicalprocess:healthcond:rheuma:1'/>
+    <iso:ns prefix='urn' uri='urn:riv:clinicalprocess:healthcond:rheuma:GetRhematoidArthritisResponder:1'/>
 
     <iso:pattern abstract="true" id="pattern.CvType">
         <iso:rule context="$path">
@@ -57,33 +57,4 @@ under the License.
         </iso:rule>
     </iso:pattern>
 
-    <!-- Rules for Response -->
-    <iso:pattern id="Verify alertInformationHeader">
-        <iso:rule context="urn1:alertInformationHeader">
-            <iso:assert test="count(urn1:nullified) = 0"><iso:name /> must not contain nullified element.</iso:assert>
-            <iso:assert test="count(urn1:nullifiedReason) = 0"><iso:name /> must not contain nullifiedReason element.</iso:assert>
-            <iso:assert test="count(urn1:documentTime) = 0"><iso:name /> must not contain documentTime element.</iso:assert>
-            <iso:assert test="count(urn1:documentTitle) = 0"><iso:name /> must not contain documentTitle element.</iso:assert>
-        </iso:rule>
-    </iso:pattern>
-
-    <iso:pattern id="Verify alertInformationBody">
-        <iso:rule context="urn1:alertInformationBody">
-            <iso:assert test="count(urn1:hypersensitivity) + count(urn1:seriousDisease) + count(urn1:treatment) + count(urn1:communicableDisease) + count(urn1:restrictionOfCare) + count(urn1:unstructuredAlertInformation) = 1">
-                In <iso:name /> exactly one of hypersensitivity, seriousDisease, treatment, communicableDisease, restrictionOfCare and unstructuredAlertInformation must be supplied.</iso:assert>
-            <iso:assert test="count(urn1:validityTimePeriod/urn1:start) = 1">
-                In <iso:name /> validityTimePeriod/urn1:start must be supplied.</iso:assert>
-        </iso:rule>
-    </iso:pattern>
-
-    <iso:pattern id="Verify pharmaceuticalHypersensitivity">
-        <iso:rule context="urn1:pharmaceuticalHypersensitivity">
-            <iso:assert test="count(urn1:atcSubstance) + count(urn1:nonATCSubstance) = 1">
-                In <iso:name /> exactly one of atcSubstance and nonATCSubstance must be supplied.</iso:assert>
-            <iso:assert test="count(urn1:atcSubstance) + count(urn1:nonATCSubstanceComment) = 1">
-                In <iso:name /> exactly one of atcSubstance and nonATCSubstanceComment must be supplied.</iso:assert>
-            <iso:assert test="(count(urn1:atcSubstance) = 1) or (count(urn1:nonATCSubstance) + count(urn1:nonATCSubstanceComment) = 2)">
-                In <iso:name /> either atcSubstance or both nonATCSubstance and nonATCSubstanceComment must be supplied.</iso:assert>
-        </iso:rule>
-    </iso:pattern>
 </iso:schema>
