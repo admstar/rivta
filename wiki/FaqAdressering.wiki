@@ -71,14 +71,14 @@ enskilda tjänster behöver förändras. Det ger gemensam hantering av gemensamm
 åtkomstkontroll, övervakning, vägval. loggning, uppdatering av engagemangsindex, SLA-uppföljning mot tjänsteproducenter m.m.
 
 ===Vad menas med vägval i TP?===
-En anropande konsument behöver inte hålla reda på den tekniska adressen (IP-adress, FQHN) till alla de 
+En anropande tjänstekonsument behöver inte hålla reda på den tekniska adressen (IP-adress, FQHN) till alla de 
 producenter som den anropar. Istället skickar konsumenten med en sk logisk adress till TP. TP översätter den 
 logiska adressen och skickar meddelandet vidare till rätt mottagare. 
 På detta sätt uppnås sk "lös koppling" mellan de system som är integrerade via TP. 
 Ett adressbyte kan genomföras en gång i TP, inte i potentiellt hundratals konsumentsystem.
 
 ===Vad menas med åtkomstkontroll i TP?===
-En konsument har inte automatiskt rätt att anropa producentsystem via TP. 
+En tjänstekonsument har inte automatiskt rätt att anropa producentsystem via TP. 
 Informationsägaren/systemägaren måste explicit ge tillstånd för varje anropande system. 
 Dessa godkännanden lagras i TP och är en förutsättning för att ett anrop skall skickas vidare.
 
@@ -108,12 +108,12 @@ Tjänsteplattformen måste mappa en logisk adress till den teknisak adressen fö
 och skicka ett anrop vidare till producenten. Det är alltså inte producentsystemet som adresseras, 
 istället en bakomliggande verksamhet eller ett bakomliggande källsystem. 
 Producentsystemet kan sägas representera verksamheten eller källsystemet. 
-Mappningen mellan logisk adress och adress till producent lagras i Tjänsteadresseringskatalogen (TAK) i Tjänsteplattformen.
+Mappningen mellan logisk adress och adress till tjänsteproducent lagras i Tjänsteadresseringskatalogen (TAK) i Tjänsteplattformen.
 
 =Behörighetshantering=
 
-==Får en konsument anropa alla producenter?==
-Nej, i normalfallet måste verksamheten eller systemägare för källsystemet explicit godkänna varje konsument innan anrop tillåts.
+==Får en tjänstekonsument anropa alla producenter?==
+Nej, i normalfallet måste verksamheten eller systemägare för källsystemet explicit godkänna varje tjänstekonsument innan anrop tillåts.
 
 ==Var finns behörighetsinformationen?==
 Denna information lagras i Tjänsteadresseringskatalaogen i Tjänsteplattformen.
@@ -143,7 +143,7 @@ producent som skall adresseras.
 ==Vilken information relaterat till behörighet lagras i TAK?==
 Anropsbehörigheter lagras i en tabell tillsammans med uppgifter om  gilitighetsperiod. 
 En uppgift om behörighet kopplas samman med logisk adress, tjänstekontrakt och konsumentsystem. 
-Tjänsteplattformen kan utifrån denna information avgöra huruvida en viss konsument får anropa en 
+Tjänsteplattformen kan utifrån denna information avgöra huruvida en viss tjänstekonsument får anropa en 
 specifik tjänst (tjänstekontrakt) på en specifik logisk adress.
 
 ==Hur administreras informationen i TAK?==
@@ -165,8 +165,8 @@ verksamheterna.
  
 ==Kan TPs seriekopplas?==
 Den nationella arkitekturen som den är beskriven i T-boken och detaljerad i RIV TA utgår ifrån att flera 
-tjänsteplattformar kan seriekopplas. Typfallet är att en region/landsting har en regional instans (en sk RTP) som används för regional trafik, men också utgör gateway för alla integrationer till tjänster utanför regionen. Praktiskt kan man i normalfallet tänka sig en kedja på upp till tre plattformar, RTP-NTP-RTP, för kommunikation ut ur en region, 
-via den gemensamma plattformen (NTP) och in till en tjänst i en annan region. Teoretisk skall dock kedjan kunna vara längre.
+tjänsteplattformar kan seriekopplas. Typfallet är att en region/landsting har en regional instans (en sk RTjP) som används för regional trafik, men också utgör gateway för alla integrationer till tjänster utanför regionen. Praktiskt kan man i normalfallet tänka sig en kedja på upp till tre plattformar, RTjP-NTjP-RTjP, för kommunikation ut ur en region, 
+via den gemensamma plattformen (NTjP) och in till en tjänst i en annan region. Teoretisk skall dock kedjan kunna vara längre.
 
 ==Vilken information finns i en regional TAK?==
 När plattformar kopplas i serie måste de samspela vad gäller vägval (adressering) och behörighetskontroll. 
@@ -174,48 +174,48 @@ Det innebär att det kommer att vara ett visst överlapp av information mellan r
 Dock måste även adresser till angränsande plattformar finnas med.
 
 ==Hur kopplas praktisk tre plattformar in i serie?==
-Låt oss anta att en konsument kopplas samman med en producent (som representerar en verksamhet) via tre plattformar; K1 - RTP1 - NTP - RTP2 - P1 - V1. 
+Låt oss anta att en tjänstekonsument kopplas samman med en tjänsteproducent (som representerar en verksamhet) via tre plattformar; K1 - RTjP1 - NTjP - RTjP2 - P1 - V1. 
 
 http://rivta.googlecode.com/svn/wiki/images/IllustrationerTAK.png
 
-Ett exempel på en sådan integration skulle kunna vara en framtida NPÖ-tjänst (NPÖ2). 
+Ett exempel på en sådan integration skulle kunna gälla NPÖ2 som tjänstekonsument och tjänsten GetCareDocumentation. 
 En klient på VGR, K1, är ansluten till VGRs regionala plattform, 
-RTP1. När en journal skall hämtas från Karolinska sjukhuset inom SLL kommer anropet att routas via den gemensamma plattformen, NTP,
-och sedan vidare till SLLs regionala, RTP2. 
+RTjP1. När en journal skall hämtas från Karolinska sjukhuset inom SLL kommer anropet att routas via den gemensamma plattformen, NTjP,
+och sedan vidare till SLLs regionala, RTjP2. 
 Därefter går till den producent, P1, som representerar den verksamhet, V1, som äger journalinformationen.  
 
-För att detta exempel skall fungera så måste TAK-RTP1 (dvs den TAK som används av RTP1) innehålla information om:     
+För att detta exempel skall fungera så måste TAK-RTjP1 (dvs den TAK som används av RTjP1) innehålla information om:     
  
  *  Den aktuella tjänsten (tjänstekontraktet)    
  *  K1 - dvs de anslutna konsumenterna    
- *  NTP - dvs att den gemensamma plattformen är ansluten som ett producentsystem för aktuellt kontrakt.    
+ *  NTjP - dvs att den gemensamma plattformen är ansluten som ett producentsystem för aktuellt kontrakt.    
  *  V1 - dvs den logiska adressen för V1    
- *  Adresseringsinformation att anrop till V1 (för specifikt kontrakt) skall adresseras via NTP    
+ *  Adresseringsinformation att anrop till V1 (för specifikt kontrakt) skall adresseras via NTjP    
  * Behörighet - det faktum att K1 har behörighet att anropa V1 
  
 Det är alltså den första plattformen i kedjan som ansvarar för behörighetskontrollen. 
-Behörighetskontroll baseras på den logiska adressen, V1. RTP1 känner inte till varken RTP2 eller P1.  
+Behörighetskontroll baseras på den logiska adressen, V1. RTjP1 känner inte till varken RTjP2 eller P1.  
 
-TAK-NTP kommer att ha information om: 
+TAK-NTjP kommer att ha information om: 
 
  *  Den aktuella tjänsten (tjänstekontraktet)    
- *  RTP1 - dvs att RTP1 är en konsument för det aktuella kontraktet    
- *  RTP2 - dvs att RTP2 är producent för det aktuella kontraktet    
+ *  RTjP1 - dvs att RTjP1 är en tjänstekonsument för det aktuella kontraktet    
+ *  RTjP2 - dvs att RTjP2 är tjänsteproducent för det aktuella kontraktet    
  *  V1 - dvs den logiska adressen för V1    
- *  Adresseringsinformation att anrop till V1 (för specifikt kontrakt) skall adresseras via RTP2 
+ *  Adresseringsinformation att anrop till V1 (för specifikt kontrakt) skall adresseras via RTjP2 
  
-Ingen behörighetskontroll i NTP. NTP känner alltså inte till K1 eller P1. 
-Eftersom RTP1 agerar konsument och kan sägas representera alla verkliga konsumenter KX så kommer adresseringen 
+Ingen behörighetskontroll i NTjP. NTjP känner alltså inte till K1 eller P1. 
+Eftersom RTjP1 agerar tjänstekonsument och kan sägas representera alla verkliga konsumenter KX så kommer adresseringen 
 att bli densamma för alla konsumenter som adresserar samma kontrakt och verksamhet.  
 
-TAK-RTP2 innehåller:   
+TAK-RTjP2 innehåller:   
 
  *  Den aktuella tjänsten (tjänstekontraktet)    
- *  NTP - dvs att NTP är en konsument för det aktuella kontraktet    
- *  P1 - dvs att P1 är producent för det aktuella kontraktet    
+ *  NTjP - dvs att NTjP är en tjänstekonsument för det aktuella kontraktet    
+ *  P1 - dvs att P1 är tjänsteproducent för det aktuella kontraktet    
  *  V1 - dvs den logiska adressen för V1    
  *  Adresseringsinformation att anrop till V1 (för specifikt kontrakt) skall adresseras via P1 
 
-Ingen behörighetskontroll sker i RTP2. RTP2 känner inte till K1 eller RTP1. Eftersom NTP agerar 
+Ingen behörighetskontroll sker i RTjP2. RTjP2 känner inte till K1 eller RTjP1. Eftersom NTjP agerar 
 konsument och kan sägas representera alla externa komsumenter så kommer adresseringen att bli densamma för alla 
 externa externa konsumenter som adresserar samma kontrakt och verksamhet.
