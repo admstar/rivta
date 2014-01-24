@@ -3,6 +3,41 @@
 
 <wiki:toc max_depth="3" />
 
+
+=Test=
+
+==Testflagga i tjänstekontrakt==
+*Fråga: * 
+Vi har fått in ett ändringsförslag på att vi ska lägga till en testflagga i meddelandet för att man efter exempelvis journalsystemsförändringar skall kunna skicka testremisser i produktion. Finns det någon helhetssyn på detta från arkitekturledningen? Jag kan tycka förslaget griper över alla nationella kontrakt som driver någon slags process (t.ex intyg, tidbok, listningstjänst).
+
+*Svar: * 
+CeHis _Arkitektur och regelverk_ har diskuterat frågan om testflagga i tjänstekontrakten. Det går att se nyttan av en sådan möjlighet. Den generella principen är dock att inte ska blanda in testadata i produktionsmiljöerna. Det finns alltid en risk att ett visst system inte korrekt implementerat kontrollen av flaggan. I flöden, där flera system anropas i serie, ökar risken att det kan begås misstag. Med tanke på de mycket höga krav på "korrekthet" som finns inom många områden inom vården anser vi att det inte skall öppnas upp för testdata man på det här sättet. Så, det generella svaret är nej. Om en specifik domän skulle vilja driva frågan vidare så görs det lämpligen via ett Arkitekturellt beslut (AB) med en tydlig konsekevensutredning.
+
+=Projektplatsen Google code=
+
+==Problem att visa/ladda ner PDF dokument==
+*Fråga: *
+Hur gör jag när jag försöker ladde ner en fil och får meddelandet: "This file is not plain text (only UTF-8 and Latin-1 text encodings are currently supported)."?
+
+*Svar: *
+Välj alternativet "View raw file"
+
+==Använda befintlig mailadress som konto i Google code==
+*Fråga: *
+Kan jag använda mitt befintliga, ej Google-baserade, mailkonto när jag jobbar i Google code?
+
+*Svar: *
+Ja. Gå till google.se och välj att logga på. Klicka sedan på "Skapa ett konto", och därefter ”Jag föredrar att använda min nuvarande e-postadress”. Fyll i uppgifterna. Sedan fungerar det.  
+
+=Plattform enligt RIV-TA=
+
+==Information om ursprungligt konsumentsystem==
+*Fråga: *
+Vad heter den http-header där Tjänsteplattformen, eller en lokal plattform, placerar HSA-id för ursprungligt anropande konsumentsystem?
+
+*Svar: *
+x-rivta-original-serviceconsumer-hsaid
+
 =Namnsättning och versionshantering =
 
 
@@ -72,38 +107,3 @@ Så, applicerat på dina frågor:
 ZIP-filen skall döpas med versionen på det högsta kontraktsversionen
 Tjänster som inte ändrats skall inte förändras, dvs skall fortsatt vara 1.0
 Zip 1.1 kan alltså innehålla kontrakt på 1.0 (dock inte motsatsen, en zip 1.0 kan inte innehålla kontrakt 1.1)
-
-
-=Test=
-
-==Testflagga i tjänstekontrakt==
-*Fråga: * 
-Vi har fått in ett ändringsförslag på att vi ska lägga till en testflagga i meddelandet för att man efter exempelvis journalsystemsförändringar skall kunna skicka testremisser i produktion. Finns det någon helhetssyn på detta från arkitekturledningen? Jag kan tycka förslaget griper över alla nationella kontrakt som driver någon slags process (t.ex intyg, tidbok, listningstjänst).
-
-*Svar: * 
-CeHis _Arkitektur och regelverk_ har diskuterat frågan om testflagga i tjänstekontrakten. Det går att se nyttan av en sådan möjlighet. Den generella principen är dock att inte ska blanda in testadata i produktionsmiljöerna. Det finns alltid en risk att ett visst system inte korrekt implementerat kontrollen av flaggan. I flöden, där flera system anropas i serie, ökar risken att det kan begås misstag. Med tanke på de mycket höga krav på "korrekthet" som finns inom många områden inom vården anser vi att det inte skall öppnas upp för testdata man på det här sättet. Så, det generella svaret är nej. Om en specifik domän skulle vilja driva frågan vidare så görs det lämpligen via ett Arkitekturellt beslut (AB) med en tydlig konsekevensutredning.
-
-=Projektplatsen Google code=
-
-==Problem att visa/ladda ner PDF dokument==
-*Fråga: *
-Hur gör jag när jag försöker ladde ner en fil och får meddelandet: "This file is not plain text (only UTF-8 and Latin-1 text encodings are currently supported)."?
-
-*Svar: *
-Välj alternativet "View raw file"
-
-==Använda befintlig mailadress som konto i Google code==
-*Fråga: *
-Kan jag använda mitt befintliga, ej Google-baserade, mailkonto när jag jobbar i Google code?
-
-*Svar: *
-Ja. Gå till google.se och välj att logga på. Klicka sedan på "Skapa ett konto", och därefter ”Jag föredrar att använda min nuvarande e-postadress”. Fyll i uppgifterna. Sedan fungerar det.  
-
-=Plattform enligt RIV-TA=
-
-==Information om ursprungligt konsumentsystem==
-*Fråga: *
-Vad heter den http-header där Tjänsteplattformen, eller en lokal plattform, placerar HSA-id för ursprungligt anropande konsumentsystem?
-
-*Svar: *
-x-rivta-original-serviceconsumer-hsaid
