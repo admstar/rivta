@@ -187,7 +187,7 @@ och sedan vidare till SLLs regionala plattform (RTjP2).
 Därefter går det till den producent, Take Care (P1), som representerar Hjärtkliniken. Den slutgiltiga adressaten är alltså Hjärtkliniken (V1). 
 
 ==== RTjP1-TAK ====
-För att detta exempel skall fungera så måste TAK-RTjP1 (dvs den TAK som används av RTjP1) innehålla förljande information:     
+För att detta exempel skall fungera så måste RTjP1-TAK (dvs den TAK som används av RTjP1) innehålla förljande information:     
  
 || *Fält* || *Data* ||
 || Tjänst || GetCareDocumentation ||
@@ -195,7 +195,8 @@ För att detta exempel skall fungera så måste TAK-RTjP1 (dvs den TAK som anvä
 || Tjänsteproducent || NTjP ||
 || Logisk adress || V1 ||
 || Adresseringsinformation || att anrop till V1 (för specifikt kontrakt) skall adresseras via NTjP ||    
-|| Behörighetinformation || det faktum att K1 har behörighet att anropa V1 ||
+|| Behörighetinformation || det faktum att K1 har behörighet att anropa V1 för GetCareDocumentation ||
+
  
  
 Det är alltså den första plattformen i kedjan som ansvarar för behörighetskontrollen. 
@@ -203,7 +204,15 @@ Behörighetskontroll baseras på den logiska adressen, V1. RTjP1 känner inte ti
 
 ==== NTjP-TAK ====
 
-TAK-NTjP kommer att ha information om: 
+NTjP-TAK kommer att ha information om: 
+
+|| *Fält* || *Data* ||
+|| Tjänst || GetCareDocumentation ||
+|| Tjänstekonsument || RTjP1 ||
+|| Tjänsteproducent || RTjP2 ||
+|| Logisk adress || V1 ||
+|| Adresseringsinformation || att anrop adresserade till adressen (verksamheten) V1, för tjänsten GetCareDocumentation, skall adresseras via tjänsteproducenten RTjP2 ||    
+|| Behörighetinformation || det faktum att tjänstekonsumenten RTjP1 har behörighet att adressera verksamheten V1 för tjänsten GetCareDocumentation ||
 
  *  Den aktuella tjänsten (GetCareDocumentation)    
  *  RTjP1 - dvs att RTjP1 är en tjänstekonsument för det aktuella kontraktet    
@@ -217,7 +226,7 @@ att bli densamma för alla konsumenter som adresserar samma kontrakt och verksam
 
 ==== RTjP2-TAK ====
 
-TAK-RTjP2 innehåller:   
+RTjP2-TAK innehåller:   
 
  *  Den aktuella tjänsten (tjänstekontraktet)    
  *  NTjP - dvs att NTjP är en tjänstekonsument för det aktuella kontraktet    
