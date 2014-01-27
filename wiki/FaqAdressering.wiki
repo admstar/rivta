@@ -194,9 +194,8 @@ För att detta exempel skall fungera så måste RTjP1-TAK (dvs den TAK som anvä
 || Tjänstekonsument || K1 ||
 || Tjänsteproducent || NTjP ||
 || Logisk adress || V1 ||
-|| Adresseringsinformation || att anrop till V1 (för specifikt kontrakt) skall adresseras via NTjP ||    
-|| Behörighetinformation || det faktum att K1 har behörighet att anropa V1 för GetCareDocumentation ||
-
+|| Adresseringsinformation || att anrop adresserade till adressen (verksamheten) V1, för tjänsten GetCareDocumentation, skall adresseras via tjänsteproducenten NTjP ||    
+|| Behörighetinformation || att tjänstekonsumenten K1 har behörighet att adressera verksamheten V1 för tjänsten GetCareDocumentation ||
  
  
 Det är alltså den första plattformen i kedjan som ansvarar för behörighetskontrollen. 
@@ -212,13 +211,8 @@ NTjP-TAK kommer att ha information om:
 || Tjänsteproducent || RTjP2 ||
 || Logisk adress || V1 ||
 || Adresseringsinformation || att anrop adresserade till adressen (verksamheten) V1, för tjänsten GetCareDocumentation, skall adresseras via tjänsteproducenten RTjP2 ||    
-|| Behörighetinformation || det faktum att tjänstekonsumenten RTjP1 har behörighet att adressera verksamheten V1 för tjänsten GetCareDocumentation ||
+|| Behörighetinformation || att tjänstekonsumenten RTjP1 har behörighet att adressera verksamheten V1 för tjänsten GetCareDocumentation ||
 
- *  Den aktuella tjänsten (GetCareDocumentation)    
- *  RTjP1 - dvs att RTjP1 är en tjänstekonsument för det aktuella kontraktet    
- *  RTjP2 - dvs att RTjP2 är tjänsteproducent för det aktuella kontraktet    
- *  V1 - dvs den logiska adressen för V1    
- *  Adresseringsinformation att anrop till V1 (för specifikt kontrakt) skall adresseras via RTjP2 
  
 Ingen behörighetskontroll i NTjP. NTjP känner alltså inte till K1 eller P1. 
 Eftersom RTjP1 agerar tjänstekonsument och kan sägas representera alla verkliga konsumenter KX så kommer adresseringen 
@@ -228,11 +222,13 @@ att bli densamma för alla konsumenter som adresserar samma kontrakt och verksam
 
 RTjP2-TAK innehåller:   
 
- *  Den aktuella tjänsten (tjänstekontraktet)    
- *  NTjP - dvs att NTjP är en tjänstekonsument för det aktuella kontraktet    
- *  P1 - dvs att P1 är tjänsteproducent för det aktuella kontraktet    
- *  V1 - dvs den logiska adressen för V1    
- *  Adresseringsinformation att anrop till V1 (för specifikt kontrakt) skall adresseras via P1 
+|| *Fält* || *Data* ||
+|| Tjänst || GetCareDocumentation ||
+|| Tjänstekonsument || NTjP ||
+|| Tjänsteproducent || P1 ||
+|| Logisk adress || V1 ||
+|| Adresseringsinformation || att anrop adresserade till adressen (verksamheten) V1, för tjänsten GetCareDocumentation, skall adresseras via tjänsteproducenten P1 ||    
+|| Behörighetinformation || att tjänstekonsumenten RTjP2 har behörighet att adressera verksamheten V1 för tjänsten GetCareDocumentation ||
 
 Ingen behörighetskontroll sker i RTjP2. RTjP2 känner inte till K1 eller RTjP1. Eftersom NTjP agerar 
 konsument och kan sägas representera alla externa komsumenter så kommer adresseringen att bli densamma för alla 
