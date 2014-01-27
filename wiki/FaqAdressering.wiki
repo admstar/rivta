@@ -179,7 +179,7 @@ K1 - RTjP1 - NTjP - RTjP2 - P1 - V1.
 
 http://rivta.googlecode.com/svn/wiki/images/IllustrationerTAK.png
 
-Ett exempel på en sådan integration skulle kunna gälla NPÖ2 som tjänstekonsument och tjänsten !!GetCareDocumentation. 
+Ett exempel på en sådan integration skulle kunna gälla NPÖ2 som tjänstekonsument och tjänsten !GetCareDocumentation. 
 En tjänstekonsument på VGR, K1, är ansluten till VGRs regionala plattform, 
 RTjP1. 
 När en journal skall hämtas från Hjärtkliniken på Karolinska sjukhuset inom SLL kommer anropet att routas via den gemensamma plattformen (NTjP),
@@ -205,10 +205,7 @@ För att detta exempel skall fungera så måste RTjP1-TAK (dvs den TAK som anvä
 || Adresseringsinformation || att anrop adresserade till adressen (verksamheten) V1, för tjänsten !GetCareDocumentation, skall adresseras via tjänsteproducenten NTjP ||    
 || Behörighetinformation || att tjänstekonsumenten K1 har behörighet att adressera verksamheten V1 för tjänsten !GetCareDocumentation ||
  
- 
-Det är alltså den första plattformen i kedjan som ansvarar för behörighetskontrollen. 
-Behörighetskontroll baseras på den logiska adressen, V1. RTjP1 känner inte till varken RTjP2 eller P1.  
-
+Det är i den första tjänsteplattformen i kedjan som det sker en behörighetskontroll av att den ursprungliga tjänstekonsumenten har behörighet att anropa verksamheten i fråga. RTjP1 har ingen information om RTjP2 och P1.
 ==== NTjP-TAK ====
 
 NTjP-TAK kommer att ha information om: 
@@ -220,11 +217,9 @@ NTjP-TAK kommer att ha information om:
 || Logisk adress || V1 ||
 || Adresseringsinformation || att anrop adresserade till adressen (verksamheten) V1, för tjänsten !GetCareDocumentation, skall adresseras via tjänsteproducenten RTjP2 ||    
 || Behörighetinformation || att tjänstekonsumenten RTjP1 har behörighet att adressera verksamheten V1 för tjänsten !GetCareDocumentation ||
-
  
-Ingen behörighetskontroll i NTjP. NTjP känner alltså inte till K1 eller P1. 
-Eftersom RTjP1 agerar tjänstekonsument och kan sägas representera alla verkliga konsumenter KX så kommer adresseringen 
-att bli densamma för alla konsumenter som adresserar samma kontrakt och verksamhet.  
+Behörighetskontrollen begränsas här till att verifiera att den regionala tjänsteplattformen RTjP1 har rättighet att andressera V1 för GetCareDocumentation. 
+NTjP känner inte till K1 eller P1. 
 
 ==== RTjP2-TAK ====
 
@@ -238,6 +233,5 @@ RTjP2-TAK innehåller:
 || Adresseringsinformation || att anrop adresserade till adressen (verksamheten) V1, för tjänsten !GetCareDocumentation, skall adresseras via tjänsteproducenten P1 ||    
 || Behörighetinformation || att tjänstekonsumenten RTjP2 har behörighet att adressera verksamheten V1 för tjänsten !GetCareDocumentation ||
 
-Ingen behörighetskontroll sker i RTjP2. RTjP2 känner inte till K1 eller RTjP1. Eftersom NTjP agerar 
-konsument och kan sägas representera alla externa komsumenter så kommer adresseringen att bli densamma för alla 
-externa externa konsumenter som adresserar samma kontrakt och verksamhet.
+Behörighetskontrollen begränsas här till att verifiera att den gemensamma tjänsteplattformen NTjP har rättighet att andressera V1 för GetCareDocumentation. 
+RTjP2 känner inte till K1 eller RTjP1. 
