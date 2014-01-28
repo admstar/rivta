@@ -145,18 +145,28 @@ parser = argparse.ArgumentParser(description=programDescription)
 parser.add_argument('-q', '--quiet', action="store_true",
                    help='Set to supress output (only rc will be set)')				   
 
-parser.add_argument('targetdir', 
+parser.add_argument('-t', '--targetdir', action="store", dest="targetDir", 
                     help='The folder where the zip archive should be placed. Specify "." for current directory. The folder must exist!')
+
+parser.add_argument('sourceDir', 
+                    help='The RIVTA tags folder to compress. Specify "." for current directory.')
+
 
 args = parser.parse_args()
 
 quiet=args.quiet
-targetDir=args.targetdir
+targetDir=args.targetDir
+
+if not targetDir:
+	qprint('No -t specified!')
+	exit(3)
+
 targetDir=os.path.abspath(targetDir)
 
 # Verify that target directory exists
 if not os.path.isdir(targetDir):
 	print('** Error: Directory ' + targetDir + ' does not exist!')
+	parser.print_help()
 	exit(1)
 
 currentDir=os.getcwd()
