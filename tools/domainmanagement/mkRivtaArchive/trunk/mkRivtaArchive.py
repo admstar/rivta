@@ -16,8 +16,8 @@ import re
 
 programDescription = '''
 The program creates a zip archive of a service domain, while verifying that fulfil naming and other rules defined in the 
-RIV TA Konfigurationsstyrning document,
-see http://rivta.se/documents/ARK_0007.
+RIV TA Konfigurationsstyrning document. see http://rivta.se/documents/ARK_0007. 
+
 \n
 The program requires Python v2. 
 
@@ -145,22 +145,23 @@ parser = argparse.ArgumentParser(description=programDescription)
 parser.add_argument('-q', '--quiet', action="store_true",
                    help='Set to supress output (only rc will be set)')				   
 
-parser.add_argument('rootdir', 
-                    help='Base folder for the domain (trunk). Specify "." for current directory.')
+parser.add_argument('targetdir', 
+                    help='The folder where the zip archive should be placed. Specify "." for current directory. The folder must exist!')
 
 args = parser.parse_args()
 
 quiet=args.quiet
-rootDir=args.rootdir
+targetDir=args.targetdir
+targetDir=os.path.abspath(targetDir)
 
-if not rootDir:
-	rootDir=os.getcwd()
-else:
-	rootDir=os.path.abspath(rootDir)
+# Verify that target directory exists
+if not os.path.isdir(targetDir):
+	print('** Error: Directory ' + targetDir + ' does not exist!')
+	exit(1)
 
-if not quiet:
-	qprint('')
-	qprint('Root directory: ' + rootDir)
+currentDir=os.getcwd()
+
+exit(42)
 
 # Move working directory and get started with the root directory in the service domain
 workingDir = os.getcwd()
