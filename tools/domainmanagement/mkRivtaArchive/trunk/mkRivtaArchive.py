@@ -20,7 +20,7 @@ RIV TA Konfigurationsstyrning document. see http://rivta.se/documents/ARK_0007.
 
 \n
 The program requires Python v2. 
-
+ 
 \n
 This program was last updated $LastChandedDate$ in revision $Rev$.
 
