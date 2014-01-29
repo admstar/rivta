@@ -19,17 +19,22 @@ The program iterates through all folders in a RIVTA Service Domain structure.
 It verifies that the folder is defined according to the RIV TA Konfigurationsstyrning document,
 see http://rivta.se/documents/ARK_0007.
 \n
-The program requires Python v2. 
+The program requires Python v2.  
+\n
+This program was last updated $LastChangedDate$ in revision $Rev$.
 
 '''
 
+# Content in test-suite is not analyzed yet
+# OBS, for exact match "^" and "$" should be added at the beginning and end of the patterns below
+
 mandatoryContent = { 
-	'trunkKey' : [['code_gen', '1'], ['docs','1'], ['schemas', '1']] ,
-	'code_gen' : [[ 'jaxws', '1'], ['wcf', '1']] ,
-	'code_gen/jaxws' : [[ 'pom.xml', '1']] ,
-	'code_gen/wcf' : [[ '.bat', '1']] ,
+	'trunkKey' : [['^code_gen$', '1'], ['^docs$','1'], ['^schemas$', '1'], ['^test-suite$', '0']] ,
+	'code_gen' : [[ '^jaxws$', '1'], ['^wcf$', '1']] ,
+	'code_gen/jaxws' : [[ '^pom.xml$', '1']] ,
+	'code_gen/wcf' : [[ '.bat$', '1']] ,
 	'docs' : [[ '.doc', '2']] ,
-	'schemas' : [[ 'interactions', '1'], ['core_components', '1']] ,
+	'schemas' : [[ '^interactions$', '1'], ['^core_components$', '1']] ,
 	'schemas/core_components' : [[ '.xsd$', '1']] ,
 	'schemas/interactions' : [[ 'Interaction$', '1']] ,
 	'interactionKey' : [[ '.wsdl$', '1'], [ '.xsd$', '1']]   
@@ -91,8 +96,13 @@ def verifyDir(subDir):
 			mObj = rePattern.search(dirItem)
 			if mObj:
 				noOccur = noOccur + 1
-		# Verify occurance and inform		
-		if pCtrl == '1':
+
+		# Verify occurance and inform
+		if pCtrl == '0':
+			# This is an optional item
+			if noOccur < 1:
+				qprint('   *** Information - optional item not included: ' + pString)
+		elif pCtrl == '1':
 			# There should be at least one occurance				
 			if noOccur < 1:
 				globRc = globRc+1
