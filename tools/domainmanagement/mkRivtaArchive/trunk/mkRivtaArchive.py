@@ -21,6 +21,9 @@ RIV TA Konfigurationsstyrning document. see http://rivta.se/documents/ARK_0007.
 \n
 The program requires Python v2. 
 
+\n
+This program was last updated $LastChandedDate$ in revision $Rev$.
+
 '''
 
 mandatoryContent = { 
@@ -145,7 +148,7 @@ parser = argparse.ArgumentParser(description=programDescription)
 parser.add_argument('-q', '--quiet', action="store_true",
                    help='Set to supress output (only rc will be set)')				   
 
-parser.add_argument('-t', '--targetdir', action="store", dest="targetDir", 
+parser.add_argument('targetdir', 
                     help='The folder where the zip archive should be placed. Specify "." for current directory. The folder must exist!')
 
 parser.add_argument('sourceDir', 
