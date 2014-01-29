@@ -40,6 +40,9 @@ mandatoryContent = {
 
 globRc = 0
 
+topLevelDomaindirectory = 'riv'
+zipCommand = 'zip -r'
+
 ####################################################################################
 # qprint - Prints a string unless the quiet flag is set
 ####################################################################################
@@ -141,7 +144,6 @@ def verifyDir(subDir):
 ####################################################################################
 # Start of main program
 ####################################################################################
-
 # Obtain and analyze input arguemts
 parser = argparse.ArgumentParser(description=programDescription)
 
@@ -151,45 +153,147 @@ parser.add_argument('-q', '--quiet', action="store_true",
 parser.add_argument('targetdir', 
                     help='The folder where the zip archive should be placed. Specify "." for current directory. The folder must exist!')
 
-parser.add_argument('sourceDir', 
+parser.add_argument('sourcedir', 
                     help='The RIVTA tags folder to compress. Specify "." for current directory.')
 
 
 args = parser.parse_args()
 
 quiet=args.quiet
-targetDir=args.targetDir
 
-if not targetDir:
-	qprint('No -t specified!')
-	exit(3)
-
+# Verify target directory
+targetDir=args.targetdir
 targetDir=os.path.abspath(targetDir)
 
-# Verify that target directory exists
 if not os.path.isdir(targetDir):
-	print('** Error: Directory ' + targetDir + ' does not exist!')
+	print('')
+	print('** Error: Target directory ' + targetDir + ' does not exist!')
+	print('')
 	parser.print_help()
 	exit(1)
 
-currentDir=os.getcwd()
+# Verify source directory
+sourceDir=args.sourcedir
+sourceDir=os.path.abspath(sourceDir)
+
+if not os.path.isdir(sourceDir):
+	print('')
+	print('** Error: Source directory ' + sourceDir + ' does not exist!')
+	print('')
+	parser.print_help()
+	exit(1)
+
+
+# Save current working directory
+dirAtStart = os.getcwd()
+
+# Move working directory to the source directory. It should be a tag-folder for the domain.
+os.chdir(sourceDir)
+
+# Get name of actual directories from sourcedir upwards
+head, tagName = os.path.split(sourceDir)
+head, tagDir  = os.path.split(head)
+head, lvl3  = os.path.split(head)
+head, lvl2  = os.path.split(head)
+head, lvl1  = os.path.split(head)
+
+# We must check if there is an old 2-level domian structure
+if lvl1 == topLevelDomaindirectory:
+	threeLevel = False;
+	qprint('>  Seems to be a two level domain structure')
+else:
+	threeLevel = True;
+
+
+# Create the domain name based on the folder structure
+if threeLevel:
+	dnFolders = lvl1 + '_' + lvl2 + '_' + lvl3
+else:
+	dnFolders = lvl2 + '_' + lvl3
+
+print('dnFolders: ' + dnFolders)
+
+#print(lvl1)
+#print(lvl2)
+#print(lvl3)
+#print(tagDir)
+#print(tagName)
+
+# Extract the name parts of the name of the TAG directory 
+rest = tagName
+if threeLevel:
+	tlvl1, dummy, rest = rest.partition('_')
+
+tlvl2,    dummy, rest = rest.partition('_')
+tlvl3,    dummy, rest = rest.partition('_')
+tversion, dummy, rest = rest.partition('_')
+trc,      dummy, rest = rest.partition('_')
+
+# Create the domain name bases on the name of the TAGs folder
+if threeLevel:
+	dnTagName = tlvl1 + '_' + tlvl2 + '_' + tlvl3
+else:
+	dnTagName = tlvl2 + '_' + tlvl3
+
+print('dnTagname: ' + dnTagName)
+
+#print(tlvl1)
+#print(tlvl2)
+#print(tlvl3)
+print('tversion: ' + tversion)
+print('trc: ' + trc)
+
+# Verification 1 - verify that the domain name part of tag is correct
+if not dnFolders == dnTagName:
+	qprint('** Error: The name part of the tag folder ("' + dnTagName + '") is not equal to domain folder structure ("' + dnFolders.replace('_','/') + '")')
+	#exit(10)
+
+# Verification 2 - verify that the version is two or three digits with dots in between
+rePattern = re.compile('[0-9]+\.[0-9]+(\.[0-9]+)?$')
+mObj = rePattern.match(tversion)
+
+if not mObj:
+	qprint('** Error: The version part of the tag folder ("' + tversion + '") is not two or three numbers with dots in between!')
+	exit(11)
+
+# Verification 3 - verify that the optional RCXX part is correct.
+# We only check if there exist an RC specification
+if trc:
+	print('TRC true')
+
+	rePattern = re.compile('RC[0-9]+$')
+	mObj = rePattern.match(trc)
+
+	if not mObj:
+		qprint('** Error: The RC part of the tag folder ("' + trc + '") is not "RC" followed by a number!')
+		exit(12)
+
+# Verification 4 - Verify the content of the source folder with the verifyDomainFolder script
+# Will be added
+
+# Finally time to create the zip file
+zipFilename = 'ServiceContracts' + '_' + dnTagName + '_' + tversion
+if trc:
+	zipFilename = zipFilename + '_' + trc
+
+print('zipFilename: ' + zipFilename)
 
 exit(42)
 
-# Move working directory and get started with the root directory in the service domain
-workingDir = os.getcwd()
-os.chdir(rootDir)
 
 # Get going, recursevly analyze the domain folders
 rc = verifyDir('')
 
-# Return working directoy 
-os.chdir(workingDir)
+# Restore working directoy 
+os.chdir(dirAtStart)
 
 # Exist with error code
 print ''
 print 'Exit:', globRc
 exit(globRc)
 
+#################################################
+# Todo
+# - Add verification 4 above, and invoke the verifyDomainFolder script  
 
 
