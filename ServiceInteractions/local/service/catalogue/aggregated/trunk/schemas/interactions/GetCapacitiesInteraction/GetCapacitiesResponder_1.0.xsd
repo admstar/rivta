@@ -30,7 +30,10 @@
 
   <xs:complexType name="GetCapacitiesType">
     <xs:annotation>
-      <xs:documentation>Get capacities for a given hsaID.</xs:documentation>
+      <xs:documentation>Returns all capacities or for given hsaId's. Result can be filtered to return capacities for given codeSystem.
+
+Example: 
+</xs:documentation>
     </xs:annotation>
     <xs:sequence>
       <xs:element name="hsaId" type="core:HsaIdType" minOccurs="0" maxOccurs="unbounded">
@@ -39,6 +42,7 @@
 T.ex alla väntetider.</xs:documentation>
         </xs:annotation>
       </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="codeSystem" type="xs:string"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
