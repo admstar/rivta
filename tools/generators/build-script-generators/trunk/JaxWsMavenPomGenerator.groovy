@@ -15,7 +15,10 @@ import org.dom4j.io.SAXReader
  *
  * Version 1.0
  * First version of this script.
- * 
+ *  
+ * Version 1.1 - 2014-01-31
+ * The generated script is placed in a code_gen directory
+ * The path to schema files in the generated POM will start with ../../ instead of ../ to match Konfigurationsstyrningen
  *
  */
 
@@ -57,7 +60,7 @@ def getTemplatePom(){
 		<url>http://maven.apache.org</url>
 	
 		<properties>
-			<schema.path>${basedir}/../schemas</schema.path>
+			<schema.path>${basedir}/../../schemas</schema.path>
 			<cxf.version>2.2.2</cxf.version>
 		</properties>
 	
@@ -198,7 +201,7 @@ def addJaxWsInformation(pom, wsdlFiles, coreSchemasFiles){
 }
 
 def printPom(baseDir, pom, rivtaProfile){
-	def jaxwsDir = "${baseDir}/generated-scripts/jaxws"
+	def jaxwsDir = "${baseDir}/code_gen/jaxws"
 	new File(jaxwsDir).deleteDir()
 	new File(jaxwsDir).mkdirs()
 
@@ -232,7 +235,7 @@ if( args.size() < 4){
 	println "	groovy JaxWsMavenPomGenerator . ehr:scheduling rivtabp20 1"
 	println ""
 	println "OUTPUT:"
-	println "generated-scripts/jaxws/pom.xml"
+	println "code_gen/jaxws/pom.xml"
 	return
 }
 
