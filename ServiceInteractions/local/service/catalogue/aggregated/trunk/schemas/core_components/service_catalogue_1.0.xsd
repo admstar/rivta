@@ -37,7 +37,7 @@
   <!-- -->
   <xs:complexType name="OfferType">
     <xs:sequence>
-      <xs:element name="hsaObject" type="tns:HsaObjectType"/>
+      <xs:element name="careUnit" type="tns:CareUnitType"/>
       <xs:element name="validContractDatePeriod" type="tns:DatePeriodType">
         <xs:annotation>
           <xs:documentation>Valid date from when this care unit starts handling type of cares.</xs:documentation>
@@ -51,13 +51,13 @@
   </xs:complexType>
 
   <!-- -->
-  <xs:complexType name="HsaObjectType">
+  <xs:complexType name="CareUnitType">
     <xs:annotation>
       <xs:documentation>careUnitId == HSAid, careUnitName, careUnitAddress</xs:documentation>
     </xs:annotation>
     <xs:sequence>
       <xs:element name="hsaId" type="tns:HsaIdType"/>
-      <xs:element name="relativeDistinguishedName" type="xs:string"/>
+      <xs:element name="displayName" type="xs:string"/>
       <xs:element minOccurs="1" name="postalAddress" type="xs:string"/>
       <xs:element minOccurs="0" name="countyCode" type="xs:string"/>
       <xs:element minOccurs="0" name="postalCode" type="xs:string"/>
@@ -89,7 +89,6 @@
       <xs:element name="productCode" type="tns:CVType"/>
       <xs:element name="properties" type="tns:CVType" maxOccurs="unbounded"/>
       <xs:element name="description" type="xs:string"/>
-      <xs:element name="price" type="xs:string" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
