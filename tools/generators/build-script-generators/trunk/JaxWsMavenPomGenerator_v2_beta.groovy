@@ -271,17 +271,25 @@ metext = me + ' [options] ' + medesc
 
 // Create the cli and define the parameters
 def cli = new CliBuilder(usage: mecall, header: 'Options:', footer: medesc)
-cli.b(longOpt: 'basedir', args:1, required:true, argName:'directory', 'trunk directory where this script will start working, i.e. the parent directory of the \'schemas\' directory')
 cli.d(longOpt: 'domain', args:1, required:true, argName:'domain-name', 'the name of this Service Domain (like \"clinicalprocess:activity:request\"')
 cli.m(longOpt: 'major', args:1, required:true, argName:'major', 'the major version of the service domain (an integer)')
 cli.r(longOpt: 'rivtaprofile', required:true, args:1, argName:'profile', 'the short name of the RIVTA profile (rivtabp20 or rivtabp21)')
+//cli.b(longOpt: 'basedir', args:1, required:true, argName:'directory', 'trunk directory where this script will start working, i.e. the parent directory of the \'schemas\' directory')
+
 
 // Verify all parameters
 def options = cli.parse(args)
 if (!options) return
 
+println(args)
+println(options)
+
+return 1
+
+
 // basedir
 def argBasedir=options.getProperty('basedir')
+//def argBasedir=options.arguments()
 def dir = new File(argBasedir)
 
 if (! dir.exists()) {

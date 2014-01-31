@@ -10,6 +10,8 @@ import groovy.io.FileType
  * Version 1.0
  * First version of this script.
  * 
+ * Version 1.1 - 2014-01-31
+ * The generated script is placed in a code_gen directory
  *
  */
 
@@ -49,7 +51,7 @@ def getTemplateWcf(baseDir, rivtaProfile){
 	
 	'''
 	
-	def wcfDir = "${baseDir}/generated-scripts/wcf"
+	def wcfDir = "${baseDir}/code_gen/wcf"
 	new File(wcfDir).deleteDir()
 	new File(wcfDir).mkdirs()
 
@@ -140,7 +142,7 @@ if( args.size() < 4){
 	println "	groovy WcfSvcutilBatfileGenerator . ehr:scheduling rivtabp20 1"	
 	println ""
 	println "OUTPUT:"
-	println "	generated-scripts/wcf/generate-src-<rivtaProfile>.bat"
+	println "	code_gen/wcf/generate-src-<rivtaProfile>.bat"
 	return
 }
 
