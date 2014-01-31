@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 
+
 #
-# LEO 2014-01-20
+# Version 1.0 - 2014-01-31 - LEO
 #
+
+
 
 import os
 import argparse
@@ -334,8 +337,11 @@ os.chdir(workingDir)
 
 # Exist with error code
 print ''
-print 'Exit:', globRc
+if globRc > 0:
+	print ' **** ', globRc, ' error(s) detected! ***'
+else:
+	print 'OK!!!'
+
+
+print 'Exit with rc:', globRc
 exit(globRc)
-
-
-
