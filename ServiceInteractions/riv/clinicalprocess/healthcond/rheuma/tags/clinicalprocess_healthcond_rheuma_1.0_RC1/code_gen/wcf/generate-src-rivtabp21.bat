@@ -23,8 +23,8 @@
 	
 	SET SCHEMADIR=..\..\schemas
 	
-SET W1=%SCHEMADIR%\.\interactions\GetRhematoidArthritisDataInteraction\GetRhematoidArthritisDataInteraction.0_RIVTABP21.wsdl
-SET X1=%SCHEMADIR%\interactions\GetRhematoidArthritisDataInteraction/\*.xsd
+SET W1=%SCHEMADIR%\.\interactions\GetRheumatoidArthritisDataInteraction\GetRheumatoidArthritisDataInteraction.0_RIVTABP21.wsdl
+SET X1=%SCHEMADIR%\interactions\GetRheumatoidArthritisDataInteraction/\*.xsd
 
 SET XCORE=%SCHEMADIR%\core_components\*.xsd
 
