@@ -9,7 +9,8 @@ För tjänstedomänen tidbokning gäller följande policy:
 
   # *Endast mottagningar som är anslutna till webbtidbokning ska skicka information till Engagemangsindex.* Det innebär att en konsument ska kunna anropa en producent med getBookingDetails och få ut fullständig information om bokningen/kallelsen. Det leder till att en ny producent behöver logik för att skicka endast vissa mottagningars tidbokningsinformation till EI, samt funktionalitet för när en ny mottagning aktiverar webbtidbokning, då producenten behöver grundladda EI med aktuell infomation om den mottagningen.
   # *Endast framtida händelser ska finnas i EI.* Historiken ska rensas från EI av producenten. Producenten ska rensa information som inte längre är relevant, ex: när en bokning är passerad, när en kallelse inte längre är giltig. Regelverket för när informationen inte är relevant kan skilja sig mellan verksamheter.
-  # *Återladdning av EI ska kunna genomföras av en producent på uppmaning.* Sannolikt kommer EI ansvara för att radera all information. Manuell rutin för att kontakta anslutna producenter. Producenterna blir ansvarig för att grundladda informationen för de anslutna mottagningarna.
-  # *Uppdatering av EI beror på implementationen hos producenten.* Om typ (bokning/kallelse), bokningsid, och HSA-id är samma (dvs endast starttid ändras) så kan en uppdatering skickas. För övriga fall så måste befintlig EI-post raderas och en ny post skapas! 
+  # *Återladdning av EI ska kunna genomföras av en producent på uppmaning.* Detta är en reservrutin som behövs om Engagemangsindex blir korrupt. EI förvaltningen kommer då att rensa EI och Tidboksproducenterna blir ansvarig för att grundladda informationen för de anslutna mottagningarna.
   # *Avbokning i tidboken ska rendera i att Engagemangsindexposten tas bort.*
-  # *Ombokning i tidboken kan rendera i en uppdatering*, om all information utom MostRecentContent är samma (inkl BokningsId). Anslutande part bör sträva efter att göra uppdatering vid ombokning, om det är möjligt.
+  # *Ombokning i tidboken ska rendera i en uppdatering av Engagemangsindex.* Beroende på förutsättningar och implmentation hos producenten så kan uppdateringen innebära att befintlig post tas bort och en ny skapas.
+
+Se DOKUMENT för mer utförlig beskrivning och kompletterande användningsfall.
