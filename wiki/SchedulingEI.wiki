@@ -1,11 +1,11 @@
 #summary Policy för uppdatering av tidbokningsinformation i Engagemangsindex
 #labels Phase-Implementation
 
-=Policy för uppdatering av tidbokningsinformation i Engagemangsindex=
+==Policy för uppdatering av tidbokningsinformation i Engagemangsindex==
 
 Varje tjänstedomän har ansvar att definiera policy och regler för uppdatering och hantering av information inom Engagemangsindex. 
 
-För tidbokning gäller följande policy:
+För tjänstedomänen tidbokning gäller följande policy:
 
   # Endast mottagningar som är anslutna till webbtidbokning ska skicka information till Engagemangsindex. Det innebär att en konsument ska kunna anropa en producent med getBookingDetails och få ut fullständig information om bokningen/kallelsen. Det leder till att en ny producent behöver logik för att skicka endast vissa mottagningars tidbokningsinformation till EI, samt funktionalitet för när en ny mottagning aktiverar webbtidbokning, då producenten behöver grundladda EI med aktuell infomation om den mottagningen.
   # Endast framtida händelse ska finnas i EI avseende tidbokningsformation. Historiken ska rensas från EI av producenten. Producenten ska rensa information som inte längre är relevant när en bokning är passerad, när en kallelse inte längre är giltig samt när en ändring hos EI är föreslagen (addera giltighetstid till EI-post + rensningsrutin till EI). Detta är dock inte implementerat och kräver en ny version av kontrakten för EI.
