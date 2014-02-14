@@ -21,15 +21,15 @@
 	@REM ---------------------------------------------------------------------------------
 	CD ..
 	
-SET SCHEMADIR=schemas
+SET SCHEMADIR=..\..\schemas
 SET W0=%SCHEMADIR%\interactions\FindOffersInteraction\FindOffersInteraction_1.0_RIVTABP21.wsdl
 SET X0=%SCHEMADIR%\interactions\FindOffersInteraction\*.xsd
 
-SET SCHEMADIR=schemas
-SET W2=%SCHEMADIR%\interactions\UpdateOffersInteraction\GetCapacitiesInteraction_1.0_RIVTABP21.wsdl
-SET X2=%SCHEMADIR%\interactions\UpdateOffersInteraction\*.xsd
+SET SCHEMADIR=..\..\schemas
+SET W2=%SCHEMADIR%\interactions\GetCapacitiesInteraction\GetCapacitiesInteraction_1.0_RIVTABP21.wsdl
+SET X2=%SCHEMADIR%\interactions\GetCapacitiesInteraction\*.xsd
 
-SET SCHEMADIR=schemas
+SET SCHEMADIR=..\..\schemas
 SET W3=%SCHEMADIR%\interactions\PullOffersInteraction\PullOffersInteraction_1.0_RIVTABP21.wsdl
 SET X3=%SCHEMADIR%\interactions\PullOffersInteraction\*.xsd
 

@@ -115,7 +115,9 @@
   <xs:element name="GetCapacitiesResponse" type="tns:GetCapacitiesResponseType"/>
   <xs:complexType name="GetCapacitiesType">
     <xs:annotation>
-      <xs:documentation>Get capacities for a given hsaID.</xs:documentation>
+      <xs:documentation>Returns all capacities or for given hsaId's. Result can be filtered to return capacities for given codeSystem.
+
+Example:</xs:documentation>
     </xs:annotation>
     <xs:sequence>
       <xs:element name="hsaId" type="core:HsaIdType" minOccurs="0" maxOccurs="unbounded">
@@ -124,12 +126,15 @@
 T.ex alla väntetider.</xs:documentation>
         </xs:annotation>
       </xs:element>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="codeSystem" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="product" type="core:CVType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="GetCapacitiesResponseType">
     <xs:sequence>
-      <xs:element name="careUnit" type="core:CareUnitCapacityType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="organizationalUnit" type="core:CareUnitCapacityType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="result" type="core:ResultType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -165,26 +170,25 @@ T.ex alla väntetider.</xs:documentation>
   <!---->
   <xs:complexType name="OfferType">
     <xs:sequence>
-      <xs:element name="hsaObject" type="tns:HsaObjectType"/>
+      <xs:element name="organizationalUnit" type="tns:organizationalUnitType"/>
       <xs:element name="validContractDatePeriod" type="tns:DatePeriodType">
         <xs:annotation>
           <xs:documentation>Valid date from when this care unit starts handling type of cares.</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="supportedInteractions" type="tns:SupportedInteractionsType"/>
-      <xs:element name="products" type="tns:ProductType" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="comment" type="xs:string" maxOccurs="1"/>
+      <xs:element name="supportedInteraction" type="tns:SupportedInteractionsType" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="product" type="tns:ProductType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <!---->
-  <xs:complexType name="HsaObjectType">
+  <xs:complexType name="organizationalUnitType">
     <xs:annotation>
-      <xs:documentation>careUnitId == HSAid, careUnitName, careUnitAddress</xs:documentation>
+      <xs:documentation/>
     </xs:annotation>
     <xs:sequence>
       <xs:element name="hsaId" type="tns:HsaIdType"/>
-      <xs:element name="relativeDistinguishedName" type="xs:string"/>
+      <xs:element name="organizationName" type="xs:string"/>
       <xs:element minOccurs="1" name="postalAddress" type="xs:string"/>
       <xs:element minOccurs="0" name="countyCode" type="xs:string"/>
       <xs:element minOccurs="0" name="postalCode" type="xs:string"/>
@@ -200,7 +204,9 @@ T.ex alla väntetider.</xs:documentation>
             For example set interaction to urn:clinicalprocess:requestflow:ProcessRequest and urn:clinicalprocess:requestflow:ProcessRequestOutcome
             if the care unit can recieve requests and send request answers.</xs:documentation>
       </xs:annotation>
-      <xs:element name="interaction" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+      <xs:element name="interaction" type="xs:anyURI" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="logicalAddress" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="producerSystemHsaId" type="xs:string" minOccurs="0" maxOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -211,9 +217,9 @@ T.ex alla väntetider.</xs:documentation>
     </xs:annotation>
     <xs:sequence>
       <xs:element name="productCode" type="tns:CVType"/>
-      <xs:element name="properties" type="tns:CVType" maxOccurs="unbounded"/>
-      <xs:element name="description" type="xs:string"/>
-      <xs:element name="price" type="xs:string" minOccurs="0"/>
+      <xs:element name="productDescription" type="xs:string" minOccurs="0"/>
+      <xs:element minOccurs="0" name="requestComment" type="xs:string"/>
+      <xs:element name="property" type="tns:CVType" maxOccurs="unbounded" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -233,12 +239,22 @@ T.ex alla väntetider.</xs:documentation>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="CSType">
+    <xs:annotation>
+      <xs:documentation>Product information</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="codeSystem" type="xs:string"/>
+      <xs:element name="product" type="tns:ProductType" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="ProductCapacityType">
     <xs:annotation>
       <xs:documentation>Product information</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="name" type="xs:string"/>
+      <xs:element name="product" type="tns:CVType"/>
       <xs:element name="capacity" type="tns:CapacityType" maxOccurs="unbounded" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
@@ -250,7 +266,6 @@ T.ex alla väntetider.</xs:documentation>
     <xs:sequence>
       <xs:element name="validTo" type="xs:string"/>
       <xs:element name="value" type="xs:string"/>
-      <xs:element name="description" type="xs:string"/>
       <xs:element name="code" type="tns:CVType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
@@ -258,8 +273,8 @@ T.ex alla väntetider.</xs:documentation>
   <xs:complexType name="CareUnitCapacityType">
     <xs:sequence>
       <xs:element name="hsaId" type="tns:HsaIdType"/>
-      <xs:element name="relativeDistinguishedName" type="xs:string"/>
-      <xs:element name="product" type="tns:ProductCapacityType" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="organizationName" type="xs:string"/>
+      <xs:element name="productCapacity" type="tns:ProductCapacityType" maxOccurs="unbounded" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -298,7 +313,16 @@ T.ex alla väntetider.</xs:documentation>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  <!--Simple data types-->
+  <xs:complexType name="ResultType">
+    <xs:annotation>
+      <xs:documentation></xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="level" type="tns:ResultCodeEnum"/>
+      <xs:element name="code" type="xs:string"/>
+      <xs:element name="message" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
   <!---->
   <xs:simpleType name="CareUnitNameType">
     <xs:annotation>
@@ -381,7 +405,21 @@ T.ex alla väntetider.</xs:documentation>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/aggregated-1.0-SNAPSHOT</con:endpoint><con:endpoint>https://qa.esb.rtp.sll.se:443/vp/service/catalogue/GetCapacities/1/rivtabp21</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:service:catalogue:GetCapacitiesResponder:1:GetCapacities" name="GetCapacities" bindingOperationName="GetCapacities" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Get capacities for SE2321000016-12B8"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://qa.esb.rtp.sll.se:443/vp/service/catalogue/GetCapacities/1/rivtabp21</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:service:catalogue:GetCapacitiesResponder:1">
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/aggregated-1.0-SNAPSHOT/GetCapacities</con:endpoint><con:endpoint>http://tempuri.org</con:endpoint><con:endpoint>https://qa.esb.rtp.sll.se:443/vp/service/catalogue/GetCapacities/1/rivtabp21</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:service:catalogue:GetCapacitiesResponder:1:GetCapacities" name="GetCapacities" bindingOperationName="GetCapacities" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Get capacities for SE2321000016-12B8"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/aggregated-1.0-SNAPSHOT/GetCapacities</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:service:catalogue:GetCapacitiesResponder:1" xmlns:urn2="urn:riv:service:catalogue:1">
+   <soapenv:Header>
+      <urn:LogicalAddress>SLL-SC</urn:LogicalAddress>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn1:GetCapacities>
+         <!--Zero or more repetitions:-->
+         <urn1:HSAId>SE2321000016-12B8</urn1:HSAId>
+         <urn1:product>
+            <urn2:code>87</urn2:code>
+            <urn2:codeSystem>oid.sll.product.catalogue</urn2:codeSystem>
+         </urn1:product>
+      </urn1:GetCapacities>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:service:catalogue:GetCapacitiesResponder:1:GetCapacities"/><con:wsrmConfig version="1.2"/></con:call><con:call name="Backup of [Get capacities for SE2321000016-12B8]"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/aggregated-1.0-SNAPSHOT/GetCapacities</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:service:catalogue:GetCapacitiesResponder:1">
    <soapenv:Header>
       <urn:LogicalAddress>SLL-SC</urn:LogicalAddress>
    </soapenv:Header>
@@ -399,7 +437,7 @@ def utils = new GroovyUtils(context)
 def dataFile = new File(utils.projectPath + "/data.xml")
 def source = new XmlDataReader(context, dataFile)
 
-source.load("Simple search")</script></con:config></con:testStep><con:testStep type="request" name="GetCapacities"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetCapacitiesResponderBinding</con:interface><con:operation>GetCapacities</con:operation><con:request name="GetCapacities"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/aggregated-1.0-SNAPSHOT</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:service:catalogue:GetCapacitiesResponder:1">
+source.load("Simple search")</script></con:config></con:testStep><con:testStep type="request" name="GetCapacities"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetCapacitiesResponderBinding</con:interface><con:operation>GetCapacities</con:operation><con:request name="GetCapacities"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/aggregated-1.0-SNAPSHOT/GetCapacities</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:service:catalogue:GetCapacitiesResponder:1">
    <soapenv:Header>
       <urn:LogicalAddress>?</urn:LogicalAddress>
    </soapenv:Header>
