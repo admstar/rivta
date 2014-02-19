@@ -1,0 +1,280 @@
+<!DOCTYPE html><html>
+<head>
+<meta charset="UTF-8"/>
+<title>TestSuite description GetLaboratoryOrderOutcome</title>
+<style>
+                    body {
+                        font-family: sans-serif;
+                        width: 800px;
+                        margin: 16px;
+                        counter-reset: section
+                    }
+                    p {
+                        margin: 0.2em;
+                    }
+                    h1 {
+                        counter-reset: sub-section;
+                        margin-bottom: 5px;
+                    }
+                    h2 {
+                        counter-reset: composite;
+                        margin-bottom: 5px;
+                    }
+                    h3 {
+                        counter-reset: detail;
+                        margin-bottom: 5px;
+                    }
+
+                    h1:before{
+                        counter-increment: section;
+                        content: counter(section) " ";
+                    }
+                    h2:before{
+                        counter-increment: sub-section;
+                        content: counter(section) "." counter(sub-section) " ";
+                    }
+                    h3:before{
+                        counter-increment: composite;
+                        content: counter(section) "." counter(sub-section) "." counter(composite) " ";
+                    }
+                    h4:before{
+                        counter-increment: detail;
+                        content: counter(section) "." counter(sub-section) "." counter(composite) "." counter(detail) " ";
+                    }
+                </style>
+</head>
+<body>
+<section>
+<h1>TestSuite description GetLaboratoryOrderOutcome</h1>
+<summary>
+<article>
+<p>This testsuite is designed to verify the GetLaboratoryOrderOutcome contract prior to integration with the national platform.</p>
+<details>
+<summary>Global variables used</summary>
+<ul>
+<li>webServiceUrl</li>
+</ul>
+</details>
+</article>
+</summary>
+<article>
+<h2>Tools</h2>
+<h3>SoapUI</h3>
+                        The testsuite uses SoapUI to verify the implementation. Documentation of SoapUI can be found at <a href="http://www.soapui.org" target="_blank">http://www.soapui.org</a>
+<br/>
+                        Link to download site: <a href="http://sourceforge.net/projects/soapui/files/soapui/" target="_blank">http://sourceforge.net/projects/soapui/files/soapui/</a>
+<br/>
+                        Install SoapUI according to the documentation.
+
+                        <h3>Setup instructions</h3>
+<ol>
+<li>Locate the test-suite/[contractName]-directory in your distribution.</li>
+<li>Copy the jar-file ‘soapui-support.jar’ to &lt;SoapUI install dir&gt;/bin/ext</li>
+<li>Open SoapUI and import the SoapUI project from the above directory, choose ‘Import Project’ from the File-menu.</li>
+<li>If your WebService endpoint requires a SSL Certificate, this can be configured from the Preferences (in the File menu). In the Preferences window  open the ‘SSL Settings’ tab and import the Keystore containing the Client Certificate.</li>
+<li>Update test-data in data.xml to match the contents in your system.</li>
+<li>You should now be able to run the test suite!</li>
+</ol>
+</article>
+<h2>Testcases</h2>
+<article>
+<h3>BasicTestcase</h3>
+<p>Verifies that the response is schema- and schematron- valid and contains data for the requested patient only.<br>
+            The only requirement on test data is that there is some data for the given patientId.
+            It might be a good idea to start by executing this testcase for a patient with a very simple response and when that works switch to a patient with more complex data.
+        </p>
+<details>
+<summary>Variables used</summary>
+<ul>
+<li>httpHeaderHsaId</li>
+<li>logicalAddress</li>
+<li>patientId</li>
+<li>patientIdType</li>
+</ul>
+</details>
+</article>
+<article>
+<h3>DateBoundaries</h3>
+<p>Verifies that the result only contains information within the date boundaries for the given patient.
+            The rule is <br><br><i>"Begränsning av sökningen i tid, vilket innebär att endast svar returneras där det finns i en
+            tidpunkt angiven i någon av i svaret ingående analysis/analysisTime, eller om sådan tid ej finns i svaret
+            (beroende på att det inte inkluderar analyssvar) tidpunkten angiven i documentTime, som ligger helt eller delvis
+            inom det sökta tidsintervallet."</i><br><br>
+            Additional information about failed assertions can be found in the script log.
+            The LaboratoryOutcome-elements below are recommended for the test, but you may skip those that are not applicable, e.g if the tested system does not
+            support start AND end time. You may also supply several elements of the same type, e.g. to test dates exactly on the boundary.
+            <ol>
+                <li>A laboratoryOutcome with DocumentTime outside the given range, and at least one Analysis where
+                    AnalysisTime starts before and ends after the given range.</li>
+                <li>A laboratoryOutcome with DocumentTime outside the given range, and at least one Analysis where
+                    AnalysisTime starts before and ends within the given range.</li>
+                <li>A laboratoryOutcome with DocumentTime outside the given range, and at least one Analysis where
+                    AnalysisTime starts within and ends after the given range.</li>
+                <li>A laboratoryOutcome with DocumentTime outside the given range, and at least one Analysis where
+                    AnalysisTime starts and ends within the given range.</li>
+                <li>A laboratoryOutcome with DocumentTime outside the given range, and at least one Analysis with only
+                    AnalysisTime start <u>or</u> end given and within the given range.</li>
+                <li>A laboratoryOutcome with DocumentTime inside the given range and without any matching analysis time</li>
+                <li>A laboratoryOutcome with DocumentTime outside the given range, and the AnalysisTime (both start and end)
+                    for all analyses before the given range.</li>
+                <li>A laboratoryOutcome with DocumentTime outside the given range, and the AnalysisTime (both start and end)
+                    for all analyses after the given range.</li>
+                <li>A laboratoryOutcome with DocumentTime outside the given range, and only AnalysisTime start given,
+                    before or after the given range.</li>
+            </ol>
+            The expected DocumentId's, case 1-6 above, must be added as a comma-separated list in the
+            expectedDocumentIds field.<br>
+            The unexpected DocumentId's, case 7-9 above, must be added as a comma-separated list in the
+            unexpectedDocumentIds field.<br>
+            The fields httpHeaderHsaId and logicalAddress must contain values that do not limit the response.
+        </p>
+<details>
+<summary>Variables used</summary>
+<ul>
+<li>httpHeaderHsaId</li>
+<li>logicalAddress</li>
+<li>patientId</li>
+<li>patientIdType</li>
+<li>timePeriodStart</li>
+<li>timePeriodEnd</li>
+<li>expectedDocumentIds</li>
+<li>unexpectedDocumentIds</li>
+</ul>
+</details>
+</article>
+<article>
+<h3>CareContactIdFilter</h3>
+<p>Verifies that the result only contains information for a single CareContactId.<br>
+            Enter a PatientId, two CareContactIds and sourceSystemHSAid that exist in the source system.<br>
+            The fields httpHeaderHsaId and logicalAddress must contain values that do not affect the returned list.
+        </p>
+<details>
+<summary>Variables used</summary>
+<ul>
+<li>httpHeaderHsaId</li>
+<li>logicalAddress</li>
+<li>patientId</li>
+<li>patientIdType</li>
+<li>careContactId1</li>
+<li>careContactId2</li>
+<li>sourceSystemHSAId</li>
+</ul>
+</details>
+</article>
+<article>
+<h3>CareUnitIdFilter</h3>
+<p>Verifies that the result only contains information for the requested CareUnitIds.<br>
+            Enter a PatientId and two CareUnitIds that exist in the source system.<br>
+            The fields httpHeaderHsaId and logicalAddress must contain values that do not affect the returned list.
+        </p>
+<details>
+<summary>Variables used</summary>
+<ul>
+<li>httpHeaderHsaId</li>
+<li>logicalAddress</li>
+<li>patientId</li>
+<li>patientIdType</li>
+<li>careUnitId1</li>
+<li>careUnitId2</li>
+</ul>
+</details>
+</article>
+<article>
+<h3>NonExistentPatientId</h3>
+<p>Verifies that the service returns an empty result instead of a Soap Fault if a nonexistent PatientId is given.<br>
+            Enter a PatientId that is not found in the source system and valid values for httpHeaderHsaId and logical adress.
+        </p>
+<details>
+<summary>Variables used</summary>
+<ul>
+<li>httpHeaderHsaId</li>
+<li>logicalAddress</li>
+<li>patientId</li>
+<li>patientIdType</li>
+</ul>
+</details>
+</article>
+<article>
+<h3>NonExistentCareContactId</h3>
+<p>Verifies that the service returns an empty result instead of a Soap Fault if a nonexistent
+            CareContactId is given.<br>
+			Enter a PatientId that exists in the source system and a CareContactId and sourceSystemHSAid that is not found in the source system.<br>
+            The fields httpHeaderHsaId and logicalAddress must contain values that do not affect the returned list.
+        </p>
+<details>
+<summary>Variables used</summary>
+<ul>
+<li>httpHeaderHsaId</li>
+<li>logicalAddress</li>
+<li>patientId</li>
+<li>patientIdType</li>
+<li>careContactId</li>
+<li>sourceSystemHSAId</li>
+</ul>
+</details>
+</article>
+<article>
+<h3>HttpHeaderFilter</h3>
+<p>Verifies that the result only contains information with correct PatientId, and that the source
+            system filters returned data based on the HttpHeader 'x-rivta-original-serviceconsumer-hsaid'.<br>
+            This testcase can be recorded as not applicable if this kind of filtering does not take place in the tested system.<br>
+            Enter a PatientId that has more than one LaboratoryorderOutcome-record in the source system.<br>
+            Add one or more CareUnitIds that must be included in the response based on the
+            filtering rules to the field 'expectedCareUnitIds'.<br>
+            Add one or more CareUnitIds of records that must not be included in the response based on the
+            filtering rules to the field 'unexpectedCareUnitIds'.<br>
+            The field logicalAddress must contain a value that does not affect the list.
+        </p>
+<details>
+<summary>Variables used</summary>
+<ul>
+<li>httpHeaderHsaId</li>
+<li>logicalAddress</li>
+<li>patientId</li>
+<li>patientIdType</li>
+<li>expectedCareUnitIds</li>
+<li>unexpectedCareUnitIds</li>
+</ul>
+</details>
+</article>
+<article>
+<h3>CareContactIdWithoutSourceSystemHSAId</h3>
+<p>The test verifies that the source system returns a Soap Fault if careContactId has a value
+            and sourceSystemHSAid is empty or not supplied.<br>
+            Enter a PatientId/CareContactId-combination that exists in the source system and valid values for httpHeaderHsaId and logicalAddress.<br>
+		</p>
+<details>
+<summary>Variables used</summary>
+<ul>
+<li>httpHeaderHsaId</li>
+<li>logicalAddress</li>
+<li>patientId</li>
+<li>patientIdType</li>
+<li>careContactId</li>
+</ul>
+</details>
+</article>
+<article>
+<h3>SourceSystemHSAIdAndLogicalAddress</h3>
+<p>The test verifies that the source system returns a Soap Fault if the logicalAddress and
+            sourceSystemHSAId are not the same.<br>
+            Enter PatientId and a CareContactId and the correct SourceSystemHSAId of a CareContact that is found in the source system.<br>
+            The field logicalAddress must NOT match SourceSystemHSAid.<br>
+            The field httpHeaderHsaId must contain a valid value.
+		</p>
+<details>
+<summary>Variables used</summary>
+<ul>
+<li>httpHeaderHsaId</li>
+<li>logicalAddress</li>
+<li>careUnitHSAid</li>
+<li>patientId</li>
+<li>patientIdType</li>
+<li>careContactId</li>
+<li>sourceSystemHSAId</li>
+</ul>
+</details>
+</article>
+</section>
+</body>
+</html>
