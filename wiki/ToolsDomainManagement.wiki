@@ -9,7 +9,7 @@ Verktyg för att verifiera och hantera innehållet i en tjänstedomän. Dessa sc
 
 ==Installera Python==
 
-Scripten är implementerade i programmeringsspråket Python, och kräver att Python version 2.7.X är installerad på datorn (OBS, fungerar INTE med Python version 3). 
+De script som har extension ".py" är implementerade i programmeringsspråket Python, och kräver att Python version 2.7.X är installerad på datorn (OBS, fungerar INTE med Python version 3). 
  
 I Linux och MacOs är Python normalt förinstallerat. Det kan laddas ner från http://www.python.org/download/.
  
@@ -17,7 +17,7 @@ Mer information om att använda Python under Windows återfinns här: http://doc
  
 
 
-== Köra Pythonscript ==
+=== Köra Pythonscript ===
 
 För Unixbaserade system (inkl MacOS) bör det vara tillräckligt att göra scriptet _executable_, lägga det i pathen och sedan köra det direkt. Ex:
 <pre>
@@ -49,3 +49,17 @@ Anges flaggan "-h" skrivs en användarinstruktion ut.
 
 Scriptet ligger i SVN och kan laddas ner från:
 https://code.google.com/p/rivta/source/browse/tools/domainmanagement/verifyDomainFolder/tags/release-1.0
+
+== diff ==
+
+diff är ett kommando som finns tillgängligt i Unixbaserade OS, inklusive MacOS. Det används för att jämföra innehållet i textfiler, men kan också rekursivt jämföra alla filer i två mappstrukturer. På detta sätt kan man på ett enkelt sätt få fram skillnaden mellan t ex två TAGS (version) av en tjänstedomän. 
+
+Exempel:
+
+{{{
+leo@mintcin ~/rivta-read-only/ServiceInteractions/riv/clinicalprocess/healthcond/actoutcome/tags $ diff --recursive --brief clinicalprocess_healthcond_actoutcome_2.0_RC12  clinicalprocess_healthcond_actoutcome_2.0_RC11 
+Files clinicalprocess_healthcond_actoutcome_2.0_RC12/docs/Arkitekturella beslut.docx and clinicalprocess_healthcond_actoutcome_2.0_RC11/docs/Arkitekturella beslut.docx differ
+Only in clinicalprocess_healthcond_actoutcome_2.0_RC11/docs: MIM_GetMaternityMedicalHistory.pdf
+Files clinicalprocess_healthcond_actoutcome_2.0_RC12/docs/Tjanstekontraktsbeskrivning clinicalprocess_healthcond_actoutcome.docx and clinicalprocess_healthcond_actoutcome_2.0_RC11/docs/Tjanstekontraktsbeskrivning clinicalprocess_healthcond_actoutcome.docx differ
+
+}}}
