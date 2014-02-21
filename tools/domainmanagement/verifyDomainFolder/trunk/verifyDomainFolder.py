@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
 
-#
+# Version 1.1 - 2014-02-21
+#   Added a check of the file names of the TKB and AB in the docs directory.
 # Version 1.0 - 2014-01-31 - LEO
-#
-
+#   Initial version
 
 
 import os
@@ -24,7 +24,7 @@ It verifies that the folder is defined according to the RIV TA Konfigurationssty
 see http://rivta.se/documents/ARK_0007. 
 \n
 
-If a tags folder is analyzed the name of the tag is ckecked. If no errors are detected the program can
+If a tags folder is analyzed the name of the tag is verified. If no errors are detected the program can
 optionally create a zip archive. 
 
 \n
@@ -34,26 +34,30 @@ This program was last updated $LastChangedDate$ in revision $Rev$.
 
 '''
 
+
+# Constants
+TOPLEVELDOMAINDIRECTORY = 'riv'
+ZIPCOMMAND = 'zip -r'
+
 # Content in test-suite is not analyzed yet
 # OBS, for exact match "^" and "$" should be added at the beginning and end of the patterns below
 
-mandatoryContent = { 
+MANDATORYCONTENT = { 
 	'trunkKey' : [['^code_gen$', '1'], ['^docs$','1'], ['^schemas$', '1'], ['^test-suite$', '0']] ,
 	'code_gen' : [[ '^jaxws$', '1'], ['^wcf$', '1']] ,
 	'code_gen/jaxws' : [[ '^pom.xml$', '1']] ,
 	'code_gen/wcf' : [[ '.bat$', '1']] ,
-	'docs' : [[ '.doc', '2']] ,
+	'docs' : [[ '^TKB_#DOMAIN#.doc', '1'], [ '^AB_#DOMAIN#.doc', '1']] ,
 	'schemas' : [[ '^interactions$', '1'], ['^core_components$', '1']] ,
 	'schemas/core_components' : [[ '.xsd$', '1']] ,
 	'schemas/interactions' : [[ 'Interaction$', '1']] ,
 	'interactionKey' : [[ '.wsdl$', '1'], [ '.xsd$', '1']]   
 		     }
 
+# Global variables 
 globRc = 0
-
-topLevelDomaindirectory = 'riv'
-zipCommand = 'zip -r'
-
+analyzeMode = ''
+domainNameVersionRc = ''
 
 ####################################################################################
 # qprint - Prints a string unless the quiet flag is set
@@ -68,6 +72,7 @@ def qprint(string):
 ####################################################################################
 def verifyDir(subDir):
 	global globRc
+	global domainNameVersionRc
 
 	if subDir == '':
 		# The name of the root directory in the service domain structure is unkknown. 'trunk' is used as pattern key. 
@@ -82,8 +87,8 @@ def verifyDir(subDir):
 		key = subDir
 		displayKey = subDir
 
-	if key in mandatoryContent:	
-		dirPattern = mandatoryContent[key]	
+	if key in MANDATORYCONTENT:	
+		dirPattern = MANDATORYCONTENT[key]	
 	else:
 		return
 
@@ -99,6 +104,7 @@ def verifyDir(subDir):
 	for pattern in dirPattern:
 		# Get a pattern at a time
 		pString = pattern[0]
+		pString = pString.replace('#DOMAIN#', domainNameVersionRc)
 		pCtrl = pattern[1]
 
 		# Count how many times the current pattern occurs in the directory
@@ -135,6 +141,7 @@ def verifyDir(subDir):
 		for pattern in dirPattern:
 			# Compare it to all patterns
 			pString = pattern[0]
+			pString = pString.replace('#DOMAIN#', domainNameVersionRc)
 
 			rePattern = re.compile(pString)
 			mObj = rePattern.search(dirItem)
@@ -158,6 +165,38 @@ def verifyDir(subDir):
 		
 	return			       
 
+
+####################################################################################
+# getNameAboveTrunk - extract name of domain based on directory names above trunk
+####################################################################################
+def getNameAboveTrunk(sourceDir):
+	# Get name of actual directories from sourcedir (trunk) upwards
+	head, dummy = os.path.split(sourceDir)
+	head, lvl3  = os.path.split(head)
+	head, lvl2  = os.path.split(head)
+	head, lvl1  = os.path.split(head)
+
+	qprint('')
+	qprint('Analyzing directories above trunk')	
+
+	# We must check if there is an old 2-level domain structure
+	if lvl1 == TOPLEVELDOMAINDIRECTORY:
+		threeLevel = False;
+		qprint('>  Seems to be a two level domain structure')
+	else:
+		threeLevel = True;
+
+
+	# Create the domain name based on the folder structure
+	if threeLevel:
+		dnFolders = lvl1 + '_' + lvl2 + '_' + lvl3
+	else:
+		dnFolders = lvl2 + '_' + lvl3
+
+	print('    Domain folder structure: ' + dnFolders.replace('_','/'))
+
+	return(dnFolders)
+
 ####################################################################################
 # verifyTag - verifies a tag definition in a RIVTA Service Domain
 ####################################################################################
@@ -173,11 +212,9 @@ def verifyTag(sourceDir):
 
 	qprint('')
 	qprint('Analyzing TAG name: ' + tagName)	
-	#qprint('')
-
 
 	# We must check if there is an old 2-level domain structure
-	if lvl1 == topLevelDomaindirectory:
+	if lvl1 == TOPLEVELDOMAINDIRECTORY:
 		threeLevel = False;
 		qprint('>  Seems to be a two level domain structure')
 	else:
@@ -234,11 +271,11 @@ def verifyTag(sourceDir):
 			globRc = globRc+1
 			return
 	
-	zipFilename = 'ServiceContracts' + '_' + dnTagName + '_' + tversion
+	domainNameVersionRc = dnTagName + '_' + tversion
 	if trc:
-		zipFilename = zipFilename + '_' + trc
+		domainNameVersionRc = domainNameVersionRc + '_' + trc
 
-	return(zipFilename)
+	return(domainNameVersionRc)
 
 ####################################################################################
 # Start of main program
@@ -278,9 +315,26 @@ if not quiet:
 	qprint('Root directory: ' + rootDir)
 
 # Verify that we are analyzing a tag (not the trunk). Get name of actual directories from sourcedir upwards.
-head, tagName = os.path.split(rootDir) # Current root dir
-head, tagDir  = os.path.split(head)    # Its parent directory - can be 'tags'
+head, tagName = os.path.split(rootDir) # Current root dir, can be the name of a tag, or trunk, or anything
+head, tagDir  = os.path.split(head)    # Its parent directory - can be 'tags' 
 
+# This script can be invoked in three distinct ways
+if tagDir == 'tags':
+	# We are analyzing a TAGS directory
+	# Here we can extract name, version and RC from the tag name
+	print('In tag dir')
+	analyzeMode = 'TAGS'
+
+elif tagName == 'trunk':
+	# We are analyzing a trunk directory
+	# Run in a trunk, we will not know version nor RC
+	print('In a trunk dir')
+	analyzeMode = 'TRUNK'
+
+else:
+	# For example when run on an extracted zip file
+	print('In neither tag nor trunk dir')
+	analyzeMode = 'OTHER'	      
 
 # Set up zip directory
 zipDir=args.zipdir
@@ -288,7 +342,7 @@ zipDir=args.zipdir
 if zipDir:
 	zipDir=os.path.abspath(zipDir)
 	# We will not analyze tag names and create zip if we are not in a tags directory
-	if not tagDir == 'tags':
+	if not analyzeMode == 'TAGS':
 		print('')
 		print('** Error: Not possible to create zip since we are not not analyzing a "tags" directory!')
 		print('')
@@ -312,19 +366,24 @@ if zipDir:
 workingDir = os.getcwd()
 os.chdir(rootDir)
 
-# Get going, recursevly analyze the domain folders
-verifyDir('')
-
 # If we are in below a TAGS folder we should verify the name of the TAG
-if tagDir == 'tags':
-	zipName=verifyTag(rootDir)
+if analyzeMode == 'TAGS':
+	domainNameVersionRc=verifyTag(rootDir)
+elif analyzeMode == 'TRUNK':
+	domainNameVersionRc=getNameAboveTrunk(rootDir)
+else:
+	domainNameVersionRc = ''
+
+# Then, finally, lets get going, recursevly analyze the domain folders
+verifyDir('')
 
 # If no error this far, and the user asked for a zip, we will try to create it
 if zipDir:
-	if globRc == 0 and zipName:
+	if globRc == 0 and analyzeMode=='TAGS' and domainNameVersionRc:
+		zipName = 'ServiceContracts' + '_' + domainNameVersionRc
 		qprint('')
 		qprint('No Errors, zip file will be created')
-		command = zipCommand + ' ' + zipDir + '/' + zipName + '.zip *'
+		command = ZIPCOMMAND + ' ' + zipDir + '/' + zipName + '.zip *'
 		qprint(command)
 		os.system(command)
 	else:
