@@ -1,17 +1,16 @@
 #!/usr/bin/env python
 
-
 # Version 1.1 - 2014-02-21
 #   Added a check of the file names of the TKB and AB in the docs directory.
 # Version 1.0 - 2014-01-31 - LEO
 #   Initial version
-
 
 import os
 import argparse
 import glob
 import string
 import re
+import xml.etree.ElementTree as pom
 
 ####################################################################################
 # Global constants and variables
@@ -162,6 +161,7 @@ def verifyDir(subDir):
 
 		if os.path.isdir(fullpath):
 			verifyDir(dir)
+
 		
 	return			       
 
@@ -246,6 +246,7 @@ def verifyTag(sourceDir):
 		dnTagName = tlvl2 + '_' + tlvl3
 
 	# Verification 1 - verify that the domain name part of tag is correct
+	print dnFolders, dnTagName
 	if not dnFolders == dnTagName:
 		qprint('   ** Error: The name part of the tag folder ("' + dnTagName + '") is not equal to domain folder structure ("' + dnFolders.replace('_','/') + '")')
 		globRc = globRc+1
@@ -276,6 +277,18 @@ def verifyTag(sourceDir):
 		domainNameVersionRc = domainNameVersionRc + '_' + trc
 
 	return(domainNameVersionRc)
+
+def verifyMavenPomVersion():
+	"""Parses a maven pom file for the version element and compares it with the tag directory name. 
+	"""
+	global domainNameVersionRc
+	pom_xml_file = 'code_gen/jaxws/pom.xml'
+	if os.path.isfile(pom_xml_file):
+		version = pom.parse('code_gen/jaxws/pom.xml').getroot().find('{http://maven.apache.org/POM/4.0.0}version')
+		if not domainNameVersionRc.endswith(version.text.replace('-', '_')):
+			qprint('   **  Warning - Maven pom version differs from tag version!')
+	else:
+		qprint('   **  Warning - Maven pom file not found!')
 
 ####################################################################################
 # Start of main program
@@ -376,6 +389,7 @@ else:
 
 # Then, finally, lets get going, recursevly analyze the domain folders
 verifyDir('')
+verifyMavenPomVersion()
 
 # If no error this far, and the user asked for a zip, we will try to create it
 if zipDir:
