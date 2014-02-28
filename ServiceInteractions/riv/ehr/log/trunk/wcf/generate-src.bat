@@ -32,13 +32,13 @@ SET X1=%SCHEMADIR%\interactions\querying\GetInfoLogsForCareProviderInteraction\*
 SET W2=%SCHEMADIR%\interactions\querying\GetInfoLogsForPatientInteraction\GetInfoLogsForPatientInteraction_1.0_RIVTABP21.wsdl
 SET X2=%SCHEMADIR%\interactions\querying\GetInfoLogsForPatientInteraction\*.xsd
 
-SET W3=%SCHEMADIR%\interactions\querying\GetLogsForCareProviderInteraction\GetLogsForCareProviderInteraction_1.0_RIVTABP21.wsdl
+SET W3=%SCHEMADIR%\interactions\querying\GetLogsForCareProviderInteraction\GetLogsForCareProviderInteraction_1.1_RIVTABP21.wsdl
 SET X3=%SCHEMADIR%\interactions\querying\GetLogsForCareProviderInteraction\*.xsd
 
 SET W4=%SCHEMADIR%\interactions\querying\GetLogsForPatientInteraction\GetLogsForPatientInteraction_1.0_RIVTABP21.wsdl
 SET X4=%SCHEMADIR%\interactions\querying\GetLogsForPatientInteraction\*.xsd
 
-SET W5=%SCHEMADIR%\interactions\querying\GetLogsForUserInteraction\GetLogsForUserInteraction_1.0_RIVTABP21.wsdl
+SET W5=%SCHEMADIR%\interactions\querying\GetLogsForUserInteraction\GetLogsForUserInteraction_1.1_RIVTABP21.wsdl
 SET X5=%SCHEMADIR%\interactions\querying\GetLogsForUserInteraction\*.xsd
 
 SET W6=%SCHEMADIR%\interactions\store\StoreLogInteraction\StoreLogInteraction_1.0_RIVTABP21.wsdl
