@@ -17,16 +17,13 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:infrastructure:supportservices:forminteraction:SaveFormPageResponder:1' xmlns:core='urn:riv:infrastructure:supportservices:forminteraction:1' targetNamespace='urn:riv:infrastructure:supportservices:forminteraction:SaveFormPageResponder:1' elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'>
-  <xs:import schemaLocation='../../core_components/infrastructure_supportservices_forminteraction_1.0.xsd' namespace='urn:riv:infrastructure:supportservices:forminteraction:1' />
-  <xs:element name='SaveFormPage' type='tns:SaveFormPageType' />
-  <xs:element name='SaveFormPageResponse' type='tns:SaveFormPageResponseType' />
-  <xs:complexType name='SaveFormPageType'>
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:infrastructure:supportservices:forminteraction:CancelFormResponder:2' xmlns:core='urn:riv:infrastructure:supportservices:forminteraction:2' targetNamespace='urn:riv:infrastructure:supportservices:forminteraction:CancelFormResponder:2' elementFormDefault='qualified' attributeFormDefault='unqualified' version='2.0'>
+  <xs:import schemaLocation='../../core_components/infrastructure_supportservices_forminteraction_2.0.xsd' namespace='urn:riv:infrastructure:supportservices:forminteraction:1' />
+  <xs:element name='CancelForm' type='tns:CancelFormType' />
+  <xs:element name='CancelFormResponse' type='tns:CancelFormResponseType' />
+  <xs:complexType name='CancelFormType'>
     <xs:sequence>
             <xs:element name="formId" type="core:FormIDType" minOccurs="1"></xs:element>
-    	<xs:element name="pageAnswer" type="core:PageAnswerType"
-    		minOccurs="1" maxOccurs="1">
-    	</xs:element>
     	<xs:element name="subjectOfCare" type="core:SubjectOfCareIdType"
     		minOccurs="0">
     		<xs:annotation>
@@ -42,22 +39,12 @@
     		maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name='SaveFormPageResponseType'>
+  <xs:complexType name='CancelFormResponseType'>
     <xs:sequence>
-            <xs:element name="form" type="core:FormType" minOccurs="0"></xs:element>
-            <xs:element name='comment' type='xs:string' minOccurs='0' />
-    	<xs:element name="resultCode" type="core:ResultCodeEnumType"
-    		maxOccurs="1">
-    	</xs:element>
-    	<xs:any namespace='##other' processContents='lax' minOccurs='0'
-    		maxOccurs='unbounded' />
+            <xs:element name="comment" type="xs:string" minOccurs="0" />
+            <xs:element name='resultCode' type='core:ResultCodeEnumType' maxOccurs="1" minOccurs="1"/>
+      <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name='ResultCodeEnum'>
-    <xs:restriction base='xs:string'>
-      <xs:enumeration value='OK' />
-      <xs:enumeration value='ERROR' />
-      <xs:enumeration value='INFO' />
-    </xs:restriction>
-  </xs:simpleType>
+
 </xs:schema>
