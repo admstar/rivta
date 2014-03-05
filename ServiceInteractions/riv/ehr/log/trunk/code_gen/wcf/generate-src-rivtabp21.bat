@@ -21,7 +21,7 @@
 	@REM ---------------------------------------------------------------------------------
 	CD ..
 	
-	SET SCHEMADIR=schemas
+	SET SCHEMADIR=..\schemas
 	
 	SET W0=%SCHEMADIR%\interactions\querying\GetAccessLogsForPatientInteraction\GetAccessLogsForPatientInteraction_1.0_RIVTABP21.wsdl
 SET X0=%SCHEMADIR%\interactions\querying\GetAccessLogsForPatientInteraction\*.xsd
@@ -44,18 +44,19 @@ SET X5=%SCHEMADIR%\interactions\querying\GetLogsForUserInteraction\*.xsd
 SET W6=%SCHEMADIR%\interactions\store\StoreLogInteraction\StoreLogInteraction_1.0_RIVTABP21.wsdl
 SET X6=%SCHEMADIR%\interactions\store\StoreLogInteraction\*.xsd
 
+SET N1=%SCHEMADIR%\core_components\store\*.xsd
+SET N2=%SCHEMADIR%\core_components\querying\*.xsd
+
 SET XCORE=%SCHEMADIR%\core_components\*.xsd
-SET XSD_QUERYING=%SCHEMADIR%\core_components\querying\*.xsd
-SET XSD_STORE=%SCHEMADIR%\core_components\store\*.xsd
 
-SET SCHEMAS=%XCORE% %XSD_QUERYING% %XSD_STORE% %W0% %X0% %W1% %X1% %W2% %X2% %W3% %X3% %W4% %X4% %W5% %X5% %W6% %X6% 
+SET SCHEMAS=%XCORE% %W0% %X0% %W1% %X1% %W2% %X2% %W3% %X3% %W4% %X4% %W5% %X5% %W6% %X6% %N1% %N2%
 
-SET OUTFILE=/out:wcf\generated-src\UrnRivEhrLogInteractions.cs
+SET OUTFILE=/out:wcf\generated-src\EhrLogInteractions.cs
 SET APPCONFIG=/config:wcf\generated-src\app.config
-SET NAMESPACE=/namespace:*,Riv.Urn.Riv.Ehr.Log.Schemas.v1
+SET NAMESPACE=/namespace:*,Riv.Ehr.Log.Schemas.v1
 SET SVCUTIL="svcutil.exe"
 %SVCUTIL% /language:cs %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
 
 CD wcf
-ECHO Generating Service contract .Net Binding interfaces and classes for urn:riv:ehr:log Release 1
+ECHO Generating Service contract .Net Binding interfaces and classes for ehr:log Release 1
 ECHO I DotNetprojektet ska du ta lagga till referens till System.ServiceModel
