@@ -21,10 +21,16 @@
 	@REM ---------------------------------------------------------------------------------
 	CD ..
 	
-	SET SCHEMADIR=schemas
+	SET SCHEMADIR=../schemas
 	
-SET W1=%SCHEMADIR%\.\interactions\GetCareDocumentationInteraction\GetCareDocumentationInteraction_2.0_RIVTABP21.wsdl
-SET X1=%SCHEMADIR%\interactions\GetCareDocumentationInteraction/\*.xsd
+SET W0=%SCHEMADIR%\.\interactions\GetCareDocumentationInteraction\GetCareDocumentationInteraction_2.0_RIVTABP21.wsdl
+SET X0=%SCHEMADIR%\interactions\GetCareDocumentationInteraction/\*.xsd
+
+SET W1=%SCHEMADIR%\.\interactions\GetDiagnosisInteraction\GetDiagnosisInteraction_2.0_RIVTABP21.wsdl
+SET X1=%SCHEMADIR%\interactions\GetDiagnosisInteraction/\*.xsd
+
+SET W2=%SCHEMADIR%\.\interactions\GetAlertInformationInteraction\GetAlertInformationInteraction_2.0_RIVTABP21.wsdl
+SET X2=%SCHEMADIR%\interactions\GetAlertInformationInteraction/\*.xsd
 
 SET XCORE=%SCHEMADIR%\core_components\*.xsd
 
