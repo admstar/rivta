@@ -244,8 +244,10 @@
 					</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-            <xs:element name="formCompleteText" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
-            <xs:element name="formName" type="xs:string"
+			<xs:element name="formCompleteText" type="xs:string"
+				minOccurs="0" maxOccurs="1">
+			</xs:element>
+			<xs:element name="formName" type="xs:string"
 				minOccurs="1">
 				<xs:annotation>
 					<xs:documentation>
@@ -258,15 +260,6 @@
 				<xs:annotation>
 					<xs:documentation>
 						Mallens/formulärets rubrik. Används på
-						formulärets introduktionssida.
-					</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="imageURL" type="xs:string" minOccurs="0"
-				maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>
-						URL till bildobjekt som skall visas på
 						formulärets introduktionssida.
 					</xs:documentation>
 				</xs:annotation>
@@ -290,7 +283,8 @@
 					</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="maxNumberOfQuestion" type="xs:int"
+            <xs:element name="media" type="tns:mediaType" minOccurs="0" maxOccurs="1"></xs:element>
+            <xs:element name="maxNumberOfQuestion" type="xs:int"
 				minOccurs="1">
 				<xs:annotation>
 					<xs:documentation>
@@ -320,8 +314,8 @@
 					</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="publishStatus" type="tns:publishStatusType" minOccurs="1"
-				maxOccurs="1">
+			<xs:element name="publishStatus"
+				type="tns:publishStatusType" minOccurs="1" maxOccurs="1">
 			</xs:element>
 			<xs:element name="templateVersion" type="xs:int"
 				minOccurs="1">
@@ -833,7 +827,27 @@
 
 	<xs:complexType name="FormRequestType">
 		<xs:sequence>
-			<xs:element name="healthcare_CareGiver" type="tns:HsaIdType"
+            <xs:element name="clinicalProcessInterestId" type="tns:clinicalProcessInterestIdType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						HSA-id för framställarens enhet/process + unik
+						identifierare. Globalt/nationellt hälsoärende
+						ID.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+            <xs:element name="expireDate" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+            <xs:element name="formText" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						Unik text för Formulär. Används t.ex.
+						"CreateFormRequest" för att bifoga en unik text
+						för formuläret. T.ex. "Hälsoundersökning inför
+						besök X".
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+            <xs:element name="healthcare_CareGiver" type="tns:HsaIdType"
 				minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>
@@ -870,28 +884,8 @@
 					</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="clinicalProcessInterestId"
-				type="tns:clinicalProcessInterestIdType" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>
-						HSA-id för framställarens enhet/process + unik
-						identifierare. Globalt/nationellt hälsoärende
-						ID.
-					</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="formText" type="xs:string" minOccurs="0"
-				maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>
-						Unik text för Formulär. Används t.ex.
-						"CreateFormRequest" för att bifoga en unik text
-						för formuläret. T.ex. "Hälsoundersökning inför
-						besök X".
-					</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="subjectOfCare"
+            <xs:element name="keepUntil" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+            <xs:element name="subjectOfCare"
 				type="tns:SubjectOfCareIdType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>
@@ -911,7 +905,9 @@
 				</xs:annotation>
 			</xs:element>
 
-			<xs:element name="templateVersion" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
+			<xs:element name="templateVersion" type="xs:int"
+				minOccurs="0" maxOccurs="1">
+			</xs:element>
 			<xs:any namespace='##other' processContents='lax'
 				minOccurs='0' maxOccurs='unbounded' />
 		</xs:sequence>
@@ -1179,21 +1175,14 @@
 					</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="imageURL" type="xs:string" minOccurs="0"
-				maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>
-						URL till bildobjekt.
-					</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="informationURL" type="xs:string"
 				minOccurs="0">
 			</xs:element>
 			<xs:element name="language" type="xs:string"
 				minOccurs="1">
 			</xs:element>
-			<xs:element name="maxNumberOfQuestion" type="xs:int"
+            <xs:element name="media" type="tns:mediaType" minOccurs="0" maxOccurs="1"></xs:element>
+            <xs:element name="maxNumberOfQuestion" type="xs:int"
 				minOccurs="1">
 			</xs:element>
 			<xs:element name="minNumberOfQuestion" type="xs:int"
@@ -1231,7 +1220,7 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="term" type="xs:string" minOccurs="1"></xs:element>
-            <xs:any namespace='##other' processContents='lax'
+			<xs:any namespace='##other' processContents='lax'
 				minOccurs='0' maxOccurs='unbounded' />
 		</xs:sequence>
 	</xs:complexType>
@@ -1471,11 +1460,11 @@ Archived - Arkiverad (kan EJ användas för att skapa formulär)</xs:documentati
         	<xs:documentation>Media.</xs:documentation>
         </xs:annotation>
         <xs:sequence>
-    		<xs:element name="mediaURL" type="xs:string">
+    		<xs:element name="mediaURL" type="xs:string" minOccurs="1" maxOccurs="1">
     			<xs:annotation>
     				<xs:documentation>URL eller adress till media.</xs:documentation>
     			</xs:annotation></xs:element>
-    		<xs:element name="mediaType" type="xs:string">
+    		<xs:element name="mediaType" type="xs:string" minOccurs="1" maxOccurs="1">
     			<xs:annotation>
     				<xs:documentation>Giltiga MIME typer.</xs:documentation>
     			</xs:annotation></xs:element>
