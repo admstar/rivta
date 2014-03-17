@@ -308,7 +308,7 @@
         </xs:sequence>
     </xs:complexType>
 
-      <xs:complexType name="HyperSensitivityType">
+    <xs:complexType name="HyperSensitivityType">
         <xs:annotation>
             <xs:documentation>
             </xs:documentation>
@@ -425,7 +425,7 @@
         </xs:sequence>
     </xs:complexType>
 
-	<!-- 
+    <!-- 
         Below: only helper types allowed.
         
         A helper type is a type used in one ore more of the domain schema common types.
@@ -595,4 +595,19 @@
         </xs:sequence>
     </xs:complexType>
     <xs:element name="communicableDisease" type="tns:CommunicableDiseaseType"/>
+
+    <xs:complexType name="ResultType">
+        <xs:annotation>
+            <xs:documentation>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="resultCode" type="codes:ResultCodeEnum"/>
+            <xs:element name="errorCode" type="codes:ErrorCodeEnum" minOccurs="0"/>
+            <xs:element name="logId" type="xs:string"/>
+            <xs:element minOccurs="0" name="subCode" type="xs:string"/>
+            <xs:element name="message" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
 </xs:schema>
