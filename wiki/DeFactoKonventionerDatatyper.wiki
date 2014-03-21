@@ -2,6 +2,7 @@
 || 1 || 2013-10-22 || - || Björn Genfors ||
 || 2 || 2013-12-16 || Justerat beskrivningen av HSAIdType och orgUnitHSAId (enligt issue 221) || Björn Genfors ||
 || 3 || 2014-02-17 || Justerat schema-innehåll || Khaled Daham ||
+|| 4 || 2014-03-21 || -Lagt till ResultType, som används för att hantera logiska fel. <br>-Lagt till RoleCode 0..1 i LegalAuthenticatorType (behov fanns i kontrakten för bild och EKG). <br>-Lagt till länkar till lista över vanligt förekommande kodverk och identifierare på lämpliga ställen. || Björn Genfors ||
 
 =Här dokumenteras informella best-practices för datatypshantering i tjänstekontrakt=
 
@@ -23,7 +24,7 @@ Information om medarbetare i vård- och omsorg som genomfört den behandling som
 ||personAddress	||string	||Postadress till personen.	||0..1||
 
 ===[CVType CVType]===
-Typ som beskriver kodade värden med en struktur hämtad från HL7 v3 CV (”CodedValue”). För implementering av attribut av slaget ”KTOV” i RIV. Kodade värden avser officiellt hanterade kodverk som hänvisas till med CodeSystem OID/UUID.
+Typ som beskriver kodade värden med en struktur hämtad från HL7 v3 CV (”CodedValue”). För implementering av attribut av slaget ”KTOV” i RIV. Kodade värden avser officiellt hanterade kodverk som hänvisas till med CodeSystem OID/UUID [ListOfCommonlyUsedCodeSystems (Vanligt förekommande kodverk)].
 
 För annan användning av koder, exempelvis för lokala kodverk utan OID, skall originalText attributet användas för att ge kodens text i det lokala systemet, och övriga attribut lämnas tomma.
 
@@ -51,7 +52,7 @@ Datum anges alltid på formatet ”ÅÅÅÅMMDD”, vilket motsvarar den ISO 882
 ||authorTime	||TimeStampType	||Den tidpunkt då dokumentet skapades.	||1..1||
 ||healthcareProfessionalHSAId	||HSAIdType	||HSA-id för vård- och omsorgspersonal. Skall anges om tillgänglig.	||0..1||
 ||healthcareProfessionalName	||string	||Namn på vård- och omsorgspersonal. Om tillgängligt skall detta anges.	||0..1||
-||healthcareProfessionalRoleCode	||CVType	||Information om personens befattning. Om möjligt skall KV Befattning (OID 1.2.752.129.2.2.1.4) användas.	||0..1||
+||healthcareProfessionalRoleCode	||CVType	||Information om personens befattning. Om möjligt skall [ListOfCommonlyUsedCodeSystems   KV Befattning] användas.	||0..1||
 ||healthCareProfessionalOrgUnit	||OrgUnitType	||Den organisation som angiven vård- och omsorgsperson är uppdragstagare på. Om tillgängligt skall detta anges.||0..1||
 ||healthcareProfessionalCareUnitHSAId||	HSAIdType||	HSA-id för PDL-enhet som vård- och omsorgspersonen är uppdragstagare för. Skall anges om tillgänglig. ||0..1 ||
 ||healthcareProfessionalCareGiverHSAId	||HSAIdType|| 	HSA-id för vårdgivaren, som är vårdgivare för den enhet som författaren är uppdragstagare för. Skall anges om tillgänglig.||0..1||
@@ -72,6 +73,7 @@ Används för att representera en signatur i samband med journalhandlingar.
 ||signatureTime||	TimeStampType||	Tidpunkt för signering||	1..1||
 ||legalAuthenticatorHSAId	||HSAIdType	||HSA-id för person som signerat dokumentet	||0..1||
 ||legalAuthenticatorName	||string	||Namnen i klartext för signerande person	||0..1||
+||legalAuthenticatorRoleCode	||CVType	||Information om personens befattning. Om möjligt skall [ListOfCommonlyUsedCodeSystems   KV Befattning] användas.	||0..1||
 
 ===[MultimediaType MultimediaType]===
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
@@ -97,7 +99,7 @@ Innehåller basinformation om ett dokument. Används för tjänstekontrakt som t
 ||sourceSystemHSAId ||HSAIdType ||HSAid för det system som dokumentet är skapat i.	||1..1||
 ||documentTitle||	string	||Titel som beskriver den information som sänds i dokumentet.	||0..1||
 ||documentTime||	TimeStampType	||Händelsetidpunkt, om relevant.	||0..1||
-||patientId	||PersonIdType	||Id för patienten. id sätts till patientens identifierare, anges med 12 siffror utan avskiljare. type sätts till OID för typ av identifierare. För personnummer ska Skatteverkets personnummer (1.2.752.129.2.1.3.1). För samordningsnummer ska Skatteverkets samordningsnummer (1.2.752.129.2.1.3.3). För reservnummer används lokalt definierade reservnummet, exempelvis SLL reservnummer (1.2.752.97.3.1.3)|| 1..1||
+||patientId	||PersonIdType	||Id för patienten. || 1..1||
 ||accountableHealthcareProfessional	||HealthcareProfessionalType	||Ansvarig hälso- och sjukvårdsperson.	||1..1||
 ||legalAuthenticator	||LegalAuthenticatorType ||Information om vem som signerat informationen i dokumentet.|| 0..1||
 ||approvedForPatient	||boolean ||Anger om information får delas till patient. Värdet sätts i sådant fall till true, i annat fall till false.	||1..1||
@@ -107,15 +109,25 @@ Innehåller basinformation om ett dokument. Används för tjänstekontrakt som t
 
 ===PersonIdType===
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
-||id	||string	||Identiteten enligt den identitetstyp (type) som angivits. Anges med 12 tecken utan bindestreck.	||1..1||
-||type	||string ||OID för typ av identifierare. För personnummer ska Skatteverkets personnummer (1.2.752.129.2.1.3.1). För samordningsnummer ska Skatteverkets samordningsnummer (1.2.752.129.2.1.3.3). För reservnummer används lokalt definierade reservnummer, exempelvis SLL reservnummer (1.2.752.97.3.1.3)	||1..1||
+||id	||string	||Identiteten enligt den identitetstyp (type) som angivits. Om identiteten är av typ personnummer eller samordningsnummer skall denna anges med 12 tecken utan skiljetecken.	||1..1||
+||type	||string ||[ListOfCommonlyUsedCodeSystems OID] för typ av identifierare.	||1..1||
 
 ===[PQType PQType]===
 Typ som baseras på datatypen PQ enligt HL7, och som beskriver överföring av uppmätta värden (”Physical Quantity”). Tillåtna värden för ”unit” bestäms av http://unitsofmeasure.org/ucum.html. Dimension ska preciseras av fältregel vid tillämpning (ex. ”Massa”). Typen är till för presentation av givna mätvärden. Vaksamhet skall iakttagas vid konvertering mellan enheter.
 
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
-||value	||double	||Mätetal mätt i enheten som anges av ”unit”	||1..1||
-||unit	||string	||Enhet enligt standard http://unitsofmeasure.org/ucum.html	||1..1||
+||value	||double	||Mätetal mätt i enheten som anges av ”unit”.	||1..1||
+||unit	||string	||Enhet enligt [http://unitsofmeasure.org/ucum.html UCUM]||1..1||
+
+===[ResultType ResultType]===
+Typ som ska hantera logiska fel.
+
+|| *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
+||resultCode ||ResultCodeEnum	||Kan endast vara OK, INFO eller ERROR. ||1..1||
+||errorCode ||ErrorCodeEnum	||Sätts endast om resultCode är ERROR. Tillåtna värden sätts per tjänstedomän.||0..1||
+||subcode||string ||Tillåtna värden sätts per tjänstedomän.||0..1||
+||logId ||string ||En UUID som kan användas vid felanmälan för att användas vid felsökning av producent.||1..1||
+||message ||string ||En beskrivande text som kan visas för användaren.||0..1||
 
 ===[TimePeriodType TimePeriodType]===
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
