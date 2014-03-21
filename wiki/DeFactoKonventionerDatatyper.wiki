@@ -2,7 +2,7 @@
 || 1 || 2013-10-22 || - || Björn Genfors ||
 || 2 || 2013-12-16 || Justerat beskrivningen av HSAIdType och orgUnitHSAId (enligt issue 221) || Björn Genfors ||
 || 3 || 2014-02-17 || Justerat schema-innehåll || Khaled Daham ||
-|| 4 || 2014-03-21 || -Lagt till ResultType, som används för att hantera logiska fel. <br>-Lagt till RoleCode 0..1 i LegalAuthenticatorType (behov fanns i kontrakten för bild och EKG). <br>-Lagt till länkar till lista över vanligt förekommande kodverk och identifierare på lämpliga ställen. || Björn Genfors ||
+|| 4 || 2014-03-21 || -Lagt till ResultType, som används för att hantera logiska fel. <br>-Lagt till !RoleCode 0..1 i LegalAuthenticatorType (behov fanns i kontrakten för bild och EKG). <br>-Lagt till länkar till lista över vanligt förekommande kodverk och identifierare på lämpliga ställen. || Björn Genfors ||
 
 =Här dokumenteras informella best-practices för datatypshantering i tjänstekontrakt=
 
@@ -24,7 +24,7 @@ Information om medarbetare i vård- och omsorg som genomfört den behandling som
 ||personAddress	||string	||Postadress till personen.	||0..1||
 
 ===[CVType CVType]===
-Typ som beskriver kodade värden med en struktur hämtad från HL7 v3 CV (”CodedValue”). För implementering av attribut av slaget ”KTOV” i RIV. Kodade värden avser officiellt hanterade kodverk som hänvisas till med CodeSystem OID/UUID [ListOfCommonlyUsedCodeSystems (Vanligt förekommande kodverk)].
+Typ som beskriver kodade värden med en struktur hämtad från HL7 v3 CV (”!CodedValue”). För implementering av attribut av slaget ”KTOV” i RIV. Kodade värden avser officiellt hanterade kodverk som hänvisas till med !codeSystem OID/UUID [ListOfCommonlyUsedCodeSystems (Vanligt förekommande kodverk)].
 
 För annan användning av koder, exempelvis för lokala kodverk utan OID, skall originalText attributet användas för att ge kodens text i det lokala systemet, och övriga attribut lämnas tomma.
 
@@ -78,7 +78,7 @@ Används för att representera en signatur i samband med journalhandlingar.
 ===[MultimediaType MultimediaType]===
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
 ||id	||string	||Identitet på multimediaobjekt som används vid referenser inom multimediadokument.	||0..1||
-||mediaType	||MediaTypeEnum	||Mediatyper enligt HL7	||1..1||
+||mediaType	||!MediaTypeEnum	||Mediatyper enligt HL7	||1..1||
 ||value	||base64Binary	||Value är binärdata som representerar objektet. Ett och endast ett av value och reference ska anges. 	||0..1||
 ||reference	||anyURI	||Referens till extern bild i form av en URL. Ett och endast ett av value och reference ska anges.	||0..1||
 
@@ -123,8 +123,8 @@ Typ som baseras på datatypen PQ enligt HL7, och som beskriver överföring av u
 Typ som ska hantera logiska fel.
 
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
-||resultCode ||ResultCodeEnum	||Kan endast vara OK, INFO eller ERROR. ||1..1||
-||errorCode ||ErrorCodeEnum	||Sätts endast om resultCode är ERROR. Tillåtna värden sätts per tjänstedomän.||0..1||
+||resultCode ||!ResultCodeEnum	||Kan endast vara OK, INFO eller ERROR. ||1..1||
+||errorCode ||!ErrorCodeEnum	||Sätts endast om resultCode är ERROR. Tillåtna värden sätts per tjänstedomän.||0..1||
 ||subcode||string ||Tillåtna värden sätts per tjänstedomän.||0..1||
 ||logId ||string ||En UUID som kan användas vid felanmälan för att användas vid felsökning av producent.||1..1||
 ||message ||string ||En beskrivande text som kan visas för användaren.||0..1||
