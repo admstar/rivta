@@ -271,6 +271,18 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="ECGReferralType">
+        <xs:sequence>
+            <xs:element name="referralId" type="xs:string"/>
+            <xs:element name="referralReason" type="xs:string" minOccurs="0"/>
+            <xs:element name="anamnesis" type="xs:string" minOccurs="0"/>
+            <xs:element name="careContactId" type="xs:string" minOccurs="0"/>
+            <xs:element name="accountableHealthcareProfessional"
+                type="tns:HealthcareProfessionalType"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="OrderType">
         <xs:sequence>
             <xs:element name="orderId" type="xs:string"/>
@@ -831,7 +843,7 @@
             <xs:element name="resultReport" type="xs:string" minOccurs="1"/>
             <xs:element minOccurs="0" name="resultComment" type="xs:string"/>
             <xs:element name="patientData" type="tns:PatientDataType" minOccurs="0"/>
-            <xs:element name="ecgRecording" type="tns:ECGRecordingType" minOccurs="0"
+            <xs:element name="ecgRecording" type="tns:ImageRecordingType" minOccurs="0"
                 maxOccurs="unbounded"/>
             <xs:element name="examinationUnit" type="xs:string" minOccurs="0"/>
             <xs:element name="accountableHealthcareProfessional"
@@ -843,14 +855,18 @@
             <xs:element maxOccurs="unbounded" minOccurs="0" name="ecgDicomData"
                 type="tns:ECGDicomDataType"/>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="ecgData" type="tns:ImageDataType"/>
+            <xs:element minOccurs="0" name="referral" type="tns:ECGReferralType"/>
+            <xs:element name="attested" type="tns:LegalAuthenticatorType"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
-    
+
     <xs:complexType name="ImageDataType">
         <xs:sequence>
-            <xs:element name="patientWeight" type="tns:PQType" minOccurs="0"/>
-            <xs:element name="patientLength" type="tns:PQType" minOccurs="0"/>
+            <xs:element name="mediaType" type="codes:MediaTypeEnum" minOccurs="0"/>
+            <xs:element name="value" type="xs:base64Binary" minOccurs="0"/>
+            <xs:element minOccurs="0" name="reference" type="xs:anyURI"/>
+            <xs:element minOccurs="0" name="burnedInaAnnotations" type="xs:boolean"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -874,7 +890,7 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="ECGRecordingType">
+    <xs:complexType name="ImageRecordingType">
         <xs:sequence>
             <xs:element name="recordingId" type="tns:IIType"/>
             <xs:element name="examinationActivity" type="tns:CVType" minOccurs="1"/>
@@ -897,7 +913,7 @@
             <xs:element name="Taxis" type="tns:PQType" minOccurs="0"/>
             <xs:element name="stType" type="tns:STType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="interpretationAlgorithmName" type="xs:string" minOccurs="0"/>
-            <xs:element name="interpretation" type="xs:string" minOccurs="0"/>
+            <xs:element name="interpretation" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
