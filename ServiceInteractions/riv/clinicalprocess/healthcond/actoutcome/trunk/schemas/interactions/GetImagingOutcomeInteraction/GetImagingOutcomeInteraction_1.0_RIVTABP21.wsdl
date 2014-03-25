@@ -17,17 +17,17 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<wsdl:definitions name='GetECGOutcomeInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema'
-  xmlns:tjsr='urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2'
-  xmlns:tjsi='urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeInitiator:2'
-  xmlns:tns='urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcome:2:rivtabp21'
-  targetNamespace='urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcome:2:rivtabp21'
+<wsdl:definitions name='GetImagingOutcomeInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema'
+  xmlns:tjsr='urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:1'
+  xmlns:tjsi='urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeInitiator:1'
+  xmlns:tns='urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcome:1:rivtabp21'
+  targetNamespace='urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcome:1:rivtabp21'
   xmlns:itr='urn:riv:itintegration:registry:1'>
   <xs:annotation>
     <xs:documentation>
-			 Tjänsteinteraktionens namn: GetECGOutcomeInteraction
+			 Tjänsteinteraktionens namn: GetImagingOutcomeInteraction
 			 Beskrivning: 
-			   Returnerar svar på en förfrågan om ECG för en patient
+			   Returnerar svar på en förfrågan om bild för en patient
 			 Revisioner: 
 			 Tjänstedomän: clinicalprocess:healthcond:actoutcome
 			 Tjänsteinteraktionstyp: Fråga-Svar
@@ -36,12 +36,12 @@
 			 </xs:documentation>
   </xs:annotation>
   <wsdl:types>
-    <xs:schema targetNamespace='urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcome:2:rivtabp21'>
-      <xs:import schemaLocation='GetECGOutcomeResponder_2.0.xsd' namespace='urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2' />
+    <xs:schema targetNamespace='urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcome:1:rivtabp21'>
+      <xs:import schemaLocation='GetImagingOutcomeResponder_1.0.xsd' namespace='urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:1' />
       <xs:import schemaLocation='../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
     </xs:schema>
   </wsdl:types>
-  <wsdl:message name='GetECGOutcomeRequest'>
+  <wsdl:message name='GetImagingOutcomeRequest'>
     <wsdl:part name='LogicalAddress' element='itr:LogicalAddress'>
 	  	<wsdl:documentation>
 			National: The HSA-id of Inera AB ("national" aggregation service)
@@ -49,23 +49,23 @@
 			Specific Source system: The HSA-id of the source system
 		</wsdl:documentation>
     </wsdl:part>
-    <wsdl:part name='parameters' element='tjsr:GetECGOutcome' />
+    <wsdl:part name='parameters' element='tjsr:GetImagingOutcome' />
   </wsdl:message>
-  <wsdl:message name='GetECGOutcomeResponse'>
-    <wsdl:part name='parameters' element='tjsr:GetECGOutcomeResponse' />
+  <wsdl:message name='GetImagingOutcomeResponse'>
+    <wsdl:part name='parameters' element='tjsr:GetImagingOutcomeResponse' />
   </wsdl:message>
-  <wsdl:portType name='GetECGOutcomeResponderInterface'>
-    <wsdl:operation name='GetECGOutcome'>
-      <wsdl:input message='tns:GetECGOutcomeRequest' />
-      <wsdl:output message='tns:GetECGOutcomeResponse' />
+  <wsdl:portType name='GetImagingOutcomeResponderInterface'>
+    <wsdl:operation name='GetImagingOutcome'>
+      <wsdl:input message='tns:GetImagingOutcomeRequest' />
+      <wsdl:output message='tns:GetImagingOutcomeResponse' />
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name='GetECGOutcomeResponderBinding' type='tns:GetECGOutcomeResponderInterface'>
+  <wsdl:binding name='GetImagingOutcomeResponderBinding' type='tns:GetImagingOutcomeResponderInterface'>
     <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
-    <wsdl:operation name='GetECGOutcome'>
-      <soap:operation soapAction='urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2:GetECGOutcome' style='document' />
+    <wsdl:operation name='GetImagingOutcome'>
+      <soap:operation soapAction='urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:2:GetImagingOutcome' style='document' />
       <wsdl:input>
-        <soap:header use='literal' message='tns:GetECGOutcomeRequest' part='LogicalAddress' />
+        <soap:header use='literal' message='tns:GetImagingOutcomeRequest' part='LogicalAddress' />
         <soap:body use='literal' parts='parameters' />
       </wsdl:input>
       <wsdl:output>
@@ -73,8 +73,8 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name='GetECGOutcomeResponderService'>
-    <wsdl:port name='GetECGOutcomeResponderPort' binding='tns:GetECGOutcomeResponderBinding'>
+  <wsdl:service name='GetImagingOutcomeResponderService'>
+    <wsdl:port name='GetImagingOutcomeResponderPort' binding='tns:GetImagingOutcomeResponderBinding'>
       <soap:address location='http://tempuri.org' />
     </wsdl:port>
   </wsdl:service>

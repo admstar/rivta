@@ -48,7 +48,6 @@
             <xs:element name="referralOutcomeHeader" type="tns:PatientSummaryHeaderType"/>
             <xs:element name="referralOutcomeBody" type="tns:ReferralOutcomeBodyType"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-
         </xs:sequence>
     </xs:complexType>
 
@@ -62,7 +61,6 @@
             <xs:element name="act" type="tns:ActType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="referral" type="tns:ReferralType"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-
         </xs:sequence>
     </xs:complexType>
 
@@ -263,7 +261,7 @@
         <xs:sequence>
             <xs:element name="referralId" type="xs:string"/>
             <xs:element name="referralText" type="xs:string" minOccurs="1"/>
-            <xs:element name="referralTime" type="tns:TimeStampType"/>
+            <xs:element name="referralTime" type="tns:TimeStampType" minOccurs="0"/>
             <xs:element name="referralAuthor" type="tns:HealthcareProfessionalType"/>
             <xs:element minOccurs="0" name="careContactId" type="xs:string"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
@@ -868,6 +866,8 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="ImageStructuredDataType"> </xs:complexType>
+
 
     <xs:complexType name="ECGBodyType">
         <xs:sequence>
@@ -986,7 +986,7 @@
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
-    
+
     <xs:complexType name="ResultType">
         <xs:annotation>
             <xs:documentation>
