@@ -17,10 +17,10 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<wsdl:definitions name='GetPersonInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tjsr='urn:riv:infrastructure:directory:employee:GetPersonResponder:1' xmlns:tjsi='urn:riv:infrastructure:directory:employee:GetPersonInitiator:1' xmlns:tns='urn:riv:infrastructure:directory:employee:GetPerson:1:rivtabp21' targetNamespace='urn:riv:infrastructure:directory:employee:GetPerson:1:rivtabp21' xmlns:itr='urn:riv:itintegration:registry:1'>
+<wsdl:definitions name='GetEmployeeInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tjsr='urn:riv:infrastructure:directory:employee:GetEmployeeResponder:1' xmlns:tjsi='urn:riv:infrastructure:directory:employee:GetEmployeeInitiator:1' xmlns:tns='urn:riv:infrastructure:directory:employee:GetEmployee:1:rivtabp21' targetNamespace='urn:riv:infrastructure:directory:employee:GetEmployee:1:rivtabp21' xmlns:itr='urn:riv:itintegration:registry:1'>
   <xs:annotation>
     <xs:documentation>
-			 Tjänsteinteraktionens namn: GetPersonInteraction
+			 Tjänsteinteraktionens namn: GetEmployeeInteraction
 			 Beskrivning: 
 			   Used to search for information about a specified unit or function
 			 Revisioner: 
@@ -31,32 +31,32 @@
 			 </xs:documentation>
   </xs:annotation>
   <wsdl:types>
-    <xs:schema targetNamespace='urn:riv:infrastructure:directory:employee:GetPerson:1:rivtabp21'>
-      <xs:import schemaLocation='GetPersonResponder_1.1.xsd' namespace='urn:riv:infrastructure:directory:employee:GetPersonResponder:1' />
+    <xs:schema targetNamespace='urn:riv:infrastructure:directory:employee:GetEmployee:1:rivtabp21'>
+      <xs:import schemaLocation='GetEmployeeResponder_1.0.xsd' namespace='urn:riv:infrastructure:directory:employee:GetEmployeeResponder:1' />
       <xs:import schemaLocation='../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
     </xs:schema>
   </wsdl:types>
-  <wsdl:message name='GetPersonRequest'>
+  <wsdl:message name='GetEmployeeRequest'>
     <wsdl:part name='LogicalAddress' element='itr:LogicalAddress'>
       <wsdl:documentation>The HSA-id of the source system</wsdl:documentation>
     </wsdl:part>
-    <wsdl:part name='parameters' element='tjsr:GetPerson' />
+    <wsdl:part name='parameters' element='tjsr:GetEmployee' />
   </wsdl:message>
-  <wsdl:message name='GetPersonResponse'>
-    <wsdl:part name='parameters' element='tjsr:GetPersonResponse' />
+  <wsdl:message name='GetEmployeeResponse'>
+    <wsdl:part name='parameters' element='tjsr:GetEmployeeResponse' />
   </wsdl:message>
-  <wsdl:portType name='GetPersonResponderInterface'>
-    <wsdl:operation name='GetPerson'>
-      <wsdl:input message='tns:GetPersonRequest' />
-      <wsdl:output message='tns:GetPersonResponse' />
+  <wsdl:portType name='GetEmployeeResponderInterface'>
+    <wsdl:operation name='GetEmployee'>
+      <wsdl:input message='tns:GetEmployeeRequest' />
+      <wsdl:output message='tns:GetEmployeeResponse' />
      </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name='GetPersonResponderBinding' type='tns:GetPersonResponderInterface'>
+  <wsdl:binding name='GetEmployeeResponderBinding' type='tns:GetEmployeeResponderInterface'>
     <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
-    <wsdl:operation name='GetPerson'>
-      <soap:operation soapAction='urn:riv:infrastructure:directory:employee:GetPersonResponder:1:GetPerson' style='document' />
+    <wsdl:operation name='GetEmployee'>
+      <soap:operation soapAction='urn:riv:infrastructure:directory:employee:GetEmployeeResponder:1:GetEmployee' style='document' />
       <wsdl:input>
-        <soap:header use='literal' message='tns:GetPersonRequest' part='LogicalAddress' />
+        <soap:header use='literal' message='tns:GetEmployeeRequest' part='LogicalAddress' />
         <soap:body use='literal' parts='parameters' />
       </wsdl:input>
       <wsdl:output>
@@ -64,8 +64,8 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name='GetPersonResponderService'>
-    <wsdl:port name='GetPersonResponderPort' binding='tns:GetPersonResponderBinding'>
+  <wsdl:service name='GetEmployeeResponderService'>
+    <wsdl:port name='GetEmployeeResponderPort' binding='tns:GetEmployeeResponderBinding'>
       <soap:address location='http://tempuri.org' />
     </wsdl:port>
   </wsdl:service>
