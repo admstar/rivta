@@ -61,6 +61,9 @@
             <xs:element name="careContactTimePeriod" type="tns:TimePeriodType"/>
             <xs:element name="careContactStatus" type="codes:CareContactStatusEnum" minOccurs="0"
                 maxOccurs="1"/>
+            <xs:element name="additionalPatientInformation"
+                type="tns:AdditionalPatientInformationType" minOccurs="0"/>
+            <xs:element name="relation" type="tns:RelationType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -268,6 +271,52 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="AdditionalPatientInformationType">
+        <xs:annotation>
+            <xs:documentation/>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="dateOfBirth" type="tns:DateType" minOccurs="1"/>
+            <xs:element name="gender" type="tns:CVType" minOccurs="0"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RelationType">
+        <xs:annotation>
+            <xs:documentation/>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="code" type="tns:CVType" minOccurs="0"/>
+            <xs:element name="referredInformation" type="tns:ReferredInformationType" minOccurs="0"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ReferredInformationType">
+        <xs:annotation>
+            <xs:documentation/>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="id" type="tns:IIType" minOccurs="1"/>
+            <xs:element name="time" type="tns:TimeStampType"/>
+            <xs:element name="urn" type="xs:anyURI" minOccurs="1"/>
+            <xs:element name="informationOwner" type="tns:InformationOwnerType"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="InformationOwnerType">
+        <xs:annotation>
+            <xs:documentation/>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="id" type="tns:IIType" minOccurs="1"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
     <xs:complexType name="LegalAuthenticatorType">
         <xs:annotation>
             <xs:documentation/>
@@ -280,5 +329,26 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:element name="healthcareProfessionalHSAId" type="tns:HSAIdType"/>
+    <xs:complexType name="IIType">
+        <xs:sequence>
+            <xs:element name="root" type="xs:string"/>
+            <xs:element name="extension" type="xs:string" minOccurs="0"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ResultType">
+        <xs:annotation>
+            <xs:documentation>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="resultCode" type="codes:ResultCodeEnum"/>
+            <xs:element name="errorCode" type="codes:ErrorCodeEnum" minOccurs="0"/>
+            <xs:element name="logId" type="xs:string"/>
+            <xs:element minOccurs="0" name="subCode" type="xs:string"/>
+            <xs:element name="message" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
 </xs:schema>
