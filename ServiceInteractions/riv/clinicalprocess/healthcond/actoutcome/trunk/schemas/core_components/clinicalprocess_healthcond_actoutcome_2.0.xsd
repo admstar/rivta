@@ -827,13 +827,47 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="ECGType">
+    <xs:complexType name="ECGOutcomeType">
         <xs:sequence>
             <xs:element name="ECGResponseHeader" type="tns:PatientSummaryHeaderType"/>
             <xs:element name="ECGResponseBody" type="tns:ECGBodyType" minOccurs="1"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
+
+    <xs:complexType name="ImageOutcomeType">
+        <xs:sequence>
+            <xs:element name="ImageOutcomeHeader" type="tns:PatientSummaryHeaderType"/>
+            <xs:element name="ImageOutcomeBody" type="tns:ImageBodyType" minOccurs="1"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ImageBodyType">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="examinationSpeciality" type="tns:CVType"/>
+            <xs:element name="resultType" type="xs:string"/>
+            <xs:element name="resultTime" type="tns:TimeStampType" minOccurs="1"/>
+            <xs:element name="resultReport" type="xs:string" minOccurs="1"/>
+            <xs:element minOccurs="0" name="resultComment" type="xs:string"/>
+            <xs:element maxOccurs="unbounded" name="radiationDose" type="tns:PQType"/>
+            <xs:element name="patientData" type="tns:PatientDataType" minOccurs="0"/>
+            <xs:element name="imageRecording" type="tns:ImageRecordingType" minOccurs="0"
+                maxOccurs="unbounded"/>
+            <xs:element name="examinationUnit" type="xs:string" minOccurs="0"/>
+            <xs:element name="accountableHealthcareProfessional"
+                type="tns:HealthcareProfessionalType" minOccurs="0"/>
+            <xs:element minOccurs="0" name="noOfImages" type="xs:string"/>
+            <xs:element minOccurs="0" name="modalityData" type="tns:ModalityDataType"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="imageDicomData"
+                type="tns:ECGDicomDataType"/>
+            <xs:element name="imageStaticData" type="tns:ImageStructuredDataType"/>
+            <xs:element minOccurs="0" name="referral" type="tns:ECGReferralType"/>
+            <xs:element name="attested" type="tns:LegalAuthenticatorType" minOccurs="0"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
 
     <xs:complexType name="ECGBodyType">
         <xs:sequence>
@@ -950,6 +984,20 @@
             <xs:element name="lowerFrequency" type="tns:PQType" minOccurs="0"/>
             <xs:element name="upperFrequency" type="tns:PQType" minOccurs="0"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="ResultType">
+        <xs:annotation>
+            <xs:documentation>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="resultCode" type="codes:ResultCodeEnum"/>
+            <xs:element name="errorCode" type="codes:ErrorCodeEnum" minOccurs="0"/>
+            <xs:element name="logId" type="xs:string"/>
+            <xs:element minOccurs="0" name="subCode" type="xs:string"/>
+            <xs:element name="message" type="xs:string" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>
