@@ -23,16 +23,16 @@
 	
 	SET SCHEMADIR=..\schemas
 	
-	SET W0=%SCHEMADIR%\interactions\GetCredentialsForPersonIncludingProtectedPersonInteraction\GetCredentialsForPersonIncludingProtectedPersonInteraction_1.1_RIVTABP21.wsdl
+	SET W0=%SCHEMADIR%\interactions\GetCredentialsForPersonIncludingProtectedPersonInteraction\GetCredentialsForPersonIncludingProtectedPersonInteraction_1.0_RIVTABP21.wsdl
 	SET X0=%SCHEMADIR%\interactions\GetCredentialsForPersonIncludingProtectedPersonInteraction\*.xsd
 
-	SET W1=%SCHEMADIR%\interactions\GetCredentialsForPersonInteraction\GetCredentialsForPersonInteraction_1.1_RIVTABP21.wsdl
+	SET W1=%SCHEMADIR%\interactions\GetCredentialsForPersonInteraction\GetCredentialsForPersonInteraction_1.0_RIVTABP21.wsdl
 	SET X1=%SCHEMADIR%\interactions\GetCredentialsForPersonInteraction\*.xsd
 
-	SET W2=%SCHEMADIR%\interactions\GetPersonAuthorizedToSystemIncludingProtectedPersonInteraction\GetPersonAuthorizedToSystemIncludingProtectedPersonInteraction_1.1_RIVTABP21.wsdl
+	SET W2=%SCHEMADIR%\interactions\GetPersonAuthorizedToSystemIncludingProtectedPersonInteraction\GetPersonAuthorizedToSystemIncludingProtectedPersonInteraction_1.0_RIVTABP21.wsdl
 	SET X2=%SCHEMADIR%\interactions\GetPersonAuthorizedToSystemIncludingProtectedPersonInteraction\*.xsd
 
-	SET W3=%SCHEMADIR%\interactions\GetPersonAuthorizedToSystemInteraction\GetPersonAuthorizedToSystemInteraction_1.1_RIVTABP21.wsdl
+	SET W3=%SCHEMADIR%\interactions\GetPersonAuthorizedToSystemInteraction\GetPersonAuthorizedToSystemInteraction_1.0_RIVTABP21.wsdl
 	SET X3=%SCHEMADIR%\interactions\GetPersonAuthorizedToSystemInteraction\*.xsd
 
 
