@@ -1210,14 +1210,14 @@
          <!--You may enter ANY elements at this point-->
       </urn1:GetECGOutcome>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2:GetECGOutcome"/></con:call></con:operation></con:interface><con:testSuite name="TestSuite" id="68c63a7e-269c-4579-bc92-efbeb5b86224"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Basic Testcase" searchProperties="true" id="b5311dab-21dc-4e2c-a422-858b8c16351d"><con:settings/><con:testStep type="groovy" name="Read data" id="cf6c1f11-959a-4249-ad9f-9d69ed4b9f1e"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2:GetECGOutcome"/></con:call></con:operation></con:interface><con:testSuite name="TestSuite" id="68c63a7e-269c-4579-bc92-efbeb5b86224"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Basic Testcase" searchProperties="true" id="b5311dab-21dc-4e2c-a422-858b8c16351d"><con:settings/><con:testStep type="groovy" name="GIVEN Basic Testcase data" id="cf6c1f11-959a-4249-ad9f-9d69ed4b9f1e"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
 
 def utils = new GroovyUtils(context)
 def dataFile = new File(utils.projectPath + "/data.xml")
 def source = new XmlDataReader(context, dataFile)
 
-source.load("Basic Testcase")</script></con:config></con:testStep><con:testStep type="request" name="WHEN calling GetECGOutcome with patientID" id="09c3f412-dba6-4c0d-82bc-d31266469628"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetECGOutcomeResponderBinding</con:interface><con:operation>GetECGOutcome</con:operation><con:request name="WHEN calling GetECGOutcome with patientID"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+source.load("Basic Testcase")</script></con:config></con:testStep><con:testStep type="request" name="WHEN calling GetECGOutcome with patientId" id="09c3f412-dba6-4c0d-82bc-d31266469628"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetECGOutcomeResponderBinding</con:interface><con:operation>GetECGOutcome</con:operation><con:request name="WHEN calling GetECGOutcome with patientId"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
   &lt;con:entry key="x-mock-response" value="BasicResponse"/>
   &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
 &lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:actoutcome:2">
@@ -1266,7 +1266,7 @@ failures.each { failure ->
     log.error ("Failure $failure.text")
 }
 
-assert (failures.isEmpty())</scriptText></con:configuration></con:assertion></con:entry></con:config></con:testStep><con:testStep type="assertionteststep" name="AND ensure patientID in response is correct" id="f5938da4-e5ef-4714-9cb5-0d47445de11f"><con:settings/><con:config xsi:type="con:AssertionTestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:entry><con:id>3720b910-dcad-4dc9-9a81-2581d911eb63</con:id><con:isGroup>false</con:isGroup><con:sourceId>09c3f412-dba6-4c0d-82bc-d31266469628</con:sourceId><con:propertyName>Response</con:propertyName><con:assertion type="GroovyScriptAssertion" name="Script Assertion"><con:configuration><scriptText>import static com.eviware.soapui.support.StringUtils.hasContent
+assert (failures.isEmpty())</scriptText></con:configuration></con:assertion></con:entry></con:config></con:testStep><con:testStep type="assertionteststep" name="AND ensure patientId is correct" id="f5938da4-e5ef-4714-9cb5-0d47445de11f"><con:settings/><con:config xsi:type="con:AssertionTestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:entry><con:id>3720b910-dcad-4dc9-9a81-2581d911eb63</con:id><con:isGroup>false</con:isGroup><con:sourceId>09c3f412-dba6-4c0d-82bc-d31266469628</con:sourceId><con:propertyName>Response</con:propertyName><con:assertion type="GroovyScriptAssertion" name="Script Assertion"><con:configuration><scriptText>import static com.eviware.soapui.support.StringUtils.hasContent
 import com.eviware.soapui.support.XmlHolder
 import se.skl.rivta.testsupport.soapui.ContextHelper
 import com.eviware.soapui.support.GroovyUtils
@@ -1336,7 +1336,7 @@ failures.each { failure ->
     log.error ("Failure $failure.text")
 }
 
-assert (failures.isEmpty())</scriptText></con:configuration></con:assertion></con:entry></con:config></con:testStep><con:testStep type="assertionteststep" name="AND ensure dates in response are valid" id="0ca9e9fb-08b2-493a-a5d4-bf1840c16ec8"><con:settings/><con:config xsi:type="con:AssertionTestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:entry><con:id>e650659c-40fa-46fc-8f21-a8f1df418e06</con:id><con:isGroup>false</con:isGroup><con:sourceId>6df10719-ffa5-4a09-8f72-c5cbe3666293</con:sourceId><con:propertyName>Response</con:propertyName><con:assertion type="GroovyScriptAssertion" name="Script Assertion"><con:configuration><scriptText>import com.eviware.soapui.support.XmlHolder
+assert (failures.isEmpty())</scriptText></con:configuration></con:assertion></con:entry></con:config></con:testStep><con:testStep type="assertionteststep" name="AND ensure timestamps are valid" id="0ca9e9fb-08b2-493a-a5d4-bf1840c16ec8"><con:settings/><con:config xsi:type="con:AssertionTestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:entry><con:id>e650659c-40fa-46fc-8f21-a8f1df418e06</con:id><con:isGroup>false</con:isGroup><con:sourceId>6df10719-ffa5-4a09-8f72-c5cbe3666293</con:sourceId><con:propertyName>Response</con:propertyName><con:assertion type="GroovyScriptAssertion" name="Script Assertion"><con:configuration><scriptText>import com.eviware.soapui.support.XmlHolder
 import se.skl.rivta.testsupport.soapui.ContextHelper
 import com.eviware.soapui.support.GroovyUtils
 
@@ -1369,7 +1369,7 @@ ECGOutcomes.each { doc ->
             (ECGOutcomeTime == null || context.timePeriodStart > ECGOutcomeTime || ECGOutcomeTime > context.timePeriodEnd)) {
         offending.add(documentId)
     }
-}</scriptText></con:configuration></con:assertion></con:entry></con:config></con:testStep><con:testStep type="assertionteststep" name="AND ensure document id's are valid" id="5319ba42-01ba-4f71-a9b2-446c8b2ad875"><con:settings/><con:config xsi:type="con:AssertionTestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:entry><con:id>f3006a41-8c1e-409f-951f-1283b8df8e9a</con:id><con:isGroup>false</con:isGroup><con:sourceId>6df10719-ffa5-4a09-8f72-c5cbe3666293</con:sourceId><con:propertyName>Response</con:propertyName><con:assertion type="GroovyScriptAssertion" name="Script Assertion"><con:configuration><scriptText>import com.eviware.soapui.support.XmlHolder
+}</scriptText></con:configuration></con:assertion></con:entry></con:config></con:testStep><con:testStep type="assertionteststep" name="AND ensure documentId's are valid" id="5319ba42-01ba-4f71-a9b2-446c8b2ad875"><con:settings/><con:config xsi:type="con:AssertionTestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:entry><con:id>f3006a41-8c1e-409f-951f-1283b8df8e9a</con:id><con:isGroup>false</con:isGroup><con:sourceId>6df10719-ffa5-4a09-8f72-c5cbe3666293</con:sourceId><con:propertyName>Response</con:propertyName><con:assertion type="GroovyScriptAssertion" name="Script Assertion"><con:configuration><scriptText>import com.eviware.soapui.support.XmlHolder
 import se.skl.rivta.testsupport.soapui.ContextHelper
 import com.eviware.soapui.support.GroovyUtils
 
@@ -1414,15 +1414,15 @@ declare namespace urn1='urn:riv:clinicalprocess:healthcond:actoutcome:2';
 //urn:GetECGOutcomeResponse[1]/urn:result[1]/urn1:resultCode[1]/text() = "OK"</path><content>true</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion></con:entry></con:config></con:testStep><con:testStep type="assertionteststep" name="AND ensure a result.logId is returned"><con:settings/><con:config xsi:type="con:AssertionTestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:entry><con:id>3d6134e3-fe2d-4387-8b44-83b54ee7a4f9</con:id><con:isGroup>false</con:isGroup><con:sourceId>6df10719-ffa5-4a09-8f72-c5cbe3666293</con:sourceId><con:propertyName>Response</con:propertyName><con:assertion type="XPath Match" name="XPath Match"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
 declare namespace urn='urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2';
 declare namespace urn1='urn:riv:clinicalprocess:healthcond:actoutcome:2';
-//urn:GetECGOutcomeResponse[1]/urn:result[1]/urn1:logId[matches(., '.*')]</path><content>*</content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion></con:entry></con:config></con:testStep><con:testStep type="assertionteststep" name="AND ensure NPÖ Schematron rules passes"><con:settings/><con:config xsi:type="con:AssertionTestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/></con:testStep><con:properties/><con:reportParameters/><con:breakPoints><con:testStepId>41078038-02fd-4ba4-bccc-1efa5c6b64cf</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>0ca9e9fb-08b2-493a-a5d4-bf1840c16ec8</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>5319ba42-01ba-4f71-a9b2-446c8b2ad875</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="CareUnitId Filter" searchProperties="true" id="2fe00a41-beb5-42f7-9e00-678707620cd8"><con:settings/><con:testStep type="groovy" name="Read data" id="2188c9a8-727b-40c0-9f2c-d40b72e9413a"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+//urn:GetECGOutcomeResponse[1]/urn:result[1]/urn1:logId[matches(., '.*')]</path><content>*</content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion></con:entry></con:config></con:testStep><con:testStep type="assertionteststep" name="AND ensure NPÖ Schematron rules passes"><con:settings/><con:config xsi:type="con:AssertionTestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/></con:testStep><con:properties/><con:reportParameters/><con:breakPoints><con:testStepId>41078038-02fd-4ba4-bccc-1efa5c6b64cf</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>0ca9e9fb-08b2-493a-a5d4-bf1840c16ec8</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>5319ba42-01ba-4f71-a9b2-446c8b2ad875</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="CareUnitHSAId Filter" searchProperties="true" id="2fe00a41-beb5-42f7-9e00-678707620cd8"><con:settings/><con:testStep type="groovy" name="GIVEN CareUnitHSAId Filter data" id="2188c9a8-727b-40c0-9f2c-d40b72e9413a"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
 
 def utils = new GroovyUtils(context)
 def dataFile = new File(utils.projectPath + "/data.xml")
 def source = new XmlDataReader(context, dataFile)
 
-source.load("CareUnitId Filter")</script></con:config></con:testStep><con:testStep type="request" name="Call ECGOutcome" id="57fdc57e-d677-481d-b856-4c995a09f818"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetECGOutcomeResponderBinding</con:interface><con:operation>GetECGOutcome</con:operation><con:request name="Call ECGOutcome"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
-  &lt;con:entry key="x-mock-response" value="CareUnitResponse"/>
+source.load("CareUnitHSAId Filter")</script></con:config></con:testStep><con:testStep type="request" name="WHEN calling ECGOutcome with careUnitHSAId" id="57fdc57e-d677-481d-b856-4c995a09f818"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetECGOutcomeResponderBinding</con:interface><con:operation>GetECGOutcome</con:operation><con:request name="WHEN calling ECGOutcome with careUnitHSAId"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="x-mock-response" value="CareUnitHSAIdResponse"/>
   &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
 &lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:actoutcome:2">
    <soapenv:Header>
@@ -1430,15 +1430,15 @@ source.load("CareUnitId Filter")</script></con:config></con:testStep><con:testSt
    </soapenv:Header>
    <soapenv:Body>
       <urn1:GetECGOutcome>
-         <urn1:careUnitHSAId>${careUnitId1}</urn1:careUnitHSAId>
-         <urn1:careUnitHSAId>${careUnitId2}</urn1:careUnitHSAId>
+         <urn1:careUnitHSAId>${careUnitHSAId}</urn1:careUnitHSAId>
+         
          <urn1:patientId>
             <urn2:id>${patientId}</urn2:id>
             <urn2:type>${patientIdType}</urn2:type>
          </urn1:patientId>
       </urn1:GetECGOutcome>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="assertionteststep" name="THEN ensure schematron rules passes"><con:settings/><con:config xsi:type="con:AssertionTestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:entry><con:id>3864c280-0b69-4d31-823c-e4b05cc03cda</con:id><con:isGroup>false</con:isGroup><con:sourceId>57fdc57e-d677-481d-b856-4c995a09f818</con:sourceId><con:propertyName>Response</con:propertyName><con:assertion type="GroovyScriptAssertion" name="Script Assertion"><con:configuration><scriptText>import se.skl.rivta.testsupport.soapui.validation.SchematronValidator
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="assertionteststep" name="THEN ensure schematron rules passes" id="638cb5fa-abd2-4714-ba1f-7df734cf8462"><con:settings/><con:config xsi:type="con:AssertionTestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:entry><con:id>3864c280-0b69-4d31-823c-e4b05cc03cda</con:id><con:isGroup>false</con:isGroup><con:sourceId>57fdc57e-d677-481d-b856-4c995a09f818</con:sourceId><con:propertyName>Response</con:propertyName><con:assertion type="GroovyScriptAssertion" name="Script Assertion"><con:configuration><scriptText>import se.skl.rivta.testsupport.soapui.validation.SchematronValidator
 import se.skl.rivta.testsupport.soapui.ContextHelper
 import com.eviware.soapui.support.GroovyUtils
 
@@ -1452,7 +1452,41 @@ def failures = validator.validateMessage(messageExchange.response.responseConten
 failures.each { failure ->
     log.error ("Failure $failure.text")
 }
-</scriptText></con:configuration></con:assertion></con:entry></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="CareContactId Filter" searchProperties="true" id="c1b3f571-1eea-4f1c-8515-8dd6bbed109d"><con:settings/><con:testStep type="groovy" name="Read data" id="497d9c2b-f6a5-47f9-9073-30f52a1f85bd"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+</scriptText></con:configuration></con:assertion></con:entry></con:config></con:testStep><con:testStep type="assertionteststep" name="AND ensure careUnitHSAId's are valid" id="3a0d57e7-a1c8-48ab-a2ac-8293812d7218"><con:settings/><con:config xsi:type="con:AssertionTestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:entry><con:id>d3783211-d9bc-4333-a5b2-d02307e8a572</con:id><con:isGroup>false</con:isGroup><con:sourceId>57fdc57e-d677-481d-b856-4c995a09f818</con:sourceId><con:propertyName>Response</con:propertyName><con:assertion type="GroovyScriptAssertion" name="Script Assertion"><con:configuration><scriptText>import com.eviware.soapui.support.XmlHolder
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def contextHelper = new ContextHelper(context)
+
+def holder = new XmlHolder( messageExchange.response.responseContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:2'
+
+def documents = holder.getDomNodes('/soapenv:Envelope/soapenv:Body/urn:GetECGOutcomeResponse/urn:ECGOutcome')
+if (documents.length == 0) {
+    contextHelper.fail("Response contains no documents.")
+    return
+}
+
+documents.each { doc ->
+    def docHolder = new XmlHolder( doc )
+    holder.namespaces.each {key, value -> docHolder.namespaces[key] = value}
+
+    def documentId = docHolder.getNodeValue('/urn:ECGOutcome/urn1:ECGOutcomeHeader/urn1:documentId')
+    def careUnitHSAId = docHolder.getNodeValue('/urn:ECGOutcome/urn1:ECGOutcomeHeader/urn1:accountableHealthcareProfessional/urn1:healthcareProfessionalCareUnitHSAId')
+    log.info(context.careUnitHSAId)
+    if (careUnitHSAId != context.careUnitHSAId) {
+        contextHelper.fail("Response contains a document with other CareUnitHSAid. CareUnitHSAid: ${careUnitHSAId} DocumentId: ${documentId}")
+    }
+}</scriptText></con:configuration></con:assertion></con:entry></con:config></con:testStep><con:testStep type="assertionteststep" name="AND ensure result.resultCode equals OK" id="b091227a-5836-4df5-9a1a-9c640d7096e5"><con:settings/><con:config xsi:type="con:AssertionTestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:entry><con:id>54910f7d-1e73-4aa1-8dc7-b74eb8c5a292</con:id><con:isGroup>false</con:isGroup><con:sourceId>57fdc57e-d677-481d-b856-4c995a09f818</con:sourceId><con:propertyName>Response</con:propertyName><con:assertion type="XPath Match" name="XPath Match"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace urn='urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2';
+declare namespace urn1='urn:riv:clinicalprocess:healthcond:actoutcome:2';
+//urn:GetECGOutcomeResponse[1]/urn:result[1]/urn1:resultCode[1]/text() = "OK"</path><content>true</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion></con:entry></con:config></con:testStep><con:testStep type="assertionteststep" name="AND ensure a result.logId is returned"><con:settings/><con:config xsi:type="con:AssertionTestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:entry><con:id>aa3f779e-6c49-492c-b546-be4953d25337</con:id><con:isGroup>false</con:isGroup><con:sourceId>57fdc57e-d677-481d-b856-4c995a09f818</con:sourceId><con:propertyName>Response</con:propertyName><con:assertion type="XPath Match" name="XPath Match"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace urn='urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2';
+declare namespace urn1='urn:riv:clinicalprocess:healthcond:actoutcome:2';
+//urn:GetECGOutcomeResponse[1]/urn:result[1]/urn1:logId[matches(., '.*')]</path><content>*</content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion></con:entry></con:config></con:testStep><con:properties/><con:reportParameters/><con:breakPoints><con:testStepId>b091227a-5836-4df5-9a1a-9c640d7096e5</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>3a0d57e7-a1c8-48ab-a2ac-8293812d7218</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>638cb5fa-abd2-4714-ba1f-7df734cf8462</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="CareContactId Filter" searchProperties="true" id="c1b3f571-1eea-4f1c-8515-8dd6bbed109d"><con:settings/><con:testStep type="groovy" name="Read data" id="497d9c2b-f6a5-47f9-9073-30f52a1f85bd"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
 
 def utils = new GroovyUtils(context)
@@ -1521,7 +1555,7 @@ def failures = validator.validateMessage(messageExchange.response.responseConten
 failures.each { failure ->
     log.error ("Failure $failure.text")
 }
-</scriptText></con:configuration></con:assertion></con:entry></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="HTTPHeader Filter" searchProperties="true" id="cbcfbf3a-47cd-4a96-bbb9-3ff4aabe1ba7"><con:settings/><con:testStep type="groovy" name="Read data" id="d0f7118d-d9c4-4bcb-8cda-443624840f2b"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+</scriptText></con:configuration></con:assertion></con:entry></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="HTTPHeader Filter" searchProperties="true" id="cbcfbf3a-47cd-4a96-bbb9-3ff4aabe1ba7"><con:settings/><con:testStep type="groovy" name="GIVEN HTTPHeader Filter data" id="d0f7118d-d9c4-4bcb-8cda-443624840f2b"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
 
 def utils = new GroovyUtils(context)
@@ -1543,7 +1577,7 @@ source.load("HTTPHeader Filter")</script></con:config></con:testStep><con:testSt
          <urn1:careContactId>${careContactId1}</urn1:careContactId>
       </urn1:GetECGOutcome>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="assertionteststep" name="THEN ensure schematron rules passes"><con:settings/><con:config xsi:type="con:AssertionTestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:entry><con:id>3993f2b1-f3c8-4cc3-9e50-ec5611d1236c</con:id><con:isGroup>false</con:isGroup><con:sourceId>2209d652-9c47-4968-866f-cb65d87db2ce</con:sourceId><con:propertyName>Response</con:propertyName><con:assertion type="GroovyScriptAssertion" name="Script Assertion"><con:configuration><scriptText>import se.skl.rivta.testsupport.soapui.validation.SchematronValidator
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="assertionteststep" name="THEN ensure schematron rules passes" id="0e0bc459-0f15-42de-9237-b7698e940495"><con:settings/><con:config xsi:type="con:AssertionTestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:entry><con:id>3993f2b1-f3c8-4cc3-9e50-ec5611d1236c</con:id><con:isGroup>false</con:isGroup><con:sourceId>2209d652-9c47-4968-866f-cb65d87db2ce</con:sourceId><con:propertyName>Response</con:propertyName><con:assertion type="GroovyScriptAssertion" name="Script Assertion"><con:configuration><scriptText>import se.skl.rivta.testsupport.soapui.validation.SchematronValidator
 import se.skl.rivta.testsupport.soapui.ContextHelper
 import com.eviware.soapui.support.GroovyUtils
 
@@ -1557,14 +1591,85 @@ def failures = validator.validateMessage(messageExchange.response.responseConten
 failures.each { failure ->
     log.error ("Failure $failure.text")
 }
-</scriptText></con:configuration></con:assertion></con:entry></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="NonExistent PatientId" searchProperties="true" id="e2c38d83-8dc0-4e31-a812-37e65bf5a2e0"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+</scriptText></con:configuration></con:assertion></con:entry></con:config></con:testStep><con:testStep type="assertionteststep" name="AND ensure patienId is correct" id="5fa85beb-5c7f-4005-888d-b35c5b6feb78"><con:settings/><con:config xsi:type="con:AssertionTestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:entry><con:id>c5dcd782-9bb2-44a5-aab4-7d189ef1c532</con:id><con:isGroup>false</con:isGroup><con:sourceId>2209d652-9c47-4968-866f-cb65d87db2ce</con:sourceId><con:propertyName>Response</con:propertyName><con:assertion type="GroovyScriptAssertion" name="Script Assertion"><con:configuration><scriptText>import static com.eviware.soapui.support.StringUtils.hasContent
+import com.eviware.soapui.support.XmlHolder
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def contextHelper = new ContextHelper(context)
+
+def holder = new XmlHolder( messageExchange.response.responseContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:2'
+
+def ECGOutcome = holder.getDomNodes('/soapenv:Envelope/soapenv:Body/urn:GetECGOutcomeResponse/urn:ECGOutcome')
+
+assert ECGOutcome.size() > 0
+
+ECGOutcome.each {l ->
+    def ECGOutcomeHolder = new XmlHolder( l )
+    holder.namespaces.each {key, value -> ECGOutcomeHolder.namespaces[key] = value}
+
+    def patientId = ECGOutcomeHolder.getNodeValue('/urn:ECGOutcome/urn1:ECGOutcomeHeader/urn1:patientId/urn1:id')
+    def patientIdType = ECGOutcomeHolder.getNodeValue('/urn:ECGOutcome/urn1:ECGOutcomeHeader/urn1:patientId/urn1:type')
+	log.info(patientId)
+	log.info(context.patientId)
+    assert patientId == context.patientId
+    assert patientIdType == context.patientIdType
+}</scriptText></con:configuration></con:assertion></con:entry></con:config></con:testStep><con:testStep type="assertionteststep" name="AND ensure document id's are valid" id="7dc7c840-4acb-4a2a-b3e9-79e981e81b29"><con:settings/><con:config xsi:type="con:AssertionTestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:entry><con:id>4b8c3360-0a6d-41e1-a17b-034110d9f1e5</con:id><con:isGroup>false</con:isGroup><con:sourceId>2209d652-9c47-4968-866f-cb65d87db2ce</con:sourceId><con:propertyName>Response</con:propertyName><con:assertion type="GroovyScriptAssertion" name="Script Assertion"><con:configuration><scriptText>import com.eviware.soapui.support.XmlHolder
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def contextHelper = new ContextHelper(context)
+
+def holder = new XmlHolder( messageExchange.response.responseContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:2'
+
+def documentIds = holder.getNodeValues('/soapenv:Envelope/soapenv:Body/urn:GetECGOutcomeResponse/urn:ECGOutcome/urn1:ECGOutcomeHeader/urn1:documentId') as List
+
+log.info("context: " + context)
+def expectedDocumentIds = context.expectedDocumentIds ? context.expectedDocumentIds.tokenize(',') : []
+def unexpectedDocumentIds = context.unexpectedDocumentIds ? context.unexpectedDocumentIds.tokenize(',') : []
+
+log.info("Assert documentIds, unexpectedDocumentIds:$unexpectedDocumentIds,\nexpectedDocumentIds, $expectedDocumentIds,\nfound documentIds $documentIds")
+
+def missingExpectedIds = []
+def extraUnexpectedIds = []
+
+documentIds.each {id ->
+    if (unexpectedDocumentIds.contains(id)) {
+        extraUnexpectedIds.add(id)
+    }
+}
+
+expectedDocumentIds.each {id ->
+    if (!documentIds.contains(id)) {
+        missingExpectedIds.add(id)
+    }
+}
+
+if(!missingExpectedIds.isEmpty() || !extraUnexpectedIds.isEmpty()) {
+	log.error("Response contains unexpected DocumentIds: $extraUnexpectedIds and/or does not contain  expected DocumentIds: $missingExpectedIds")
+	assert(false)
+}</scriptText></con:configuration></con:assertion></con:entry></con:config></con:testStep><con:testStep type="assertionteststep" name="AND ensure result.resultCode equals OK" id="d8cbcd05-8b52-4fe3-aae0-48c7b8b2c810"><con:settings/><con:config xsi:type="con:AssertionTestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:entry><con:id>d02dc2ec-7193-4ea0-a2ae-77a9cc483aa6</con:id><con:isGroup>false</con:isGroup><con:sourceId>2209d652-9c47-4968-866f-cb65d87db2ce</con:sourceId><con:propertyName>Response</con:propertyName><con:assertion type="XPath Match" name="XPath Match"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace urn='urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2';
+declare namespace urn1='urn:riv:clinicalprocess:healthcond:actoutcome:2';
+//urn:GetECGOutcomeResponse[1]/urn:result[1]/urn1:resultCode[1]/text() = "OK"</path><content>true</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion></con:entry></con:config></con:testStep><con:testStep type="assertionteststep" name="AND ensure result.logId is returned"><con:settings/><con:config xsi:type="con:AssertionTestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:entry><con:id>aa3aa0b8-4158-438c-8bee-6f37e0105b56</con:id><con:isGroup>false</con:isGroup><con:sourceId>2209d652-9c47-4968-866f-cb65d87db2ce</con:sourceId><con:propertyName>Response</con:propertyName><con:assertion type="XPath Match" name="XPath Match"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace urn='urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2';
+declare namespace urn1='urn:riv:clinicalprocess:healthcond:actoutcome:2';
+//urn:GetECGOutcomeResponse[1]/urn:result[1]/urn1:logId[matches(., '.*')]</path><content>*</content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion></con:entry></con:config></con:testStep><con:properties/><con:reportParameters/><con:breakPoints><con:testStepId>d8cbcd05-8b52-4fe3-aae0-48c7b8b2c810</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="NonExistent PatientId" searchProperties="true" id="e2c38d83-8dc0-4e31-a812-37e65bf5a2e0"><con:settings/><con:testStep type="groovy" name="Read data" id="c35defa4-6eb9-4c8c-b61c-1ae8bbaf824a"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
 
 def utils = new GroovyUtils(context)
 def dataFile = new File(utils.projectPath + "/data.xml")
 def source = new XmlDataReader(context, dataFile)
 
-source.load("NonExistent PatientId")</script></con:config></con:testStep><con:testStep type="request" name="WHEN calling ECGOutcome with nonexistent patientID"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetECGOutcomeResponderBinding</con:interface><con:operation>GetECGOutcome</con:operation><con:request name="WHEN calling ECGOutcome with nonexistent patientID"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+source.load("NonExistent PatientId")</script></con:config></con:testStep><con:testStep type="request" name="WHEN calling ECGOutcome with nonexistent patientID" id="d7c02ec2-3f8e-4feb-a510-45068e52fbf5"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetECGOutcomeResponderBinding</con:interface><con:operation>GetECGOutcome</con:operation><con:request name="WHEN calling ECGOutcome with nonexistent patientID"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
   &lt;con:entry key="x-mock-response" value="EmptyResponse"/>
   &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
 &lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:actoutcome:2">
@@ -1579,7 +1684,16 @@ source.load("NonExistent PatientId")</script></con:config></con:testStep><con:te
          </urn1:patientId>
       </urn1:GetECGOutcome>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="assertionteststep" name="THEN ensure zero ECGOutcome in response"><con:settings/><con:config xsi:type="con:AssertionTestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="NonExistent CareContactId" searchProperties="true" id="014faf21-65a7-41ef-9c75-11df2a709192"><con:settings/><con:testStep type="groovy" name="Read data" id="0d612de0-42d7-4243-ad3c-86d7e307a504"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="assertionteststep" name="THEN ensure zero ECGOutcome in response" id="417eff84-b993-4d36-a219-99f2b5f382ce"><con:settings/><con:config xsi:type="con:AssertionTestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:entry><con:id>ae6ca619-c2f0-4b1d-b3ad-c58981dc7f18</con:id><con:isGroup>false</con:isGroup><con:sourceId>d7c02ec2-3f8e-4feb-a510-45068e52fbf5</con:sourceId><con:propertyName>Response</con:propertyName><con:assertion type="XPath Match" name="XPath Match"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace urn='urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2';
+declare namespace urn1='urn:riv:clinicalprocess:healthcond:actoutcome:2';
+count(//urn:GetECGOutcomeResponse[1]/urn:GetECGOutcome)</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion></con:entry></con:config></con:testStep><con:testStep type="assertionteststep" name="AND ensure result.resultCode equals OK" id="f0013026-3b57-4c16-9df7-98f6cf7e6ba4"><con:settings/><con:config xsi:type="con:AssertionTestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:entry><con:id>adaae2f3-a99e-4f9b-bbd2-ccf2cc77c634</con:id><con:isGroup>false</con:isGroup><con:sourceId>d7c02ec2-3f8e-4feb-a510-45068e52fbf5</con:sourceId><con:propertyName>Response</con:propertyName><con:assertion type="XPath Match" name="XPath Match"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace urn='urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2';
+declare namespace urn1='urn:riv:clinicalprocess:healthcond:actoutcome:2';
+//urn:GetECGOutcomeResponse[1]/urn:result[1]/urn1:resultCode[1]/text() = "OK"</path><content>true</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion></con:entry></con:config></con:testStep><con:testStep type="assertionteststep" name="AND ensure a result.logId is returned"><con:settings/><con:config xsi:type="con:AssertionTestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:entry><con:id>38528e11-af1c-4b97-b728-86664c0e4226</con:id><con:isGroup>false</con:isGroup><con:sourceId>d7c02ec2-3f8e-4feb-a510-45068e52fbf5</con:sourceId><con:propertyName>Response</con:propertyName><con:assertion type="XPath Match" name="XPath Match"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace urn='urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2';
+declare namespace urn1='urn:riv:clinicalprocess:healthcond:actoutcome:2';
+//urn:GetECGOutcomeResponse[1]/urn:result[1]/urn1:logId[matches(., '.*')]</path><content>*</content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion></con:entry></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="NonExistent CareContactId" searchProperties="true" id="014faf21-65a7-41ef-9c75-11df2a709192"><con:settings/><con:testStep type="groovy" name="Read data" id="0d612de0-42d7-4243-ad3c-86d7e307a504"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
 
 def utils = new GroovyUtils(context)
