@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project activeEnvironment="Default" name="GetImagingOutcomeMock" resourceRoot="${projectDir}" soapui-version="4.6.4" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetImagingOutcomeResponderBinding" type="wsdl" bindingName="{urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcome:1:rivtabp21}GetImagingOutcomeResponderBinding" soapVersion="1_1" anonymous="optional" definition="../../schemas/interactions/GetImagingOutcomeInteraction/GetImagingOutcomeInteraction_1.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/actoutcome/trunk/schemas/interactions/GetImagingOutcomeInteraction/GetImagingOutcomeInteraction_1.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/actoutcome/trunk/schemas/interactions/GetImagingOutcomeInteraction/GetImagingOutcomeInteraction_1.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+<con:soapui-project activeEnvironment="Default" name="GetImagingOutcomeMock" resourceRoot="${projectDir}" soapui-version="5.0.0-beta" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetImagingOutcomeResponderBinding" type="wsdl" bindingName="{urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcome:1:rivtabp21}GetImagingOutcomeResponderBinding" soapVersion="1_1" anonymous="optional" definition="../../schemas/interactions/GetImagingOutcomeInteraction/GetImagingOutcomeInteraction_1.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/actoutcome/trunk/schemas/interactions/GetImagingOutcomeInteraction/GetImagingOutcomeInteraction_1.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/actoutcome/trunk/schemas/interactions/GetImagingOutcomeInteraction/GetImagingOutcomeInteraction_1.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
@@ -1208,7 +1208,46 @@
          <!--You may enter ANY elements at this point-->
       </urn1:GetImagingOutcome>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:2:GetImagingOutcome"/></con:call></con:operation></con:interface><con:mockService port="8088" path="/mockGetImagingOutcomeResponderBinding" host="Khaleds-MacBook-Pro.local" name="GetImagingOutcomeResponderBinding MockService"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="GetImagingOutcome" interface="GetImagingOutcomeResponderBinding" operation="GetImagingOutcome"><con:settings/><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:defaultResponse>Response 1</con:defaultResponse><con:response name="Response 1" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:2">
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:2:GetImagingOutcome"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:mockService port="8088" path="/mockGetImagingOutcomeResponderBinding" host="Khaleds-MacBook-Pro.local" name="GetImagingOutcomeMock"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="GetImagingOutcome" interface="GetImagingOutcomeResponderBinding" operation="GetImagingOutcome"><con:settings/><con:dispatchStyle>SCRIPT</con:dispatchStyle><con:defaultResponse>SoapFault</con:defaultResponse><con:dispatchPath>import com.eviware.soapui.support.XmlHolder
+import com.eviware.soapui.impl.wsdl.support.wsdl.WsdlContext
+import com.eviware.soapui.impl.wsdl.support.wsdl.WsdlValidator
+import com.eviware.soapui.impl.wsdl.panels.mockoperation.WsdlMockRequestMessageExchange
+
+def mockService = mockOperation.mockService
+
+def wsdlcontext = new WsdlContext("http://localhost:${mockService.port}/${mockService.path}?WSDL");
+def validator = new WsdlValidator(wsdlcontext);
+def msgExchange = new WsdlMockRequestMessageExchange(mockRequest, mockOperation); 
+def errors = validator.assertRequest(msgExchange, false);
+
+def msg = ""
+if (errors.length > 0) {
+	errors.each {
+		log.error("Incoming request contains error ${it.toString()}")
+		msg += "${it.toString()}\n"
+	}
+	context.validationMessages = msg
+	return "SoapFault"
+}
+
+def holder = new XmlHolder( mockRequest.requestContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:itintegration:registry:1'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:2'
+holder.namespaces['urn2'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:2'
+
+def careUnitHSAid = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetImagingOutcome/urn1:careUnitHSAid')
+def patientId = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetImagingOutcome/urn1:patientId/urn2:id')
+def patientIdType = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetImagingOutcome/urn1:patientId/urn2:type')
+
+context.patientId = patientId
+context.patientIdType = patientIdType
+context.careUnitHSAid = careUnitHSAid
+
+def responseName = mockRequest.requestHeaders['x-mock-response'][0]
+log.debug("responseName: ${responseName}")
+
+return responseName</con:dispatchPath><con:response name="Response 1" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:2">
    <soapenv:Header/>
    <soapenv:Body>
       <urn:GetImagingOutcomeResponse>
@@ -1515,4 +1554,17 @@
          <!--You may enter ANY elements at this point-->
       </urn:GetImagingOutcomeResponse>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:2:GetImagingOutcome"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:properties/><con:wssContainer/><con:databaseConnectionContainer/></con:soapui-project>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:2:GetImagingOutcome"/></con:response><con:response name="SoapFault" httpResponseStatus="500" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+  <soapenv:Body>
+    <soapenv:Fault>
+      <faultcode>server</faultcode>
+      <faultstring xml:lang="SE">That's an error!</faultstring>
+      <!--Optional:-->
+      <faultactor>1</faultactor>
+      <!--Optional:-->
+      <detail>
+      	<text>Illegal values!</text>
+      </detail>
+    </soapenv:Fault>
+  </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:2:GetImagingOutcome"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/><con:reporting><con:xmlTemplates/><con:parameters/></con:reporting></con:soapui-project>
