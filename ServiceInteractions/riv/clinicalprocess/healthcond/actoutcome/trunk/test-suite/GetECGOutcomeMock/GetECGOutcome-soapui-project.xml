@@ -92,7 +92,7 @@
     <xs:sequence>
       <xs:element name="careUnitHSAId" type="core:HSAIdType" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="patientId" type="core:PersonIdType"/>
-      <xs:element name="timePeriod" type="core:DatePeriodType" minOccurs="0"/>
+      <xs:element name="datePeriod" type="core:DatePeriodType" minOccurs="0"/>
       <xs:element name="sourceSystemHSAId" type="core:HSAIdType" minOccurs="0"/>
       <xs:element name="careContactId" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
@@ -382,6 +382,7 @@
       <xs:element name="signatureTime" type="tns:TimeStampType"/>
       <xs:element name="legalAuthenticatorHSAId" type="tns:HSAIdType" minOccurs="0"/>
       <xs:element minOccurs="0" name="legalAuthenticatorName" type="xs:string"/>
+      <xs:element minOccurs="0" name="legalAuthenticatorRoleCode" type="tns:CVType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -687,12 +688,12 @@
     </xs:annotation>
     <xs:sequence>
       <xs:element name="authorTime" type="tns:TimeStampType"/>
-      <xs:element name="healthcareProfessionalHSAId" type="tns:HSAIdType" minOccurs="1"/>
+      <xs:element name="healthcareProfessionalHSAId" type="tns:HSAIdType" minOccurs="0"/>
       <xs:element name="healthcareProfessionalName" type="xs:string" minOccurs="0"/>
       <xs:element name="healthcareProfessionalRoleCode" type="tns:CVType" minOccurs="0"/>
-      <xs:element name="healthcareProfessionalOrgUnit" type="tns:OrgUnitType" minOccurs="1"/>
-      <xs:element name="healthcareProfessionalCareUnitHSAId" type="tns:HSAIdType" minOccurs="1"/>
-      <xs:element minOccurs="1" name="healthcareProfessionalCareGiverHSAId" type="tns:HSAIdType"/>
+      <xs:element name="healthcareProfessionalOrgUnit" type="tns:OrgUnitType" minOccurs="0"/>
+      <xs:element name="healthcareProfessionalCareUnitHSAId" type="tns:HSAIdType" minOccurs="0"/>
+      <xs:element minOccurs="0" name="healthcareProfessionalCareGiverHSAId" type="tns:HSAIdType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -714,8 +715,8 @@
                 Text som anger namnet på plats eller ort för enhetens eller funktionens fysiska placering</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="orgUnitHSAId" type="tns:HSAIdType" minOccurs="1"/>
-      <xs:element name="orgUnitName" type="xs:string" minOccurs="1"/>
+      <xs:element name="orgUnitHSAId" type="tns:HSAIdType" minOccurs="0"/>
+      <xs:element name="orgUnitName" type="xs:string" minOccurs="0"/>
       <xs:element name="orgUnitTelecom" type="xs:string" minOccurs="0"/>
       <xs:element name="orgUnitEmail" type="xs:string" minOccurs="0"/>
       <xs:element name="orgUnitAddress" type="xs:string" minOccurs="0"/>
@@ -815,7 +816,7 @@
       <xs:element name="accountableHealthcareProfessional" type="tns:HealthcareProfessionalType" minOccurs="0"/>
       <xs:element minOccurs="0" name="noOfImages" type="xs:string"/>
       <xs:element minOccurs="0" name="modalityData" type="tns:ModalityDataType"/>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="imageDicomData" type="tns:ECGDicomDataType"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="imageDicomData" type="tns:DicomDataType"/>
       <xs:element name="imageStaticData" type="tns:ImageStructuredDataType"/>
       <xs:element minOccurs="0" name="referral" type="tns:ECGReferralType"/>
       <xs:element name="attested" type="tns:LegalAuthenticatorType" minOccurs="0"/>
@@ -826,18 +827,17 @@
   <xs:complexType name="ECGOutcomeBodyType">
     <xs:sequence>
       <xs:element minOccurs="0" name="examinationSpeciality" type="tns:CVType"/>
-      <xs:element name="resultType" type="xs:string"/>
+      <xs:element name="typeOfResult" type="xs:string"/>
       <xs:element name="resultTime" type="tns:TimeStampType" minOccurs="1"/>
       <xs:element name="resultReport" type="xs:string" minOccurs="1"/>
       <xs:element minOccurs="0" name="resultComment" type="xs:string"/>
       <xs:element name="patientData" type="tns:PatientDataType" minOccurs="0"/>
       <xs:element name="ecgRecording" type="tns:ImageRecordingType" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="examinationUnit" type="xs:string" minOccurs="0"/>
       <xs:element name="accountableHealthcareProfessional" type="tns:HealthcareProfessionalType" minOccurs="0"/>
       <xs:element minOccurs="0" name="modalityData" type="tns:ModalityDataType"/>
       <xs:element minOccurs="0" name="pacemaker" type="xs:boolean"/>
       <xs:element maxOccurs="unbounded" minOccurs="0" name="ecgStructuredData" type="tns:ECGStructuredDataType"/>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="ecgDicomData" type="tns:ECGDicomDataType"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="ecgDicomData" type="tns:DicomDataType"/>
       <xs:element maxOccurs="unbounded" minOccurs="0" name="ecgData" type="tns:ImageDataType"/>
       <xs:element minOccurs="0" name="referral" type="tns:ECGReferralType"/>
       <xs:element name="attested" type="tns:LegalAuthenticatorType"/>
@@ -862,6 +862,7 @@
   </xs:complexType>
   <xs:complexType name="ModalityDataType">
     <xs:sequence>
+      <xs:element minOccurs="0" name="typeOfModality" type="xs:string"/>
       <xs:element name="manufacturer" type="xs:string" minOccurs="0"/>
       <xs:element name="modelName" type="xs:string" minOccurs="0"/>
       <xs:element name="equipmentId" type="xs:string" minOccurs="0"/>
@@ -876,6 +877,7 @@
       <xs:element name="examinationActivity" type="tns:CVType" minOccurs="1"/>
       <xs:element name="examinationTimePeriod" type="tns:TimePeriodType" minOccurs="1"/>
       <xs:element name="examinationStatus" type="tns:CVType" minOccurs="0"/>
+      <xs:element name="examinationUnit" type="xs:string" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -883,23 +885,23 @@
     <xs:sequence>
       <xs:element name="usedFilter" type="tns:UsedFilterType" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="heartRate" type="tns:PQType" minOccurs="0"/>
-      <xs:element name="QT" type="tns:PQType" minOccurs="0"/>
-      <xs:element name="QTc" type="tns:PQType" minOccurs="0"/>
-      <xs:element name="PR" type="tns:PQType" minOccurs="0"/>
-      <xs:element name="Paxis" type="tns:PQType" minOccurs="0"/>
-      <xs:element name="QRSAxis" type="tns:PQType" minOccurs="0"/>
-      <xs:element name="Taxis" type="tns:PQType" minOccurs="0"/>
-      <xs:element name="stType" type="tns:STType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="qt" type="tns:PQType" minOccurs="0"/>
+      <xs:element name="qtCorrected" type="tns:PQType" minOccurs="0"/>
+      <xs:element name="pr" type="tns:PQType" minOccurs="0"/>
+      <xs:element name="pAxis" type="tns:PQType" minOccurs="0"/>
+      <xs:element name="qrsAxis" type="tns:PQType" minOccurs="0"/>
+      <xs:element name="tAxis" type="tns:PQType" minOccurs="0"/>
+      <xs:element name="st" type="tns:STType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="interpretationAlgorithmName" type="xs:string" minOccurs="0"/>
       <xs:element name="interpretation" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="ECGDicomDataType">
+  <xs:complexType name="DicomDataType">
     <xs:sequence>
-      <xs:element name="demSOP" type="xs:string"/>
-      <xs:element name="demValue" type="xs:base64Binary" minOccurs="0"/>
-      <xs:element name="demReference" type="xs:anyURI" minOccurs="0"/>
+      <xs:element name="dicomSOP" type="xs:string"/>
+      <xs:element name="dicomValue" type="xs:base64Binary" minOccurs="0"/>
+      <xs:element name="dicomReference" type="xs:anyURI" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -1282,8 +1284,6 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
                      <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
                   </urn1:healthcareProfessionalOrgUnit>
-                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
-                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                </urn1:accountableHealthcareProfessional>
                <urn1:legalAuthenticator>
                   <urn1:signatureTime>20120102122322</urn1:signatureTime>
@@ -1300,7 +1300,7 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                   <urn1:codeSystem>OID</urn1:codeSystem>
                   <urn1:displayName>ett</urn1:displayName>
                </urn1:examinationSpeciality>
-               <urn1:resultType>?</urn1:resultType>
+               <urn1:typeOfResult>?</urn1:typeOfResult>
                <urn1:resultTime>20120102122322</urn1:resultTime>
                <urn1:resultReport>?</urn1:resultReport>
                <urn1:resultComment>?</urn1:resultComment>
@@ -1335,8 +1335,8 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:codeSystem>OID</urn1:codeSystem>
                      <urn1:displayName>Planerad</urn1:displayName>
                   </urn1:examinationStatus>
+                  <urn1:examinationUnit>?</urn1:examinationUnit>
                </urn1:ecgRecording>
-               <urn1:examinationUnit>?</urn1:examinationUnit>
                <urn1:accountableHealthcareProfessional>
                   <urn1:authorTime>20120102122322</urn1:authorTime>
                   <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
@@ -1354,8 +1354,6 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
                      <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
                   </urn1:healthcareProfessionalOrgUnit>
-                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
-                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                </urn1:accountableHealthcareProfessional>
                <urn1:modalityData>
                   <urn1:manufacturer>?</urn1:manufacturer>
@@ -1386,32 +1384,249 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:value>130.0</urn1:value>
                      <urn1:unit>?</urn1:unit>
                   </urn1:heartRate>
-                  <urn1:QT>
+                  <urn1:qt>
                      <urn1:value>140</urn1:value>
                      <urn1:unit>s</urn1:unit>
-                  </urn1:QT>
-                  <urn1:QTc>
+                  </urn1:qt>
+                  <urn1:qtCorrected>
                      <urn1:value>150</urn1:value>
                      <urn1:unit>?</urn1:unit>
-                  </urn1:QTc>
-                  <urn1:PR>
+                  </urn1:qtCorrected>
+                  <urn1:pr>
                      <urn1:value>160.0</urn1:value>
                      <urn1:unit>s</urn1:unit>
-                  </urn1:PR>
-                  <urn1:Paxis>
+                  </urn1:pr>
+                  <urn1:pAxis>
                      <urn1:value>170.0</urn1:value>
                      <urn1:unit>?</urn1:unit>
-                  </urn1:Paxis>
-                  <urn1:QRSAxis>
+                  </urn1:pAxis>
+                  <urn1:qrsAxis>
                      <urn1:value>170.0</urn1:value>
                      <urn1:unit>?</urn1:unit>
-                  </urn1:QRSAxis>
-                  <urn1:Taxis>
+                  </urn1:qrsAxis>
+                  <urn1:tAxis>
                      <urn1:value>180.0</urn1:value>
                      <urn1:unit>?</urn1:unit>
-                  </urn1:Taxis>
+                  </urn1:tAxis>
+                  <urn1:st>
+                     <urn1:leadName>?</urn1:leadName>
+                     <urn1:stLevel>
+                        <urn1:value>190.0</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                     </urn1:stLevel>
+                  </urn1:st>
+                  <urn1:interpretationAlgorithmName>?</urn1:interpretationAlgorithmName>
+                  <urn1:interpretation>?</urn1:interpretation>
+               </urn1:ecgStructuredData>
+               <urn1:ecgDicomData>
+                  <urn1:dicomSOP>?</urn1:dicomSOP>
+                  <urn1:dicomValue>cid:358086327269</urn1:dicomValue>
+                  <urn1:dicomReference>?</urn1:dicomReference>
+               </urn1:ecgDicomData>
+               <urn1:ecgData>
+                  <urn1:mediaType>text/html</urn1:mediaType>
+                  <urn1:value>cid:449923047380</urn1:value>
+                  <urn1:reference>urn:test</urn1:reference>
+                  <urn1:burnedInaAnnotations>false</urn1:burnedInaAnnotations>
+               </urn1:ecgData>
+               <urn1:referral>
+                  <urn1:referralId>?</urn1:referralId>
+                  <urn1:referralReason>?</urn1:referralReason>
+                  <urn1:anamnesis>?</urn1:anamnesis>
+                  <urn1:careContactId>?</urn1:careContactId>
+                  <urn1:accountableHealthcareProfessional>
+                     <urn1:authorTime>20120102122322</urn1:authorTime>
+                     <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                     <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                     <urn1:healthcareProfessionalRoleCode>
+                        <urn1:code>1</urn1:code>
+                        <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                        <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
+                     </urn1:healthcareProfessionalRoleCode>
+                     <urn1:healthcareProfessionalOrgUnit>
+                        <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                        <urn1:orgUnitName>?</urn1:orgUnitName>
+                        <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                        <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                        <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                        <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                     </urn1:healthcareProfessionalOrgUnit>
+                  </urn1:accountableHealthcareProfessional>
+               </urn1:referral>
+               <urn1:attested>
+                  <urn1:signatureTime>20120102122322</urn1:signatureTime>
+                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+               </urn1:attested>
+            </urn1:ECGOutcomeBody>
+         </urn:ECGOutcome>
+         <!-- End of one ECG record -->
+         <urn:result>
+            <urn1:resultCode>OK</urn1:resultCode>
+            <urn1:logId>0000-1111</urn1:logId>
+         </urn:result>
+         <!--You may enter ANY elements at this point-->
+      </urn:GetECGOutcomeResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2:GetECGOutcome"/></con:response><con:response name="DateResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:2">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetECGOutcomeResponse>
+         <!--Zero or more repetitions:-->
+         <urn:ECGOutcome>
+            <urn1:ECGOutcomeHeader>
+               <urn1:documentId>774411</urn1:documentId>
+               <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
+               <urn1:documentTitle>?</urn1:documentTitle>
+               <urn1:documentTime>20120102122322</urn1:documentTime>
+               <urn1:patientId>
+                  <urn1:id>${patientId}</urn1:id>
+                  <urn1:type>${patientIdType}</urn1:type>
+               </urn1:patientId>
+               <urn1:accountableHealthcareProfessional>
+                  <urn1:authorTime>20120102122322</urn1:authorTime>
+                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                  <urn1:healthcareProfessionalRoleCode>
+                     <urn1:code>1</urn1:code>
+                     <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                     <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
+                  </urn1:healthcareProfessionalRoleCode>
+                  <urn1:healthcareProfessionalOrgUnit>
+                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                     <urn1:orgUnitName>?</urn1:orgUnitName>
+                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                  </urn1:healthcareProfessionalOrgUnit>
+                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+               </urn1:accountableHealthcareProfessional>
+               <urn1:legalAuthenticator>
+                  <urn1:signatureTime>20120102122322</urn1:signatureTime>
+                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+               </urn1:legalAuthenticator>
+               <urn1:approvedForPatient>true</urn1:approvedForPatient>
+               <urn1:careContactId>?</urn1:careContactId>
+               <urn1:nullified>false</urn1:nullified>
+               <urn1:nullifiedReason>?</urn1:nullifiedReason>
+            </urn1:ECGOutcomeHeader>
+            <urn1:ECGOutcomeBody>
+               <urn1:examinationSpeciality>
+                  <urn1:code>1</urn1:code>
+                  <urn1:codeSystem>OID</urn1:codeSystem>
+                  <urn1:displayName>ett</urn1:displayName>
+               </urn1:examinationSpeciality>
+               <urn1:typeOfResult>?</urn1:typeOfResult>
+               <urn1:resultTime>20120102122322</urn1:resultTime>
+               <urn1:resultReport>?</urn1:resultReport>
+               <urn1:resultComment>?</urn1:resultComment>
+               <urn1:patientData>
+                  <urn1:patientWeight>
+                     <urn1:value>85.0</urn1:value>
+                     <urn1:unit>kg</urn1:unit>
+                  </urn1:patientWeight>
+                  <urn1:patientLength>
+                     <urn1:value>172</urn1:value>
+                     <urn1:unit>cm</urn1:unit>
+                  </urn1:patientLength>
+               </urn1:patientData>
+               <!--Zero or more repetitions:-->
+               <urn1:ecgRecording>
+                  <urn1:recordingId>
+                     <urn1:root>?</urn1:root>
+                     <urn1:extension>?</urn1:extension>
+                  </urn1:recordingId>
+                  <urn1:examinationActivity>
+                     <urn1:code>AA001</urn1:code>
+                     <urn1:codeSystem>1.2.752.116.1.3.2.1.4</urn1:codeSystem>
+                     <urn1:codeSystemName>Klassifikation av vårdåtgärder(KVÅ)</urn1:codeSystemName>
+                     <urn1:displayName>Adenosintest</urn1:displayName>
+                  </urn1:examinationActivity>
+                  <urn1:examinationTimePeriod>
+                     <urn1:start>20120102122322</urn1:start>
+                     <urn1:end>20120102122322</urn1:end>
+                  </urn1:examinationTimePeriod>
+                  <urn1:examinationStatus>
+                     <urn1:code>1</urn1:code>
+                     <urn1:codeSystem>OID</urn1:codeSystem>
+                     <urn1:displayName>Planerad</urn1:displayName>
+                  </urn1:examinationStatus>
+                  <urn1:examinationUnit>?</urn1:examinationUnit>
+               </urn1:ecgRecording>
+               <urn1:accountableHealthcareProfessional>
+                  <urn1:authorTime>20120102122322</urn1:authorTime>
+                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                  <urn1:healthcareProfessionalRoleCode>
+                     <urn1:code>1</urn1:code>
+                     <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                     <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
+                  </urn1:healthcareProfessionalRoleCode>
+                  <urn1:healthcareProfessionalOrgUnit>
+                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                     <urn1:orgUnitName>?</urn1:orgUnitName>
+                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                  </urn1:healthcareProfessionalOrgUnit>
+               </urn1:accountableHealthcareProfessional>
+               <urn1:modalityData>
+                  <urn1:manufacturer>?</urn1:manufacturer>
+                  <urn1:modelName>?</urn1:modelName>
+                  <urn1:equipmentId>?</urn1:equipmentId>
+                  <urn1:softwareVersion>?</urn1:softwareVersion>
+                  <urn1:lineFilter>
+                     <urn1:value>2.0</urn1:value>
+                     <urn1:unit>Hz</urn1:unit>
+                  </urn1:lineFilter>
+               </urn1:modalityData>
+               <urn1:pacemaker>false</urn1:pacemaker>
+               <!--Zero or more repetitions:-->
+               <urn1:ecgStructuredData>
                   <!--Zero or more repetitions:-->
-                  <urn1:stType>
+                  <urn1:usedFilter>
+                     <urn1:filterName>?</urn1:filterName>
+                     <urn1:lowerFrequency>
+                        <urn1:value>10.0</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                     </urn1:lowerFrequency>
+                     <urn1:upperFrequency>
+                        <urn1:value>20.0</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                     </urn1:upperFrequency>
+                  </urn1:usedFilter>
+                  <urn1:heartRate>
+                     <urn1:value>130.0</urn1:value>
+                     <urn1:unit>?</urn1:unit>
+                  </urn1:heartRate>
+                  <urn1:qt>
+                     <urn1:value>140</urn1:value>
+                     <urn1:unit>s</urn1:unit>
+                  </urn1:qt>
+                  <urn1:qtCorrected>
+                     <urn1:value>150</urn1:value>
+                     <urn1:unit>?</urn1:unit>
+                  </urn1:qtCorrected>
+                  <urn1:pr>
+                     <urn1:value>160.0</urn1:value>
+                     <urn1:unit>s</urn1:unit>
+                  </urn1:pr>
+                  <urn1:pAxis>
+                     <urn1:value>170.0</urn1:value>
+                     <urn1:unit>?</urn1:unit>
+                  </urn1:pAxis>
+                  <urn1:qrsAxis>
+                     <urn1:value>170.0</urn1:value>
+                     <urn1:unit>?</urn1:unit>
+                  </urn1:qrsAxis>
+                  <urn1:tAxis>
+                     <urn1:value>180.0</urn1:value>
+                     <urn1:unit>?</urn1:unit>
+                  </urn1:tAxis>
+                  <!--Zero or more repetitions:-->
+                  <urn1:st>
                      <urn1:leadName>?</urn1:leadName>
                      <urn1:stLevel>
                         <urn1:value>190.0</urn1:value>
@@ -1419,7 +1634,7 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                         <!--You may enter ANY elements at this point-->
                      </urn1:stLevel>
                      <!--You may enter ANY elements at this point-->
-                  </urn1:stType>
+                  </urn1:st>
                   <!--Optional:-->
                   <urn1:interpretationAlgorithmName>?</urn1:interpretationAlgorithmName>
                   <!--Zero or more repetitions:-->
@@ -1428,12 +1643,243 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                </urn1:ecgStructuredData>
                <!--Zero or more repetitions:-->
                <urn1:ecgDicomData>
-                  <urn1:demSOP>?</urn1:demSOP>
+                  <urn1:dicomSOP>?</urn1:dicomSOP>
+                  <urn1:dicomValue>cid:358086327269</urn1:dicomValue>
+                  <urn1:dicomReference>?</urn1:dicomReference>
+               </urn1:ecgDicomData>
+               <!--Zero or more repetitions:-->
+               <urn1:ecgData>
                   <!--Optional:-->
-                  <urn1:demValue>cid:358086327269</urn1:demValue>
+                  <urn1:mediaType>text/html</urn1:mediaType>
                   <!--Optional:-->
-                  <urn1:demReference>?</urn1:demReference>
+                  <urn1:value>cid:449923047380</urn1:value>
+                  <!--Optional:-->
+                  <urn1:reference>urn:test</urn1:reference>
+                  <!--Optional:-->
+                  <urn1:burnedInaAnnotations>false</urn1:burnedInaAnnotations>
                   <!--You may enter ANY elements at this point-->
+               </urn1:ecgData>
+               <!--Optional:-->
+               <urn1:referral>
+                  <urn1:referralId>?</urn1:referralId>
+                  <!--Optional:-->
+                  <urn1:referralReason>?</urn1:referralReason>
+                  <!--Optional:-->
+                  <urn1:anamnesis>?</urn1:anamnesis>
+                  <!--Optional:-->
+                  <urn1:careContactId>?</urn1:careContactId>
+                  <urn1:accountableHealthcareProfessional>
+                     <urn1:authorTime>20120102122322</urn1:authorTime>
+                     <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                     <!--Optional:-->
+                     <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                     <!--Optional:-->
+                     <urn1:healthcareProfessionalRoleCode>
+                        <urn1:code>1</urn1:code>
+                        <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                        <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
+                     </urn1:healthcareProfessionalRoleCode>
+                     <urn1:healthcareProfessionalOrgUnit>
+                        <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                        <urn1:orgUnitName>?</urn1:orgUnitName>
+                        <!--Optional:-->
+                        <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                        <!--Optional:-->
+                        <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                        <!--Optional:-->
+                        <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                        <!--Optional:-->
+                        <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                        <!--You may enter ANY elements at this point-->
+                     </urn1:healthcareProfessionalOrgUnit>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:accountableHealthcareProfessional>
+                  <!--You may enter ANY elements at this point-->
+               </urn1:referral>
+               <urn1:attested>
+                  <urn1:signatureTime>20120102122322</urn1:signatureTime>
+                  <!--Optional:-->
+                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+                  <!--You may enter ANY elements at this point-->
+               </urn1:attested>
+               <!--You may enter ANY elements at this point-->
+            </urn1:ECGOutcomeBody>
+            <!--You may enter ANY elements at this point-->
+         </urn:ECGOutcome>
+         <urn:ECGOutcome>
+            <urn1:ECGOutcomeHeader>
+               <urn1:documentId>774412</urn1:documentId>
+               <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
+               <urn1:documentTitle>?</urn1:documentTitle>
+               <urn1:documentTime>20120102122322</urn1:documentTime>
+               <urn1:patientId>
+                  <urn1:id>${patientId}</urn1:id>
+                  <urn1:type>${patientIdType}</urn1:type>
+               </urn1:patientId>
+               <urn1:accountableHealthcareProfessional>
+                  <urn1:authorTime>20120102122322</urn1:authorTime>
+                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                  <urn1:healthcareProfessionalRoleCode>
+                     <urn1:code>1</urn1:code>
+                     <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                     <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
+                  </urn1:healthcareProfessionalRoleCode>
+                  <urn1:healthcareProfessionalOrgUnit>
+                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                     <urn1:orgUnitName>?</urn1:orgUnitName>
+                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                  </urn1:healthcareProfessionalOrgUnit>
+                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+               </urn1:accountableHealthcareProfessional>
+               <urn1:legalAuthenticator>
+                  <urn1:signatureTime>20120102122322</urn1:signatureTime>
+                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+               </urn1:legalAuthenticator>
+               <urn1:approvedForPatient>true</urn1:approvedForPatient>
+               <urn1:careContactId>?</urn1:careContactId>
+               <urn1:nullified>false</urn1:nullified>
+               <urn1:nullifiedReason>?</urn1:nullifiedReason>
+            </urn1:ECGOutcomeHeader>
+            <urn1:ECGOutcomeBody>
+               <urn1:examinationSpeciality>
+                  <urn1:code>1</urn1:code>
+                  <urn1:codeSystem>OID</urn1:codeSystem>
+                  <urn1:displayName>ett</urn1:displayName>
+               </urn1:examinationSpeciality>
+               <urn1:typeOfResult>?</urn1:typeOfResult>
+               <urn1:resultTime>20120102122322</urn1:resultTime>
+               <urn1:resultReport>?</urn1:resultReport>
+               <urn1:resultComment>?</urn1:resultComment>
+               <urn1:patientData>
+                  <urn1:patientWeight>
+                     <urn1:value>85.0</urn1:value>
+                     <urn1:unit>kg</urn1:unit>
+                  </urn1:patientWeight>
+                  <urn1:patientLength>
+                     <urn1:value>172</urn1:value>
+                     <urn1:unit>cm</urn1:unit>
+                  </urn1:patientLength>
+               </urn1:patientData>
+               <!--Zero or more repetitions:-->
+               <urn1:ecgRecording>
+                  <urn1:recordingId>
+                     <urn1:root>?</urn1:root>
+                     <urn1:extension>?</urn1:extension>
+                  </urn1:recordingId>
+                  <urn1:examinationActivity>
+                     <urn1:code>AA001</urn1:code>
+                     <urn1:codeSystem>1.2.752.116.1.3.2.1.4</urn1:codeSystem>
+                     <urn1:codeSystemName>Klassifikation av vårdåtgärder(KVÅ)</urn1:codeSystemName>
+                     <urn1:displayName>Adenosintest</urn1:displayName>
+                  </urn1:examinationActivity>
+                  <urn1:examinationTimePeriod>
+                     <urn1:start>20120102122322</urn1:start>
+                     <urn1:end>20120102122322</urn1:end>
+                  </urn1:examinationTimePeriod>
+                  <urn1:examinationStatus>
+                     <urn1:code>1</urn1:code>
+                     <urn1:codeSystem>OID</urn1:codeSystem>
+                     <urn1:displayName>Planerad</urn1:displayName>
+                  </urn1:examinationStatus>
+                  <urn1:examinationUnit>?</urn1:examinationUnit>
+               </urn1:ecgRecording>
+               <urn1:accountableHealthcareProfessional>
+                  <urn1:authorTime>20120102122322</urn1:authorTime>
+                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                  <urn1:healthcareProfessionalRoleCode>
+                     <urn1:code>1</urn1:code>
+                     <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                     <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
+                  </urn1:healthcareProfessionalRoleCode>
+                  <urn1:healthcareProfessionalOrgUnit>
+                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                     <urn1:orgUnitName>?</urn1:orgUnitName>
+                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                  </urn1:healthcareProfessionalOrgUnit>
+               </urn1:accountableHealthcareProfessional>
+               <urn1:modalityData>
+                  <urn1:manufacturer>?</urn1:manufacturer>
+                  <urn1:modelName>?</urn1:modelName>
+                  <urn1:equipmentId>?</urn1:equipmentId>
+                  <urn1:softwareVersion>?</urn1:softwareVersion>
+                  <urn1:lineFilter>
+                     <urn1:value>2.0</urn1:value>
+                     <urn1:unit>Hz</urn1:unit>
+                  </urn1:lineFilter>
+               </urn1:modalityData>
+               <urn1:pacemaker>false</urn1:pacemaker>
+               <!--Zero or more repetitions:-->
+               <urn1:ecgStructuredData>
+                  <!--Zero or more repetitions:-->
+                  <urn1:usedFilter>
+                     <urn1:filterName>?</urn1:filterName>
+                     <urn1:lowerFrequency>
+                        <urn1:value>10.0</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                     </urn1:lowerFrequency>
+                     <urn1:upperFrequency>
+                        <urn1:value>20.0</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                     </urn1:upperFrequency>
+                  </urn1:usedFilter>
+                  <urn1:heartRate>
+                     <urn1:value>130.0</urn1:value>
+                     <urn1:unit>?</urn1:unit>
+                  </urn1:heartRate>
+                  <urn1:qt>
+                     <urn1:value>140</urn1:value>
+                     <urn1:unit>s</urn1:unit>
+                  </urn1:qt>
+                  <urn1:qtCorrected>
+                     <urn1:value>150</urn1:value>
+                     <urn1:unit>?</urn1:unit>
+                  </urn1:qtCorrected>
+                  <urn1:pr>
+                     <urn1:value>160.0</urn1:value>
+                     <urn1:unit>s</urn1:unit>
+                  </urn1:pr>
+                  <urn1:pAxis>
+                     <urn1:value>170.0</urn1:value>
+                     <urn1:unit>?</urn1:unit>
+                  </urn1:pAxis>
+                  <urn1:qrsAxis>
+                     <urn1:value>170.0</urn1:value>
+                     <urn1:unit>?</urn1:unit>
+                  </urn1:qrsAxis>
+                  <urn1:tAxis>
+                     <urn1:value>180.0</urn1:value>
+                     <urn1:unit>?</urn1:unit>
+                  </urn1:tAxis>
+                  <!--Zero or more repetitions:-->
+                  <urn1:st>
+                     <urn1:leadName>?</urn1:leadName>
+                     <urn1:stLevel>
+                        <urn1:value>190.0</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                        <!--You may enter ANY elements at this point-->
+                     </urn1:stLevel>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:st>
+                  <!--Optional:-->
+                  <urn1:interpretationAlgorithmName>?</urn1:interpretationAlgorithmName>
+                  <!--Zero or more repetitions:-->
+                  <urn1:interpretation>?</urn1:interpretation>
+                  <!--You may enter ANY elements at this point-->
+               </urn1:ecgStructuredData>
+               <!--Zero or more repetitions:-->
+               <urn1:ecgDicomData>
+                  <urn1:dicomSOP>?</urn1:dicomSOP>
+                  <urn1:dicomValue>cid:358086327269</urn1:dicomValue>
+                  <urn1:dicomReference>?</urn1:dicomReference>
                </urn1:ecgDicomData>
                <!--Zero or more repetitions:-->
                <urn1:ecgData>
@@ -1503,500 +1949,6 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
          <!--You may enter ANY elements at this point-->
       </urn:GetECGOutcomeResponse>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2:GetECGOutcome"/></con:response><con:response name="DateResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:2">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <urn:GetECGOutcomeResponse>
-         <!--Zero or more repetitions:-->
-         <urn:ECGOutcome>
-            <urn1:ECGOutcomeHeader>
-               <urn1:documentId>774411</urn1:documentId>
-               <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
-               <urn1:documentTitle>?</urn1:documentTitle>
-               <urn1:documentTime>20120102122322</urn1:documentTime>
-               <urn1:patientId>
-                  <urn1:id>${patientId}</urn1:id>
-                  <urn1:type>${patientIdType}</urn1:type>
-               </urn1:patientId>
-               <urn1:accountableHealthcareProfessional>
-                  <urn1:authorTime>20131108103000</urn1:authorTime>
-                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                  <urn1:healthcareProfessionalRoleCode>
-                     <urn1:code>1</urn1:code>
-                     <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
-                     <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
-                  </urn1:healthcareProfessionalRoleCode>
-                  <urn1:healthcareProfessionalOrgUnit>
-                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                     <urn1:orgUnitName>?</urn1:orgUnitName>
-                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                  </urn1:healthcareProfessionalOrgUnit>
-                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
-                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
-               </urn1:accountableHealthcareProfessional>
-               <urn1:legalAuthenticator>
-                  <urn1:signatureTime>20120102122322</urn1:signatureTime>
-                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
-               </urn1:legalAuthenticator>
-               <urn1:approvedForPatient>true</urn1:approvedForPatient>
-               <urn1:careContactId>?</urn1:careContactId>
-               <urn1:nullified>false</urn1:nullified>
-               <urn1:nullifiedReason>?</urn1:nullifiedReason>
-            </urn1:ECGOutcomeHeader>
-            <urn1:ECGOutcomeBody>
-               <urn1:examinationSpeciality>
-                  <urn1:code>1</urn1:code>
-                  <urn1:codeSystem>OID</urn1:codeSystem>
-                  <urn1:displayName>ett</urn1:displayName>
-               </urn1:examinationSpeciality>
-               <urn1:resultType>?</urn1:resultType>
-               <urn1:resultTime>20120102122322</urn1:resultTime>
-               <urn1:resultReport>?</urn1:resultReport>
-               <urn1:resultComment>?</urn1:resultComment>
-               <urn1:patientData>
-                  <urn1:patientWeight>
-                     <urn1:value>85.0</urn1:value>
-                     <urn1:unit>kg</urn1:unit>
-                  </urn1:patientWeight>
-                  <urn1:patientLength>
-                     <urn1:value>172</urn1:value>
-                     <urn1:unit>cm</urn1:unit>
-                  </urn1:patientLength>
-               </urn1:patientData>
-               <!--Zero or more repetitions:-->
-               <urn1:ecgRecording>
-                  <urn1:recordingId>
-                     <urn1:root>?</urn1:root>
-                     <urn1:extension>?</urn1:extension>
-                  </urn1:recordingId>
-                  <urn1:examinationActivity>
-                     <urn1:code>AA001</urn1:code>
-                     <urn1:codeSystem>1.2.752.116.1.3.2.1.4</urn1:codeSystem>
-                     <urn1:codeSystemName>Klassifikation av vårdåtgärder(KVÅ)</urn1:codeSystemName>
-                     <urn1:displayName>Adenosintest</urn1:displayName>
-                  </urn1:examinationActivity>
-                  <urn1:examinationTimePeriod>
-                     <urn1:start>20120102122322</urn1:start>
-                     <urn1:end>20120102122322</urn1:end>
-                  </urn1:examinationTimePeriod>
-                  <urn1:examinationStatus>
-                     <urn1:code>1</urn1:code>
-                     <urn1:codeSystem>OID</urn1:codeSystem>
-                     <urn1:displayName>Planerad</urn1:displayName>
-                  </urn1:examinationStatus>
-               </urn1:ecgRecording>
-               <urn1:examinationUnit>?</urn1:examinationUnit>
-               <urn1:accountableHealthcareProfessional>
-                  <urn1:authorTime>20120102122322</urn1:authorTime>
-                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                  <urn1:healthcareProfessionalRoleCode>
-                     <urn1:code>1</urn1:code>
-                     <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
-                     <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
-                  </urn1:healthcareProfessionalRoleCode>
-                  <urn1:healthcareProfessionalOrgUnit>
-                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                     <urn1:orgUnitName>?</urn1:orgUnitName>
-                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                  </urn1:healthcareProfessionalOrgUnit>
-                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
-                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
-               </urn1:accountableHealthcareProfessional>
-               <urn1:modalityData>
-                  <urn1:manufacturer>?</urn1:manufacturer>
-                  <urn1:modelName>?</urn1:modelName>
-                  <urn1:equipmentId>?</urn1:equipmentId>
-                  <urn1:softwareVersion>?</urn1:softwareVersion>
-                  <urn1:lineFilter>
-                     <urn1:value>2.0</urn1:value>
-                     <urn1:unit>Hz</urn1:unit>
-                  </urn1:lineFilter>
-               </urn1:modalityData>
-               <urn1:pacemaker>false</urn1:pacemaker>
-               <!--Zero or more repetitions:-->
-               <urn1:ecgStructuredData>
-                  <!--Zero or more repetitions:-->
-                  <urn1:usedFilter>
-                     <urn1:filterName>?</urn1:filterName>
-                     <urn1:lowerFrequency>
-                        <urn1:value>10.0</urn1:value>
-                        <urn1:unit>?</urn1:unit>
-                     </urn1:lowerFrequency>
-                     <urn1:upperFrequency>
-                        <urn1:value>20.0</urn1:value>
-                        <urn1:unit>?</urn1:unit>
-                     </urn1:upperFrequency>
-                  </urn1:usedFilter>
-                  <urn1:heartRate>
-                     <urn1:value>130.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:heartRate>
-                  <urn1:QT>
-                     <urn1:value>140</urn1:value>
-                     <urn1:unit>s</urn1:unit>
-                  </urn1:QT>
-                  <urn1:QTc>
-                     <urn1:value>150</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:QTc>
-                  <urn1:PR>
-                     <urn1:value>160.0</urn1:value>
-                     <urn1:unit>s</urn1:unit>
-                  </urn1:PR>
-                  <urn1:Paxis>
-                     <urn1:value>170.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:Paxis>
-                  <urn1:QRSAxis>
-                     <urn1:value>170.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:QRSAxis>
-                  <urn1:Taxis>
-                     <urn1:value>180.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:Taxis>
-                  <!--Zero or more repetitions:-->
-                  <urn1:stType>
-                     <urn1:leadName>?</urn1:leadName>
-                     <urn1:stLevel>
-                        <urn1:value>190.0</urn1:value>
-                        <urn1:unit>?</urn1:unit>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:stLevel>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:stType>
-                  <!--Optional:-->
-                  <urn1:interpretationAlgorithmName>?</urn1:interpretationAlgorithmName>
-                  <!--Zero or more repetitions:-->
-                  <urn1:interpretation>?</urn1:interpretation>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:ecgStructuredData>
-               <!--Zero or more repetitions:-->
-               <urn1:ecgDicomData>
-                  <urn1:demSOP>?</urn1:demSOP>
-                  <!--Optional:-->
-                  <urn1:demValue>cid:358086327269</urn1:demValue>
-                  <!--Optional:-->
-                  <urn1:demReference>?</urn1:demReference>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:ecgDicomData>
-               <!--Zero or more repetitions:-->
-               <urn1:ecgData>
-                  <!--Optional:-->
-                  <urn1:mediaType>text/html</urn1:mediaType>
-                  <!--Optional:-->
-                  <urn1:value>cid:449923047380</urn1:value>
-                  <!--Optional:-->
-                  <urn1:reference>urn:test</urn1:reference>
-                  <!--Optional:-->
-                  <urn1:burnedInaAnnotations>false</urn1:burnedInaAnnotations>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:ecgData>
-               <!--Optional:-->
-               <urn1:referral>
-                  <urn1:referralId>?</urn1:referralId>
-                  <!--Optional:-->
-                  <urn1:referralReason>?</urn1:referralReason>
-                  <!--Optional:-->
-                  <urn1:anamnesis>?</urn1:anamnesis>
-                  <!--Optional:-->
-                  <urn1:careContactId>?</urn1:careContactId>
-                  <urn1:accountableHealthcareProfessional>
-                     <urn1:authorTime>20120102122322</urn1:authorTime>
-                     <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                     <!--Optional:-->
-                     <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                     <!--Optional:-->
-                  <urn1:healthcareProfessionalRoleCode>
-                     <urn1:code>1</urn1:code>
-                     <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
-                     <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
-                  </urn1:healthcareProfessionalRoleCode>
-                     <urn1:healthcareProfessionalOrgUnit>
-                        <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                        <urn1:orgUnitName>?</urn1:orgUnitName>
-                        <!--Optional:-->
-                        <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                        <!--Optional:-->
-                        <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                        <!--Optional:-->
-                        <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                        <!--Optional:-->
-                        <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:healthcareProfessionalOrgUnit>
-                     <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
-                     <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:accountableHealthcareProfessional>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:referral>
-               <urn1:attested>
-                  <urn1:signatureTime>20120102122322</urn1:signatureTime>
-                  <!--Optional:-->
-                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:attested>
-               <!--You may enter ANY elements at this point-->
-            </urn1:ECGOutcomeBody>
-            <!--You may enter ANY elements at this point-->
-         </urn:ECGOutcome>
-         <urn:ECGOutcome>
-            <urn1:ECGOutcomeHeader>
-               <urn1:documentId>774412</urn1:documentId>
-               <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
-               <urn1:documentTitle>?</urn1:documentTitle>
-               <urn1:documentTime>20120102122322</urn1:documentTime>
-               <urn1:patientId>
-                  <urn1:id>${patientId}</urn1:id>
-                  <urn1:type>${patientIdType}</urn1:type>
-               </urn1:patientId>
-               <urn1:accountableHealthcareProfessional>
-                  <urn1:authorTime>20131108103000</urn1:authorTime>
-                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                  <urn1:healthcareProfessionalRoleCode>
-                     <urn1:code>1</urn1:code>
-                     <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
-                     <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
-                  </urn1:healthcareProfessionalRoleCode>
-                  <urn1:healthcareProfessionalOrgUnit>
-                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                     <urn1:orgUnitName>?</urn1:orgUnitName>
-                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                  </urn1:healthcareProfessionalOrgUnit>
-                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
-                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
-               </urn1:accountableHealthcareProfessional>
-               <urn1:legalAuthenticator>
-                  <urn1:signatureTime>20120102122322</urn1:signatureTime>
-                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
-               </urn1:legalAuthenticator>
-               <urn1:approvedForPatient>true</urn1:approvedForPatient>
-               <urn1:careContactId>?</urn1:careContactId>
-               <urn1:nullified>false</urn1:nullified>
-               <urn1:nullifiedReason>?</urn1:nullifiedReason>
-            </urn1:ECGOutcomeHeader>
-            <urn1:ECGOutcomeBody>
-               <urn1:examinationSpeciality>
-                  <urn1:code>1</urn1:code>
-                  <urn1:codeSystem>OID</urn1:codeSystem>
-                  <urn1:displayName>ett</urn1:displayName>
-               </urn1:examinationSpeciality>
-               <urn1:resultType>?</urn1:resultType>
-               <urn1:resultTime>20120102122322</urn1:resultTime>
-               <urn1:resultReport>?</urn1:resultReport>
-               <urn1:resultComment>?</urn1:resultComment>
-               <urn1:patientData>
-                  <urn1:patientWeight>
-                     <urn1:value>85.0</urn1:value>
-                     <urn1:unit>kg</urn1:unit>
-                  </urn1:patientWeight>
-                  <urn1:patientLength>
-                     <urn1:value>172</urn1:value>
-                     <urn1:unit>cm</urn1:unit>
-                  </urn1:patientLength>
-               </urn1:patientData>
-               <!--Zero or more repetitions:-->
-               <urn1:ecgRecording>
-                  <urn1:recordingId>
-                     <urn1:root>?</urn1:root>
-                     <urn1:extension>?</urn1:extension>
-                  </urn1:recordingId>
-                  <urn1:examinationActivity>
-                     <urn1:code>AA001</urn1:code>
-                     <urn1:codeSystem>1.2.752.116.1.3.2.1.4</urn1:codeSystem>
-                     <urn1:codeSystemName>Klassifikation av vårdåtgärder(KVÅ)</urn1:codeSystemName>
-                     <urn1:displayName>Adenosintest</urn1:displayName>
-                  </urn1:examinationActivity>
-                  <urn1:examinationTimePeriod>
-                     <urn1:start>20120102122322</urn1:start>
-                     <urn1:end>20120102122322</urn1:end>
-                  </urn1:examinationTimePeriod>
-                  <urn1:examinationStatus>
-                     <urn1:code>1</urn1:code>
-                     <urn1:codeSystem>OID</urn1:codeSystem>
-                     <urn1:displayName>Planerad</urn1:displayName>
-                  </urn1:examinationStatus>
-               </urn1:ecgRecording>
-               <urn1:examinationUnit>?</urn1:examinationUnit>
-               <urn1:accountableHealthcareProfessional>
-                  <urn1:authorTime>20120102122322</urn1:authorTime>
-                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                  <urn1:healthcareProfessionalRoleCode>
-                     <urn1:code>1</urn1:code>
-                     <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
-                     <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
-                  </urn1:healthcareProfessionalRoleCode>
-                  <urn1:healthcareProfessionalOrgUnit>
-                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                     <urn1:orgUnitName>?</urn1:orgUnitName>
-                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                  </urn1:healthcareProfessionalOrgUnit>
-                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
-                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
-               </urn1:accountableHealthcareProfessional>
-               <urn1:modalityData>
-                  <urn1:manufacturer>?</urn1:manufacturer>
-                  <urn1:modelName>?</urn1:modelName>
-                  <urn1:equipmentId>?</urn1:equipmentId>
-                  <urn1:softwareVersion>?</urn1:softwareVersion>
-                  <urn1:lineFilter>
-                     <urn1:value>2.0</urn1:value>
-                     <urn1:unit>Hz</urn1:unit>
-                  </urn1:lineFilter>
-               </urn1:modalityData>
-               <urn1:pacemaker>false</urn1:pacemaker>
-               <!--Zero or more repetitions:-->
-               <urn1:ecgStructuredData>
-                  <!--Zero or more repetitions:-->
-                  <urn1:usedFilter>
-                     <urn1:filterName>?</urn1:filterName>
-                     <urn1:lowerFrequency>
-                        <urn1:value>10.0</urn1:value>
-                        <urn1:unit>?</urn1:unit>
-                     </urn1:lowerFrequency>
-                     <urn1:upperFrequency>
-                        <urn1:value>20.0</urn1:value>
-                        <urn1:unit>?</urn1:unit>
-                     </urn1:upperFrequency>
-                  </urn1:usedFilter>
-                  <urn1:heartRate>
-                     <urn1:value>130.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:heartRate>
-                  <urn1:QT>
-                     <urn1:value>140</urn1:value>
-                     <urn1:unit>s</urn1:unit>
-                  </urn1:QT>
-                  <urn1:QTc>
-                     <urn1:value>150</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:QTc>
-                  <urn1:PR>
-                     <urn1:value>160.0</urn1:value>
-                     <urn1:unit>s</urn1:unit>
-                  </urn1:PR>
-                  <urn1:Paxis>
-                     <urn1:value>170.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:Paxis>
-                  <urn1:QRSAxis>
-                     <urn1:value>170.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:QRSAxis>
-                  <urn1:Taxis>
-                     <urn1:value>180.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:Taxis>
-                  <!--Zero or more repetitions:-->
-                  <urn1:stType>
-                     <urn1:leadName>?</urn1:leadName>
-                     <urn1:stLevel>
-                        <urn1:value>190.0</urn1:value>
-                        <urn1:unit>?</urn1:unit>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:stLevel>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:stType>
-                  <!--Optional:-->
-                  <urn1:interpretationAlgorithmName>?</urn1:interpretationAlgorithmName>
-                  <!--Zero or more repetitions:-->
-                  <urn1:interpretation>?</urn1:interpretation>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:ecgStructuredData>
-               <!--Zero or more repetitions:-->
-               <urn1:ecgDicomData>
-                  <urn1:demSOP>?</urn1:demSOP>
-                  <!--Optional:-->
-                  <urn1:demValue>cid:358086327269</urn1:demValue>
-                  <!--Optional:-->
-                  <urn1:demReference>?</urn1:demReference>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:ecgDicomData>
-               <!--Zero or more repetitions:-->
-               <urn1:ecgData>
-                  <!--Optional:-->
-                  <urn1:mediaType>text/html</urn1:mediaType>
-                  <!--Optional:-->
-                  <urn1:value>cid:449923047380</urn1:value>
-                  <!--Optional:-->
-                  <urn1:reference>urn:test</urn1:reference>
-                  <!--Optional:-->
-                  <urn1:burnedInaAnnotations>false</urn1:burnedInaAnnotations>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:ecgData>
-               <!--Optional:-->
-               <urn1:referral>
-                  <urn1:referralId>?</urn1:referralId>
-                  <!--Optional:-->
-                  <urn1:referralReason>?</urn1:referralReason>
-                  <!--Optional:-->
-                  <urn1:anamnesis>?</urn1:anamnesis>
-                  <!--Optional:-->
-                  <urn1:careContactId>?</urn1:careContactId>
-                  <urn1:accountableHealthcareProfessional>
-                     <urn1:authorTime>20120102122322</urn1:authorTime>
-                     <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                     <!--Optional:-->
-                     <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                     <!--Optional:-->
-                  <urn1:healthcareProfessionalRoleCode>
-                     <urn1:code>1</urn1:code>
-                     <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
-                     <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
-                  </urn1:healthcareProfessionalRoleCode>
-                     <urn1:healthcareProfessionalOrgUnit>
-                        <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                        <urn1:orgUnitName>?</urn1:orgUnitName>
-                        <!--Optional:-->
-                        <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                        <!--Optional:-->
-                        <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                        <!--Optional:-->
-                        <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                        <!--Optional:-->
-                        <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:healthcareProfessionalOrgUnit>
-                     <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
-                     <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:accountableHealthcareProfessional>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:referral>
-               <urn1:attested>
-                  <urn1:signatureTime>20120102122322</urn1:signatureTime>
-                  <!--Optional:-->
-                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:attested>
-               <!--You may enter ANY elements at this point-->
-            </urn1:ECGOutcomeBody>
-            <!--You may enter ANY elements at this point-->
-         </urn:ECGOutcome>
-         <urn:result>
-            <urn1:resultCode>OK</urn1:resultCode>
-            <urn1:logId>0000-1111</urn1:logId>
-         </urn:result>
-         <!--You may enter ANY elements at this point-->
-      </urn:GetECGOutcomeResponse>
-   </soapenv:Body>
 </soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2:GetECGOutcome"/></con:response><con:response name="CareUnitHSAIdResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:2">
    <soapenv:Header/>
    <soapenv:Body>
@@ -2004,7 +1956,7 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
          <!--Zero or more repetitions:-->
          <urn:ECGOutcome>
             <urn1:ECGOutcomeHeader>
-               <urn1:documentId>${documentId}0</urn1:documentId>
+               <urn1:documentId>${documentId}</urn1:documentId>
                <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
                <urn1:documentTitle>?</urn1:documentTitle>
                <urn1:documentTime>20120102122322</urn1:documentTime>
@@ -2013,7 +1965,7 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                   <urn1:type>${patientIdType}</urn1:type>
                </urn1:patientId>
                <urn1:accountableHealthcareProfessional>
-                  <urn1:authorTime>20131108103000</urn1:authorTime>
+                  <urn1:authorTime>20120102122322</urn1:authorTime>
                   <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                   <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
                   <urn1:healthcareProfessionalRoleCode>
@@ -2047,7 +1999,7 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                   <urn1:codeSystem>OID</urn1:codeSystem>
                   <urn1:displayName>ett</urn1:displayName>
                </urn1:examinationSpeciality>
-               <urn1:resultType>?</urn1:resultType>
+               <urn1:typeOfResult>?</urn1:typeOfResult>
                <urn1:resultTime>20120102122322</urn1:resultTime>
                <urn1:resultReport>?</urn1:resultReport>
                <urn1:resultComment>?</urn1:resultComment>
@@ -2082,8 +2034,8 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:codeSystem>OID</urn1:codeSystem>
                      <urn1:displayName>Planerad</urn1:displayName>
                   </urn1:examinationStatus>
+                  <urn1:examinationUnit>?</urn1:examinationUnit>
                </urn1:ecgRecording>
-               <urn1:examinationUnit>?</urn1:examinationUnit>
                <urn1:accountableHealthcareProfessional>
                   <urn1:authorTime>20120102122322</urn1:authorTime>
                   <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
@@ -2101,8 +2053,6 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
                      <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
                   </urn1:healthcareProfessionalOrgUnit>
-                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
-                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                </urn1:accountableHealthcareProfessional>
                <urn1:modalityData>
                   <urn1:manufacturer>?</urn1:manufacturer>
@@ -2133,115 +2083,82 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:value>130.0</urn1:value>
                      <urn1:unit>?</urn1:unit>
                   </urn1:heartRate>
-                  <urn1:QT>
+                  <urn1:qt>
                      <urn1:value>140</urn1:value>
                      <urn1:unit>s</urn1:unit>
-                  </urn1:QT>
-                  <urn1:QTc>
+                  </urn1:qt>
+                  <urn1:qtCorrected>
                      <urn1:value>150</urn1:value>
                      <urn1:unit>?</urn1:unit>
-                  </urn1:QTc>
-                  <urn1:PR>
+                  </urn1:qtCorrected>
+                  <urn1:pr>
                      <urn1:value>160.0</urn1:value>
                      <urn1:unit>s</urn1:unit>
-                  </urn1:PR>
-                  <urn1:Paxis>
+                  </urn1:pr>
+                  <urn1:pAxis>
                      <urn1:value>170.0</urn1:value>
                      <urn1:unit>?</urn1:unit>
-                  </urn1:Paxis>
-                  <urn1:QRSAxis>
+                  </urn1:pAxis>
+                  <urn1:qrsAxis>
                      <urn1:value>170.0</urn1:value>
                      <urn1:unit>?</urn1:unit>
-                  </urn1:QRSAxis>
-                  <urn1:Taxis>
+                  </urn1:qrsAxis>
+                  <urn1:tAxis>
                      <urn1:value>180.0</urn1:value>
                      <urn1:unit>?</urn1:unit>
-                  </urn1:Taxis>
-                  <!--Zero or more repetitions:-->
-                  <urn1:stType>
+                  </urn1:tAxis>
+                  <urn1:st>
                      <urn1:leadName>?</urn1:leadName>
                      <urn1:stLevel>
                         <urn1:value>190.0</urn1:value>
                         <urn1:unit>?</urn1:unit>
-                        <!--You may enter ANY elements at this point-->
                      </urn1:stLevel>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:stType>
-                  <!--Optional:-->
+                  </urn1:st>
                   <urn1:interpretationAlgorithmName>?</urn1:interpretationAlgorithmName>
-                  <!--Zero or more repetitions:-->
                   <urn1:interpretation>?</urn1:interpretation>
-                  <!--You may enter ANY elements at this point-->
                </urn1:ecgStructuredData>
-               <!--Zero or more repetitions:-->
                <urn1:ecgDicomData>
-                  <urn1:demSOP>?</urn1:demSOP>
-                  <!--Optional:-->
-                  <urn1:demValue>cid:358086327269</urn1:demValue>
-                  <!--Optional:-->
-                  <urn1:demReference>?</urn1:demReference>
-                  <!--You may enter ANY elements at this point-->
+                  <urn1:dicomSOP>?</urn1:dicomSOP>
+                  <urn1:dicomValue>cid:358086327269</urn1:dicomValue>
+                  <urn1:dicomReference>?</urn1:dicomReference>
                </urn1:ecgDicomData>
-               <!--Zero or more repetitions:-->
                <urn1:ecgData>
-                  <!--Optional:-->
                   <urn1:mediaType>text/html</urn1:mediaType>
-                  <!--Optional:-->
                   <urn1:value>cid:449923047380</urn1:value>
-                  <!--Optional:-->
                   <urn1:reference>urn:test</urn1:reference>
-                  <!--Optional:-->
                   <urn1:burnedInaAnnotations>false</urn1:burnedInaAnnotations>
-                  <!--You may enter ANY elements at this point-->
                </urn1:ecgData>
-               <!--Optional:-->
                <urn1:referral>
                   <urn1:referralId>?</urn1:referralId>
-                  <!--Optional:-->
                   <urn1:referralReason>?</urn1:referralReason>
-                  <!--Optional:-->
                   <urn1:anamnesis>?</urn1:anamnesis>
-                  <!--Optional:-->
                   <urn1:careContactId>?</urn1:careContactId>
                   <urn1:accountableHealthcareProfessional>
                      <urn1:authorTime>20120102122322</urn1:authorTime>
                      <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                     <!--Optional:-->
                      <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                     <!--Optional:-->
-                  <urn1:healthcareProfessionalRoleCode>
-                     <urn1:code>1</urn1:code>
-                     <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
-                     <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
-                  </urn1:healthcareProfessionalRoleCode>
+                     <urn1:healthcareProfessionalRoleCode>
+                        <urn1:code>1</urn1:code>
+                        <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                        <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
+                     </urn1:healthcareProfessionalRoleCode>
                      <urn1:healthcareProfessionalOrgUnit>
                         <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
                         <urn1:orgUnitName>?</urn1:orgUnitName>
-                        <!--Optional:-->
                         <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                        <!--Optional:-->
                         <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                        <!--Optional:-->
                         <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                        <!--Optional:-->
                         <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                        <!--You may enter ANY elements at this point-->
                      </urn1:healthcareProfessionalOrgUnit>
                      <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
                      <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
-                     <!--You may enter ANY elements at this point-->
                   </urn1:accountableHealthcareProfessional>
-                  <!--You may enter ANY elements at this point-->
                </urn1:referral>
                <urn1:attested>
                   <urn1:signatureTime>20120102122322</urn1:signatureTime>
-                  <!--Optional:-->
                   <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
-                  <!--You may enter ANY elements at this point-->
                </urn1:attested>
-               <!--You may enter ANY elements at this point-->
             </urn1:ECGOutcomeBody>
-            <!--You may enter ANY elements at this point-->
          </urn:ECGOutcome>
          <urn:result>
             <urn1:resultCode>OK</urn1:resultCode>
@@ -2257,8 +2174,8 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
          <!--Zero or more repetitions:-->
          <urn:ECGOutcome>
             <urn1:ECGOutcomeHeader>
-               <urn1:documentId>${documentId}0</urn1:documentId>
-               <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
+               <urn1:documentId>${documentId}</urn1:documentId>
+               <urn1:sourceSystemHSAId>12</urn1:sourceSystemHSAId>
                <urn1:documentTitle>?</urn1:documentTitle>
                <urn1:documentTime>20120102122322</urn1:documentTime>
                <urn1:patientId>
@@ -2266,7 +2183,7 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                   <urn1:type>${patientIdType}</urn1:type>
                </urn1:patientId>
                <urn1:accountableHealthcareProfessional>
-                  <urn1:authorTime>20131108103000</urn1:authorTime>
+                  <urn1:authorTime>20120102122322</urn1:authorTime>
                   <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                   <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
                   <urn1:healthcareProfessionalRoleCode>
@@ -2282,7 +2199,7 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
                      <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
                   </urn1:healthcareProfessionalOrgUnit>
-                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                  <urn1:healthcareProfessionalCareUnitHSAId>1122334455</urn1:healthcareProfessionalCareUnitHSAId>
                   <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                </urn1:accountableHealthcareProfessional>
                <urn1:legalAuthenticator>
@@ -2290,7 +2207,7 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                   <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
                </urn1:legalAuthenticator>
                <urn1:approvedForPatient>true</urn1:approvedForPatient>
-               <urn1:careContactId>?</urn1:careContactId>
+               <urn1:careContactId>566710</urn1:careContactId>
                <urn1:nullified>false</urn1:nullified>
                <urn1:nullifiedReason>?</urn1:nullifiedReason>
             </urn1:ECGOutcomeHeader>
@@ -2300,7 +2217,7 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                   <urn1:codeSystem>OID</urn1:codeSystem>
                   <urn1:displayName>ett</urn1:displayName>
                </urn1:examinationSpeciality>
-               <urn1:resultType>?</urn1:resultType>
+               <urn1:typeOfResult>?</urn1:typeOfResult>
                <urn1:resultTime>20120102122322</urn1:resultTime>
                <urn1:resultReport>?</urn1:resultReport>
                <urn1:resultComment>?</urn1:resultComment>
@@ -2335,8 +2252,8 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:codeSystem>OID</urn1:codeSystem>
                      <urn1:displayName>Planerad</urn1:displayName>
                   </urn1:examinationStatus>
+                  <urn1:examinationUnit>?</urn1:examinationUnit>
                </urn1:ecgRecording>
-               <urn1:examinationUnit>?</urn1:examinationUnit>
                <urn1:accountableHealthcareProfessional>
                   <urn1:authorTime>20120102122322</urn1:authorTime>
                   <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
@@ -2354,8 +2271,6 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
                      <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
                   </urn1:healthcareProfessionalOrgUnit>
-                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
-                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                </urn1:accountableHealthcareProfessional>
                <urn1:modalityData>
                   <urn1:manufacturer>?</urn1:manufacturer>
@@ -2386,115 +2301,82 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:value>130.0</urn1:value>
                      <urn1:unit>?</urn1:unit>
                   </urn1:heartRate>
-                  <urn1:QT>
+                  <urn1:qt>
                      <urn1:value>140</urn1:value>
                      <urn1:unit>s</urn1:unit>
-                  </urn1:QT>
-                  <urn1:QTc>
+                  </urn1:qt>
+                  <urn1:qtCorrected>
                      <urn1:value>150</urn1:value>
                      <urn1:unit>?</urn1:unit>
-                  </urn1:QTc>
-                  <urn1:PR>
+                  </urn1:qtCorrected>
+                  <urn1:pr>
                      <urn1:value>160.0</urn1:value>
                      <urn1:unit>s</urn1:unit>
-                  </urn1:PR>
-                  <urn1:Paxis>
+                  </urn1:pr>
+                  <urn1:pAxis>
                      <urn1:value>170.0</urn1:value>
                      <urn1:unit>?</urn1:unit>
-                  </urn1:Paxis>
-                  <urn1:QRSAxis>
+                  </urn1:pAxis>
+                  <urn1:qrsAxis>
                      <urn1:value>170.0</urn1:value>
                      <urn1:unit>?</urn1:unit>
-                  </urn1:QRSAxis>
-                  <urn1:Taxis>
+                  </urn1:qrsAxis>
+                  <urn1:tAxis>
                      <urn1:value>180.0</urn1:value>
                      <urn1:unit>?</urn1:unit>
-                  </urn1:Taxis>
-                  <!--Zero or more repetitions:-->
-                  <urn1:stType>
+                  </urn1:tAxis>
+                  <urn1:st>
                      <urn1:leadName>?</urn1:leadName>
                      <urn1:stLevel>
                         <urn1:value>190.0</urn1:value>
                         <urn1:unit>?</urn1:unit>
-                        <!--You may enter ANY elements at this point-->
                      </urn1:stLevel>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:stType>
-                  <!--Optional:-->
+                  </urn1:st>
                   <urn1:interpretationAlgorithmName>?</urn1:interpretationAlgorithmName>
-                  <!--Zero or more repetitions:-->
                   <urn1:interpretation>?</urn1:interpretation>
-                  <!--You may enter ANY elements at this point-->
                </urn1:ecgStructuredData>
-               <!--Zero or more repetitions:-->
                <urn1:ecgDicomData>
-                  <urn1:demSOP>?</urn1:demSOP>
-                  <!--Optional:-->
-                  <urn1:demValue>cid:358086327269</urn1:demValue>
-                  <!--Optional:-->
-                  <urn1:demReference>?</urn1:demReference>
-                  <!--You may enter ANY elements at this point-->
+                  <urn1:dicomSOP>?</urn1:dicomSOP>
+                  <urn1:dicomValue>cid:358086327269</urn1:dicomValue>
+                  <urn1:dicomReference>?</urn1:dicomReference>
                </urn1:ecgDicomData>
-               <!--Zero or more repetitions:-->
                <urn1:ecgData>
-                  <!--Optional:-->
                   <urn1:mediaType>text/html</urn1:mediaType>
-                  <!--Optional:-->
                   <urn1:value>cid:449923047380</urn1:value>
-                  <!--Optional:-->
                   <urn1:reference>urn:test</urn1:reference>
-                  <!--Optional:-->
                   <urn1:burnedInaAnnotations>false</urn1:burnedInaAnnotations>
-                  <!--You may enter ANY elements at this point-->
                </urn1:ecgData>
-               <!--Optional:-->
                <urn1:referral>
                   <urn1:referralId>?</urn1:referralId>
-                  <!--Optional:-->
                   <urn1:referralReason>?</urn1:referralReason>
-                  <!--Optional:-->
                   <urn1:anamnesis>?</urn1:anamnesis>
-                  <!--Optional:-->
-                  <urn1:careContactId>?</urn1:careContactId>
+                  <urn1:careContactId>566711</urn1:careContactId>
                   <urn1:accountableHealthcareProfessional>
                      <urn1:authorTime>20120102122322</urn1:authorTime>
                      <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                     <!--Optional:-->
                      <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                     <!--Optional:-->
-                  <urn1:healthcareProfessionalRoleCode>
-                     <urn1:code>1</urn1:code>
-                     <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
-                     <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
-                  </urn1:healthcareProfessionalRoleCode>
+                     <urn1:healthcareProfessionalRoleCode>
+                        <urn1:code>1</urn1:code>
+                        <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                        <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
+                     </urn1:healthcareProfessionalRoleCode>
                      <urn1:healthcareProfessionalOrgUnit>
                         <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
                         <urn1:orgUnitName>?</urn1:orgUnitName>
-                        <!--Optional:-->
                         <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                        <!--Optional:-->
                         <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                        <!--Optional:-->
                         <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                        <!--Optional:-->
                         <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                        <!--You may enter ANY elements at this point-->
                      </urn1:healthcareProfessionalOrgUnit>
                      <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
                      <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
-                     <!--You may enter ANY elements at this point-->
                   </urn1:accountableHealthcareProfessional>
-                  <!--You may enter ANY elements at this point-->
                </urn1:referral>
                <urn1:attested>
                   <urn1:signatureTime>20120102122322</urn1:signatureTime>
-                  <!--Optional:-->
                   <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
-                  <!--You may enter ANY elements at this point-->
                </urn1:attested>
-               <!--You may enter ANY elements at this point-->
             </urn1:ECGOutcomeBody>
-            <!--You may enter ANY elements at this point-->
          </urn:ECGOutcome>
          <urn:result>
             <urn1:resultCode>OK</urn1:resultCode>
@@ -2519,7 +2401,7 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                   <urn1:type>${patientIdType}</urn1:type>
                </urn1:patientId>
                <urn1:accountableHealthcareProfessional>
-                  <urn1:authorTime>20131108103000</urn1:authorTime>
+                  <urn1:authorTime>20120102122322</urn1:authorTime>
                   <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                   <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
                   <urn1:healthcareProfessionalRoleCode>
@@ -2535,7 +2417,7 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
                      <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
                   </urn1:healthcareProfessionalOrgUnit>
-                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                  <urn1:healthcareProfessionalCareUnitHSAId>1122334455</urn1:healthcareProfessionalCareUnitHSAId>
                   <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                </urn1:accountableHealthcareProfessional>
                <urn1:legalAuthenticator>
@@ -2553,7 +2435,7 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                   <urn1:codeSystem>OID</urn1:codeSystem>
                   <urn1:displayName>ett</urn1:displayName>
                </urn1:examinationSpeciality>
-               <urn1:resultType>?</urn1:resultType>
+               <urn1:typeOfResult>?</urn1:typeOfResult>
                <urn1:resultTime>20120102122322</urn1:resultTime>
                <urn1:resultReport>?</urn1:resultReport>
                <urn1:resultComment>?</urn1:resultComment>
@@ -2588,8 +2470,8 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:codeSystem>OID</urn1:codeSystem>
                      <urn1:displayName>Planerad</urn1:displayName>
                   </urn1:examinationStatus>
+                  <urn1:examinationUnit>?</urn1:examinationUnit>
                </urn1:ecgRecording>
-               <urn1:examinationUnit>?</urn1:examinationUnit>
                <urn1:accountableHealthcareProfessional>
                   <urn1:authorTime>20120102122322</urn1:authorTime>
                   <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
@@ -2607,8 +2489,6 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
                      <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
                   </urn1:healthcareProfessionalOrgUnit>
-                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
-                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                </urn1:accountableHealthcareProfessional>
                <urn1:modalityData>
                   <urn1:manufacturer>?</urn1:manufacturer>
@@ -2639,115 +2519,82 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:value>130.0</urn1:value>
                      <urn1:unit>?</urn1:unit>
                   </urn1:heartRate>
-                  <urn1:QT>
+                  <urn1:qt>
                      <urn1:value>140</urn1:value>
                      <urn1:unit>s</urn1:unit>
-                  </urn1:QT>
-                  <urn1:QTc>
+                  </urn1:qt>
+                  <urn1:qtCorrected>
                      <urn1:value>150</urn1:value>
                      <urn1:unit>?</urn1:unit>
-                  </urn1:QTc>
-                  <urn1:PR>
+                  </urn1:qtCorrected>
+                  <urn1:pr>
                      <urn1:value>160.0</urn1:value>
                      <urn1:unit>s</urn1:unit>
-                  </urn1:PR>
-                  <urn1:Paxis>
+                  </urn1:pr>
+                  <urn1:pAxis>
                      <urn1:value>170.0</urn1:value>
                      <urn1:unit>?</urn1:unit>
-                  </urn1:Paxis>
-                  <urn1:QRSAxis>
+                  </urn1:pAxis>
+                  <urn1:qrsAxis>
                      <urn1:value>170.0</urn1:value>
                      <urn1:unit>?</urn1:unit>
-                  </urn1:QRSAxis>
-                  <urn1:Taxis>
+                  </urn1:qrsAxis>
+                  <urn1:tAxis>
                      <urn1:value>180.0</urn1:value>
                      <urn1:unit>?</urn1:unit>
-                  </urn1:Taxis>
-                  <!--Zero or more repetitions:-->
-                  <urn1:stType>
+                  </urn1:tAxis>
+                  <urn1:st>
                      <urn1:leadName>?</urn1:leadName>
                      <urn1:stLevel>
                         <urn1:value>190.0</urn1:value>
                         <urn1:unit>?</urn1:unit>
-                        <!--You may enter ANY elements at this point-->
                      </urn1:stLevel>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:stType>
-                  <!--Optional:-->
+                  </urn1:st>
                   <urn1:interpretationAlgorithmName>?</urn1:interpretationAlgorithmName>
-                  <!--Zero or more repetitions:-->
                   <urn1:interpretation>?</urn1:interpretation>
-                  <!--You may enter ANY elements at this point-->
                </urn1:ecgStructuredData>
-               <!--Zero or more repetitions:-->
                <urn1:ecgDicomData>
-                  <urn1:demSOP>?</urn1:demSOP>
-                  <!--Optional:-->
-                  <urn1:demValue>cid:358086327269</urn1:demValue>
-                  <!--Optional:-->
-                  <urn1:demReference>?</urn1:demReference>
-                  <!--You may enter ANY elements at this point-->
+                  <urn1:dicomSOP>?</urn1:dicomSOP>
+                  <urn1:dicomValue>cid:358086327269</urn1:dicomValue>
+                  <urn1:dicomReference>?</urn1:dicomReference>
                </urn1:ecgDicomData>
-               <!--Zero or more repetitions:-->
                <urn1:ecgData>
-                  <!--Optional:-->
                   <urn1:mediaType>text/html</urn1:mediaType>
-                  <!--Optional:-->
                   <urn1:value>cid:449923047380</urn1:value>
-                  <!--Optional:-->
                   <urn1:reference>urn:test</urn1:reference>
-                  <!--Optional:-->
                   <urn1:burnedInaAnnotations>false</urn1:burnedInaAnnotations>
-                  <!--You may enter ANY elements at this point-->
                </urn1:ecgData>
-               <!--Optional:-->
                <urn1:referral>
                   <urn1:referralId>?</urn1:referralId>
-                  <!--Optional:-->
                   <urn1:referralReason>?</urn1:referralReason>
-                  <!--Optional:-->
                   <urn1:anamnesis>?</urn1:anamnesis>
-                  <!--Optional:-->
                   <urn1:careContactId>?</urn1:careContactId>
                   <urn1:accountableHealthcareProfessional>
                      <urn1:authorTime>20120102122322</urn1:authorTime>
                      <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                     <!--Optional:-->
                      <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                     <!--Optional:-->
-                  <urn1:healthcareProfessionalRoleCode>
-                     <urn1:code>1</urn1:code>
-                     <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
-                     <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
-                  </urn1:healthcareProfessionalRoleCode>
+                     <urn1:healthcareProfessionalRoleCode>
+                        <urn1:code>1</urn1:code>
+                        <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                        <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
+                     </urn1:healthcareProfessionalRoleCode>
                      <urn1:healthcareProfessionalOrgUnit>
                         <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
                         <urn1:orgUnitName>?</urn1:orgUnitName>
-                        <!--Optional:-->
                         <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                        <!--Optional:-->
                         <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                        <!--Optional:-->
                         <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                        <!--Optional:-->
                         <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                        <!--You may enter ANY elements at this point-->
                      </urn1:healthcareProfessionalOrgUnit>
                      <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
                      <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
-                     <!--You may enter ANY elements at this point-->
                   </urn1:accountableHealthcareProfessional>
-                  <!--You may enter ANY elements at this point-->
                </urn1:referral>
                <urn1:attested>
                   <urn1:signatureTime>20120102122322</urn1:signatureTime>
-                  <!--Optional:-->
                   <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
-                  <!--You may enter ANY elements at this point-->
                </urn1:attested>
-               <!--You may enter ANY elements at this point-->
             </urn1:ECGOutcomeBody>
-            <!--You may enter ANY elements at this point-->
          </urn:ECGOutcome>
          <urn:ECGOutcome>
             <urn1:ECGOutcomeHeader>
@@ -2760,7 +2607,7 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                   <urn1:type>${patientIdType}</urn1:type>
                </urn1:patientId>
                <urn1:accountableHealthcareProfessional>
-                  <urn1:authorTime>20131108103000</urn1:authorTime>
+                  <urn1:authorTime>20120102122322</urn1:authorTime>
                   <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
                   <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
                   <urn1:healthcareProfessionalRoleCode>
@@ -2776,7 +2623,7 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
                      <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
                   </urn1:healthcareProfessionalOrgUnit>
-                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                  <urn1:healthcareProfessionalCareUnitHSAId>1122334455</urn1:healthcareProfessionalCareUnitHSAId>
                   <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                </urn1:accountableHealthcareProfessional>
                <urn1:legalAuthenticator>
@@ -2794,7 +2641,7 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                   <urn1:codeSystem>OID</urn1:codeSystem>
                   <urn1:displayName>ett</urn1:displayName>
                </urn1:examinationSpeciality>
-               <urn1:resultType>?</urn1:resultType>
+               <urn1:typeOfResult>?</urn1:typeOfResult>
                <urn1:resultTime>20120102122322</urn1:resultTime>
                <urn1:resultReport>?</urn1:resultReport>
                <urn1:resultComment>?</urn1:resultComment>
@@ -2829,8 +2676,8 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:codeSystem>OID</urn1:codeSystem>
                      <urn1:displayName>Planerad</urn1:displayName>
                   </urn1:examinationStatus>
+                  <urn1:examinationUnit>?</urn1:examinationUnit>
                </urn1:ecgRecording>
-               <urn1:examinationUnit>?</urn1:examinationUnit>
                <urn1:accountableHealthcareProfessional>
                   <urn1:authorTime>20120102122322</urn1:authorTime>
                   <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
@@ -2848,8 +2695,6 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
                      <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
                   </urn1:healthcareProfessionalOrgUnit>
-                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
-                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                </urn1:accountableHealthcareProfessional>
                <urn1:modalityData>
                   <urn1:manufacturer>?</urn1:manufacturer>
@@ -2880,116 +2725,84 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:value>130.0</urn1:value>
                      <urn1:unit>?</urn1:unit>
                   </urn1:heartRate>
-                  <urn1:QT>
+                  <urn1:qt>
                      <urn1:value>140</urn1:value>
                      <urn1:unit>s</urn1:unit>
-                  </urn1:QT>
-                  <urn1:QTc>
+                  </urn1:qt>
+                  <urn1:qtCorrected>
                      <urn1:value>150</urn1:value>
                      <urn1:unit>?</urn1:unit>
-                  </urn1:QTc>
-                  <urn1:PR>
+                  </urn1:qtCorrected>
+                  <urn1:pr>
                      <urn1:value>160.0</urn1:value>
                      <urn1:unit>s</urn1:unit>
-                  </urn1:PR>
-                  <urn1:Paxis>
+                  </urn1:pr>
+                  <urn1:pAxis>
                      <urn1:value>170.0</urn1:value>
                      <urn1:unit>?</urn1:unit>
-                  </urn1:Paxis>
-                  <urn1:QRSAxis>
+                  </urn1:pAxis>
+                  <urn1:qrsAxis>
                      <urn1:value>170.0</urn1:value>
                      <urn1:unit>?</urn1:unit>
-                  </urn1:QRSAxis>
-                  <urn1:Taxis>
+                  </urn1:qrsAxis>
+                  <urn1:tAxis>
                      <urn1:value>180.0</urn1:value>
                      <urn1:unit>?</urn1:unit>
-                  </urn1:Taxis>
-                  <!--Zero or more repetitions:-->
-                  <urn1:stType>
+                  </urn1:tAxis>
+                  <urn1:st>
                      <urn1:leadName>?</urn1:leadName>
                      <urn1:stLevel>
                         <urn1:value>190.0</urn1:value>
                         <urn1:unit>?</urn1:unit>
-                        <!--You may enter ANY elements at this point-->
                      </urn1:stLevel>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:stType>
-                  <!--Optional:-->
+                  </urn1:st>
                   <urn1:interpretationAlgorithmName>?</urn1:interpretationAlgorithmName>
-                  <!--Zero or more repetitions:-->
                   <urn1:interpretation>?</urn1:interpretation>
-                  <!--You may enter ANY elements at this point-->
                </urn1:ecgStructuredData>
-               <!--Zero or more repetitions:-->
                <urn1:ecgDicomData>
-                  <urn1:demSOP>?</urn1:demSOP>
-                  <!--Optional:-->
-                  <urn1:demValue>cid:358086327269</urn1:demValue>
-                  <!--Optional:-->
-                  <urn1:demReference>?</urn1:demReference>
-                  <!--You may enter ANY elements at this point-->
+                  <urn1:dicomSOP>?</urn1:dicomSOP>
+                  <urn1:dicomValue>cid:358086327269</urn1:dicomValue>
+                  <urn1:dicomReference>?</urn1:dicomReference>
                </urn1:ecgDicomData>
-               <!--Zero or more repetitions:-->
                <urn1:ecgData>
-                  <!--Optional:-->
                   <urn1:mediaType>text/html</urn1:mediaType>
-                  <!--Optional:-->
                   <urn1:value>cid:449923047380</urn1:value>
-                  <!--Optional:-->
                   <urn1:reference>urn:test</urn1:reference>
-                  <!--Optional:-->
                   <urn1:burnedInaAnnotations>false</urn1:burnedInaAnnotations>
-                  <!--You may enter ANY elements at this point-->
                </urn1:ecgData>
-               <!--Optional:-->
                <urn1:referral>
                   <urn1:referralId>?</urn1:referralId>
-                  <!--Optional:-->
                   <urn1:referralReason>?</urn1:referralReason>
-                  <!--Optional:-->
                   <urn1:anamnesis>?</urn1:anamnesis>
-                  <!--Optional:-->
                   <urn1:careContactId>?</urn1:careContactId>
                   <urn1:accountableHealthcareProfessional>
                      <urn1:authorTime>20120102122322</urn1:authorTime>
                      <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                     <!--Optional:-->
                      <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                     <!--Optional:-->
-                  <urn1:healthcareProfessionalRoleCode>
-                     <urn1:code>1</urn1:code>
-                     <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
-                     <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
-                  </urn1:healthcareProfessionalRoleCode>
+                     <urn1:healthcareProfessionalRoleCode>
+                        <urn1:code>1</urn1:code>
+                        <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                        <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
+                     </urn1:healthcareProfessionalRoleCode>
                      <urn1:healthcareProfessionalOrgUnit>
                         <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
                         <urn1:orgUnitName>?</urn1:orgUnitName>
-                        <!--Optional:-->
                         <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                        <!--Optional:-->
                         <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                        <!--Optional:-->
                         <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                        <!--Optional:-->
                         <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                        <!--You may enter ANY elements at this point-->
                      </urn1:healthcareProfessionalOrgUnit>
                      <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
                      <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
-                     <!--You may enter ANY elements at this point-->
                   </urn1:accountableHealthcareProfessional>
-                  <!--You may enter ANY elements at this point-->
                </urn1:referral>
                <urn1:attested>
                   <urn1:signatureTime>20120102122322</urn1:signatureTime>
-                  <!--Optional:-->
                   <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
-                  <!--You may enter ANY elements at this point-->
                </urn1:attested>
-               <!--You may enter ANY elements at this point-->
             </urn1:ECGOutcomeBody>
-            <!--You may enter ANY elements at this point-->
          </urn:ECGOutcome>
+
          <urn:result>
             <urn1:resultCode>OK</urn1:resultCode>
             <urn1:logId>0000-1111</urn1:logId>
@@ -3020,4 +2833,449 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
       </detail>
     </soapenv:Fault>
   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2:GetECGOutcome"/></con:response><con:response name="Response 8" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:2">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetECGOutcomeResponse>
+         <!--Zero or more repetitions:-->
+         <urn:ECGOutcome>
+            <urn1:ECGOutcomeHeader>
+               <urn1:documentId>?</urn1:documentId>
+               <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
+               <!--Optional:-->
+               <urn1:documentTitle>?</urn1:documentTitle>
+               <!--Optional:-->
+               <urn1:documentTime>?</urn1:documentTime>
+               <urn1:patientId>
+                  <urn1:id>?</urn1:id>
+                  <urn1:type>?</urn1:type>
+                  <!--You may enter ANY elements at this point-->
+               </urn1:patientId>
+               <urn1:accountableHealthcareProfessional>
+                  <urn1:authorTime>?</urn1:authorTime>
+                  <!--Optional:-->
+                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                  <!--Optional:-->
+                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                  <!--Optional:-->
+                  <urn1:healthcareProfessionalRoleCode>
+                     <!--Optional:-->
+                     <urn1:code>?</urn1:code>
+                     <!--Optional:-->
+                     <urn1:codeSystem>?</urn1:codeSystem>
+                     <!--Optional:-->
+                     <urn1:codeSystemName>?</urn1:codeSystemName>
+                     <!--Optional:-->
+                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
+                     <!--Optional:-->
+                     <urn1:displayName>?</urn1:displayName>
+                     <!--Optional:-->
+                     <urn1:originalText>?</urn1:originalText>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:healthcareProfessionalRoleCode>
+                  <!--Optional:-->
+                  <urn1:healthcareProfessionalOrgUnit>
+                     <!--Optional:-->
+                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                     <!--Optional:-->
+                     <urn1:orgUnitName>?</urn1:orgUnitName>
+                     <!--Optional:-->
+                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                     <!--Optional:-->
+                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                     <!--Optional:-->
+                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                     <!--Optional:-->
+                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:healthcareProfessionalOrgUnit>
+                  <!--Optional:-->
+                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                  <!--Optional:-->
+                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+                  <!--You may enter ANY elements at this point-->
+               </urn1:accountableHealthcareProfessional>
+               <!--Optional:-->
+               <urn1:legalAuthenticator>
+                  <urn1:signatureTime>?</urn1:signatureTime>
+                  <!--Optional:-->
+                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+                  <!--Optional:-->
+                  <urn1:legalAuthenticatorName>?</urn1:legalAuthenticatorName>
+                  <!--Optional:-->
+                  <urn1:legalAuthenticatorRoleCode>
+                     <!--Optional:-->
+                     <urn1:code>?</urn1:code>
+                     <!--Optional:-->
+                     <urn1:codeSystem>?</urn1:codeSystem>
+                     <!--Optional:-->
+                     <urn1:codeSystemName>?</urn1:codeSystemName>
+                     <!--Optional:-->
+                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
+                     <!--Optional:-->
+                     <urn1:displayName>?</urn1:displayName>
+                     <!--Optional:-->
+                     <urn1:originalText>?</urn1:originalText>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:legalAuthenticatorRoleCode>
+                  <!--You may enter ANY elements at this point-->
+               </urn1:legalAuthenticator>
+               <urn1:approvedForPatient>?</urn1:approvedForPatient>
+               <!--Optional:-->
+               <urn1:careContactId>?</urn1:careContactId>
+               <!--Optional:-->
+               <urn1:nullified>?</urn1:nullified>
+               <!--Optional:-->
+               <urn1:nullifiedReason>?</urn1:nullifiedReason>
+            </urn1:ECGOutcomeHeader>
+            <urn1:ECGOutcomeBody>
+               <!--Optional:-->
+               <urn1:examinationSpeciality>
+                  <!--Optional:-->
+                  <urn1:code>?</urn1:code>
+                  <!--Optional:-->
+                  <urn1:codeSystem>?</urn1:codeSystem>
+                  <!--Optional:-->
+                  <urn1:codeSystemName>?</urn1:codeSystemName>
+                  <!--Optional:-->
+                  <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
+                  <!--Optional:-->
+                  <urn1:displayName>?</urn1:displayName>
+                  <!--Optional:-->
+                  <urn1:originalText>?</urn1:originalText>
+                  <!--You may enter ANY elements at this point-->
+               </urn1:examinationSpeciality>
+               <urn1:typeOfResult>?</urn1:typeOfResult>
+               <urn1:resultTime>?</urn1:resultTime>
+               <urn1:resultReport>?</urn1:resultReport>
+               <!--Optional:-->
+               <urn1:resultComment>?</urn1:resultComment>
+               <!--Optional:-->
+               <urn1:patientData>
+                  <!--Optional:-->
+                  <urn1:patientWeight>
+                     <urn1:value>?</urn1:value>
+                     <urn1:unit>?</urn1:unit>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:patientWeight>
+                  <!--Optional:-->
+                  <urn1:patientLength>
+                     <urn1:value>?</urn1:value>
+                     <urn1:unit>?</urn1:unit>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:patientLength>
+                  <!--You may enter ANY elements at this point-->
+               </urn1:patientData>
+               <!--Zero or more repetitions:-->
+               <urn1:ecgRecording>
+                  <urn1:recordingId>
+                     <urn1:root>?</urn1:root>
+                     <!--Optional:-->
+                     <urn1:extension>?</urn1:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:recordingId>
+                  <urn1:examinationActivity>
+                     <!--Optional:-->
+                     <urn1:code>?</urn1:code>
+                     <!--Optional:-->
+                     <urn1:codeSystem>?</urn1:codeSystem>
+                     <!--Optional:-->
+                     <urn1:codeSystemName>?</urn1:codeSystemName>
+                     <!--Optional:-->
+                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
+                     <!--Optional:-->
+                     <urn1:displayName>?</urn1:displayName>
+                     <!--Optional:-->
+                     <urn1:originalText>?</urn1:originalText>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:examinationActivity>
+                  <urn1:examinationTimePeriod>
+                     <!--Optional:-->
+                     <urn1:start>?</urn1:start>
+                     <!--Optional:-->
+                     <urn1:end>?</urn1:end>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:examinationTimePeriod>
+                  <!--Optional:-->
+                  <urn1:examinationStatus>
+                     <!--Optional:-->
+                     <urn1:code>?</urn1:code>
+                     <!--Optional:-->
+                     <urn1:codeSystem>?</urn1:codeSystem>
+                     <!--Optional:-->
+                     <urn1:codeSystemName>?</urn1:codeSystemName>
+                     <!--Optional:-->
+                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
+                     <!--Optional:-->
+                     <urn1:displayName>?</urn1:displayName>
+                     <!--Optional:-->
+                     <urn1:originalText>?</urn1:originalText>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:examinationStatus>
+                  <!--Optional:-->
+                  <urn1:examinationUnit>?</urn1:examinationUnit>
+                  <!--You may enter ANY elements at this point-->
+               </urn1:ecgRecording>
+               <!--Optional:-->
+               <urn1:accountableHealthcareProfessional>
+                  <urn1:authorTime>?</urn1:authorTime>
+                  <!--Optional:-->
+                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                  <!--Optional:-->
+                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                  <!--Optional:-->
+                  <urn1:healthcareProfessionalRoleCode>
+                     <!--Optional:-->
+                     <urn1:code>?</urn1:code>
+                     <!--Optional:-->
+                     <urn1:codeSystem>?</urn1:codeSystem>
+                     <!--Optional:-->
+                     <urn1:codeSystemName>?</urn1:codeSystemName>
+                     <!--Optional:-->
+                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
+                     <!--Optional:-->
+                     <urn1:displayName>?</urn1:displayName>
+                     <!--Optional:-->
+                     <urn1:originalText>?</urn1:originalText>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:healthcareProfessionalRoleCode>
+                  <!--Optional:-->
+                  <urn1:healthcareProfessionalOrgUnit>
+                     <!--Optional:-->
+                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                     <!--Optional:-->
+                     <urn1:orgUnitName>?</urn1:orgUnitName>
+                     <!--Optional:-->
+                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                     <!--Optional:-->
+                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                     <!--Optional:-->
+                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                     <!--Optional:-->
+                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:healthcareProfessionalOrgUnit>
+                  <!--Optional:-->
+                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                  <!--Optional:-->
+                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+                  <!--You may enter ANY elements at this point-->
+               </urn1:accountableHealthcareProfessional>
+               <!--Optional:-->
+               <urn1:modalityData>
+                  <!--Optional:-->
+                  <urn1:typeOfModality>?</urn1:typeOfModality>
+                  <!--Optional:-->
+                  <urn1:manufacturer>?</urn1:manufacturer>
+                  <!--Optional:-->
+                  <urn1:modelName>?</urn1:modelName>
+                  <!--Optional:-->
+                  <urn1:equipmentId>?</urn1:equipmentId>
+                  <!--Optional:-->
+                  <urn1:softwareVersion>?</urn1:softwareVersion>
+                  <!--Optional:-->
+                  <urn1:lineFilter>
+                     <urn1:value>?</urn1:value>
+                     <urn1:unit>?</urn1:unit>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:lineFilter>
+                  <!--You may enter ANY elements at this point-->
+               </urn1:modalityData>
+               <!--Optional:-->
+               <urn1:pacemaker>?</urn1:pacemaker>
+               <!--Zero or more repetitions:-->
+               <urn1:ecgStructuredData>
+                  <!--Zero or more repetitions:-->
+                  <urn1:usedFilter>
+                     <!--Optional:-->
+                     <urn1:filterName>?</urn1:filterName>
+                     <!--Optional:-->
+                     <urn1:lowerFrequency>
+                        <urn1:value>?</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                        <!--You may enter ANY elements at this point-->
+                     </urn1:lowerFrequency>
+                     <!--Optional:-->
+                     <urn1:upperFrequency>
+                        <urn1:value>?</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                        <!--You may enter ANY elements at this point-->
+                     </urn1:upperFrequency>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:usedFilter>
+                  <!--Optional:-->
+                  <urn1:heartRate>
+                     <urn1:value>?</urn1:value>
+                     <urn1:unit>?</urn1:unit>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:heartRate>
+                  <!--Optional:-->
+                  <urn1:qt>
+                     <urn1:value>?</urn1:value>
+                     <urn1:unit>?</urn1:unit>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:qt>
+                  <!--Optional:-->
+                  <urn1:qtCorrected>
+                     <urn1:value>?</urn1:value>
+                     <urn1:unit>?</urn1:unit>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:qtCorrected>
+                  <!--Optional:-->
+                  <urn1:pr>
+                     <urn1:value>?</urn1:value>
+                     <urn1:unit>?</urn1:unit>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:pr>
+                  <!--Optional:-->
+                  <urn1:pAxis>
+                     <urn1:value>?</urn1:value>
+                     <urn1:unit>?</urn1:unit>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:pAxis>
+                  <!--Optional:-->
+                  <urn1:qrsAxis>
+                     <urn1:value>?</urn1:value>
+                     <urn1:unit>?</urn1:unit>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:qrsAxis>
+                  <!--Optional:-->
+                  <urn1:tAxis>
+                     <urn1:value>?</urn1:value>
+                     <urn1:unit>?</urn1:unit>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:tAxis>
+                  <!--Zero or more repetitions:-->
+                  <urn1:st>
+                     <urn1:leadName>?</urn1:leadName>
+                     <urn1:stLevel>
+                        <urn1:value>?</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                        <!--You may enter ANY elements at this point-->
+                     </urn1:stLevel>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:st>
+                  <!--Optional:-->
+                  <urn1:interpretationAlgorithmName>?</urn1:interpretationAlgorithmName>
+                  <!--Zero or more repetitions:-->
+                  <urn1:interpretation>?</urn1:interpretation>
+                  <!--You may enter ANY elements at this point-->
+               </urn1:ecgStructuredData>
+               <!--Zero or more repetitions:-->
+               <urn1:ecgDicomData>
+                  <urn1:dicomSOP>?</urn1:dicomSOP>
+                  <!--Optional:-->
+                  <urn1:dicomValue>cid:457678451553</urn1:dicomValue>
+                  <!--Optional:-->
+                  <urn1:dicomReference>?</urn1:dicomReference>
+                  <!--You may enter ANY elements at this point-->
+               </urn1:ecgDicomData>
+               <!--Zero or more repetitions:-->
+               <urn1:ecgData>
+                  <!--Optional:-->
+                  <urn1:mediaType>?</urn1:mediaType>
+                  <!--Optional:-->
+                  <urn1:value>cid:885626245878</urn1:value>
+                  <!--Optional:-->
+                  <urn1:reference>?</urn1:reference>
+                  <!--Optional:-->
+                  <urn1:burnedInaAnnotations>?</urn1:burnedInaAnnotations>
+                  <!--You may enter ANY elements at this point-->
+               </urn1:ecgData>
+               <!--Optional:-->
+               <urn1:referral>
+                  <urn1:referralId>?</urn1:referralId>
+                  <!--Optional:-->
+                  <urn1:referralReason>?</urn1:referralReason>
+                  <!--Optional:-->
+                  <urn1:anamnesis>?</urn1:anamnesis>
+                  <!--Optional:-->
+                  <urn1:careContactId>?</urn1:careContactId>
+                  <urn1:accountableHealthcareProfessional>
+                     <urn1:authorTime>?</urn1:authorTime>
+                     <!--Optional:-->
+                     <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                     <!--Optional:-->
+                     <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                     <!--Optional:-->
+                     <urn1:healthcareProfessionalRoleCode>
+                        <!--Optional:-->
+                        <urn1:code>?</urn1:code>
+                        <!--Optional:-->
+                        <urn1:codeSystem>?</urn1:codeSystem>
+                        <!--Optional:-->
+                        <urn1:codeSystemName>?</urn1:codeSystemName>
+                        <!--Optional:-->
+                        <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
+                        <!--Optional:-->
+                        <urn1:displayName>?</urn1:displayName>
+                        <!--Optional:-->
+                        <urn1:originalText>?</urn1:originalText>
+                        <!--You may enter ANY elements at this point-->
+                     </urn1:healthcareProfessionalRoleCode>
+                     <!--Optional:-->
+                     <urn1:healthcareProfessionalOrgUnit>
+                        <!--Optional:-->
+                        <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                        <!--Optional:-->
+                        <urn1:orgUnitName>?</urn1:orgUnitName>
+                        <!--Optional:-->
+                        <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                        <!--Optional:-->
+                        <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                        <!--Optional:-->
+                        <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                        <!--Optional:-->
+                        <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                        <!--You may enter ANY elements at this point-->
+                     </urn1:healthcareProfessionalOrgUnit>
+                     <!--Optional:-->
+                     <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                     <!--Optional:-->
+                     <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:accountableHealthcareProfessional>
+                  <!--You may enter ANY elements at this point-->
+               </urn1:referral>
+               <urn1:attested>
+                  <urn1:signatureTime>?</urn1:signatureTime>
+                  <!--Optional:-->
+                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+                  <!--Optional:-->
+                  <urn1:legalAuthenticatorName>?</urn1:legalAuthenticatorName>
+                  <!--Optional:-->
+                  <urn1:legalAuthenticatorRoleCode>
+                     <!--Optional:-->
+                     <urn1:code>?</urn1:code>
+                     <!--Optional:-->
+                     <urn1:codeSystem>?</urn1:codeSystem>
+                     <!--Optional:-->
+                     <urn1:codeSystemName>?</urn1:codeSystemName>
+                     <!--Optional:-->
+                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
+                     <!--Optional:-->
+                     <urn1:displayName>?</urn1:displayName>
+                     <!--Optional:-->
+                     <urn1:originalText>?</urn1:originalText>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:legalAuthenticatorRoleCode>
+                  <!--You may enter ANY elements at this point-->
+               </urn1:attested>
+               <!--You may enter ANY elements at this point-->
+            </urn1:ECGOutcomeBody>
+            <!--You may enter ANY elements at this point-->
+         </urn:ECGOutcome>
+         <urn:result>
+            <urn1:resultCode>?</urn1:resultCode>
+            <!--Optional:-->
+            <urn1:errorCode>?</urn1:errorCode>
+            <urn1:logId>?</urn1:logId>
+            <!--Optional:-->
+            <urn1:subCode>?</urn1:subCode>
+            <!--Optional:-->
+            <urn1:message>?</urn1:message>
+         </urn:result>
+         <!--You may enter ANY elements at this point-->
+      </urn:GetECGOutcomeResponse>
+   </soapenv:Body>
 </soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2:GetECGOutcome"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/><con:reporting><con:xmlTemplates/><con:parameters/></con:reporting></con:soapui-project>

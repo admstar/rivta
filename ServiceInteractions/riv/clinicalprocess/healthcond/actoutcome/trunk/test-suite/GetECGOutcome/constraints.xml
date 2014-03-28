@@ -78,35 +78,68 @@ under the License.
     <!-- Rule for PatientData -->
     <iso:pattern id="Verify patientData">
         <iso:rule context="urn1:patientWeight/urn1:unit">
-            <iso:assert test="normalize-space(.) = 'kg'">Unit MUST be kg.</iso:assert>
+            <iso:assert test="normalize-space(.) = 'kg'">patientWeight.unit MUST be kg.</iso:assert>
         </iso:rule>
     </iso:pattern>
     
     <iso:pattern id="Verify patientData">
         <iso:rule context="urn1:patientLength/urn1:unit">
-            <iso:assert test="normalize-space(.) = 'cm'">Unit MUST be cm.</iso:assert>
+            <iso:assert test="normalize-space(.) = 'cm'">patientLength.unit MUST be cm.</iso:assert>
         </iso:rule>
     </iso:pattern>
     
     <!-- Rule for LineFilter -->
     <iso:pattern id="Verify lineFilter">
         <iso:rule context="urn1:lineFilter/urn1:unit">
-            <iso:assert test="normalize-space(.) = 'Hz'">Unit MUST be Hz.</iso:assert>
+            <iso:assert test="normalize-space(.) = 'Hz'">lineFilter.unit MUST be Hz.</iso:assert>
         </iso:rule>
     </iso:pattern>
     
     <!-- Rule for QT -->
     <iso:pattern id="Verify QT">
-        <iso:rule context="urn1:QT/urn1:unit">
-            <iso:assert test="normalize-space(.) = 's'">Unit MUST be s.</iso:assert>
+        <iso:rule context="urn1:qt/urn1:unit">
+            <iso:assert test="normalize-space(.) = 's'">qt.unit MUST be s.</iso:assert>
         </iso:rule>
     </iso:pattern>
     
     <!-- Rule for PR -->
     <iso:pattern id="Verify PR">
-        <iso:rule context="urn1:PR/urn1:unit">
-            <iso:assert test="normalize-space(.) = 's'">Unit MUST be s.</iso:assert>
+        <iso:rule context="urn1:pr/urn1:unit">
+            <iso:assert test="normalize-space(.) = 's'">pr.unit MUST be s.</iso:assert>
         </iso:rule>
     </iso:pattern>
+
+    <!-- Rule for PR -->
+    <iso:pattern id="Verify PR">
+        <iso:rule context="urn1:pr/urn1:unit">
+            <iso:assert test="normalize-space(.) = 's'">pr.unit MUST be s.</iso:assert>
+        </iso:rule>
+    </iso:pattern>
+
+    <!-- Elements that MUST not exist -->
+    <iso:pattern id="Verify ECGOutcomeBody.accountableHealthcareProfessional">
+        <iso:rule context="urn1:ECGOutcomeBody/urn1:accountableHealthcareProfessional/urn1:healthcareProfessionalCareUnitHSAId">
+            <iso:assert test="not(exists(.))">The <iso:name/> MUST not exist in ECGOutcomeBody.accountableHealthcareProfessional</iso:assert>
+        </iso:rule>       
+    </iso:pattern>
+    
+    <iso:pattern id="Verify ECGOutcomeBody.accountableHealthcareProfessional">
+        <iso:rule context="urn1:ECGOutcomeBody/urn1:accountableHealthcareProfessional/urn1:healthcareProfessionalCareGiverHSAId">
+            <iso:assert test="not(exists(.))">The <iso:name/> MUST not exist ECGOutcomeBody.accountableHealthcareProfessional</iso:assert>
+        </iso:rule>       
+    </iso:pattern>
+
+    <iso:pattern id="Verify ECGOutcomeBody.modalityData">
+        <iso:rule context="urn1:ECGOutcomeBody/urn1:modalityData/urn1:typeOfModality">
+            <iso:assert test="not(exists(.))">The <iso:name/> MUST not exist ECGOutcomeBody.modalityData</iso:assert>
+        </iso:rule>       
+    </iso:pattern>
+    
+    <iso:pattern id="Verify attested">
+        <iso:rule context="urn1:attested/urn1:legalAuthenticatorRoleCode">
+            <iso:assert test="not(exists(.))">The <iso:name/> MUST not exist attested</iso:assert>
+        </iso:rule>       
+    </iso:pattern>
+    
 
 </iso:schema>

@@ -16,14 +16,16 @@
  specific language governing permissions and limitations
  under the License.-->
 <wsdl:definitions name="GetImagingOutcomeInteraction" targetNamespace="urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcome:1:rivtabp21" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tjsr="urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:1" xmlns:tjsi="urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeInitiator:1" xmlns:tns="urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcome:1:rivtabp21" xmlns:itr="urn:riv:itintegration:registry:1">
-  <wsdl:documentation>Tjänsteinteraktionens namn: GetImagingOutcomeInteraction
+  <xs:annotation>
+    <xs:documentation>Tjänsteinteraktionens namn: GetImagingOutcomeInteraction
 			 Beskrivning: 
-			   Returnerar svar på en förfrågan om ECG för en patient
+			   Returnerar svar på en förfrågan om bild för en patient
 			 Revisioner: 
 			 Tjänstedomän: clinicalprocess:healthcond:actoutcome
 			 Tjänsteinteraktionstyp: Fråga-Svar
 			 WS-profil: RIVTABP21
-			 Förvaltas av: Sveriges Kommuner och Landsting</wsdl:documentation>
+			 Förvaltas av: Sveriges Kommuner och Landsting</xs:documentation>
+  </xs:annotation>
   <wsdl:types>
     <xs:schema targetNamespace="urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcome:1:rivtabp21">
       <xs:import schemaLocation="GetImagingOutcomeResponder_1.0.xsd" namespace="urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:1"/>
@@ -131,9 +133,9 @@
       <xs:element name="accountableHealthcareProfessional" type="tns:HealthcareProfessionalType"/>
       <xs:element name="legalAuthenticator" type="tns:LegalAuthenticatorType" minOccurs="0"/>
       <xs:element name="approvedForPatient" type="xs:boolean"/>
+      <xs:element name="careContactId" type="xs:string" minOccurs="0"/>
       <xs:element name="nullified" type="xs:boolean" minOccurs="0"/>
       <xs:element name="nullifiedReason" type="xs:string" minOccurs="0"/>
-      <xs:element name="careContactId" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="ReferralOutcomeType">
@@ -319,7 +321,7 @@
     <xs:sequence>
       <xs:element name="referralId" type="xs:string"/>
       <xs:element name="referralText" type="xs:string" minOccurs="1"/>
-      <xs:element name="referralTime" type="tns:TimeStampType"/>
+      <xs:element name="referralTime" type="tns:TimeStampType" minOccurs="0"/>
       <xs:element name="referralAuthor" type="tns:HealthcareProfessionalType"/>
       <xs:element minOccurs="0" name="careContactId" type="xs:string"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
@@ -379,6 +381,7 @@
     <xs:sequence>
       <xs:element name="signatureTime" type="tns:TimeStampType"/>
       <xs:element name="legalAuthenticatorHSAId" type="tns:HSAIdType" minOccurs="0"/>
+      <xs:element minOccurs="0" name="legalAuthenticatorName" type="xs:string"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -786,8 +789,8 @@
   </xs:complexType>
   <xs:complexType name="ECGOutcomeType">
     <xs:sequence>
-      <xs:element name="ECGResponseHeader" type="tns:PatientSummaryHeaderType"/>
-      <xs:element name="ECGResponseBody" type="tns:ECGBodyType" minOccurs="1"/>
+      <xs:element name="ECGOutcomeHeader" type="tns:PatientSummaryHeaderType"/>
+      <xs:element name="ECGOutcomeBody" type="tns:ECGOutcomeBodyType" minOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -820,7 +823,7 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="ImageStructuredDataType"></xs:complexType>
-  <xs:complexType name="ECGBodyType">
+  <xs:complexType name="ECGOutcomeBodyType">
     <xs:sequence>
       <xs:element minOccurs="0" name="examinationSpeciality" type="tns:CVType"/>
       <xs:element name="resultType" type="xs:string"/>
