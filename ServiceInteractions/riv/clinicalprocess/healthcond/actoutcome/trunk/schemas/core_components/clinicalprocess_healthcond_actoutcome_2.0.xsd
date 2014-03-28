@@ -412,7 +412,7 @@
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
-    
+
     <xs:complexType name="ResultType">
         <xs:annotation>
             <xs:documentation>
@@ -426,7 +426,7 @@
             <xs:element name="message" type="xs:string" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
-    
+
     <!-- service contract domain types -->
 
     <xs:complexType name="HealthcareProfessionalType_LaboratoryOrderOutcomeBody_REMOVE">
@@ -630,29 +630,28 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="ImageOutcomeType">
+    <xs:complexType name="ImagingOutcomeType">
         <xs:sequence>
-            <xs:element name="ImageOutcomeHeader" type="tns:PatientSummaryHeaderType"/>
-            <xs:element name="ImageOutcomeBody" type="tns:ImageBodyType" minOccurs="1"/>
+            <xs:element name="imagingOutcomeHeader" type="tns:PatientSummaryHeaderType"/>
+            <xs:element name="imagingOutcomeBody" type="tns:ImagingBodyType" minOccurs="1"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="ImageBodyType">
+    <xs:complexType name="ImagingBodyType">
         <xs:sequence>
             <xs:element minOccurs="0" name="examinationSpeciality" type="tns:CVType"/>
-            <xs:element name="resultType" type="xs:string"/>
+            <xs:element name="typeOfResult" type="xs:string"/>
             <xs:element name="resultTime" type="tns:TimeStampType" minOccurs="1"/>
             <xs:element name="resultReport" type="xs:string" minOccurs="1"/>
             <xs:element minOccurs="0" name="resultComment" type="xs:string"/>
-            <xs:element maxOccurs="unbounded" name="radiationDose" type="tns:PQType"/>
+            <xs:element maxOccurs="unbounded" name="radiationDose" type="tns:PQType" minOccurs="0"/>
             <xs:element name="patientData" type="tns:PatientDataType" minOccurs="0"/>
             <xs:element name="imageRecording" type="tns:ImageRecordingType" minOccurs="0"
                 maxOccurs="unbounded"/>
-            <xs:element name="examinationUnit" type="xs:string" minOccurs="0"/>
             <xs:element name="accountableHealthcareProfessional"
                 type="tns:HealthcareProfessionalType" minOccurs="0"/>
-            <xs:element minOccurs="0" name="noOfImages" type="xs:string"/>
+            <xs:element minOccurs="0" name="numberOfImages" type="xs:int"/>
             <xs:element minOccurs="0" name="modalityData" type="tns:ModalityDataType"/>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="imageDicomData"
                 type="tns:DicomDataType"/>
@@ -663,7 +662,19 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="ImageStructuredDataType"> </xs:complexType>
+    <xs:complexType name="ImageStructuredDataType">
+
+        <xs:sequence>
+            <xs:element name="aperture" type="tns:PQType"/>
+            <xs:element name="exposureTime" type="tns:PQType"/>
+            <xs:element name="imageCreationTime" type="tns:TimeStampType"/>
+            <xs:element name="bodyPartExamined" type="tns:CVType"/>
+            <xs:element name="contrastAgentUsed" type="xs:string"/>
+            <xs:element name="magneticFieldStrength" type="tns:PQType"/>
+            <xs:element name="copyright" type="xs:string"/>
+            <xs:element name="imageData" type="tns:ImageDataType"/>
+        </xs:sequence>
+    </xs:complexType>
 
 
     <xs:complexType name="ECGOutcomeBodyType">
@@ -849,7 +860,7 @@
             <xs:element name="resultReport" type="xs:string" minOccurs="0" maxOccurs="1"/>
             <xs:element name="resultComment" type="xs:string" minOccurs="0" maxOccurs="1"/>
             <xs:element name="accountableHeathcareProfessional"
-                type="tns:HealthcareProfessionalType_LaboratoryOrderOutcomeBody" minOccurs="0"/>
+                type="tns:HealthcareProfessionalType" minOccurs="0"/>
             <xs:element name="analysis" type="tns:AnalysisType" maxOccurs="unbounded" minOccurs="0"/>
             <xs:element name="order" type="tns:OrderType"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>

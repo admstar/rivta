@@ -33,7 +33,7 @@ under the License.
             <logicalAddress>112233</logicalAddress>
             <patientId>197609272393</patientId>
             <patientIdType>1.2.752.129.2.1.3.1</patientIdType>
-        </data>
+        </data>        
     </testcase>
     <testcase id="CareUnitHSAId Filter">
         <description>Verifies that the result only contains information for the requested CareUnitHSAId.<br/>
@@ -50,7 +50,7 @@ under the License.
     </testcase>
     <testcase id="Date Boundaries">
         <description>Verifies that the result only contains information within the date boundaries for the given patient.<br/>
-            This test will require at least eight ReferralOutcome records:
+            This test will require at least eight ECGOutcome records:
             <ol>
                 <li>A record with DocumentTime within the given range, the AuthorTime and SignatureTime should
                 before or after the given range.</li>
@@ -70,7 +70,7 @@ under the License.
             The DocumentId's of case 1-7 should be added as a comma-separated list in the
                 expectedDocumentIds field.<br/>
             The DocumentId's of case 8 should be added in the unexpectedDocumentIds field.<br/>
-            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of ReferralOutcome records.
+            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of ECGOutcome records.
         </description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
@@ -88,11 +88,11 @@ under the License.
     <testcase id="Only PatientId">
         <description>Verifies that the result only contains information with correct PatientId.
             Enter a PatientId that is stored in the source system.<br/>
-            The DocumentId's of the expected ReferralOutcome records should be added as a comma-separated list in the
+            The DocumentId's of the expected ECGOutcome records should be added as a comma-separated list in the
             expectedDocumentIds field.<br/>
-            The DocumentId's of ReferralOutcome records from other CareUnit's should be added as a comma-separated list in the
+            The DocumentId's of ECGOutcome records from other CareUnit's should be added as a comma-separated list in the
             unexpectedDocumentIds field.<br/>
-            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of ReferralOutcome records.
+            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of ECGOutcome records.
         </description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
@@ -123,7 +123,7 @@ under the License.
             filtering rules to the field 'expectedDocumentIds'.<br/>
             Add one or more DocumentId's of records that should not be included in the response based on the
             filtering rules to the field 'unexpectedDocumentIds'.<br/>
-            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of ReferralOutcome records.
+            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of ECGOutcome records.
         </description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
@@ -143,7 +143,7 @@ under the License.
         <description>Verifies that the service returns an empty result instead of a Soap Fault if a non-existing
             CareContactId is given.<br/>
             Enter a PatientId that exists in the source system and a CareContactId and sourceSystemHSAid that is not found in the source system.<br/>
-            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of ReferralOutcome records.
+            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of ECGOutcome records.
         </description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
@@ -156,7 +156,7 @@ under the License.
     </testcase>
     <testcase id="HTTPHeader Filter">
         <description>Verifies that the result only contains information with correct PatientId, and that the source
-            system should filter ReferralOutcome records based on the HttpHeader 'x-rivta-original-serviceconsumer-hsaid'.<br/>
+            system should filter ECGOutcome records based on the HttpHeader 'x-rivta-original-serviceconsumer-hsaid'.<br/>
             Enter a PatientId that has more than one VaccinationMedicalRecord in the source system.<br/>
             Add one or more DocumentId's of records that should be included in the response based on the
             filtering rules to the field 'expectedDocumentIds'.<br/>
