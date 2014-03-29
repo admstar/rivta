@@ -27,7 +27,6 @@
         namespace="urn:riv:clinicalprocess:healthcond:actoutcome:enums:2"/>
 
     <!-- Common datatypes -->
-
     <xs:complexType name="PatientSummaryHeaderType">
         <xs:sequence>
             <xs:element name="documentId" type="xs:string"/>
@@ -54,11 +53,9 @@
             <xs:element name="actResult" type="tns:MultimediaType" minOccurs="0"
                 maxOccurs="unbounded"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-
         </xs:sequence>
     </xs:complexType>
 
-    <!-- Datatypes for GetImagingOutcome -->
     <xs:complexType name="ObservationType">
         <xs:sequence>
             <xs:element name="id" type="tns:IIType" minOccurs="1" maxOccurs="1"/>
@@ -297,13 +294,6 @@
         </xs:sequence>
     </xs:complexType>
 
-    <!-- 
-        Below: only helper types allowed.
-        
-        A helper type is a type used in one ore more of the domain schema common types.
-        It can also be a type used in two or more service schemas.
-    -->
-
     <xs:complexType name="DatePeriodType">
         <xs:annotation>
             <xs:documentation>
@@ -424,69 +414,6 @@
             <xs:element name="logId" type="xs:string"/>
             <xs:element minOccurs="0" name="subCode" type="xs:string"/>
             <xs:element name="message" type="xs:string" minOccurs="0"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <!-- service contract domain types -->
-
-    <xs:complexType name="HealthcareProfessionalType_LaboratoryOrderOutcomeBody_REMOVE">
-        <xs:annotation>
-            <xs:documentation>
-                Information om hälso- och omsorgspesonal
-                
-                healthcareProfessionalHsaId: 
-                HSA-id för vård- och omsorgspersonal 
-                healthcareProfessionalName
-                Namn på vård- och omsorgspersonal
-                healthcareProfessionalRoleCode: 
-                Information om personens befattning. Om möjligt skall KV Befattning (OID 1.2.752.129.2.2.1.4), se 
-                http://www.inera.se/Documents/TJANSTER_PROJEKT/Katalogtjanst_HSA/Innehall/hsa_innehall_befattning.pdf 
-                healthcareProfessionalCareUnitHSAid: 
-                HSA-id för PDL-enhet som vård- och omsorgspersonen är uppdragstagare för
-                healthcareProfessionalCareGiverHSAid: 
-                HSA-id för vårdgivaren, som är vårdgivare för den enhet som författaren är uppdragstagare för
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="authorTime" type="tns:TimeStampType"/>
-            <xs:element name="healthcareProfessionalHSAId" type="tns:HSAIdType" minOccurs="1"/>
-            <xs:element name="healthcareProfessionalName" type="xs:string" minOccurs="0"/>
-            <xs:element name="healthcareProfessionalRoleCode" type="tns:CVType" minOccurs="0"/>
-            <xs:element name="healthcareProfessionalOrgUnit" type="tns:OrgUnitType" minOccurs="1"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="HealthcareProfessionalType_GetReferralOutcome_REMOVE">
-        <xs:annotation>
-            <xs:documentation>
-                Information om hälso- och omsorgspesonal
-                
-                healthcareProfessionalHsaId: 
-                HSA-id för vård- och omsorgspersonal 
-                healthcareProfessionalName
-                Namn på vård- och omsorgspersonal
-                healthcareProfessionalRoleCode: 
-                Information om personens befattning. Om möjligt skall KV Befattning (OID 1.2.752.129.2.2.1.4), se 
-                http://www.inera.se/Documents/TJANSTER_PROJEKT/Katalogtjanst_HSA/Innehall/hsa_innehall_befattning.pdf 
-                healthcareProfessionalCareUnitHSAid: 
-                HSA-id för PDL-enhet som vård- och omsorgspersonen är uppdragstagare för
-                healthcareProfessionalCareGiverHSAid: 
-                HSA-id för vårdgivaren, som är vårdgivare för den enhet som författaren är uppdragstagare för
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="authorTime" type="tns:TimeStampType"/>
-            <xs:element name="healthcareProfessionalHSAId" type="tns:HSAIdType" minOccurs="0"/>
-            <xs:element name="healthcareProfessionalName" type="xs:string" minOccurs="0"/>
-            <xs:element name="healthcareProfessionalRoleCode" type="tns:CVType" minOccurs="0"/>
-            <xs:element name="healthcareProfessionalOrgUnit" type="tns:OrgUnitType" minOccurs="0"/>
-            <xs:element name="healthcareProfessionalCareUnitHSAId" type="tns:HSAIdType"
-                minOccurs="0"/>
-            <xs:element minOccurs="0" name="healthcareProfessionalCareGiverHSAId"
-                type="tns:HSAIdType"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-
         </xs:sequence>
     </xs:complexType>
 
@@ -641,7 +568,7 @@
     <xs:complexType name="ImagingBodyType">
         <xs:sequence>
             <xs:element minOccurs="0" name="examinationSpeciality" type="tns:CVType"/>
-            <xs:element name="typeOfResult" type="xs:string"/>
+            <xs:element name="typeOfResult" type="codes:TypeOfResultCodeEnum"/>
             <xs:element name="resultTime" type="tns:TimeStampType" minOccurs="1"/>
             <xs:element name="resultReport" type="xs:string" minOccurs="1"/>
             <xs:element minOccurs="0" name="resultComment" type="xs:string"/>
@@ -649,13 +576,6 @@
             <xs:element name="patientData" type="tns:PatientDataType" minOccurs="0"/>
             <xs:element name="imageRecording" type="tns:ImageRecordingType" minOccurs="0"
                 maxOccurs="unbounded"/>
-            <xs:element name="accountableHealthcareProfessional"
-                type="tns:HealthcareProfessionalType" minOccurs="0"/>
-            <xs:element minOccurs="0" name="numberOfImages" type="xs:int"/>
-            <xs:element minOccurs="0" name="modalityData" type="tns:ModalityDataType"/>
-            <xs:element maxOccurs="unbounded" minOccurs="0" name="imageDicomData"
-                type="tns:DicomDataType"/>
-            <xs:element name="imageStaticData" type="tns:ImageStructuredDataType"/>
             <xs:element minOccurs="0" name="referral" type="tns:ECGReferralType"/>
             <xs:element name="attested" type="tns:LegalAuthenticatorType" minOccurs="0"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
@@ -665,13 +585,13 @@
     <xs:complexType name="ImageStructuredDataType">
 
         <xs:sequence>
-            <xs:element name="aperture" type="tns:PQType"/>
-            <xs:element name="exposureTime" type="tns:PQType"/>
-            <xs:element name="imageCreationTime" type="tns:TimeStampType"/>
-            <xs:element name="bodyPartExamined" type="tns:CVType"/>
-            <xs:element name="contrastAgentUsed" type="xs:string"/>
-            <xs:element name="magneticFieldStrength" type="tns:PQType"/>
-            <xs:element name="copyright" type="xs:string"/>
+            <xs:element name="aperture" type="tns:PQType" minOccurs="0"/>
+            <xs:element name="exposureTime" type="tns:PQType" minOccurs="0"/>
+            <xs:element name="imageCreationTime" type="tns:TimeStampType" minOccurs="0"/>
+            <xs:element name="bodyPartExamined" type="tns:CVType" minOccurs="0"/>
+            <xs:element name="contrastAgentUsed" type="xs:string" minOccurs="0"/>
+            <xs:element name="magneticFieldStrength" type="tns:PQType" minOccurs="0"/>
+            <xs:element name="copyright" type="xs:string" minOccurs="0"/>
             <xs:element name="imageData" type="tns:ImageDataType"/>
         </xs:sequence>
     </xs:complexType>
@@ -704,7 +624,7 @@
 
     <xs:complexType name="ImageDataType">
         <xs:sequence>
-            <xs:element name="mediaType" type="codes:MediaTypeEnum" minOccurs="0"/>
+            <xs:element name="mediaType" type="codes:MediaTypeEnum" minOccurs="1"/>
             <xs:element name="value" type="xs:base64Binary" minOccurs="0"/>
             <xs:element minOccurs="0" name="reference" type="xs:anyURI"/>
             <xs:element minOccurs="0" name="burnedInaAnnotations" type="xs:boolean"/>
@@ -739,6 +659,14 @@
             <xs:element name="examinationTimePeriod" type="tns:TimePeriodType" minOccurs="1"/>
             <xs:element name="examinationStatus" type="tns:CVType" minOccurs="0"/>
             <xs:element name="examinationUnit" type="xs:string" minOccurs="0"/>
+            <xs:element name="accountableHealthcareProfessional"
+                type="tns:HealthcareProfessionalType" minOccurs="0"/>
+            <xs:element minOccurs="0" name="numberOfImages" type="xs:int"/>
+            <xs:element minOccurs="0" name="modalityData" type="tns:ModalityDataType"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="imageDicomData"
+                type="tns:DicomDataType"/>
+            <xs:element name="imageStaticData" type="tns:ImageStructuredDataType"
+                maxOccurs="unbounded" minOccurs="0"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
