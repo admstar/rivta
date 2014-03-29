@@ -231,6 +231,7 @@
             <xs:element name="careContactId" type="xs:string" minOccurs="0"/>
             <xs:element name="accountableHealthcareProfessional"
                 type="tns:HealthcareProfessionalType"/>
+            <xs:element name="attested" type="tns:LegalAuthenticatorType" minOccurs="0"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -551,8 +552,8 @@
 
     <xs:complexType name="ECGOutcomeType">
         <xs:sequence>
-            <xs:element name="ECGOutcomeHeader" type="tns:PatientSummaryHeaderType"/>
-            <xs:element name="ECGOutcomeBody" type="tns:ECGOutcomeBodyType" minOccurs="1"/>
+            <xs:element name="ecgOutcomeHeader" type="tns:PatientSummaryHeaderType"/>
+            <xs:element name="ecgOutcomeBody" type="tns:ECGOutcomeBodyType" minOccurs="1"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -577,7 +578,6 @@
             <xs:element name="imageRecording" type="tns:ImageRecordingType" minOccurs="0"
                 maxOccurs="unbounded"/>
             <xs:element minOccurs="0" name="referral" type="tns:ECGReferralType"/>
-            <xs:element name="attested" type="tns:LegalAuthenticatorType" minOccurs="0"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -600,24 +600,14 @@
     <xs:complexType name="ECGOutcomeBodyType">
         <xs:sequence>
             <xs:element minOccurs="0" name="examinationSpeciality" type="tns:CVType"/>
-            <xs:element name="typeOfResult" type="xs:string"/>
+            <xs:element name="typeOfResult" type="codes:TypeOfResultCodeEnum"/>
             <xs:element name="resultTime" type="tns:TimeStampType" minOccurs="1"/>
             <xs:element name="resultReport" type="xs:string" minOccurs="1"/>
             <xs:element minOccurs="0" name="resultComment" type="xs:string"/>
             <xs:element name="patientData" type="tns:PatientDataType" minOccurs="0"/>
-            <xs:element name="ecgRecording" type="tns:ImageRecordingType" minOccurs="0"
+            <xs:element name="ecgRecording" type="tns:ECGRecordingType" minOccurs="0"
                 maxOccurs="unbounded"/>
-            <xs:element name="accountableHealthcareProfessional"
-                type="tns:HealthcareProfessionalType" minOccurs="0"/>
-            <xs:element minOccurs="0" name="modalityData" type="tns:ModalityDataType"/>
-            <xs:element minOccurs="0" name="pacemaker" type="xs:boolean"/>
-            <xs:element maxOccurs="unbounded" minOccurs="0" name="ecgStructuredData"
-                type="tns:ECGStructuredDataType"/>
-            <xs:element maxOccurs="unbounded" minOccurs="0" name="ecgDicomData"
-                type="tns:DicomDataType"/>
-            <xs:element maxOccurs="unbounded" minOccurs="0" name="ecgData" type="tns:ImageDataType"/>
             <xs:element minOccurs="0" name="referral" type="tns:ECGReferralType"/>
-            <xs:element name="attested" type="tns:LegalAuthenticatorType"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -665,8 +655,28 @@
             <xs:element minOccurs="0" name="modalityData" type="tns:ModalityDataType"/>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="imageDicomData"
                 type="tns:DicomDataType"/>
-            <xs:element name="imageStaticData" type="tns:ImageStructuredDataType"
+            <xs:element name="imageStructuredData" type="tns:ImageStructuredDataType"
                 maxOccurs="unbounded" minOccurs="0"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ECGRecordingType">
+        <xs:sequence>
+            <xs:element name="recordingId" type="tns:IIType"/>
+            <xs:element name="examinationActivity" type="tns:CVType" minOccurs="1"/>
+            <xs:element name="examinationTimePeriod" type="tns:TimePeriodType" minOccurs="1"/>
+            <xs:element name="examinationStatus" type="tns:CVType" minOccurs="0"/>
+            <xs:element name="examinationUnit" type="xs:string" minOccurs="0"/>
+            <xs:element name="accountableHealthcareProfessional"
+                type="tns:HealthcareProfessionalType" minOccurs="0"/>
+            <xs:element minOccurs="0" name="modalityData" type="tns:ModalityDataType"/>
+            <xs:element minOccurs="0" name="pacemaker" type="xs:boolean"/>
+            <xs:element name="ecgStructuredData" type="tns:ECGStructuredDataType"
+                maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="ecgDicomData"
+                type="tns:DicomDataType"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="ecgData" type="tns:ImageDataType"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
