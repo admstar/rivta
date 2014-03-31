@@ -1047,6 +1047,65 @@
       </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
+  <xs:simpleType name="ExaminationStatusCodeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Initierad">
+        <xs:annotation>
+          <xs:documentation>Initierad</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Planerad">
+        <xs:annotation>
+          <xs:documentation>Planerad (bevakad)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Tidbokad">
+        <xs:annotation>
+          <xs:documentation>Tidbokad</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Uppskjuten">
+        <xs:annotation>
+          <xs:documentation>Uppskjuten</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Annullerad">
+        <xs:annotation>
+          <xs:documentation>Annullerad</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Pågående">
+        <xs:annotation>
+          <xs:documentation>Pågående</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Avvakta">
+        <xs:annotation>
+          <xs:documentation>Avvakta</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Avbruten">
+        <xs:annotation>
+          <xs:documentation>Avbruten</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Avklarad">
+        <xs:annotation>
+          <xs:documentation>Avklarad</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Inaktuell">
+        <xs:annotation>
+          <xs:documentation>Inaktuell</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Makulerad">
+        <xs:annotation>
+          <xs:documentation>Makulerad</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:simpleType name="TypeOfResultCodeEnum">
     <xs:restriction base="xs:string">
       <xs:enumeration value="PREL">
@@ -1346,71 +1405,69 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                         <urn1:unit>Hz</urn1:unit>
                      </urn1:lineFilter>
                   </urn1:modalityData>
+                  <urn1:pacemaker>false</urn1:pacemaker>
+                  <urn1:ecgStructuredData>
+                     <urn1:usedFilter>
+                        <urn1:filterName>?</urn1:filterName>
+                        <urn1:lowerFrequency>
+                           <urn1:value>10.0</urn1:value>
+                           <urn1:unit>?</urn1:unit>
+                        </urn1:lowerFrequency>
+                        <urn1:upperFrequency>
+                           <urn1:value>20.0</urn1:value>
+                           <urn1:unit>?</urn1:unit>
+                        </urn1:upperFrequency>
+                     </urn1:usedFilter>
+                     <urn1:heartRate>
+                        <urn1:value>130.0</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                     </urn1:heartRate>
+                     <urn1:qt>
+                        <urn1:value>140</urn1:value>
+                        <urn1:unit>s</urn1:unit>
+                     </urn1:qt>
+                     <urn1:qtCorrected>
+                        <urn1:value>150</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                     </urn1:qtCorrected>
+                     <urn1:pr>
+                        <urn1:value>160.0</urn1:value>
+                        <urn1:unit>s</urn1:unit>
+                     </urn1:pr>
+                     <urn1:pAxis>
+                        <urn1:value>170.0</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                     </urn1:pAxis>
+                     <urn1:qrsAxis>
+                        <urn1:value>170.0</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                     </urn1:qrsAxis>
+                     <urn1:tAxis>
+                        <urn1:value>180.0</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                     </urn1:tAxis>
+                     <urn1:st>
+                        <urn1:leadName>?</urn1:leadName>
+                        <urn1:stLevel>
+                           <urn1:value>190.0</urn1:value>
+                           <urn1:unit>?</urn1:unit>
+                        </urn1:stLevel>
+                     </urn1:st>
+                     <urn1:interpretationAlgorithmName>?</urn1:interpretationAlgorithmName>
+                     <urn1:interpretation>?</urn1:interpretation>
+                  </urn1:ecgStructuredData>
+                  <urn1:ecgDicomData>
+                     <urn1:dicomSOP>?</urn1:dicomSOP>
+                     <urn1:dicomValue>cid:358086327269</urn1:dicomValue>
+                     <urn1:dicomReference>?</urn1:dicomReference>
+                  </urn1:ecgDicomData>
+                  <urn1:ecgData>
+                     <urn1:mediaType>text/html</urn1:mediaType>
+                     <urn1:value>cid:449923047380</urn1:value>
+                     <urn1:reference>urn:test</urn1:reference>
+                     <urn1:burnedInaAnnotations>false</urn1:burnedInaAnnotations>
+                  </urn1:ecgData>
                </urn1:ecgRecording>
-               <urn1:pacemaker>false</urn1:pacemaker>
-               <!--Zero or more repetitions:-->
-               <urn1:ecgStructuredData>
-                  <!--Zero or more repetitions:-->
-                  <urn1:usedFilter>
-                     <urn1:filterName>?</urn1:filterName>
-                     <urn1:lowerFrequency>
-                        <urn1:value>10.0</urn1:value>
-                        <urn1:unit>?</urn1:unit>
-                     </urn1:lowerFrequency>
-                     <urn1:upperFrequency>
-                        <urn1:value>20.0</urn1:value>
-                        <urn1:unit>?</urn1:unit>
-                     </urn1:upperFrequency>
-                  </urn1:usedFilter>
-                  <urn1:heartRate>
-                     <urn1:value>130.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:heartRate>
-                  <urn1:qt>
-                     <urn1:value>140</urn1:value>
-                     <urn1:unit>s</urn1:unit>
-                  </urn1:qt>
-                  <urn1:qtCorrected>
-                     <urn1:value>150</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:qtCorrected>
-                  <urn1:pr>
-                     <urn1:value>160.0</urn1:value>
-                     <urn1:unit>s</urn1:unit>
-                  </urn1:pr>
-                  <urn1:pAxis>
-                     <urn1:value>170.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:pAxis>
-                  <urn1:qrsAxis>
-                     <urn1:value>170.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:qrsAxis>
-                  <urn1:tAxis>
-                     <urn1:value>180.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:tAxis>
-                  <urn1:st>
-                     <urn1:leadName>?</urn1:leadName>
-                     <urn1:stLevel>
-                        <urn1:value>190.0</urn1:value>
-                        <urn1:unit>?</urn1:unit>
-                     </urn1:stLevel>
-                  </urn1:st>
-                  <urn1:interpretationAlgorithmName>?</urn1:interpretationAlgorithmName>
-                  <urn1:interpretation>?</urn1:interpretation>
-               </urn1:ecgStructuredData>
-               <urn1:ecgDicomData>
-                  <urn1:dicomSOP>?</urn1:dicomSOP>
-                  <urn1:dicomValue>cid:358086327269</urn1:dicomValue>
-                  <urn1:dicomReference>?</urn1:dicomReference>
-               </urn1:ecgDicomData>
-               <urn1:ecgData>
-                  <urn1:mediaType>text/html</urn1:mediaType>
-                  <urn1:value>cid:449923047380</urn1:value>
-                  <urn1:reference>urn:test</urn1:reference>
-                  <urn1:burnedInaAnnotations>false</urn1:burnedInaAnnotations>
-               </urn1:ecgData>
                <urn1:referral>
                   <urn1:referralId>?</urn1:referralId>
                   <urn1:referralReason>?</urn1:referralReason>
@@ -1434,11 +1491,11 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                         <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
                      </urn1:healthcareProfessionalOrgUnit>
                   </urn1:accountableHealthcareProfessional>
+                  <urn1:attested>
+                     <urn1:signatureTime>20120102122322</urn1:signatureTime>
+                     <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+                  </urn1:attested>
                </urn1:referral>
-               <urn1:attested>
-                  <urn1:signatureTime>20120102122322</urn1:signatureTime>
-                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
-               </urn1:attested>
             </urn1:ecgOutcomeBody>
          </urn:ecgOutcome>
          <!--End of one ECG record-->
@@ -1454,8 +1511,8 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
    <soapenv:Body>
       <urn:GetECGOutcomeResponse>
          <!--Zero or more repetitions:-->
-         <urn:ECGOutcome>
-            <urn1:ECGOutcomeHeader>
+         <urn:ecgOutcome>
+            <urn1:ecgOutcomeHeader>
                <urn1:documentId>774411</urn1:documentId>
                <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
                <urn1:documentTitle>?</urn1:documentTitle>
@@ -1492,14 +1549,14 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                <urn1:careContactId>?</urn1:careContactId>
                <urn1:nullified>false</urn1:nullified>
                <urn1:nullifiedReason>?</urn1:nullifiedReason>
-            </urn1:ECGOutcomeHeader>
-            <urn1:ECGOutcomeBody>
+            </urn1:ecgOutcomeHeader>
+            <urn1:ecgOutcomeBody>
                <urn1:examinationSpeciality>
                   <urn1:code>1</urn1:code>
                   <urn1:codeSystem>OID</urn1:codeSystem>
                   <urn1:displayName>ett</urn1:displayName>
                </urn1:examinationSpeciality>
-               <urn1:typeOfResult>?</urn1:typeOfResult>
+               <urn1:typeOfResult>PREL</urn1:typeOfResult>
                <urn1:resultTime>20120102122322</urn1:resultTime>
                <urn1:resultReport>?</urn1:resultReport>
                <urn1:resultComment>?</urn1:resultComment>
@@ -1535,112 +1592,112 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:displayName>Planerad</urn1:displayName>
                   </urn1:examinationStatus>
                   <urn1:examinationUnit>?</urn1:examinationUnit>
-               </urn1:ecgRecording>
-               <urn1:accountableHealthcareProfessional>
-                  <urn1:authorTime>20120102122322</urn1:authorTime>
-                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                  <urn1:healthcareProfessionalRoleCode>
-                     <urn1:code>1</urn1:code>
-                     <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
-                     <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
-                  </urn1:healthcareProfessionalRoleCode>
-                  <urn1:healthcareProfessionalOrgUnit>
-                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                     <urn1:orgUnitName>?</urn1:orgUnitName>
-                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                  </urn1:healthcareProfessionalOrgUnit>
-               </urn1:accountableHealthcareProfessional>
-               <urn1:modalityData>
-                  <urn1:manufacturer>?</urn1:manufacturer>
-                  <urn1:modelName>?</urn1:modelName>
-                  <urn1:equipmentId>?</urn1:equipmentId>
-                  <urn1:softwareVersion>?</urn1:softwareVersion>
-                  <urn1:lineFilter>
-                     <urn1:value>2.0</urn1:value>
-                     <urn1:unit>Hz</urn1:unit>
-                  </urn1:lineFilter>
-               </urn1:modalityData>
-               <urn1:pacemaker>false</urn1:pacemaker>
-               <!--Zero or more repetitions:-->
-               <urn1:ecgStructuredData>
+                  <urn1:accountableHealthcareProfessional>
+                     <urn1:authorTime>20120102122322</urn1:authorTime>
+                     <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                     <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                     <urn1:healthcareProfessionalRoleCode>
+                        <urn1:code>1</urn1:code>
+                        <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                        <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
+                     </urn1:healthcareProfessionalRoleCode>
+                     <urn1:healthcareProfessionalOrgUnit>
+                        <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                        <urn1:orgUnitName>?</urn1:orgUnitName>
+                        <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                        <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                        <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                        <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                     </urn1:healthcareProfessionalOrgUnit>
+                  </urn1:accountableHealthcareProfessional>
+                  <urn1:modalityData>
+                     <urn1:manufacturer>?</urn1:manufacturer>
+                     <urn1:modelName>?</urn1:modelName>
+                     <urn1:equipmentId>?</urn1:equipmentId>
+                     <urn1:softwareVersion>?</urn1:softwareVersion>
+                     <urn1:lineFilter>
+                        <urn1:value>2.0</urn1:value>
+                        <urn1:unit>Hz</urn1:unit>
+                     </urn1:lineFilter>
+                  </urn1:modalityData>
+                  <urn1:pacemaker>false</urn1:pacemaker>
                   <!--Zero or more repetitions:-->
-                  <urn1:usedFilter>
-                     <urn1:filterName>?</urn1:filterName>
-                     <urn1:lowerFrequency>
-                        <urn1:value>10.0</urn1:value>
+                  <urn1:ecgStructuredData>
+                     <!--Zero or more repetitions:-->
+                     <urn1:usedFilter>
+                        <urn1:filterName>?</urn1:filterName>
+                        <urn1:lowerFrequency>
+                           <urn1:value>10.0</urn1:value>
+                           <urn1:unit>?</urn1:unit>
+                        </urn1:lowerFrequency>
+                        <urn1:upperFrequency>
+                           <urn1:value>20.0</urn1:value>
+                           <urn1:unit>?</urn1:unit>
+                        </urn1:upperFrequency>
+                     </urn1:usedFilter>
+                     <urn1:heartRate>
+                        <urn1:value>130.0</urn1:value>
                         <urn1:unit>?</urn1:unit>
-                     </urn1:lowerFrequency>
-                     <urn1:upperFrequency>
-                        <urn1:value>20.0</urn1:value>
+                     </urn1:heartRate>
+                     <urn1:qt>
+                        <urn1:value>140</urn1:value>
+                        <urn1:unit>s</urn1:unit>
+                     </urn1:qt>
+                     <urn1:qtCorrected>
+                        <urn1:value>150</urn1:value>
                         <urn1:unit>?</urn1:unit>
-                     </urn1:upperFrequency>
-                  </urn1:usedFilter>
-                  <urn1:heartRate>
-                     <urn1:value>130.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:heartRate>
-                  <urn1:qt>
-                     <urn1:value>140</urn1:value>
-                     <urn1:unit>s</urn1:unit>
-                  </urn1:qt>
-                  <urn1:qtCorrected>
-                     <urn1:value>150</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:qtCorrected>
-                  <urn1:pr>
-                     <urn1:value>160.0</urn1:value>
-                     <urn1:unit>s</urn1:unit>
-                  </urn1:pr>
-                  <urn1:pAxis>
-                     <urn1:value>170.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:pAxis>
-                  <urn1:qrsAxis>
-                     <urn1:value>170.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:qrsAxis>
-                  <urn1:tAxis>
-                     <urn1:value>180.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:tAxis>
-                  <!--Zero or more repetitions:-->
-                  <urn1:st>
-                     <urn1:leadName>?</urn1:leadName>
-                     <urn1:stLevel>
-                        <urn1:value>190.0</urn1:value>
+                     </urn1:qtCorrected>
+                     <urn1:pr>
+                        <urn1:value>160.0</urn1:value>
+                        <urn1:unit>s</urn1:unit>
+                     </urn1:pr>
+                     <urn1:pAxis>
+                        <urn1:value>170.0</urn1:value>
                         <urn1:unit>?</urn1:unit>
+                     </urn1:pAxis>
+                     <urn1:qrsAxis>
+                        <urn1:value>170.0</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                     </urn1:qrsAxis>
+                     <urn1:tAxis>
+                        <urn1:value>180.0</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                     </urn1:tAxis>
+                     <!--Zero or more repetitions:-->
+                     <urn1:st>
+                        <urn1:leadName>?</urn1:leadName>
+                        <urn1:stLevel>
+                           <urn1:value>190.0</urn1:value>
+                           <urn1:unit>?</urn1:unit>
+                           <!--You may enter ANY elements at this point-->
+                        </urn1:stLevel>
                         <!--You may enter ANY elements at this point-->
-                     </urn1:stLevel>
+                     </urn1:st>
+                     <!--Optional:-->
+                     <urn1:interpretationAlgorithmName>?</urn1:interpretationAlgorithmName>
+                     <!--Zero or more repetitions:-->
+                     <urn1:interpretation>?</urn1:interpretation>
                      <!--You may enter ANY elements at this point-->
-                  </urn1:st>
-                  <!--Optional:-->
-                  <urn1:interpretationAlgorithmName>?</urn1:interpretationAlgorithmName>
+                  </urn1:ecgStructuredData>
                   <!--Zero or more repetitions:-->
-                  <urn1:interpretation>?</urn1:interpretation>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:ecgStructuredData>
-               <!--Zero or more repetitions:-->
-               <urn1:ecgDicomData>
-                  <urn1:dicomSOP>?</urn1:dicomSOP>
-                  <urn1:dicomValue>cid:358086327269</urn1:dicomValue>
-                  <urn1:dicomReference>?</urn1:dicomReference>
-               </urn1:ecgDicomData>
-               <!--Zero or more repetitions:-->
-               <urn1:ecgData>
-                  <!--Optional:-->
-                  <urn1:mediaType>text/html</urn1:mediaType>
-                  <!--Optional:-->
-                  <urn1:value>cid:449923047380</urn1:value>
-                  <!--Optional:-->
-                  <urn1:reference>urn:test</urn1:reference>
-                  <!--Optional:-->
-                  <urn1:burnedInaAnnotations>false</urn1:burnedInaAnnotations>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:ecgData>
+                  <urn1:ecgDicomData>
+                     <urn1:dicomSOP>?</urn1:dicomSOP>
+                     <urn1:dicomValue>cid:358086327269</urn1:dicomValue>
+                     <urn1:dicomReference>?</urn1:dicomReference>
+                  </urn1:ecgDicomData>
+                  <!--Zero or more repetitions:-->
+                  <urn1:ecgData>
+                     <!--Optional:-->
+                     <urn1:mediaType>text/html</urn1:mediaType>
+                     <!--Optional:-->
+                     <urn1:value>cid:449923047380</urn1:value>
+                     <!--Optional:-->
+                     <urn1:reference>urn:test</urn1:reference>
+                     <!--Optional:-->
+                     <urn1:burnedInaAnnotations>false</urn1:burnedInaAnnotations>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:ecgData>
+               </urn1:ecgRecording>
                <!--Optional:-->
                <urn1:referral>
                   <urn1:referralId>?</urn1:referralId>
@@ -1677,19 +1734,19 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <!--You may enter ANY elements at this point-->
                   </urn1:accountableHealthcareProfessional>
                   <!--You may enter ANY elements at this point-->
+                  <urn1:attested>
+                     <urn1:signatureTime>20120102122322</urn1:signatureTime>
+                     <!--Optional:-->
+                     <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:attested>
                </urn1:referral>
-               <urn1:attested>
-                  <urn1:signatureTime>20120102122322</urn1:signatureTime>
-                  <!--Optional:-->
-                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:attested>
                <!--You may enter ANY elements at this point-->
-            </urn1:ECGOutcomeBody>
+            </urn1:ecgOutcomeBody>
             <!--You may enter ANY elements at this point-->
-         </urn:ECGOutcome>
-         <urn:ECGOutcome>
-            <urn1:ECGOutcomeHeader>
+         </urn:ecgOutcome>
+         <urn:ecgOutcome>
+            <urn1:ecgOutcomeHeader>
                <urn1:documentId>774412</urn1:documentId>
                <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
                <urn1:documentTitle>?</urn1:documentTitle>
@@ -1726,14 +1783,14 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                <urn1:careContactId>?</urn1:careContactId>
                <urn1:nullified>false</urn1:nullified>
                <urn1:nullifiedReason>?</urn1:nullifiedReason>
-            </urn1:ECGOutcomeHeader>
-            <urn1:ECGOutcomeBody>
+            </urn1:ecgOutcomeHeader>
+            <urn1:ecgOutcomeBody>
                <urn1:examinationSpeciality>
                   <urn1:code>1</urn1:code>
                   <urn1:codeSystem>OID</urn1:codeSystem>
                   <urn1:displayName>ett</urn1:displayName>
                </urn1:examinationSpeciality>
-               <urn1:typeOfResult>?</urn1:typeOfResult>
+               <urn1:typeOfResult>PREL</urn1:typeOfResult>
                <urn1:resultTime>20120102122322</urn1:resultTime>
                <urn1:resultReport>?</urn1:resultReport>
                <urn1:resultComment>?</urn1:resultComment>
@@ -1769,127 +1826,10 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:displayName>Planerad</urn1:displayName>
                   </urn1:examinationStatus>
                   <urn1:examinationUnit>?</urn1:examinationUnit>
-               </urn1:ecgRecording>
-               <urn1:accountableHealthcareProfessional>
-                  <urn1:authorTime>20120102122322</urn1:authorTime>
-                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                  <urn1:healthcareProfessionalRoleCode>
-                     <urn1:code>1</urn1:code>
-                     <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
-                     <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
-                  </urn1:healthcareProfessionalRoleCode>
-                  <urn1:healthcareProfessionalOrgUnit>
-                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                     <urn1:orgUnitName>?</urn1:orgUnitName>
-                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                  </urn1:healthcareProfessionalOrgUnit>
-               </urn1:accountableHealthcareProfessional>
-               <urn1:modalityData>
-                  <urn1:manufacturer>?</urn1:manufacturer>
-                  <urn1:modelName>?</urn1:modelName>
-                  <urn1:equipmentId>?</urn1:equipmentId>
-                  <urn1:softwareVersion>?</urn1:softwareVersion>
-                  <urn1:lineFilter>
-                     <urn1:value>2.0</urn1:value>
-                     <urn1:unit>Hz</urn1:unit>
-                  </urn1:lineFilter>
-               </urn1:modalityData>
-               <urn1:pacemaker>false</urn1:pacemaker>
-               <!--Zero or more repetitions:-->
-               <urn1:ecgStructuredData>
-                  <!--Zero or more repetitions:-->
-                  <urn1:usedFilter>
-                     <urn1:filterName>?</urn1:filterName>
-                     <urn1:lowerFrequency>
-                        <urn1:value>10.0</urn1:value>
-                        <urn1:unit>?</urn1:unit>
-                     </urn1:lowerFrequency>
-                     <urn1:upperFrequency>
-                        <urn1:value>20.0</urn1:value>
-                        <urn1:unit>?</urn1:unit>
-                     </urn1:upperFrequency>
-                  </urn1:usedFilter>
-                  <urn1:heartRate>
-                     <urn1:value>130.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:heartRate>
-                  <urn1:qt>
-                     <urn1:value>140</urn1:value>
-                     <urn1:unit>s</urn1:unit>
-                  </urn1:qt>
-                  <urn1:qtCorrected>
-                     <urn1:value>150</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:qtCorrected>
-                  <urn1:pr>
-                     <urn1:value>160.0</urn1:value>
-                     <urn1:unit>s</urn1:unit>
-                  </urn1:pr>
-                  <urn1:pAxis>
-                     <urn1:value>170.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:pAxis>
-                  <urn1:qrsAxis>
-                     <urn1:value>170.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:qrsAxis>
-                  <urn1:tAxis>
-                     <urn1:value>180.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:tAxis>
-                  <!--Zero or more repetitions:-->
-                  <urn1:st>
-                     <urn1:leadName>?</urn1:leadName>
-                     <urn1:stLevel>
-                        <urn1:value>190.0</urn1:value>
-                        <urn1:unit>?</urn1:unit>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:stLevel>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:st>
-                  <!--Optional:-->
-                  <urn1:interpretationAlgorithmName>?</urn1:interpretationAlgorithmName>
-                  <!--Zero or more repetitions:-->
-                  <urn1:interpretation>?</urn1:interpretation>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:ecgStructuredData>
-               <!--Zero or more repetitions:-->
-               <urn1:ecgDicomData>
-                  <urn1:dicomSOP>?</urn1:dicomSOP>
-                  <urn1:dicomValue>cid:358086327269</urn1:dicomValue>
-                  <urn1:dicomReference>?</urn1:dicomReference>
-               </urn1:ecgDicomData>
-               <!--Zero or more repetitions:-->
-               <urn1:ecgData>
-                  <!--Optional:-->
-                  <urn1:mediaType>text/html</urn1:mediaType>
-                  <!--Optional:-->
-                  <urn1:value>cid:449923047380</urn1:value>
-                  <!--Optional:-->
-                  <urn1:reference>urn:test</urn1:reference>
-                  <!--Optional:-->
-                  <urn1:burnedInaAnnotations>false</urn1:burnedInaAnnotations>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:ecgData>
-               <!--Optional:-->
-               <urn1:referral>
-                  <urn1:referralId>?</urn1:referralId>
-                  <!--Optional:-->
-                  <urn1:referralReason>?</urn1:referralReason>
-                  <!--Optional:-->
-                  <urn1:anamnesis>?</urn1:anamnesis>
-                  <!--Optional:-->
-                  <urn1:careContactId>?</urn1:careContactId>
                   <urn1:accountableHealthcareProfessional>
                      <urn1:authorTime>20120102122322</urn1:authorTime>
                      <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                     <!--Optional:-->
                      <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                     <!--Optional:-->
                      <urn1:healthcareProfessionalRoleCode>
                         <urn1:code>1</urn1:code>
                         <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
@@ -1898,37 +1838,132 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:healthcareProfessionalOrgUnit>
                         <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
                         <urn1:orgUnitName>?</urn1:orgUnitName>
-                        <!--Optional:-->
                         <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                        <!--Optional:-->
                         <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                        <!--Optional:-->
                         <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                        <!--Optional:-->
                         <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                     </urn1:healthcareProfessionalOrgUnit>
+                  </urn1:accountableHealthcareProfessional>
+                  <urn1:modalityData>
+                     <urn1:manufacturer>?</urn1:manufacturer>
+                     <urn1:modelName>?</urn1:modelName>
+                     <urn1:equipmentId>?</urn1:equipmentId>
+                     <urn1:softwareVersion>?</urn1:softwareVersion>
+                     <urn1:lineFilter>
+                        <urn1:value>2.0</urn1:value>
+                        <urn1:unit>Hz</urn1:unit>
+                     </urn1:lineFilter>
+                  </urn1:modalityData>
+                  <urn1:pacemaker>false</urn1:pacemaker>
+                  <!--Zero or more repetitions:-->
+                  <urn1:ecgStructuredData>
+                     <!--Zero or more repetitions:-->
+                     <urn1:usedFilter>
+                        <urn1:filterName>?</urn1:filterName>
+                        <urn1:lowerFrequency>
+                           <urn1:value>10.0</urn1:value>
+                           <urn1:unit>?</urn1:unit>
+                        </urn1:lowerFrequency>
+                        <urn1:upperFrequency>
+                           <urn1:value>20.0</urn1:value>
+                           <urn1:unit>?</urn1:unit>
+                        </urn1:upperFrequency>
+                     </urn1:usedFilter>
+                     <urn1:heartRate>
+                        <urn1:value>130.0</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                     </urn1:heartRate>
+                     <urn1:qt>
+                        <urn1:value>140</urn1:value>
+                        <urn1:unit>s</urn1:unit>
+                     </urn1:qt>
+                     <urn1:qtCorrected>
+                        <urn1:value>150</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                     </urn1:qtCorrected>
+                     <urn1:pr>
+                        <urn1:value>160.0</urn1:value>
+                        <urn1:unit>s</urn1:unit>
+                     </urn1:pr>
+                     <urn1:pAxis>
+                        <urn1:value>170.0</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                     </urn1:pAxis>
+                     <urn1:qrsAxis>
+                        <urn1:value>170.0</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                     </urn1:qrsAxis>
+                     <urn1:tAxis>
+                        <urn1:value>180.0</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                     </urn1:tAxis>
+                     <!--Zero or more repetitions:-->
+                     <urn1:st>
+                        <urn1:leadName>?</urn1:leadName>
+                        <urn1:stLevel>
+                           <urn1:value>190.0</urn1:value>
+                           <urn1:unit>?</urn1:unit>
+                           <!--You may enter ANY elements at this point-->
+                        </urn1:stLevel>
                         <!--You may enter ANY elements at this point-->
+                     </urn1:st>
+                     <!--Optional:-->
+                     <urn1:interpretationAlgorithmName>?</urn1:interpretationAlgorithmName>
+                     <!--Zero or more repetitions:-->
+                     <urn1:interpretation>?</urn1:interpretation>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:ecgStructuredData>
+                  <!--Zero or more repetitions:-->
+                  <urn1:ecgDicomData>
+                     <urn1:dicomSOP>?</urn1:dicomSOP>
+                     <urn1:dicomValue>cid:358086327269</urn1:dicomValue>
+                     <urn1:dicomReference>?</urn1:dicomReference>
+                  </urn1:ecgDicomData>
+                  <!--Zero or more repetitions:-->
+                  <urn1:ecgData>
+                     <!--Optional:-->
+                     <urn1:mediaType>text/html</urn1:mediaType>
+                     <urn1:value>cid:449923047380</urn1:value>
+                     <urn1:reference>urn:test</urn1:reference>
+                     <urn1:burnedInaAnnotations>false</urn1:burnedInaAnnotations>
+                  </urn1:ecgData>
+               </urn1:ecgRecording>
+               <urn1:referral>
+                  <urn1:referralId>?</urn1:referralId>
+                  <urn1:referralReason>?</urn1:referralReason>
+                  <urn1:anamnesis>?</urn1:anamnesis>
+                  <urn1:careContactId>?</urn1:careContactId>
+                  <urn1:accountableHealthcareProfessional>
+                     <urn1:authorTime>20120102122322</urn1:authorTime>
+                     <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                     <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                     <urn1:healthcareProfessionalRoleCode>
+                        <urn1:code>1</urn1:code>
+                        <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                        <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
+                     </urn1:healthcareProfessionalRoleCode>
+                     <urn1:healthcareProfessionalOrgUnit>
+                        <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                        <urn1:orgUnitName>?</urn1:orgUnitName>
+                        <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                        <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                        <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                        <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
                      </urn1:healthcareProfessionalOrgUnit>
                      <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
                      <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
-                     <!--You may enter ANY elements at this point-->
                   </urn1:accountableHealthcareProfessional>
-                  <!--You may enter ANY elements at this point-->
+                  <urn1:attested>
+                     <urn1:signatureTime>20120102122322</urn1:signatureTime>
+                     <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+                  </urn1:attested>
                </urn1:referral>
-               <urn1:attested>
-                  <urn1:signatureTime>20120102122322</urn1:signatureTime>
-                  <!--Optional:-->
-                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:attested>
-               <!--You may enter ANY elements at this point-->
-            </urn1:ECGOutcomeBody>
-            <!--You may enter ANY elements at this point-->
-         </urn:ECGOutcome>
+            </urn1:ecgOutcomeBody>
+         </urn:ecgOutcome>
          <urn:result>
             <urn1:resultCode>OK</urn1:resultCode>
             <urn1:logId>0000-1111</urn1:logId>
          </urn:result>
-         <!--You may enter ANY elements at this point-->
       </urn:GetECGOutcomeResponse>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2:GetECGOutcome"/></con:response><con:response name="CareUnitHSAIdResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:2">
@@ -1936,8 +1971,8 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
    <soapenv:Body>
       <urn:GetECGOutcomeResponse>
          <!--Zero or more repetitions:-->
-         <urn:ECGOutcome>
-            <urn1:ECGOutcomeHeader>
+         <urn:ecgOutcome>
+            <urn1:ecgOutcomeHeader>
                <urn1:documentId>${documentId}</urn1:documentId>
                <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
                <urn1:documentTitle>?</urn1:documentTitle>
@@ -1974,14 +2009,14 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                <urn1:careContactId>?</urn1:careContactId>
                <urn1:nullified>false</urn1:nullified>
                <urn1:nullifiedReason>?</urn1:nullifiedReason>
-            </urn1:ECGOutcomeHeader>
-            <urn1:ECGOutcomeBody>
+            </urn1:ecgOutcomeHeader>
+            <urn1:ecgOutcomeBody>
                <urn1:examinationSpeciality>
                   <urn1:code>1</urn1:code>
                   <urn1:codeSystem>OID</urn1:codeSystem>
                   <urn1:displayName>ett</urn1:displayName>
                </urn1:examinationSpeciality>
-               <urn1:typeOfResult>?</urn1:typeOfResult>
+               <urn1:typeOfResult>PREL</urn1:typeOfResult>
                <urn1:resultTime>20120102122322</urn1:resultTime>
                <urn1:resultReport>?</urn1:resultReport>
                <urn1:resultComment>?</urn1:resultComment>
@@ -2017,99 +2052,99 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:displayName>Planerad</urn1:displayName>
                   </urn1:examinationStatus>
                   <urn1:examinationUnit>?</urn1:examinationUnit>
-               </urn1:ecgRecording>
-               <urn1:accountableHealthcareProfessional>
-                  <urn1:authorTime>20120102122322</urn1:authorTime>
-                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                  <urn1:healthcareProfessionalRoleCode>
-                     <urn1:code>1</urn1:code>
-                     <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
-                     <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
-                  </urn1:healthcareProfessionalRoleCode>
-                  <urn1:healthcareProfessionalOrgUnit>
-                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                     <urn1:orgUnitName>?</urn1:orgUnitName>
-                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                  </urn1:healthcareProfessionalOrgUnit>
-               </urn1:accountableHealthcareProfessional>
-               <urn1:modalityData>
-                  <urn1:manufacturer>?</urn1:manufacturer>
-                  <urn1:modelName>?</urn1:modelName>
-                  <urn1:equipmentId>?</urn1:equipmentId>
-                  <urn1:softwareVersion>?</urn1:softwareVersion>
-                  <urn1:lineFilter>
-                     <urn1:value>2.0</urn1:value>
-                     <urn1:unit>Hz</urn1:unit>
-                  </urn1:lineFilter>
-               </urn1:modalityData>
-               <urn1:pacemaker>false</urn1:pacemaker>
-               <!--Zero or more repetitions:-->
-               <urn1:ecgStructuredData>
+                  <urn1:accountableHealthcareProfessional>
+                     <urn1:authorTime>20120102122322</urn1:authorTime>
+                     <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                     <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                     <urn1:healthcareProfessionalRoleCode>
+                        <urn1:code>1</urn1:code>
+                        <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                        <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
+                     </urn1:healthcareProfessionalRoleCode>
+                     <urn1:healthcareProfessionalOrgUnit>
+                        <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                        <urn1:orgUnitName>?</urn1:orgUnitName>
+                        <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                        <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                        <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                        <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                     </urn1:healthcareProfessionalOrgUnit>
+                  </urn1:accountableHealthcareProfessional>
+                  <urn1:modalityData>
+                     <urn1:manufacturer>?</urn1:manufacturer>
+                     <urn1:modelName>?</urn1:modelName>
+                     <urn1:equipmentId>?</urn1:equipmentId>
+                     <urn1:softwareVersion>?</urn1:softwareVersion>
+                     <urn1:lineFilter>
+                        <urn1:value>2.0</urn1:value>
+                        <urn1:unit>Hz</urn1:unit>
+                     </urn1:lineFilter>
+                  </urn1:modalityData>
+                  <urn1:pacemaker>false</urn1:pacemaker>
                   <!--Zero or more repetitions:-->
-                  <urn1:usedFilter>
-                     <urn1:filterName>?</urn1:filterName>
-                     <urn1:lowerFrequency>
-                        <urn1:value>10.0</urn1:value>
+                  <urn1:ecgStructuredData>
+                     <!--Zero or more repetitions:-->
+                     <urn1:usedFilter>
+                        <urn1:filterName>?</urn1:filterName>
+                        <urn1:lowerFrequency>
+                           <urn1:value>10.0</urn1:value>
+                           <urn1:unit>?</urn1:unit>
+                        </urn1:lowerFrequency>
+                        <urn1:upperFrequency>
+                           <urn1:value>20.0</urn1:value>
+                           <urn1:unit>?</urn1:unit>
+                        </urn1:upperFrequency>
+                     </urn1:usedFilter>
+                     <urn1:heartRate>
+                        <urn1:value>130.0</urn1:value>
                         <urn1:unit>?</urn1:unit>
-                     </urn1:lowerFrequency>
-                     <urn1:upperFrequency>
-                        <urn1:value>20.0</urn1:value>
+                     </urn1:heartRate>
+                     <urn1:qt>
+                        <urn1:value>140</urn1:value>
+                        <urn1:unit>s</urn1:unit>
+                     </urn1:qt>
+                     <urn1:qtCorrected>
+                        <urn1:value>150</urn1:value>
                         <urn1:unit>?</urn1:unit>
-                     </urn1:upperFrequency>
-                  </urn1:usedFilter>
-                  <urn1:heartRate>
-                     <urn1:value>130.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:heartRate>
-                  <urn1:qt>
-                     <urn1:value>140</urn1:value>
-                     <urn1:unit>s</urn1:unit>
-                  </urn1:qt>
-                  <urn1:qtCorrected>
-                     <urn1:value>150</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:qtCorrected>
-                  <urn1:pr>
-                     <urn1:value>160.0</urn1:value>
-                     <urn1:unit>s</urn1:unit>
-                  </urn1:pr>
-                  <urn1:pAxis>
-                     <urn1:value>170.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:pAxis>
-                  <urn1:qrsAxis>
-                     <urn1:value>170.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:qrsAxis>
-                  <urn1:tAxis>
-                     <urn1:value>180.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:tAxis>
-                  <urn1:st>
-                     <urn1:leadName>?</urn1:leadName>
-                     <urn1:stLevel>
-                        <urn1:value>190.0</urn1:value>
+                     </urn1:qtCorrected>
+                     <urn1:pr>
+                        <urn1:value>160.0</urn1:value>
+                        <urn1:unit>s</urn1:unit>
+                     </urn1:pr>
+                     <urn1:pAxis>
+                        <urn1:value>170.0</urn1:value>
                         <urn1:unit>?</urn1:unit>
-                     </urn1:stLevel>
-                  </urn1:st>
-                  <urn1:interpretationAlgorithmName>?</urn1:interpretationAlgorithmName>
-                  <urn1:interpretation>?</urn1:interpretation>
-               </urn1:ecgStructuredData>
-               <urn1:ecgDicomData>
-                  <urn1:dicomSOP>?</urn1:dicomSOP>
-                  <urn1:dicomValue>cid:358086327269</urn1:dicomValue>
-                  <urn1:dicomReference>?</urn1:dicomReference>
-               </urn1:ecgDicomData>
-               <urn1:ecgData>
-                  <urn1:mediaType>text/html</urn1:mediaType>
-                  <urn1:value>cid:449923047380</urn1:value>
-                  <urn1:reference>urn:test</urn1:reference>
-                  <urn1:burnedInaAnnotations>false</urn1:burnedInaAnnotations>
-               </urn1:ecgData>
+                     </urn1:pAxis>
+                     <urn1:qrsAxis>
+                        <urn1:value>170.0</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                     </urn1:qrsAxis>
+                     <urn1:tAxis>
+                        <urn1:value>180.0</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                     </urn1:tAxis>
+                     <urn1:st>
+                        <urn1:leadName>?</urn1:leadName>
+                        <urn1:stLevel>
+                           <urn1:value>190.0</urn1:value>
+                           <urn1:unit>?</urn1:unit>
+                        </urn1:stLevel>
+                     </urn1:st>
+                     <urn1:interpretationAlgorithmName>?</urn1:interpretationAlgorithmName>
+                     <urn1:interpretation>?</urn1:interpretation>
+                  </urn1:ecgStructuredData>
+                  <urn1:ecgDicomData>
+                     <urn1:dicomSOP>?</urn1:dicomSOP>
+                     <urn1:dicomValue>cid:358086327269</urn1:dicomValue>
+                     <urn1:dicomReference>?</urn1:dicomReference>
+                  </urn1:ecgDicomData>
+                  <urn1:ecgData>
+                     <urn1:mediaType>text/html</urn1:mediaType>
+                     <urn1:value>cid:449923047380</urn1:value>
+                     <urn1:reference>urn:test</urn1:reference>
+                     <urn1:burnedInaAnnotations>false</urn1:burnedInaAnnotations>
+                  </urn1:ecgData>
+               </urn1:ecgRecording>
                <urn1:referral>
                   <urn1:referralId>?</urn1:referralId>
                   <urn1:referralReason>?</urn1:referralReason>
@@ -2135,13 +2170,13 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
                      <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                   </urn1:accountableHealthcareProfessional>
+                  <urn1:attested>
+                     <urn1:signatureTime>20120102122322</urn1:signatureTime>
+                     <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+                  </urn1:attested>
                </urn1:referral>
-               <urn1:attested>
-                  <urn1:signatureTime>20120102122322</urn1:signatureTime>
-                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
-               </urn1:attested>
-            </urn1:ECGOutcomeBody>
-         </urn:ECGOutcome>
+            </urn1:ecgOutcomeBody>
+         </urn:ecgOutcome>
          <urn:result>
             <urn1:resultCode>OK</urn1:resultCode>
             <urn1:logId>0000-1111</urn1:logId>
@@ -2149,13 +2184,26 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
          <!--You may enter ANY elements at this point-->
       </urn:GetECGOutcomeResponse>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2:GetECGOutcome"/></con:response><con:response name="CareContactResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:2">
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2:GetECGOutcome"/></con:response><con:response name="CareContactResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:script>context.documentId = 123456789
+
+// create XmlHolder for request content
+def holder = new com.eviware.soapui.support.XmlHolder( mockRequest.requestContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:itintegration:registry:1'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2'
+holder.namespaces['urn2'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:2'
+
+context.patientId = holder.getNodeValue('//urn1:patientId[1]/urn2:id')
+context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')
+context.sourceSystemHSAId = holder.getNodeValue('//urn1:sourceSystemHSAId')
+context.careContactId1 = holder.getNodeValue('//urn1:careContactId[1]')
+context.careContactId2 = holder.getNodeValue('//urn1:careContactId[2]')</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:2">
    <soapenv:Header/>
    <soapenv:Body>
       <urn:GetECGOutcomeResponse>
          <!--Zero or more repetitions:-->
-         <urn:ECGOutcome>
-            <urn1:ECGOutcomeHeader>
+         <urn:ecgOutcome>
+            <urn1:ecgOutcomeHeader>
                <urn1:documentId>${documentId}</urn1:documentId>
                <urn1:sourceSystemHSAId>12</urn1:sourceSystemHSAId>
                <urn1:documentTitle>?</urn1:documentTitle>
@@ -2192,14 +2240,14 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                <urn1:careContactId>566710</urn1:careContactId>
                <urn1:nullified>false</urn1:nullified>
                <urn1:nullifiedReason>?</urn1:nullifiedReason>
-            </urn1:ECGOutcomeHeader>
-            <urn1:ECGOutcomeBody>
+            </urn1:ecgOutcomeHeader>
+            <urn1:ecgOutcomeBody>
                <urn1:examinationSpeciality>
                   <urn1:code>1</urn1:code>
                   <urn1:codeSystem>OID</urn1:codeSystem>
                   <urn1:displayName>ett</urn1:displayName>
                </urn1:examinationSpeciality>
-               <urn1:typeOfResult>?</urn1:typeOfResult>
+               <urn1:typeOfResult>DEF</urn1:typeOfResult>
                <urn1:resultTime>20120102122322</urn1:resultTime>
                <urn1:resultReport>?</urn1:resultReport>
                <urn1:resultComment>?</urn1:resultComment>
@@ -2235,7 +2283,6 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:displayName>Planerad</urn1:displayName>
                   </urn1:examinationStatus>
                   <urn1:examinationUnit>?</urn1:examinationUnit>
-               </urn1:ecgRecording>
                <urn1:accountableHealthcareProfessional>
                   <urn1:authorTime>20120102122322</urn1:authorTime>
                   <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
@@ -2328,6 +2375,8 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                   <urn1:reference>urn:test</urn1:reference>
                   <urn1:burnedInaAnnotations>false</urn1:burnedInaAnnotations>
                </urn1:ecgData>
+               </urn1:ecgRecording>
+
                <urn1:referral>
                   <urn1:referralId>?</urn1:referralId>
                   <urn1:referralReason>?</urn1:referralReason>
@@ -2353,13 +2402,14 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
                      <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                   </urn1:accountableHealthcareProfessional>
-               </urn1:referral>
                <urn1:attested>
                   <urn1:signatureTime>20120102122322</urn1:signatureTime>
                   <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
                </urn1:attested>
-            </urn1:ECGOutcomeBody>
-         </urn:ECGOutcome>
+               </urn1:referral>
+
+            </urn1:ecgOutcomeBody>
+         </urn:ecgOutcome>
          <urn:result>
             <urn1:resultCode>OK</urn1:resultCode>
             <urn1:logId>0000-1111</urn1:logId>
@@ -2372,8 +2422,8 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
    <soapenv:Body>
       <urn:GetECGOutcomeResponse>
          <!--Zero or more repetitions:-->
-         <urn:ECGOutcome>
-            <urn1:ECGOutcomeHeader>
+         <urn:ecgOutcome>
+            <urn1:ecgOutcomeHeader>
                <urn1:documentId>774411</urn1:documentId>
                <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
                <urn1:documentTitle>?</urn1:documentTitle>
@@ -2410,14 +2460,14 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                <urn1:careContactId>?</urn1:careContactId>
                <urn1:nullified>false</urn1:nullified>
                <urn1:nullifiedReason>?</urn1:nullifiedReason>
-            </urn1:ECGOutcomeHeader>
-            <urn1:ECGOutcomeBody>
+            </urn1:ecgOutcomeHeader>
+            <urn1:ecgOutcomeBody>
                <urn1:examinationSpeciality>
                   <urn1:code>1</urn1:code>
                   <urn1:codeSystem>OID</urn1:codeSystem>
                   <urn1:displayName>ett</urn1:displayName>
                </urn1:examinationSpeciality>
-               <urn1:typeOfResult>?</urn1:typeOfResult>
+               <urn1:typeOfResult>PREL</urn1:typeOfResult>
                <urn1:resultTime>20120102122322</urn1:resultTime>
                <urn1:resultReport>?</urn1:resultReport>
                <urn1:resultComment>?</urn1:resultComment>
@@ -2453,99 +2503,99 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:displayName>Planerad</urn1:displayName>
                   </urn1:examinationStatus>
                   <urn1:examinationUnit>?</urn1:examinationUnit>
-               </urn1:ecgRecording>
-               <urn1:accountableHealthcareProfessional>
-                  <urn1:authorTime>20120102122322</urn1:authorTime>
-                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                  <urn1:healthcareProfessionalRoleCode>
-                     <urn1:code>1</urn1:code>
-                     <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
-                     <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
-                  </urn1:healthcareProfessionalRoleCode>
-                  <urn1:healthcareProfessionalOrgUnit>
-                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                     <urn1:orgUnitName>?</urn1:orgUnitName>
-                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                  </urn1:healthcareProfessionalOrgUnit>
-               </urn1:accountableHealthcareProfessional>
-               <urn1:modalityData>
-                  <urn1:manufacturer>?</urn1:manufacturer>
-                  <urn1:modelName>?</urn1:modelName>
-                  <urn1:equipmentId>?</urn1:equipmentId>
-                  <urn1:softwareVersion>?</urn1:softwareVersion>
-                  <urn1:lineFilter>
-                     <urn1:value>2.0</urn1:value>
-                     <urn1:unit>Hz</urn1:unit>
-                  </urn1:lineFilter>
-               </urn1:modalityData>
-               <urn1:pacemaker>false</urn1:pacemaker>
-               <!--Zero or more repetitions:-->
-               <urn1:ecgStructuredData>
+                  <urn1:accountableHealthcareProfessional>
+                     <urn1:authorTime>20120102122322</urn1:authorTime>
+                     <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                     <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                     <urn1:healthcareProfessionalRoleCode>
+                        <urn1:code>1</urn1:code>
+                        <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                        <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
+                     </urn1:healthcareProfessionalRoleCode>
+                     <urn1:healthcareProfessionalOrgUnit>
+                        <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                        <urn1:orgUnitName>?</urn1:orgUnitName>
+                        <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                        <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                        <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                        <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                     </urn1:healthcareProfessionalOrgUnit>
+                  </urn1:accountableHealthcareProfessional>
+                  <urn1:modalityData>
+                     <urn1:manufacturer>?</urn1:manufacturer>
+                     <urn1:modelName>?</urn1:modelName>
+                     <urn1:equipmentId>?</urn1:equipmentId>
+                     <urn1:softwareVersion>?</urn1:softwareVersion>
+                     <urn1:lineFilter>
+                        <urn1:value>2.0</urn1:value>
+                        <urn1:unit>Hz</urn1:unit>
+                     </urn1:lineFilter>
+                  </urn1:modalityData>
+                  <urn1:pacemaker>false</urn1:pacemaker>
                   <!--Zero or more repetitions:-->
-                  <urn1:usedFilter>
-                     <urn1:filterName>?</urn1:filterName>
-                     <urn1:lowerFrequency>
-                        <urn1:value>10.0</urn1:value>
+                  <urn1:ecgStructuredData>
+                     <!--Zero or more repetitions:-->
+                     <urn1:usedFilter>
+                        <urn1:filterName>?</urn1:filterName>
+                        <urn1:lowerFrequency>
+                           <urn1:value>10.0</urn1:value>
+                           <urn1:unit>?</urn1:unit>
+                        </urn1:lowerFrequency>
+                        <urn1:upperFrequency>
+                           <urn1:value>20.0</urn1:value>
+                           <urn1:unit>?</urn1:unit>
+                        </urn1:upperFrequency>
+                     </urn1:usedFilter>
+                     <urn1:heartRate>
+                        <urn1:value>130.0</urn1:value>
                         <urn1:unit>?</urn1:unit>
-                     </urn1:lowerFrequency>
-                     <urn1:upperFrequency>
-                        <urn1:value>20.0</urn1:value>
+                     </urn1:heartRate>
+                     <urn1:qt>
+                        <urn1:value>140</urn1:value>
+                        <urn1:unit>s</urn1:unit>
+                     </urn1:qt>
+                     <urn1:qtCorrected>
+                        <urn1:value>150</urn1:value>
                         <urn1:unit>?</urn1:unit>
-                     </urn1:upperFrequency>
-                  </urn1:usedFilter>
-                  <urn1:heartRate>
-                     <urn1:value>130.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:heartRate>
-                  <urn1:qt>
-                     <urn1:value>140</urn1:value>
-                     <urn1:unit>s</urn1:unit>
-                  </urn1:qt>
-                  <urn1:qtCorrected>
-                     <urn1:value>150</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:qtCorrected>
-                  <urn1:pr>
-                     <urn1:value>160.0</urn1:value>
-                     <urn1:unit>s</urn1:unit>
-                  </urn1:pr>
-                  <urn1:pAxis>
-                     <urn1:value>170.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:pAxis>
-                  <urn1:qrsAxis>
-                     <urn1:value>170.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:qrsAxis>
-                  <urn1:tAxis>
-                     <urn1:value>180.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:tAxis>
-                  <urn1:st>
-                     <urn1:leadName>?</urn1:leadName>
-                     <urn1:stLevel>
-                        <urn1:value>190.0</urn1:value>
+                     </urn1:qtCorrected>
+                     <urn1:pr>
+                        <urn1:value>160.0</urn1:value>
+                        <urn1:unit>s</urn1:unit>
+                     </urn1:pr>
+                     <urn1:pAxis>
+                        <urn1:value>170.0</urn1:value>
                         <urn1:unit>?</urn1:unit>
-                     </urn1:stLevel>
-                  </urn1:st>
-                  <urn1:interpretationAlgorithmName>?</urn1:interpretationAlgorithmName>
-                  <urn1:interpretation>?</urn1:interpretation>
-               </urn1:ecgStructuredData>
-               <urn1:ecgDicomData>
-                  <urn1:dicomSOP>?</urn1:dicomSOP>
-                  <urn1:dicomValue>cid:358086327269</urn1:dicomValue>
-                  <urn1:dicomReference>?</urn1:dicomReference>
-               </urn1:ecgDicomData>
-               <urn1:ecgData>
-                  <urn1:mediaType>text/html</urn1:mediaType>
-                  <urn1:value>cid:449923047380</urn1:value>
-                  <urn1:reference>urn:test</urn1:reference>
-                  <urn1:burnedInaAnnotations>false</urn1:burnedInaAnnotations>
-               </urn1:ecgData>
+                     </urn1:pAxis>
+                     <urn1:qrsAxis>
+                        <urn1:value>170.0</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                     </urn1:qrsAxis>
+                     <urn1:tAxis>
+                        <urn1:value>180.0</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                     </urn1:tAxis>
+                     <urn1:st>
+                        <urn1:leadName>?</urn1:leadName>
+                        <urn1:stLevel>
+                           <urn1:value>190.0</urn1:value>
+                           <urn1:unit>?</urn1:unit>
+                        </urn1:stLevel>
+                     </urn1:st>
+                     <urn1:interpretationAlgorithmName>?</urn1:interpretationAlgorithmName>
+                     <urn1:interpretation>?</urn1:interpretation>
+                  </urn1:ecgStructuredData>
+                  <urn1:ecgDicomData>
+                     <urn1:dicomSOP>?</urn1:dicomSOP>
+                     <urn1:dicomValue>cid:358086327269</urn1:dicomValue>
+                     <urn1:dicomReference>?</urn1:dicomReference>
+                  </urn1:ecgDicomData>
+                  <urn1:ecgData>
+                     <urn1:mediaType>text/html</urn1:mediaType>
+                     <urn1:value>cid:449923047380</urn1:value>
+                     <urn1:reference>urn:test</urn1:reference>
+                     <urn1:burnedInaAnnotations>false</urn1:burnedInaAnnotations>
+                  </urn1:ecgData>
+               </urn1:ecgRecording>
                <urn1:referral>
                   <urn1:referralId>?</urn1:referralId>
                   <urn1:referralReason>?</urn1:referralReason>
@@ -2571,15 +2621,15 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
                      <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                   </urn1:accountableHealthcareProfessional>
+                  <urn1:attested>
+                     <urn1:signatureTime>20120102122322</urn1:signatureTime>
+                     <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+                  </urn1:attested>
                </urn1:referral>
-               <urn1:attested>
-                  <urn1:signatureTime>20120102122322</urn1:signatureTime>
-                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
-               </urn1:attested>
-            </urn1:ECGOutcomeBody>
-         </urn:ECGOutcome>
-         <urn:ECGOutcome>
-            <urn1:ECGOutcomeHeader>
+            </urn1:ecgOutcomeBody>
+         </urn:ecgOutcome>
+         <urn:ecgOutcome>
+            <urn1:ecgOutcomeHeader>
                <urn1:documentId>774412</urn1:documentId>
                <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
                <urn1:documentTitle>?</urn1:documentTitle>
@@ -2616,14 +2666,14 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                <urn1:careContactId>?</urn1:careContactId>
                <urn1:nullified>false</urn1:nullified>
                <urn1:nullifiedReason>?</urn1:nullifiedReason>
-            </urn1:ECGOutcomeHeader>
-            <urn1:ECGOutcomeBody>
+            </urn1:ecgOutcomeHeader>
+            <urn1:ecgOutcomeBody>
                <urn1:examinationSpeciality>
                   <urn1:code>1</urn1:code>
                   <urn1:codeSystem>OID</urn1:codeSystem>
                   <urn1:displayName>ett</urn1:displayName>
                </urn1:examinationSpeciality>
-               <urn1:typeOfResult>?</urn1:typeOfResult>
+               <urn1:typeOfResult>PREL</urn1:typeOfResult>
                <urn1:resultTime>20120102122322</urn1:resultTime>
                <urn1:resultReport>?</urn1:resultReport>
                <urn1:resultComment>?</urn1:resultComment>
@@ -2659,99 +2709,99 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:displayName>Planerad</urn1:displayName>
                   </urn1:examinationStatus>
                   <urn1:examinationUnit>?</urn1:examinationUnit>
-               </urn1:ecgRecording>
-               <urn1:accountableHealthcareProfessional>
-                  <urn1:authorTime>20120102122322</urn1:authorTime>
-                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                  <urn1:healthcareProfessionalRoleCode>
-                     <urn1:code>1</urn1:code>
-                     <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
-                     <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
-                  </urn1:healthcareProfessionalRoleCode>
-                  <urn1:healthcareProfessionalOrgUnit>
-                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                     <urn1:orgUnitName>?</urn1:orgUnitName>
-                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                  </urn1:healthcareProfessionalOrgUnit>
-               </urn1:accountableHealthcareProfessional>
-               <urn1:modalityData>
-                  <urn1:manufacturer>?</urn1:manufacturer>
-                  <urn1:modelName>?</urn1:modelName>
-                  <urn1:equipmentId>?</urn1:equipmentId>
-                  <urn1:softwareVersion>?</urn1:softwareVersion>
-                  <urn1:lineFilter>
-                     <urn1:value>2.0</urn1:value>
-                     <urn1:unit>Hz</urn1:unit>
-                  </urn1:lineFilter>
-               </urn1:modalityData>
-               <urn1:pacemaker>false</urn1:pacemaker>
-               <!--Zero or more repetitions:-->
-               <urn1:ecgStructuredData>
+                  <urn1:accountableHealthcareProfessional>
+                     <urn1:authorTime>20120102122322</urn1:authorTime>
+                     <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                     <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                     <urn1:healthcareProfessionalRoleCode>
+                        <urn1:code>1</urn1:code>
+                        <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                        <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
+                     </urn1:healthcareProfessionalRoleCode>
+                     <urn1:healthcareProfessionalOrgUnit>
+                        <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                        <urn1:orgUnitName>?</urn1:orgUnitName>
+                        <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                        <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                        <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                        <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                     </urn1:healthcareProfessionalOrgUnit>
+                  </urn1:accountableHealthcareProfessional>
+                  <urn1:modalityData>
+                     <urn1:manufacturer>?</urn1:manufacturer>
+                     <urn1:modelName>?</urn1:modelName>
+                     <urn1:equipmentId>?</urn1:equipmentId>
+                     <urn1:softwareVersion>?</urn1:softwareVersion>
+                     <urn1:lineFilter>
+                        <urn1:value>2.0</urn1:value>
+                        <urn1:unit>Hz</urn1:unit>
+                     </urn1:lineFilter>
+                  </urn1:modalityData>
+                  <urn1:pacemaker>false</urn1:pacemaker>
                   <!--Zero or more repetitions:-->
-                  <urn1:usedFilter>
-                     <urn1:filterName>?</urn1:filterName>
-                     <urn1:lowerFrequency>
-                        <urn1:value>10.0</urn1:value>
+                  <urn1:ecgStructuredData>
+                     <!--Zero or more repetitions:-->
+                     <urn1:usedFilter>
+                        <urn1:filterName>?</urn1:filterName>
+                        <urn1:lowerFrequency>
+                           <urn1:value>10.0</urn1:value>
+                           <urn1:unit>?</urn1:unit>
+                        </urn1:lowerFrequency>
+                        <urn1:upperFrequency>
+                           <urn1:value>20.0</urn1:value>
+                           <urn1:unit>?</urn1:unit>
+                        </urn1:upperFrequency>
+                     </urn1:usedFilter>
+                     <urn1:heartRate>
+                        <urn1:value>130.0</urn1:value>
                         <urn1:unit>?</urn1:unit>
-                     </urn1:lowerFrequency>
-                     <urn1:upperFrequency>
-                        <urn1:value>20.0</urn1:value>
+                     </urn1:heartRate>
+                     <urn1:qt>
+                        <urn1:value>140</urn1:value>
+                        <urn1:unit>s</urn1:unit>
+                     </urn1:qt>
+                     <urn1:qtCorrected>
+                        <urn1:value>150</urn1:value>
                         <urn1:unit>?</urn1:unit>
-                     </urn1:upperFrequency>
-                  </urn1:usedFilter>
-                  <urn1:heartRate>
-                     <urn1:value>130.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:heartRate>
-                  <urn1:qt>
-                     <urn1:value>140</urn1:value>
-                     <urn1:unit>s</urn1:unit>
-                  </urn1:qt>
-                  <urn1:qtCorrected>
-                     <urn1:value>150</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:qtCorrected>
-                  <urn1:pr>
-                     <urn1:value>160.0</urn1:value>
-                     <urn1:unit>s</urn1:unit>
-                  </urn1:pr>
-                  <urn1:pAxis>
-                     <urn1:value>170.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:pAxis>
-                  <urn1:qrsAxis>
-                     <urn1:value>170.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:qrsAxis>
-                  <urn1:tAxis>
-                     <urn1:value>180.0</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                  </urn1:tAxis>
-                  <urn1:st>
-                     <urn1:leadName>?</urn1:leadName>
-                     <urn1:stLevel>
-                        <urn1:value>190.0</urn1:value>
+                     </urn1:qtCorrected>
+                     <urn1:pr>
+                        <urn1:value>160.0</urn1:value>
+                        <urn1:unit>s</urn1:unit>
+                     </urn1:pr>
+                     <urn1:pAxis>
+                        <urn1:value>170.0</urn1:value>
                         <urn1:unit>?</urn1:unit>
-                     </urn1:stLevel>
-                  </urn1:st>
-                  <urn1:interpretationAlgorithmName>?</urn1:interpretationAlgorithmName>
-                  <urn1:interpretation>?</urn1:interpretation>
-               </urn1:ecgStructuredData>
-               <urn1:ecgDicomData>
-                  <urn1:dicomSOP>?</urn1:dicomSOP>
-                  <urn1:dicomValue>cid:358086327269</urn1:dicomValue>
-                  <urn1:dicomReference>?</urn1:dicomReference>
-               </urn1:ecgDicomData>
-               <urn1:ecgData>
-                  <urn1:mediaType>text/html</urn1:mediaType>
-                  <urn1:value>cid:449923047380</urn1:value>
-                  <urn1:reference>urn:test</urn1:reference>
-                  <urn1:burnedInaAnnotations>false</urn1:burnedInaAnnotations>
-               </urn1:ecgData>
+                     </urn1:pAxis>
+                     <urn1:qrsAxis>
+                        <urn1:value>170.0</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                     </urn1:qrsAxis>
+                     <urn1:tAxis>
+                        <urn1:value>180.0</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                     </urn1:tAxis>
+                     <urn1:st>
+                        <urn1:leadName>?</urn1:leadName>
+                        <urn1:stLevel>
+                           <urn1:value>190.0</urn1:value>
+                           <urn1:unit>?</urn1:unit>
+                        </urn1:stLevel>
+                     </urn1:st>
+                     <urn1:interpretationAlgorithmName>?</urn1:interpretationAlgorithmName>
+                     <urn1:interpretation>?</urn1:interpretation>
+                  </urn1:ecgStructuredData>
+                  <urn1:ecgDicomData>
+                     <urn1:dicomSOP>?</urn1:dicomSOP>
+                     <urn1:dicomValue>cid:358086327269</urn1:dicomValue>
+                     <urn1:dicomReference>?</urn1:dicomReference>
+                  </urn1:ecgDicomData>
+                  <urn1:ecgData>
+                     <urn1:mediaType>text/html</urn1:mediaType>
+                     <urn1:value>cid:449923047380</urn1:value>
+                     <urn1:reference>urn:test</urn1:reference>
+                     <urn1:burnedInaAnnotations>false</urn1:burnedInaAnnotations>
+                  </urn1:ecgData>
+               </urn1:ecgRecording>
                <urn1:referral>
                   <urn1:referralId>?</urn1:referralId>
                   <urn1:referralReason>?</urn1:referralReason>
@@ -2777,14 +2827,13 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
                      <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                   </urn1:accountableHealthcareProfessional>
+                  <urn1:attested>
+                     <urn1:signatureTime>20120102122322</urn1:signatureTime>
+                     <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+                  </urn1:attested>
                </urn1:referral>
-               <urn1:attested>
-                  <urn1:signatureTime>20120102122322</urn1:signatureTime>
-                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
-               </urn1:attested>
-            </urn1:ECGOutcomeBody>
-         </urn:ECGOutcome>
-
+            </urn1:ecgOutcomeBody>
+         </urn:ecgOutcome>
          <urn:result>
             <urn1:resultCode>OK</urn1:resultCode>
             <urn1:logId>0000-1111</urn1:logId>
@@ -2820,8 +2869,8 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
    <soapenv:Body>
       <urn:GetECGOutcomeResponse>
          <!--Zero or more repetitions:-->
-         <urn:ECGOutcome>
-            <urn1:ECGOutcomeHeader>
+         <urn:ecgOutcome>
+            <urn1:ecgOutcomeHeader>
                <urn1:documentId>?</urn1:documentId>
                <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
                <!--Optional:-->
@@ -2909,8 +2958,8 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                <urn1:nullified>?</urn1:nullified>
                <!--Optional:-->
                <urn1:nullifiedReason>?</urn1:nullifiedReason>
-            </urn1:ECGOutcomeHeader>
-            <urn1:ECGOutcomeBody>
+            </urn1:ecgOutcomeHeader>
+            <urn1:ecgOutcomeBody>
                <!--Optional:-->
                <urn1:examinationSpeciality>
                   <!--Optional:-->
@@ -2996,174 +3045,173 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                   </urn1:examinationStatus>
                   <!--Optional:-->
                   <urn1:examinationUnit>?</urn1:examinationUnit>
+                  <!--Optional:-->
+                  <urn1:accountableHealthcareProfessional>
+                     <urn1:authorTime>?</urn1:authorTime>
+                     <!--Optional:-->
+                     <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                     <!--Optional:-->
+                     <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                     <!--Optional:-->
+                     <urn1:healthcareProfessionalRoleCode>
+                        <!--Optional:-->
+                        <urn1:code>?</urn1:code>
+                        <!--Optional:-->
+                        <urn1:codeSystem>?</urn1:codeSystem>
+                        <!--Optional:-->
+                        <urn1:codeSystemName>?</urn1:codeSystemName>
+                        <!--Optional:-->
+                        <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
+                        <!--Optional:-->
+                        <urn1:displayName>?</urn1:displayName>
+                        <!--Optional:-->
+                        <urn1:originalText>?</urn1:originalText>
+                        <!--You may enter ANY elements at this point-->
+                     </urn1:healthcareProfessionalRoleCode>
+                     <!--Optional:-->
+                     <urn1:healthcareProfessionalOrgUnit>
+                        <!--Optional:-->
+                        <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                        <!--Optional:-->
+                        <urn1:orgUnitName>?</urn1:orgUnitName>
+                        <!--Optional:-->
+                        <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                        <!--Optional:-->
+                        <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                        <!--Optional:-->
+                        <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                        <!--Optional:-->
+                        <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                        <!--You may enter ANY elements at this point-->
+                     </urn1:healthcareProfessionalOrgUnit>
+                     <!--Optional:-->
+                     <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                     <!--Optional:-->
+                     <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:accountableHealthcareProfessional>
+                  <!--Optional:-->
+                  <urn1:modalityData>
+                     <!--Optional:-->
+                     <urn1:typeOfModality>?</urn1:typeOfModality>
+                     <!--Optional:-->
+                     <urn1:manufacturer>?</urn1:manufacturer>
+                     <!--Optional:-->
+                     <urn1:modelName>?</urn1:modelName>
+                     <!--Optional:-->
+                     <urn1:equipmentId>?</urn1:equipmentId>
+                     <!--Optional:-->
+                     <urn1:softwareVersion>?</urn1:softwareVersion>
+                     <!--Optional:-->
+                     <urn1:lineFilter>
+                        <urn1:value>?</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                        <!--You may enter ANY elements at this point-->
+                     </urn1:lineFilter>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:modalityData>
+                  <!--Optional:-->
+                  <urn1:pacemaker>?</urn1:pacemaker>
+                  <!--Zero or more repetitions:-->
+                  <urn1:ecgStructuredData>
+                     <!--Zero or more repetitions:-->
+                     <urn1:usedFilter>
+                        <!--Optional:-->
+                        <urn1:filterName>?</urn1:filterName>
+                        <!--Optional:-->
+                        <urn1:lowerFrequency>
+                           <urn1:value>?</urn1:value>
+                           <urn1:unit>?</urn1:unit>
+                           <!--You may enter ANY elements at this point-->
+                        </urn1:lowerFrequency>
+                        <!--Optional:-->
+                        <urn1:upperFrequency>
+                           <urn1:value>?</urn1:value>
+                           <urn1:unit>?</urn1:unit>
+                           <!--You may enter ANY elements at this point-->
+                        </urn1:upperFrequency>
+                        <!--You may enter ANY elements at this point-->
+                     </urn1:usedFilter>
+                     <!--Optional:-->
+                     <urn1:heartRate>
+                        <urn1:value>?</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                        <!--You may enter ANY elements at this point-->
+                     </urn1:heartRate>
+                     <!--Optional:-->
+                     <urn1:qt>
+                        <urn1:value>?</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                        <!--You may enter ANY elements at this point-->
+                     </urn1:qt>
+                     <!--Optional:-->
+                     <urn1:qtCorrected>
+                        <urn1:value>?</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                        <!--You may enter ANY elements at this point-->
+                     </urn1:qtCorrected>
+                     <!--Optional:-->
+                     <urn1:pr>
+                        <urn1:value>?</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                        <!--You may enter ANY elements at this point-->
+                     </urn1:pr>
+                     <!--Optional:-->
+                     <urn1:pAxis>
+                        <urn1:value>?</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                        <!--You may enter ANY elements at this point-->
+                     </urn1:pAxis>
+                     <!--Optional:-->
+                     <urn1:qrsAxis>
+                        <urn1:value>?</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                        <!--You may enter ANY elements at this point-->
+                     </urn1:qrsAxis>
+                     <!--Optional:-->
+                     <urn1:tAxis>
+                        <urn1:value>?</urn1:value>
+                        <urn1:unit>?</urn1:unit>
+                        <!--You may enter ANY elements at this point-->
+                     </urn1:tAxis>
+                     <!--Zero or more repetitions:-->
+                     <urn1:st>
+                        <urn1:leadName>?</urn1:leadName>
+                        <urn1:stLevel>
+                           <urn1:value>?</urn1:value>
+                           <urn1:unit>?</urn1:unit>
+                           <!--You may enter ANY elements at this point-->
+                        </urn1:stLevel>
+                        <!--You may enter ANY elements at this point-->
+                     </urn1:st>
+                     <!--Optional:-->
+                     <urn1:interpretationAlgorithmName>?</urn1:interpretationAlgorithmName>
+                     <!--Zero or more repetitions:-->
+                     <urn1:interpretation>?</urn1:interpretation>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:ecgStructuredData>
+                  <!--Zero or more repetitions:-->
+                  <urn1:ecgDicomData>
+                     <urn1:dicomSOP>?</urn1:dicomSOP>
+                     <!--Optional:-->
+                     <urn1:dicomValue>cid:1299194581613</urn1:dicomValue>
+                     <!--Optional:-->
+                     <urn1:dicomReference>?</urn1:dicomReference>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:ecgDicomData>
+                  <!--Zero or more repetitions:-->
+                  <urn1:ecgData>
+                     <urn1:mediaType>?</urn1:mediaType>
+                     <!--Optional:-->
+                     <urn1:value>cid:640135199758</urn1:value>
+                     <!--Optional:-->
+                     <urn1:reference>?</urn1:reference>
+                     <!--Optional:-->
+                     <urn1:burnedInaAnnotations>?</urn1:burnedInaAnnotations>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:ecgData>
                   <!--You may enter ANY elements at this point-->
                </urn1:ecgRecording>
-               <!--Optional:-->
-               <urn1:accountableHealthcareProfessional>
-                  <urn1:authorTime>?</urn1:authorTime>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalRoleCode>
-                     <!--Optional:-->
-                     <urn1:code>?</urn1:code>
-                     <!--Optional:-->
-                     <urn1:codeSystem>?</urn1:codeSystem>
-                     <!--Optional:-->
-                     <urn1:codeSystemName>?</urn1:codeSystemName>
-                     <!--Optional:-->
-                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                     <!--Optional:-->
-                     <urn1:displayName>?</urn1:displayName>
-                     <!--Optional:-->
-                     <urn1:originalText>?</urn1:originalText>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:healthcareProfessionalRoleCode>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalOrgUnit>
-                     <!--Optional:-->
-                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                     <!--Optional:-->
-                     <urn1:orgUnitName>?</urn1:orgUnitName>
-                     <!--Optional:-->
-                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                     <!--Optional:-->
-                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                     <!--Optional:-->
-                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                     <!--Optional:-->
-                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:healthcareProfessionalOrgUnit>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:accountableHealthcareProfessional>
-               <!--Optional:-->
-               <urn1:modalityData>
-                  <!--Optional:-->
-                  <urn1:typeOfModality>?</urn1:typeOfModality>
-                  <!--Optional:-->
-                  <urn1:manufacturer>?</urn1:manufacturer>
-                  <!--Optional:-->
-                  <urn1:modelName>?</urn1:modelName>
-                  <!--Optional:-->
-                  <urn1:equipmentId>?</urn1:equipmentId>
-                  <!--Optional:-->
-                  <urn1:softwareVersion>?</urn1:softwareVersion>
-                  <!--Optional:-->
-                  <urn1:lineFilter>
-                     <urn1:value>?</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:lineFilter>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:modalityData>
-               <!--Optional:-->
-               <urn1:pacemaker>?</urn1:pacemaker>
-               <!--Zero or more repetitions:-->
-               <urn1:ecgStructuredData>
-                  <!--Zero or more repetitions:-->
-                  <urn1:usedFilter>
-                     <!--Optional:-->
-                     <urn1:filterName>?</urn1:filterName>
-                     <!--Optional:-->
-                     <urn1:lowerFrequency>
-                        <urn1:value>?</urn1:value>
-                        <urn1:unit>?</urn1:unit>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:lowerFrequency>
-                     <!--Optional:-->
-                     <urn1:upperFrequency>
-                        <urn1:value>?</urn1:value>
-                        <urn1:unit>?</urn1:unit>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:upperFrequency>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:usedFilter>
-                  <!--Optional:-->
-                  <urn1:heartRate>
-                     <urn1:value>?</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:heartRate>
-                  <!--Optional:-->
-                  <urn1:qt>
-                     <urn1:value>?</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:qt>
-                  <!--Optional:-->
-                  <urn1:qtCorrected>
-                     <urn1:value>?</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:qtCorrected>
-                  <!--Optional:-->
-                  <urn1:pr>
-                     <urn1:value>?</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:pr>
-                  <!--Optional:-->
-                  <urn1:pAxis>
-                     <urn1:value>?</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:pAxis>
-                  <!--Optional:-->
-                  <urn1:qrsAxis>
-                     <urn1:value>?</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:qrsAxis>
-                  <!--Optional:-->
-                  <urn1:tAxis>
-                     <urn1:value>?</urn1:value>
-                     <urn1:unit>?</urn1:unit>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:tAxis>
-                  <!--Zero or more repetitions:-->
-                  <urn1:st>
-                     <urn1:leadName>?</urn1:leadName>
-                     <urn1:stLevel>
-                        <urn1:value>?</urn1:value>
-                        <urn1:unit>?</urn1:unit>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:stLevel>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:st>
-                  <!--Optional:-->
-                  <urn1:interpretationAlgorithmName>?</urn1:interpretationAlgorithmName>
-                  <!--Zero or more repetitions:-->
-                  <urn1:interpretation>?</urn1:interpretation>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:ecgStructuredData>
-               <!--Zero or more repetitions:-->
-               <urn1:ecgDicomData>
-                  <urn1:dicomSOP>?</urn1:dicomSOP>
-                  <!--Optional:-->
-                  <urn1:dicomValue>cid:457678451553</urn1:dicomValue>
-                  <!--Optional:-->
-                  <urn1:dicomReference>?</urn1:dicomReference>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:ecgDicomData>
-               <!--Zero or more repetitions:-->
-               <urn1:ecgData>
-                  <!--Optional:-->
-                  <urn1:mediaType>?</urn1:mediaType>
-                  <!--Optional:-->
-                  <urn1:value>cid:885626245878</urn1:value>
-                  <!--Optional:-->
-                  <urn1:reference>?</urn1:reference>
-                  <!--Optional:-->
-                  <urn1:burnedInaAnnotations>?</urn1:burnedInaAnnotations>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:ecgData>
                <!--Optional:-->
                <urn1:referral>
                   <urn1:referralId>?</urn1:referralId>
@@ -3217,36 +3265,37 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" encodin
                      <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
                      <!--You may enter ANY elements at this point-->
                   </urn1:accountableHealthcareProfessional>
+                  <!--Optional:-->
+                  <urn1:attested>
+                     <urn1:signatureTime>?</urn1:signatureTime>
+                     <!--Optional:-->
+                     <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+                     <!--Optional:-->
+                     <urn1:legalAuthenticatorName>?</urn1:legalAuthenticatorName>
+                     <!--Optional:-->
+                     <urn1:legalAuthenticatorRoleCode>
+                        <!--Optional:-->
+                        <urn1:code>?</urn1:code>
+                        <!--Optional:-->
+                        <urn1:codeSystem>?</urn1:codeSystem>
+                        <!--Optional:-->
+                        <urn1:codeSystemName>?</urn1:codeSystemName>
+                        <!--Optional:-->
+                        <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
+                        <!--Optional:-->
+                        <urn1:displayName>?</urn1:displayName>
+                        <!--Optional:-->
+                        <urn1:originalText>?</urn1:originalText>
+                        <!--You may enter ANY elements at this point-->
+                     </urn1:legalAuthenticatorRoleCode>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:attested>
                   <!--You may enter ANY elements at this point-->
                </urn1:referral>
-               <urn1:attested>
-                  <urn1:signatureTime>?</urn1:signatureTime>
-                  <!--Optional:-->
-                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
-                  <!--Optional:-->
-                  <urn1:legalAuthenticatorName>?</urn1:legalAuthenticatorName>
-                  <!--Optional:-->
-                  <urn1:legalAuthenticatorRoleCode>
-                     <!--Optional:-->
-                     <urn1:code>?</urn1:code>
-                     <!--Optional:-->
-                     <urn1:codeSystem>?</urn1:codeSystem>
-                     <!--Optional:-->
-                     <urn1:codeSystemName>?</urn1:codeSystemName>
-                     <!--Optional:-->
-                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                     <!--Optional:-->
-                     <urn1:displayName>?</urn1:displayName>
-                     <!--Optional:-->
-                     <urn1:originalText>?</urn1:originalText>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:legalAuthenticatorRoleCode>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:attested>
                <!--You may enter ANY elements at this point-->
-            </urn1:ECGOutcomeBody>
+            </urn1:ecgOutcomeBody>
             <!--You may enter ANY elements at this point-->
-         </urn:ECGOutcome>
+         </urn:ecgOutcome>
          <urn:result>
             <urn1:resultCode>?</urn1:resultCode>
             <!--Optional:-->
