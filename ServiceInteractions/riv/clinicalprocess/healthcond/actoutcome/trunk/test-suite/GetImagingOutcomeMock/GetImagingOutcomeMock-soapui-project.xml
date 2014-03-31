@@ -1047,6 +1047,65 @@
       </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
+  <xs:simpleType name="ExaminationStatusCodeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Initierad">
+        <xs:annotation>
+          <xs:documentation>Initierad</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Planerad">
+        <xs:annotation>
+          <xs:documentation>Planerad (bevakad)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Tidbokad">
+        <xs:annotation>
+          <xs:documentation>Tidbokad</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Uppskjuten">
+        <xs:annotation>
+          <xs:documentation>Uppskjuten</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Annullerad">
+        <xs:annotation>
+          <xs:documentation>Annullerad</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Pågående">
+        <xs:annotation>
+          <xs:documentation>Pågående</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Avvakta">
+        <xs:annotation>
+          <xs:documentation>Avvakta</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Avbruten">
+        <xs:annotation>
+          <xs:documentation>Avbruten</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Avklarad">
+        <xs:annotation>
+          <xs:documentation>Avklarad</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Inaktuell">
+        <xs:annotation>
+          <xs:documentation>Inaktuell</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Makulerad">
+        <xs:annotation>
+          <xs:documentation>Makulerad</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:simpleType name="TypeOfResultCodeEnum">
     <xs:restriction base="xs:string">
       <xs:enumeration value="PREL">
@@ -1220,7 +1279,7 @@ if (errors.length > 0) {
 def holder = new XmlHolder( mockRequest.requestContent )
 holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
 holder.namespaces['urn'] = 'urn:riv:itintegration:registry:1'
-holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:2'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:1'
 holder.namespaces['urn2'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:2'
 
 def careUnitHSAid = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetImagingOutcome/urn1:careUnitHSAid')
@@ -1554,7 +1613,17 @@ return responseName</con:dispatchPath><con:response name="Response 1" encoding="
       </detail>
     </soapenv:Fault>
   </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:2:GetImagingOutcome"/></con:response><con:response name="BasicResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:2">
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:2:GetImagingOutcome"/></con:response><con:response name="BasicResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:script>context.documentId = 123456789
+
+// create XmlHolder for request content
+def holder = new com.eviware.soapui.support.XmlHolder( mockRequest.requestContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:itintegration:registry:1'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:1'
+holder.namespaces['urn2'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:2'
+
+context.patientId = holder.getNodeValue('//urn1:patientId[1]/urn2:id')
+context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:2">
    <soapenv:Header/>
    <soapenv:Body>
       <urn:GetImagingOutcomeResponse>
@@ -1697,6 +1766,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" encoding="
                         <urn1:originalText>some role</urn1:originalText>
                      </urn1:healthcareProfessionalRoleCode>
                      <urn1:healthcareProfessionalOrgUnit>                     
+                        <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
                         <urn1:orgUnitName>?</urn1:orgUnitName>
                         <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
                         <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
@@ -1717,6 +1787,859 @@ return responseName</con:dispatchPath><con:response name="Response 1" encoding="
             <urn1:logId>0000-1111</urn1:logId>
          </urn:result>
          <!--You may enter ANY elements at this point-->
+      </urn:GetImagingOutcomeResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:2:GetImagingOutcome"/></con:response><con:response name="DateResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:script>context.documentId = 774411
+
+// create XmlHolder for request content
+def holder = new com.eviware.soapui.support.XmlHolder( mockRequest.requestContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:itintegration:registry:1'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:1'
+holder.namespaces['urn2'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:2'
+
+context.patientId = holder.getNodeValue('//urn1:patientId[1]/urn2:id')
+context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:2">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetImagingOutcomeResponse>
+         <!--Zero or more repetitions:-->
+         <urn:imagingOutcome>
+            <urn1:imagingOutcomeHeader>
+               <urn1:documentId>${documentId}</urn1:documentId>
+               <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
+               <urn1:documentTitle>?</urn1:documentTitle>
+               <urn1:documentTime>20120102122322</urn1:documentTime>
+               <urn1:patientId>
+                  <urn1:id>${patientId}</urn1:id>
+                  <urn1:type>${patientIdType}</urn1:type>
+               </urn1:patientId>
+               <urn1:accountableHealthcareProfessional>
+                  <urn1:authorTime>20130802122322</urn1:authorTime>
+                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                  <urn1:healthcareProfessionalRoleCode>
+                     <urn1:code>1</urn1:code>
+                     <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                     <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
+                  </urn1:healthcareProfessionalRoleCode>
+                  <urn1:healthcareProfessionalOrgUnit>
+                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                     <urn1:orgUnitName>?</urn1:orgUnitName>
+                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                  </urn1:healthcareProfessionalOrgUnit>
+                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+               </urn1:accountableHealthcareProfessional>
+               <urn1:legalAuthenticator>
+                  <urn1:signatureTime>20120102122322</urn1:signatureTime>
+                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+               </urn1:legalAuthenticator>
+               <urn1:approvedForPatient>true</urn1:approvedForPatient>
+               <urn1:careContactId>?</urn1:careContactId>
+               <urn1:nullified>false</urn1:nullified>
+               <urn1:nullifiedReason>?</urn1:nullifiedReason>
+            </urn1:imagingOutcomeHeader>
+            <urn1:imagingOutcomeBody>
+               <urn1:examinationSpeciality>
+                  <urn1:code>1</urn1:code>
+                  <urn1:codeSystem>2</urn1:codeSystem>
+                  <urn1:displayName>3</urn1:displayName>
+               </urn1:examinationSpeciality>
+               <urn1:typeOfResult>PREL</urn1:typeOfResult>
+               <urn1:resultTime>20120102122322</urn1:resultTime>
+               <urn1:resultReport>?</urn1:resultReport>
+               <urn1:resultComment>?</urn1:resultComment>
+               <urn1:radiationDose>
+                  <urn1:value>20</urn1:value>
+                  <urn1:unit>?</urn1:unit>
+               </urn1:radiationDose>
+               <!--Optional:-->
+               <urn1:patientData>
+                  <urn1:patientWeight>
+                     <urn1:value>20</urn1:value>
+                     <urn1:unit>kg</urn1:unit>
+                  </urn1:patientWeight>
+                  <urn1:patientLength>
+                     <urn1:value>160</urn1:value>
+                     <urn1:unit>cm</urn1:unit>
+                  </urn1:patientLength>
+               </urn1:patientData>
+               <!--Zero or more repetitions:-->
+               <urn1:imageRecording>
+                  <urn1:recordingId>
+                     <urn1:root>?</urn1:root>
+                     <urn1:extension>?</urn1:extension>
+                  </urn1:recordingId>
+                  <urn1:examinationActivity>
+                     <urn1:code>?</urn1:code>
+                     <urn1:codeSystem>?</urn1:codeSystem>
+                     <urn1:codeSystemName>?</urn1:codeSystemName>
+                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
+                     <urn1:displayName>?</urn1:displayName>
+                  </urn1:examinationActivity>
+                  <urn1:examinationTimePeriod>
+                     <urn1:start>20120102122322</urn1:start>
+                     <urn1:end>20120103122322</urn1:end>
+                  </urn1:examinationTimePeriod>
+                  <urn1:examinationStatus>
+                     <urn1:code>?</urn1:code>
+                     <urn1:codeSystem>?</urn1:codeSystem>
+                     <urn1:codeSystemName>?</urn1:codeSystemName>
+                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
+                     <urn1:displayName>?</urn1:displayName>
+                  </urn1:examinationStatus>
+                  <urn1:examinationUnit>?</urn1:examinationUnit>
+                  <urn1:accountableHealthcareProfessional>
+                     <urn1:authorTime>20120102122322</urn1:authorTime>
+                     <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                     <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                     <urn1:healthcareProfessionalRoleCode>
+                        <urn1:code>1</urn1:code>
+                        <urn1:codeSystem>2</urn1:codeSystem>
+                        <urn1:displayName>3</urn1:displayName>
+                     </urn1:healthcareProfessionalRoleCode>
+                     <urn1:healthcareProfessionalOrgUnit>
+                        <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                        <urn1:orgUnitName>?</urn1:orgUnitName>
+                        <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                        <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                        <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                        <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                     </urn1:healthcareProfessionalOrgUnit>
+                  </urn1:accountableHealthcareProfessional>
+                  <urn1:numberOfImages>1</urn1:numberOfImages>
+                  <urn1:modalityData>
+                     <urn1:manufacturer>?</urn1:manufacturer>
+                     <urn1:modelName>?</urn1:modelName>
+                     <urn1:equipmentId>?</urn1:equipmentId>
+                     <urn1:softwareVersion>?</urn1:softwareVersion>
+                  </urn1:modalityData>
+                  <urn1:imageDicomData>
+                     <urn1:dicomSOP>?</urn1:dicomSOP>
+                     <urn1:dicomValue>cid:131132964330</urn1:dicomValue>
+                     <urn1:dicomReference>?</urn1:dicomReference>
+                  </urn1:imageDicomData>
+                  <urn1:imageStructuredData>
+                     <urn1:imageData>
+                        <urn1:mediaType>image/png</urn1:mediaType>
+                     </urn1:imageData>
+                  </urn1:imageStructuredData>
+               </urn1:imageRecording>
+               <urn1:referral>
+                  <urn1:referralId>?</urn1:referralId>
+                  <urn1:referralReason>?</urn1:referralReason>
+                  <urn1:anamnesis>?</urn1:anamnesis>
+                  <urn1:careContactId>?</urn1:careContactId>
+                  <urn1:accountableHealthcareProfessional>
+                     <urn1:authorTime>20120102122322</urn1:authorTime>
+                     <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                     <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                     <urn1:healthcareProfessionalRoleCode>
+                        <urn1:originalText>some role</urn1:originalText>
+                     </urn1:healthcareProfessionalRoleCode>
+                     <urn1:healthcareProfessionalOrgUnit>                     
+                        <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                        <urn1:orgUnitName>?</urn1:orgUnitName>
+                        <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                        <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                        <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                        <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                     </urn1:healthcareProfessionalOrgUnit>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:accountableHealthcareProfessional>
+                  <urn1:attested>
+                     <urn1:signatureTime>20120102122322</urn1:signatureTime>
+                     <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+                  </urn1:attested>
+               </urn1:referral>
+            </urn1:imagingOutcomeBody>
+         </urn:imagingOutcome>
+                  <urn:imagingOutcome>
+            <urn1:imagingOutcomeHeader>
+               <urn1:documentId>774412</urn1:documentId>
+               <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
+               <urn1:documentTitle>?</urn1:documentTitle>
+               <urn1:documentTime>20120102122322</urn1:documentTime>
+               <urn1:patientId>
+                  <urn1:id>${patientId}</urn1:id>
+                  <urn1:type>${patientIdType}</urn1:type>
+               </urn1:patientId>
+               <urn1:accountableHealthcareProfessional>
+                  <urn1:authorTime>20130802122322</urn1:authorTime>
+                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                  <urn1:healthcareProfessionalRoleCode>
+                     <urn1:code>1</urn1:code>
+                     <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                     <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
+                  </urn1:healthcareProfessionalRoleCode>
+                  <urn1:healthcareProfessionalOrgUnit>
+                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                     <urn1:orgUnitName>?</urn1:orgUnitName>
+                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                  </urn1:healthcareProfessionalOrgUnit>
+                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+               </urn1:accountableHealthcareProfessional>
+               <urn1:legalAuthenticator>
+                  <urn1:signatureTime>20120102122322</urn1:signatureTime>
+                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+               </urn1:legalAuthenticator>
+               <urn1:approvedForPatient>true</urn1:approvedForPatient>
+               <urn1:careContactId>?</urn1:careContactId>
+               <urn1:nullified>false</urn1:nullified>
+               <urn1:nullifiedReason>?</urn1:nullifiedReason>
+            </urn1:imagingOutcomeHeader>
+            <urn1:imagingOutcomeBody>
+               <urn1:examinationSpeciality>
+                  <urn1:code>1</urn1:code>
+                  <urn1:codeSystem>2</urn1:codeSystem>
+                  <urn1:displayName>3</urn1:displayName>
+               </urn1:examinationSpeciality>
+               <urn1:typeOfResult>PREL</urn1:typeOfResult>
+               <urn1:resultTime>20120102122322</urn1:resultTime>
+               <urn1:resultReport>?</urn1:resultReport>
+               <urn1:resultComment>?</urn1:resultComment>
+               <urn1:radiationDose>
+                  <urn1:value>20</urn1:value>
+                  <urn1:unit>?</urn1:unit>
+               </urn1:radiationDose>
+               <!--Optional:-->
+               <urn1:patientData>
+                  <urn1:patientWeight>
+                     <urn1:value>20</urn1:value>
+                     <urn1:unit>kg</urn1:unit>
+                  </urn1:patientWeight>
+                  <urn1:patientLength>
+                     <urn1:value>160</urn1:value>
+                     <urn1:unit>cm</urn1:unit>
+                  </urn1:patientLength>
+               </urn1:patientData>
+               <!--Zero or more repetitions:-->
+               <urn1:imageRecording>
+                  <urn1:recordingId>
+                     <urn1:root>?</urn1:root>
+                     <urn1:extension>?</urn1:extension>
+                  </urn1:recordingId>
+                  <urn1:examinationActivity>
+                     <urn1:code>?</urn1:code>
+                     <urn1:codeSystem>?</urn1:codeSystem>
+                     <urn1:codeSystemName>?</urn1:codeSystemName>
+                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
+                     <urn1:displayName>?</urn1:displayName>
+                  </urn1:examinationActivity>
+                  <urn1:examinationTimePeriod>
+                     <urn1:start>20120102122322</urn1:start>
+                     <urn1:end>20120103122322</urn1:end>
+                  </urn1:examinationTimePeriod>
+                  <urn1:examinationStatus>
+                     <urn1:code>?</urn1:code>
+                     <urn1:codeSystem>?</urn1:codeSystem>
+                     <urn1:codeSystemName>?</urn1:codeSystemName>
+                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
+                     <urn1:displayName>?</urn1:displayName>
+                  </urn1:examinationStatus>
+                  <urn1:examinationUnit>?</urn1:examinationUnit>
+                  <urn1:accountableHealthcareProfessional>
+                     <urn1:authorTime>20120102122322</urn1:authorTime>
+                     <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                     <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                     <urn1:healthcareProfessionalRoleCode>
+                        <urn1:code>1</urn1:code>
+                        <urn1:codeSystem>2</urn1:codeSystem>
+                        <urn1:displayName>3</urn1:displayName>
+                     </urn1:healthcareProfessionalRoleCode>
+                     <urn1:healthcareProfessionalOrgUnit>
+                        <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                        <urn1:orgUnitName>?</urn1:orgUnitName>
+                        <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                        <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                        <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                        <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                     </urn1:healthcareProfessionalOrgUnit>
+                  </urn1:accountableHealthcareProfessional>
+                  <urn1:numberOfImages>1</urn1:numberOfImages>
+                  <urn1:modalityData>
+                     <urn1:manufacturer>?</urn1:manufacturer>
+                     <urn1:modelName>?</urn1:modelName>
+                     <urn1:equipmentId>?</urn1:equipmentId>
+                     <urn1:softwareVersion>?</urn1:softwareVersion>
+                  </urn1:modalityData>
+                  <urn1:imageDicomData>
+                     <urn1:dicomSOP>?</urn1:dicomSOP>
+                     <urn1:dicomValue>cid:131132964330</urn1:dicomValue>
+                     <urn1:dicomReference>?</urn1:dicomReference>
+                  </urn1:imageDicomData>
+                  <urn1:imageStructuredData>
+                     <urn1:imageData>
+                        <urn1:mediaType>image/png</urn1:mediaType>
+                     </urn1:imageData>
+                  </urn1:imageStructuredData>
+               </urn1:imageRecording>
+               <urn1:referral>
+                  <urn1:referralId>?</urn1:referralId>
+                  <urn1:referralReason>?</urn1:referralReason>
+                  <urn1:anamnesis>?</urn1:anamnesis>
+                  <urn1:careContactId>?</urn1:careContactId>
+                  <urn1:accountableHealthcareProfessional>
+                     <urn1:authorTime>20120102122322</urn1:authorTime>
+                     <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                     <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                     <urn1:healthcareProfessionalRoleCode>
+                        <urn1:originalText>some role</urn1:originalText>
+                     </urn1:healthcareProfessionalRoleCode>
+                     <urn1:healthcareProfessionalOrgUnit>                     
+                        <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                        <urn1:orgUnitName>?</urn1:orgUnitName>
+                        <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                        <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                        <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                        <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                     </urn1:healthcareProfessionalOrgUnit>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:accountableHealthcareProfessional>
+                  <urn1:attested>
+                     <urn1:signatureTime>20120102122322</urn1:signatureTime>
+                     <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+                  </urn1:attested>
+               </urn1:referral>
+            </urn1:imagingOutcomeBody>
+         </urn:imagingOutcome>
+
+         <urn:result>
+            <urn1:resultCode>OK</urn1:resultCode>
+            <urn1:logId>0000-1111</urn1:logId>
+         </urn:result>
+         <!--You may enter ANY elements at this point-->
+      </urn:GetImagingOutcomeResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:2:GetImagingOutcome"/></con:response><con:response name="CareUnitHSAIdResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:script>context.documentId = 774411
+
+// create XmlHolder for request content
+def holder = new com.eviware.soapui.support.XmlHolder( mockRequest.requestContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:itintegration:registry:1'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:1'
+holder.namespaces['urn2'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:2'
+
+context.patientId = holder.getNodeValue('//urn1:patientId[1]/urn2:id')
+context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')
+context.careUnitId1 = holder.getNodeValue('//urn1:careUnitHSAId[1]')
+context.careUnitId2 = holder.getNodeValue('//urn1:careUnitHSAId[2]')</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:2">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetImagingOutcomeResponse>
+         <!--Zero or more repetitions:-->
+         <urn:imagingOutcome>
+            <urn1:imagingOutcomeHeader>
+               <urn1:documentId>${documentId}</urn1:documentId>
+               <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
+               <urn1:documentTitle>?</urn1:documentTitle>
+               <urn1:documentTime>20120102122322</urn1:documentTime>
+               <urn1:patientId>
+                  <urn1:id>${patientId}</urn1:id>
+                  <urn1:type>${patientIdType}</urn1:type>
+               </urn1:patientId>
+               <urn1:accountableHealthcareProfessional>
+                  <urn1:authorTime>20130802122322</urn1:authorTime>
+                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                  <urn1:healthcareProfessionalRoleCode>
+                     <urn1:code>1</urn1:code>
+                     <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                     <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
+                  </urn1:healthcareProfessionalRoleCode>
+                  <urn1:healthcareProfessionalOrgUnit>
+                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                     <urn1:orgUnitName>?</urn1:orgUnitName>
+                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                  </urn1:healthcareProfessionalOrgUnit>
+                  <urn1:healthcareProfessionalCareUnitHSAId>${careUnitId1}</urn1:healthcareProfessionalCareUnitHSAId>
+                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+               </urn1:accountableHealthcareProfessional>
+               <urn1:legalAuthenticator>
+                  <urn1:signatureTime>20120102122322</urn1:signatureTime>
+                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+               </urn1:legalAuthenticator>
+               <urn1:approvedForPatient>true</urn1:approvedForPatient>
+               <urn1:careContactId>?</urn1:careContactId>
+               <urn1:nullified>false</urn1:nullified>
+               <urn1:nullifiedReason>?</urn1:nullifiedReason>
+            </urn1:imagingOutcomeHeader>
+            <urn1:imagingOutcomeBody>
+               <urn1:examinationSpeciality>
+                  <urn1:code>1</urn1:code>
+                  <urn1:codeSystem>2</urn1:codeSystem>
+                  <urn1:displayName>3</urn1:displayName>
+               </urn1:examinationSpeciality>
+               <urn1:typeOfResult>PREL</urn1:typeOfResult>
+               <urn1:resultTime>20120102122322</urn1:resultTime>
+               <urn1:resultReport>?</urn1:resultReport>
+               <urn1:resultComment>?</urn1:resultComment>
+               <urn1:radiationDose>
+                  <urn1:value>20</urn1:value>
+                  <urn1:unit>?</urn1:unit>
+               </urn1:radiationDose>
+               <!--Optional:-->
+               <urn1:patientData>
+                  <urn1:patientWeight>
+                     <urn1:value>20</urn1:value>
+                     <urn1:unit>kg</urn1:unit>
+                  </urn1:patientWeight>
+                  <urn1:patientLength>
+                     <urn1:value>160</urn1:value>
+                     <urn1:unit>cm</urn1:unit>
+                  </urn1:patientLength>
+               </urn1:patientData>
+               <!--Zero or more repetitions:-->
+               <urn1:imageRecording>
+                  <urn1:recordingId>
+                     <urn1:root>?</urn1:root>
+                     <urn1:extension>?</urn1:extension>
+                  </urn1:recordingId>
+                  <urn1:examinationActivity>
+                     <urn1:code>?</urn1:code>
+                     <urn1:codeSystem>?</urn1:codeSystem>
+                     <urn1:codeSystemName>?</urn1:codeSystemName>
+                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
+                     <urn1:displayName>?</urn1:displayName>
+                  </urn1:examinationActivity>
+                  <urn1:examinationTimePeriod>
+                     <urn1:start>20120102122322</urn1:start>
+                     <urn1:end>20120103122322</urn1:end>
+                  </urn1:examinationTimePeriod>
+                  <urn1:examinationStatus>
+                     <urn1:code>?</urn1:code>
+                     <urn1:codeSystem>?</urn1:codeSystem>
+                     <urn1:codeSystemName>?</urn1:codeSystemName>
+                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
+                     <urn1:displayName>?</urn1:displayName>
+                  </urn1:examinationStatus>
+                  <urn1:examinationUnit>?</urn1:examinationUnit>
+                  <urn1:accountableHealthcareProfessional>
+                     <urn1:authorTime>20120102122322</urn1:authorTime>
+                     <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                     <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                     <urn1:healthcareProfessionalRoleCode>
+                        <urn1:code>1</urn1:code>
+                        <urn1:codeSystem>2</urn1:codeSystem>
+                        <urn1:displayName>3</urn1:displayName>
+                     </urn1:healthcareProfessionalRoleCode>
+                     <urn1:healthcareProfessionalOrgUnit>
+                        <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                        <urn1:orgUnitName>?</urn1:orgUnitName>
+                        <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                        <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                        <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                        <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                     </urn1:healthcareProfessionalOrgUnit>
+                  </urn1:accountableHealthcareProfessional>
+                  <urn1:numberOfImages>1</urn1:numberOfImages>
+                  <urn1:modalityData>
+                     <urn1:manufacturer>?</urn1:manufacturer>
+                     <urn1:modelName>?</urn1:modelName>
+                     <urn1:equipmentId>?</urn1:equipmentId>
+                     <urn1:softwareVersion>?</urn1:softwareVersion>
+                  </urn1:modalityData>
+                  <urn1:imageDicomData>
+                     <urn1:dicomSOP>?</urn1:dicomSOP>
+                     <urn1:dicomValue>cid:131132964330</urn1:dicomValue>
+                     <urn1:dicomReference>?</urn1:dicomReference>
+                  </urn1:imageDicomData>
+                  <urn1:imageStructuredData>
+                     <urn1:imageData>
+                        <urn1:mediaType>image/png</urn1:mediaType>
+                     </urn1:imageData>
+                  </urn1:imageStructuredData>
+               </urn1:imageRecording>
+               <urn1:referral>
+                  <urn1:referralId>?</urn1:referralId>
+                  <urn1:referralReason>?</urn1:referralReason>
+                  <urn1:anamnesis>?</urn1:anamnesis>
+                  <urn1:careContactId>?</urn1:careContactId>
+                  <urn1:accountableHealthcareProfessional>
+                     <urn1:authorTime>20120102122322</urn1:authorTime>
+                     <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                     <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                     <urn1:healthcareProfessionalRoleCode>
+                        <urn1:originalText>some role</urn1:originalText>
+                     </urn1:healthcareProfessionalRoleCode>
+                     <urn1:healthcareProfessionalOrgUnit>                     
+                        <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                        <urn1:orgUnitName>?</urn1:orgUnitName>
+                        <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                        <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                        <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                        <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                     </urn1:healthcareProfessionalOrgUnit>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:accountableHealthcareProfessional>
+                  <urn1:attested>
+                     <urn1:signatureTime>20120102122322</urn1:signatureTime>
+                     <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+                  </urn1:attested>
+               </urn1:referral>
+            </urn1:imagingOutcomeBody>
+         </urn:imagingOutcome>
+                  <urn:imagingOutcome>
+            <urn1:imagingOutcomeHeader>
+               <urn1:documentId>774412</urn1:documentId>
+               <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
+               <urn1:documentTitle>?</urn1:documentTitle>
+               <urn1:documentTime>20120102122322</urn1:documentTime>
+               <urn1:patientId>
+                  <urn1:id>${patientId}</urn1:id>
+                  <urn1:type>${patientIdType}</urn1:type>
+               </urn1:patientId>
+               <urn1:accountableHealthcareProfessional>
+                  <urn1:authorTime>20130802122322</urn1:authorTime>
+                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                  <urn1:healthcareProfessionalRoleCode>
+                     <urn1:code>1</urn1:code>
+                     <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                     <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
+                  </urn1:healthcareProfessionalRoleCode>
+                  <urn1:healthcareProfessionalOrgUnit>
+                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                     <urn1:orgUnitName>?</urn1:orgUnitName>
+                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                  </urn1:healthcareProfessionalOrgUnit>
+                  <urn1:healthcareProfessionalCareUnitHSAId>${careUnitId2}</urn1:healthcareProfessionalCareUnitHSAId>
+                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+               </urn1:accountableHealthcareProfessional>
+               <urn1:legalAuthenticator>
+                  <urn1:signatureTime>20120102122322</urn1:signatureTime>
+                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+               </urn1:legalAuthenticator>
+               <urn1:approvedForPatient>true</urn1:approvedForPatient>
+               <urn1:careContactId>?</urn1:careContactId>
+               <urn1:nullified>false</urn1:nullified>
+               <urn1:nullifiedReason>?</urn1:nullifiedReason>
+            </urn1:imagingOutcomeHeader>
+            <urn1:imagingOutcomeBody>
+               <urn1:examinationSpeciality>
+                  <urn1:code>1</urn1:code>
+                  <urn1:codeSystem>2</urn1:codeSystem>
+                  <urn1:displayName>3</urn1:displayName>
+               </urn1:examinationSpeciality>
+               <urn1:typeOfResult>PREL</urn1:typeOfResult>
+               <urn1:resultTime>20120102122322</urn1:resultTime>
+               <urn1:resultReport>?</urn1:resultReport>
+               <urn1:resultComment>?</urn1:resultComment>
+               <urn1:radiationDose>
+                  <urn1:value>20</urn1:value>
+                  <urn1:unit>?</urn1:unit>
+               </urn1:radiationDose>
+               <!--Optional:-->
+               <urn1:patientData>
+                  <urn1:patientWeight>
+                     <urn1:value>20</urn1:value>
+                     <urn1:unit>kg</urn1:unit>
+                  </urn1:patientWeight>
+                  <urn1:patientLength>
+                     <urn1:value>160</urn1:value>
+                     <urn1:unit>cm</urn1:unit>
+                  </urn1:patientLength>
+               </urn1:patientData>
+               <!--Zero or more repetitions:-->
+               <urn1:imageRecording>
+                  <urn1:recordingId>
+                     <urn1:root>?</urn1:root>
+                     <urn1:extension>?</urn1:extension>
+                  </urn1:recordingId>
+                  <urn1:examinationActivity>
+                     <urn1:code>?</urn1:code>
+                     <urn1:codeSystem>?</urn1:codeSystem>
+                     <urn1:codeSystemName>?</urn1:codeSystemName>
+                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
+                     <urn1:displayName>?</urn1:displayName>
+                  </urn1:examinationActivity>
+                  <urn1:examinationTimePeriod>
+                     <urn1:start>20120102122322</urn1:start>
+                     <urn1:end>20120103122322</urn1:end>
+                  </urn1:examinationTimePeriod>
+                  <urn1:examinationStatus>
+                     <urn1:code>?</urn1:code>
+                     <urn1:codeSystem>?</urn1:codeSystem>
+                     <urn1:codeSystemName>?</urn1:codeSystemName>
+                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
+                     <urn1:displayName>?</urn1:displayName>
+                  </urn1:examinationStatus>
+                  <urn1:examinationUnit>?</urn1:examinationUnit>
+                  <urn1:accountableHealthcareProfessional>
+                     <urn1:authorTime>20120102122322</urn1:authorTime>
+                     <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                     <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                     <urn1:healthcareProfessionalRoleCode>
+                        <urn1:code>1</urn1:code>
+                        <urn1:codeSystem>2</urn1:codeSystem>
+                        <urn1:displayName>3</urn1:displayName>
+                     </urn1:healthcareProfessionalRoleCode>
+                     <urn1:healthcareProfessionalOrgUnit>
+                        <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                        <urn1:orgUnitName>?</urn1:orgUnitName>
+                        <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                        <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                        <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                        <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                     </urn1:healthcareProfessionalOrgUnit>
+                  </urn1:accountableHealthcareProfessional>
+                  <urn1:numberOfImages>1</urn1:numberOfImages>
+                  <urn1:modalityData>
+                     <urn1:manufacturer>?</urn1:manufacturer>
+                     <urn1:modelName>?</urn1:modelName>
+                     <urn1:equipmentId>?</urn1:equipmentId>
+                     <urn1:softwareVersion>?</urn1:softwareVersion>
+                  </urn1:modalityData>
+                  <urn1:imageDicomData>
+                     <urn1:dicomSOP>?</urn1:dicomSOP>
+                     <urn1:dicomValue>cid:131132964330</urn1:dicomValue>
+                     <urn1:dicomReference>?</urn1:dicomReference>
+                  </urn1:imageDicomData>
+                  <urn1:imageStructuredData>
+                     <urn1:imageData>
+                        <urn1:mediaType>image/png</urn1:mediaType>
+                     </urn1:imageData>
+                  </urn1:imageStructuredData>
+               </urn1:imageRecording>
+               <urn1:referral>
+                  <urn1:referralId>?</urn1:referralId>
+                  <urn1:referralReason>?</urn1:referralReason>
+                  <urn1:anamnesis>?</urn1:anamnesis>
+                  <urn1:careContactId>?</urn1:careContactId>
+                  <urn1:accountableHealthcareProfessional>
+                     <urn1:authorTime>20120102122322</urn1:authorTime>
+                     <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                     <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                     <urn1:healthcareProfessionalRoleCode>
+                        <urn1:originalText>some role</urn1:originalText>
+                     </urn1:healthcareProfessionalRoleCode>
+                     <urn1:healthcareProfessionalOrgUnit>                     
+                        <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                        <urn1:orgUnitName>?</urn1:orgUnitName>
+                        <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                        <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                        <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                        <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                     </urn1:healthcareProfessionalOrgUnit>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:accountableHealthcareProfessional>
+                  <urn1:attested>
+                     <urn1:signatureTime>20120102122322</urn1:signatureTime>
+                     <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+                  </urn1:attested>
+               </urn1:referral>
+            </urn1:imagingOutcomeBody>
+         </urn:imagingOutcome>
+
+         <urn:result>
+            <urn1:resultCode>OK</urn1:resultCode>
+            <urn1:logId>0000-1111</urn1:logId>
+         </urn:result>
+         <!--You may enter ANY elements at this point-->
+      </urn:GetImagingOutcomeResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:2:GetImagingOutcome"/></con:response><con:response name="CareContactIdResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:script>context.documentId = 774411
+
+// create XmlHolder for request content
+def holder = new com.eviware.soapui.support.XmlHolder( mockRequest.requestContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:itintegration:registry:1'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:1'
+holder.namespaces['urn2'] = 'urn:riv:clinicalprocess:healthcond:actoutcome:2'
+
+context.patientId = holder.getNodeValue('//urn1:patientId[1]/urn2:id')
+context.patientIdType = holder.getNodeValue('//urn1:patientId[1]/urn2:type')
+context.sourceSystemHSAId = holder.getNodeValue('//urn1:sourceSystemHSAId')
+context.careUnitId = holder.getNodeValue('//urn1:careUnitHSAId[1]')
+context.careContactId = holder.getNodeValue('//urn1:careContactId[1]')</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:2">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetImagingOutcomeResponse>
+         <!--Zero or more repetitions:-->
+         <urn:imagingOutcome>
+            <urn1:imagingOutcomeHeader>
+               <urn1:documentId>${documentId}</urn1:documentId>
+               <urn1:sourceSystemHSAId>${sourceSystemHSAId}</urn1:sourceSystemHSAId>
+               <urn1:documentTitle>?</urn1:documentTitle>
+               <urn1:documentTime>20120102122322</urn1:documentTime>
+               <urn1:patientId>
+                  <urn1:id>${patientId}</urn1:id>
+                  <urn1:type>${patientIdType}</urn1:type>
+               </urn1:patientId>
+               <urn1:accountableHealthcareProfessional>
+                  <urn1:authorTime>20130802122322</urn1:authorTime>
+                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                  <urn1:healthcareProfessionalRoleCode>
+                     <urn1:code>1</urn1:code>
+                     <urn1:codeSystem>1.2.752.129.2.2.1.4</urn1:codeSystem>
+                     <urn1:displayName>1.2.752.129.2.2.1.4</urn1:displayName>
+                  </urn1:healthcareProfessionalRoleCode>
+                  <urn1:healthcareProfessionalOrgUnit>
+                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                     <urn1:orgUnitName>?</urn1:orgUnitName>
+                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                  </urn1:healthcareProfessionalOrgUnit>
+                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+               </urn1:accountableHealthcareProfessional>
+               <urn1:legalAuthenticator>
+                  <urn1:signatureTime>20120102122322</urn1:signatureTime>
+                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+               </urn1:legalAuthenticator>
+               <urn1:approvedForPatient>true</urn1:approvedForPatient>
+               <urn1:careContactId>${careContactId}</urn1:careContactId>
+               <urn1:nullified>false</urn1:nullified>
+               <urn1:nullifiedReason>?</urn1:nullifiedReason>
+            </urn1:imagingOutcomeHeader>
+            <urn1:imagingOutcomeBody>
+               <urn1:examinationSpeciality>
+                  <urn1:code>1</urn1:code>
+                  <urn1:codeSystem>2</urn1:codeSystem>
+                  <urn1:displayName>3</urn1:displayName>
+               </urn1:examinationSpeciality>
+               <urn1:typeOfResult>PREL</urn1:typeOfResult>
+               <urn1:resultTime>20120102122322</urn1:resultTime>
+               <urn1:resultReport>?</urn1:resultReport>
+               <urn1:resultComment>?</urn1:resultComment>
+               <urn1:radiationDose>
+                  <urn1:value>20</urn1:value>
+                  <urn1:unit>?</urn1:unit>
+               </urn1:radiationDose>
+               <!--Optional:-->
+               <urn1:patientData>
+                  <urn1:patientWeight>
+                     <urn1:value>20</urn1:value>
+                     <urn1:unit>kg</urn1:unit>
+                  </urn1:patientWeight>
+                  <urn1:patientLength>
+                     <urn1:value>160</urn1:value>
+                     <urn1:unit>cm</urn1:unit>
+                  </urn1:patientLength>
+               </urn1:patientData>
+               <!--Zero or more repetitions:-->
+               <urn1:imageRecording>
+                  <urn1:recordingId>
+                     <urn1:root>?</urn1:root>
+                     <urn1:extension>?</urn1:extension>
+                  </urn1:recordingId>
+                  <urn1:examinationActivity>
+                     <urn1:code>?</urn1:code>
+                     <urn1:codeSystem>?</urn1:codeSystem>
+                     <urn1:codeSystemName>?</urn1:codeSystemName>
+                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
+                     <urn1:displayName>?</urn1:displayName>
+                  </urn1:examinationActivity>
+                  <urn1:examinationTimePeriod>
+                     <urn1:start>20120102122322</urn1:start>
+                     <urn1:end>20120103122322</urn1:end>
+                  </urn1:examinationTimePeriod>
+                  <urn1:examinationStatus>
+                     <urn1:code>?</urn1:code>
+                     <urn1:codeSystem>?</urn1:codeSystem>
+                     <urn1:codeSystemName>?</urn1:codeSystemName>
+                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
+                     <urn1:displayName>?</urn1:displayName>
+                  </urn1:examinationStatus>
+                  <urn1:examinationUnit>?</urn1:examinationUnit>
+                  <urn1:accountableHealthcareProfessional>
+                     <urn1:authorTime>20120102122322</urn1:authorTime>
+                     <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                     <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                     <urn1:healthcareProfessionalRoleCode>
+                        <urn1:code>1</urn1:code>
+                        <urn1:codeSystem>2</urn1:codeSystem>
+                        <urn1:displayName>3</urn1:displayName>
+                     </urn1:healthcareProfessionalRoleCode>
+                     <urn1:healthcareProfessionalOrgUnit>
+                        <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                        <urn1:orgUnitName>?</urn1:orgUnitName>
+                        <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                        <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                        <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                        <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                     </urn1:healthcareProfessionalOrgUnit>
+                  </urn1:accountableHealthcareProfessional>
+                  <urn1:numberOfImages>1</urn1:numberOfImages>
+                  <urn1:modalityData>
+                     <urn1:manufacturer>?</urn1:manufacturer>
+                     <urn1:modelName>?</urn1:modelName>
+                     <urn1:equipmentId>?</urn1:equipmentId>
+                     <urn1:softwareVersion>?</urn1:softwareVersion>
+                  </urn1:modalityData>
+                  <urn1:imageDicomData>
+                     <urn1:dicomSOP>?</urn1:dicomSOP>
+                     <urn1:dicomValue>cid:131132964330</urn1:dicomValue>
+                     <urn1:dicomReference>?</urn1:dicomReference>
+                  </urn1:imageDicomData>
+                  <urn1:imageStructuredData>
+                     <urn1:imageData>
+                        <urn1:mediaType>image/png</urn1:mediaType>
+                     </urn1:imageData>
+                  </urn1:imageStructuredData>
+               </urn1:imageRecording>
+               <urn1:referral>
+                  <urn1:referralId>?</urn1:referralId>
+                  <urn1:referralReason>?</urn1:referralReason>
+                  <urn1:anamnesis>?</urn1:anamnesis>
+                  <urn1:careContactId>?</urn1:careContactId>
+                  <urn1:accountableHealthcareProfessional>
+                     <urn1:authorTime>20120102122322</urn1:authorTime>
+                     <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                     <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                     <urn1:healthcareProfessionalRoleCode>
+                        <urn1:originalText>some role</urn1:originalText>
+                     </urn1:healthcareProfessionalRoleCode>
+                     <urn1:healthcareProfessionalOrgUnit>                     
+                        <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                        <urn1:orgUnitName>?</urn1:orgUnitName>
+                        <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                        <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                        <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                        <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                     </urn1:healthcareProfessionalOrgUnit>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:accountableHealthcareProfessional>
+                  <urn1:attested>
+                     <urn1:signatureTime>20120102122322</urn1:signatureTime>
+                     <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+                  </urn1:attested>
+               </urn1:referral>
+            </urn1:imagingOutcomeBody>
+         </urn:imagingOutcome>
+         <urn:result>
+            <urn1:resultCode>OK</urn1:resultCode>
+            <urn1:logId>0000-1111</urn1:logId>
+         </urn:result>
+         <!--You may enter ANY elements at this point-->
+      </urn:GetImagingOutcomeResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:2:GetImagingOutcome"/></con:response><con:response name="EmptyResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:2">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetImagingOutcomeResponse>
+         <urn:result>
+            <urn1:resultCode>OK</urn1:resultCode>
+            <urn1:logId>0000-1111</urn1:logId>
+         </urn:result>
       </urn:GetImagingOutcomeResponse>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:actoutcome:GetImagingOutcomeResponder:2:GetImagingOutcome"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/><con:reporting><con:xmlTemplates/><con:parameters/></con:reporting></con:soapui-project>
