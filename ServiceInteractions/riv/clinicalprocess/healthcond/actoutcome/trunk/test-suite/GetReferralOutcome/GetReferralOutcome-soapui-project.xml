@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project activeEnvironment="Default" name="GetReferralOutcome" resourceRoot="${projectDir}" soapui-version="5.0.0-beta" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetReferralOutcomeResponderBinding" type="wsdl" bindingName="{urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcome:2:rivtabp21}GetReferralOutcomeResponderBinding" soapVersion="1_1" anonymous="optional" definition="../../schemas/interactions/GetReferralOutcomeInteraction/GetReferralOutcomeInteraction_2.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/actoutcome/trunk/schemas/interactions/GetReferralOutcomeInteraction/GetReferralOutcomeInteraction_2.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/actoutcome/trunk/schemas/interactions/GetReferralOutcomeInteraction/GetReferralOutcomeInteraction_2.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+<con:soapui-project activeEnvironment="Default" name="GetReferralOutcome" resourceRoot="${projectDir}" soapui-version="5.0.0-beta" abortOnError="false" runType="SEQUENTIAL" id="3d0cd4aa-d841-4b8d-9863-d07f43b129c4" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetReferralOutcomeResponderBinding" type="wsdl" bindingName="{urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcome:2:rivtabp21}GetReferralOutcomeResponderBinding" soapVersion="1_1" anonymous="optional" definition="../../schemas/interactions/GetReferralOutcomeInteraction/GetReferralOutcomeInteraction_2.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/actoutcome/trunk/schemas/interactions/GetReferralOutcomeInteraction/GetReferralOutcomeInteraction_2.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/actoutcome/trunk/schemas/interactions/GetReferralOutcomeInteraction/GetReferralOutcomeInteraction_2.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
@@ -92,7 +92,7 @@
     <xs:sequence>
       <xs:element name="careUnitHSAid" type="core:HSAIdType" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="patientId" type="core:PersonIdType"/>
-      <xs:element name="timePeriod" type="core:DatePeriodType" minOccurs="0"/>
+      <xs:element name="datePeriod" type="core:DatePeriodType" minOccurs="0"/>
       <xs:element name="sourceSystemHSAId" type="core:HSAIdType" minOccurs="0"/>
       <xs:element name="careContactId" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
@@ -149,7 +149,6 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  <!--Datatypes for GetImagingOutcome-->
   <xs:complexType name="ObservationType">
     <xs:sequence>
       <xs:element name="id" type="tns:IIType" minOccurs="1" maxOccurs="1"/>
@@ -298,6 +297,7 @@
       <xs:element name="anamnesis" type="xs:string" minOccurs="0"/>
       <xs:element name="careContactId" type="xs:string" minOccurs="0"/>
       <xs:element name="accountableHealthcareProfessional" type="tns:HealthcareProfessionalType"/>
+      <xs:element name="attested" type="tns:LegalAuthenticatorType" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -350,10 +350,6 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  <!--Below: only helper types allowed.
-        
-        A helper type is a type used in one ore more of the domain schema common types.
-        It can also be a type used in two or more service schemas.-->
   <xs:complexType name="DatePeriodType">
     <xs:annotation>
       <xs:documentation>Används för att specificera ett datumintervall
@@ -451,59 +447,6 @@
       <xs:element name="logId" type="xs:string"/>
       <xs:element minOccurs="0" name="subCode" type="xs:string"/>
       <xs:element name="message" type="xs:string" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-  <!--service contract domain types-->
-  <xs:complexType name="HealthcareProfessionalType_LaboratoryOrderOutcomeBody_REMOVE">
-    <xs:annotation>
-      <xs:documentation>Information om hälso- och omsorgspesonal
-                
-                healthcareProfessionalHsaId: 
-                HSA-id för vård- och omsorgspersonal 
-                healthcareProfessionalName
-                Namn på vård- och omsorgspersonal
-                healthcareProfessionalRoleCode: 
-                Information om personens befattning. Om möjligt skall KV Befattning (OID 1.2.752.129.2.2.1.4), se 
-                http://www.inera.se/Documents/TJANSTER_PROJEKT/Katalogtjanst_HSA/Innehall/hsa_innehall_befattning.pdf 
-                healthcareProfessionalCareUnitHSAid: 
-                HSA-id för PDL-enhet som vård- och omsorgspersonen är uppdragstagare för
-                healthcareProfessionalCareGiverHSAid: 
-                HSA-id för vårdgivaren, som är vårdgivare för den enhet som författaren är uppdragstagare för</xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="authorTime" type="tns:TimeStampType"/>
-      <xs:element name="healthcareProfessionalHSAId" type="tns:HSAIdType" minOccurs="1"/>
-      <xs:element name="healthcareProfessionalName" type="xs:string" minOccurs="0"/>
-      <xs:element name="healthcareProfessionalRoleCode" type="tns:CVType" minOccurs="0"/>
-      <xs:element name="healthcareProfessionalOrgUnit" type="tns:OrgUnitType" minOccurs="1"/>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="HealthcareProfessionalType_GetReferralOutcome_REMOVE">
-    <xs:annotation>
-      <xs:documentation>Information om hälso- och omsorgspesonal
-                
-                healthcareProfessionalHsaId: 
-                HSA-id för vård- och omsorgspersonal 
-                healthcareProfessionalName
-                Namn på vård- och omsorgspersonal
-                healthcareProfessionalRoleCode: 
-                Information om personens befattning. Om möjligt skall KV Befattning (OID 1.2.752.129.2.2.1.4), se 
-                http://www.inera.se/Documents/TJANSTER_PROJEKT/Katalogtjanst_HSA/Innehall/hsa_innehall_befattning.pdf 
-                healthcareProfessionalCareUnitHSAid: 
-                HSA-id för PDL-enhet som vård- och omsorgspersonen är uppdragstagare för
-                healthcareProfessionalCareGiverHSAid: 
-                HSA-id för vårdgivaren, som är vårdgivare för den enhet som författaren är uppdragstagare för</xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="authorTime" type="tns:TimeStampType"/>
-      <xs:element name="healthcareProfessionalHSAId" type="tns:HSAIdType" minOccurs="0"/>
-      <xs:element name="healthcareProfessionalName" type="xs:string" minOccurs="0"/>
-      <xs:element name="healthcareProfessionalRoleCode" type="tns:CVType" minOccurs="0"/>
-      <xs:element name="healthcareProfessionalOrgUnit" type="tns:OrgUnitType" minOccurs="0"/>
-      <xs:element name="healthcareProfessionalCareUnitHSAId" type="tns:HSAIdType" minOccurs="0"/>
-      <xs:element minOccurs="0" name="healthcareProfessionalCareGiverHSAId" type="tns:HSAIdType"/>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="HealthcareProfessionalType">
@@ -626,8 +569,8 @@
   </xs:complexType>
   <xs:complexType name="ECGOutcomeType">
     <xs:sequence>
-      <xs:element name="ECGOutcomeHeader" type="tns:PatientSummaryHeaderType"/>
-      <xs:element name="ECGOutcomeBody" type="tns:ECGOutcomeBodyType" minOccurs="1"/>
+      <xs:element name="ecgOutcomeHeader" type="tns:PatientSummaryHeaderType"/>
+      <xs:element name="ecgOutcomeBody" type="tns:ECGOutcomeBodyType" minOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -641,58 +584,45 @@
   <xs:complexType name="ImagingBodyType">
     <xs:sequence>
       <xs:element minOccurs="0" name="examinationSpeciality" type="tns:CVType"/>
-      <xs:element name="typeOfResult" type="xs:string"/>
+      <xs:element name="typeOfResult" type="codes:TypeOfResultCodeEnum"/>
       <xs:element name="resultTime" type="tns:TimeStampType" minOccurs="1"/>
       <xs:element name="resultReport" type="xs:string" minOccurs="1"/>
       <xs:element minOccurs="0" name="resultComment" type="xs:string"/>
       <xs:element maxOccurs="unbounded" name="radiationDose" type="tns:PQType" minOccurs="0"/>
       <xs:element name="patientData" type="tns:PatientDataType" minOccurs="0"/>
       <xs:element name="imageRecording" type="tns:ImageRecordingType" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="accountableHealthcareProfessional" type="tns:HealthcareProfessionalType" minOccurs="0"/>
-      <xs:element minOccurs="0" name="numberOfImages" type="xs:int"/>
-      <xs:element minOccurs="0" name="modalityData" type="tns:ModalityDataType"/>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="imageDicomData" type="tns:DicomDataType"/>
-      <xs:element name="imageStaticData" type="tns:ImageStructuredDataType"/>
       <xs:element minOccurs="0" name="referral" type="tns:ECGReferralType"/>
-      <xs:element name="attested" type="tns:LegalAuthenticatorType" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="ImageStructuredDataType">
     <xs:sequence>
-      <xs:element name="aperture" type="tns:PQType"/>
-      <xs:element name="exposureTime" type="tns:PQType"/>
-      <xs:element name="imageCreationTime" type="tns:TimeStampType"/>
-      <xs:element name="bodyPartExamined" type="tns:CVType"/>
-      <xs:element name="contrastAgentUsed" type="xs:string"/>
-      <xs:element name="magneticFieldStrength" type="tns:PQType"/>
-      <xs:element name="copyright" type="xs:string"/>
+      <xs:element name="aperture" type="tns:PQType" minOccurs="0"/>
+      <xs:element name="exposureTime" type="tns:PQType" minOccurs="0"/>
+      <xs:element name="imageCreationTime" type="tns:TimeStampType" minOccurs="0"/>
+      <xs:element name="bodyPartExamined" type="tns:CVType" minOccurs="0"/>
+      <xs:element name="contrastAgentUsed" type="xs:string" minOccurs="0"/>
+      <xs:element name="magneticFieldStrength" type="tns:PQType" minOccurs="0"/>
+      <xs:element name="copyright" type="xs:string" minOccurs="0"/>
       <xs:element name="imageData" type="tns:ImageDataType"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="ECGOutcomeBodyType">
     <xs:sequence>
       <xs:element minOccurs="0" name="examinationSpeciality" type="tns:CVType"/>
-      <xs:element name="typeOfResult" type="xs:string"/>
+      <xs:element name="typeOfResult" type="codes:TypeOfResultCodeEnum"/>
       <xs:element name="resultTime" type="tns:TimeStampType" minOccurs="1"/>
       <xs:element name="resultReport" type="xs:string" minOccurs="1"/>
       <xs:element minOccurs="0" name="resultComment" type="xs:string"/>
       <xs:element name="patientData" type="tns:PatientDataType" minOccurs="0"/>
-      <xs:element name="ecgRecording" type="tns:ImageRecordingType" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="accountableHealthcareProfessional" type="tns:HealthcareProfessionalType" minOccurs="0"/>
-      <xs:element minOccurs="0" name="modalityData" type="tns:ModalityDataType"/>
-      <xs:element minOccurs="0" name="pacemaker" type="xs:boolean"/>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="ecgStructuredData" type="tns:ECGStructuredDataType"/>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="ecgDicomData" type="tns:DicomDataType"/>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="ecgData" type="tns:ImageDataType"/>
+      <xs:element name="ecgRecording" type="tns:ECGRecordingType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element minOccurs="0" name="referral" type="tns:ECGReferralType"/>
-      <xs:element name="attested" type="tns:LegalAuthenticatorType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="ImageDataType">
     <xs:sequence>
-      <xs:element name="mediaType" type="codes:MediaTypeEnum" minOccurs="0"/>
+      <xs:element name="mediaType" type="codes:MediaTypeEnum" minOccurs="1"/>
       <xs:element name="value" type="xs:base64Binary" minOccurs="0"/>
       <xs:element minOccurs="0" name="reference" type="xs:anyURI"/>
       <xs:element minOccurs="0" name="burnedInaAnnotations" type="xs:boolean"/>
@@ -722,8 +652,29 @@
       <xs:element name="recordingId" type="tns:IIType"/>
       <xs:element name="examinationActivity" type="tns:CVType" minOccurs="1"/>
       <xs:element name="examinationTimePeriod" type="tns:TimePeriodType" minOccurs="1"/>
+      <xs:element name="examinationStatus" type="codes:ExaminationStatusCodeEnum" minOccurs="0"/>
+      <xs:element name="examinationUnit" type="xs:string" minOccurs="0"/>
+      <xs:element name="accountableHealthcareProfessional" type="tns:HealthcareProfessionalType" minOccurs="0"/>
+      <xs:element minOccurs="0" name="numberOfImages" type="xs:int"/>
+      <xs:element minOccurs="0" name="modalityData" type="tns:ModalityDataType"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="imageDicomData" type="tns:DicomDataType"/>
+      <xs:element name="imageStructuredData" type="tns:ImageStructuredDataType" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ECGRecordingType">
+    <xs:sequence>
+      <xs:element name="recordingId" type="tns:IIType"/>
+      <xs:element name="examinationActivity" type="tns:CVType" minOccurs="1"/>
+      <xs:element name="examinationTimePeriod" type="tns:TimePeriodType" minOccurs="1"/>
       <xs:element name="examinationStatus" type="tns:CVType" minOccurs="0"/>
       <xs:element name="examinationUnit" type="xs:string" minOccurs="0"/>
+      <xs:element name="accountableHealthcareProfessional" type="tns:HealthcareProfessionalType" minOccurs="0"/>
+      <xs:element minOccurs="0" name="modalityData" type="tns:ModalityDataType"/>
+      <xs:element minOccurs="0" name="pacemaker" type="xs:boolean"/>
+      <xs:element name="ecgStructuredData" type="tns:ECGStructuredDataType" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="ecgDicomData" type="tns:DicomDataType"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="ecgData" type="tns:ImageDataType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -1096,6 +1047,84 @@
       </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
+  <xs:simpleType name="ExaminationStatusCodeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Initierad">
+        <xs:annotation>
+          <xs:documentation>Initierad</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Planerad">
+        <xs:annotation>
+          <xs:documentation>Planerad (bevakad)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Tidbokad">
+        <xs:annotation>
+          <xs:documentation>Tidbokad</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Uppskjuten">
+        <xs:annotation>
+          <xs:documentation>Uppskjuten</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Annullerad">
+        <xs:annotation>
+          <xs:documentation>Annullerad</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Pågående">
+        <xs:annotation>
+          <xs:documentation>Pågående</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Avvakta">
+        <xs:annotation>
+          <xs:documentation>Avvakta</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Avbruten">
+        <xs:annotation>
+          <xs:documentation>Avbruten</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Avklarad">
+        <xs:annotation>
+          <xs:documentation>Avklarad</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Inaktuell">
+        <xs:annotation>
+          <xs:documentation>Inaktuell</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Makulerad">
+        <xs:annotation>
+          <xs:documentation>Makulerad</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TypeOfResultCodeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PREL">
+        <xs:annotation>
+          <xs:documentation>Preliminärsvar</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DEF">
+        <xs:annotation>
+          <xs:documentation>Definitivsvar</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="TILL">
+        <xs:annotation>
+          <xs:documentation>Tilläggssvar</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:simpleType name="SexCodeEnum">
     <xs:restriction base="xs:int">
       <xs:enumeration value="0">
@@ -1430,7 +1459,7 @@ expectedDocumentIds.each {id ->
 	if (!documentIds.contains(id)) {
 		contextHelper.fail("Response does not contain a expected record. DocumentId: $id")
 	}
-}</scriptText></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcomeResponder:2:GetReferralOutcome" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Only PatientId" searchProperties="true" id="3b4079f9-96aa-4aea-b472-c7e0401f235a"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+}</scriptText></con:configuration></con:assertion><con:credentials><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcomeResponder:2:GetReferralOutcome" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Only PatientId" searchProperties="true" id="3b4079f9-96aa-4aea-b472-c7e0401f235a"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
 
 def utils = new GroovyUtils(context)
@@ -1520,7 +1549,7 @@ expectedDocumentIds.each {id ->
 	if (!documentIds.contains(id)) {
 		contextHelper.fail("Response does not contain a expected record. DocumentId: $id")
 	}
-}</scriptText></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcomeResponder:2:GetReferralOutcome" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="NonExisting PatientId" searchProperties="true" id="41845e3d-78c1-4928-9843-19fff65c817d"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+}</scriptText></con:configuration></con:assertion><con:credentials><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcomeResponder:2:GetReferralOutcome" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="NonExisting PatientId" searchProperties="true" id="41845e3d-78c1-4928-9843-19fff65c817d"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
 
 def utils = new GroovyUtils(context)
@@ -1782,15 +1811,15 @@ expectedDocumentIds.each {id ->
 	if (!documentIds.contains(id)) {
 		contextHelper.fail("Response does not contain a expected record. DocumentId: $id")
 	}
-}</scriptText></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcomeResponder:2:GetReferralOutcome" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:properties/><con:reportParameters/></con:testSuite><con:testSuite name="Fault tests"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Verify SourceSystemHSAid and CareContactId" searchProperties="true" id="6d86e007-3747-4614-9461-4ecdeb6c91ae"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+}</scriptText></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcomeResponder:2:GetReferralOutcome" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:properties/><con:reportParameters/></con:testSuite><con:testSuite name="Fault tests" id="5c10649d-9b76-4bb7-904b-7c82180f6e11"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Verify SourceSystemHSAid and CareContactId" searchProperties="true" id="6d86e007-3747-4614-9461-4ecdeb6c91ae"><con:settings/><con:testStep type="groovy" name="Read data" id="1e8fec0b-2137-416a-9393-c08369086ee2"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
 
 def utils = new GroovyUtils(context)
 def dataFile = new File(utils.projectPath + "/data.xml")
 def source = new XmlDataReader(context, dataFile)
 
-source.load("CareContactId and SourceSystemHsaId")</script></con:config></con:testStep><con:testStep type="request" name="Call GetReferralOutcome"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetReferralOutcomeResponderBinding</con:interface><con:operation>GetReferralOutcome</con:operation><con:request name="Call GetReferralOutcome"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
-  &lt;con:entry key="x-mock-response" value="SoapFault"/>
+source.load("CareContactId and SourceSystemHsaId")</script></con:config></con:testStep><con:testStep type="request" name="Call GetReferralOutcome" id="b92a689b-99d8-4c72-8088-d679c759f2eb"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetReferralOutcomeResponderBinding</con:interface><con:operation>GetReferralOutcome</con:operation><con:request name="Call GetReferralOutcome"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="x-mock-response" value="ERROR"/>
   &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
 &lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcomeResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:actoutcome:2">
    <soapenv:Header>
@@ -1802,19 +1831,21 @@ source.load("CareContactId and SourceSystemHsaId")</script></con:config></con:te
             <urn2:id>${patientId}</urn2:id>
             <urn2:type>${patientIdType}</urn2:type>
          </urn1:patientId>
-         <urn1:sourceSystemHSAid>${sourceSystemHSAid}</urn1:sourceSystemHSAid>
+         <urn1:sourceSystemHSAId>${sourceSystemHSAid}</urn1:sourceSystemHSAId>
          <urn1:careContactId>${careContactId}</urn1:careContactId>
       </urn1:GetReferralOutcome>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" name="SOAP Response"/><con:assertion type="Schema Compliance" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Response SLA Assertion" name="Response SLA"><con:configuration><SLA>15000</SLA></con:configuration></con:assertion><con:assertion type="Not SOAP Fault Assertion" name="SOAP Fault"/><con:credentials><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcomeResponder:2:GetReferralOutcome" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Verify SourceSystemHSAid and LogicalAddress" searchProperties="true" id="b04e92f7-4b9b-4889-b15b-a7feceee18e1"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" name="SOAP Response"/><con:assertion type="Schema Compliance" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Response SLA Assertion" name="Response SLA"><con:configuration><SLA>15000</SLA></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:credentials><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcomeResponder:2:GetReferralOutcome" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="assertionteststep" name="AND ensure result.resultCode equals ERROR"><con:settings/><con:config xsi:type="con:AssertionTestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:entry><con:id>a067a0fe-6080-4172-98cd-3dbd878ea7a2</con:id><con:isGroup>false</con:isGroup><con:sourceId>b92a689b-99d8-4c72-8088-d679c759f2eb</con:sourceId><con:propertyName>Response</con:propertyName><con:assertion type="XPath Match" name="XPath Match"><con:configuration><path>declare namespace urn='urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcomeResponder:2';
+declare namespace urn1='urn:riv:clinicalprocess:healthcond:actoutcome:2';
+//urn:GetReferralOutcomeResponse[1]/urn:result[1]/urn1:resultCode[1]</path><content>ERROR</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion></con:entry></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Verify SourceSystemHSAid and LogicalAddress" searchProperties="true" id="b04e92f7-4b9b-4889-b15b-a7feceee18e1"><con:settings/><con:testStep type="groovy" name="Read data" id="1ad3e936-ae84-4a10-82e5-96b4986c214d"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
 
 def utils = new GroovyUtils(context)
 def dataFile = new File(utils.projectPath + "/data.xml")
 def source = new XmlDataReader(context, dataFile)
 
-source.load("SourceSystemHsaId and LogicalAddress")</script></con:config></con:testStep><con:testStep type="request" name="Call GetReferralOutcome"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetReferralOutcomeResponderBinding</con:interface><con:operation>GetReferralOutcome</con:operation><con:request name="Call GetReferralOutcome"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
-  &lt;con:entry key="x-mock-response" value="SoapFault"/>
+source.load("SourceSystemHsaId and LogicalAddress")</script></con:config></con:testStep><con:testStep type="request" name="Call GetReferralOutcome" id="b9748121-eac7-4474-a356-5344f7742e6d"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetReferralOutcomeResponderBinding</con:interface><con:operation>GetReferralOutcome</con:operation><con:request name="Call GetReferralOutcome"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="x-mock-response" value="ERROR"/>
   &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
 &lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcomeResponder:2" xmlns:urn2="urn:riv:clinicalprocess:healthcond:actoutcome:2">
    <soapenv:Header>
@@ -1826,8 +1857,10 @@ source.load("SourceSystemHsaId and LogicalAddress")</script></con:config></con:t
             <urn2:id>${patientId}</urn2:id>
             <urn2:type>${patientIdType}</urn2:type>
          </urn1:patientId>
-         <urn1:sourceSystemHSAid>${sourceSystemHSAid}</urn1:sourceSystemHSAid>
+         <urn1:sourceSystemHSAId>${sourceSystemHSAid}</urn1:sourceSystemHSAId>
          <urn1:careContactId>${careContactId}</urn1:careContactId>
       </urn1:GetReferralOutcome>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" name="SOAP Response"/><con:assertion type="Schema Compliance" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Response SLA Assertion" name="Response SLA"><con:configuration><SLA>15000</SLA></con:configuration></con:assertion><con:assertion type="Not SOAP Fault Assertion" name="SOAP Fault"/><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcomeResponder:2:GetReferralOutcome" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:properties/><con:reportParameters/></con:testSuite><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/><con:reporting><con:xmlTemplates/><con:parameters/></con:reporting><con:sensitiveInformation/></con:soapui-project>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" name="SOAP Response"/><con:assertion type="Schema Compliance" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Response SLA Assertion" name="Response SLA"><con:configuration><SLA>15000</SLA></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:credentials><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcomeResponder:2:GetReferralOutcome" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="assertionteststep" name="AND ensure result.resultCode equals ERROR"><con:settings/><con:config xsi:type="con:AssertionTestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:entry><con:id>a7eab3b3-7e7d-45a9-b245-78ae8f389d6e</con:id><con:isGroup>false</con:isGroup><con:sourceId>b9748121-eac7-4474-a356-5344f7742e6d</con:sourceId><con:propertyName>Response</con:propertyName><con:assertion type="XPath Match" name="XPath Match"><con:configuration><path>declare namespace urn='urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcomeResponder:2';
+declare namespace urn1='urn:riv:clinicalprocess:healthcond:actoutcome:2';
+//urn:GetReferralOutcomeResponse[1]/urn:result[1]/urn1:errorCode[1]</path><content>INVALID_REQUEST</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion></con:entry></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:properties/><con:reportParameters/></con:testSuite><con:requirements/><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/><con:reporting><con:xmlTemplates/><con:parameters/></con:reporting><con:sensitiveInformation/></con:soapui-project>
