@@ -18,38 +18,37 @@
  under the License.
  -->		
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:tns="urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2"
-    xmlns:core="urn:riv:clinicalprocess:healthcond:actoutcome:2"
-    xmlns:codes="urn:riv:clinicalprocess:healthcond:actoutcome:enums:2"
-    targetNamespace="urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcomeResponder:2"
-    elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+    xmlns:tns="urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:1"
+    xmlns:core="urn:riv:clinicalprocess:healthcond:actoutcome:3"
+    xmlns:codes="urn:riv:clinicalprocess:healthcond:actoutcome:enums:3"
+    targetNamespace="urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:1"
+    elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
 
-    <xs:import schemaLocation="../../core_components/clinicalprocess_healthcond_actoutcome_2.0.xsd"
-        namespace="urn:riv:clinicalprocess:healthcond:actoutcome:2"/>
+    <xs:import schemaLocation="../../core_components/clinicalprocess_healthcond_actoutcome_3.0.xsd"
+        namespace="urn:riv:clinicalprocess:healthcond:actoutcome:3"/>
     <xs:import
-        schemaLocation="../../core_components/clinicalprocess_healthcond_actoutcome_enum_2.0.xsd"
-        namespace="urn:riv:clinicalprocess:healthcond:actoutcome:enums:2"/>
+        schemaLocation="../../core_components/clinicalprocess_healthcond_actoutcome_enum_3.0.xsd"
+        namespace="urn:riv:clinicalprocess:healthcond:actoutcome:enums:3"/>
 
-    <xs:element name="GetLaboratoryOrderOutcome" type="tns:GetLaboratoryOrderOutcomeType"/>
-    <xs:element name="GetLaboratoryOrderOutcomeResponse"
-        type="tns:GetLaboratoryOrderOutcomeResponseType"/>
+    <xs:element name="GetECGOutcome" type="tns:GetECGOutcomeType"/>
+    <xs:element name="GetECGOutcomeResponse" type="tns:GetECGOutcomeResponseType"/>
 
-    <xs:complexType name="GetLaboratoryOrderOutcomeType">
+    <xs:complexType name="GetECGOutcomeType">
         <xs:sequence>
             <xs:element name="careUnitHSAId" type="core:HSAIdType" maxOccurs="unbounded"
                 minOccurs="0"/>
             <xs:element name="patientId" type="core:PersonIdType"/>
-            <xs:element name="timePeriod" type="core:DatePeriodType" minOccurs="0"/>
+            <xs:element name="datePeriod" type="core:DatePeriodType" minOccurs="0"/>
             <xs:element name="sourceSystemHSAId" type="core:HSAIdType" minOccurs="0"/>
             <xs:element name="careContactId" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="GetLaboratoryOrderOutcomeResponseType">
+    <xs:complexType name="GetECGOutcomeResponseType">
         <xs:sequence>
-            <xs:element name="laboratoryOrderOutcome" type="core:LaboratoryOrderOutcomeType"
-                minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="ecgOutcome" type="core:ECGOutcomeType" minOccurs="0"
+                maxOccurs="unbounded"/>
             <xs:element name="result" type="core:ResultType"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>

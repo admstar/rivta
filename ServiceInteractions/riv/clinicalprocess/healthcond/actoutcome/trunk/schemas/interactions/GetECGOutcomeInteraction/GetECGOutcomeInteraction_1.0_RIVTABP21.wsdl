@@ -17,17 +17,17 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<wsdl:definitions name='GetReferralOutcomeInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema'
-  xmlns:tjsr='urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcomeResponder:2'
-  xmlns:tjsi='urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcomeInitiator:2'
-  xmlns:tns='urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcome:2:rivtabp21'
-  targetNamespace='urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcome:2:rivtabp21'
+<wsdl:definitions name='GetECGOutcomeInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema'
+  xmlns:tjsr='urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:1'
+  xmlns:tjsi='urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeInitiator:1'
+  xmlns:tns='urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcome:1:rivtabp21'
+  targetNamespace='urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcome:1:rivtabp21'
   xmlns:itr='urn:riv:itintegration:registry:1'>
   <xs:annotation>
     <xs:documentation>
-			 Tjänsteinteraktionens namn: GetReferralOutcomeInteraction
+			 Tjänsteinteraktionens namn: GetECGOutcomeInteraction
 			 Beskrivning: 
-			   Returnerar svar på en förfrågan om konsultationsremiss för en patient
+			   Returnerar svar på en förfrågan om ECG för en patient
 			 Revisioner: 
 			 Tjänstedomän: clinicalprocess:healthcond:actoutcome
 			 Tjänsteinteraktionstyp: Fråga-Svar
@@ -36,12 +36,12 @@
 			 </xs:documentation>
   </xs:annotation>
   <wsdl:types>
-    <xs:schema targetNamespace='urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcome:2:rivtabp21'>
-      <xs:import schemaLocation='GetReferralOutcomeResponder_2.0.xsd' namespace='urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcomeResponder:2' />
+    <xs:schema targetNamespace='urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcome:1:rivtabp21'>
+      <xs:import schemaLocation='GetECGOutcomeResponder_1.0.xsd' namespace='urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:1' />
       <xs:import schemaLocation='../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
     </xs:schema>
   </wsdl:types>
-  <wsdl:message name='GetReferralOutcomeRequest'>
+  <wsdl:message name='GetECGOutcomeRequest'>
     <wsdl:part name='LogicalAddress' element='itr:LogicalAddress'>
 	  	<wsdl:documentation>
 			National: The HSA-id of Inera AB ("national" aggregation service)
@@ -49,23 +49,23 @@
 			Specific Source system: The HSA-id of the source system
 		</wsdl:documentation>
     </wsdl:part>
-    <wsdl:part name='parameters' element='tjsr:GetReferralOutcome' />
+    <wsdl:part name='parameters' element='tjsr:GetECGOutcome' />
   </wsdl:message>
-  <wsdl:message name='GetReferralOutcomeResponse'>
-    <wsdl:part name='parameters' element='tjsr:GetReferralOutcomeResponse' />
+  <wsdl:message name='GetECGOutcomeResponse'>
+    <wsdl:part name='parameters' element='tjsr:GetECGOutcomeResponse' />
   </wsdl:message>
-  <wsdl:portType name='GetReferralOutcomeResponderInterface'>
-    <wsdl:operation name='GetReferralOutcome'>
-      <wsdl:input message='tns:GetReferralOutcomeRequest' />
-      <wsdl:output message='tns:GetReferralOutcomeResponse' />
+  <wsdl:portType name='GetECGOutcomeResponderInterface'>
+    <wsdl:operation name='GetECGOutcome'>
+      <wsdl:input message='tns:GetECGOutcomeRequest' />
+      <wsdl:output message='tns:GetECGOutcomeResponse' />
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name='GetReferralOutcomeResponderBinding' type='tns:GetReferralOutcomeResponderInterface'>
+  <wsdl:binding name='GetECGOutcomeResponderBinding' type='tns:GetECGOutcomeResponderInterface'>
     <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
-    <wsdl:operation name='GetReferralOutcome'>
-      <soap:operation soapAction='urn:riv:clinicalprocess:healthcond:actoutcome:GetReferralOutcomeResponder:2:GetReferralOutcome' style='document' />
+    <wsdl:operation name='GetECGOutcome'>
+      <soap:operation soapAction='urn:riv:clinicalprocess:healthcond:actoutcome:GetECGOutcomeResponder:1:GetECGOutcome' style='document' />
       <wsdl:input>
-        <soap:header use='literal' message='tns:GetReferralOutcomeRequest' part='LogicalAddress' />
+        <soap:header use='literal' message='tns:GetECGOutcomeRequest' part='LogicalAddress' />
         <soap:body use='literal' parts='parameters' />
       </wsdl:input>
       <wsdl:output>
@@ -73,8 +73,8 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name='GetReferralOutcomeResponderService'>
-    <wsdl:port name='GetReferralOutcomeResponderPort' binding='tns:GetReferralOutcomeResponderBinding'>
+  <wsdl:service name='GetECGOutcomeResponderService'>
+    <wsdl:port name='GetECGOutcomeResponderPort' binding='tns:GetECGOutcomeResponderBinding'>
       <soap:address location='http://tempuri.org' />
     </wsdl:port>
   </wsdl:service>
