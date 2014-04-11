@@ -23,7 +23,9 @@
   <xs:element name='SaveFormPageResponse' type='tns:SaveFormPageResponseType' />
   <xs:complexType name='SaveFormPageType'>
     <xs:sequence>
-            <xs:element name="formId" type="core:FormIDType" minOccurs="1"></xs:element>
+    	<xs:element name="formId" type="core:FormIDType"
+    		minOccurs="1">
+    	</xs:element>
     	<xs:element name="pageAnswer" type="core:PageAnswerType"
     		minOccurs="1" maxOccurs="1">
     	</xs:element>
@@ -38,7 +40,13 @@
     			</xs:documentation>
     		</xs:annotation>
     	</xs:element>
-    	<xs:any namespace='##other' processContents='lax' minOccurs='0'
+            <xs:element name="temporarySave" type="xs:boolean" minOccurs="0" maxOccurs="1">
+            	<xs:annotation>
+            		<xs:documentation>Formuläret skall sparas temporärt.
+- Indata skall ej valideras.
+- Samma CurrentPage returneras. </xs:documentation>
+            	</xs:annotation></xs:element>
+            <xs:any namespace='##other' processContents='lax' minOccurs='0'
     		maxOccurs='unbounded' />
     </xs:sequence>
   </xs:complexType>
