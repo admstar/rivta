@@ -57,6 +57,7 @@
 			<xs:element name="patient" type="PatientTypeOutcome"/>
 			<xs:element name="author" type="AuthorType"/>
 			<xs:element name="recipient" type="RecipientType"/>
+			<xs:element name="forwardingRecipient" type="RecipientType" minOccurs="0"/>
 			<xs:element name="outcome" type="RequestReceivedConfirmationOutcomeType"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
@@ -162,7 +163,7 @@ Examples: 1
 			<xs:pattern value="\+\d+-\d+"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<!-- Date format YYYYMMDD -->
+	<!-- Date format SSYYMMDD -->
 	<xs:complexType name="DateType">
 		<xs:attribute name="value" use="required">
 			<xs:simpleType>
@@ -260,10 +261,10 @@ Examples: 1
 	<xs:complexType name="AuthorType">
 		<xs:sequence>
 			<!--eRemiss.remissdatum-->
-			<xs:element name="dateOfRequest" type="DateType"/>
+			<xs:element name="date" type="DateType"/>
 			<!--Required when type codeRequestOutcomeType = SR, KS, KB, RB-->
-			<xs:element name="healthcareProfessional" type="HealthcareProfessionalType"/>
-			<xs:element name="typeOfHealthcareProfessional" type="codes:codeForProfession"/>
+			<xs:element name="healthcareProfessional" type="HealthcareProfessionalType" minOccurs="0"/>
+			<xs:element name="typeOfHealthcareProfessional" type="codes:codeForProfession" minOccurs="0"/>
 			<!-- custodian + author.representedOrganisation-->
 			<xs:element name="healthcareProfessionalOrganisation" type="OrganisationType"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
