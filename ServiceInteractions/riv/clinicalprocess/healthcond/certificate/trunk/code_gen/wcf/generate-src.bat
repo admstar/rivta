@@ -26,7 +26,7 @@ SET NAMESPACE=/namespace:*,Riv.Clinicalprocess.Healthcond.Certificate.Schemas.v1
 SET SCHEMADIR="schemas\interactions"
 SET SVCUTIL="svcutil.exe"
 
-SET W1=%SCHEMADIR%\GetCertificateForCareInteraction\GetCertificateForCareInteraction_1.0_RIVTABP21.wsdl
+SET W1=%SCHEMADIR%\GetCertificateForCareInteraction\GetCertificateForCareInteraction_0.9_RIVTABP21.wsdl
 SET X1=%SCHEMADIR%\GetCertificateForCareInteraction\*.xsd
 
 SET X15=schemas\core_components\*.xsd
