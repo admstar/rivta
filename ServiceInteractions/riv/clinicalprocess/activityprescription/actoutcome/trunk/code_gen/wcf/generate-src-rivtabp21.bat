@@ -23,11 +23,13 @@
 CD ..
 	
 	
-SET SCHEMADIR=schemas
+SET SCHEMADIR=..\schemas
 	
 	
 SET W0=%SCHEMADIR%\interactions\GetVaccinationHistoryInteraction\GetVaccinationHistoryInteraction_1.0_RIVTABP21.wsdl
 SET X0=%SCHEMADIR%\interactions\GetVaccinationHistoryInteraction\*.xsd
+SET W0=%SCHEMADIR%\interactions\GetMedicationHistoryInteraction\GetMedicationHistoryInteraction_1.0_RIVTABP21.wsdl
+SET X0=%SCHEMADIR%\interactions\GetMedicationHistoryInteraction\*.xsd
 
 SET XCORE=%SCHEMADIR%\core_components\*.xsd
 
