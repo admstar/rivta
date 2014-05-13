@@ -3,28 +3,28 @@
 || 2 || 2013-12-16 || Justerat beskrivningen av HSAIdType och orgUnitHSAId (enligt issue 221) || Björn Genfors ||
 || 3 || 2014-02-17 || Justerat schema-innehåll || Khaled Daham ||
 || 4 || 2014-03-21 || -Lagt till ResultType, som används för att hantera logiska fel. <br>-Lagt till !RoleCode 0..1 i LegalAuthenticatorType (behov fanns i kontrakten för bild och EKG). <br>-Lagt till länkar till lista över vanligt förekommande kodverk och identifierare på lämpliga ställen. || Björn Genfors ||
+|| 5 || 2014-05-13 || -Lagt till PQIntervalType. <br>-Justerat DateType att tillåta variabel noggrannhet. <br>-Förtydligat beskrivningen av vissa typer och/eller fält. || Björn Genfors ||
 
 =Här dokumenteras informella best-practices för datatypshantering i tjänstekontrakt=
 
-Denna sida syftar till att öka återanvändningen av goda exempel. Ofta föregås goda exempel av många möten som avhandlat en specifik problemställning där expertis deltagit. Det är därför bra om dessa ansträngningar kan återanvändas.
-
+Denna sida syftar till att öka återanvändningen av datatyper, och  i förlängningen verka för återanvändbara profiler.
 
 ==Gemensamma informationskomponenter==
 I tjänstekontraktsbeskrivningarna används ett antal komponenter som är gemensamma för vissa meddelanden i flera domäner eller inom denna domän, och dessa beskrivs i detta avsnitt.
-Observera att med anledning av att tjänstekontrakten även kan stödjas av producentsystem som saknar (fullständig) HSAid-information så är HSAid-attribut i beskrivningarna nedan valfria. Se även avsnittet ”Informationssäkerhet” ovan.
+Observera att med anledning av att tjänstekontrakten även kan stödjas av producentsystem som saknar (fullständig) HSA-id-information så är HSA-id-attribut i beskrivningarna nedan valfria. Se även avsnittet ”Informationssäkerhet” ovan.
 
 ===[ActorType ActorType]===
 Information om medarbetare i vård- och omsorg som genomfört den behandling som rapporteras genom tjänstekontrakt i denna domän.
 
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
 ||hsaId	||HSAIdType||	HSA-id för personen	||0..1||
-||name	||string	||Namn på personen. Minst ett av dessa två fält ska anges.	||0..1||
+||name	||string	||Namn på personen. Minst ett av dessa fälten hsaId och name ska anges.	||0..1||
 ||personTelecom	||string	||Telefon till personen.	||0..1||
 ||personEmail	||string	||Epostadress till personen.	||0..1||
 ||personAddress	||string	||Postadress till personen.	||0..1||
 
 ===[CVType CVType]===
-Typ som beskriver kodade värden med en struktur hämtad från HL7 v3 CV (”!CodedValue”). För implementering av attribut av slaget ”KTOV” i RIV. Kodade värden avser officiellt hanterade kodverk som hänvisas till med !codeSystem OID/UUID [ListOfCommonlyUsedCodeSystems (Vanligt förekommande kodverk)].
+Typ som beskriver kodade värden med en struktur hämtad från HL7 v3 CV (”!CodedValue”). Kodade värden avser officiellt hanterade kodverk som hänvisas till med codeSystem OID/UUID [ListOfCommonlyUsedCodeSystems (Vanligt förekommande kodverk)].
 
 För annan användning av koder, exempelvis för lokala kodverk utan OID, skall originalText attributet användas för att ge kodens text i det lokala systemet, och övriga attribut lämnas tomma.
 
@@ -37,19 +37,21 @@ För annan användning av koder, exempelvis för lokala kodverk utan OID, skall 
 ||originalText	||string	|| originalText ska användas vid överföring av värden som kommer från lokala kodverk som ej är identifierade med OID eller när kod helt saknas. I sådana fall skall en beskrivande text anges i originalText. Om originalText anges kan ingen av de övriga elementen anges.	||0..1||
 
 ===[DatePeriodType DatePeriodType]===
+Ett datumintervall anges normalt sett med ett start- och ett slutdatum, men öppna intervall är tillåtna. Huruvida ändpunkterna inkluderas i intervallet eller ej bör tydligt beskrivas vid varje enskild tillämpning.
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
 ||start	||DateType	||Periodens startdatum. Minst ett av start och end skall anges.	||0..1||
 ||end	||DateType	||Periodens slutdatum. Minst ett av start och end skall anges.	||0..1||
 
 ===DateType===
-Datum anges alltid på formatet ”ÅÅÅÅMMDD”, vilket motsvarar den ISO 8824-kompatibla formatbeskrivningen ”YYYYMMDD”.
+Datum anges på formatet ”ÅÅÅÅMMDD”, eller med mindre noggrannhet på formaten "ÅÅÅÅMM" och "ÅÅÅÅ". Detta motsvarar den ISO 8601-kompatibla formatbeskrivningen ”YYYYMMDD”.
+Tidszon anges inte i meddelandeformaten. All information om datum och tidpunkter som utbyts via tjänsterna ska ange datum och tidpunkter i den tidszon som gäller/gällde i Sverige vid den tidpunkt som respektive datum- eller tidpunktsfält bär information om. Såväl tjänstekonsumenter som tjänsteproducenter skall med andra ord förutsätta att datum och tidpunkter som utbyts är i tidszonerna CET (svensk normaltid) respektive CEST (svensk normaltid med justering för sommartid).
 
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
-||date	||string	||Datum uttrycks med formatet ”ÅÅÅÅMMDD”	||1..1||
+||date	||string	||Datum uttrycks på formatet ”ÅÅÅÅMMDD”, eller med mindre noggrannhet enligt något av formaten "ÅÅÅÅMM" och "ÅÅÅÅ".	||1..1||
 
 ===[HealthcareProfessionalType HealthcareProfessionalType]===
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
-||authorTime	||TimeStampType	||Den tidpunkt då dokumentet skapades.	||1..1||
+||authorTime	||TimeStampType	||Den tidpunkt då dokumentet skapades, eller annan tillämplig tidpunkt.	||1..1||
 ||healthcareProfessionalHSAId	||HSAIdType	||HSA-id för vård- och omsorgspersonal. Skall anges om tillgänglig.	||0..1||
 ||healthcareProfessionalName	||string	||Namn på vård- och omsorgspersonal. Om tillgängligt skall detta anges.	||0..1||
 ||healthcareProfessionalRoleCode	||CVType	||Information om personens befattning. Om möjligt skall [ListOfCommonlyUsedCodeSystems   KV Befattning] användas.	||0..1||
@@ -108,12 +110,23 @@ Innehåller basinformation om ett dokument. Används för tjänstekontrakt som t
 ||nullifiedReason ||string ||Anger orsak till makulering.	||0..1||
 
 ===PersonIdType===
+Person-id är vanligtvis ett personnummer, men kan även vara samordningsnummer eller reservnummer. Syftar till att identifiera en privatperson.
+
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
 ||id	||string	||Identiteten enligt den identitetstyp (type) som angivits. Om identiteten är av typ personnummer eller samordningsnummer skall denna anges med 12 tecken utan skiljetecken.	||1..1||
 ||type	||string ||[ListOfCommonlyUsedCodeSystems OID] för typ av identifierare.	||1..1||
 
+===[PQIntervalType PQIntervalType]===
+Typ som baseras på datatypen IVL_PQ enligt HL7, och som beskriver överföring av intervaller av mätbara värden (”Physical Quantity”). Ett intervall som är öppet i ena änden kan anges.
+Tillåtna värden för ”unit” bestäms av http://unitsofmeasure.org/ucum.html. Dimension ska preciseras av fältregel vid tillämpning (ex. ”Massa”). Vaksamhet skall iakttagas vid konvertering mellan enheter.
+
+|| *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
+||low ||double	||Mätetal mätt i enheten som anges av ”unit”. Minst ett av fälten low och high måste anges.	||0..1||
+||high ||double	||Mätetal mätt i enheten som anges av ”unit”. Minst ett av fälten low och high måste anges.	||0..1||
+||unit	||string	||Enhet enligt [http://unitsofmeasure.org/ucum.html UCUM]||1..1||
+
 ===[PQType PQType]===
-Typ som baseras på datatypen PQ enligt HL7, och som beskriver överföring av uppmätta värden (”Physical Quantity”). Tillåtna värden för ”unit” bestäms av http://unitsofmeasure.org/ucum.html. Dimension ska preciseras av fältregel vid tillämpning (ex. ”Massa”). Typen är till för presentation av givna mätvärden. Vaksamhet skall iakttagas vid konvertering mellan enheter.
+Typ som baseras på datatypen PQ enligt HL7, och som beskriver överföring av mätbara värden (”Physical Quantity”). Tillåtna värden för ”unit” bestäms av http://unitsofmeasure.org/ucum.html. Dimension ska preciseras av fältregel vid tillämpning (ex. ”Massa”). Vaksamhet skall iakttagas vid konvertering mellan enheter.
 
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
 ||value	||double	||Mätetal mätt i enheten som anges av ”unit”.	||1..1||
@@ -130,13 +143,14 @@ Typ som ska hantera logiska fel.
 ||message ||string ||En beskrivande text som kan visas för användaren.||0..1||
 
 ===[TimePeriodType TimePeriodType]===
+Ett tidsintervall anges normalt sett med en start- och en sluttidpunkt, men öppna intervall är tillåtna. Huruvida ändpunkterna inkluderas i intervallet eller ej bör tydligt beskrivas vid varje enskild tillämpning.
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
 ||start	||TimeStampType	||Periodens starttid. Minst ett av start och end skall anges.	||0..1||
 ||end	||TimeStampType	||Periodens sluttid. Minst ett av start och end skall anges.	||0..1||
 
 ===[TimeStampType TimeStampType]===
-Tidpunkter anges alltid på formatet ”ÅÅÅÅMMDDttmmss”, vilket motsvarar den ISO 8824-kompatibla formatbeskrivningen ”YYYYMMDDhhmmss”.
+Tidpunkter anges alltid på formatet ”ÅÅÅÅMMDDttmmss”, vilket motsvarar den ISO 8601-kompatibla formatbeskrivningen ”YYYYMMDDhhmmss”.
 Tidszon anges inte i meddelandeformaten. All information om datum och tidpunkter som utbyts via tjänsterna ska ange datum och tidpunkter i den tidszon som gäller/gällde i Sverige vid den tidpunkt som respektive datum- eller tidpunktsfält bär information om. Såväl tjänstekonsumenter som tjänsteproducenter skall med andra ord förutsätta att datum och tidpunkter som utbyts är i tidszonerna CET (svensk normaltid) respektive CEST (svensk normaltid med justering för sommartid).
 
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
-||timestamp	||string	||Tid uttrycks med formatet ”ÅÅÅÅMMDDttmmss”	||1..1||
+||timestamp	||string	||Tid uttrycks på formatet ”ÅÅÅÅMMDDttmmss”.	||1..1||
