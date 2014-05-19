@@ -44,9 +44,7 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Patient vars läkemedelsförteckning skall hämtas.
-                    </xs:documentation>
+                    <xs:documentation>Patient vars läkemedelsförteckning skall hämtas.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -56,25 +54,11 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Anropande vårdpersonal.
-                    </xs:documentation>
+                    <xs:documentation>Anropande vårdpersonal.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
-            <xs:element name="forskrivarkod"
-                        type="xs:string"
-                        minOccurs="0"
-                        maxOccurs="1"
-                        nillable="false">
-                <xs:annotation>
-                    <xs:documentation>
-                        Förskrivarens individuella förskrivarkod.
-                        Gruppförskrivarkoder får ej användas.
-                        Valideras mot FORS.
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
+            <xs:element minOccurs="0" maxOccurs="1" nillable="false" name="forskrivarkod" type="forskrivarkod"/>
 
             <xs:element name="identifieradArbetsplats"
                         type="logistics:ArbetsplatsIdentifikation"
@@ -82,9 +66,7 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Identifierad arbetsplats.
-                    </xs:documentation>
+                    <xs:documentation>Identifierad arbetsplats.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -105,10 +87,8 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Information om patienten vars läkemedelsförteckning man hämtat.
-                        Om patienten är markerad som Avliden så returneras ej pdf.
-                    </xs:documentation>
+                    <xs:documentation>Information om patienten vars läkemedelsförteckning man hämtat.
+Om patienten är markerad som Avliden så returneras ej pdf.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -118,9 +98,7 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Utdrag från läkemedelsförteckningen som PDF.
-                    </xs:documentation>
+                    <xs:documentation>Utdrag från läkemedelsförteckningen som PDF.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -130,23 +108,11 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Resultatkod för anropet.
-                    </xs:documentation>
+                    <xs:documentation>Resultatkod för anropet.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
-            <xs:element name='comment'
-                        type='xs:string'
-                        minOccurs='0'
-                        maxOccurs="1"
-                        nillable="false">
-                <xs:annotation>
-                    <xs:documentation>
-                        Kommentar till eventuella fel eller varningar.
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
+            <xs:element minOccurs="0" maxOccurs="1" nillable="false" name="comment" type="comment"/>
 
             <xs:any namespace='##other'
                     processContents='lax'
@@ -155,5 +121,27 @@
 
         </xs:sequence>
     </xs:complexType>
+
+    <xs:simpleType name="comment">
+        <xs:annotation>
+            <xs:documentation>Kommentar till eventuella fel eller varningar.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="1024"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="forskrivarkod">
+        <xs:annotation>
+            <xs:documentation>Förskrivarens individuella förskrivarkod.
+Gruppförskrivarkoder får ej användas.
+Valideras mot FORS.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="7"/>
+            <xs:maxLength value="7"/>
+        </xs:restriction>
+    </xs:simpleType>
 
 </xs:schema>
