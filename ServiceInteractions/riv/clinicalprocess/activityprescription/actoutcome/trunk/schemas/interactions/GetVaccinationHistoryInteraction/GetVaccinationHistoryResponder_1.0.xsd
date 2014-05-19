@@ -17,24 +17,32 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:clinicalprocess:activityprescription:actoutcome:GetVaccinationHistoryResponder:1' xmlns:core='urn:riv:clinicalprocess:activityprescription:actoutcome:1' targetNamespace='urn:riv:clinicalprocess:activityprescription:actoutcome:GetVaccinationHistoryResponder:1' elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'>
-  <xs:import schemaLocation='../../core_components/clinicalprocess_activityprescription_actoutcome_1.0.xsd' namespace='urn:riv:clinicalprocess:activityprescription:actoutcome:1' />
-  <xs:element name='GetVaccinationHistory' type='tns:GetVaccinationHistoryType' />
-  <xs:element name='GetVaccinationHistoryResponse' type='tns:GetVaccinationHistoryResponseType' />
-  <xs:complexType name='GetVaccinationHistoryType'>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:tns="urn:riv:clinicalprocess:activityprescription:actoutcome:GetVaccinationHistoryResponder:1"
+  xmlns:core="urn:riv:clinicalprocess:activityprescription:actoutcome:1"
+  targetNamespace="urn:riv:clinicalprocess:activityprescription:actoutcome:GetVaccinationHistoryResponder:1"
+  elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+  <xs:import
+    schemaLocation="../../core_components/clinicalprocess_activityprescription_actoutcome_1.0.xsd"
+    namespace="urn:riv:clinicalprocess:activityprescription:actoutcome:1"/>
+  <xs:element name="GetVaccinationHistory" type="tns:GetVaccinationHistoryType"/>
+  <xs:element name="GetVaccinationHistoryResponse" type="tns:GetVaccinationHistoryResponseType"/>
+  <xs:complexType name="GetVaccinationHistoryType">
     <xs:sequence>
-      <xs:element name='careUnitHSAid' type='core:HSAidType' minOccurs='0' maxOccurs='unbounded' />
-      <xs:element name='patientId' type='core:PersonIdType' minOccurs='1' maxOccurs='1' />
-      <xs:element name='timePeriod' type='core:DatePeriodType' minOccurs='0' maxOccurs='1' />
-      <xs:element name='sourceSystemHSAid' type='core:HSAidType' minOccurs='0' maxOccurs='1' />
-      <xs:element name='careContactId' type='xs:string' minOccurs='0' maxOccurs='unbounded' />
-      <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
+      <xs:element name="careUnitHSAid" type="core:HSAIdType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="patientId" type="core:PersonIdType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="timePeriod" type="core:DatePeriodType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="sourceSystemHSAid" type="core:HSAIdType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="careContactId" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name='GetVaccinationHistoryResponseType'>
+  <xs:complexType name="GetVaccinationHistoryResponseType">
     <xs:sequence>
-      <xs:element name='vaccinationMedicalRecord' type='core:VaccinationMedicalRecordType' minOccurs='0' maxOccurs='unbounded' />
-      <xs:any namespace='##other' processContents='lax' minOccurs='0' maxOccurs='unbounded' />
+      <xs:element name="vaccinationMedicalRecord" type="core:VaccinationMedicalRecordType"
+        minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="result" type="core:ResultType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>
