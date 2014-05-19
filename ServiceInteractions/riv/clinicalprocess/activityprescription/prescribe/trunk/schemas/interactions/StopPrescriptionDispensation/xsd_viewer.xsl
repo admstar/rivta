@@ -154,6 +154,62 @@
                     <td class="header">Beskrivning</td>
                     <td class="header">Multip.</td>
                 </tr>
+                <xsl:for-each select="*/xs:extension">
+                    <tr>
+                        <td><a href="#{@base}"><xsl:value-of select="@base"/></a></td>
+                        <td>-</td>
+                        <td>Inkluderar objektets fält.</td>
+                        <td>Enligt objekt.</td>
+                    </tr>
+                    <xsl:for-each select="*/xs:element">
+                        <tr>
+                            <td><xsl:value-of select="@name"/></td>
+                            <td>
+                                <xsl:choose>
+                                    <xsl:when test="not(contains(@type, 'xs'))">
+                                        <xsl:choose>
+                                            <xsl:when test="contains(@type, ':')">
+                                                <a href="#{substring-after(@type,':')}"><xsl:value-of select="substring-after(@type,':')"/></a>
+                                            </xsl:when>
+                                            <xsl:otherwise>
+                                                <a href="#{@type}"><xsl:value-of select="@type"/></a>
+                                            </xsl:otherwise>
+                                        </xsl:choose>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:value-of select="substring-after(@type,':')"/>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </td>
+                            <td>
+                                <xsl:value-of select="xs:annotation/xs:documentation"/>
+                            </td>
+                            <td>
+                                <xsl:choose>
+                                    <xsl:when test="@minOccurs!=''">
+                                        <xsl:choose>
+                                            <xsl:when test="@maxOccurs!=''">
+                                                <xsl:value-of select="@minOccurs"/>..<xsl:value-of select="@maxOccurs"/>
+
+                                            </xsl:when>
+                                            <xsl:otherwise>
+                                                <xsl:value-of select="@minOccurs"/>..1
+                                            </xsl:otherwise>
+                                        </xsl:choose>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:choose>
+                                            <xsl:when test="@maxOccurs!=''">
+                                                1..<xsl:value-of select="@maxOccurs"/>
+                                            </xsl:when>
+                                            <xsl:otherwise>1..1</xsl:otherwise>
+                                        </xsl:choose>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </td>
+                        </tr>
+                    </xsl:for-each>
+                </xsl:for-each>
                 <xsl:for-each select="*/xs:choice">
                     <xsl:for-each select="xs:element">
                         <tr>

@@ -44,9 +44,7 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Patient att hämta aktuella ordinationer för.
-                    </xs:documentation>
+                    <xs:documentation>Patient att hämta aktuella ordinationer för.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -56,10 +54,8 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Urval som begränsar antal returnerade poster. Om svarsurval ej är
-                        angivet begränsas antal poster till de 100 första.
-                    </xs:documentation>
+                    <xs:documentation>Urval som begränsar antal returnerade poster. Om svarsurval ej är
+angivet begränsas antal poster till de 100 första.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -70,11 +66,9 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Anger om svaret ska kompletteras med information från Produkt- och artikelregistret.
-                        Se kompletterandeHandelsvaruinformation, kompletterandeLakemedelsartikelinformation
-                        och kompletterandeLakemedelsproduktinformation.
-                    </xs:documentation>
+                    <xs:documentation>Anger om svaret ska kompletteras med information från Produkt- och artikelregistret.
+Se kompletterandeHandelsvaruinformation, kompletterandeLakemedelsartikelinformation
+och kompletterandeLakemedelsproduktinformation.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -95,10 +89,8 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Tidpunkt för senaste ordinationsändring för en patient. Returneras endast
-                        om patienten finns i NOD.
-                    </xs:documentation>
+                    <xs:documentation>Tidpunkt för senaste ordinationsändring för en patient. Returneras endast
+om patienten finns i NOD.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -108,9 +100,7 @@
                         maxOccurs="unbounded"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Aktuella ordinationer för angiven patient.
-                    </xs:documentation>
+                    <xs:documentation>Aktuella ordinationer för angiven patient.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -120,9 +110,7 @@
                         maxOccurs="unbounded"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Eventuell kompletterande läkemedelsartikelinformation.
-                    </xs:documentation>
+                    <xs:documentation>Eventuell kompletterande handelsvaruinformation.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -132,9 +120,7 @@
                         maxOccurs="unbounded"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Eventuell kompletterande läkemedelsartikelinformation.
-                    </xs:documentation>
+                    <xs:documentation>Eventuell kompletterande läkemedelsartikelinformation.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -144,9 +130,7 @@
                         maxOccurs="unbounded"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Eventuell kompletterande läkemedelsproduktinformation.
-                    </xs:documentation>
+                    <xs:documentation>Eventuell kompletterande läkemedelsproduktinformation.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -156,10 +140,8 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Svarsurval returneras om svarsurval är angivet i begäran eller om svarsurval
-                        inte är angivet och totalt antal poster är större än 100.
-                    </xs:documentation>
+                    <xs:documentation>Svarsurval returneras om svarsurval är angivet i begäran eller om svarsurval
+inte är angivet och totalt antal poster är större än 100.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -169,9 +151,7 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Totalt antal poster.
-                    </xs:documentation>
+                    <xs:documentation>Totalt antal poster.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -181,23 +161,11 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Resultatkod för anropet.
-                    </xs:documentation>
+                    <xs:documentation>Resultatkod för anropet.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
-            <xs:element name='comment'
-                        type='xs:string'
-                        minOccurs='0'
-                        maxOccurs="1"
-                        nillable="false">
-                <xs:annotation>
-                    <xs:documentation>
-                        Kommentar till eventuella fel eller varningar.
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
+            <xs:element minOccurs="0" maxOccurs="1" nillable="false" name="comment" type="comment"/>
 
             <xs:any namespace='##other'
                     processContents='lax'
@@ -206,5 +174,15 @@
 
         </xs:sequence>
     </xs:complexType>
+
+    <xs:simpleType name="comment">
+        <xs:annotation>
+            <xs:documentation>Kommentar till eventuella fel eller varningar.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="1024"/>
+        </xs:restriction>
+    </xs:simpleType>
 
 </xs:schema>

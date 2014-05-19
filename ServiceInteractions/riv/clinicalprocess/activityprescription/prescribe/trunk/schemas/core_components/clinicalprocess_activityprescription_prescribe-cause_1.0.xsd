@@ -45,9 +45,7 @@
                         maxOccurs="unbounded"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Huvudordinationsorsak för insättning.
-                    </xs:documentation>
+                    <xs:documentation>Huvudordinationsorsak för insättning.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -57,9 +55,7 @@
                         maxOccurs="unbounded"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Underordinationsorsak för insättning.
-                    </xs:documentation>
+                    <xs:documentation>Underordinationsorsak för insättning.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -80,25 +76,13 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Ordinationsorsak till insättning. Snomed CT-kod används för vald ordinationsorsak.
-                        Koden valideras att den finns i angiven version av Socialstyrelsens
-                        kodsystem för ordinationsorsaker (NKOO).
-                    </xs:documentation>
+                    <xs:documentation>Ordinationsorsak till insättning. Snomed CT-kod används för vald ordinationsorsak.
+Koden valideras att den finns i angiven version av Socialstyrelsens
+kodsystem för ordinationsorsaker (NKOO).</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
-            <xs:element name="annanOrsak"
-                        type="xs:string"
-                        minOccurs="0"
-                        maxOccurs="1"
-                        nillable="false">
-                <xs:annotation>
-                    <xs:documentation>
-                        Ordinationsorsak i fritext om ”Annan orsak” anges.
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
+            <xs:element minOccurs="0" maxOccurs="1" nillable="false" name="annanOrsak" type="annanOrsak"/>
 
             <xs:any namespace="##other"
                     processContents="lax"
@@ -111,53 +95,10 @@
     <xs:complexType name="Orsak">
         <xs:sequence>
 
-            <xs:element name="kod"
-                        type="xs:string"
-                        minOccurs="1"
-                        maxOccurs="1"
-                        nillable="false">
-                <xs:annotation>
-                    <xs:documentation>
-                        Kod för orsaken.
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-
-            <xs:element name="text"
-                        type="xs:string"
-                        minOccurs="1"
-                        maxOccurs="1"
-                        nillable="false">
-                <xs:annotation>
-                    <xs:documentation>
-                        Textutläsning av kod.
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-
-            <xs:element name="register"
-                        type="xs:string"
-                        minOccurs="1"
-                        maxOccurs="1"
-                        nillable="false">
-                <xs:annotation>
-                    <xs:documentation>
-                        Unikt id för det kodsystem som används.
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-
-            <xs:element name="version"
-                        type="xs:string"
-                        minOccurs="1"
-                        maxOccurs="1"
-                        nillable="false">
-                <xs:annotation>
-                    <xs:documentation>
-                        Version av det kodsystem som används.
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
+            <xs:element minOccurs="1" maxOccurs="1" nillable="false" name="kod" type="kod"/>
+            <xs:element minOccurs="1" maxOccurs="1" nillable="false" name="text" type="text"/>
+            <xs:element minOccurs="1" maxOccurs="1" nillable="false" name="register" type="register"/>
+            <xs:element minOccurs="1" maxOccurs="1" nillable="false" name="version" type="version"/>
 
             <xs:any namespace="##other"
                     processContents="lax"
@@ -166,5 +107,55 @@
 
         </xs:sequence>
     </xs:complexType>
+
+    <xs:simpleType name="annanOrsak">
+        <xs:annotation>
+            <xs:documentation>Ordinationsorsak i fritext om ”Annan orsak” anges.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="254"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="kod">
+        <xs:annotation>
+            <xs:documentation>Kod för orsaken.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="20"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="text">
+        <xs:annotation>
+            <xs:documentation>Textutläsning av kod.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="256"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="register">
+        <xs:annotation>
+            <xs:documentation>Unikt id för det kodsystem som används.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="30"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="version">
+        <xs:annotation>
+            <xs:documentation>Version av det kodsystem som används.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="30"/>
+        </xs:restriction>
+    </xs:simpleType>
 
 </xs:schema>

@@ -44,9 +44,7 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Tidpunkt för senast uppläst underlag för utsättning.
-                    </xs:documentation>
+                    <xs:documentation>Tidpunkt för senaste ordinationsändring för en patient.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -56,9 +54,7 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Underlagsversion från receptdepå för dospatienter.
-                    </xs:documentation>
+                    <xs:documentation>Underlagsversion från receptdepå för dospatienter.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -68,9 +64,7 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Information om registrerande och ordinerande vårdpersonal.
-                    </xs:documentation>
+                    <xs:documentation>Information om registrerande och ordinerande vårdpersonal.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -80,9 +74,7 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Utsättningsinformation.
-                    </xs:documentation>
+                    <xs:documentation>Utsättningsinformation.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -92,9 +84,7 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Referens till ordination att sätta ut.
-                    </xs:documentation>
+                    <xs:documentation>Referens till ordination att sätta ut.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -104,10 +94,8 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Klientinformation innehållande anropande systems information.
-                        Obligatorisk information vid anrop till receptregister.
-                    </xs:documentation>
+                    <xs:documentation>Klientinformation innehållande anropande systems information.
+Obligatorisk information vid anrop till receptregister.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -127,9 +115,7 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Referens till ordination som satts ut.
-                    </xs:documentation>
+                    <xs:documentation>Referens till ordination som satts ut.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -139,9 +125,7 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Tidpunkt för uppdaterat underlag efter utsättning.
-                    </xs:documentation>
+                    <xs:documentation>Tidpunkt för uppdaterat underlag efter utsättning.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -151,9 +135,7 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Resultat från VOK-UTS.
-                    </xs:documentation>
+                    <xs:documentation>Resultat från VOK-UTS.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -163,23 +145,11 @@
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>
-                        Resultatkod för anropet.
-                    </xs:documentation>
+                    <xs:documentation>Resultatkod för anropet.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
-            <xs:element name='comment'
-                        type='xs:string'
-                        minOccurs='0'
-                        maxOccurs="1"
-                        nillable="false">
-                <xs:annotation>
-                    <xs:documentation>
-                        Kommentar till eventuella fel eller varningar.
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
+            <xs:element minOccurs="0" maxOccurs="1" nillable="false" name="comment" type="comment"/>
 
             <xs:any namespace='##other'
                     processContents='lax'
@@ -188,4 +158,15 @@
 
         </xs:sequence>
     </xs:complexType>
+
+    <xs:simpleType name="comment">
+        <xs:annotation>
+            <xs:documentation>Kommentar till eventuella fel eller varningar.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="1024"/>
+        </xs:restriction>
+    </xs:simpleType>
+
 </xs:schema>
