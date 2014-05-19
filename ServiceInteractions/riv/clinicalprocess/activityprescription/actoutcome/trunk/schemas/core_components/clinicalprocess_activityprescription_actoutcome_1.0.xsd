@@ -321,6 +321,16 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="PrescriptionReasonType">
+    <xs:annotation>
+      <xs:documentation> </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="reason" type="tns:CVType" minOccurs="1"/>
+      <xs:element name="otherReason" type="xs:string" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="GenericsType">
     <xs:annotation>
       <xs:documentation> </xs:documentation>
@@ -365,58 +375,154 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="PharmaceuticalProductType">
+  <xs:complexType name="DrugType">
     <xs:annotation>
       <xs:documentation> </xs:documentation>
     </xs:annotation>
     <xs:sequence>
       <xs:element name="nplId" type="tns:IIType" minOccurs="0"/>
-      <xs:element name="productName" type="xs:string"/>
       <xs:element name="atcCode" type="tns:CVType" minOccurs="0"/>
       <xs:element name="routeOfAdministration" type="tns:CVType" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
+
   <xs:complexType name="DosageType2">
     <xs:annotation>
       <xs:documentation> </xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="lengthOfTreatment" type="tns:PQIntervalType"/>
-      <xs:element name="maximumTime" type="xs:boolean" minOccurs="0"/>
+      <xs:element name="lengthOfTreatment" type="tns:PQIntervalType" minOccurs="0"/>
+      <xs:element name="isMaximumTreatmentTime" type="xs:boolean" minOccurs="1"/>
       <xs:element name="dosageInstruction" type="xs:string"/>
       <xs:element name="unitDose" type="tns:CVType" minOccurs="0"/>
       <xs:element name="shortNotation" type="xs:string" minOccurs="0"/>
       <xs:element name="setDosage" type="tns:DosageType" minOccurs="0"/>
       <xs:element name="maximumDosage" type="tns:DosageType" minOccurs="0"/>
       <xs:element name="conditionalDosage" type="tns:DosageType" minOccurs="0"/>
+      <xs:element name="frequencyDosage" type="tns:FrequencyDosageType" minOccurs="0"/>
+      <xs:element minOccurs="0" name="periodDosage" type="tns:PeriodDosageType"/>
+      <xs:element minOccurs="0" name="occasionalDose" type="tns:OccasionalDosageType"/>
+      <xs:element minOccurs="0" name="rampedDosage" type="tns:RampedDosageType"/>
+      <xs:element minOccurs="0" name="singleDose" type="tns:SingleDoseType"/>
+      <xs:element minOccurs="0" name="unstructuredDosageInformation"
+        type="tns:UnstructuredDosageInformationType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
+
+  <xs:complexType name="FrequencyDosageType">
+    <xs:annotation>
+      <xs:documentation> </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="dose" type="tns:PQIntervalType" minOccurs="1"/>
+      <xs:element name="frequency" type="tns:PQType" minOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="SingleDoseType">
+    <xs:annotation>
+      <xs:documentation> </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="dose" type="tns:PQIntervalType" minOccurs="1"/>
+      <xs:element name="time" type="tns:TimeStampType" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="UnstructuredDosageInformationType">
+    <xs:annotation>
+      <xs:documentation> </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="text" type="xs:string" minOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="RampedDosageType">
+    <xs:annotation>
+      <xs:documentation> </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="dosageStep" type="tns:PQIntervalType" minOccurs="1"/>
+      <xs:element name="timeStep" type="tns:PQType" minOccurs="1"/>
+      <xs:element name="rampStart" type="tns:RampEndpointType" minOccurs="1"/>
+      <xs:element name="rampEnd" type="tns:RampEndpointType" minOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="RampEndpointType">
+    <xs:annotation>
+      <xs:documentation> </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="a" type="xs:string" minOccurs="1"/>
+      <xs:element name="b" type="xs:string" minOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="PeriodDosageType">
+    <xs:annotation>
+      <xs:documentation> </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="dose" type="tns:PQIntervalType" minOccurs="1"/>
+      <xs:element name="period" type="tns:PQType" minOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="OccasionalDosageType">
+    <xs:annotation>
+      <xs:documentation> </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="period" type="tns:PQType" minOccurs="1"/>
+      <xs:element name="administration" type="tns:AdministrationOccurrenceType" minOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AdministrationOccurrenceType">
+    <xs:annotation>
+      <xs:documentation> </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="dose" type="tns:PQIntervalType" minOccurs="1"/>
+      <xs:element name="time" type="xs:string" minOccurs="0"/>
+      <xs:element name="dayOfPeriod" type="xs:int"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+
   <xs:complexType name="DrugChoiceType">
     <xs:annotation>
       <xs:documentation> </xs:documentation>
     </xs:annotation>
     <xs:sequence>
       <xs:element name="comment" type="xs:string" minOccurs="0"/>
-      <xs:element name="unstructuredInformation" type="tns:UnstructuredInformationType"
-        minOccurs="0"/>
-      <xs:element name="merchandise" type="tns:MerchantType" minOccurs="0"/>
-      <xs:element name="pharmaceuticalItem" type="tns:PharmaceuticalItemType" minOccurs="0"/>
-      <xs:element name="pharmaceuticalProduct" type="tns:PharmaceuticalProductType" minOccurs="0"/>
+      <xs:element name="unstructuredDrugInformation" type="xs:string" minOccurs="0"/>
+      <xs:element name="merchandiseArticleNumber" type="tns:CVType" minOccurs="0"/>
+      <xs:element name="nplPackId" type="tns:CVType" minOccurs="0"/>
+      <xs:element minOccurs="0" name="drugType" type="tns:DrugType"/>
       <xs:element name="generics" type="tns:GenericsType" minOccurs="0"/>
       <xs:element name="dosage" type="tns:DosageType2" maxOccurs="unbounded" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-
     </xs:sequence>
   </xs:complexType>
+
   <xs:complexType name="UnstructuredInformationType">
     <xs:annotation>
       <xs:documentation/>
-
     </xs:annotation>
     <xs:sequence>
-
       <xs:element name="articleNumber" type="tns:CVType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
@@ -432,16 +538,19 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
+
   <xs:complexType name="PQIntervalType">
     <xs:annotation>
       <xs:documentation> </xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="a" type="xs:string"/>
-      <xs:element name="b" type="xs:string" minOccurs="0"/>
+      <xs:element name="low" type="xs:double" minOccurs="0"/>
+      <xs:element name="high" type="xs:double" minOccurs="0"/>
+      <xs:element name="unit" type="xs:string" minOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
+
   <xs:complexType name="TimePeriodType">
     <xs:annotation>
       <xs:documentation>
@@ -458,7 +567,7 @@
       <xs:element name="start" type="tns:TimeStampType" minOccurs="0"/>
       <xs:element name="end" type="tns:TimeStampType" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-      
+
     </xs:sequence>
   </xs:complexType>
 </xs:schema>
