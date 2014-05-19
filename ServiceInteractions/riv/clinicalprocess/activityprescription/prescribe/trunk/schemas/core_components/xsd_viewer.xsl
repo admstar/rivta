@@ -75,8 +75,8 @@
             </head>
             <body>
                 <xsl:call-template name="renterSchemaTypeMatrix" />
-                <xsl:call-template name="renderSchemaComplexTypes" />
-                <xsl:call-template name="renderSchemaSimpleTypes" />
+                <xsl:call-template name="renderSchemaComplexTypes" /> <!-- objekten -->
+                <xsl:call-template name="renderSchemaSimpleTypes" /> <!-- enum, decimal mm -->
             </body>
         </html>
     </xsl:template>
@@ -93,7 +93,7 @@
         <br/>
     </xsl:template>
 
-    <xsl:template name="renderSchemaMatrix" match="*">
+    <xsl:template name="renderSchemaMatrix" match="*">  <!-- alla objekt med länkar + attribut-->
         <xsl:for-each select="child::*">
             <xsl:call-template name="renderMatrixRow"/>
             <xsl:for-each select="document(xs:include/@schemaLocation)">
@@ -102,7 +102,7 @@
         </xsl:for-each>
     </xsl:template>
 
-    <xsl:template name="renderSchemaComplexTypes" match="*">
+    <xsl:template name="renderSchemaComplexTypes" match="*"> <!-- alla complex types objekt APImässigt -->
         <xsl:for-each select="child::*">
             <xsl:call-template name="renderComplexTypes"/>
             <xsl:for-each select="document(xs:include/@schemaLocation)">
@@ -111,7 +111,7 @@
         </xsl:for-each>
     </xsl:template>
 
-    <xsl:template name="renderSchemaSimpleTypes" match="*">
+    <xsl:template name="renderSchemaSimpleTypes" match="*"> <!-- alla simple types objekt APImässigt -->
         <xsl:for-each select="child::*">
             <xsl:call-template name="renderSimpleTypes"/>
             <xsl:for-each select="document(xs:include/@schemaLocation)">
@@ -120,7 +120,7 @@
         </xsl:for-each>
     </xsl:template>
 
-    <xsl:template name="renderMatrixRow" match="*">
+    <xsl:template name="renderMatrixRow" match="*"> <!-- skriver ut alla objekt vi har -->
         <xsl:for-each select="xs:complexType">
             <xsl:for-each select="*">
                 <xsl:for-each select="child::*">
@@ -154,6 +154,62 @@
                     <td class="header">Beskrivning</td>
                     <td class="header">Multip.</td>
                 </tr>
+                <xsl:for-each select="*/xs:extension">
+                    <tr>
+                        <td><a href="#{@base}"><xsl:value-of select="@base"/></a></td>
+                        <td>-</td>
+                        <td>Inkluderar objektets fält.</td>
+                        <td>Enligt objekt.</td>
+                    </tr>
+                    <xsl:for-each select="*/xs:element">
+                            <tr>
+                                <td><xsl:value-of select="@name"/></td>
+                                <td>
+                                    <xsl:choose>
+                                        <xsl:when test="not(contains(@type, 'xs'))">
+                                            <xsl:choose>
+                                                <xsl:when test="contains(@type, ':')">
+                                                    <a href="#{substring-after(@type,':')}"><xsl:value-of select="substring-after(@type,':')"/></a>
+                                                </xsl:when>
+                                                <xsl:otherwise>
+                                                    <a href="#{@type}"><xsl:value-of select="@type"/></a>
+                                                </xsl:otherwise>
+                                            </xsl:choose>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:value-of select="substring-after(@type,':')"/>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </td>
+                                <td>
+                                    <xsl:value-of select="xs:annotation/xs:documentation"/>
+                                </td>
+                                <td>
+                                    <xsl:choose>
+                                        <xsl:when test="@minOccurs!=''">
+                                            <xsl:choose>
+                                                <xsl:when test="@maxOccurs!=''">
+                                                    <xsl:value-of select="@minOccurs"/>..<xsl:value-of select="@maxOccurs"/>
+
+                                                </xsl:when>
+                                                <xsl:otherwise>
+                                                    <xsl:value-of select="@minOccurs"/>..1
+                                                </xsl:otherwise>
+                                            </xsl:choose>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:choose>
+                                                <xsl:when test="@maxOccurs!=''">
+                                                    1..<xsl:value-of select="@maxOccurs"/>
+                                                </xsl:when>
+                                                <xsl:otherwise>1..1</xsl:otherwise>
+                                            </xsl:choose>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </td>
+                            </tr>
+                    </xsl:for-each>
+                </xsl:for-each>
                 <xsl:for-each select="*/xs:choice">
                     <xsl:for-each select="xs:element">
                         <tr>
