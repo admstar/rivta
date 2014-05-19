@@ -28,20 +28,23 @@
   <xs:element name="GetMedicationHistory" type="tns:GetMedicationHistoryType"/>
   <xs:element name="GetMedicationHistoryResponse" type="tns:GetMedicationHistoryResponseType"/>
   <xs:complexType name="GetMedicationHistoryType">
-      <xs:sequence>
-        <xs:element name="careUnitHSAId" type="core:HSAIdType" maxOccurs="unbounded"
-          minOccurs="0"/>
-        <xs:element name="patientId" type="core:PersonIdType"/>
-        <xs:element name="datePeriod" type="core:DatePeriodType" minOccurs="0"/>
-        <xs:element name="sourceSystemHSAId" type="core:HSAIdType" minOccurs="0"/>
-        <xs:element name="careContactId" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-        <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-      </xs:sequence>
+    <xs:sequence>
+      <xs:element name="careUnitHSAId" type="core:HSAIdType" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="careGiverHSAId" type="core:HSAIdType"/>
+      <xs:element name="patientId" type="core:PersonIdType"/>
+      <xs:element name="datePeriod" type="core:DatePeriodType" minOccurs="0"/>
+      <xs:element name="sourceSystemHSAId" type="core:HSAIdType" minOccurs="0"/>
+      <xs:element name="careContactId" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="prescriptionChainId" type="core:IIType"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="prescriptionStatus" type="core:CVType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
   </xs:complexType>
   <xs:complexType name="GetMedicationHistoryResponseType">
     <xs:sequence>
-      <xs:element name="medicationMedicalRecord" type="core:MedicationMedicalRecordType"/>
-      <xs:element name="result" type="core:ResultType" minOccurs="0"/>
+      <xs:element name="medicationMedicalRecord" type="core:MedicationMedicalRecordType"
+        maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="result" type="core:ResultType" minOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
