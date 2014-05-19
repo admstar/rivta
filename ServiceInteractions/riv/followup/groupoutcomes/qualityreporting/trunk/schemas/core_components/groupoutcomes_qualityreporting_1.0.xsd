@@ -17,7 +17,12 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:followup:groupoutcomes:qualityreporting:1' targetNamespace='urn:followup:groupoutcomes:qualityreporting:1' elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' 
+  xmlns:tns='urn:riv:followup:groupoutcomes:qualityreporting:1' 
+  targetNamespace='urn:riv:followup:groupoutcomes:qualityreporting:1' 
+  elementFormDefault='qualified' 
+  attributeFormDefault='unqualified' 
+  version='1.0'
     xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" vc:minVersion="1.1">
   <xs:simpleType name="HSAIdType">
     <xs:restriction base="xs:string"/>
@@ -34,6 +39,18 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:simpleType name="DateType">
+    <xs:annotation>
+      <xs:documentation>
+        Datum uttrycks på formatet ”ÅÅÅÅMMDD”, eller med mindre noggrannhet enligt något av formaten "ÅÅÅÅMM" och "ÅÅÅÅ".
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern
+        value="\d{4}((((0[1-9])|(1[0-2]))((0[1-9])|([12]\d)|(3[01]))?)?|(\-(((0[1-9])|(1[0-2]))(\-((0[1-9])|([12]\d)|(3[01])))?)?)?)"
+      />
+    </xs:restriction>
+  </xs:simpleType>
   <xs:simpleType name="TimeStampType">
     <xs:annotation>
       <xs:documentation>
@@ -53,8 +70,8 @@
       </xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="low" type="tns:TimeStampType" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="high" type="tns:TimeStampType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="low" type="tns:DateType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="high" type="tns:DateType" minOccurs="1" maxOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -186,8 +203,8 @@
       <xs:element name="MeasureIdVersionNumber" type="xs:integer" minOccurs="1" maxOccurs="1"/>
       <xs:element name="MeasureIdVersionDependent" type="tns:IIType" minOccurs="1" maxOccurs="1"/>
       <xs:element name="MeasurePeriod" type="tns:DatePeriodType" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="FirstServiceEncounter" type="tns:TimeStampType" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="LastServiceEncounter" type="tns:TimeStampType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="FirstServiceEncounter" type="tns:DateType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="LastServiceEncounter" type="tns:DateType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="ProportionMeasure" type="tns:ProportionMeasureType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="ContinuousVariableMeasure" type="tns:ContinuousVariableMeasureType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="missingMeasure" type="tns:MissingMeasureType" minOccurs="0" maxOccurs="1"/>
