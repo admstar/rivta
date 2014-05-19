@@ -37,13 +37,14 @@
 @REM ---------------------------------------------------------------------------------
 	
 CD ..
+CD ..
 	
 	
 SET SCHEMADIR=schemas
 	
 	
-SET W0=%SCHEMADIR%\interactions\GetAggregatedQualityReportInteraction\GetAggregatedQualityReportInteraction_1.0_RIVTABP21.wsdl
-SET X0=%SCHEMADIR%\interactions\GetAggregatedQualityReportInteraction\*.xsd
+SET W0=%SCHEMADIR%\interactions\GetQualityIndicatorsInteraction\GetQualityIndicatorsInteraction_1.0_RIVTABP21.wsdl
+SET X0=%SCHEMADIR%\interactions\GetQualityIndicatorsInteraction\*.xsd
 
 SET XCORE=%SCHEMADIR%\core_components\*.xsd
 
