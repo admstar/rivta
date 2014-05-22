@@ -68,7 +68,7 @@
       <xs:element name="performer" type="tns:ActorType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="anatomicalSite" type="tns:CVType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="route" type="tns:CVType" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="dosage" type="tns:DosageType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="dose" type="tns:DoseType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="isDoseComplete" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
       <xs:element name="doseOrdinalNumber" type="xs:integer" minOccurs="0" maxOccurs="1"/>
       <xs:element name="numberOfPrescribedDoses" type="xs:integer" minOccurs="0" maxOccurs="1"/>
@@ -76,7 +76,7 @@
       <xs:element name="commentPrescription" type="xs:string" minOccurs="0" maxOccurs="1"/>
       <xs:element name="commentAdministration" type="xs:string" minOccurs="0" maxOccurs="1"/>
       <xs:element name="patientAdverseEffect" type="tns:CVType" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="vaccineType" type="tns:CVType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="typeOfVaccine" type="tns:CVType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="vaccineName" type="tns:CVType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="vaccineBatchId" type="xs:string" minOccurs="0" maxOccurs="1"/>
       <xs:element name="vaccineManufacturer" type="xs:string" minOccurs="0" maxOccurs="1"/>
@@ -212,7 +212,7 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="DosageType">
+  <xs:complexType name="DoseType">
     <xs:sequence>
       <xs:element name="quantity" type="tns:PQType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="displayName" type="xs:string" minOccurs="1" maxOccurs="1"/>
@@ -313,7 +313,7 @@
       <xs:element name="endOfTreatment" type="tns:TimeStampType" minOccurs="0"/>
       <xs:element name="endOfTreatmentReason" type="tns:CVType" minOccurs="0"/>
       <xs:element name="selfMedication" type="xs:boolean"/>
-      <xs:element name="drugChoice" type="tns:DrugChoiceType" minOccurs="0"/>
+      <xs:element name="drug" type="tns:DrugChoiceType" minOccurs="0"/>
       <xs:element name="dispensationAuthorization" type="tns:DispensationAuthorizationType"
         minOccurs="0"/>
       <xs:element maxOccurs="unbounded" minOccurs="0" name="administration"
@@ -370,8 +370,9 @@
       <xs:element name="administrationId" type="tns:IIType"/>
       <xs:element name="administrationTime" type="tns:TimePeriodType"/>
       <xs:element name="administrationComment" type="xs:string" minOccurs="0"/>
-      <xs:element minOccurs="0" name="drug" type="tns:DrugChoiceType"/>
+      <xs:element minOccurs="0" name="routeOfAdministration" type="tns:CVType"/>
       <xs:element name="administeringHealthcareProfessional" type="tns:HealthcareProfessionalType"/>
+      <xs:element minOccurs="0" name="drug" type="tns:DrugChoiceType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -380,14 +381,14 @@
       <xs:documentation> </xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="nplId" type="tns:IIType" minOccurs="1"/>
+      <xs:element name="nplId" type="tns:CVType" minOccurs="1"/>
       <xs:element name="atcCode" type="tns:CVType" minOccurs="0"/>
       <xs:element name="routeOfAdministration" type="tns:CVType" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="DosageType2">
+  <xs:complexType name="DosageType">
     <xs:annotation>
       <xs:documentation> </xs:documentation>
     </xs:annotation>
@@ -397,9 +398,9 @@
       <xs:element name="dosageInstruction" type="xs:string"/>
       <xs:element name="unitDose" type="tns:CVType" minOccurs="0"/>
       <xs:element name="shortNotation" type="xs:string" minOccurs="0"/>
-      <xs:element name="setDosage" type="tns:DosageType" minOccurs="0"/>
-      <xs:element name="maximumDosage" type="tns:DosageType" minOccurs="0"/>
-      <xs:element name="conditionalDosage" type="tns:DosageType" minOccurs="0"/>
+      <xs:element name="setDosage" type="tns:SetDosageType" minOccurs="0"/>
+      <xs:element name="maximumDosage" type="tns:MaximumDosageType" minOccurs="0"/>
+      <xs:element name="conditionalDosage" type="tns:ConditionalDosageType" minOccurs="0"/>
       <xs:element name="frequencyDosage" type="tns:FrequencyDosageType" minOccurs="0"/>
       <xs:element minOccurs="0" name="periodDosage" type="tns:PeriodDosageType"/>
       <xs:element minOccurs="0" name="occasionalDose" type="tns:OccasionalDosageType"/>
@@ -510,10 +511,10 @@
       <xs:element name="comment" type="xs:string" minOccurs="0"/>
       <xs:element name="unstructuredDrugInformation" type="xs:string" minOccurs="0"/>
       <xs:element name="merchandiseArticleNumber" type="tns:CVType" minOccurs="0"/>
-      <xs:element name="nplPackId" type="tns:CVType" minOccurs="0"/>
-      <xs:element minOccurs="0" name="drugType" type="tns:DrugType"/>
+      <xs:element name="drugArticle" type="tns:CVType" minOccurs="0"/>
+      <xs:element minOccurs="0" name="drug" type="tns:DrugType"/>
       <xs:element name="generics" type="tns:GenericsType" minOccurs="0"/>
-      <xs:element name="dosage" type="tns:DosageType2" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="dosage" type="tns:DosageType" maxOccurs="unbounded" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
