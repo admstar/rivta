@@ -157,7 +157,7 @@
   <xs:complexType name="LegalAuthenticatorType">
     <xs:sequence>
       <xs:element name="signatureTime" type="tns:TimeStampType" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="legalAuthenticatorHSAid" type="tns:HSAIdType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="legalAuthenticatorHSAId" type="tns:HSAIdType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="legalAuthenticatorName" type="xs:string" minOccurs="0" maxOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
@@ -182,7 +182,7 @@
   </xs:complexType>
   <xs:complexType name="OrgUnitType">
     <xs:sequence>
-      <xs:element name="orgUnitHSAid" type="tns:HSAIdType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="orgUnitHSAId" type="tns:HSAIdType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="orgUnitName" type="xs:string" minOccurs="0" maxOccurs="1"/>
       <xs:element name="orgUnitTelecom" type="xs:string" minOccurs="0" maxOccurs="1"/>
       <xs:element name="orgUnitEmail" type="xs:string" minOccurs="0" maxOccurs="1"/>
@@ -401,16 +401,59 @@
       <xs:element name="setDosage" type="tns:SetDosageType" minOccurs="0"/>
       <xs:element name="maximumDosage" type="tns:MaximumDosageType" minOccurs="0"/>
       <xs:element name="conditionalDosage" type="tns:ConditionalDosageType" minOccurs="0"/>
-      <xs:element name="frequencyDosage" type="tns:FrequencyDosageType" minOccurs="0"/>
-      <xs:element minOccurs="0" name="periodDosage" type="tns:PeriodDosageType"/>
-      <xs:element minOccurs="0" name="occasionalDose" type="tns:OccasionalDosageType"/>
-      <xs:element minOccurs="0" name="rampedDosage" type="tns:RampedDosageType"/>
-      <xs:element minOccurs="0" name="singleDose" type="tns:SingleDoseType"/>
-      <xs:element minOccurs="0" name="unstructuredDosageInformation"
-        type="tns:UnstructuredDosageInformationType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
+
+  <xs:complexType name="SetDosageType">
+    <xs:annotation>
+      <xs:documentation> </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="frequencyDosage" type="tns:FrequencyDosageType" minOccurs="0"/>
+      <xs:element name="periodDosage" type="tns:PeriodDosageType" minOccurs="0"/>
+      <xs:element name="occasionDosage" type="tns:OccasionDosageType" minOccurs="0"/>
+      <xs:element name="rampedDosage" type="tns:RampedDosageType" minOccurs="0"/>
+      <xs:element name="singleDose" type="tns:SingleDoseType" minOccurs="0"/>
+      <xs:element name="unstructuredDosageInformation" type="tns:UnstructuredDosageInformationType"
+        minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MaximumDosageType">
+    <xs:annotation>
+      <xs:documentation> </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="frequencyDosage" type="tns:FrequencyDosageType" minOccurs="0"/>
+      <xs:element name="periodDosage" type="tns:PeriodDosageType" minOccurs="0"/>
+      <xs:element name="occasionDosage" type="tns:OccasionDosageType" minOccurs="0"/>
+      <xs:element name="rampedDosage" type="tns:RampedDosageType" minOccurs="0"/>
+      <xs:element name="singleDose" type="tns:SingleDoseType" minOccurs="0"/>
+      <xs:element name="unstructuredDosageInformation" type="tns:UnstructuredDosageInformationType"
+        minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ConditionalDosageType">
+    <xs:annotation>
+      <xs:documentation> </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="1" name="conditionDescription" type="xs:string"/>
+      <xs:element name="frequencyDosage" type="tns:FrequencyDosageType" minOccurs="0"/>
+      <xs:element name="periodDosage" type="tns:PeriodDosageType" minOccurs="0"/>
+      <xs:element name="occasionDosage" type="tns:OccasionDosageType" minOccurs="0"/>
+      <xs:element name="rampedDosage" type="tns:RampedDosageType" minOccurs="0"/>
+      <xs:element name="singleDose" type="tns:SingleDoseType" minOccurs="0"/>
+      <xs:element name="unstructuredDosageInformation" type="tns:UnstructuredDosageInformationType"
+        minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
 
   <xs:complexType name="FrequencyDosageType">
     <xs:annotation>
@@ -449,10 +492,10 @@
       <xs:documentation> </xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="dosageStep" type="tns:PQIntervalType" minOccurs="1"/>
+      <xs:element name="doseStep" type="tns:PQType" minOccurs="1"/>
       <xs:element name="timeStep" type="tns:PQType" minOccurs="1"/>
-      <xs:element name="rampStart" type="tns:RampEndpointType" minOccurs="1"/>
-      <xs:element name="rampEnd" type="tns:RampEndpointType" minOccurs="1"/>
+      <xs:element name="rampStart" type="tns:RampEndpointType"/>
+      <xs:element name="rampStart" type="tns:RampEndpointType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -462,8 +505,12 @@
       <xs:documentation> </xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="a" type="xs:string" minOccurs="1"/>
-      <xs:element name="b" type="xs:string" minOccurs="1"/>
+      <xs:element name="frequencyDosage" type="tns:FrequencyDosageType" minOccurs="0"/>
+      <xs:element name="periodDosage" type="tns:PeriodDosageType" minOccurs="0"/>
+      <xs:element name="occasionDosage" type="tns:OccasionDosageType" minOccurs="0"/>
+      <xs:element name="singleDose" type="tns:SingleDoseType" minOccurs="0"/>
+      <xs:element name="unstructuredDosageInformation" type="tns:UnstructuredDosageInformationType"
+        minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -479,13 +526,14 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="OccasionalDosageType">
+  <xs:complexType name="OccasionDosageType">
     <xs:annotation>
       <xs:documentation> </xs:documentation>
     </xs:annotation>
     <xs:sequence>
       <xs:element name="period" type="tns:PQType" minOccurs="1"/>
-      <xs:element name="administration" type="tns:AdministrationOccurrenceType" minOccurs="1"/>
+      <xs:element name="administration" type="tns:AdministrationOccurrenceType" minOccurs="1"
+        maxOccurs="unbounded"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -501,7 +549,6 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-
 
   <xs:complexType name="DrugChoiceType">
     <xs:annotation>
@@ -568,7 +615,6 @@
       <xs:element name="start" type="tns:TimeStampType" minOccurs="0"/>
       <xs:element name="end" type="tns:TimeStampType" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-
     </xs:sequence>
   </xs:complexType>
 </xs:schema>

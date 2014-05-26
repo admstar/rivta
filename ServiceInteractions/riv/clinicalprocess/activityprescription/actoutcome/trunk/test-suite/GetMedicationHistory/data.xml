@@ -23,6 +23,26 @@ under the License.
     <globaldata>
         <webServiceUrl>http://localhost:8088/mockGetMedicationHistoryResponderBinding</webServiceUrl>
     </globaldata>
+    <testcase id="Basic Testcase">
+        <description>Verifies that the result only contains.
+            The DocumentId's of case 1-7 should be added as a comma-separated list in the
+            expectedDocumentIds field.<br/>
+            The DocumentId's of case 8 should be added in the unexpectedDocumentIds field.<br/>
+            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of MedicationMedicalRecords.
+        </description>
+        <data>
+            <httpHeaderHsaId>112233</httpHeaderHsaId>
+            <logicalAddress>112233</logicalAddress>
+            <patientId>7601011212</patientId>
+            <patientIdType>1.2.752.129.2.1.3.1</patientIdType>
+            <timePeriodStart>20130601</timePeriodStart>
+            <timePeriodEnd>20130630</timePeriodEnd>
+            <!-- Add a list of comma-separated ids that at least should be included in the response -->
+            <expectedDocumentIds>5566770,5566771</expectedDocumentIds>
+            <!-- Add a list of comma-separated ids that should not be included in the response -->
+            <unexpectedDocumentIds>11,12,13</unexpectedDocumentIds>
+        </data>
+    </testcase>
     <testcase id="Date Boundaries">
         <description>Verifies that the result only contains information within the date boundaries for the given patient.<br/>
             This test will require at least eight MedicationMedicalRecords:
@@ -179,6 +199,21 @@ under the License.
     <testcase id="SourceSystemHsaId and LogicalAddress">
         <description>The test verifies that the source system returns a Soap Fault if the logicalAddress and
             sourceSystemHSAid doesn't match.<br/>
+            Enter a PatientId and a CareContactId and the correct SourceSystemHSAid of a CareContact that should be found in the source system.<br/>
+            The field logicalAddress should not match SourceSystemHSAid.<br/>
+            The field httpHeaderHsaId should contain a value that does not affect the list of records.</description>
+        <data>
+            <httpHeaderHsaId>112233</httpHeaderHsaId>
+            <logicalAddress>987654321</logicalAddress>
+            <careUnitHSAid>1123465</careUnitHSAid>
+            <patientId>7601021212</patientId>
+            <patientIdType>1.2.752.129.2.1.3.1</patientIdType>
+            <careContactId>1122334455</careContactId>
+            <sourceSystemHSAid>112233</sourceSystemHSAid>
+        </data>
+    </testcase>
+    <testcase id="activeOnly">
+        <description>The test verifies that all returned medication records are active<br/>
             Enter a PatientId and a CareContactId and the correct SourceSystemHSAid of a CareContact that should be found in the source system.<br/>
             The field logicalAddress should not match SourceSystemHSAid.<br/>
             The field httpHeaderHsaId should contain a value that does not affect the list of records.</description>
