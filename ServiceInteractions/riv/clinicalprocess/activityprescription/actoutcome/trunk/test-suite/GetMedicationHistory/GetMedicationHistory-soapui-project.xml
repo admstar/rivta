@@ -751,17 +751,33 @@ def utils = new GroovyUtils(context)
 def dataFile = new File(utils.projectPath + "/data.xml")
 def source = new XmlDataReader(context, dataFile)
 
-source.load("Basic Testcase")</script></con:config></con:testStep><con:testStep type="request" name="WHEN calling GetMedicationHistory" id="2aaa79cc-9bb1-473f-9723-978cbfd886a7"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetMedicationHistoryResponderBinding</con:interface><con:operation>GetMedicationHistory</con:operation><con:request name="WHEN calling GetMedicationHistory"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:clinicalprocess:activityprescription:actoutcome:GetMedicationHistoryResponder:1" xmlns:urn2="urn:riv:clinicalprocess:activityprescription:actoutcome:1">
+source.load("Basic Testcase")</script></con:config></con:testStep><con:testStep type="request" name="WHEN calling GetMedicationHistory" id="2aaa79cc-9bb1-473f-9723-978cbfd886a7"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetMedicationHistoryResponderBinding</con:interface><con:operation>GetMedicationHistory</con:operation><con:request name="WHEN calling GetMedicationHistory"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="x-mock-response" value="Basic Testcase"/>
+  &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:clinicalprocess:activityprescription:actoutcome:GetMedicationHistoryResponder:1" xmlns:urn2="urn:riv:clinicalprocess:activityprescription:actoutcome:1">
    <soapenv:Header>
       <urn:LogicalAddress>?</urn:LogicalAddress>
    </soapenv:Header>
    <soapenv:Body>
       <urn1:GetMedicationHistory>
-         <urn1:patientId>
-            <urn2:id>?</urn2:id>
-            <urn2:type>?</urn2:type>
+         <urn1:careUnitHSAId>?</urn1:careUnitHSAId>
+         <urn1:careGiverHSAId>?</urn1:careGiverHSAId>
+         <urn1:patientId><urn2:id/>
+            <urn2:type/>
          </urn1:patientId>
-         <urn1:activeOnly>?</urn1:activeOnly>
+         <!--Optional:-->
+         <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
+         <!--Zero or more repetitions:-->
+         <urn1:careContactId>?</urn1:careContactId>
+         <!--Zero or more repetitions:-->
+         <urn1:prescriptionChainId>
+            <urn2:root>?</urn2:root>
+            <!--Optional:-->
+            <urn2:extension>?</urn2:extension>
+            <!--You may enter ANY elements at this point-->
+         </urn1:prescriptionChainId>
+         <urn1:activeOnly>false</urn1:activeOnly>
+         <!--You may enter ANY elements at this point-->
       </urn1:GetMedicationHistory>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="assertionteststep" name="THEN ensure all schemtron rules passes"><con:settings/><con:config xsi:type="con:AssertionTestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:entry><con:id>88b716cb-924d-4e75-9afb-2fe84d8463bb</con:id><con:isGroup>false</con:isGroup><con:sourceId>2aaa79cc-9bb1-473f-9723-978cbfd886a7</con:sourceId><con:propertyName>Response</con:propertyName><con:assertion type="GroovyScriptAssertion" name="Script Assertion"><con:configuration><scriptText>import se.skl.rivta.testsupport.soapui.validation.SchematronValidator
