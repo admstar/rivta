@@ -24,23 +24,16 @@ under the License.
         <webServiceUrl>http://localhost:8088/mockGetMedicationHistoryResponderBinding</webServiceUrl>
     </globaldata>
     <testcase id="Basic Testcase">
-        <description>Verifies that the result only contains.
-            The DocumentId's of case 1-7 should be added as a comma-separated list in the
-            expectedDocumentIds field.<br/>
-            The DocumentId's of case 8 should be added in the unexpectedDocumentIds field.<br/>
-            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of MedicationMedicalRecords.
+        <description>Verifies that the response contains
+            correct patientId<br/>
+            documentId's match the expectedDocumentIds list<br/>
         </description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
             <logicalAddress>112233</logicalAddress>
             <patientId>7601011212</patientId>
             <patientIdType>1.2.752.129.2.1.3.1</patientIdType>
-            <timePeriodStart>20130601</timePeriodStart>
-            <timePeriodEnd>20130630</timePeriodEnd>
-            <!-- Add a list of comma-separated ids that at least should be included in the response -->
             <expectedDocumentIds>5566770,5566771</expectedDocumentIds>
-            <!-- Add a list of comma-separated ids that should not be included in the response -->
-            <unexpectedDocumentIds>11,12,13</unexpectedDocumentIds>
         </data>
     </testcase>
     <testcase id="Date Boundaries">
@@ -97,9 +90,9 @@ under the License.
             <patientIdType>1.2.752.129.2.1.3.1</patientIdType>
             <sourceSystemHSAid>112233</sourceSystemHSAid>
             <!-- Add a list of comma-separated ids that at least should be included in the response -->
-            <expectedDocumentIds></expectedDocumentIds>
+            <expectedDocumentIds>774411,774412</expectedDocumentIds>
             <!-- Add a list of comma-separated ids that should not be included in the response -->
-            <unexpectedDocumentIds>123456</unexpectedDocumentIds>
+            <unexpectedDocumentIds>123456,123457</unexpectedDocumentIds>
         </data>
     </testcase>
     <testcase id="Only PatientId">
