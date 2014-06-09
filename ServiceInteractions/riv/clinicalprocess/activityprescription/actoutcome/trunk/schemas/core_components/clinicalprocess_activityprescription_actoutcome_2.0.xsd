@@ -18,12 +18,12 @@
  under the License.
  -->		
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:tns="urn:riv:clinicalprocess:activityprescription:actoutcome:1"
-  xmlns:codes="urn:riv:clinicalprocess:activityprescription:actoutcome:enums:1"
-  targetNamespace="urn:riv:clinicalprocess:activityprescription:actoutcome:1"
+  xmlns:tns="urn:riv:clinicalprocess:activityprescription:actoutcome:2"
+  xmlns:codes="urn:riv:clinicalprocess:activityprescription:actoutcome:enums:2"
+  targetNamespace="urn:riv:clinicalprocess:activityprescription:actoutcome:2"
   elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
-  <xs:import schemaLocation="./clinicalprocess_activityprescription_actoutcome_enum_1.0.xsd"
-    namespace="urn:riv:clinicalprocess:activityprescription:actoutcome:enums:1"/>
+  <xs:import schemaLocation="./clinicalprocess_activityprescription_actoutcome_enum_2.0.xsd"
+    namespace="urn:riv:clinicalprocess:activityprescription:actoutcome:enums:2"/>
   <xs:complexType name="VaccinationMedicalRecordType">
     <xs:sequence>
       <xs:element name="vaccinationMedicalRecordHeader" type="tns:PatientSummaryHeaderType"
@@ -558,12 +558,43 @@
     </xs:annotation>
     <xs:sequence>
       <xs:element name="comment" type="xs:string" minOccurs="0"/>
-      <xs:element name="unstructuredDrugInformation" type="xs:string" minOccurs="0"/>
-      <xs:element name="merchandiseArticleNumber" type="tns:CVType" minOccurs="0"/>
-      <xs:element name="drugArticle" type="tns:CVType" minOccurs="0"/>
+      <xs:element name="unstructuredDrugInformation" type="tns:UnstructuredDrugInformationType"
+        minOccurs="0"/>
+      <xs:element name="merchandise" type="tns:MerchandiseType" minOccurs="0"/>
+      <xs:element name="drugArticle" type="tns:DrugArticleType" minOccurs="0"/>
       <xs:element minOccurs="0" name="drug" type="tns:DrugType"/>
       <xs:element name="generics" type="tns:GenericsType" minOccurs="0"/>
       <xs:element name="dosage" type="tns:DosageType" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="UnstructuredDrugInformationType">
+    <xs:annotation>
+      <xs:documentation/>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="unstructuredInformation" type="xs:string"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MerchandiseType">
+    <xs:annotation>
+      <xs:documentation/>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="articleNumber" type="tns:CVType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DrugArticleType">
+    <xs:annotation>
+      <xs:documentation/>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="nplPackId" type="tns:CVType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
