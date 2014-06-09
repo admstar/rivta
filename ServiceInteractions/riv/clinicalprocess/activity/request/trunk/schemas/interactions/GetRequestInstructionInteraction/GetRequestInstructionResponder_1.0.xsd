@@ -24,15 +24,13 @@
 	<xs:complexType name="GetRequestInstructionType">
 		<xs:sequence>
 			<xs:element name="diagnosisGroup" type="xs:string"/>
-			<xs:element ref="core:requestReceiver"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="GetRequestInstructionResponseType">
 		<xs:sequence>
-			<xs:element name="instruction" type="xs:string"/>
-			<xs:element name="ResultCode" type="core:ResultCodeEnum"/>
-			<xs:element name="comment" type="xs:string" minOccurs="0"/>
+			<xs:element name="instruction" type="core:InstructionType"/>
+			<xs:element name="result" type="core:ResultType"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>

@@ -19,20 +19,18 @@
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:clinicalprocess:activity:request:ProcessRequestConfirmationResponder:1" xmlns:core="urn:riv:clinicalprocess:activity:request:1" targetNamespace="urn:riv:clinicalprocess:activity:request:ProcessRequestConfirmationResponder:1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
 	<xs:import namespace="urn:riv:clinicalprocess:activity:request:1" schemaLocation="../../core_components/clinicalprocess_activity_request_1.0.xsd"/>
+	<xs:import namespace="urn:riv:clinicalprocess:activity:request:request:1" schemaLocation="../../core_components/request_1.0.xsd"/>
 	<xs:element name="ProcessRequestConfirmation" type="tns:ProcessRequestConfirmationType"/>
 	<xs:element name="ProcessRequestConfirmationResponse" type="tns:ProcessRequestConfirmationResponseType"/>
 	<xs:complexType name="ProcessRequestConfirmationType">
 		<xs:sequence>
 			<xs:element ref="core:requestConfirmation"/>
-			<!--Attachment of the original request-->
-			<xs:element ref="core:originalRequest"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ProcessRequestConfirmationResponseType">
 		<xs:sequence>
-			<xs:element name="ResultCode" type="core:ResultCodeEnum"/>
-			<xs:element name="comment" type="xs:string" minOccurs="0"/>
+			<xs:element name="result" type="core:ResultType"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>

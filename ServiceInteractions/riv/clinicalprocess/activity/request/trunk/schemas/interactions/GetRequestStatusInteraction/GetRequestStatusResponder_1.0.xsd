@@ -25,14 +25,15 @@
 		<xs:sequence>
 			<xs:element ref="core:requestId"/>
 			<xs:element ref="core:personId"/>
+			<xs:element name="typeOfRequest" type="core:CVType" minOccurs="0"/>
+			<xs:element name="timePeriod" type="core:TimePeriodType" minOccurs="0"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="GetRequestStatusResponseType">
 		<xs:sequence>
-			<xs:element ref="core:requestStatus" maxOccurs="unbounded"/>
-			<xs:element name="ResultCode" type="core:ResultCodeEnum"/>
-			<xs:element name="comment" type="xs:string" minOccurs="0"/>
+			<xs:element ref="core:requestStatus" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="result" type="core:ResultType"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
