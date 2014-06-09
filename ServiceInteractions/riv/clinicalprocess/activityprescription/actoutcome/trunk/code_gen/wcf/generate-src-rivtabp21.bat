@@ -26,9 +26,9 @@ CD ..
 SET SCHEMADIR=..\schemas
 	
 	
-SET W0=%SCHEMADIR%\interactions\GetVaccinationHistoryInteraction\GetVaccinationHistoryInteraction_1.0_RIVTABP21.wsdl
+SET W0=%SCHEMADIR%\interactions\GetVaccinationHistoryInteraction\GetVaccinationHistoryInteraction_2.0_RIVTABP21.wsdl
 SET X0=%SCHEMADIR%\interactions\GetVaccinationHistoryInteraction\*.xsd
-SET W0=%SCHEMADIR%\interactions\GetMedicationHistoryInteraction\GetMedicationHistoryInteraction_1.0_RIVTABP21.wsdl
+SET W0=%SCHEMADIR%\interactions\GetMedicationHistoryInteraction\GetMedicationHistoryInteraction_2.0_RIVTABP21.wsdl
 SET X0=%SCHEMADIR%\interactions\GetMedicationHistoryInteraction\*.xsd
 
 SET XCORE=%SCHEMADIR%\core_components\*.xsd
@@ -37,7 +37,7 @@ SET SCHEMAS=%XCORE% %W0% %X0%
 
 SET OUTFILE=/out:wcf\generated-src\GetVaccinationHistoryInteractions.cs
 SET APPCONFIG=/config:wcf\generated-src\app.config
-SET NAMESPACE=/namespace:*,Riv.clinicalprocess.activityprescription.actoutcome.Schemas.v1
+SET NAMESPACE=/namespace:*,Riv.clinicalprocess.activityprescription.actoutcome.Schemas.v2
 SET SVCUTIL="svcutil.exe"
 %SVCUTIL% /language:cs %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
 
