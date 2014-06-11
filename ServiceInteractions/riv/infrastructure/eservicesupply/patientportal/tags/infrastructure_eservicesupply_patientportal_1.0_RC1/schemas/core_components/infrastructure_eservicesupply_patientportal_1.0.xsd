@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->		
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tns='urn:riv:infrastructure::eservicesupply:patientportal:1' targetNamespace='urn:riv:infrastructure::eservicesupply:patientportal:1' elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'>
+<xs:simpleType name="SubjectOfCareIdType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="^[0-9]{8}[0-9pPtTfF][0-9]{3}$"/>
+		</xs:restriction>
+	</xs:simpleType>
+		<xs:simpleType name="HsaIdType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="ResultCodeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OK"/>
+			<xs:enumeration value="ERROR"/>
+			<xs:enumeration value="INFO"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ErrorCodeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Unavailable"/>
+			<xs:enumeration value="Unauthorized"/>
+			<xs:enumeration value="IllegalArgument"/>
+			<xs:enumeration value="Unknown"/>
+		</xs:restriction>
+	</xs:simpleType>	
+	
+	<xs:complexType name="OrganisationUnitType">
+        <xs:annotation>
+        	<xs:documentation>The organisationunit that is considered to be the the the information source/sender </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+			<xs:element name="unitId" type="tns:OrganisationUnitIdType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="unitName" type="xs:string"
+				minOccurs="1" maxOccurs="1"/>
+			<xs:element name="unitAddress"
+				type="xs:string" minOccurs="0" />
+			<xs:element name="unitPostalCode"
+				type="xs:string" minOccurs="0" />
+			<xs:element name="unitPostalCity"
+				type="xs:string" minOccurs="0" />
+			<xs:element name="unitTelephone"
+				type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="MessageType">
+				<xs:sequence>
+					<xs:element name="organisationUnit"
+						type="tns:OrganisationUnitType" minOccurs="1" maxOccurs="1" />
+					<xs:element name="messageThreadId" type="xs:string"
+						minOccurs="0" maxOccurs="1" />
+					<xs:element name="MessageDescription" type="xs:string"
+						minOccurs="0" maxOccurs="1" />
+					<xs:element name="messageText" type="xs:string"
+						minOccurs="1" maxOccurs="1" />
+					<xs:element name="SSOLink" type="tns:SSOLinkType" minOccurs="0" maxOccurs="1"></xs:element>
+				</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="notificationMethodType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SMS"></xs:enumeration>
+			<xs:enumeration value="email"></xs:enumeration>
+			<xs:enumeration value="other"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="SSOLinkType">
+        <xs:annotation>
+        	<xs:documentation>Information for creating a linkt that supports single sign on to a related system
+base url for the system is a configuration and is inserted by config, key is linksystemId</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+			<xs:element name="systemID" type="xs:string"
+				minOccurs="1" maxOccurs="1">
+			</xs:element>
+			<xs:element name="text" type="xs:string" minOccurs="1"
+				maxOccurs="1">
+			</xs:element>
+			<xs:element name="queryString" type="xs:string"
+				minOccurs="0" maxOccurs="1">
+			</xs:element>
+            <xs:element name="type" type="tns:linkTypeType" minOccurs="0" maxOccurs="1"></xs:element>
+        </xs:sequence>
+	</xs:complexType>
+
+
+	<xs:simpleType name="linkTypeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="widget"></xs:enumeration>
+			<xs:enumeration value="newWin"></xs:enumeration>
+			<xs:enumeration value="embed"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="OrganisationUnitIdType">
+		<xs:simpleContent>
+			<xs:extension base="tns:HsaIdType"></xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+</xs:schema>
