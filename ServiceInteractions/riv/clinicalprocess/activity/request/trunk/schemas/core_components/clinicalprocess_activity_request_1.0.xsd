@@ -33,9 +33,9 @@
 	
 	<xs:complexType name="RequestType">
 		<xs:sequence>
-			<!--eRemiss-id-->
+			<!--remiss-id-->
 			<xs:element name="requestId" type="RequestIdType"/>
-			<!--e-remisstyp-->
+			<!--remisstyp-->
 			<xs:element name="typeOfRequest" type="codes:codeForRequestType"/>
 			<!--versionstidpunkt-->
 			<xs:element name="versionTimeStamp" type="TimeStampType"/>
@@ -55,7 +55,7 @@
 			<xs:element name="intermediaryParticipant" type="IntermediaryType" minOccurs="0" maxOccurs="unbounded"/>
 			<!--kompletterande administrativ information-->
 			<xs:element name="additionalInformation" type="AdditionalInformationType"/>
-			<!--Borde ligga under PatientType?-->
+			<!--Varningsinformation-->
 			<xs:element name="awarenessInformation" type="AwarenessInformationType" minOccurs="0"/>
 			<!--innehåller Frågeställning-->
 			<xs:element name="questionFormulation" type="QuestionFormulationType"/>
@@ -63,12 +63,14 @@
 			<xs:element name="paymentCommitment" type="PaymentCommitmentType" minOccurs="0"/>
 			<!--bilaga-->
 			<xs:element name="attachment" type="AttachmentType" minOccurs="0" maxOccurs="unbounded"/>
+			<!-- id för individanpassad vårdprocess -->
+			<xs:element name="careProcessId" type="xs:string" minOccurs="0"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="RequestConfirmationType">
 		<xs:sequence>
-			<!--besvarar eRemiss.eRemiss-id-->
+			<!--besvarar remiss.remiss-id-->
 			<xs:element name="requestId" type="RequestIdType"/>
 			<!--svars-id-->
 			<xs:element name="requestConfirmationId" type="RequestIdType"/>
@@ -219,16 +221,11 @@ Examples: 1
 							<xs:documentation>Nationellt samordningsnummer</xs:documentation>
 						</xs:annotation>
 					</xs:enumeration>
-					<xs:enumeration value="1.2.752.129.2.1.3.2">
-						<xs:annotation>
-							<xs:documentation>Nationellt reservnummer</xs:documentation>
-						</xs:annotation>
-					</xs:enumeration>
 				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>
 	</xs:complexType>
-	<!-- Type for carrying an address, modeled after navnet with addition of postBox -->
+	<!-- Type for carrying an address, modelled after Skatteverket Navet with addition of postBox -->
 	<xs:complexType name="AddressType">
 		<xs:sequence>
 			<xs:element name="careOf" minOccurs="0">
@@ -458,6 +455,7 @@ Examples: 1
 	<!-- Condition Types -->
 	<xs:complexType name="ConditionType">
 		<xs:sequence>
+			<xs:element name="id" type="ConditionIdType" minOccurs="0"/>
 			<xs:element name="text" minOccurs="0">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
@@ -481,7 +479,7 @@ Examples: 1
 	<!-- Activity types -->
 	<xs:complexType name="ActivityType">
 		<xs:sequence>
-			<xs:element name="id" type="ActivityIdType"/>
+			<xs:element name="id" type="ActivityIdType" minOccurs="0"/>
 			<xs:element name="text" minOccurs="0">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
@@ -516,10 +514,8 @@ Examples: 1
 				<xs:restriction base="xs:string">
 					<xs:enumeration value="1.2.752.116.1.3.2.1.4"/>
 					<xs:enumeration value="1.2.752.116.2.1.1"/>
-					<xs:enumeration value="1.2.752.97.3.1.11"/>
 					<!--KVÅ-->
 					<!--Snomed CT-->
-					<!--SLL IKK-->
 				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>
@@ -588,7 +584,7 @@ Examples: 1
     </xs:complexType>
 	<xs:complexType name="PaymentCommitmentType">
 		<xs:sequence>
-			<xs:element name="paymentCommitmentId" type="PaymentCommitmentIdType"/>
+			<xs:element name="paymentCommitmentId" type="PaymentCommitmentIdType" minOccurs="0"/>
 			<xs:element name="commitmentType" type="codes:codeForCommitmentType"/>
 			<xs:element name="commitmentTypeChapter" type="codes:codeForCommitmentTypeChapter" minOccurs="0"/>
 			<xs:element name="validity" type="TimeIntervalType"/>
@@ -663,7 +659,7 @@ Examples: 1
 	<xs:complexType name="RequestStatusType">
 		<xs:sequence>
 			<!--RemissStatus-id-->
-			<xs:element name="requestStatusId" type="RequestStatusIdType"/>
+			<xs:element name="requestStatusId" type="RequestStatusIdType" minOccurs="0"/>
 			<!--RemissStatus-->
 			<xs:element name="requestStatus" type="CVType"/>
 			<!--RemissStatustid-->
@@ -703,7 +699,7 @@ Examples: 1
 			<xs:element name="urn" type="URNType"/>
 			<xs:element name="id" type="xs:string"/>
 			<xs:element name="mimetype" type="xs:string"/>
-			<xs:element name="size" type="xs:int"/>
+			<xs:element name="size" type="xs:long"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -735,10 +731,8 @@ Examples: 1
 	</xs:simpleType>
 	<xs:simpleType name="ErrorCodeEnum">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="INVALID_REQUEST"/>
-            <xs:enumeration value="TRANSFORMATION_ERROR"/>
+            <xs:enumeration value="VALIDATION_ERROR"/>
             <xs:enumeration value="APPLICATION_ERROR"/>
-            <xs:enumeration value="TECHNICAL_ERROR"/>
         </xs:restriction>
     </xs:simpleType>
 	<xs:complexType name="ResultType">
@@ -750,7 +744,7 @@ Examples: 1
             <xs:element name="resultCode" type="ResultCodeEnum"/>
             <xs:element name="errorCode" type="ErrorCodeEnum" minOccurs="0"/>
             <xs:element name="logId" type="xs:string"/>
-            <xs:element minOccurs="0" name="subCode" type="xs:string"/>
+            <xs:element name="subCode" type="xs:string" minOccurs="0/>
             <xs:element name="message" type="xs:string" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
