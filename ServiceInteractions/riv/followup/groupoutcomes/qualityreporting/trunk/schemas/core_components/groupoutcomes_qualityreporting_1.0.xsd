@@ -42,23 +42,27 @@
   <xs:simpleType name="DateType">
     <xs:annotation>
       <xs:documentation>
-        Datum uttrycks på formatet ”ÅÅÅÅMMDD”, eller med mindre noggrannhet enligt något av formaten "ÅÅÅÅMM" och "ÅÅÅÅ".
+        Datum uttrycks på formatet ”ÅÅÅÅMMDD”
       </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:pattern
-        value="\d{4}((((0[1-9])|(1[0-2]))((0[1-9])|([12]\d)|(3[01]))?)?|(\-(((0[1-9])|(1[0-2]))(\-((0[1-9])|([12]\d)|(3[01])))?)?)?)"
-      />
+      <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="TimeStampType">
     <xs:annotation>
       <xs:documentation>
-        Tidsangivelse med varierbar precision från år till nanosekund.
+        A quantity specifying a point on the axis of natural time.
+        A point in time is most often represented as a calendar
+        expression.
+        
+        The time has the format YYYYMMDDhhmmss
       </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])(0[0-9]|1[0-9]|2[0123])([0-5])([0-9])([0-5])([0-9])"/>
+      <xs:pattern
+        value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])(0[0-9]|1[0-9]|2[0123])([0-5])([0-9])([0-5])([0-9])"
+      />
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="DatePeriodType">
@@ -97,17 +101,6 @@
     <xs:sequence>
       <xs:element name="low" type="xs:double" minOccurs="1" maxOccurs="1"/>
       <xs:element name="high" type="xs:double" minOccurs="1" maxOccurs="1"/>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="DataControllerType">
-    <xs:annotation>
-      <xs:documentation>
-        Personuppgiftsansvarig för källsystemets data.
-      </xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="HSAId" type="tns:HSAIdType" minOccurs="1" maxOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -158,7 +151,6 @@
       <xs:element name="DocumentTime" type="tns:TimeStampType" minOccurs="1" maxOccurs="1"/>
       <xs:element name="ReportingPeriod" type="tns:DatePeriodType" minOccurs="1" maxOccurs="1"/>
       <xs:element name="ReportingSystem" type="tns:ReportingSystemType" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="DataController" type="tns:DataControllerType" minOccurs="1" maxOccurs="1"/>
       <xs:element name="ReportingOrganization" type="tns:ReportingOrganizationType" minOccurs="1" maxOccurs="1"/>
       <xs:element name="Measurement" type="tns:MeasurementType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
