@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+
+# Version 1.2 - 2014-02-21
+#   Added 
 # Version 1.1 - 2014-02-21
 #   Added a check of the file names of the TKB and AB in the docs directory.
 # Version 1.0 - 2014-01-31 - LEO
