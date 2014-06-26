@@ -111,7 +111,7 @@
       </xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="HSAId" type="tns:HSAIdType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="hsaId" type="tns:HSAIdType" minOccurs="1" maxOccurs="1"/>
       <xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
@@ -123,7 +123,7 @@
       </xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="HSAId" type="tns:HSAIdType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="hsaId" type="tns:HSAIdType" minOccurs="1" maxOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -147,12 +147,11 @@
       </xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="DocumentId" type="tns:IIType" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="DocumentTime" type="tns:TimeStampType" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="ReportingPeriod" type="tns:DatePeriodType" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="ReportingSystem" type="tns:ReportingSystemType" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="ReportingOrganization" type="tns:ReportingOrganizationType" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="Measurement" type="tns:MeasurementType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="measurementChecksum" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="reportingPeriod" type="tns:DatePeriodType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="reportingSystem" type="tns:ReportingSystemType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="reportingOrganization" type="tns:ReportingOrganizationType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="measurement" type="tns:MeasurementType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -177,16 +176,16 @@
       </xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="MeasureIdVersionIndependent" type="tns:IIType" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="MeasureIdVersionNumber" type="xs:integer" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="MeasureIdVersionDependent" type="tns:IIType" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="MeasurePeriod" type="tns:DatePeriodType" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="FirstServiceEncounter" type="tns:DateType" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="LastServiceEncounter" type="tns:DateType" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="ProportionMeasure" type="tns:ProportionMeasureType" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="ContinuousVariableMeasure" type="tns:ContinuousVariableMeasureType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="measureIdVersionIndependent" type="tns:IIType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="measureIdVersionNumber" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="measureIdVersionDependent" type="tns:IIType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="measurePeriod" type="tns:DatePeriodType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="firstServiceEncounter" type="tns:DateType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="lastServiceEncounter" type="tns:DateType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="proportionMeasure" type="tns:ProportionMeasureType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="continuousVariableMeasure" type="tns:ContinuousVariableMeasureType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="missingMeasure" type="tns:MissingMeasureType" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="PerformingOrganization" type="tns:PerformingOrganizationType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="performingOrganization" type="tns:PerformingOrganizationType" minOccurs="1" maxOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -197,14 +196,14 @@
       </xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="Rate" type="xs:double" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="Denominator" type="xs:double" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="Numerator" type="xs:double" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="ConfidenceInterval95percent" type="tns:ConfidenceInterval95percentType" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="StandardDeviation" type="xs:double" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="Coverage" type="xs:double" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="Exclusions" type="xs:double" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="ReferenceIntervalRate" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="rate" type="xs:double" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="denominator" type="xs:double" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="numerator" type="xs:double" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="confidenceInterval95percent" type="tns:ConfidenceInterval95percentType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="standardDeviation" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="coverage" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="exclusions" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="referenceIntervalRate" type="xs:double" minOccurs="0" maxOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -215,14 +214,14 @@
       </xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="MeasurePopulation" type="xs:double" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="Value" type="tns:PQType" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="Method" type="tns:ObservationmethodAggregateEnum" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="ConfidenceInterval95percent" type="tns:ConfidenceInterval95percentType" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="StandardDeviation" type="xs:double" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="Coverage" type="xs:double" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="Exclusions" type="xs:double" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="ReferenceIntervalValue" type="tns:PQType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="measurePopulation" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="value" type="tns:PQType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="method" type="tns:ObservationmethodAggregateEnum" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="confidenceInterval95percent" type="tns:ConfidenceInterval95percentType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="standardDeviation" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="coverage" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="exclusions" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="referenceIntervalValue" type="tns:PQType" minOccurs="0" maxOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -245,11 +244,11 @@
       </xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="HSAId" type="tns:HSAIdType" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="OrganizationName" type="xs:string" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="OrganizationType" type="tns:OrganizationTypeCodeEnum" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="OrganizationId" type="tns:IIType" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="AsOrganizationPartOf" type="tns:PerformingOrganizationType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="hsaId" type="tns:HSAIdType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="organizationName" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="organizationType" type="tns:OrganizationTypeCodeEnum" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="organizationId" type="tns:IIType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="asOrganizationPartOf" type="tns:PerformingOrganizationType" minOccurs="0" maxOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
