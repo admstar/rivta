@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 
-
-# Version 1.2 - 2014-02-21
-#   Added 
-# Version 1.1 - 2014-02-21
+# Version 1.2 - 2014-06-26 - LEO
+#   The version correspond to RIVTA Konfigurationsstyrnig 2.0.5
+#   Changed the verification of TKB and AB. Should not contain version information anymore.
+#   Check that for a domain version A.B.C, C cannot be 0.
+#   Run svn log to indicate if a tag has been modified after creation
+#   Make the message clearer that regualar expressions are used to match file and directory names
+# Version 1.1 - 2014-02-21 - LEO
 #   Added a check of the file names of the TKB and AB in the docs directory.
 # Version 1.0 - 2014-01-31 - LEO
 #   Initial version
@@ -59,6 +62,7 @@ MANDATORYCONTENT = {
 # Global variables 
 globRc = 0
 analyzeMode = ''
+domainName = ''
 domainNameVersionRc = ''
 
 ####################################################################################
@@ -74,6 +78,7 @@ def qprint(string):
 ####################################################################################
 def verifyDir(subDir):
 	global globRc
+	global domainName
 	global domainNameVersionRc
 
 	if subDir == '':
@@ -106,7 +111,8 @@ def verifyDir(subDir):
 	for pattern in dirPattern:
 		# Get a pattern at a time
 		pString = pattern[0]
-		pString = pString.replace('#DOMAIN#', domainNameVersionRc)
+#		pString = pString.replace('#DOMAIN#', domainNameVersionRc)
+		pString = pString.replace('#DOMAIN#', domainName)
 		pCtrl = pattern[1]
 
 		# Count how many times the current pattern occurs in the directory
@@ -122,12 +128,12 @@ def verifyDir(subDir):
 		if pCtrl == '0':
 			# This is an optional item
 			if noOccur < 1:
-				qprint('   *** Information - optional item not included: ' + pString)
+				qprint('   *** Information - optional item not included (regular expression): "' + pString + '"')
 		elif pCtrl == '1':
 			# There should be at least one occurance				
 			if noOccur < 1:
 				globRc = globRc+1
-				qprint('   *** Error   - Missing mandatory item: ' + pString)
+				qprint('   *** Error   - Missing mandatory item (regular expression): "' + pString + '"')
 		elif pCtrl == '2':
 			# There should be at least two occurances
 			if noOccur < 2:
@@ -143,7 +149,8 @@ def verifyDir(subDir):
 		for pattern in dirPattern:
 			# Compare it to all patterns
 			pString = pattern[0]
-			pString = pString.replace('#DOMAIN#', domainNameVersionRc)
+#			pString = pString.replace('#DOMAIN#', domainNameVersionRc)
+			pString = pString.replace('#DOMAIN#', domainName)
 
 			rePattern = re.compile(pString)
 			mObj = rePattern.search(dirItem)
@@ -170,10 +177,14 @@ def verifyDir(subDir):
 
 
 ####################################################################################
-# getNameAboveTrunk - extract name of domain based on directory names above trunk
+# getNameAboveTrunk - extract name of domain based on directory names above the 
+# trunk 
 ####################################################################################
 def getNameAboveTrunk(sourceDir):
 	# Get name of actual directories from sourcedir (trunk) upwards
+
+	global domainName
+
 	head, dummy = os.path.split(sourceDir)
 	head, lvl3  = os.path.split(head)
 	head, lvl2  = os.path.split(head)
@@ -198,6 +209,7 @@ def getNameAboveTrunk(sourceDir):
 
 	print('    Domain folder structure: ' + dnFolders.replace('_','/'))
 
+	domainName = dnFolders
 	return(dnFolders)
 
 ####################################################################################
@@ -205,6 +217,7 @@ def getNameAboveTrunk(sourceDir):
 ####################################################################################
 def verifyTag(sourceDir):
 	global globRc
+	global domainName
 	
 	# Get name of actual directories from sourcedir upwards
 	head, tagName = os.path.split(sourceDir)
@@ -215,6 +228,7 @@ def verifyTag(sourceDir):
 
 	qprint('')
 	qprint('Analyzing TAG name: ' + tagName)	
+	qprint('')
 
 	# We must check if there is an old 2-level domain structure
 	if lvl1 == TOPLEVELDOMAINDIRECTORY:
@@ -229,8 +243,6 @@ def verifyTag(sourceDir):
 		dnFolders = lvl1 + '_' + lvl2 + '_' + lvl3
 	else:
 		dnFolders = lvl2 + '_' + lvl3
-
-	print('    Domain folder structure: ' + dnFolders.replace('_','/'))
 
 	# Extract the name parts of the name of the TAG directory 
 	rest = tagName
@@ -249,18 +261,18 @@ def verifyTag(sourceDir):
 		dnTagName = tlvl2 + '_' + tlvl3
 
 	# Verification 1 - verify that the domain name part of tag is correct
-	print dnFolders, dnTagName
 	if not dnFolders == dnTagName:
 		qprint('   ** Error: The name part of the tag folder ("' + dnTagName + '") is not equal to domain folder structure ("' + dnFolders.replace('_','/') + '")')
 		globRc = globRc+1
 		return
 
 	# Verification 2 - verify that the version is two or three digits with dots in between
-	rePattern = re.compile('[0-9]+\.[0-9]+(\.[0-9]+)?$')
+	# OBS, the optional third number can not be 0
+	rePattern = re.compile('[0-9]+\.[0-9]+(\.[1-9]+)?$')
 	mObj = rePattern.match(tversion)
 
 	if not mObj:
-		qprint('   ** Error: The version part of the tag folder ("' + tversion + '") is not two or three numbers with dots in between!')
+		qprint('   ** Error: The version part of the tag folder ("' + tversion + '") is not two or three numbers with dots in between, where the third number is not 0')
 		globRc = globRc+1
 		return
 
@@ -274,24 +286,25 @@ def verifyTag(sourceDir):
 			qprint('   ** Error: The RC part of the tag folder ("' + trc + '") is not "RC" followed by a number!')
 			globRc = globRc+1
 			return
-	
+
+	domainName = dnTagName	
 	domainNameVersionRc = dnTagName + '_' + tversion
 	if trc:
 		domainNameVersionRc = domainNameVersionRc + '_' + trc
 
 	return(domainNameVersionRc)
 
-def verifyMavenPomVersion():
-	"""Parses a maven pom file for the version element and compares it with the tag directory name. 
-	"""
-	global domainNameVersionRc
-	pom_xml_file = 'code_gen/jaxws/pom.xml'
-	if os.path.isfile(pom_xml_file):
-		version = pom.parse('code_gen/jaxws/pom.xml').getroot().find('{http://maven.apache.org/POM/4.0.0}version')
-		if not domainNameVersionRc.endswith(version.text.replace('-', '_')):
-			qprint('   **  Warning - Maven pom version differs from tag version!')
-	else:
-		qprint('   **  Warning - Maven pom file not found!')
+#def verifyMavenPomVersion():
+#	"""Parses a maven pom file for the version element and compares it with the tag directory name. 
+#	"""
+#	global domainNameVersionRc
+#	pom_xml_file = 'code_gen/jaxws/pom.xml'
+#	if os.path.isfile(pom_xml_file):
+#		version = pom.parse('code_gen/jaxws/pom.xml').getroot().find('{http://maven.apache.org/POM/4.0.0}version')
+#		if not domainNameVersionRc.endswith(version.text.replace('-', '_')):
+#			qprint('   **  Warning - Maven pom version differs from tag version!')
+#	else:
+#		qprint('   **  Warning - Maven pom file not found!')
 
 ####################################################################################
 # Start of main program
@@ -349,7 +362,9 @@ elif tagName == 'trunk':
 
 else:
 	# For example when run on an extracted zip file
+	# Not yet used
 	print('In neither tag nor trunk dir')
+	globRc = 42;
 	analyzeMode = 'OTHER'	      
 
 # Set up zip directory
@@ -391,8 +406,14 @@ else:
 	domainNameVersionRc = ''
 
 # Then, finally, lets get going, recursevly analyze the domain folders
-verifyDir('')
-verifyMavenPomVersion()
+# No need to analyze the folders if there are errors at this point 
+if analyzeMode != 'OTHER' and globRc == 0:
+	verifyDir('')
+
+
+# This check should be added
+#     verifyMavenPomVersion()
+#  
 
 # If no error this far, and the user asked for a zip, we will try to create it
 if zipDir:
@@ -418,6 +439,16 @@ if globRc > 0:
 else:
 	print 'OK!!!'
 
+if analyzeMode == 'TAGS':
+	qprint('')
+	qprint('A tag is supposed to be a snapshot of the trunk at a certain point in time (a certain revision), created with the "svn copy" command.')
+	qprint('We will now run the "svn log" command on this tag to verify that it contains just one line and has not been modified after it was created with "svn copy".')
+	qprint('')
+	cmd = 'svn log ' + rootDir
+	qprint(cmd)
+	qprint('')
+	os.system(cmd)
 
 print 'Exit with rc:', globRc
+
 exit(globRc)
