@@ -64,8 +64,9 @@ SET OUTFILE=/out:wcf\generated-src\CrmSchedulingInteractions.cs
 SET APPCONFIG=/config:wcf\generated-src\app.config
 SET NAMESPACE=/namespace:*,Riv.Crm.Scheduling.Schemas.v1
 SET SVCUTIL="svcutil.exe"
-%SVCUTIL% /language:cs %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
+%SVCUTIL% /language:cs /syncOnly %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
 
 CD wcf
 ECHO Generating Service contract .Net Binding interfaces and classes for crm:scheduling version 1
 ECHO I DotNetprojektet ska du ta lägga till referens till System.ServiceModel
+ECHO The  /syncOnly svcutil argument was added to support .net 4.5 and above. If you have an older version you my need to remove it, in case svcutil failes to run
