@@ -439,15 +439,16 @@ if globRc > 0:
 else:
 	print 'OK!!!'
 
-if analyzeMode == 'TAGS':
-	qprint('')
-	qprint('A tag is supposed to be a snapshot of the trunk at a certain point in time (a certain revision), created with the "svn copy" command.')
-	qprint('We will now run the "svn log" command on this tag to verify that it contains just one line and has not been modified after it was created with "svn copy".')
-	qprint('')
-	cmd = 'svn log ' + rootDir
-	qprint(cmd)
-	qprint('')
-	os.system(cmd)
+# Need a better way to check that a tag has not been manipulated
+#if analyzeMode == 'TAGS':
+#	qprint('')
+#	qprint('A tag is supposed to be a snapshot of the trunk at a certain point in time (a certain revision), created with the "svn copy" command.')
+#	qprint('We will now run the "svn log" command on this tag to verify that it contains just one line and has not been modified after it was created with "svn copy".')
+#	qprint('')
+#	cmd = 'svn log ' + rootDir
+#	qprint(cmd)
+#	qprint('')
+#	os.system(cmd)
 
 print 'Exit with rc:', globRc
 
