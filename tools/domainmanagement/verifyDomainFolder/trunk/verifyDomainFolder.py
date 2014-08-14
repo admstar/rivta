@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+
+# Version 1.3-BETA - 2014-08-DD - LEO
+#   Added -f flag to force creating zip even if RC not equal 0
+#   Added a version number in final printout. 
 # Version 1.2 - 2014-06-26 - LEO
 #   The version correspond to RIVTA Konfigurationsstyrnig 2.0.5
 #   Changed the verification of TKB and AB. Should not contain version information anymore.
@@ -23,6 +27,7 @@ import xml.etree.ElementTree as pom
 ####################################################################################
 
 programDescription = '''
+verifyDomainFolder 1.3-BETA. 
 The program verifies a service domain structure. 
 It iterates through all folders in a RIVTA Service Domain structure, starting from a trunk or specific tags folder.
 It verifies that the folder is defined according to the RIV TA Konfigurationsstyrning document,
@@ -319,6 +324,10 @@ parser.add_argument('-q', '--quiet', action="store_true",
 parser.add_argument('-z', '--zipdir',  
                     help='If we are analyzing a tags folder (not a trunk folder) a zip file will be created in the zipdir folder. Specify "." for current directory. The folder must exist if this option is specified!')
 
+parser.add_argument('-f', '--force', action="store_true", 
+                    help='A zip file is created even though RC != 0')
+
+
 parser.add_argument('rootdir', 
                     help='Base folder for the domain (trunk or a tag directory). Specify "." for current directory.')
 
@@ -326,6 +335,7 @@ parser.add_argument('rootdir',
 args = parser.parse_args()
 
 quiet=args.quiet
+force=args.force
 
 # Set up root directory
 rootDir=args.rootdir
@@ -417,10 +427,10 @@ if analyzeMode != 'OTHER' and globRc == 0:
 
 # If no error this far, and the user asked for a zip, we will try to create it
 if zipDir:
-	if globRc == 0 and analyzeMode=='TAGS' and domainNameVersionRc:
+	if (globRc == 0 or force) and analyzeMode=='TAGS' and domainNameVersionRc:
 		zipName = 'ServiceContracts' + '_' + domainNameVersionRc
 		qprint('')
-		qprint('No Errors, zip file will be created')
+		qprint('Zip file will be created')
 		command = ZIPCOMMAND + ' ' + zipDir + '/' + zipName + '.zip *'
 		qprint(command)
 		os.system(command)
@@ -432,7 +442,7 @@ if zipDir:
 # Return working directory 
 os.chdir(workingDir)
 
-# Exist with error code
+# Exit with error code
 print ''
 if globRc > 0:
 	print ' **** ', globRc, ' error(s) detected! ***'
@@ -450,6 +460,8 @@ else:
 #	qprint('')
 #	os.system(cmd)
 
-print 'Exit with rc:', globRc
+print ''
+print 'verifyDomainFolder 1.3-BETA - exit with rc:', globRc
+print ''
 
 exit(globRc)
