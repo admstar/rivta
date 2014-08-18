@@ -46,15 +46,15 @@ html_domain_index_info([
     p(' ') ,
     p(i('Information på denna sida är extraherad från subversion, tjänstekontraktsbeskrivningar, tjänsteadresseringskatalogerna i NTjP samt Arkitektur och regelverks förteckning över svenska domännamn.')) ,
     p(' ') ,
-    table([attribute(border,0)] ,
+    table(
 	  [
 	      tr(
 		  [
-		  th('Tjänstedomän') ,
-		  th('Svensk beteckning') ,
-		  th('Installerad i NTjP') ,
-		  th('Installerad i QA') ,
-		  th('Länk till TKB')
+		  th([attribute(class, dom1)], 'Tjänstedomän') ,
+		  th([attribute(class, dom2)], 'Svensk beteckning') ,
+		  th([attribute(class, dom3)], 'NTjP') ,
+		  th([attribute(class, dom4)], 'QA') ,
+		  th([attribute(class, dom5)], 'Länk')
 	      ]) ,
 	      TrList
 	  ]
@@ -114,16 +114,16 @@ html_interaction_index_info([
     p(i('Information på denna sida är extraherad från WSDL-filer i subversion samt tjänsteadresseringskatalogerna i NTjP.')) ,
     p(' ') ,
     p(' '),
-    table([attribute(border, 1)] ,
+    table(
 	  [
 	      tr(
 		  [
-		  th('Tjänstekontrakt') ,
-		  th('Beskrivning') ,
-		  th('Tjänstedomän') ,
-		  th('Installerad i NTjP') ,
-		  th('Installerad i QA') ,
-		  th('Senast ändrad')
+		  th([attribute(class, int1)], 'Tjänstekontrakt') ,
+		  th([attribute(class, int2)], 'Beskrivning') ,
+		  th([attribute(class, int3)], 'Tjänstedomän') ,
+		  th([attribute(class, int4)], 'NTjP') ,
+		  th([attribute(class, int5)], 'QA') ,
+		  th([attribute(class, int6)], 'Ändrad')
 	      ]) ,
 	      TrList2
 	  ]
