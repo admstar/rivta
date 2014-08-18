@@ -17,25 +17,23 @@
 Create HTML output
 ====================================================================== */
 
-
-
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Generate all HTML files
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 html_generate :-
 	html_generate_domain_pages ,
 	html_generate_interaction_index ,
 	html_generate_domain_index .
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+/* =======================================================================
 Generate an index file for all domains
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+========================================================================== */
+
 html_generate_domain_index :-
 	html_domain_index_info(Body) ,
 	open('/home/leo/tmp/domains/index.html', write, Stream, []) ,
-%	Stream = 'user_output' ,
 	inera_html_template('Index över tjänstedomäner', Body, Content) ,
 	l_html_write(Content, Stream) ,
 	close(Stream).
+
+% ----------------------------------------------------------------------
 
 html_domain_index_info([
     h1('Tjänstedomäner') ,
@@ -89,20 +87,26 @@ get_domain_index_info(
 	Link = a([attribute(href, TkbLink)], 'TKB') ;
 	Link = '-' ) .
 
+% ----------------------------------------------------------------------
+
 domain_index_tp_info(Envir, Domain, 'X') :-
 	tk_get_interaction(Envir, _Interaction, _Version, _BPVersion, Domain) ,
 	! .
 domain_index_tp_info(_Envir, _Domain, ' ') .
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Predicates to generate interaction index
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+/* =======================================================================
+Generate an index file of all service interactions
+========================================================================== */
+
 html_generate_interaction_index :-
 	html_interaction_index_info(Body) ,
 	open('/home/leo/tmp/domains/interaction_index.html', write, Stream, []) ,
 	inera_html_template('Index över tjänstekontrakt', Body, Content) ,
 	l_html_write(Content, Stream) ,
 	close(Stream).
+
+% ----------------------------------------------------------------------
 
 html_interaction_index_info([
     h1('Tjänstekontrakt'),
@@ -159,31 +163,26 @@ get_interaction_index_info(
 	interaction_index_tp_info(prod, Domain, Inter, InTp) ,
 	interaction_index_tp_info(qa, Domain, Inter, InQA) .
 
+% ----------------------------------------------------------------------
+
 interaction_index_tp_info(Envir, Domain, Interaction,  'X') :-
 	tk_get_interaction(Envir, Interaction, _Version, _BPVersion, Domain) ,
 	! .
 interaction_index_tp_info(_Envir, _Domain, _Interaction,  ' ') .
 
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Support predicates
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-get_swedish_name(Domain, Swedish) :-
-	dt_get_swedish_name(Domain, Swedish) ,
-	! .
-get_swedish_name(Domain, ' - ') :-
-%	dt_get_popular_name(Domain, Swedish) ,
-	l_write_trace(['* No Swedish name defined for: ', Domain], 0) .
+/* =======================================================================
+Generate an HTML file describing a service domain
+========================================================================== */
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Generate domain pages
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 html_generate_domain_pages :-
 	sv_get_domain(Domain) ,
 	html_domain_page(Domain) ,
 	fail .
 
 html_generate_domain_pages .
+
+% ----------------------------------------------------------------------
 
 html_domain_page(Domain) :-
 	sv_get_domain(Domain) ,
@@ -211,40 +210,11 @@ html_domain_page(Domain) :-
 	l_write_trace(['HTML_domain does not exist',Domain], 0) ,
 	fail.
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Support predicates
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-html_domain_filename(Domain, FileName) :-
-	atomic_list_concat(Domain, '_', DomainFileName) ,
-	atomic_list_concat([DomainFileName, 'html'], '.', FileName) .
-
-html_domain_file_path_name(Domain, TheFile) :-
-	c_html_domains_dir(HtmlDir) ,
-	html_domain_filename(Domain, FileName) ,
-	atomic_concat(HtmlDir, FileName, TheFile) .
-
-html_domain_file_exist(Domain) :-
-	html_domain_file_path_name(Domain, TheFile) ,
-	exists_file(TheFile) .
-
-
-%html_domain_info(Domain, Html_list2) :-
-html_domain_info(Domain, [Tkb_html_list, Services_html_list, Consumer_list, Producer_list]) :-
-	dt_get_domain_acceptance(Domain, Version, OkType) ,
-	atomic_list_concat(Domain, '_', DomainName),
-	atomic_list_concat([DomainName, Version], '_', Tag) ,
-	l_write_trace([tag, Tag], 1),
-	html_domain_info_tkb(OkType, Domain, Tag, Version, Tkb_html_list) ,
-	html_domain_info_services(OkType, Domain, Tag, Services_html_list) ,
-	l_write_trace(['Services_list: ', Services_html_list], 1 ),
-	html_domain_info_consumers(Domain, Consumer_list) ,
-	html_domain_info_producers(Domain, Producer_list) .
-
-
-
-
+% ----------------------------------------------------------------------
+% html_domain_info_tkb
 % Basic information and acceptance level for domains accepted according
 % to current rules
+% ----------------------------------------------------------------------
 html_domain_info_tkb(0, Domain, Tag, Version,
 		     [
 					 h2('Inledning'),
@@ -259,7 +229,8 @@ html_domain_info_tkb(0, Domain, Tag, Version,
 	! ,
 	html_ziplink(Domain, ZipLinkText) .
 
-% Accepted according to old rules
+
+% ----- Accepted according to old rules
 html_domain_info_tkb(1, Domain, _Tag, _Version,
 		     [
 					  h2('Inledning'),
@@ -275,7 +246,7 @@ html_domain_info_tkb(1, Domain, _Tag, _Version,
 	! ,
 	html_ziplink(Domain, ZipLinkText) .
 
-% Not yet reviewed
+% ----- Not yet reviewed
 html_domain_info_tkb(2, Domain, _Tag, _Version,
 		     [
 					  h2('Inledning'),
@@ -289,7 +260,7 @@ html_domain_info_tkb(2, Domain, _Tag, _Version,
 	sv_get_tkb_info(Domain, trunk, TkbLink, lastChanged(TkbDate, _), TkbDescription) ,
 	! .
 
-% No TKB found
+% ----- No TKB found
 html_domain_info_tkb(_OkType, _Domain, _Tag, _Version,
 		  [
 				 h2('Inledning'),
@@ -298,6 +269,7 @@ html_domain_info_tkb(_OkType, _Domain, _Tag, _Version,
 			     ]
 		 ) .
 
+% ----------------------------------------------------------------------
 
 html_domain_info_services(OkType, Domain, Tag,
 			  [
@@ -312,7 +284,7 @@ html_domain_info_services(OkType, Domain, Tag,
 	    sv_get_interaction(Service,Version, _RivVersion,Description,Domain,Tag2,lastChanged(Date, _Time)),
 	    TrList).
 
-
+% ----------------------------------------------------------------------
 
 html_domain_info_consumers(Domain,
 			   [
@@ -330,6 +302,8 @@ html_domain_info_consumers(Domain,
 
 html_domain_info_consumers(_Domain, [] ) .
 
+% ----------------------------------------------------------------------
+
 html_domain_info_producers(Domain,
 			   [
 			       h2('Tjänsteproducenter anslutna till domänen'),
@@ -345,9 +319,11 @@ html_domain_info_producers(Domain,
 
 html_domain_info_producers(_Domain, [] ) .
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Create a text i a zip link exist
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+% ----------------------------------------------------------------------
+% Create a text i a zip link exist
+% ----------------------------------------------------------------------
+
 html_ziplink(Domain,
 	     [
 		 h2('Nedladdning'),
@@ -365,6 +341,9 @@ html_ziplink(Domain,
 html_ziplink(_Domain, '') .
 
 
+/* =======================================================================
+HTML generation support predicates
+========================================================================== */
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Inera HTML template
@@ -394,8 +373,17 @@ inera_html_template(Title, Body,
 	l_current_time(Time) ,
 	atomic_list_concat(['This HTML page was generated by leolib:html_generate_page/1', Date, Time], ' ', Comment) .
 
+% ----------------------------------------------------------------------
+
+get_swedish_name(Domain, Swedish) :-
+	dt_get_swedish_name(Domain, Swedish) ,
+	! .
+get_swedish_name(Domain, ' - ') :-
+%	dt_get_popular_name(Domain, Swedish) ,
+	l_write_trace(['* No Swedish name defined for: ', Domain], 0) .
 
 % ----------------------------------------------------------------------
+
 get_tkb_info(Domain, trunk, TkbLink, lastChanged(TkbDate, _), TkbDescription) :-
 	sv_get_tkb_info(Domain, trunk, TkbLink, lastChanged(TkbDate, _), TkbDescription) ,
 	! .
@@ -403,10 +391,42 @@ get_tkb_info(_Domain, trunk, '-', lastChanged('-', _Time), 'TKB kunde inte hitta
 
 % ----------------------------------------------------------------------
 
+html_domain_filename(Domain, FileName) :-
+	atomic_list_concat(Domain, '_', DomainFileName) ,
+	atomic_list_concat([DomainFileName, 'html'], '.', FileName) .
 
-/* =========================================================================
+% ----------------------------------------------------------------------
+
+html_domain_file_path_name(Domain, TheFile) :-
+	c_html_domains_dir(HtmlDir) ,
+	html_domain_filename(Domain, FileName) ,
+	atomic_concat(HtmlDir, FileName, TheFile) .
+
+% ----------------------------------------------------------------------
+
+html_domain_file_exist(Domain) :-
+	html_domain_file_path_name(Domain, TheFile) ,
+	exists_file(TheFile) .
+
+% ----------------------------------------------------------------------
+
+html_domain_info(Domain, [Tkb_html_list, Services_html_list, Consumer_list, Producer_list]) :-
+	dt_get_domain_acceptance(Domain, Version, OkType) ,
+	atomic_list_concat(Domain, '_', DomainName),
+	atomic_list_concat([DomainName, Version], '_', Tag) ,
+	l_write_trace([tag, Tag], 1),
+	html_domain_info_tkb(OkType, Domain, Tag, Version, Tkb_html_list) ,
+	html_domain_info_services(OkType, Domain, Tag, Services_html_list) ,
+	l_write_trace(['Services_list: ', Services_html_list], 1 ),
+	html_domain_info_consumers(Domain, Consumer_list) ,
+	html_domain_info_producers(Domain, Producer_list) .
+
+
+
+
+/* =======================================================================
 	Other misc stuff
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+========================================================================== */
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Generate redirect files to tkb on request from Maria Brunsell

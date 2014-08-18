@@ -383,40 +383,80 @@ get_tkb_description2(Filepath, Txtfilepath, _TkbTimestamp) :-
 	shell(Command).
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-The description is read from the text file
+The description is read from the text file.
+First we try to find the WEB description. If not found, the normal
+description is extracted.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-get_tkb_description3(Txtfilepath, Description) :-
+
+% ----- WEB description
+get_tkb_description3(Txtfilepath, WebDescription) :-
 %	l_read_file_to_list(Txtfilepath, Lines, [encoding(iso_latin_1)]
 %	) ,
 	l_read_file_to_list(Txtfilepath, Lines) ,
+	get_tkb_inledningw1(Lines, After) ,
+	get_tkb_inledningw2(After, DescriptionList) ,
+	atomic_list_concat(DescriptionList, ' ', Desc) ,
+	l_strip_blanks(Desc, WebDescription) ,
+	atom_length(WebDescription, Len) ,
+	Len > 0 ,
+	! .
+
+% ----- Ordinary description. Lets remove during testing.
+
+get_tkb_description3(Txtfilepath, Description) :-
+	l_read_file_to_list(Txtfilepath, Lines) ,
 	get_tkb_inledning1(Lines, After) ,
 	get_tkb_inledning2(After, DescriptionList) ,
-	atomic_list_concat(DescriptionList, ' ', Desc) ,
+	atomic_list_concat(DescriptionList, ' ', Desc1) ,
+	atom_concat(Desc1, ' (WEB paragraph text not found in TKB)', Desc) ,
 	l_strip_blanks(Desc, Description) ,
 	atom_length(Description, Len) ,
 	Len > 0 ,
 	! .
 
+
 get_tkb_description3(Txtfilepath, 'Kunde inte extrahera beskrivning från denna TKB') :-
 	l_write_trace(['Could not extract TKB Desc for: ', Txtfilepath], 1) .
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Find start of description text. There are a number of alternatives.
+Find start of WEB description text.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-/*
-get_tkb_inledning1([Inledning|Rest], Rest ) :-
-	member(Text,
-	       ['Inledning',
-		'1 Inledning',
-		'1. Inledning',
-		'1 Om dokumentet',
-		'1.1 Om dokumentet',
-		'2. Inledning',
-		'2 Inledning']),
-	       sub_atom_icasechk(Inledning, _Start, Text) ,
+get_tkb_inledningw1([Inledning|Rest], Rest ) :-
+	member(Inledning,
+	       [
+		'1.1 WEB beskrivning'
+	       ]),
 	       ! .
-*/
 
+get_tkb_inledningw1([_First|Rest], Rest2 ) :-
+	get_tkb_inledningw1(Rest, Rest2 ) .
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Identify end of WEB description
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+get_tkb_inledningw2([Avslutning|_Rest], [] ) :-
+	member(Text,
+	       [ 'teknikoberoende',
+		 '1.2 Versionsinformation' ,
+		 'de tekniska kontrakten' ,
+		 % 'teknik-oberoende',
+		 '2 Målgrupp',
+		 'Förändrade tjänstekontrakt',
+		 '2. Generella regler',
+		 '1.2. Bakgrund',
+		 'tekniskt-oberoende']) ,
+	       sub_atom_icasechk(Avslutning, _Start, Text) ,
+	       ! .
+
+get_tkb_inledningw2([Line|Rest], [Line|Sofar]) :-
+	get_tkb_inledningw2(Rest, Sofar) .
+
+
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Find start of ordinary description text. There are a number of
+alternatives.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 get_tkb_inledning1([Inledning|Rest], Rest ) :-
 	member(Inledning,
 	       ['Inledning',
@@ -435,7 +475,7 @@ get_tkb_inledning1([_First|Rest], Rest2 ) :-
 
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Identify end of description
+Identify end of ordinary description
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 get_tkb_inledning2([Avslutning|_Rest], [] ) :-
 	member(Text,
