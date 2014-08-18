@@ -40,9 +40,9 @@
 
 	SET SCHEMAS=%XCORE% %W0% %X0% %W1% %X1% %W2% %X2% %W3% %X3%
 
-	SET OUTFILE=/out:wcf\generated-src\InfrastructureDirectoryAuthorizationManagementInteractions.cs
+	SET OUTFILE=/out:wcf\generated-src\InfrastructureDirectoryAuthorizationmanagementInteractions.cs
 	SET APPCONFIG=/config:wcf\generated-src\app.config
-	SET NAMESPACE=/namespace:*,Riv.Infrastructure.Directory.AuthorizationManagement.Schemas.v1
+	SET NAMESPACE=/namespace:*,Riv.Infrastructure.Directory.Authorizationmanagement.Schemas.v1
 	SET SVCUTIL="svcutil.exe"
 	%SVCUTIL% /language:cs %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
 
