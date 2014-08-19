@@ -21,10 +21,18 @@ import glob
 import string
 import re
 import xml.etree.ElementTree as pom
+import urllib
+import urllib2
 
 ####################################################################################
 # Global constants and variables
 ####################################################################################
+
+# Constants
+TOPLEVELDOMAINDIRECTORY = 'riv'
+ZIPCOMMAND = 'zip -r'
+CURRENT_VERSION='1.3-BETA'
+NEXT_VERSION='1.3'
 
 programDescription = '''
 verifyDomainFolder 1.3-BETA. 
@@ -40,14 +48,11 @@ optionally create a zip archive.
 \n
 The program requires Python v2.  
 \n
+Current version is $CURRENT_VERSION. 
 This program was last updated $LastChangedDate$ in revision $Rev$.
 
 '''
 
-
-# Constants
-TOPLEVELDOMAINDIRECTORY = 'riv'
-ZIPCOMMAND = 'zip -r'
 
 # Content in test-suite is not analyzed yet
 # OBS, for exact match "^" and "$" should be added at the beginning and end of the patterns below
@@ -69,6 +74,30 @@ globRc = 0
 analyzeMode = ''
 domainName = ''
 domainNameVersionRc = ''
+
+####################################################################################
+# qprint - Prints a string unless the quiet flag is set
+####################################################################################
+def checkVersion():
+
+        newVersionUrl = 'http://code.google.com/p/rivta/source/browse/tools/domainmanagement/verifyDomainFolder/tags/release-' + NEXT_VERSION + '/verifyDomainFolder.py'
+
+        try:
+                response = urllib2.urlopen(newVersionUrl)
+                if response.code == 200:
+                        print ''
+                        print '*** A new version of this script has been released. Please download it from:'
+                        print ''
+                        print newVersionUrl
+                        print ''
+                        exit(42)
+
+        except urllib2.URLError, e:
+                print ''
+
+	return	
+
+# https://code.google.com/p/rivta/source/browse/tools/domainmanagement/verifyDomainFolder/tags/release-1.2/verifyDomainFolder.py
 
 ####################################################################################
 # qprint - Prints a string unless the quiet flag is set
@@ -315,6 +344,8 @@ def verifyTag(sourceDir):
 # Start of main program
 ####################################################################################
 
+checkVersion()
+
 # Obtain and analyze input arguemts
 parser = argparse.ArgumentParser(description=programDescription)
 
@@ -461,7 +492,7 @@ else:
 #	os.system(cmd)
 
 print ''
-print 'verifyDomainFolder 1.3-BETA - exit with rc:', globRc
+print 'verifyDomainFolder ', CURRENT_VERSION, ' - exit with rc:', globRc
 print ''
 
 exit(globRc)
