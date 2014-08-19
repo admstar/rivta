@@ -42,7 +42,7 @@ html_domain_index_info([
     '  |  ',
     a([attribute(href, 'interaction_index.html')], 'Index över tjänstekontrakt') ,
     p(' ') ,
-    p(i('Information på denna sida är extraherad från subversion, tjänstekontraktsbeskrivningar, tjänsteadresseringskatalogerna i NTjP samt Arkitektur och regelverks förteckning över svenska domännamn.')) ,
+    div(attribute(class, ingress), 'Information på denna sida är extraherad från subversion, tjänstekontraktsbeskrivningar, tjänsteadresseringskatalogerna i NTjP samt Arkitektur och regelverks förteckning över svenska domännamn.') ,
     p(' ') ,
     table(
 	  [
@@ -115,7 +115,7 @@ html_interaction_index_info([
     '  |  ',
     a([attribute(href, 'interaction_index.html')], 'Index över tjänstekontrakt') ,
     p(' ') ,
-    p(i('Information på denna sida är extraherad från WSDL-filer i subversion samt tjänsteadresseringskatalogerna i NTjP.')) ,
+    p('Information på denna sida är extraherad från WSDL-filer i subversion samt tjänsteadresseringskatalogerna i NTjP.') ,
     p(' ') ,
     p(' '),
     table(
@@ -218,10 +218,10 @@ html_domain_page(Domain) :-
 html_domain_info_tkb(0, Domain, Tag, Version,
 		     [
 					 h2('Inledning'),
-					 p(['Denna beskrivning är baserad på version ', b(Version), '. Den är godkänd enligt nuvarande regelverk. ', ZipLinkText]),
+					 p(['Denna beskrivning är baserad på version ', b(Version), '. Den är godkänd enligt gällande regelverk. ', ZipLinkText]),
 					 h2(['Beskrivning av tjänstedomänen (från ',
 					     a([attribute(href, TkbLink)],'Tjänstekontraktsbeskrivningen'), ')'] ),
-					 p(i(TkbDescription)) ,
+					 p(TkbDescription) ,
 					 p([a([attribute(href, TkbLink)],'Tjänstekontraktsbeskrivningen'), ' uppdaterades senast ', b(TkbDate), '.'])
 				     ]
 		    ) :- % Godkänd enligt nuvarande regelverk
@@ -238,7 +238,7 @@ html_domain_info_tkb(1, Domain, _Tag, _Version,
 					  ZipLinkText,
 					  h2(['Beskrivning av tjänstedomänen (från ',
 					      a([attribute(href, TkbLink)],'Tjänstekontraktsbeskrivningen'), ')'] ),
-					  p(i(TkbDescription)) ,
+					  p(TkbDescription) ,
 					  p([a([attribute(href, TkbLink)],'Tjänstekontraktsbeskrivningen'), ' uppdaterades senast ', b(TkbDate), '.'])
 				      ]
 		 ) :-
@@ -253,7 +253,7 @@ html_domain_info_tkb(2, Domain, _Tag, _Version,
 					  p(['Denna beskrivning är baserad på version på utvecklingsversionen (trunk) av domänen. Den är ännu inte granskad av Arkitektur och regelverk på Inera.']),
 					  h2(['Beskrivning av tjänstedomänen (från ',
 					      a([attribute(href, TkbLink)],'Tjänstekontraktsbeskrivningen'), ')'] ),
-					  p(i(TkbDescription)) ,
+					  p(TkbDescription) ,
 					  p([a([attribute(href, TkbLink)],'Tjänstekontraktsbeskrivningen'), ' uppdaterades senast ', b(TkbDate), '.'])
 			     ]
 		    ) :-
@@ -328,8 +328,7 @@ html_ziplink(Domain,
 	     [
 		 h2('Nedladdning'),
 		 p([
-		     'Ladda ner domänens zip-arkiv ',
-		     a([attribute(href, ZipLink)],'här'),
+		     a([attribute(href, ZipLink)],'Ladda ner domänens zip-arkiv'),
 		     ' (baserat på den aktuella ',
 		     a([attribute(href, 'http://rivta.se/servicedomaintable')],'tabellen över granskade domäner'),
 		     ').'
