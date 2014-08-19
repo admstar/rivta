@@ -359,7 +359,7 @@ inera_html_template(Title, Body,
 		       attribute(charset, 'UTF-8')],
 		      []) ,
 		 link([
-		     attribute(href,'http://rivta.se/Normal.css'),
+		     attribute(href,'http://rivta.se/domainsy/Normaly.css'),
 		     attribute(rel,'stylesheet'),
 		     attribute(type, 'text/css'),
 		     attribute(media, 'screen')],
