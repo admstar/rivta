@@ -402,7 +402,7 @@ get_tkb_description3(Txtfilepath, WebDescription) :-
 	! .
 
 % ----- Ordinary description. Lets remove during testing.
-
+/*
 get_tkb_description3(Txtfilepath, Description) :-
 	l_read_file_to_list(Txtfilepath, Lines) ,
 	get_tkb_inledning1(Lines, After) ,
@@ -413,9 +413,9 @@ get_tkb_description3(Txtfilepath, Description) :-
 	atom_length(Description, Len) ,
 	Len > 0 ,
 	! .
+*/
 
-
-get_tkb_description3(Txtfilepath, 'Kunde inte extrahera beskrivning från denna TKB') :-
+get_tkb_description3(Txtfilepath, '-') :-
 	l_write_trace(['Could not extract TKB Desc for: ', Txtfilepath], 1) .
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

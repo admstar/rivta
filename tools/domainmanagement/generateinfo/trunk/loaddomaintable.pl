@@ -91,10 +91,7 @@ dt_get_domain_acceptance(Domain, Version, OkType) :-
 		       _,
 		       check(t, 'G', Link),
 		       _ )) ,
-	! ,
 	get_domain_acceptance2(Link, OkType) .
-
-dt_get_domain_acceptance(_Domain, '-', 2) .
 
 get_domain_acceptance2(Link, 0) :-
 	atom_length(Link, Len), Len > 3 ,  % To be current it must have a link to the review file

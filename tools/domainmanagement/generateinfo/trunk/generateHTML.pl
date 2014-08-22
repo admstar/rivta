@@ -217,6 +217,21 @@ html_domain_page(Domain) :-
 	fail.
 
 % ----------------------------------------------------------------------
+% The structure of the domain page
+% ----------------------------------------------------------------------
+
+html_domain_info(Domain, [Tkb_html_list, Services_html_list, Consumer_list, Producer_list]) :-
+	get_domain_acceptance(Domain, Version, OkType) ,
+	atomic_list_concat(Domain, '_', DomainName),
+	atomic_list_concat([DomainName, Version], '_', Tag) ,
+	l_write_trace([tag, Tag], 1),
+	html_domain_info_tkb(OkType, Domain, Tag, Version, Tkb_html_list) ,
+	html_domain_info_services(OkType, Domain, Tag, Services_html_list) ,
+	l_write_trace(['Services_list: ', Services_html_list], 1 ),
+	html_domain_info_consumers(Domain, Consumer_list) ,
+	html_domain_info_producers(Domain, Producer_list) .
+
+% ----------------------------------------------------------------------
 % html_domain_info_tkb
 % Basic information and acceptance level for domains accepted according
 % to current rules
@@ -385,7 +400,7 @@ get_swedish_name(Domain, Swedish) :-
 	! .
 get_swedish_name(Domain, ' - ') :-
 %	dt_get_popular_name(Domain, Swedish) ,
-	l_write_trace(['* No Swedish name defined for: ', Domain], 0) .
+	l_write_trace(['* No Swedish name defined for: ', Domain], 1) .
 
 % ----------------------------------------------------------------------
 
@@ -412,21 +427,13 @@ html_domain_file_path_name(Domain, TheFile) :-
 html_domain_file_exist(Domain) :-
 	html_domain_file_path_name(Domain, TheFile) ,
 	exists_file(TheFile) .
-
 % ----------------------------------------------------------------------
 
-html_domain_info(Domain, [Tkb_html_list, Services_html_list, Consumer_list, Producer_list]) :-
+get_domain_acceptance(Domain, Version, OkType) :-
 	dt_get_domain_acceptance(Domain, Version, OkType) ,
-	atomic_list_concat(Domain, '_', DomainName),
-	atomic_list_concat([DomainName, Version], '_', Tag) ,
-	l_write_trace([tag, Tag], 1),
-	html_domain_info_tkb(OkType, Domain, Tag, Version, Tkb_html_list) ,
-	html_domain_info_services(OkType, Domain, Tag, Services_html_list) ,
-	l_write_trace(['Services_list: ', Services_html_list], 1 ),
-	html_domain_info_consumers(Domain, Consumer_list) ,
-	html_domain_info_producers(Domain, Producer_list) .
+	! .
 
-
+get_domain_acceptance(_Domain, '-', 2) .
 
 
 /* =======================================================================
@@ -478,7 +485,7 @@ write_excel :-
 	sv_get_all_domains(Domains) ,
 	member(Domain, Domains) ,
 	dt_get_popular_name(Domain, Popular) ,
-	dt_get_domain_acceptance(Domain, Version, OkType),
+	get_domain_acceptance(Domain, Version, OkType),
 	get_tkb_info(Domain, trunk, TkbLink, lastChanged(TkbDate, _Time), TkbDescription) ,
 	atomic_list_concat(Domain, ':', DomainName) ,
 	atomic_list_concat([DomainName, Popular, Version, OkType, TkbLink, TkbDate, TkbDescription], ';', DLine),

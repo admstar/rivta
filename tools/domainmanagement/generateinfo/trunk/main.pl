@@ -22,7 +22,7 @@ c_tmp_dir('/home/leo/tmp/') .
 
 c_html_domains_dir(Dir) :-
 	c_tmp_dir(TmpDir) ,
-	atomic_concat(TmpDir, 'domains/', Dir) .
+	atomic_concat(TmpDir, 'www/domains/', Dir) .
 
 % ----------------------------------------------------------------------
 
