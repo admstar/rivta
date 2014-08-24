@@ -4,6 +4,7 @@
 	      dt_get_popular_name/2 ,
 	      dt_get_swedish_name/2 ,
 	      dt_get_zip_link/2 ,
+	      dt_get_zip_link/3 ,
 	      dt_load_domain_table/1 ,
 	      dt_load_swedish_names/1
        ]) .
@@ -39,12 +40,14 @@ dt_get_swedish_name(Domain, Swedish) :-
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Retrieve the link to the zip archiv
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-
 dt_get_zip_link(Domain, ZipLink) :-
+	dt_get_zip_link(Domain, _Version, ZipLink) .
+
+dt_get_zip_link(Domain, Version, ZipLink) :-
 	recorded(domainTable, domainTable(
 				 Domain,
 				 _PopularName,
-				 _Version,
+				 Version,
 				 check(s,_S_code, _S_link),
 				 check(i,_I_code, _I_link),
 				 check(t,_T_code, _T_link),

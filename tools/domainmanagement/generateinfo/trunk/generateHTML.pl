@@ -54,7 +54,8 @@ html_domain_index_info([
 		  th([attribute(class, dom2)], 'Svensk beteckning') ,
 		  th([attribute(class, dom3)], 'NTjP') ,
 		  th([attribute(class, dom4)], 'QA') ,
-		  th([attribute(class, dom5)], 'Länk')
+%		  th([attribute(class, dom5)], 'Länk')
+		  th([attribute(class, dom5)], 'WEB text')
 	      ]) ,
 	      TrList
 	  ]
@@ -67,8 +68,10 @@ html_domain_index_info([
 		td(Popular),
 		td([attribute(align,center)],InTp),
 		td([attribute(align,center)],InQA),
-		td([attribute(align,center)], TkbLink)]),
-	    get_domain_index_info(DomainNameLink, Popular, InTp, InQA, TkbLink),
+		td([attribute(align,center)], WebText)]),
+%	    get_domain_index_info(DomainNameLink, Popular, InTp, InQA,
+%	    TkbLink),
+	    get_domain_index_info_x(DomainNameLink, Popular, InTp, InQA, WebText),
 	    TrList).
 
 get_domain_index_info(
@@ -88,6 +91,46 @@ get_domain_index_info(
 	(   sv_get_tkb_info(Domain, trunk, TkbLink, _LastChanged, _TkbDescription) ->
 	Link = a([attribute(href, TkbLink)], 'TKB') ;
 	Link = '-' ) .
+
+get_domain_index_info_x(
+    DomainNameLink,
+    Popular,
+    InTp,
+    InQA,
+    Text) :-
+	sv_get_domain(Domain) ,
+	atomic_list_concat(Domain, ':', DomainName) ,
+	html_domain_filename(Domain, FileName) ,
+	(   html_domain_file_exist(Domain) -> DomainNameLink = a(attribute(href, FileName), DomainName) ; DomainNameLink = DomainName ) ,
+%	dt_get_popular_name(Domain, Popular) ,
+	get_swedish_name(Domain, Popular) , % Take the name from Sonjas table
+	domain_index_tp_info(prod, Domain, InTp) ,
+	domain_index_tp_info(qa, Domain, InQA) ,
+	sv_get_tkb_info(Domain, trunk, _TkbLink, _LastChanged, TkbDescription) ,
+	atom_length(TkbDescription, Len) ,
+	(   Len > 1 ->
+	Text = 'OK' ;
+	Text = '-' ) .
+
+/*
+get_domain_index_info(
+    DomainNameLink,
+    Popular,
+    InTp,
+    InQA,
+    Link) :-
+	sv_get_domain(Domain) ,
+	atomic_list_concat(Domain, ':', DomainName) ,
+	html_domain_filename(Domain, FileName) ,
+	(   html_domain_file_exist(Domain) -> DomainNameLink = a(attribute(href, FileName), DomainName) ; DomainNameLink = DomainName ) ,
+%	dt_get_popular_name(Domain, Popular) ,
+	get_swedish_name(Domain, Popular) , % Take the name from Sonjas table
+	domain_index_tp_info(prod, Domain, InTp) ,
+	domain_index_tp_info(qa, Domain, InQA) ,
+	(   sv_get_tkb_info(Domain, trunk, TkbLink, _LastChanged, _TkbDescription) ->
+	Link = a([attribute(href, TkbLink)], 'TKB') ;
+	Link = '-' ) .
+*/
 
 % ----------------------------------------------------------------------
 
@@ -220,23 +263,150 @@ html_domain_page(Domain) :-
 % The structure of the domain page
 % ----------------------------------------------------------------------
 
-html_domain_info(Domain, [Tkb_html_list, Services_html_list, Consumer_list, Producer_list]) :-
-	get_domain_acceptance(Domain, Version, OkType) ,
+html_domain_info(Domain, [Desc, VersionInfo, Consumer_list, Producer_list]) :-
+	html_domain_info_description(Domain, Desc) ,
+	get_domain_presentation_list(Domain, DomVersionList),
+	html_domain_info_version(Domain, DomVersionList, VersionInfo),
+%	get_domain_acceptance(Domain, Version, OkType) ,
+%	atomic_list_concat(Domain, '_', DomainName),
+%	atomic_list_concat([DomainName, Version], '_', Tag) ,
+%	l_write_trace([tag, Tag], 1),
+%	html_domain_info_tkb(Domain, Tkb_html_list) ,
+%	html_domain_info_tkb(OkType, Domain, Tag, Version,
+%	Tkb_html_list) ,
+%	html_domain_info_services(OkType, Domain, Tag,
+%	Services_html_list) ,
+%	l_write_trace(['Services_list: ', Services_html_list], 1 ),
+	html_domain_info_consumers(Domain, Consumer_list) ,
+	html_domain_info_producers(Domain, Producer_list) .
+
+% ----------------------------------------------------------------------
+
+html_domain_info_description(Domain,
+		     [
+			 h2('Beskrivning'),
+			 p(['Beskrivning av tjänstedomänen (från kap 1.1 i ',
+			     a([attribute(href, TkbLink)],'Tjänstekontraktsbeskrivningen'), ' i trunk)'] ),
+			 p(TkbDescription)
+		     ]
+		    ) :-
+	sv_get_tkb_info(Domain, trunk, TkbLink, lastChanged(_TkbDate, _), TkbDescription) .
+
+% ---------------------------------------------------------------------
+
+
+html_domain_info_version(Domain, [Version], Text ) :-
+	! ,
+	html_domain_info_version2(Domain, Version, Text) .
+
+html_domain_info_version(Domain, [First, Second], [VI1, VI2]) :-
+	html_domain_info_version2(Domain, First, VI1),
+	html_domain_info_version2(Domain, Second, VI2).
+
+% ---------------------------------------------------------------------
+
+% trunk clause
+html_domain_info_version2(Domain, trunk,
+			  [
+				      h2('Pågående utveckling (trunk)'),
+				      p(['Detta är en pågående utveckling som ännu inte är granskad av Arkitektur och regelverk på Inera.']),
+				      p([a([attribute(href, TkbLink)],'Tjänstekontraktsbeskrivning'), ' som uppdaterades senast ', b(TkbDate), '.']) ,
+				      ServiceList
+				  ]
+			) :-
+	! ,
+%	atomic_list_concat(Domain, '_', DomainName),
+%	atomic_list_concat([DomainName, Version], '_', Tag) ,
+	sv_get_tkb_info(Domain, trunk, TkbLink, lastChanged(TkbDate, _), _TkbDescription) ,
+	html_domain_info_services(Domain, trunk, ServiceList) .
+
+% A release or RC (or beta) which can be found in a tag in svn
+html_domain_info_version2(Domain, Version,
+			  [
+				      h2([Uname, ' ', Version]),
+				      p(['Denna ', Lname, ' är godkänd av Inera Arkitektur och regelverk. ', ZipLinkText]) ,
+				      p([a([attribute(href, TkbLink)],'Tjänstekontraktsbeskrivning'), ' som uppdaterades senast ', b(TkbDate), '.']) ,
+				      ServiceList
+				  ]
+			 ) :-
 	atomic_list_concat(Domain, '_', DomainName),
 	atomic_list_concat([DomainName, Version], '_', Tag) ,
-	l_write_trace([tag, Tag], 1),
-	html_domain_info_tkb(OkType, Domain, Tag, Version, Tkb_html_list) ,
+	tag_synonym(Tag, Uname, Lname),
+	write(Tag), write(' --- '), write(Uname), nl ,
+	sv_get_tkb_info(Domain, tag(Tag), TkbLink, lastChanged(TkbDate, _), _TkbDescription) ,
+	write('After sv_get...') , nl ,
+	! ,
+	html_ziplink(Domain, Version, ZipLinkText) , %% MUST ADD TAG HERE
+	html_domain_info_services(Domain, tag(Tag), ServiceList) ,
+	l_write_trace([Tag, ' - ', ServiceList],1) .
+
+% A release or RC (or beta) which cannot be found in a tag in svn
+html_domain_info_version2(Domain, Version,
+			  [
+				      h2([Uname, ' ', Version]),
+				      p(['Denna ', Lname, ' är godkänd av Inera Arkitektur och regelverk. ', ZipLinkText]) ,
+				      p(['Denna ', Lname, ' kan inte återfinnas i versionshanteringssystemet (som en tag i svn). Av den orsaken kan ingen information om Tjänstekontraktsbeskrivning eller tjänster presenteras. Se zip-arkivet ovan.']),
+				      ServiceList
+				  ]
+			 ) :-
+	atomic_list_concat(Domain, '_', DomainName),
+	atomic_list_concat([DomainName, Version], '_', Tag) ,
+	tag_synonym(Tag, Uname, Lname),
+%	sv_get_tkb_info(Domain, tag(Tag), TkbLink, lastChanged(TkbDate,
+%	_), _TkbDescription) , ! ,
+	html_ziplink(Domain, Version, ZipLinkText) ,
+	html_domain_info_services(Domain, tag(Tag), ServiceList) ,
+	l_write_trace([Tag, ' - ', ServiceList],1) .
+
+
+
+% ---------------------------------------------------------------------
+
+
+% ----------------------------------------------------------------------
+% ----------------------------------------------------------------------
+% ----------------------------------------------------------------------
+
+/*
+html_domain_info3(Domain, trunk, VersionInfo) :-
+	! ,
+%	get_domain_acceptance(Domain, Version, OkType) ,
+%	atomic_list_concat(Domain, '_', DomainName),
+%	atomic_list_concat([DomainName, Version], '_', Tag) ,
+%	l_write_trace([tag, Tag], 1),
+%	html_domain_info_tkb(Domain, Tkb_html_list) ,
+	html_domain_info_tkb(trunk, Domain, VersionInfo ),
+	! .
+*/
+/*
 	html_domain_info_services(OkType, Domain, Tag, Services_html_list) ,
 	l_write_trace(['Services_list: ', Services_html_list], 1 ),
 	html_domain_info_consumers(Domain, Consumer_list) ,
 	html_domain_info_producers(Domain, Producer_list) .
+
+
+html_domain_info3(_Domain, _Version, 'VersionInfo') .
+	get_domain_acceptance(Domain, Version, OkType) ,
+	atomic_list_concat(Domain, '_', DomainName),
+	atomic_list_concat([DomainName, Version], '_', Tag) ,
+	l_write_trace([tag, Tag], 1),
+	html_domain_info_tkb(Domain, Tkb_html_list) ,
+%	html_domain_info_tkb(OkType, Domain, Tag, Version,
+%	Tkb_html_list) ,
+	html_domain_info_services(OkType, Domain, Tag, Services_html_list) ,
+	l_write_trace(['Services_list: ', Services_html_list], 1 ),
+	html_domain_info_consumers(Domain, Consumer_list) ,
+	html_domain_info_producers(Domain, Producer_list) .
+*/
 
 % ----------------------------------------------------------------------
 % html_domain_info_tkb
 % Basic information and acceptance level for domains accepted according
 % to current rules
 % ----------------------------------------------------------------------
-html_domain_info_tkb(0, Domain, Tag, Version,
+% ----------------------------------------------------------------------
+/*
+html_domain_info_tkb(release, Domain, Tag, Version,
 		     [
 					 h2('Inledning'),
 					 p(['Denna beskrivning är baserad på version ', b(Version), '. Den är godkänd enligt gällande regelverk. ', ZipLinkText]),
@@ -252,7 +422,7 @@ html_domain_info_tkb(0, Domain, Tag, Version,
 
 
 % ----- Accepted according to old rules
-html_domain_info_tkb(1, Domain, _Tag, _Version,
+html_domain_info_tkb(rc, Domain, _Tag, _Version,
 		     [
 					  h2('Inledning'),
 					  p('Denna beskrivning är baserad på version på utvecklingsversionen (trunk) av domänen. Den är godkänd enligt ett tidigare regelverk.'),
@@ -268,20 +438,19 @@ html_domain_info_tkb(1, Domain, _Tag, _Version,
 	html_ziplink(Domain, ZipLinkText) .
 
 % ----- Not yet reviewed
-html_domain_info_tkb(2, Domain, _Tag, _Version,
+html_domain_info_tkb(trunk, Domain,
 		     [
-					  h2('Inledning'),
-					  p(['Denna beskrivning är baserad på version på utvecklingsversionen (trunk) av domänen. Den är ännu inte granskad av Arkitektur och regelverk på Inera.']),
-					  h2(['Beskrivning av tjänstedomänen (från ',
-					      a([attribute(href, TkbLink)],'Tjänstekontraktsbeskrivningen'), ')'] ),
-					  p(TkbDescription) ,
-					  p([a([attribute(href, TkbLink)],'Tjänstekontraktsbeskrivningen'), ' uppdaterades senast ', b(TkbDate), '.'])
-			     ]
+				h2('Pågående utveckling'),
+				p(['Denna beskrivning är baserad på utvecklingsversionen (trunk) av domänen. Den är ännu inte granskad av Arkitektur och regelverk på Inera.']),
+				p(['Se beskrivning i ', a([attribute(href, TkbLink)],'Tjänstekontraktsbeskrivningen') ] ),
+				p([a([attribute(href, TkbLink)],'Tjänstekontraktsbeskrivningen'), ' uppdaterades senast ', b(TkbDate), '.'])
+			    ]
 		    ) :-
-	sv_get_tkb_info(Domain, trunk, TkbLink, lastChanged(TkbDate, _), TkbDescription) ,
+	sv_get_tkb_info(Domain, trunk, TkbLink, lastChanged(TkbDate, _), _TkbDescription) ,
 	! .
-
+*/
 % ----- No TKB found
+/*
 html_domain_info_tkb(_OkType, _Domain, _Tag, _Version,
 		  [
 				 h2('Inledning'),
@@ -289,27 +458,32 @@ html_domain_info_tkb(_OkType, _Domain, _Tag, _Version,
 				 p(['Det var inte möjligt att identifiera eller extrahera information från Tjänstekontraktsbeskrivningen.'])
 			     ]
 		 ) .
-
+*/
 % ----------------------------------------------------------------------
 
-html_domain_info_services(OkType, Domain, Tag,
+%html_domain_info_services(OkType, Domain, Tag,
+html_domain_info_services(Domain, Tag,
 			  [
-					      h2('Tjänstekontrakt'),
-					      p('Följande tjänstekontrakt är definierade i denna version. Beskrivningstexten är hämtad från respektive WSDL-fil.'),
+%					      h2('Tjänstekontrakt'),
+					      p(['Följande tjänstekontrakt är definierade i denna ', Lname, '. Beskrivningstexten är hämtad från respektive WSDL-fil.']),
 					      ul( TrList )
 					  ]
 			 ) :-
-	(   OkType > 0 -> Tag2=trunk ; Tag2=tag(Tag) ),
+%	(   OkType > 0 -> Tag2=trunk ; Tag2=tag(Tag) ),
+	tag_synonym(Tag, _Uname, Lname),
 	bagof(
 	    li([b(Service), ' ', Version, ' - ', Description, ' (', Date, ')' ]),
-	    sv_get_interaction(Service,Version, _RivVersion,Description,Domain,Tag2,lastChanged(Date, _Time)),
-	    TrList).
+	    sv_get_interaction(Service, Version, _RivVersion,Description,Domain,Tag, lastChanged(Date, _Time)),
+	    TrList) ,
+	! .
+
+html_domain_info_services(_Domain, _Tag, p('(Denna tag kunde ej återfinnas i svn, varför information om tjänster ej kan presenteras)')) .
 
 % ----------------------------------------------------------------------
 
 html_domain_info_consumers(Domain,
 			   [
-			       h2('Tjänstekonsumenter anslutna till domänen'),
+			       h2('Tjänstekonsumenter anslutna till domänens kontrakt'),
 			       p('Följande tjänstekonsumenter är anslutna till tjänster (tjänstekontrakt) i domänen i den nationellt gemensamma tjänsteplattformen.'),
 			       ul( TrList )
 			   ]
@@ -327,7 +501,7 @@ html_domain_info_consumers(_Domain, [] ) .
 
 html_domain_info_producers(Domain,
 			   [
-			       h2('Tjänsteproducenter anslutna till domänen'),
+			       h2('Tjänsteproducenter anslutna till domänens kontrakt'),
 			       p('Följande tjänsteproducenter är anslutna via tjänster (tjänstekontrakt) i den nationellt gemensamma tjänsteplattformen.'),
 			       ul( TrList )
 			   ]
@@ -340,25 +514,69 @@ html_domain_info_producers(Domain,
 
 html_domain_info_producers(_Domain, [] ) .
 
+% ----------------------------------------------------------------------
+% Calculate the list of domain versions that should be displayed
+% on the domain page.
+%
+% 1. [Accepted release with highest version]
+% 2. [Accepted RC with highest version]
+% 3. trunk - always added last
+%
+% ----------------------------------------------------------------------
+% We only look for accepted versions
+get_domain_presentation_list(Domain, DomList) :-
+	findall(
+	    Version,
+	    dt_get_domain_acceptance(Domain, Version, _OkType),
+	    UnorderedList),
+	sort(UnorderedList, OList),
+	reverse(OList, ROList) ,
+	extract_highest_release(ROList, Release) ,
+	extract_highest_rc(ROList, RC) ,
+	append(Release, RC, DomList1) ,
+	append(DomList1, [trunk], DomList) .
+
+extract_highest_release([], [] ) :- ! .
+% If there is not an underscrore, then we assume a release (no beta or
+% RC)
+extract_highest_release([First|_Rest], [First] ) :-
+	\+ sub_atom(First, _Before, _Len, _After, '_') ,
+	! .
+extract_highest_release([_First|Rest], First ) :-
+	extract_highest_release(Rest, First ) .
+
+% If we do not find an accepted RC, then we return null
+extract_highest_rc([], [] ) :- ! .
+% If there is an underscrore, then we assume a release (no beta or
+% RC)
+extract_highest_rc([First|_Rest], [First] ) :-
+	sub_atom(First, _Before, _Len, _After, '_') ,
+	! .
+extract_highest_rc([_First|Rest], First ) :-
+	extract_highest_rc(Rest, First ) .
+
+
 
 % ----------------------------------------------------------------------
 % Create a text i a zip link exist
 % ----------------------------------------------------------------------
 
-html_ziplink(Domain,
+html_ziplink(Domain, Version,
 	     [
-		 h2('Nedladdning'),
 		 p([
-		     a([attribute(href, ZipLink)],'Ladda ner domänens zip-arkiv'),
+		     a([attribute(href, ZipLink)],['Ladda ner zip-arkivet för denna ', Lname]),
 		     ' (baserat på den aktuella ',
 		     a([attribute(href, 'http://rivta.se/servicedomaintable')],'tabellen över granskade domäner'),
 		     ').'
 		 ])
 	     ] ) :-
-	dt_get_zip_link(Domain, ZipLink) ,
+	tag_synonym(Version, _Uname, Lname),
+	dt_get_zip_link(Domain, Version, ZipLink) ,
 	! .
 
-html_ziplink(_Domain, '') .
+html_ziplink(Domain, Version, '') :-
+	write(Domain), write(' - '), write(Version), nl.
+
 
 
 /* =======================================================================
@@ -394,6 +612,8 @@ inera_html_template(Title, Body,
 	atomic_list_concat(['This HTML page was generated by leolib:html_generate_page/1', Date, Time], ' ', Comment) .
 
 % ----------------------------------------------------------------------
+
+
 
 get_swedish_name(Domain, Swedish) :-
 	dt_get_swedish_name(Domain, Swedish) ,
@@ -434,6 +654,23 @@ get_domain_acceptance(Domain, Version, OkType) :-
 	! .
 
 get_domain_acceptance(_Domain, '-', 2) .
+
+% ----------------------------------------------------------------------
+
+tag_synonym(trunk, 'Utvecklingsversion', 'utvecklingsversion') :- ! .
+
+tag_synonym(tag(Tag), 'Releasekandidat', 'releasekandidat') :-
+	member(Check, ['_RC', 'beta']) ,
+	sub_atom(Tag, _, _, _, Check) ,
+	! .
+
+tag_synonym(Tag, 'Releasekandidat', 'releasekandidat') :-
+	atom(Tag),
+	member(Check, ['_RC', 'beta']) ,
+	sub_atom(Tag, _, _, _, Check) ,
+	! .
+
+tag_synonym(_Tag, 'Release', 'release') .
 
 
 /* =======================================================================
