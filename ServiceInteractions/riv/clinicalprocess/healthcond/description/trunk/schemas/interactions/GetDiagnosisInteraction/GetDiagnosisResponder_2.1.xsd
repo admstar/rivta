@@ -18,34 +18,34 @@
  under the License.
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:tns="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2"
+	xmlns:tns="urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2"
 	xmlns:core="urn:riv:clinicalprocess:healthcond:description:2"
 	xmlns:codes="urn:riv:clinicalprocess:healthcond:description:enums:2"
-	targetNamespace="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2"
-	elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+	targetNamespace="urn:riv:clinicalprocess:healthcond:description:GetDiagnosisResponder:2"
+	elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1">
 
-	<xs:import schemaLocation="../../core_components/clinicalprocess_healthcond_description_2.0.xsd"
+	<xs:import schemaLocation="../../core_components/clinicalprocess_healthcond_description_2.1.xsd"
 		namespace="urn:riv:clinicalprocess:healthcond:description:2"/>
 	<xs:import
-		schemaLocation="../../core_components/clinicalprocess_healthcond_description_enum_2.0.xsd"
+		schemaLocation="../../core_components/clinicalprocess_healthcond_description_enum_2.1.xsd"
 		namespace="urn:riv:clinicalprocess:healthcond:description:enums:2"/>
 
-	<xs:element name="GetCareDocumentation" type="tns:GetCareDocumentationType"/>
-	<xs:element name="GetCareDocumentationResponse" type="tns:GetCareDocumentationResponseType"/>
+	<xs:element name="GetDiagnosis" type="tns:GetDiagnosisType"/>
+	<xs:element name="GetDiagnosisResponse" type="tns:GetDiagnosisResponseType"/>
 
-	<xs:complexType name="GetCareDocumentationType">
+	<xs:complexType name="GetDiagnosisType">
 		<xs:sequence>
-			<xs:element name="careUnitHSAid" type="core:HSAIdType" minOccurs="0"
+			<xs:element name="careUnitHSAId" type="core:HSAIdType" minOccurs="0"
 				maxOccurs="unbounded"/>
 			<xs:element name="patientId" type="core:PersonIdType"/>
 			<xs:element name="timePeriod" type="core:DatePeriodType" minOccurs="0"/>
-			<xs:element name="sourceSystemHSAid" type="core:HSAIdType" minOccurs="0"/>
+			<xs:element name="sourceSystemHSAId" type="core:HSAIdType" minOccurs="0"/>
 			<xs:element name="careContactId" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:complexType name="GetCareDocumentationResponseType">
+	<xs:complexType name="GetDiagnosisResponseType">
 		<xs:annotation>
 			<xs:documentation>
 				careDocumentation: 
@@ -53,7 +53,7 @@
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="careDocumentation" type="core:CareDocumentationType" minOccurs="0"
+			<xs:element name="diagnosis" type="core:DiagnosisType" minOccurs="0"
 				maxOccurs="unbounded"/>
 			<xs:element minOccurs="0" name="result" type="core:ResultType"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
