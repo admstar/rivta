@@ -186,7 +186,7 @@
 			<xs:element name="currentPage" type="tns:PageType"
 				maxOccurs="1" minOccurs="0">
 			</xs:element>
-			<xs:element name="answeredPage" type="tns:PageType"
+			<xs:element name="answeredPages" type="tns:PageType"
 				maxOccurs="unbounded" minOccurs="0">
 			</xs:element>
 			<xs:element name="lastSavedDate" type="xs:string"
@@ -276,7 +276,7 @@
 			<xs:element name="media" type="tns:MediaType" minOccurs="0"
 				maxOccurs="1">
 			</xs:element>
-			<xs:element name="maxNumberOfQuestion" type="xs:int"
+			<xs:element name="maxNumberOfQuestions" type="xs:int"
 				minOccurs="1">
 				<xs:annotation>
 					<xs:documentation>
@@ -285,7 +285,7 @@
 					</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="minNumberOfQuestion" type="xs:int"
+			<xs:element name="minNumberOfQuestions" type="xs:int"
 				minOccurs="1">
 			</xs:element>
 			<xs:element name="maxNumberOfPages" type="xs:int"
@@ -394,7 +394,7 @@
 					</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="question" type="tns:QuestionType"
+			<xs:element name="questions" type="tns:QuestionType"
 				maxOccurs="unbounded">
 			</xs:element>
 			<xs:element name="subject" type="xs:string" minOccurs="0">
@@ -416,10 +416,10 @@
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="answer" type="tns:AnswerType"
+			<xs:element name="answers" type="tns:AnswerType"
 				minOccurs="0" maxOccurs="unbounded">
 			</xs:element>
-			<xs:element name="answerAlternative"
+			<xs:element name="answerAlternatives"
 				type="tns:AnswerAlternativeType" minOccurs="0"
 				maxOccurs="unbounded">
 			</xs:element>
@@ -573,7 +573,7 @@
 			<xs:element name="questionSuperior"
 				type="tns:QuestionSuperiorType" minOccurs="0">
 			</xs:element>
-			<xs:element name="validationEvent"
+			<xs:element name="validationEvents"
 				type="tns:ValidationEventType" minOccurs="0"
 				maxOccurs="unbounded">
 			</xs:element>
@@ -728,7 +728,7 @@
 	<xs:complexType name="QuestionBlockAnswersType">
 		<xs:sequence>
             <xs:element name="blockNumber" type="xs:int" minOccurs="1"></xs:element>
-			<xs:element name="questionAnswer"
+			<xs:element name="questionAnswers"
 				type="tns:QuestionAnswerType" maxOccurs="unbounded">
 			</xs:element>
 			<xs:any namespace='##other' processContents='lax'
@@ -742,7 +742,7 @@
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="answer" type="tns:AnswerType"
+			<xs:element name="answers" type="tns:AnswerType"
 				minOccurs="1" maxOccurs="unbounded">
 			</xs:element>
             <xs:element name="questionNumber" type="xs:int" minOccurs="1"></xs:element>
@@ -917,7 +917,7 @@
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="superiorAnswerAlternativeNumber"
+			<xs:element name="superiorAnswerAlternativeNumbers"
 				type="xs:int" minOccurs="0" maxOccurs="unbounded">
 			</xs:element>
             <xs:element name="superiorQuestionNumber" type="xs:int" minOccurs="1"></xs:element>
@@ -1000,7 +1000,7 @@
 	<xs:complexType name="PageAnswerType">
 		<xs:sequence>
             <xs:element name="pageNumber" type="xs:int" minOccurs="1"></xs:element>
-			<xs:element name="questionAnswerBlock"
+			<xs:element name="questionAnswerBlocks"
 				type="tns:QuestionBlockAnswersType" maxOccurs="unbounded">
 			</xs:element>
 			<xs:any namespace='##other' processContents='lax'
@@ -1172,10 +1172,10 @@
 			<xs:element name="media" type="tns:MediaType" minOccurs="0"
 				maxOccurs="1">
 			</xs:element>
-			<xs:element name="maxNumberOfQuestion" type="xs:int"
+			<xs:element name="maxNumberOfQuestions" type="xs:int"
 				minOccurs="1">
 			</xs:element>
-			<xs:element name="minNumberOfQuestion" type="xs:int"
+			<xs:element name="minNumberOfQuestions" type="xs:int"
 				minOccurs="1">
 			</xs:element>
 			<xs:element name="maxNumberOfPages" type="xs:int"
@@ -1261,7 +1261,7 @@
 
 	<xs:complexType name="TemplateQuestionType">
 		<xs:sequence>
-			<xs:element name="answerAlternative"
+			<xs:element name="answerAlternatives"
 				type="tns:AnswerAlternativeType" maxOccurs="unbounded"
 				minOccurs="0">
 			</xs:element>
@@ -1313,7 +1313,7 @@
 			<xs:element name="questionSuperior"
 				type="tns:QuestionSuperiorType" minOccurs="0">
 			</xs:element>
-			<xs:element name="validationEvent"
+			<xs:element name="validationEvents"
 				type="tns:ValidationEventType" minOccurs="0"
 				maxOccurs="unbounded">
 			</xs:element>
@@ -1338,7 +1338,7 @@
         	<xs:documentation>Objekt för att definiera om mallen är global. Attributet countycode styr mallens tillgänglighet. ISO 3166-2:SE</xs:documentation>
         </xs:annotation>
         <xs:sequence>
-        	<xs:element name="countycode" type="tns:countycodeType"
+        	<xs:element name="countycodes" type="tns:countycodeType"
         		maxOccurs="unbounded" minOccurs="0">
                 <xs:annotation>
                 	<xs:documentation>Avgränsande fält. Om Propagate "true" kan mallen delas inom en till flera länskoder. 
@@ -1375,7 +1375,7 @@ False = Mallen delas inte. </xs:documentation>
 Logik hanteras av formulöärmotorn.</xs:documentation>
         </xs:annotation>
         <xs:sequence>
-			<xs:element name="route" type="tns:TemplateRouteType" maxOccurs="unbounded"></xs:element>
+			<xs:element name="routes" type="tns:TemplateRouteType" maxOccurs="unbounded"></xs:element>
 		</xs:sequence>
 	</xs:complexType>
 
@@ -1385,7 +1385,7 @@ Logik hanteras av formulöärmotorn.</xs:documentation>
         </xs:annotation>
         <xs:sequence>
 			<xs:element name="pageNumber" type="xs:int" maxOccurs="1"></xs:element>
-			<xs:element name="rule" type="tns:TemplateRuleType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+			<xs:element name="rules" type="tns:TemplateRuleType" minOccurs="0" maxOccurs="unbounded"></xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	
