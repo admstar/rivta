@@ -2,7 +2,7 @@
 	      sv_get_domain/1,
 	      sv_get_all_domains/1,
 	      sv_get_interaction/7,
-	      sv_get_tkb_info/5 ,
+	      sv_get_tkb_info/7 ,
 	      sv_load_svninfo/1
 	  ]).
 
@@ -27,13 +27,15 @@ sv_get_all_domains(Domains) :-
 	setof(Domain, sv_get_domain(Domain), Domains) .
 
 
-sv_get_tkb_info(Domain, Tag, TkbLink2, TkbDate, TkbDescription) :-
+sv_get_tkb_info(Domain, Tag, TkbLink2, TkbDate, TkbDescription, LongSwedish, ShortSwedish) :-
 	recorded(svnInfo,
 		 svnTkb(
 		     FilePath,
 		     TkbDescription ,
 		     svnInfo(_Rev, TkbDate) ,
-		     domain(Domain, Tag) )
+		     domain(Domain, Tag) ,
+		     swedishNames(LongSwedish, ShortSwedish)
+		 )
 		) ,
 	svnRootDir(RootDir) ,
 	atom_concat(RootDir, RestName, FilePath),
@@ -57,13 +59,14 @@ record_files(Rpath, DomainList, Dtag) :-
 	sub_atom(File, 0, 1, _Rem, 'T'),
 	l_path_to_rpath(Filepath, [File| Rpath]),
 	get_svn_info(Filepath, svnInfo(Revision, Date)) ,
-	get_tkb_description(DomainList, Dtag, Filepath, Date, Description) ,
-	l_write_trace(['TKB: ', File, DomainList, Dtag, svnInfo(Revision, Date), Description], 3) ,
+	get_tkb_file_info(DomainList, Dtag, Filepath, Date, Description, SwedishNames) ,
+	l_write_trace(['TKB: ', File, DomainList, Dtag, svnInfo(Revision, Date), Description, SwedishNames], 1) ,
 	store_tkb(svnTkb(
 		      Filepath,
 		      Description ,
 		      svnInfo(Revision, Date) ,
-		      domain(DomainList, Dtag)
+		      domain(DomainList, Dtag) ,
+		      SwedishNames
 		  )
 		 ) .
 
@@ -202,7 +205,8 @@ store_tkb(svnTkb(
 	      File,
 	      Description ,
 	      SvnInfo ,
-	      domain(DomainList, Dtag)
+	      domain(DomainList, Dtag),
+	      SwedishNames
 	  )
 	 ) :-
 	  nonvar(File) ,
@@ -210,13 +214,15 @@ store_tkb(svnTkb(
 	  nonvar(SvnInfo) ,
 	  nonvar(DomainList),
 	  nonvar(Dtag) ,
+	  nonvar(SwedishNames) ,
 	  ! ,
 	  recordz(svnInfo,
 		  svnTkb(
 		      File,
 		      Description ,
 		      SvnInfo ,
-		      domain(DomainList, Dtag)
+		      domain(DomainList, Dtag) ,
+		      SwedishNames
 		  )
 		 ) .
 
@@ -339,18 +345,18 @@ read_lines(Codes, Out, [Line|Lines]) :-
 
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-There are a number of predicates to read the description from the TK
-files. The TKB word files are converted to text with Libre office. The
-text files are kept since the conversion is quite time consuming. The
-date is checked to see when a text file is to be re-generated.
-There is a number of alternatives to extract the description from the
-text file.
-We assume that Libre office is not available in windows.
+There are a number of predicates to read the description and Swedish
+names from the TK files. The TKB word files are converted to text with
+Libre office. The text files are kept since the conversion is quite time
+consuming. The date is checked to see when a text file is to be
+re-generated. There is a number of alternatives to extract the
+description from the text file. We assume that Libre office is not
+available in windows.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-get_tkb_description(_DomainList, _Dtag, _Filepath, lastChanged(_TkbDate, _TkbTime), 'Cannot read TKB in a Windows system.') :-
+get_tkb_file_info(_DomainList, _Dtag, _Filepath, lastChanged(_TkbDate, _TkbTime), 'Cannot read TKB in a Windows system.', _SwedishNames) :-
 	l_current_os(win) .
 
-get_tkb_description(DomainList, Dtag, Filepath, lastChanged(TkbDate, TkbTime), Description) :-
+get_tkb_file_info(DomainList, Dtag, Filepath, lastChanged(TkbDate, TkbTime), Description, swedishNames(LongName, ShortName)) :-
 	l_current_os(unix),
 	file_base_name(Filepath, File),
 	file_name_extension(FName, _Ext, File),
@@ -361,13 +367,15 @@ get_tkb_description(DomainList, Dtag, Filepath, lastChanged(TkbDate, TkbTime), D
 	atomic_list_concat(['/home/leo/tmp/tkb_store/', DomTag, '/'], Txtpath),
 	atomic_list_concat([Txtpath,FName,'.txt'], Txtfilepath),
 	parse_time(TS, _Format, TkbTimestamp),
-	get_tkb_description2(Filepath, Txtfilepath, TkbTimestamp) ,
-	get_tkb_description3(Txtfilepath, Description) .
+	get_tkb_file_info2(Filepath, Txtfilepath, TkbTimestamp) ,
+	get_tkb_webtext(Txtfilepath, Description) ,
+	get_tkb_swedish_name(Txtfilepath, LongName, ShortName) .
+
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 This clause verifies that the text file exist and is newer than the doc
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-get_tkb_description2(_Filepath, Txtfilepath, TkbTimestamp) :-
+get_tkb_file_info2(_Filepath, Txtfilepath, TkbTimestamp) :-
 	exists_file(Txtfilepath),
 	time_file(Txtfilepath, TxtTimestamp) ,
 	TxtTimestamp > TkbTimestamp ,
@@ -375,8 +383,7 @@ get_tkb_description2(_Filepath, Txtfilepath, TkbTimestamp) :-
 	! .
 
 % We need to (re-)generate a txt file
-get_tkb_description2(Filepath, Txtfilepath, _TkbTimestamp) :-
-
+get_tkb_file_info2(Filepath, Txtfilepath, _TkbTimestamp) :-
 	file_directory_name(Txtfilepath, Txtpath),
 	l_write_trace(['TKB txt to be generated: ', Txtfilepath], 1) ,
 	atomic_list_concat(['libreoffice --invisible --convert-to txt:Text --outdir ' ,Txtpath, ' \'', Filepath,'\' '], Command),
@@ -384,12 +391,26 @@ get_tkb_description2(Filepath, Txtfilepath, _TkbTimestamp) :-
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 The description is read from the text file.
-First we try to find the WEB description. If not found, the normal
-description is extracted.
+We try to find the WEB description.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
+% ----- Swedish name
+get_tkb_swedish_name(Txtfilepath, LongName, ShortName) :-
+	l_read_file_to_list(Txtfilepath, Lines) ,
+	get_tkb_inlednings1(Lines, LongName1, ShortName1) ,
+	l_strip_blanks(LongName1, LongName) ,
+	l_strip_blanks(ShortName1, ShortName) ,
+	atom_length(LongName, Llen),
+	Llen > 0 ,
+	atom_length(ShortName, Slen),
+	Slen > 0 ,
+	! .
+
+get_tkb_swedish_name(Txtfilepath, '-', '-') :-
+	l_write_trace(['Could not extract Swedish names for: ', Txtfilepath], 1) .
+
 % ----- WEB description
-get_tkb_description3(Txtfilepath, WebDescription) :-
+get_tkb_webtext(Txtfilepath, WebDescription) :-
 %	l_read_file_to_list(Txtfilepath, Lines, [encoding(iso_latin_1)]
 %	) ,
 	l_read_file_to_list(Txtfilepath, Lines) ,
@@ -401,7 +422,12 @@ get_tkb_description3(Txtfilepath, WebDescription) :-
 	Len > 0 ,
 	! .
 
-% ----- Ordinary description. Lets remove during testing.
+get_tkb_webtext(Txtfilepath, '-') :-
+	l_write_trace(['Could not extract TKB WEB description for: ', Txtfilepath], 1) .
+
+
+% ----- Ordinary description. Will not be read anymore. Code will be
+% removed eventually.
 /*
 get_tkb_description3(Txtfilepath, Description) :-
 	l_read_file_to_list(Txtfilepath, Lines) ,
@@ -415,8 +441,41 @@ get_tkb_description3(Txtfilepath, Description) :-
 	! .
 */
 
-get_tkb_description3(Txtfilepath, '-') :-
-	l_write_trace(['Could not extract TKB Desc for: ', Txtfilepath], 1) .
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Find start of Swedish name
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+get_tkb_inlednings1([Inledning, LongName, ShortName| _Rest], LongName, ShortName ) :-
+	member(Inledning,
+	       [
+		'1.1 Svenskt namn'
+	       ]),
+	       ! .
+
+get_tkb_inlednings1([_First|Rest], LongName, ShortName ) :-
+	get_tkb_inlednings1(Rest, LongName, ShortName ) .
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Identify end of Swedish name
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+get_tkb_inlednings2([Avslutning|_Rest], [] ) :-
+	member(Text,
+	       [ 'teknikoberoende',
+		 'Versionsinformation' ,
+		 'de tekniska kontrakten' ,
+		 % 'teknik-oberoende',
+		 '2 Målgrupp',
+		 'Förändrade tjänstekontrakt',
+		 '2. Generella regler',
+		 'tekniskt-oberoende']) ,
+	       sub_atom_icasechk(Avslutning, _Start, Text) ,
+	       ! .
+
+get_tkb_inlednings2([Line|Rest], [Line|Sofar]) :-
+	get_tkb_inledningw2(Rest, Sofar) .
+
+
+
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Find start of WEB description text.
@@ -424,7 +483,7 @@ Find start of WEB description text.
 get_tkb_inledningw1([Inledning|Rest], Rest ) :-
 	member(Inledning,
 	       [
-		'1.1 WEB beskrivning'
+		'1.2 WEB beskrivning'
 	       ]),
 	       ! .
 
@@ -437,13 +496,12 @@ Identify end of WEB description
 get_tkb_inledningw2([Avslutning|_Rest], [] ) :-
 	member(Text,
 	       [ 'teknikoberoende',
-		 '1.2 Versionsinformation' ,
+		 'Versionsinformation' ,
 		 'de tekniska kontrakten' ,
 		 % 'teknik-oberoende',
 		 '2 Målgrupp',
 		 'Förändrade tjänstekontrakt',
 		 '2. Generella regler',
-		 '1.2. Bakgrund',
 		 'tekniskt-oberoende']) ,
 	       sub_atom_icasechk(Avslutning, _Start, Text) ,
 	       ! .
@@ -453,10 +511,10 @@ get_tkb_inledningw2([Line|Rest], [Line|Sofar]) :-
 
 
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Find start of ordinary description text. There are a number of
-alternatives.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/*
+%Find start of ordinary description text. There are a number of
+%alternatives.
+
 get_tkb_inledning1([Inledning|Rest], Rest ) :-
 	member(Inledning,
 	       ['Inledning',
@@ -474,9 +532,9 @@ get_tkb_inledning1([_First|Rest], Rest2 ) :-
 	get_tkb_inledning1(Rest, Rest2 ) .
 
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Identify end of ordinary description
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+%Identify end of ordinary description
+
 get_tkb_inledning2([Avslutning|_Rest], [] ) :-
 	member(Text,
 	       [ 'teknikoberoende',
@@ -493,6 +551,7 @@ get_tkb_inledning2([Avslutning|_Rest], [] ) :-
 
 get_tkb_inledning2([Line|Rest], [Line|Sofar]) :-
 	get_tkb_inledning2(Rest, Sofar) .
+*/
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Convert between different formats for tags, branches and trunk

@@ -43,61 +43,46 @@ html_domain_index_info([
     a([attribute(href, 'index.html')], 'Index över tjänstedomäner') ,
     '  |  ',
     a([attribute(href, 'interaction_index.html')], 'Index över tjänstekontrakt') ,
+        div(attribute(class, ingress), 'Här hittar du en förteckning över samtliga tjänstedomäner och tjänstekontrakt, samt om de är installerade i den nationella Tjänsteplattformen eller inte') ,
     p(' ') ,
-    div(attribute(class, ingress), 'Information på denna sida är extraherad från subversion, tjänstekontraktsbeskrivningar, tjänsteadresseringskatalogerna i NTjP samt Arkitektur och regelverks förteckning över svenska domännamn.') ,
+    div(attribute(class, ingress), 'Information på denna sida är extraherad från subversion, tjänstekontraktsbeskrivningar samt tjänsteadresseringskatalogerna i NTjP. Klicka på länkarna i tabellen för mer information.') ,
     p(' ') ,
     table(
 	  [
 	      tr(
 		  [
 		  th([attribute(class, dom1)], 'Tjänstedomän') ,
-		  th([attribute(class, dom2)], 'Svensk beteckning') ,
-		  th([attribute(class, dom3)], 'NTjP') ,
-		  th([attribute(class, dom4)], 'QA') ,
-%		  th([attribute(class, dom5)], 'Länk')
-		  th([attribute(class, dom5)], 'WEB text')
+		  th([attribute(class, dom2)], 'Svenskt namn') ,
+		  th([attribute(class, dom3)], 'Engelskt namn') ,
+		  th([attribute(class, dom4)], 'NTjP') ,
+		  th([attribute(class, dom5)], 'QA')
 	      ]) ,
-	      TrList
-	  ]
-	 )
+	TrList
+    ]
+    )
 ]
 		      ) :-
 	findall(
 	    tr([
-		td(DomainNameLink),
-		td(Popular),
-		td([attribute(align,center)],InTp),
-		td([attribute(align,center)],InQA),
-		td([attribute(align,center)], WebText)]),
+		td(ShortSwedish) ,
+		td(LongSwedish) ,
+		td(DomainNameLink) ,
+		td([attribute(align,center)], InTp) ,
+		td([attribute(align,center)], InQA)
+	    ]),
 %	    get_domain_index_info(DomainNameLink, Popular, InTp, InQA,
 %	    TkbLink),
-	    get_domain_index_info_x(DomainNameLink, Popular, InTp, InQA, WebText),
+	    get_domain_index_info_x(DomainNameLink, _Popular, InTp, InQA, _WebText, LongSwedish, ShortSwedish),
 	    TrList).
-
-get_domain_index_info(
-    DomainNameLink,
-    Popular,
-    InTp,
-    InQA,
-    Link) :-
-	sv_get_domain(Domain) ,
-	atomic_list_concat(Domain, ':', DomainName) ,
-	html_domain_filename(Domain, FileName) ,
-	(   html_domain_file_exist(Domain) -> DomainNameLink = a(attribute(href, FileName), DomainName) ; DomainNameLink = DomainName ) ,
-%	dt_get_popular_name(Domain, Popular) ,
-	get_swedish_name(Domain, Popular) , % Take the name from Sonjas table
-	domain_index_tp_info(prod, Domain, InTp) ,
-	domain_index_tp_info(qa, Domain, InQA) ,
-	(   sv_get_tkb_info(Domain, trunk, TkbLink, _LastChanged, _TkbDescription) ->
-	Link = a([attribute(href, TkbLink)], 'TKB') ;
-	Link = '-' ) .
 
 get_domain_index_info_x(
     DomainNameLink,
     Popular,
     InTp,
     InQA,
-    Text) :-
+    Text,
+    LongSwedish,
+    ShortSwedish) :-
 	sv_get_domain(Domain) ,
 	atomic_list_concat(Domain, ':', DomainName) ,
 	html_domain_filename(Domain, FileName) ,
@@ -106,7 +91,7 @@ get_domain_index_info_x(
 	get_swedish_name(Domain, Popular) , % Take the name from Sonjas table
 	domain_index_tp_info(prod, Domain, InTp) ,
 	domain_index_tp_info(qa, Domain, InQA) ,
-	sv_get_tkb_info(Domain, trunk, _TkbLink, _LastChanged, TkbDescription) ,
+	sv_get_tkb_info(Domain, trunk, _TkbLink, _LastChanged, TkbDescription, LongSwedish, ShortSwedish) ,
 	atom_length(TkbDescription, Len) ,
 	(   Len > 1 ->
 	Text = 'OK' ;
@@ -272,7 +257,7 @@ html_domain_info(Domain, [Desc, VersionInfo, Consumer_list, Producer_list]) :-
 %	atomic_list_concat([DomainName, Version], '_', Tag) ,
 %	l_write_trace([tag, Tag], 1),
 %	html_domain_info_tkb(Domain, Tkb_html_list) ,
-%	html_domain_info_tkb(OkType, Domain, Tag, Version,
+%	html_domain_info_tkb(OkTypFe, Domain, Tag, Version,
 %	Tkb_html_list) ,
 %	html_domain_info_services(OkType, Domain, Tag,
 %	Services_html_list) ,
@@ -290,18 +275,17 @@ html_domain_info_description(Domain,
 			 p(TkbDescription)
 		     ]
 		    ) :-
-	sv_get_tkb_info(Domain, trunk, TkbLink, lastChanged(_TkbDate, _), TkbDescription) .
+	sv_get_tkb_info(Domain, trunk, TkbLink, lastChanged(_TkbDate, _), TkbDescription, _LongSwedish, _ShortSwedish) .
+
+
 
 % ---------------------------------------------------------------------
 
+html_domain_info_version(_Domain, [], '' ) :- ! .
 
-html_domain_info_version(Domain, [Version], Text ) :-
-	! ,
-	html_domain_info_version2(Domain, Version, Text) .
-
-html_domain_info_version(Domain, [First, Second], [VI1, VI2]) :-
-	html_domain_info_version2(Domain, First, VI1),
-	html_domain_info_version2(Domain, Second, VI2).
+html_domain_info_version(Domain, [First | Rest], [VI | VRest]) :-
+	html_domain_info_version2(Domain, First, VI),
+	html_domain_info_version(Domain, Rest, VRest).
 
 % ---------------------------------------------------------------------
 
@@ -317,7 +301,7 @@ html_domain_info_version2(Domain, trunk,
 	! ,
 %	atomic_list_concat(Domain, '_', DomainName),
 %	atomic_list_concat([DomainName, Version], '_', Tag) ,
-	sv_get_tkb_info(Domain, trunk, TkbLink, lastChanged(TkbDate, _), _TkbDescription) ,
+	sv_get_tkb_info(Domain, trunk, TkbLink, lastChanged(TkbDate, _), _TkbDescription, _LongSwedish, _ShortSwedish) ,
 	html_domain_info_services(Domain, trunk, ServiceList) .
 
 % A release or RC (or beta) which can be found in a tag in svn
@@ -332,9 +316,7 @@ html_domain_info_version2(Domain, Version,
 	atomic_list_concat(Domain, '_', DomainName),
 	atomic_list_concat([DomainName, Version], '_', Tag) ,
 	tag_synonym(Tag, Uname, Lname),
-	write(Tag), write(' --- '), write(Uname), nl ,
-	sv_get_tkb_info(Domain, tag(Tag), TkbLink, lastChanged(TkbDate, _), _TkbDescription) ,
-	write('After sv_get...') , nl ,
+	sv_get_tkb_info(Domain, tag(Tag), TkbLink, lastChanged(TkbDate, _), _TkbDescription, _LongSwedish, _ShortSwedish) ,
 	! ,
 	html_ziplink(Domain, Version, ZipLinkText) , %% MUST ADD TAG HERE
 	html_domain_info_services(Domain, tag(Tag), ServiceList) ,
@@ -625,7 +607,7 @@ get_swedish_name(Domain, ' - ') :-
 % ----------------------------------------------------------------------
 
 get_tkb_info(Domain, trunk, TkbLink, lastChanged(TkbDate, _), TkbDescription) :-
-	sv_get_tkb_info(Domain, trunk, TkbLink, lastChanged(TkbDate, _), TkbDescription) ,
+	sv_get_tkb_info(Domain, trunk, TkbLink, lastChanged(TkbDate, _), TkbDescription, _LongSwedish, _ShortSwedish) ,
 	! .
 get_tkb_info(_Domain, trunk, '-', lastChanged('-', _Time), 'TKB kunde inte hittas.') .
 
@@ -681,7 +663,7 @@ tag_synonym(_Tag, 'Release', 'release') .
 Generate redirect files to tkb on request from Maria Brunsell
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 html_tkb_redirect(Domain) :-
-	sv_get_tkb_info(Domain, trunk, TkbLink, _TkbDate, _TkbDescription) ,
+	sv_get_tkb_info(Domain, trunk, TkbLink, _TkbDate, _TkbDescription, _LongSwedish, _ShortSwedish) ,
 	! ,
 	l_current_date(Date),
 	l_current_time(Time) ,
@@ -755,10 +737,6 @@ list_services_in_unaccepted_domains :-
 
 list_services_in_unaccepted_domains .
 
-
-testa(A) :-
-	loadsvninfo:get_tkb_description3(
-	    '/home/leo/tmp/tkb_store/clinicalprocess_activity_request-clinicalprocess_activity_request_1.0_beta_r2693/Tjänstekontraktbeskrivning NeR.txt', A).
 
 
 
