@@ -410,19 +410,21 @@ get_tkb_swedish_name(Txtfilepath, '-', '-') :-
 	l_write_trace(['Could not extract Swedish names for: ', Txtfilepath], 1) .
 
 % ----- WEB description
-get_tkb_webtext(Txtfilepath, WebDescription) :-
+%get_tkb_webtext(Txtfilepath, WebDescription) :-
+get_tkb_webtext(Txtfilepath, DescriptionList) :-
 %	l_read_file_to_list(Txtfilepath, Lines, [encoding(iso_latin_1)]
 %	) ,
 	l_read_file_to_list(Txtfilepath, Lines) ,
 	get_tkb_inledningw1(Lines, After) ,
 	get_tkb_inledningw2(After, DescriptionList) ,
-	atomic_list_concat(DescriptionList, ' ', Desc) ,
-	l_strip_blanks(Desc, WebDescription) ,
-	atom_length(WebDescription, Len) ,
-	Len > 0 ,
 	! .
+%	atomic_list_concat(DescriptionList, ' ', Desc) ,
+%	l_strip_blanks(Desc, WebDescription) ,
+%	atom_length(WebDescription, Len) ,
+%	Len > 0 ,
+%	! .
 
-get_tkb_webtext(Txtfilepath, '-') :-
+get_tkb_webtext(Txtfilepath, ['-']) :-
 	l_write_trace(['Could not extract TKB WEB description for: ', Txtfilepath], 1) .
 
 

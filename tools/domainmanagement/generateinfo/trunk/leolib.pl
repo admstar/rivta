@@ -468,10 +468,13 @@ html_write2([Content | Rest], Stream) :-
 	html_write2(Content, Stream) ,
 	html_write2(Rest, Stream) .
 
+% --- Special tags
+% string-tag
 html_write2(string(String), Stream) :-
 	! ,
 	write(Stream, String) .
 
+% comment-tag
 html_write2(comment(Comment), Stream) :-
 	! ,
 	l_write_list(Stream, [
@@ -480,6 +483,24 @@ html_write2(comment(Comment), Stream) :-
 			 Comment ,
 			 ' -->',
 			 nl ]) .
+
+/*
+
+       <a class="info" href="#">Info</a><span class="help-text">Texten som ska visas i pop:uppen när musen hovrar över ikonen.</span>
+	*/
+html_write2(info(Text), Stream) :-
+	! ,
+	html_write2([
+	    a([attribute(class, info), attribute(href, '#')], 'Info') ,
+	    span(attribute(class, 'help-text'), Text)
+	] ,
+		    Stream) .
+
+html_write2(br, Stream) :-
+	nl(Stream),
+	write(Stream, '<br>' ) ,
+	nl(Stream) .
+
 
 % A tag with no attributes specified, specify as []
 html_write2(Struct, Stream) :-

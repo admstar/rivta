@@ -2,14 +2,11 @@
 	      html_generate/0
 	  ]) .
 
-
-
 :- use_module(leolib).
 :- use_module(loaddomaintable).
 :- use_module(loadsvninfo).
 :- use_module(loadtak).
 :- use_module(library(http/html_write)).
-
 
 
 
@@ -80,7 +77,7 @@ get_domain_index_info_x(
     Popular,
     InTp,
     InQA,
-    Text,
+    _Text,
     LongSwedish,
     ShortSwedish) :-
 	sv_get_domain(Domain) ,
@@ -91,11 +88,11 @@ get_domain_index_info_x(
 	get_swedish_name(Domain, Popular) , % Take the name from Sonjas table
 	domain_index_tp_info(prod, Domain, InTp) ,
 	domain_index_tp_info(qa, Domain, InQA) ,
-	sv_get_tkb_info(Domain, trunk, _TkbLink, _LastChanged, TkbDescription, LongSwedish, ShortSwedish) ,
-	atom_length(TkbDescription, Len) ,
-	(   Len > 1 ->
-	Text = 'OK' ;
-	Text = '-' ) .
+	sv_get_tkb_info(Domain, trunk, _TkbLink, _LastChanged, _TkbDescription, LongSwedish, ShortSwedish) .
+%	atom_length(TkbDescription, Len) ,
+%	(   Len > 1 ->
+%	Text = 'OK' ;
+%	Text = '-' ) .
 
 /*
 get_domain_index_info(
@@ -269,13 +266,13 @@ html_domain_info(Domain, [Desc, VersionInfo, Consumer_list, Producer_list]) :-
 
 html_domain_info_description(Domain,
 		     [
-			 h2('Beskrivning'),
-			 p(['Beskrivning av tjänstedomänen (från kap 1.1 i ',
-			     a([attribute(href, TkbLink)],'Tjänstekontraktsbeskrivningen'), ' i trunk)'] ),
-			 p(TkbDescription)
+				 h2(['Beskrivning' ,
+				     info('Beskrivning av tjänstedomänen (från kap 1.1 i Tjänstekontraktsbeskrivningen i trunk)' )]),
+				 p(TkbDescription)
 		     ]
 		    ) :-
-	sv_get_tkb_info(Domain, trunk, TkbLink, lastChanged(_TkbDate, _), TkbDescription, _LongSwedish, _ShortSwedish) .
+	sv_get_tkb_info(Domain, trunk, _TkbLink, lastChanged(_TkbDate, _), TkbDescriptionList, _LongSwedish, _ShortSwedish) ,
+	format_description(TkbDescriptionList, TkbDescription) .
 
 
 
@@ -326,19 +323,18 @@ html_domain_info_version2(Domain, Version,
 html_domain_info_version2(Domain, Version,
 			  [
 				      h2([Uname, ' ', Version]),
-				      p(['Denna ', Lname, ' är godkänd av Inera Arkitektur och regelverk. ', ZipLinkText]) ,
-				      p(['Denna ', Lname, ' kan inte återfinnas i versionshanteringssystemet (som en tag i svn). Av den orsaken kan ingen information om Tjänstekontraktsbeskrivning eller tjänster presenteras. Se zip-arkivet ovan.']),
-				      ServiceList
+				      p([ZipLinkText, 'Den är godkänd av Inera Arkitektur och regelverk.']) ,
+				      ['Dock finns ingen tag ', i(Tag), ' i versionshanteringssystemet. Av den orsaken kan information om tjänstekontraktsbeskrivning och tjänster inte presenteras.']
 				  ]
 			 ) :-
 	atomic_list_concat(Domain, '_', DomainName),
 	atomic_list_concat([DomainName, Version], '_', Tag) ,
-	tag_synonym(Tag, Uname, Lname),
+	tag_synonym(Tag, Uname, _Lname),
 %	sv_get_tkb_info(Domain, tag(Tag), TkbLink, lastChanged(TkbDate,
 %	_), _TkbDescription) , ! ,
-	html_ziplink(Domain, Version, ZipLinkText) ,
-	html_domain_info_services(Domain, tag(Tag), ServiceList) ,
-	l_write_trace([Tag, ' - ', ServiceList],1) .
+	html_ziplink(Domain, Version, ZipLinkText) .
+%	html_domain_info_services(Domain, tag(Tag), ServiceList) ,
+
 
 
 
@@ -352,7 +348,8 @@ html_domain_info_version2(Domain, Version,
 /*
 html_domain_info3(Domain, trunk, VersionInfo) :-
 	! ,
-%	get_domain_acceptance(Domain, Version, OkType) ,
+%	get_domain_acceptance
+%
 %	atomic_list_concat(Domain, '_', DomainName),
 %	atomic_list_concat([DomainName, Version], '_', Tag) ,
 %	l_write_trace([tag, Tag], 1),
@@ -653,6 +650,20 @@ tag_synonym(Tag, 'Releasekandidat', 'releasekandidat') :-
 	! .
 
 tag_synonym(_Tag, 'Release', 'release') .
+
+% ----------------------------------------------------------------------
+
+format_description([], []) :- ! .
+
+format_description([Line|Rest], ['<br>'|Rest2]) :-
+	l_strip_blanks(Line, Sline),
+	atom_length(Sline, Len) ,
+	Len = 0 ,
+	! ,
+	format_description(Rest, Rest2) .
+
+format_description([Line|Rest], [Line|Rest2]) :-
+	format_description(Rest, Rest2) .
 
 
 /* =======================================================================
