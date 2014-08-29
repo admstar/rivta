@@ -2,6 +2,7 @@
 	      sv_get_domain/1,
 	      sv_get_all_domains/1,
 	      sv_get_interaction/7,
+	      sv_get_latest_tkb_info/7,
 	      sv_get_tkb_info/7 ,
 	      sv_load_svninfo/1
 	  ]).
@@ -27,6 +28,16 @@ sv_get_all_domains(Domains) :-
 	setof(Domain, sv_get_domain(Domain), Domains) .
 
 % Must change to only return newest TKB
+sv_get_latest_tkb_info(InDomain, InTag, OutTkbLink, OutTkbDate, OutTkbDescription, OutLongSwedish, OutShortSwedish) :-
+	nonvar(InDomain),
+	setof(
+	    [TkbDate, InDomain, InTag, TkbLink, TkbDescription, LongSwedish, ShortSwedish] ,
+	    sv_get_tkb_info(InDomain, InTag, TkbLink, TkbDate, TkbDescription, LongSwedish, ShortSwedish) ,
+	    TkbInfoList ) ,
+	reverse(TkbInfoList,
+		[[OutTkbDate, InDomain, InTag, OutTkbLink, OutTkbDescription, OutLongSwedish, OutShortSwedish ] | _Rest ]) .
+
+
 sv_get_tkb_info(Domain, Tag, TkbLink2, TkbDate, TkbDescription, LongSwedish, ShortSwedish) :-
 	recorded(svnInfo,
 		 svnTkb(
