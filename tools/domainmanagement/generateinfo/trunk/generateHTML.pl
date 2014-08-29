@@ -36,13 +36,15 @@ html_generate_domain_index :-
 
 html_domain_index_info([
     h1('Tjänstedomäner') ,
-    p(' ') ,
-    a([attribute(href, 'index.html')], 'Index över tjänstedomäner') ,
-    '  |  ',
-    a([attribute(href, 'interaction_index.html')], 'Index över tjänstekontrakt') ,
-        div(attribute(class, ingress), 'Här hittar du en förteckning över samtliga tjänstedomäner och tjänstekontrakt, samt om de är installerade i den nationella Tjänsteplattformen eller inte') ,
-    p(' ') ,
-    div(attribute(class, ingress), 'Information på denna sida är extraherad från subversion, tjänstekontraktsbeskrivningar samt tjänsteadresseringskatalogerna i NTjP. Klicka på länkarna i tabellen för mer information.') ,
+    div(attribute(class, ingress),
+	[
+	    'Här hittar du en förteckning över samtliga tjänstedomäner och ',
+	    a([attribute(href, 'interaction_index.html')], 'tjänstekontrakt') ,
+	    ' samt om de är installerade i den nationella Tjänsteplattformen eller inte.',
+	    p(' ') ,
+	    'Information på denna sida är extraherad från subversion, tjänstekontraktsbeskrivningar samt tjänsteadresseringskatalogerna i NTjP. Klicka på länkarna i tabellen för mer information.'
+	]
+       ) ,
     p(' ') ,
     table(
 	  [
@@ -52,13 +54,19 @@ html_domain_index_info([
 		  th([attribute(class, dom2)], 'Svenskt namn') ,
 		  th([attribute(class, dom3)], 'Engelskt namn') ,
 		  th([attribute(class, dom4)], 'NTjP') ,
-		  th([attribute(class, dom5)], 'QA')
-	      ]) ,
+		  th([attribute(class, dom5)], ['QA ',
+						info(['Informationen från NTjPs tjänsteadresseringskataloger uppdaterades senast ',
+						      Date])
+					       ]
+		    )
+	      ]
+	      ) ,
 	TrList
     ]
     )
 ]
 		      ) :-
+	tk_get_tak_date(prod, Date) ,
 	findall(
 	    tr([
 		td(ShortSwedish) ,
@@ -139,14 +147,12 @@ html_generate_interaction_index :-
 
 html_interaction_index_info([
     h1('Tjänstekontrakt'),
-    p(' ') ,
-    a([attribute(href, 'index.html')], 'Index över tjänstedomäner') ,
-    '  |  ',
-    a([attribute(href, 'interaction_index.html')], 'Index över tjänstekontrakt') ,
-    p(' ') ,
-    p('Information på denna sida är extraherad från WSDL-filer i subversion samt tjänsteadresseringskatalogerna i NTjP.') ,
-    p(' ') ,
-    p(' '),
+    div(attribute(class, ingress), [
+	    'Här hittar du en förteckning över samtliga tjänstekontakt och ',
+	    a([attribute(href, 'index.html')], 'tjänstedomäner') ,
+	    ' samt om de är installerade i den nationella Tjänsteplattformen eller inte.' ,
+	    div(attribute(class, ingress), 'Information på denna sida är extraherad från subversion, tjänstekontraktsbeskrivningar samt tjänsteadresseringskatalogerna i NTjP. Klicka på länkarna i tabellen för mer information.')
+	]) ,
     table(
 	  [
 	      tr(
@@ -220,11 +226,10 @@ html_domain_page(Domain) :-
 	atomic_list_concat(Domain, ':', DomainName) ,
 	append([
 	    h1(DomainName),
-	    p(' ') ,
-	    a([attribute(href, 'index.html')], 'Index över tjänstedomäner') ,
-	    '  |  ',
-	    a([attribute(href, 'interaction_index.html')], 'Index över tjänstekontrakt') ,
-	    p(' ')
+	    'Samtliga ',
+	    a([attribute(href, 'index.html')], 'tjänstedomäner') ,
+	    ' och ',
+	    a([attribute(href, 'interaction_index.html')], 'tjänstekontrakt.')
 	],
 	       Tkb_html_list,
 	       Content) ,
@@ -266,8 +271,8 @@ html_domain_info(Domain, [Desc, VersionInfo, Consumer_list, Producer_list]) :-
 
 html_domain_info_description(Domain,
 		     [
-				 h2(['Beskrivning' ,
-				     info('Beskrivning av tjänstedomänen (från kap 1.1 i Tjänstekontraktsbeskrivningen i trunk)' )]),
+				 h2(['Beskrivning ' ,
+				     info('Beskrivningen av tjänstedomänen är hämtad från kap 1.2 i dess Tjänstekontraktsbeskrivning (i trunk).' )]),
 				 p(TkbDescription)
 		     ]
 		    ) :-
