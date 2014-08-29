@@ -3,6 +3,7 @@
 	      tk_get_domain_consumer/4,
 	      tk_get_domain_producer/4,
 	      tk_get_interaction/5,
+	      tk_get_tak_date/2,
 	      tk_get_tak_info/5
 	  ]) .
 
@@ -13,6 +14,9 @@ tk_loadtak :-
 
 tk_get_tak_info(Envir, Domain, Interaction, IVersion, RivVersion) :-
 	recorded(takInfo, takInfo(Envir, Domain, Interaction, IVersion, RivVersion)) .
+
+tk_get_tak_date(Envir, Date) :-
+	recorded(takInfo, takDate(Envir, Date)) .
 
 % This predicate use bagof since I do not want it to return duplicates
 tk_get_domain_consumer(Envir, Domain, Consumer_HSA, Consumer_Desc) :-
@@ -52,6 +56,9 @@ tk_get_interaction(Envir, Interaction, IntVersion, BPVersion, Domain) :-
 
 loadTAK2(Envir, File) :-
 	nonvar(Envir) ,
+	l_erase_all(takInfo, takDate(Envir, _Date)) ,
+	l_file_date_time(File, Date, _Time),
+	recordz(takInfo, takDate(Envir, Date)) ,
 	l_erase_all(takInfo, takInfo(Envir, _Acc, _Cons, _Prod, _LA)) ,
 	l_read_file_to_list(File, [_HeaderLine | Lines], [encoding(iso_latin_1)]) ,
 %	l_write_trace(Lines, 3),

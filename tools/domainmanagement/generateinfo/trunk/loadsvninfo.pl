@@ -26,7 +26,7 @@ sv_get_domain(Domain) :-
 sv_get_all_domains(Domains) :-
 	setof(Domain, sv_get_domain(Domain), Domains) .
 
-
+% Must change to only return newest TKB
 sv_get_tkb_info(Domain, Tag, TkbLink2, TkbDate, TkbDescription, LongSwedish, ShortSwedish) :-
 	recorded(svnInfo,
 		 svnTkb(

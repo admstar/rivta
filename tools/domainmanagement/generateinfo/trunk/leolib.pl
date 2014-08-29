@@ -9,6 +9,7 @@
 	      l_current_time/1,
 	      l_erase_all/1,
 	      l_erase_all/2,
+	      l_file_date_time/3,
 	      l_get_date_time/7,
 	      l_html_write/1,
 	      l_html_write/2,
@@ -304,6 +305,19 @@ l_current_time(Time) :-
 	pad0(S, Second) ,
 	atomic_list_concat([Hour, Minute, Second], ':', Time).
 
+% Extract last modification date and time for a file
+l_file_date_time(File, Date, Time) :-
+	time_file(File, TS),
+	stamp_date_time(TS, date(Year, Mo, Da, Ho, Mi, Se, _, _, _), 'local') ,
+	pad0(Mo, Month) ,
+	pad0(Da, Day) ,
+	atomic_list_concat([Year, Month, Day], '-', Date) ,
+	pad0(Ho, Hour) ,
+	pad0(Mi, Minute) ,
+	Se0 is truncate(Se),
+	pad0(Se0, Second) ,
+	atomic_list_concat([Hour, Minute, Second], ':', Time) .
+
 pad0(Number, Padded) :-
 	atom_length(Number, 1) ,
 	! ,
@@ -496,7 +510,7 @@ html_write2(info(Text), Stream) :-
 	] ,
 		    Stream) .
 
-html_write2(br, Stream) :-
+html_write2(newline, Stream) :-
 	nl(Stream),
 	write(Stream, '<br>' ) ,
 	nl(Stream) .
