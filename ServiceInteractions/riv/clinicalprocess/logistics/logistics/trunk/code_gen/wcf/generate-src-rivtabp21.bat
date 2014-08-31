@@ -23,7 +23,7 @@
 	
 	SET SCHEMADIR=..\..\schemas
 	
-SET W1=%SCHEMADIR%\.\interactions\GetCareContactsInteraction\GetCareContactsInteraction_2.1_RIVTABP21.wsdl
+SET W1=%SCHEMADIR%\.\interactions\GetCareContactsInteraction\GetCareContactsInteraction_3.0_RIVTABP21.wsdl
 SET X1=%SCHEMADIR%\interactions\GetCareContactsInteraction/\*.xsd
 
 SET XCORE=%SCHEMADIR%\core_components\*.xsd
@@ -32,7 +32,7 @@ SET SCHEMAS=%XCORE% %W0% %X0% %W1% %X1% %W2% %X2%
 
 SET OUTFILE=/out:wcf\generated-src\clinicalProcessLogisticsLogistics.cs
 SET APPCONFIG=/config:wcf\generated-src\app.config
-SET NAMESPACE=/namespace:*,Riv.ClinicalProcess.Logistics.Logistics.v2
+SET NAMESPACE=/namespace:*,Riv.ClinicalProcess.Logistics.Logistics.v3
 SET SVCUTIL="svcutil.exe"
 %SVCUTIL% /language:cs %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
 
