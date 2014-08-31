@@ -55,7 +55,7 @@ html_domain_index_info([
 		  th([attribute(class, dom3)], 'Engelskt namn') ,
 		  th([attribute(class, dom4)], 'NTjP') ,
 		  th([attribute(class, dom5)], ['QA ',
-						info(['Informationen från NTjPs tjänsteadresseringskataloger uppdaterades senast ', Date])
+						info(['Informationen kommer från NTjPs tjänsteadresseringskataloger. Den uppdaterades senast ', Date])
 					       ]
 		    )
 	      ]
@@ -160,7 +160,7 @@ html_interaction_index_info([
 		     th([attribute(class, int3)], 'Tjänstedomän') ,
 		     th([attribute(class, int4)], 'NTjP') ,
 		  th([attribute(class, int5)],  ['QA ',
-						 info(['Informationen från NTjPs tjänsteadresseringskataloger uppdaterades senast ', Date])
+						 info(['Informationen kommer från från NTjPs tjänsteadresseringskataloger. Den uppdaterades senast ', Date])
 						]) ,
 		  th([attribute(class, int6)], 'Ändrad')
 	      ]) ,
@@ -469,7 +469,7 @@ html_domain_info_services(_Domain, _Tag, p('(Denna tag kunde ej återfinnas i sv
 html_domain_info_consumers(Domain,
 			   [
 			       h2(['Tjänstekonsumenter anslutna till domänens kontrakt ',
-				   info(['Informationen från NTjPs tjänsteadresseringskataloger uppdaterades senast ', Date])]),
+				   info(['Informationen nedan kommer från NTjPs tjänsteadresseringskataloger. Den uppdaterades senast ', Date])]),
 			       p([
 				   'Följande tjänstekonsumenter är anslutna till tjänster (tjänstekontrakt) i domänen i den nationellt gemensamma tjänsteplattformen.']),
 			       ul( TrList )
@@ -490,7 +490,7 @@ html_domain_info_consumers(_Domain, [] ) .
 html_domain_info_producers(Domain,
 			   [
 			       h2(['Tjänsteproducenter anslutna till domänens kontrakt ',
-				   info(['Informationen från NTjPs tjänsteadresseringskataloger uppdaterades senast ', Date])]),
+				   info(['Informationen nedan kommer från NTjPs tjänsteadresseringskataloger. Den uppdaterades senast ', Date])]),
 			       p('Följande tjänsteproducenter är anslutna via tjänster (tjänstekontrakt) i den nationellt gemensamma tjänsteplattformen.'),
 			       ul( TrList )
 			   ]
