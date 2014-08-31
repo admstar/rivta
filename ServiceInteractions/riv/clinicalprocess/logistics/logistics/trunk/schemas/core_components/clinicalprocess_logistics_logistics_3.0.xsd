@@ -57,10 +57,9 @@
         <xs:sequence>
             <xs:element name="careContactCode" type="tns:CVType" minOccurs="0"/>
             <xs:element name="careContactReason" type="xs:string" minOccurs="0"/>
-            <xs:element name="careContactOrgUnit" type="tns:OrgUnitType"/>
-            <xs:element name="careContactTimePeriod" type="tns:TimePeriodType"/>
-            <xs:element name="careContactStatus" type="tns:CVType" minOccurs="0"
-                maxOccurs="1"/>
+            <xs:element name="careContactOrgUnit" type="tns:OrgUnitType" minOccurs="0"/>
+            <xs:element name="careContactTimePeriod" type="tns:TimePeriodType" minOccurs="0"/>
+            <xs:element name="careContactStatus" type="tns:CVType" minOccurs="0" maxOccurs="1"/>
             <xs:element name="additionalPatientInformation"
                 type="tns:AdditionalPatientInformationType" minOccurs="0"/>
             <xs:element name="relation" type="tns:RelationType" minOccurs="0" maxOccurs="unbounded"/>
@@ -197,10 +196,29 @@
         </xs:sequence>
     </xs:complexType>
 
-    <!-- YYYYMMDD -->
+    <xs:complexType name="PartialDateType">
+        <xs:annotation>
+            <xs:documentation>YYYY, YYYYMM or YYYYMMDD</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="format" type="codes:DateTypeFormatEnum"/>
+            <xs:element name="value" type="tns:PartialDateValueType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="PartialDateValueType">
+        <xs:annotation>
+            <xs:documentation>YYYY, YYYYMM or YYYYMMDD</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern
+                value="-?([1-9][0-9]{3}|0[0-9]{3})((0[1-9]|1[0-2])((0[1-9]|[12][0-9]|3[01]))?)?"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:simpleType name="DateType">
         <xs:annotation>
-            <xs:documentation/>
+            <xs:documentation>YYYYMMDD</xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
             <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"/>
@@ -276,7 +294,7 @@
             <xs:documentation/>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="dateOfBirth" type="tns:DateType" minOccurs="1"/>
+            <xs:element name="dateOfBirth" type="tns:PartialDateType" minOccurs="0"/>
             <xs:element name="gender" type="tns:CVType" minOccurs="0"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
