@@ -89,35 +89,10 @@ get_domain_index_info_x(
 	atomic_list_concat(Domain, ':', DomainName) ,
 	html_domain_filename(Domain, FileName) ,
 	(   html_domain_file_exist(Domain) -> DomainNameLink = a(attribute(href, FileName), DomainName) ; DomainNameLink = DomainName ) ,
-%	dt_get_popular_name(Domain, Popular) ,
 	get_swedish_name(Domain, Popular) , % Take the name from Sonjas table
 	domain_index_tp_info(prod, Domain, InTp) ,
 	domain_index_tp_info(qa, Domain, InQA) ,
 	get_latest_tkb_info(Domain, trunk, _TkbLink, _LastChanged, _TkbDescription, LongSwedish, ShortSwedish) .
-%	atom_length(TkbDescription, Len) ,
-%	(   Len > 1 ->
-%	Text = 'OK' ;
-%	Text = '-' ) .
-
-/*
-get_domain_index_info(
-    DomainNameLink,
-    Popular,
-    InTp,
-    InQA,
-    Link) :-
-	sv_get_domain(Domain) ,
-	atomic_list_concat(Domain, ':', DomainName) ,
-	html_domain_filename(Domain, FileName) ,
-	(   html_domain_file_exist(Domain) -> DomainNameLink = a(attribute(href, FileName), DomainName) ; DomainNameLink = DomainName ) ,
-%	dt_get_popular_name(Domain, Popular) ,
-	get_swedish_name(Domain, Popular) , % Take the name from Sonjas table
-	domain_index_tp_info(prod, Domain, InTp) ,
-	domain_index_tp_info(qa, Domain, InQA) ,
-	(   sv_get_tkb_info(Domain, trunk, TkbLink, _LastChanged, _TkbDescription) ->
-	Link = a([attribute(href, TkbLink)], 'TKB') ;
-	Link = '-' ) .
-*/
 
 % ----------------------------------------------------------------------
 
@@ -255,16 +230,6 @@ html_domain_info(Domain, [Desc, VersionInfo, Consumer_list, Producer_list]) :-
 	html_domain_info_description(Domain, Desc) ,
 	get_domain_presentation_list(Domain, DomVersionList),
 	html_domain_info_version(Domain, DomVersionList, VersionInfo),
-%	get_domain_acceptance(Domain, Version, OkType) ,
-%	atomic_list_concat(Domain, '_', DomainName),
-%	atomic_list_concat([DomainName, Version], '_', Tag) ,
-%	l_write_trace([tag, Tag], 1),
-%	html_domain_info_tkb(Domain, Tkb_html_list) ,
-%	html_domain_info_tkb(OkTypFe, Domain, Tag, Version,
-%	Tkb_html_list) ,
-%	html_domain_info_services(OkType, Domain, Tag,
-%	Services_html_list) ,
-%	l_write_trace(['Services_list: ', Services_html_list], 1 ),
 	html_domain_info_consumers(Domain, Consumer_list) ,
 	html_domain_info_producers(Domain, Producer_list) .
 
@@ -302,8 +267,6 @@ html_domain_info_version2(Domain, trunk,
 				  ]
 			) :-
 	! ,
-%	atomic_list_concat(Domain, '_', DomainName),
-%	atomic_list_concat([DomainName, Version], '_', Tag) ,
 	get_latest_tkb_info(Domain, trunk, TkbLink, lastChanged(TkbDate, _), _TkbDescription, _LongSwedish, _ShortSwedish) ,
 	html_domain_info_services(Domain, trunk, ServiceList) .
 
@@ -336,116 +299,11 @@ html_domain_info_version2(Domain, Version,
 	atomic_list_concat(Domain, '_', DomainName),
 	atomic_list_concat([DomainName, Version], '_', Tag) ,
 	tag_synonym(Tag, Uname, _Lname),
-%	sv_get_tkb_info(Domain, tag(Tag), TkbLink, lastChanged(TkbDate,
-%	_), _TkbDescription) , ! ,
 	html_ziplink(Domain, Version, ZipLinkText) .
-%	html_domain_info_services(Domain, tag(Tag), ServiceList) ,
-
-
-
-
-% ---------------------------------------------------------------------
 
 
 % ----------------------------------------------------------------------
-% ----------------------------------------------------------------------
-% ----------------------------------------------------------------------
-
-/*
-html_domain_info3(Domain, trunk, VersionInfo) :-
-	! ,
-%	get_domain_acceptance
 %
-%	atomic_list_concat(Domain, '_', DomainName),
-%	atomic_list_concat([DomainName, Version], '_', Tag) ,
-%	l_write_trace([tag, Tag], 1),
-%	html_domain_info_tkb(Domain, Tkb_html_list) ,
-	html_domain_info_tkb(trunk, Domain, VersionInfo ),
-	! .
-*/
-/*
-	html_domain_info_services(OkType, Domain, Tag, Services_html_list) ,
-	l_write_trace(['Services_list: ', Services_html_list], 1 ),
-	html_domain_info_consumers(Domain, Consumer_list) ,
-	html_domain_info_producers(Domain, Producer_list) .
-
-
-html_domain_info3(_Domain, _Version, 'VersionInfo') .
-	get_domain_acceptance(Domain, Version, OkType) ,
-	atomic_list_concat(Domain, '_', DomainName),
-	atomic_list_concat([DomainName, Version], '_', Tag) ,
-	l_write_trace([tag, Tag], 1),
-	html_domain_info_tkb(Domain, Tkb_html_list) ,
-%	html_domain_info_tkb(OkType, Domain, Tag, Version,
-%	Tkb_html_list) ,
-	html_domain_info_services(OkType, Domain, Tag, Services_html_list) ,
-	l_write_trace(['Services_list: ', Services_html_list], 1 ),
-	html_domain_info_consumers(Domain, Consumer_list) ,
-	html_domain_info_producers(Domain, Producer_list) .
-*/
-
-% ----------------------------------------------------------------------
-% html_domain_info_tkb
-% Basic information and acceptance level for domains accepted according
-% to current rules
-% ----------------------------------------------------------------------
-% ----------------------------------------------------------------------
-/*
-html_domain_info_tkb(release, Domain, Tag, Version,
-		     [
-					 h2('Inledning'),
-					 p(['Denna beskrivning är baserad på version ', b(Version), '. Den är godkänd enligt gällande regelverk. ', ZipLinkText]),
-					 h2(['Beskrivning av tjänstedomänen (från ',
-					     a([attribute(href, TkbLink)],'Tjänstekontraktsbeskrivningen'), ')'] ),
-					 p(TkbDescription) ,
-					 p([a([attribute(href, TkbLink)],'Tjänstekontraktsbeskrivningen'), ' uppdaterades senast ', b(TkbDate), '.'])
-				     ]
-		    ) :- % Godkänd enligt nuvarande regelverk
-	sv_get_tkb_info(Domain, tag(Tag), TkbLink, lastChanged(TkbDate, _), TkbDescription) ,
-	! ,
-	html_ziplink(Domain, ZipLinkText) .
-
-
-% ----- Accepted according to old rules
-html_domain_info_tkb(rc, Domain, _Tag, _Version,
-		     [
-					  h2('Inledning'),
-					  p('Denna beskrivning är baserad på version på utvecklingsversionen (trunk) av domänen. Den är godkänd enligt ett tidigare regelverk.'),
-					  ZipLinkText,
-					  h2(['Beskrivning av tjänstedomänen (från ',
-					      a([attribute(href, TkbLink)],'Tjänstekontraktsbeskrivningen'), ')'] ),
-					  p(TkbDescription) ,
-					  p([a([attribute(href, TkbLink)],'Tjänstekontraktsbeskrivningen'), ' uppdaterades senast ', b(TkbDate), '.'])
-				      ]
-		 ) :-
-	sv_get_tkb_info(Domain, trunk, TkbLink, lastChanged(TkbDate, _), TkbDescription) ,
-	! ,
-	html_ziplink(Domain, ZipLinkText) .
-
-% ----- Not yet reviewed
-html_domain_info_tkb(trunk, Domain,
-		     [
-				h2('Pågående utveckling'),
-				p(['Denna beskrivning är baserad på utvecklingsversionen (trunk) av domänen. Den är ännu inte granskad av Arkitektur och regelverk på Inera.']),
-				p(['Se beskrivning i ', a([attribute(href, TkbLink)],'Tjänstekontraktsbeskrivningen') ] ),
-				p([a([attribute(href, TkbLink)],'Tjänstekontraktsbeskrivningen'), ' uppdaterades senast ', b(TkbDate), '.'])
-			    ]
-		    ) :-
-	sv_get_tkb_info(Domain, trunk, TkbLink, lastChanged(TkbDate, _), _TkbDescription) ,
-	! .
-*/
-% ----- No TKB found
-/*
-html_domain_info_tkb(_OkType, _Domain, _Tag, _Version,
-		  [
-				 h2('Inledning'),
-				 p(['Denna beskrivning är baserad på version på utvecklingsversionen (trunk) av domänen. ']),
-				 p(['Det var inte möjligt att identifiera eller extrahera information från Tjänstekontraktsbeskrivningen.'])
-			     ]
-		 ) .
-*/
-% ----------------------------------------------------------------------
-
 %html_domain_info_services(OkType, Domain, Tag,
 html_domain_info_services(Domain, Tag,
 			  [
@@ -454,7 +312,6 @@ html_domain_info_services(Domain, Tag,
 					      ul( TrList )
 					  ]
 			 ) :-
-%	(   OkType > 0 -> Tag2=trunk ; Tag2=tag(Tag) ),
 	tag_synonym(Tag, _Uname, Lname),
 	bagof(
 	    li([b(Service), ' ', Version, ' - ', Description, ' (', Date, ')' ]),
@@ -617,13 +474,13 @@ get_swedish_name(Domain, ' - ') :-
 get_tkb_info(Domain, trunk, TkbLink, lastChanged(TkbDate, _), TkbDescription) :-
 	sv_get_tkb_info(Domain, trunk, TkbLink, lastChanged(TkbDate, _), TkbDescription, _LongSwedish, _ShortSwedish) ,
 	! .
-get_tkb_info(_Domain, trunk, '-', lastChanged('-', _Time), 'TKB kunde inte hittas.') .
+get_tkb_info(_Domain, trunk, '-', lastChanged('-', _Time), ['TKB kunde inte hittas.']) .
 
 get_latest_tkb_info(Domain, Tag, TkbLink, LastChanged, TkbDescription, LongSwedish, ShortSwedish) :-
 	sv_get_latest_tkb_info(Domain, Tag, TkbLink, LastChanged, TkbDescription, LongSwedish, ShortSwedish) ,
 	! .
 
-get_latest_tkb_info(_Domain, _Tag, '-', lastChanged('-', _Time), 'TKB kunde inte hittas.', '-', '-') .
+get_latest_tkb_info(_Domain, _Tag, '-', lastChanged('-', _Time), ['TKB kunde inte hittas.'], '-', '-') .
 % ----------------------------------------------------------------------
 
 html_domain_filename(Domain, FileName) :-

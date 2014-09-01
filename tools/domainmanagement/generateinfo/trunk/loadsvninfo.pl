@@ -4,7 +4,8 @@
 	      sv_get_interaction/7,
 	      sv_get_latest_tkb_info/7,
 	      sv_get_tkb_info/7 ,
-	      sv_load_svninfo/1
+	      sv_load_svninfo/1 ,
+	      sv_verify/2
 	  ]).
 
 :- use_module(leolib).
@@ -20,6 +21,7 @@ sv_load_svninfo(Rootdir) :-
 	l_path_to_rpath(Rootdir, Rpath) ,
 	record_files(Rpath, _, _) .
 
+% -----------------------------------------------------------------------
 
 sv_get_domain(Domain) :-
 	recorded(_,svnDomain(domain(Domain))) .
@@ -27,6 +29,7 @@ sv_get_domain(Domain) :-
 sv_get_all_domains(Domains) :-
 	setof(Domain, sv_get_domain(Domain), Domains) .
 
+% -----------------------------------------------------------------------
 % Must change to only return newest TKB
 sv_get_latest_tkb_info(InDomain, InTag, OutTkbLink, OutTkbDate, OutTkbDescription, OutLongSwedish, OutShortSwedish) :-
 	nonvar(InDomain),
@@ -53,14 +56,38 @@ sv_get_tkb_info(Domain, Tag, TkbLink2, TkbDate, TkbDescription, LongSwedish, Sho
 	atom_concat('http://rivta.googlecode.com/svn/ServiceInteractions/riv', RestName, TkbLink1) ,
 	l_urlencode(TkbLink1, TkbLink2) .
 
+% -----------------------------------------------------------------------
+
 sv_get_interaction(Service, SVersion, RivVersion, Description, Domain, DTag, Date) :-
 	recorded(_,svnInteraction(interaction(Service, SVersion, RivVersion, Description),domain(Domain, DTag),svnInfo(_, Date))) .
+
+% -----------------------------------------------------------------------
+
+sv_verify(domains, No) :-
+	setof(Domain,
+	      recorded(svnInfo, svnDomain(domain(Domain))) ,
+	      List) ,
+	length(List, No) .
+
+sv_verify(tkb, No) :-
+	setof(struct(A,B,C,D,E,F,G),
+	      sv_get_tkb_info(A,B,C,D,E,F,G),
+	      List) ,
+	length(List, No) .
+
+sv_verify(interactions, No) :-
+	setof(struct(A,B,C,D,E,F,G),
+	      sv_get_interaction(A,B,C,D,E,F,G),
+	      List) ,
+	length(List, No) .
+
+
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 There is a number of clauses to handle different kind of folders and
 files
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-% Manage TKB files
+% Manage TKB files ---------------------------------
 record_files(Rpath, DomainList, Dtag) :-
 	nonvar(Dtag),
 	l_ls(Rpath, ItemList) ,
@@ -82,7 +109,7 @@ record_files(Rpath, DomainList, Dtag) :-
 		 ) .
 
 
-% This clause manage WSDL files
+% This clause manage WSDL files ---------------------
 record_files(Rpath, DomainList, Dtag) :-
 	nonvar(Dtag),
 	l_ls(Rpath, ItemList) ,
@@ -97,7 +124,7 @@ record_files(Rpath, DomainList, Dtag) :-
 	l_write_trace(['WDSL file: ', File, Interaction, IVersion, RivVersion, Description], 2),
 	store_wsdl(File, svnInteraction(interaction(Interaction, IVersion, RivVersion, Description), domain(DomainList, Dtag), SvnInfo)) .
 
-% Manage a tags folder
+% Manage a tags folder --------------------------------
 record_files([ TagName , tags | Rpath], DomainList, Dtag) :-
 	var(Dtag) ,
 	! ,
@@ -105,7 +132,7 @@ record_files([ TagName , tags | Rpath], DomainList, Dtag) :-
 	member(Item, Itemlist),
 	record_files([Item, TagName, tags | Rpath], DomainList, tag(TagName)) .
 
-% Manage a branches folder
+% Manage a branches folder -----------------------------
 record_files([ TagName , branches | Rpath], DomainList, Dtag) :-
 	var(Dtag),
 	! ,
@@ -113,7 +140,7 @@ record_files([ TagName , branches | Rpath], DomainList, Dtag) :-
 	member(Item, Itemlist),
 	record_files([Item, TagName, branches | Rpath], DomainList, branch(TagName)) .
 
-% Manage a trunk folder
+% Manage a trunk folder - --------------------------------
 record_files([ trunk | Rpath], DomainList, Dtag) :-
 	var(Dtag),
 	! ,
