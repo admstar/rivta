@@ -74,12 +74,11 @@ html_domain_index_info([
 		td([attribute(align,center)], InTp) ,
 		td([attribute(align,center)], InQA)
 	    ]),
-	    get_domain_index_info_x(DomainNameLink, _Popular, InTp, InQA, _WebText, LongSwedish, ShortSwedish),
+	    get_domain_index_info_x(DomainNameLink, InTp, InQA, _WebText, LongSwedish, ShortSwedish),
 	    TrList).
 
 get_domain_index_info_x(
     DomainNameLink,
-    Popular,
     InTp,
     InQA,
     _Text,
@@ -89,7 +88,6 @@ get_domain_index_info_x(
 	atomic_list_concat(Domain, ':', DomainName) ,
 	html_domain_filename(Domain, FileName) ,
 	(   html_domain_file_exist(Domain) -> DomainNameLink = a(attribute(href, FileName), DomainName) ; DomainNameLink = DomainName ) ,
-	get_swedish_name(Domain, Popular) , % Take the name from Sonjas table
 	domain_index_tp_info(prod, Domain, InTp) ,
 	domain_index_tp_info(qa, Domain, InQA) ,
 	get_latest_tkb_info(Domain, trunk, _TkbLink, _LastChanged, _TkbDescription, LongSwedish, ShortSwedish) .
@@ -170,7 +168,6 @@ get_interaction_index_info(
 	atomic_list_concat(Domain, ':', DomainName) ,
 	html_domain_filename(Domain, FileName) ,
 	(   html_domain_file_exist(Domain) -> DomainNameLink = a(attribute(href, FileName), DomainName) ; DomainNameLink = DomainName ) ,
-%	dt_get_popular_name(Domain, Popular) ,
 	interaction_index_tp_info(prod, Domain, Inter, InTp) ,
 	interaction_index_tp_info(qa, Domain, Inter, InQA) .
 
@@ -461,16 +458,6 @@ inera_html_template(Title, Body,
 % ----------------------------------------------------------------------
 
 
-
-get_swedish_name(Domain, Swedish) :-
-	dt_get_swedish_name(Domain, Swedish) ,
-	! .
-get_swedish_name(Domain, ' - ') :-
-%	dt_get_popular_name(Domain, Swedish) ,
-	l_write_trace(['* No Swedish name defined for: ', Domain], 1) .
-
-% ----------------------------------------------------------------------
-
 get_tkb_info(Domain, trunk, TkbLink, lastChanged(TkbDate, _), TkbDescription) :-
 	sv_get_tkb_info(Domain, trunk, TkbLink, lastChanged(TkbDate, _), TkbDescription, _LongSwedish, _ShortSwedish) ,
 	! .
@@ -577,32 +564,6 @@ html_tkb_redirect(Domain) :-
 	close(Stream).
 
 % ----------------------------------------------------------------------
-
-write_excel :-
-	open('domains.csv', write, _, [alias(domains)]),
-	atomic_list_concat(['Tjänstedomän', 'Tjänstedomän-svensk namn (enligt http://rivta.se/servicedomaintable)', 'Version', 'Granskningsresultat', 'Länk till TKB', 'TKB senast ändrad', 'Beskrivning enligt TKB'], ';', Firstline) ,
-	write(domains, Firstline), nl(domains),
-	open('services.csv', write, _, [alias(services)]),
-	atomic_list_concat(['Tjänstedomän', 'Tjänstekontrakt', 'Version', 'Senast ändrad', 'Beskrivning hämtad från WSDL-fil'], ';', Firstline2),
-	write(services, Firstline2), nl(services) ,
-	sv_get_all_domains(Domains) ,
-	member(Domain, Domains) ,
-	dt_get_popular_name(Domain, Popular) ,
-	get_domain_acceptance(Domain, Version, OkType),
-	get_tkb_info(Domain, trunk, TkbLink, lastChanged(TkbDate, _Time), TkbDescription) ,
-	atomic_list_concat(Domain, ':', DomainName) ,
-	atomic_list_concat([DomainName, Popular, Version, OkType, TkbLink, TkbDate, TkbDescription], ';', DLine),
-	l_write_trace(['DOMAINs to CSV file: ', DLine, nl], 2) ,
-	write(domains, DLine), nl(domains),
-	sv_get_interaction(Service, SVersion, _RivVersion, Description, Domain, trunk, lastChanged(Date, _Timestamp)) ,
-	atomic_list_concat([DomainName, Service, SVersion, Date, Description], ';', SLine),
-	l_write_trace(['SERVICES to CSV file: ', SLine], 2),
-	write(services, SLine), nl(services) ,
-	fail.
-
-write_excel :-
-	close(services) ,
-	close(domains) .
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Verification predicates

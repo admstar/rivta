@@ -1,12 +1,9 @@
 :- module(loaddomaintable, [
 	      dt_get_domain_acceptance/3 ,
 	      dt_get_domain_table/2 ,
-	      dt_get_popular_name/2 ,
-	      dt_get_swedish_name/2 ,
 	      dt_get_zip_link/2 ,
 	      dt_get_zip_link/3 ,
-	      dt_load_domain_table/1 ,
-	      dt_load_swedish_names/1
+	      dt_load_domain_table/1
        ]) .
 
 
@@ -24,18 +21,6 @@ dt_load_domain_table(URL) :-
 
 dt_load_domain_table(_).
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-These predicates loads and retrieves Swedish domain names from CSV file
-(Sonjas file)
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-dt_load_swedish_names(File) :-
-	l_erase_all(swTable),
-	l_read_file_to_list(File, [_Headers | Lines ], [encoding(iso_latin_1)]) ,
-	load_swedish_names(Lines) .
-
-dt_get_swedish_name(Domain, Swedish) :-
-	recorded(swTable, swName(Domain, Swedish)) ,
-	Domain \= [''] .
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Retrieve the link to the zip archiv
@@ -72,11 +57,14 @@ dt_get_domain_table(Domain, Version) :-
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Get the Swedish name as specified on the SD table
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+/*
 dt_get_popular_name(Domain, Popular) :-
 	recorded(_, domainTable(Domain, Popular, _,_,_,_,_ )) ,
 	! .
 
 dt_get_popular_name(_, ' ') .
+*/
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Get the acceptance level of a version of a domain from the DT-table
