@@ -1,5 +1,5 @@
 :- module(loadtak, [
-	      tk_loadtak/0 ,
+	      tk_loadtak/2 ,
 	      tk_get_domain_consumer/4,
 	      tk_get_domain_producer/4,
 	      tk_get_interaction/5,
@@ -8,9 +8,7 @@
 	  ]) .
 
 
-tk_loadtak :-
-	loadTAK2(prod, 'TakProd.csv') ,
-	loadTAK2(qa, 'TakQA.csv') .
+tk_loadtak(Envir, File) :- loadTAK2(Envir, File) .
 
 tk_get_tak_info(Envir, Domain, Interaction, IVersion, RivVersion) :-
 	recorded(takInfo, takInfo(Envir, Domain, Interaction, IVersion, RivVersion)) .
