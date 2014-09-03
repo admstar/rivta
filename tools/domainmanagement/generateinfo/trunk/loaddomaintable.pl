@@ -3,7 +3,8 @@
 	      dt_get_domain_table/2 ,
 	      dt_get_zip_link/2 ,
 	      dt_get_zip_link/3 ,
-	      dt_load_domain_table/1
+	      dt_load_domain_table/1 ,
+	      dt_verify/1
        ]) .
 
 
@@ -54,7 +55,7 @@ dt_get_domain_table(Domain, Version) :-
 
 
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+/* - - - - - - - - sv- - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Get the Swedish name as specified on the SD table
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
@@ -88,6 +89,17 @@ get_domain_acceptance2(Link, 0) :-
 	atom_length(Link, Len), Len > 3 ,  % To be current it must have a link to the review file
 	! .
 get_domain_acceptance2(_Link, 1) .
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Verify the loading of the domain table
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+dt_verify(No) :-
+	setof(struct(A,B),
+	      dt_get_domain_table(A,B),
+	      List) ,
+	length(List, No) .
+
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Load Swedish names from List of CSV lines

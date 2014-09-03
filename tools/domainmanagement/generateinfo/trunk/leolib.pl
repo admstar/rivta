@@ -286,6 +286,8 @@ l_current_os(unix) :-
 l_current_os(win) :-
 	current_prolog_flag(windows, true) .
 
+% -----------------------------------------------------------------------
+
 l_get_date_time(Year, Month, Day, Hour, Minute, Second, Microsecond) :-
 	get_time(T),
 	stamp_date_time(T, date(Year, Month, Day, Hour, Minute, S, _, _, _), 'local') ,
@@ -305,7 +307,9 @@ l_current_time(Time) :-
 	pad0(S, Second) ,
 	atomic_list_concat([Hour, Minute, Second], ':', Time).
 
+% -----------------------------------------------------------------------
 % Extract last modification date and time for a file
+
 l_file_date_time(File, Date, Time) :-
 	time_file(File, TS),
 	stamp_date_time(TS, date(Year, Mo, Da, Ho, Mi, Se, _, _, _), 'local') ,
