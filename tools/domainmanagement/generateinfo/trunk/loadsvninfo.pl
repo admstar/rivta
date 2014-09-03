@@ -70,8 +70,17 @@ sv_verify(domains, No) :-
 	length(List, No) .
 
 sv_verify(tkb, No) :-
-	setof(struct(A,B,C,D,E,F,G),
-	      sv_get_tkb_info(A,B,C,D,E,F,G),
+	setof(struct(A,B,C,D,E),
+%	      sv_get_tkb_info(A,B,C,D,E,F,G),
+	      recorded(svnInfo,
+		       svnTkb(
+			   A ,
+			   B ,
+			   C ,
+			   D ,
+			   E
+		       )
+		      ) ,
 	      List) ,
 	length(List, No) .
 

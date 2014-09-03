@@ -4,7 +4,8 @@
 	      tk_get_domain_producer/4,
 	      tk_get_interaction/5,
 	      tk_get_tak_date/2,
-	      tk_get_tak_info/5
+	      tk_get_tak_info/5,
+	      tk_verify/1
 	  ]) .
 
 
@@ -51,6 +52,17 @@ tk_get_interaction(Envir, Interaction, IntVersion, BPVersion, Domain) :-
 	    _ ,
 	    _ ,
 	    _ ) .
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Verify the loading of the domain table
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+tk_verify(No) :-
+	setof(struct(A,B,C,D,E),
+	      tk_get_tak_info(A,B,C,D,E),
+	      List) ,
+	length(List, No) .
+
 
 loadTAK2(Envir, File) :-
 	nonvar(Envir) ,

@@ -25,8 +25,9 @@ Generate an index file for all domains
 
 html_generate_domain_index :-
 	html_domain_index_info(Body) ,
-	c_tmp_dir(Tmp),
-	atomic_concat(Tmp, 'www/domains/index.html' , DomainIndex),
+%	c_tmp_dir(Tmp),
+	c_www_domains_dir(Dir) ,
+	atomic_concat(Dir, 'index.html' , DomainIndex),
 	open(DomainIndex, write, Stream, []) ,
 	inera_html_template('Index över tjänstedomäner', Body, Content) ,
 	l_html_write(Content, Stream) ,
@@ -106,8 +107,9 @@ Generate an index file of all service interactions
 
 html_generate_interaction_index :-
 	html_interaction_index_info(Body) ,
-	c_tmp_dir(Tmp),
-	atomic_concat(Tmp, 'www/domains/interaction_index.html' , InteractionIndex),
+%	c_tmp_dir(Tmp),
+	c_www_domains_dir(Dir) ,
+	atomic_concat(Dir, 'interaction_index.html' , InteractionIndex),
 	open(InteractionIndex, write, Stream, []) ,
 	inera_html_template('Index över tjänstekontrakt', Body, Content) ,
 	l_html_write(Content, Stream) ,
@@ -207,8 +209,9 @@ html_domain_page(Domain) :-
 	       Tkb_html_list,
 	       Content) ,
 	html_domain_filename(Domain, FileName) ,
-	c_tmp_dir(Tmp),
-	atomic_concat(Tmp, 'www/domains/' , DomainFolder),
+%	c_tmp_dir(Tmp),
+%	atomic_concat(Tmp, 'www/domains/' , DomainFolder),
+	c_www_domains_dir(DomainFolder) ,
 	atomic_concat(DomainFolder, FileName, Txtpath),
 	open(Txtpath, write, Stream, []) ,
 	inera_html_template(DomainName, Content, Page) ,
@@ -477,7 +480,7 @@ html_domain_filename(Domain, FileName) :-
 % ----------------------------------------------------------------------
 
 html_domain_file_path_name(Domain, TheFile) :-
-	c_html_domains_dir(HtmlDir) ,
+	c_www_domains_dir(HtmlDir) ,
 	html_domain_filename(Domain, FileName) ,
 	atomic_concat(HtmlDir, FileName, TheFile) .
 
