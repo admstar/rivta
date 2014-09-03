@@ -1,12 +1,22 @@
 #!/bin/sh 
 
 # The following environment variable must be set
-# HOME
 
 SVNRIVDIR=$HOME/rivta-read-only/ServiceInteractions/riv
 WWWDIR=$HOME/tmp/www
+EXECDIR=$HOME/rivta/tools/domainmanagement/generateinfo/trunk
+TAKPROD=$EXECDIR/TakProd.csv
+TAKQA=$EXECDIR/TakQA.csv
 DOMAINTABLEURL='http://code.google.com/p/rivta/wiki/ServiceDomainTable'
-TAKPROD=$HOME/rivta/tools/domainmanagement/generateinfo/trunk/TakProd.csv
-TAKQA=$HOME/rivta/tools/domainmanagement/generateinfo/trunk/TakQA.csv
 
-swipl -q -f main.pl 
+# Remove all the domain files. Maybe count and check overall size for later verification
+
+swipl -g external_main main.pl
+
+echo $?
+
+# Check RC, and verify the the html files "seems" to be generated ok
+# if so, call rsync to send it up to one.com
+
+
+

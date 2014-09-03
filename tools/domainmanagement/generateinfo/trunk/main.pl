@@ -67,6 +67,8 @@ main :- main(_RC) .
 main(RC) :-
 	load ,
 	verify ,
+	l_counter_get(error_count, RC1) ,
+	generate(RC1) ,
 	l_counter_get(error_count, RC) .
 
 external_main :-
@@ -93,6 +95,12 @@ loadTak :-
 	tk_loadtak(prod, ProdFile) ,
 	tk_loadtak(qa, QaFile) .
 
+generate(0) :-
+	! ,
+	html_generate.
+
+generate(_) .
+
 verify :-
 	l_counter_set(error_count, 0),
 	dt_verify(DLines) ,
@@ -118,3 +126,5 @@ verify2(Label, Size, _MinSize) :-
 	l_write_list(['*** ERROR ***: ', Label, ' only ', Size, ' records loaded', nl]) .
 
 % ----------------------------------------------------------------------
+hello :-
+	write('Hello world!'), nl .
