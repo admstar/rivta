@@ -307,12 +307,14 @@ html_domain_info_version2(Domain, Version,
 %html_domain_info_services(OkType, Domain, Tag,
 html_domain_info_services(Domain, Tag,
 			  [
-%					      h2('Tjänstekontrakt'),
-					      p(['Följande tjänstekontrakt är definierade i denna ', Lname, '. Beskrivningstexten är hämtad från respektive WSDL-fil.']),
-					      ul( TrList )
-					  ]
+				      %					      h2('Tjänstekontrakt'),
+				      p(['Följande tjänstekontrakt är definierade i denna ', Lname, '. Beskrivningstexten är hämtad från respektive WSDL-fil.']),
+				      ul( TrList )
+				  ]
 			 ) :-
 	tag_synonym(Tag, _Uname, Lname),
+% This bagof does not return the interactions in
+% infrastructure.directory.employee !!!!
 	bagof(
 	    li([b(Service), ' ', Version, ' - ', Description, ' (', Date, ')' ]),
 	    sv_get_interaction(Service, Version, _RivVersion,Description,Domain,Tag, lastChanged(Date, _Time)),
