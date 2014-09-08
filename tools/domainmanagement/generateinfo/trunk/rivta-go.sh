@@ -10,8 +10,12 @@ TAKQA=$EXECDIR/TakQA.csv
 DOMAINTABLEURL='http://code.google.com/p/rivta/wiki/ServiceDomainTable'
 
 # Remove all the domain files. Maybe count and check overall size for later verification
+# Count the number of html files
 
-swipl -g external_main main.pl
+cd $WWWDIR/domains 
+find . -name "*.html" -print | wc | column -t 
+
+#swipl -g external_main main.pl
 
 echo $?
 
