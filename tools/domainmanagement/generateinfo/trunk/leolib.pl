@@ -507,12 +507,16 @@ html_write2(comment(Comment), Stream) :-
        <a class="info" href="#">Info</a><span class="help-text">Texten som ska visas i pop:uppen när musen hovrar över ikonen.</span>
 	*/
 html_write2(info(Text), Stream) :-
+	html_write2(info(right, Text), Stream) .
+
+html_write2(info(Side, Text), Stream) :-
 	! ,
+	(   Side = 'left' -> Pos = 'help-text-left' ; Pos = 'help-text-right' ),
 	html_write2([
-	    a([attribute(class, info), attribute(href, '#')], 'Info') ,
-	    span(attribute(class, 'help-text'), Text)
+	    a([attribute(class, info), attribute(href, '#') ] ,
+	      ['Info ' , span(attribute(class, Pos), Text) ])
 	] ,
-		    Stream) .
+		    Stream ) .
 
 html_write2(newline, Stream) :-
 	nl(Stream),

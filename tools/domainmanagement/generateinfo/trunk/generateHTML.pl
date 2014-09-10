@@ -38,29 +38,26 @@ html_generate_domain_index :-
 html_domain_index_info([
     h1('Tjänstedomäner') ,
     div(attribute(class, ingress),
-	[
-	    'Här hittar du en förteckning över samtliga tjänstedomäner och ',
-	    a([attribute(href, 'interaction_index.html')], 'tjänstekontrakt') ,
-	    ' samt om de är installerade i den nationella Tjänsteplattformen eller inte.',
-	    p(' ') ,
-	    'Information på denna sida är extraherad från subversion, tjänstekontraktsbeskrivningar samt tjänsteadresseringskatalogerna i NTjP. Klicka på länkarna i tabellen för mer information.'
-	]
-       ) ,
+	'Här hittar du en förteckning över samtliga tjänstedomäner. I tabellen kan du också se om de är installerade i den nationella Tjänsteplattformen eller inte.') ,
+    p(' ') ,
+    'Information på denna sida är hämtad från subversion, tjänstekontraktsbeskrivningar samt tjänsteadresseringskatalogerna i den nationella tjänsteplattformen. Klicka på länkarna i tabellen för mer information.' ,
+    newline ,
+    a([attribute(href, 'interaction_index.html')],'Se även förteckning över samtliga tjänstekontrakt.') ,
     p(' ') ,
     table(
-	  [
-	      tr(
-		  [
-		  th([attribute(class, dom1)], 'Tjänstedomän') ,
-		  th([attribute(class, dom2)], 'Svenskt namn') ,
-		  th([attribute(class, dom3)], 'Engelskt namn') ,
+	[
+	tr(
+	    [
+	    th([attribute(class, dom1)], 'Tjänstedomän') ,
+	    th([attribute(class, dom2)], 'Svenskt namn') ,
+	    th([attribute(class, dom3)], 'Engelskt namn') ,
 		  th([attribute(class, dom4)], 'NTjP') ,
-		  th([attribute(class, dom5)], ['QA ',
-						info(['Informationen kommer från NTjPs tjänsteadresseringskataloger. Den uppdaterades senast ', Date])
-					       ]
+	    th([attribute(class, dom5)], ['QA ',
+					  info(left, ['Informationen kommer från NTjPs tjänsteadresseringskataloger. Den uppdaterades senast ', Date])
+					 ]
 		    )
-	      ]
-	      ) ,
+	]
+	) ,
 	TrList
     ]
     )
@@ -119,29 +116,30 @@ html_generate_interaction_index :-
 
 html_interaction_index_info([
     h1('Tjänstekontrakt'),
-    div(attribute(class, ingress), [
-	    'Här hittar du en förteckning över samtliga tjänstekontakt och ',
-	    a([attribute(href, 'index.html')], 'tjänstedomäner') ,
-	    ' samt om de är installerade i den nationella Tjänsteplattformen eller inte.' ,
-	    div(attribute(class, ingress), 'Information på denna sida är extraherad från versionshanteringssystemet, tjänstekontraktsbeskrivningar samt tjänsteadresseringskatalogerna i NTjP. Klicka på länkarna i tabellen för mer information.')
-	]) ,
+    div(attribute(class, ingress),
+	'Här hittar du en förteckning över samtliga tjänstekontakt. I tabellen kan du också se om tjänstekontrakten är installerade i den nationella Tjänsteplattformen eller inte.' ),
+    p(' '),
+    'Informationen på denna sida är direkt hämtad från WSDL-filer i subversion samt tjänsteadresseringskatalogerna i den nationella Tjänsteplattformen. Klicka på länkarna i tabellen för mer information. ' ,
+    newline,
+    a([attribute(href, 'index.html')], 'Se även förteckning över alla tjänstedomäner.') ,
+    p(' '),
     table(
-	  [
-	      tr(
-		  [
-		  th([attribute(class, int1)], 'Tjänstekontrakt') ,
-		  th([attribute(class, int2)], ['Beskrivning ',
-						info('Beskrivningen kommer från tjänstens WSDL-fil')]),
-		     th([attribute(class, int3)], 'Tjänstedomän') ,
-		     th([attribute(class, int4)], 'NTjP') ,
-		  th([attribute(class, int5)],  ['QA ',
-						 info(['Informationen kommer från från NTjPs tjänsteadresseringskataloger. Den uppdaterades senast ', Date])
-						]) ,
-		  th([attribute(class, int6)], 'Ändrad')
-	      ]) ,
+	[
+	tr(
+	    [
+	    th([attribute(class, int1)], 'Tjänstekontrakt') ,
+	    th([attribute(class, int2)], ['Beskrivning ',
+					  info('Beskrivningen kommer från tjänstens WSDL-fil')]),
+	    th([attribute(class, int3)], 'Tjänstedomän') ,
+	    th([attribute(class, int4)], 'NTjP') ,
+	    th([attribute(class, int5)],  ['QA ',
+					   info(left,['Informationen kommer från från NTjPs tjänsteadresseringskataloger. Den uppdaterades senast ', Date])
+					  ]) ,
+	    th([attribute(class, int6)], 'Ändrad')
+	]) ,
 	      TrList2
-	  ]
-	 )
+    ]
+    )
 ]
 			   ) :-
 	tk_get_tak_date(prod, Date) ,
@@ -199,12 +197,18 @@ html_domain_page(Domain) :-
 	! ,
 	html_domain_info(Domain, Tkb_html_list) ,
 	atomic_list_concat(Domain, ':', DomainName) ,
+	get_latest_tkb_info(Domain, trunk, _TkbLink, lastChanged(_TkbDate, _), _TkbDescriptionList, _LongSwedish, ShortSwedish) ,
+	atomic_list_concat([ShortSwedish, DomainName], ' - ', BothNames),
+	% Show Swedish name if it exist
+	(   ShortSwedish = '-' -> Heading = DomainName ; Heading = BothNames ) ,
 	append([
-	    h1(DomainName),
-	    'Samtliga ',
-	    a([attribute(href, 'index.html')], 'tjänstedomäner') ,
+	    h1(Heading),
+	    div(attribute(class, ingress),
+		['Här hittar du information om godkända releaser samt pågående utveckling av denna tjänstedomän.']) ,
+	    'Se även listan över ',
+	    a([attribute(href, 'index.html')], 'samtliga tjänstedomäner') ,
 	    ' och ',
-	    a([attribute(href, 'interaction_index.html')], 'tjänstekontrakt.')
+	    a([attribute(href, 'interaction_index.html')], 'samtliga tjänstekontrakt.')
 	],
 	       Tkb_html_list,
 	       Content) ,
@@ -261,8 +265,9 @@ html_domain_info_version(Domain, [First | Rest], [VI | VRest]) :-
 html_domain_info_version2(Domain, trunk,
 			  [
 				      h2('Pågående utveckling (trunk)'),
-				      p(['Detta är en pågående utveckling som ännu inte är granskad av Arkitektur och regelverk på Inera.']),
-				      p([a([attribute(href, TkbLink)],'Tjänstekontraktsbeskrivning'), ' som uppdaterades senast ', TkbDate, '.']) ,
+				      p(['Pågående utveckling innebär att dessa ännu inte är granskade av Inera Arkitektur och regelverk.']),
+				      ul(
+					  li([a([attribute(href, TkbLink)],'Tjänstekontraktsbeskrivning'), i([' (uppdaterades senast ', TkbDate, ').'])])) ,
 				      ServiceList
 				  ]
 			) :-
@@ -274,8 +279,11 @@ html_domain_info_version2(Domain, trunk,
 html_domain_info_version2(Domain, Version,
 			  [
 				      h2([Uname, ' ', Version]),
-				      p(['Denna ', Lname, ' är godkänd av Inera Arkitektur och regelverk. ', ZipLinkText]) ,
-				      [a([attribute(href, TkbLink)],'Tjänstekontraktsbeskrivning'), ' (', TkbDate, ').'] ,
+				      p(['Denna ', Lname, ' är godkänd av Inera Arkitektur och regelverk. ']) ,
+				      ul([
+					  li(ZipLinkText),
+					  li([a([attribute(href, TkbLink)],'Tjänstekontraktsbeskrivning'), i([' (uppdaterades senast ', TkbDate, ').'])])
+				      ]),
 				      ServiceList
 				  ]
 			 ) :-
@@ -292,13 +300,16 @@ html_domain_info_version2(Domain, Version,
 html_domain_info_version2(Domain, Version,
 			  [
 				      h2([Uname, ' ', Version]),
-				      p(['Denna ', Uname, ' är godkänd av Inera Arkitektur och regelverk.', ZipLinkText]) ,
+				      p(['Denna ', Lname, ' är godkänd av Inera Arkitektur och regelverk.']) ,
+				      ul([
+					  li(ZipLinkText)
+				      ]) ,
 				      ['Dock finns ingen tag ', i(Tag), ' med en TKB i versionshanteringssystemet. Av den orsaken kan information om tjänstekontraktsbeskrivning och tjänster inte presenteras.']
 				  ]
 			 ) :-
 	atomic_list_concat(Domain, '_', DomainName),
 	atomic_list_concat([DomainName, Version], '_', Tag) ,
-	tag_synonym(Tag, Uname, _Lname),
+	tag_synonym(Tag, Uname, Lname),
 	html_ziplink(Domain, Version, ZipLinkText) .
 
 
@@ -308,7 +319,8 @@ html_domain_info_version2(Domain, Version,
 html_domain_info_services(Domain, Tag,
 			  [
 				      %					      h2('Tjänstekontrakt'),
-				      p(['Följande tjänstekontrakt är definierade i denna ', Lname, '. Beskrivningstexten är hämtad från respektive WSDL-fil.']),
+				      p(b(['Tjänstekontrakt som är definierade i denna ', Lname, '.'])),
+				      p('Informationen nedan är hämtad från respektive WSDL-fil.'),
 				      ul( TrList )
 				  ]
 			 ) :-
@@ -316,7 +328,12 @@ html_domain_info_services(Domain, Tag,
 % This bagof does not return the interactions in
 % infrastructure.directory.employee !!!!
 	bagof(
-	    li([b(Service), ' ', Version, ' - ', Description, ' (', Date, ')' ]),
+	    li([
+		b(Service), ' ',
+		Version, ' - ',
+		Description,
+		i([' (uppdaterades senast ', Date, ')'])
+	    ]),
 	    sv_get_interaction(Service, Version, _RivVersion,Description,Domain,Tag, lastChanged(Date, _Time)),
 	    TrList) ,
 	! .
@@ -412,11 +429,9 @@ extract_highest_rc([_First|Rest], First ) :-
 
 html_ziplink(Domain, Version,
 	     [
-			 p([
-			     a([attribute(href, ZipLink)],['Ladda ner zip-arkivet ']),
-			     info([
-				 'Länken till zip-arkivet har hämtats från tabellen över granskade domäner; http://rivta.se/servicedomaintable'
-			     ])
+			 a([attribute(href, ZipLink)],['Ladda ner zip-arkivet ']),
+			 info([
+			     'Länken till zip-arkivet har hämtats från tabellen över granskade domäner; http://rivta.se/servicedomaintable'
 			 ])
 		     ] ) :-
 %	tag_synonym(Version, _Uname, Lname),
@@ -442,6 +457,11 @@ inera_html_template(Title, Body,
     html([attribute(xmlns,'http://www.w3.org/1999/xhtml'), attribute('xml:lang','sv'), attribute(lang,'sv')],
 	 [
 	     head( [
+		 link([
+		     attribute(href,'http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic&subset=latin-ext'),
+		     attribute(rel,'stylesheet'),
+		     attribute(type,'text/css')] ,
+		      []) ,
 		 meta([attribute('http-equiv','Content-Type') ,
 		       attribute(content, 'text/html;'),
 		       attribute(charset, 'UTF-8')],
@@ -454,7 +474,7 @@ inera_html_template(Title, Body,
 		      []) ,
 		 title(Title)
 	     ] ) ,
-	     body([Body, p(i(['Senast uppdaterad ', Date]))])
+	     body([Body, p([b('Senast uppdaterad '), Date])])
 	 ] ) ] ) :-
 	l_current_date(Date),
 	l_current_time(Time) ,
