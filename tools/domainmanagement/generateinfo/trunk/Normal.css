@@ -1,4 +1,4 @@
-﻿/* HTML */
+/* HTML */
 html {
     height: 100%;
 }
@@ -10,7 +10,7 @@ body {
     font: 100%/1.3 'PT Sans', Arial, Verdana, Sans-Serif;
     line-height: 24px;
     color: #3a2c1c;	
-/*	background: #E8F6FF;*/
+/*	background: #E8F6FF; */
     }
 
 a {
@@ -42,14 +42,14 @@ table {
 	width: 934px;
 	border: 0px;
 	border-spacing: 5px;
-	border-collapse: collapse;
+	/*border-collapse: collapse;*/
 	table-layout: fixed;
 	text-align: left;
 	
 }
 table, th, td {    
 	padding: 2px;
-	border-bottom: 2px solid #a2a2a2;
+	border-bottom: 2px solid #a2a2a2;	
  }
  
 table, tr, td{
@@ -133,33 +133,56 @@ display: inline-block;
 height: 30px;
 text-indent:-9999px;
 width: 20px;
+position: relative;
 }
 
-
-
-a.info:hover  + .help-text, a.info:focus  + .help-text  {
-	display: inline-block;
+a.info:hover .help-text-right,
+a.info:hover .help-text-left
+ {
+	display: inline-block;	
 }
 
-span.help-text:before {
+span.help-text-right:before,
+span.help-text-left:before {
     background: url("images/blue-arrow-left.png") rgba(0, 0, 0, 0);
     content: " ";
     height: 16px;
     left: -9px;
     position: absolute;
-    top: 10px;
+    top: -141px;
     width: 9px;
 }
 
-span.help-text {
-    background: #05aea7;
+span.help-text-right {    
+	background: none repeat scroll 0 0 #05aea7;
     border-radius: 4px;
     color: #fff;
     display: none;
 	margin-left: 10px;
-    padding: 5px 25px 5px 10px;
-    position: absolute;
+    padding: 5px 25px 5px 10px;    
     max-width: 415px;
+	z-index: 99999;	
+	left: 100%;
+	position: absolute;
+	text-indent: 0;
+	top:0;
+	width: 300px;
+}
+
+span.help-text-left {    
+	background: none repeat scroll 0 0 #05aea7;
+    border-radius: 4px;
+    color: #fff;
+    display: none;
+	margin-right: 10px;
+    padding: 5px 25px 5px 10px;    
+    max-width: 415px;
+	z-index: 99999;
+	right: 100%;
+	position: absolute;
+	text-indent: 0;
+	top:0;
+	width: 300px;
 }
 
 /* ------------ */
@@ -2019,7 +2042,7 @@ html[xmlns] .clearfix {
     width: 20px;
     height: 30px;
 }
-  .Videosystem span.help-text, .video span {
+  .Videosystem span.help-text-right, .video span {
         background: #05aea7;
         display: none;
         padding: 5px 25px 5px 10px;
@@ -2190,11 +2213,11 @@ table.form {
     height: 30px;
     float: right;
 }
-.Videosystem span.help-text {
+.Videosystem span.help-text-right {
     right: 30px;
     z-index: 1000;
 }
-    .Videosystem span.help-text:after {
+    .Videosystem span.help-text-right:after {
         width: 9px;
         height: 16px;
         background: url(images/blue-arrow-right.png);
