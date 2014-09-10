@@ -4,7 +4,8 @@
 || 3 || 2014-02-17 || Justerat schema-innehåll || Khaled Daham ||
 || 4 || 2014-03-21 || -Lagt till ResultType, som används för att hantera logiska fel. <br>-Lagt till !RoleCode 0..1 i LegalAuthenticatorType (behov fanns i kontrakten för bild och EKG). <br>-Lagt till länkar till lista över vanligt förekommande kodverk och identifierare på lämpliga ställen. || Björn Genfors ||
 || 5 || 2014-05-13 || -Lagt till PQIntervalType. <br>-Justerat DateType att tillåta variabel noggrannhet. <br>-Förtydligat beskrivningen av vissa typer och/eller fält. || Björn Genfors ||
-|| 6 || 2014-08-21 || Uppdaterad beskrivning för DateTime/TimeStamp.|| Khaled Daham ||
+|| 6 || 2014-08-21 || Uppdaterad beskrivning för DateType och TimeStampType.|| Khaled Daham ||
+|| 7 || 2014-09-10 || -Korrigerat dokumentation för DateType för att revertera möjligheten till variabel noggrannhet (kompatibilitetsbekymmer med ISO-standarder) <br>-Lagt till en ny typ, PartialDateType, för att bära information om datum med variabel noggrannhet. || Björn Genfors ||
 
 =Här dokumenteras informella best-practices för datatypshantering i tjänstekontrakt=
 
@@ -48,7 +49,7 @@ Datum anges på formatet ”ÅÅÅÅMMDD”. Detta motsvarar den ISO 8601 och IS
 Tidszon anges inte i meddelandeformaten. All information om datum och tidpunkter som utbyts via tjänsterna ska ange datum och tidpunkter i den tidszon som gäller/gällde i Sverige vid den tidpunkt som respektive datum- eller tidpunktsfält bär information om. Såväl tjänstekonsumenter som tjänsteproducenter skall med andra ord förutsätta att datum och tidpunkter som utbyts är i tidszonerna CET (svensk normaltid) respektive CEST (svensk normaltid med justering för sommartid).
 
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
-||date	||string	||Datum uttrycks på formatet ”ÅÅÅÅMMDD”, eller med mindre noggrannhet enligt något av formaten "ÅÅÅÅMM" och "ÅÅÅÅ".	||1..1||
+||date	||string	||Datum uttrycks på formatet ”ÅÅÅÅMMDD”.	||1..1||
 
 ===[HealthcareProfessionalType HealthcareProfessionalType]===
 || *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
@@ -93,6 +94,13 @@ Används för att representera en signatur i samband med journalhandlingar.
 ||orgUnitEmail	||string	||Epost till organisationsenhet.	||0..1||
 ||orgUnitAddress	||string	||Postadress till organisationsenhet. Skrivs på ett så naturligt sätt som möjligt, exempelvis:<br>”Storgatan 12<br>468 91 Lilleby”	||0..1||
 ||orgUnitLocation	||string	||Text som anger namnet på plats eller ort för enhetens eller funktionens fysiska placering	||0..1||
+
+===[PartialDateType PartialDateType]===
+Kan beskriva ett datum med variabel noggrannhet.
+
+|| *Namn* || *Datatyp* || *Beskrivning* || *Kardinalitet* ||
+||format ||DateTypeFormatEnum || Enum som beskriver datumets noggrannhet. Tillåtna värden är "YYYYMMDD", "YYYYMM" och "YYYY".	||1..1||
+||value ||string ||Sträng som håller själva datumet, och uttrycks på det format som anges i format.	||1..1||
 
 ===[PatientSummaryHeaderType PatientSummaryHeaderType]===
 Innehåller basinformation om ett dokument. Används för tjänstekontrakt som tillverkas enligt HL7-metoden "Green CDA".
