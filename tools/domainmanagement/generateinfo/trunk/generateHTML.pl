@@ -40,7 +40,7 @@ html_domain_index_info([
     div(attribute(class, ingress),
 	'Här hittar du en förteckning över samtliga tjänstedomäner. I tabellen kan du också se om de är installerade i den nationella Tjänsteplattformen eller inte.') ,
     p(' ') ,
-    'Information på denna sida är hämtad från subversion, tjänstekontraktsbeskrivningar samt tjänsteadresseringskatalogerna i den nationella tjänsteplattformen. Klicka på länkarna i tabellen för mer information.' ,
+    'Informationen på denna sida är hämtad från subversion, tjänstekontraktsbeskrivningar samt tjänsteadresseringskatalogerna i den nationella tjänsteplattformen. Klicka på länkarna i tabellen för mer information.' ,
     newline ,
     a([attribute(href, 'interaction_index.html')],'Se även förteckning över samtliga tjänstekontrakt.') ,
     p(' ') ,
@@ -51,7 +51,7 @@ html_domain_index_info([
 	    th([attribute(class, dom1)], 'Tjänstedomän') ,
 	    th([attribute(class, dom2)], 'Svenskt namn') ,
 	    th([attribute(class, dom3)], 'Engelskt namn') ,
-		  th([attribute(class, dom4)], 'NTjP') ,
+	    th([attribute(class, dom4), attribute(align, left)], 'NTjP') ,
 	    th([attribute(class, dom5)], ['QA ',
 					  info(left, ['Informationen kommer från NTjPs tjänsteadresseringskataloger. Den uppdaterades senast ', Date])
 					 ]
@@ -241,7 +241,7 @@ html_domain_info(Domain, [Desc, VersionInfo, Consumer_list, Producer_list]) :-
 
 html_domain_info_description(Domain,
 		     [
-				 h2(['Beskrivning ' ,
+				 h2(['Beskrivning av tjänstedomänen ' ,
 				     info('Beskrivningen av tjänstedomänen är hämtad från kap 1.2 i dess Tjänstekontraktsbeskrivning (i trunk).' )]),
 				 p(TkbDescription)
 		     ]
@@ -330,7 +330,7 @@ html_domain_info_services(Domain, Tag,
 	bagof(
 	    li([
 		b(Service), ' ',
-		Version, ' - ',
+		b(Version), ' - ',
 		Description,
 		i([' (uppdaterades senast ', Date, ')'])
 	    ]),
@@ -459,7 +459,7 @@ inera_html_template(Title, Body,
 	     head( [
 		 link([
 		     attribute(href,'http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic&subset=latin-ext'),
-		     attribute(rel,'stylesheet'),
+		     attribute(rel,'../css/Normal.css'),
 		     attribute(type,'text/css')] ,
 		      []) ,
 		 meta([attribute('http-equiv','Content-Type') ,
