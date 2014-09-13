@@ -55,38 +55,67 @@
         </xs:restriction>
     </xs:simpleType>
 
-<!--
-
-    <xs:simpleType name="CareContactStatusEnum">
-        <xs:restriction base="xs:int">
-            <xs:enumeration value="1">
-                <xs:annotation>
-                    <xs:documentation>Ej påbörjad</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="2">
-                <xs:annotation>
-                    <xs:documentation>Inställd</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="3">
-                <xs:annotation>
-                    <xs:documentation>Pågående</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="4">
-                <xs:annotation>
-                    <xs:documentation>Avbruten</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="5">
-                <xs:annotation>
-                    <xs:documentation>Avslutad</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
+    <xs:simpleType name="MediaTypeEnum">
+        <xs:union
+            memberTypes="tns:ApplicationMediaEnum tns:AudioMediaTypeEnum tns:ImageMediaTypeEnum tns:ModelMediaTypeEnum tns:MultipartMediaTypeEnum tns:TextMediaTypeEnum tns:VideoMediaTypeEnum"
+        />
+    </xs:simpleType>
+    
+    <xs:simpleType name="ImageMediaTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="image/g3fax"/>
+            <xs:enumeration value="image/gif"/>
+            <xs:enumeration value="image/jpeg"/>
+            <xs:enumeration value="image/png"/>
+            <xs:enumeration value="image/tiff"/>
         </xs:restriction>
     </xs:simpleType>
-    -->
+    
+    <xs:simpleType name="MultipartMediaTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="multipart/x-hl7-cda-level1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="VideoMediaTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="video/mpeg"/>
+            <xs:enumeration value="video/x-avi"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="TextMediaTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="text/html"/>
+            <xs:enumeration value="text/plain"/>
+            <xs:enumeration value="text/rtf"/>
+            <xs:enumeration value="text/sgml"/>
+            <xs:enumeration value="text/x-hl7-ft"/>
+            <xs:enumeration value="text/xml"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="ModelMediaTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="model/vrml"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="ApplicationMediaEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="application/dicom"/>
+            <xs:enumeration value="application/msword"/>
+            <xs:enumeration value="application/pdf"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="AudioMediaTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="audio/basic"/>
+            <xs:enumeration value="audio/k32adpcm"/>
+            <xs:enumeration value="audio/mpeg"/>
+        </xs:restriction>
+    </xs:simpleType>
     
     <xs:simpleType name="DateTypeFormatEnum">
         <xs:restriction base="xs:string">
@@ -110,6 +139,17 @@
             <xs:enumeration value="TRANSFORMATION_ERROR"/>
             <xs:enumeration value="APPLICATION_ERROR"/>
             <xs:enumeration value="TECHNICAL_ERROR"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="TypeOfCareServiceEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="HSJV"/>
+            <xs:enumeration value="HTJ"/>
+            <xs:enumeration value="LSS"/>
+            <xs:enumeration value="PVTJ"/>
+            <xs:enumeration value="SVTJ"/>
+            <xs:enumeration value="SÄBO"/>
         </xs:restriction>
     </xs:simpleType>
     

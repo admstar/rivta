@@ -34,6 +34,21 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="CareServiceType">
+        <xs:sequence>
+            <xs:element name="careServiceHeader" type="tns:PatientSummaryHeaderType"/>
+            <xs:element name="careServiceBody" type="tns:CareServiceBodyType"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CarePlanType">
+        <xs:sequence>
+            <xs:element name="carePlanHeader" type="tns:PatientSummaryHeaderType"/>
+            <xs:element name="carePlanBody" type="tns:CarePlanBodyType"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
 
     <xs:complexType name="CareContactBodyType">
         <xs:annotation>
@@ -62,6 +77,66 @@
             <xs:element name="careContactStatus" type="tns:CVType" minOccurs="0" maxOccurs="1"/>
             <xs:element name="additionalPatientInformation"
                 type="tns:AdditionalPatientInformationType" minOccurs="0"/>
+            <xs:element name="relation" type="tns:RelationType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CareServiceBodyType">
+        <xs:annotation>
+            <xs:documentation>
+                careContactCode:
+                Typ av vård- och omsorgsdokumentation. Nullvärde tillåtetet.
+                careContactReason:
+                Text som beskriver orsaken till vård- och omsorgskontakt som 
+                vård- och omsorgstagaren själv eller dess företrädare anger.
+                careContactOrgUnit:
+                Den enhet som kontakt utfördes vid
+                careContactTimePeriod:
+                För besök sätts sluttidpunken till samma tid som anges som starttidpunkt.
+                För planerade kontakter sätts ingen sluttidpunkt.
+                Pågående vårdtillfälle ska anges på samma sätt som en planerad vårdkontakt, 
+                dvs med angivet startdatum, men utan slutdatum.				
+                careContactStatus:
+                Status på vårdkontakten enligt kodverk ur NPÖ RIV-spec 2.2.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="performerHealthCareUnit" type="tns:IIType" minOccurs="1"/>
+            <xs:element name="performerHealthCareProfessional" type="tns:IIType" minOccurs="0"/>
+            <xs:element name="typeOfCareService" type="codes:TypeOfCareServiceEnum" minOccurs="1"/>
+            <xs:element name="timePeriod" type="tns:TimePeriodType" minOccurs="1"/>
+            <xs:element name="input" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="scope" type="xs:string" minOccurs="1"/>
+            <xs:element minOccurs="0" name="housing" type="xs:string"/>
+            <xs:element name="relation" type="tns:RelationType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CarePlanBodyType">
+        <xs:annotation>
+            <xs:documentation>
+                careContactCode:
+                Typ av vård- och omsorgsdokumentation. Nullvärde tillåtetet.
+                careContactReason:
+                Text som beskriver orsaken till vård- och omsorgskontakt som 
+                vård- och omsorgstagaren själv eller dess företrädare anger.
+                careContactOrgUnit:
+                Den enhet som kontakt utfördes vid
+                careContactTimePeriod:
+                För besök sätts sluttidpunken till samma tid som anges som starttidpunkt.
+                För planerade kontakter sätts ingen sluttidpunkt.
+                Pågående vårdtillfälle ska anges på samma sätt som en planerad vårdkontakt, 
+                dvs med angivet startdatum, men utan slutdatum.				
+                careContactStatus:
+                Status på vårdkontakten enligt kodverk ur NPÖ RIV-spec 2.2.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="content" type="tns:MultimediaType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="participatingCareUnitHSAId" type="tns:IIType" minOccurs="0"
+                maxOccurs="unbounded"/>
             <xs:element name="relation" type="tns:RelationType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
@@ -318,7 +393,7 @@
         <xs:sequence>
             <xs:element name="id" type="tns:IIType" minOccurs="1"/>
             <xs:element name="time" type="tns:TimeStampType"/>
-            <xs:element name="urn" type="xs:anyURI" minOccurs="1"/>
+            <xs:element name="type" type="xs:string" minOccurs="1"/>
             <xs:element name="informationOwner" type="tns:InformationOwnerType"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
@@ -333,7 +408,16 @@
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
-
+    
+    <xs:complexType name="MultimediaType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:string" minOccurs="0"/>
+            <xs:element name="mediaType" type="codes:MediaTypeEnum"/>
+            <xs:element name="value" type="xs:base64Binary" minOccurs="0"/>
+            <xs:element name="reference" type="xs:anyURI" minOccurs="0"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
 
     <xs:complexType name="LegalAuthenticatorType">
         <xs:annotation>
