@@ -49,6 +49,65 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="FunctionalStatusAssessmentType">
+        <xs:sequence>
+            <xs:element name="functionalStatusAssessmentHeader" type="tns:PatientSummaryHeaderType"/>
+            <xs:element name="functionalStatusAssessmentBody"
+                type="tns:FunctionalStatusAssessmentBodyType"/>
+            <xs:element name="relation" type="tns:RelationType" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FunctionalStatusAssessmentBodyType">
+        <xs:annotation>
+            <xs:documentation>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="assessmentCategory" type="codes:AssessmentCategoryEnum"/>
+            <xs:element minOccurs="0" name="comment" type="xs:string"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="padl" type="tns:PADLType"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="disability" type="tns:DisabilityType"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RelationType">
+        <xs:annotation>
+            <xs:documentation/>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="code" type="tns:CVType" minOccurs="1"/>
+            <xs:element name="referredInformation" type="tns:ReferredInformationType" minOccurs="1"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ReferredInformationType">
+        <xs:annotation>
+            <xs:documentation/>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="id" type="tns:IIType" minOccurs="1"/>
+            <xs:element name="time" type="tns:TimeStampType"/>
+            <xs:element name="type" type="xs:string" minOccurs="1"/>
+            <xs:element name="informationOwner" type="tns:InformationOwnerType"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="InformationOwnerType">
+        <xs:annotation>
+            <xs:documentation/>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="id" type="tns:IIType" minOccurs="1"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
     <!-- @TODO better names for clinicalDocumentNoteCode -->
     <xs:complexType name="ClinicalDocumentNoteType">
         <xs:annotation>
@@ -425,6 +484,31 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="PADLType">
+        <xs:annotation>
+            <xs:documentation>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="typeOfAssessment" type="tns:CVType"/>
+            <xs:element name="assessment" type="xs:string" minOccurs="1"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DisabilityType">
+        <xs:annotation>
+            <xs:documentation>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="disabilityAssessment" type="tns:CVType"/>
+            <xs:element name="comment" type="xs:string" minOccurs="0"/>
+            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
     <!-- 
         Below: only helper types allowed.
         
@@ -595,6 +679,8 @@
         </xs:sequence>
     </xs:complexType>
     <xs:element name="communicableDisease" type="tns:CommunicableDiseaseType"/>
+
+
 
     <xs:complexType name="ResultType">
         <xs:annotation>
