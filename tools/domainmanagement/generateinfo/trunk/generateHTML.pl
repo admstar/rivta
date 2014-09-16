@@ -319,7 +319,7 @@ html_domain_info_version2(Domain, Version,
 html_domain_info_services(Domain, Tag,
 			  [
 				      %					      h2('Tjänstekontrakt'),
-				      p(b(['Tjänstekontrakt som är definierade i denna ', Lname, '.'])),
+				      p(b(['Tjänstekontrakt som är definierade i denna ', Lname])),
 				      p('Informationen nedan är hämtad från respektive WSDL-fil.'),
 				      ul( TrList )
 				  ]
