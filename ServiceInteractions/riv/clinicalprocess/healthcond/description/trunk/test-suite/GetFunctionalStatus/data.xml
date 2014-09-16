@@ -40,29 +40,9 @@ under the License.
         <description>Verifies that the result only contains information within the date boundaries for the given patient.<br/>
             This test will require at least nine FunctionalStatus:
             <ol>
-                <li>A contact with DocumentTime within the given range, and the CareContactTimePeriod (both start and end)
+                <li>A functional status with DocumentTime within the given range
                 before or after the given range.</li>
-                <li>A contact with DocumentTime outside the given range and a CareContactTimePeriod that starts before and
-                ends within the given range.</li>
-                <li>A contact with DocumentTime outside the given range and a CareContactTimePeriod that starts within and
-                ends after the given range.</li>
-                <li>A contact with DocumentTime outside the given range and a CareContactTimePeriod that starts before and
-                ends after the given range.</li>
-                <li>A contact with DocumentTime outside the given range and a CareContactTimePeriod that starts within and
-                ends within the given range.</li>
-                <li>A contact with DocumentTime outside the given range and a CareContactTimePeriod that starts before and
-                no end time.</li>
-                <li>A contact with DocumentTime outside the given range and a CareContactTimePeriod that starts before and
-                ends before the given range.</li>
-                <li>A contact with DocumentTime outside the given range and a CareContactTimePeriod that starts after and
-                ends after the given range.</li>
-                <li>A contact with DocumentTime outside the given range and a CareContactTimePeriod that starts after and
-                no end time.</li>
             </ol>
-            The CareContactId's of case 1-6 should be added as a comma-separated list in the
-                expectedDocumentIds field.<br/>
-            The CareContactId's of case 7, 8 and 9 should be added as a comma-separated list in the
-                unexpectedDocumentIds field.<br/>
             The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of FunctionalStatus.
         </description>
         <data>
@@ -80,10 +60,10 @@ under the License.
     </testcase>
     <testcase id="CareUnitHsaId Filter">
         <description>Verifies that the result only contains information with correct CareUnitHsaId for the given patient.<br/>
-            The patient should have several FunctionalStatus, with at least one CareContact from the given CareUnitHsaId.<br/>
-            The CareContactId's of the expected FunctionalStatus should be added as a comma-separated list in the
+            The patient should have several FunctionalStatus, with at least one status from the given CareUnitHsaId.<br/>
+            The documentId's of the expected FunctionalStatus should be added as a comma-separated list in the
             expectedDocumentIds field.<br/>
-            The CareContactId's of FunctionalStatus from other CareUnit's should be added as a comma-separated list in the
+            The documentId's of FunctionalStatus from other CareUnit's should be added as a comma-separated list in the
             unexpectedDocumentIds field.
         </description>
         <data>
@@ -120,10 +100,10 @@ under the License.
     <testcase id="HTTPHeader Filter">
         <description>Verifies that the result only contains information with correct PatientId, and that the source
             system should filter FunctionalStatus based on the HttpHeader 'x-rivta-original-serviceconsumer-hsaid'.<br/>
-            Enter a PatientId that has more than one CareContact in the source system.<br/>
-            Add one or more CareContactId's of contacts that should be included in the response based on the
+            Enter a PatientId that has more than one Functional status in the source system.<br/>
+            Add one or more documentId of functional status that should be included in the response based on the
             filtering rules to the field 'expectedDocumentIds'.<br/>
-            Add one or more CareContactId's of contacts that should not be included in the response based on the
+            Add one or more documentId of functional status that should not be included in the response based on the
             filtering rules to the field 'unexpectedDocumentIds'.<br/>
 			The field logicalAddress should contain a value that does not affect the list of FunctionalStatus.
         </description>
