@@ -33,7 +33,6 @@ under the License.
             <patientIdType>1.2.752.129.2.1.3.1</patientIdType>
             <timePeriodStart>20130501</timePeriodStart>
             <timePeriodEnd>20130531</timePeriodEnd>
-            <expectedDocumentIds>5566770</expectedDocumentIds>
         </data>
     </testcase>
  
@@ -74,7 +73,7 @@ under the License.
             <timePeriodStart>20130501</timePeriodStart>
             <timePeriodEnd>20130531</timePeriodEnd>
             <!-- Add a list of comma-separated ids that at least should be included in the response -->
-            <expectedDocumentIds>5566770,5566771</expectedDocumentIds>
+            <expectedDocumentIds>5566770</expectedDocumentIds>
             <!-- Add a list of comma-separated ids that should not be included in the response -->
             <unexpectedDocumentIds>11,12,13</unexpectedDocumentIds>
         </data>
@@ -90,44 +89,14 @@ under the License.
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
             <logicalAddress>112233</logicalAddress>
-            <careUnitHSAid>123465</careUnitHSAid>
+            <careUnitHSAId>123465</careUnitHSAId>
             <patientId>7601021212</patientId>
             <patientIdType>1.2.752.129.2.1.3.1</patientIdType>
-            <sourceSystemHSAid>112233</sourceSystemHSAid>
+            <sourceSystemHSAId>112233</sourceSystemHSAId>
             <!-- Add a list of comma-separated ids that at least should be included in the response -->
-            <expectedDocumentIds></expectedDocumentIds>
+            <expectedDocumentIds>5566770</expectedDocumentIds>
             <!-- Add a list of comma-separated ids that should not be included in the response -->
-            <unexpectedDocumentIds>123456</unexpectedDocumentIds>
-        </data>
-    </testcase>
-    <testcase id="Only PatientId">
-        <description>Verifies that the result only contains information with correct PatientId.<br/>
-            Enter a PatientId that is stored in the source system.<br/>
-            The CareContactId's of the expected FunctionalStatus should be added as a comma-separated list in the
-            expectedDocumentIds field.<br/>
-            The CareContactId's of FunctionalStatus from other CareUnit's should be added as a comma-separated list in the
-            unexpectedDocumentIds field.
-        </description>
-        <data>
-            <httpHeaderHsaId>112233</httpHeaderHsaId>
-            <logicalAddress>112233</logicalAddress>
-            <patientId>7601021212</patientId>
-            <patientIdType>1.2.752.129.2.1.3.1</patientIdType>
-            <!-- Add a list of comma-separated ids that at least should be included in the response -->
-            <expectedDocumentIds></expectedDocumentIds>
-            <!-- Add a list of comma-separated ids that should not be included in the response -->
-            <unexpectedDocumentIds>123456</unexpectedDocumentIds>
-        </data>
-    </testcase>
-    <testcase id="NonExisting PatientId">
-        <description>Verifies that the service returns an empty result instead of a Soap Fault if a non-existing PatientId is given.<br/>
-            Enter a PatientId that is not found in the source system.
-        </description>
-        <data>
-            <httpHeaderHsaId>112233</httpHeaderHsaId>
-            <logicalAddress>112233</logicalAddress>
-            <patientId>1234567890</patientId>
-            <patientIdType>1.2.752.129.2.1.3.1</patientIdType>
+            <unexpectedDocumentIds>11,12,13</unexpectedDocumentIds>
         </data>
     </testcase>
     <testcase id="CareContactId Filter">
@@ -142,6 +111,31 @@ under the License.
             <patientIdType>1.2.752.129.2.1.3.1</patientIdType>
             <careContactId>1122334455</careContactId>
             <sourceSystemHSAid>112233</sourceSystemHSAid>
+            <!-- Add a list of comma-separated ids that at least should be included in the response -->
+            <expectedDocumentIds>5566770</expectedDocumentIds>
+            <!-- Add a list of comma-separated ids that should not be included in the response -->
+            <unexpectedDocumentIds>11,12,13</unexpectedDocumentIds>
+        </data>
+    </testcase>
+    <testcase id="HTTPHeader Filter">
+        <description>Verifies that the result only contains information with correct PatientId, and that the source
+            system should filter FunctionalStatus based on the HttpHeader 'x-rivta-original-serviceconsumer-hsaid'.<br/>
+            Enter a PatientId that has more than one CareContact in the source system.<br/>
+            Add one or more CareContactId's of contacts that should be included in the response based on the
+            filtering rules to the field 'expectedDocumentIds'.<br/>
+            Add one or more CareContactId's of contacts that should not be included in the response based on the
+            filtering rules to the field 'unexpectedDocumentIds'.<br/>
+			The field logicalAddress should contain a value that does not affect the list of FunctionalStatus.
+        </description>
+        <data>
+            <httpHeaderHsaId>112233</httpHeaderHsaId>
+            <logicalAddress>112233</logicalAddress>
+            <patientId>7601021212</patientId>
+            <patientIdType>1.2.752.129.2.1.3.1</patientIdType>
+            <!-- Add a list of comma-separated ids that at least should be included in the response -->
+            <expectedDocumentIds>5566770</expectedDocumentIds>
+            <!-- Add a list of comma-separated ids that should not be included in the response -->
+            <unexpectedDocumentIds>11,12,13</unexpectedDocumentIds>
         </data>
     </testcase>
     <testcase id="NonExisting CareContactId">
@@ -159,28 +153,19 @@ under the License.
             <sourceSystemHSAid>112233</sourceSystemHSAid>
         </data>
     </testcase>
-    <testcase id="Http-header Filter">
-        <description>Verifies that the result only contains information with correct PatientId, and that the source
-            system should filter FunctionalStatus based on the HttpHeader 'x-rivta-original-serviceconsumer-hsaid'.<br/>
-            Enter a PatientId that has more than one CareContact in the source system.<br/>
-            Add one or more CareContactId's of contacts that should be included in the response based on the
-            filtering rules to the field 'expectedDocumentIds'.<br/>
-            Add one or more CareContactId's of contacts that should not be included in the response based on the
-            filtering rules to the field 'unexpectedDocumentIds'.<br/>
-			The field logicalAddress should contain a value that does not affect the list of FunctionalStatus.
+    <testcase id="NonExisting PatientId">
+        <description>Verifies that the service returns an empty result instead of a Soap Fault if a non-existing PatientId is given.<br/>
+            Enter a PatientId that is not found in the source system.
         </description>
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
             <logicalAddress>112233</logicalAddress>
-            <patientId>7601021212</patientId>
+            <patientId>1234567890</patientId>
             <patientIdType>1.2.752.129.2.1.3.1</patientIdType>
-            <!-- Add a list of comma-separated ids that at least should be included in the response -->
-            <expectedDocumentIds>987654321</expectedDocumentIds>
-            <!-- Add a list of comma-separated ids that should not be included in the response -->
-            <unexpectedDocumentIds>123456</unexpectedDocumentIds>
         </data>
     </testcase>
-    <testcase id="CareContactId and SourceSystemHsaId">
+	<!-- Test that must return an error by the producer -->
+    <testcase id="SourceSystemHSAId and CareContactId">
         <description>The test verifies that the source system returns a Soap Fault if the sourceSystemHSAid
             is empty when careContactId has a value.<br/>
             Enter a PatientId and a CareContactId of a CareContact that should be found in the source system.<br/>
@@ -194,7 +179,7 @@ under the License.
             <careContactId>1122334455</careContactId>
         </data>
     </testcase>
-    <testcase id="SourceSystemHsaId and LogicalAddress">
+    <testcase id="SourceSystemHSAId and LogicalAddress">
         <description>The test verifies that the source system returns a Soap Fault if the logicalAddress and
             sourceSystemHSAid doesn't match.<br/>
             Enter PatientId and a CareContactId and the correct SourceSystemHSAid of a CareContact that should be found in the source system.<br/>
