@@ -23,7 +23,7 @@
 	
 	SET SCHEMADIR=../schemas
 	
-SET W0=%SCHEMADIR%\.\interactions\GetCareDocumentationInteraction\GetCareDocumentationInteraction_2.0_RIVTABP21.wsdl
+SET W0=%SCHEMADIR%\.\interactions\GetCareDocumentationInteraction\GetCareDocumentationInteraction_2.1_RIVTABP21.wsdl
 SET X0=%SCHEMADIR%\interactions\GetCareDocumentationInteraction/\*.xsd
 
 SET W1=%SCHEMADIR%\.\interactions\GetDiagnosisInteraction\GetDiagnosisInteraction_2.0_RIVTABP21.wsdl
@@ -41,7 +41,7 @@ SET SCHEMAS=%XCORE% %W0% %X0% %W1% %X1% %W2% %X2% %W3% %X3%
 
 SET OUTFILE=/out:wcf\generated-src\clinicalprocessHealthcondDescription.cs
 SET APPCONFIG=/config:wcf\generated-src\app.config
-SET NAMESPACE=/namespace:*,Riv.ClinicalProcess.HealthCond.Description.Schemas.v1
+SET NAMESPACE=/namespace:*,Riv.ClinicalProcess.HealthCond.Description.Schemas.v2
 SET SVCUTIL="svcutil.exe"
 %SVCUTIL% /language:cs %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
 
