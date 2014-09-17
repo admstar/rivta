@@ -46,6 +46,7 @@
         <xs:sequence>
             <xs:element name="carePlanHeader" type="tns:PatientSummaryHeaderType"/>
             <xs:element name="carePlanBody" type="tns:CarePlanBodyType"/>
+            <xs:element name="relation" type="tns:RelationType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -117,27 +118,12 @@
     <xs:complexType name="CarePlanBodyType">
         <xs:annotation>
             <xs:documentation>
-                careContactCode:
-                Typ av vård- och omsorgsdokumentation. Nullvärde tillåtetet.
-                careContactReason:
-                Text som beskriver orsaken till vård- och omsorgskontakt som 
-                vård- och omsorgstagaren själv eller dess företrädare anger.
-                careContactOrgUnit:
-                Den enhet som kontakt utfördes vid
-                careContactTimePeriod:
-                För besök sätts sluttidpunken till samma tid som anges som starttidpunkt.
-                För planerade kontakter sätts ingen sluttidpunkt.
-                Pågående vårdtillfälle ska anges på samma sätt som en planerad vårdkontakt, 
-                dvs med angivet startdatum, men utan slutdatum.				
-                careContactStatus:
-                Status på vårdkontakten enligt kodverk ur NPÖ RIV-spec 2.2.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="content" type="tns:MultimediaType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="participatingCareUnitHSAId" type="tns:IIType" minOccurs="0"
                 maxOccurs="unbounded"/>
-            <xs:element name="relation" type="tns:RelationType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -408,7 +394,7 @@
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
-    
+
     <xs:complexType name="MultimediaType">
         <xs:sequence>
             <xs:element name="id" type="xs:string" minOccurs="0"/>
