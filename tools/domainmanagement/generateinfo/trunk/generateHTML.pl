@@ -557,6 +557,18 @@ tag_synonym(_Tag, 'Release', 'release') .
 
 format_description([], []) :- ! .
 
+% Remove double empty lines
+format_description([Line1, Line2 | Rest], Rest2) :-
+	l_strip_blanks(Line1, Sline1),
+	atom_length(Sline1, Len1) ,
+	Len1 = 0 ,
+	l_strip_blanks(Line2, Sline2),
+	atom_length(Sline2, Len2) ,
+	Len2 = 0 ,
+	! ,
+	format_description([Line2 | Rest], Rest2) .
+
+% Insert a brake instead of single empty line
 format_description([Line|Rest], ['<br>'|Rest2]) :-
 	l_strip_blanks(Line, Sline),
 	atom_length(Sline, Len) ,

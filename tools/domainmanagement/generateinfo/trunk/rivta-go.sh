@@ -70,8 +70,8 @@ fi
 
 # All looks good so far, copy the html files to the server
 echo "*** All looks good, send it to the server"
-rsync -avz -e ssh /home/leo/tmp/www/domains/ rivta.se@ssh.rivta.se:/www/domains/
-
+#rsync -avz -e ssh /home/leo/tmp/www/domains/ rivta.se@ssh.rivta.se:/www/domains/
+rsync -avz --rsh='sshpass -e ssh' /home/leo/tmp/www/domains/ rivta.se@ssh.rivta.se:/www/domains/
 
 
 
