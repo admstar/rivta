@@ -472,7 +472,7 @@ get_tkb_webtext(Txtfilepath, DescriptionList) :-
 %	! .
 
 get_tkb_webtext(Txtfilepath, ['-']) :-
-	l_write_trace(['Could not extract TKB WEB description for: ', Txtfilepath], 1) .
+	l_write_trace(['Could not extract TKB WEB description for: ', Txtfilepath], 0) .
 
 
 % ----- Ordinary description. Will not be read anymore. Code will be
@@ -497,7 +497,8 @@ Find start of Swedish name
 get_tkb_inlednings1([Inledning, LongName, ShortName| _Rest], LongName, ShortName ) :-
 	member(Inledning,
 	       [
-		'1.1 Svenskt namn'
+		   '1.1 Svenskt namn' ,
+		   '1.1. Svenskt namn'
 	       ]),
 	       ! .
 
@@ -532,7 +533,8 @@ Find start of WEB description text.
 get_tkb_inledningw1([Inledning|Rest], Rest ) :-
 	member(Inledning,
 	       [
-		'1.2 WEB beskrivning'
+		   '1.2 WEB beskrivning',
+		   '1.2. WEB beskrivning'
 	       ]),
 	       ! .
 
