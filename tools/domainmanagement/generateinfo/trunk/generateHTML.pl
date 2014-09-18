@@ -450,6 +450,14 @@ HTML generation support predicates
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Inera HTML template
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+/* Add following to stop caching of pages:
+
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+*/
+
 inera_html_template(Title, Body,
     [
     string('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">') ,
@@ -465,6 +473,15 @@ inera_html_template(Title, Body,
 		 meta([attribute('http-equiv','Content-Type') ,
 		       attribute(content, 'text/html;'),
 		       attribute(charset, 'UTF-8')],
+		      []) ,
+		 meta([attribute('http-equiv','Cache-Control') ,
+		       attribute(content, 'no-cache, no-store, must-revalidate')],
+		      []) ,
+		 meta([attribute('http-equiv','Pragma') ,
+		       attribute(content, 'no-cache')],
+		      []) ,
+		 meta([attribute('http-equiv','Expires') ,
+		       attribute(content, '0')],
 		      []) ,
 		 link([
 		     attribute(href,'../css/Normal.css'),
