@@ -79,7 +79,8 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="code" type="tns:CVType" minOccurs="1"/>
-            <xs:element name="referredInformation" type="tns:ReferredInformationType" minOccurs="1"/>
+            <xs:element name="referredInformation" type="tns:ReferredInformationType" minOccurs="1"
+                maxOccurs="unbounded"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -188,7 +189,7 @@
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
-    
+
     <!-- Only used here to keep backwards compatibility with GetCareDocumentation 2.0, must be removed in favour
         of PatientSummaryHeaderType above when we go for the next major version -->
     <xs:complexType name="CPatientSummaryHeaderType">
