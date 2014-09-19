@@ -472,7 +472,7 @@ get_tkb_webtext(Txtfilepath, DescriptionList) :-
 %	! .
 
 get_tkb_webtext(Txtfilepath, ['-']) :-
-	l_write_trace(['Could not extract TKB WEB description for: ', Txtfilepath], 0) .
+	l_write_trace(['Could not extract TKB WEB description for: ', Txtfilepath], 1) .
 
 
 % ----- Ordinary description. Will not be read anymore. Code will be
@@ -534,6 +534,7 @@ get_tkb_inledningw1([Inledning|Rest], Rest ) :-
 	member(Inledning,
 	       [
 		   '1.2 WEB beskrivning',
+		   '1.2 Webbeskrivning',
 		   '1.2. WEB beskrivning'
 	       ]),
 	       ! .
