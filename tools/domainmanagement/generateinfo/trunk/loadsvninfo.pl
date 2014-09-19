@@ -97,8 +97,10 @@ There is a number of clauses to handle different kind of folders and
 files
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 % Manage TKB files ---------------------------------
-record_files(Rpath, DomainList, Dtag) :-
+% Ensure we are in a docs folder
+record_files([ docs | RpathRest], DomainList, Dtag) :-
 	nonvar(Dtag),
+	Rpath = [ docs | RpathRest],
 	l_ls(Rpath, ItemList) ,
 	member(File, ItemList),
 	sub_atom(File, _Start, _End, Remaining, '.doc'),
@@ -121,6 +123,7 @@ record_files(Rpath, DomainList, Dtag) :-
 % This clause manage WSDL files ---------------------
 record_files(Rpath, DomainList, Dtag) :-
 	nonvar(Dtag),
+	Rpath = [ _InteractionName, interactions, schemas | _Rest] ,
 	l_ls(Rpath, ItemList) ,
 	member(File, ItemList),
 	sub_atom(File, _Before, _Len, _After, 'Interaction'),

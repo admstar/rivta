@@ -156,6 +156,9 @@ html_interaction_index_info([
 	    TrList) ,
 	sort(TrList, TrList2).
 
+% Removed the version number from the list. If we show TAK info
+% we need to show each version of each interaction.
+% Need to think about this
 get_interaction_index_info(
     Interaction,
     Description,
@@ -163,8 +166,8 @@ get_interaction_index_info(
     InTp,
     InQA ,
     LastChanged) :-
-	sv_get_interaction(Inter, Version, _BP, Description, Domain, trunk, lastChanged(LastChanged, _Time)) ,
-	atomic_list_concat([Inter, Version], ' ', Interaction) ,
+	sv_get_interaction(Inter, _Version, _BP, Description, Domain, trunk, lastChanged(LastChanged, _Time)) ,
+	Interaction = Inter, %atomic_list_concat([Inter, Version], ' ', Interaction) ,
 	atomic_list_concat(Domain, ':', DomainName) ,
 	html_domain_filename(Domain, FileName) ,
 	(   html_domain_file_exist(Domain) -> DomainNameLink = a(attribute(href, FileName), DomainName) ; DomainNameLink = DomainName ) ,
@@ -173,10 +176,10 @@ get_interaction_index_info(
 
 % ----------------------------------------------------------------------
 
-interaction_index_tp_info(Envir, Domain, Interaction,  'X') :-
+interaction_index_tp_info(Envir, Domain, Interaction, 'X') :-
 	tk_get_interaction(Envir, Interaction, _Version, _BPVersion, Domain) ,
 	! .
-interaction_index_tp_info(_Envir, _Domain, _Interaction,  ' ') .
+interaction_index_tp_info(_Envir, _Domain, _Interaction, ' ') .
 
 
 /* =======================================================================
@@ -325,9 +328,7 @@ html_domain_info_services(Domain, Tag,
 				  ]
 			 ) :-
 	tag_synonym(Tag, _Uname, Lname),
-% This bagof does not return the interactions in
-% infrastructure.directory.employee !!!!
-	bagof(
+	findall(
 	    li([
 		b(Service), ' ',
 		b(Version), ' - ',
@@ -352,7 +353,7 @@ html_domain_info_consumers(Domain,
 			   ]
 			  ) :-
 	tk_get_tak_date(prod, Date) ,
-	bagof(
+	findall(
 	    li([b(C_Desc), ' (', C_HSA, ')']),
 	    tk_get_domain_consumer(prod, Domain, C_HSA, C_Desc) ,
 	    TrList),
@@ -372,7 +373,7 @@ html_domain_info_producers(Domain,
 			   ]
 			  ) :-
 	tk_get_tak_date(prod, Date) ,
-	bagof(
+	findall(
 	    li([b(C_Desc), ' (', C_HSA, ')']),
 	    tk_get_domain_producer(prod, Domain, C_HSA, C_Desc) ,
 	    TrList),
