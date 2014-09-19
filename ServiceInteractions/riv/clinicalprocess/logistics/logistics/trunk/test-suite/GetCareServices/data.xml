@@ -36,12 +36,22 @@ under the License.
  
     <testcase id="Date Boundaries">
         <description>Verifies that the result only contains information within the date boundaries for the given patient.<br/>
+            This test will require at least five care services:
             <ol>
-                <li>A functional status with DocumentTime within the given range
-                before or after the given range.</li>
+                <li>A status with authorTime within the given range, signatureTime and documentTime outside the given range.</li>
+                <li>A status with signatureTime within the given range, authorTime and documentTime outside the given range.</li>
+                <li>A status with documentTime within the given range, authorTime and signatureTime outside the given range.</li>
+                <li>A status with authorTime exactly on the start-date of the given range, signatureTime and documentTime outside the given range.</li>
+                <li>A status with signatureTime exactly on the end-date of the given range, authorTime and documentTime outside the given range.</li>
+                <li>A status with all times outside the given range.</li>
             </ol>
-            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of CareServices.
+            The expected DocumentId's, case 1-5 above, must be added as a comma-separated list in the
+            expectedDocumentIds field.<br/>
+            The unexpected DocumentId's, case 6 above, must be added as a comma-separated list in the
+            unexpectedDocumentIds field.<br/>
+            The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of care services.
         </description>
+ 
         <data>
             <httpHeaderHsaId>112233</httpHeaderHsaId>
             <logicalAddress>112233</logicalAddress>
@@ -97,7 +107,7 @@ under the License.
     <testcase id="HTTPHeader Filter">
         <description>Verifies that the result only contains information with correct PatientId, and that the source
             system should filter CareServices based on the HttpHeader 'x-rivta-original-serviceconsumer-hsaid'.<br/>
-            Enter a PatientId that has more than one Functional status in the source system.<br/>
+            Enter a PatientId that has more than one care service in the source system.<br/>
             Add one or more documentId of functional status that should be included in the response based on the
             filtering rules to the field 'expectedDocumentIds'.<br/>
             Add one or more documentId of functional status that should not be included in the response based on the
@@ -143,7 +153,7 @@ under the License.
     </testcase>
 	<!-- Test that must return an error by the producer -->
     <testcase id="SourceSystemHSAId and CareContactId">
-        <description>The test verifies that the source system returns a Soap Fault if the sourceSystemHSAid
+        <description>The test verifies that the source system returns a message with result.resultCode = ERROR and result.errorCode = INVALID_REQUEST if the sourceSystemHSAid
             is empty when careContactId has a value.<br/>
             Enter a PatientId and a CareContactId of a CareContact that should be found in the source system.<br/>
             The fields httpHeaderHsaId and logicalAddress should contain values that does not affect the list of CareServices.
@@ -157,7 +167,7 @@ under the License.
         </data>
     </testcase>
     <testcase id="SourceSystemHSAId and LogicalAddress">
-        <description>The test verifies that the source system returns a Soap Fault if the logicalAddress and
+        <description>The test verifies that the source system returns a message with result.resultCode = ERROR and result.erroCode = INVALID_REQUEST if the logicalAddress and
             sourceSystemHSAid doesn't match.<br/>
             Enter PatientId and a CareContactId and the correct SourceSystemHSAid of a CareContact that should be found in the source system.<br/>
             The field logicalAddress should not match SourceSystemHSAid.<br/>
