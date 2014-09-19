@@ -86,20 +86,6 @@
     <xs:complexType name="CareServiceBodyType">
         <xs:annotation>
             <xs:documentation>
-                careContactCode:
-                Typ av vård- och omsorgsdokumentation. Nullvärde tillåtetet.
-                careContactReason:
-                Text som beskriver orsaken till vård- och omsorgskontakt som 
-                vård- och omsorgstagaren själv eller dess företrädare anger.
-                careContactOrgUnit:
-                Den enhet som kontakt utfördes vid
-                careContactTimePeriod:
-                För besök sätts sluttidpunken till samma tid som anges som starttidpunkt.
-                För planerade kontakter sätts ingen sluttidpunkt.
-                Pågående vårdtillfälle ska anges på samma sätt som en planerad vårdkontakt, 
-                dvs med angivet startdatum, men utan slutdatum.				
-                careContactStatus:
-                Status på vårdkontakten enligt kodverk ur NPÖ RIV-spec 2.2.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
@@ -124,6 +110,7 @@
             <xs:element name="content" type="tns:MultimediaType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="participatingCareUnitHSAId" type="tns:IIType" minOccurs="0"
                 maxOccurs="unbounded"/>
+            <xs:element minOccurs="0" name="typeOfCarePlanEnum" type="codes:TypeOfCarePlanEnum"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -366,8 +353,9 @@
             <xs:documentation/>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="code" type="tns:CVType" minOccurs="0"/>
-            <xs:element name="referredInformation" type="tns:ReferredInformationType" minOccurs="0"/>
+            <xs:element name="code" type="tns:CVType" minOccurs="1"/>
+            <xs:element name="referredInformation" type="tns:ReferredInformationType" minOccurs="1"
+                maxOccurs="unbounded"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>

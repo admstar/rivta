@@ -173,20 +173,7 @@
   </xs:complexType>
   <xs:complexType name="CareServiceBodyType">
     <xs:annotation>
-      <xs:documentation>careContactCode:
-                Typ av vård- och omsorgsdokumentation. Nullvärde tillåtetet.
-                careContactReason:
-                Text som beskriver orsaken till vård- och omsorgskontakt som 
-                vård- och omsorgstagaren själv eller dess företrädare anger.
-                careContactOrgUnit:
-                Den enhet som kontakt utfördes vid
-                careContactTimePeriod:
-                För besök sätts sluttidpunken till samma tid som anges som starttidpunkt.
-                För planerade kontakter sätts ingen sluttidpunkt.
-                Pågående vårdtillfälle ska anges på samma sätt som en planerad vårdkontakt, 
-                dvs med angivet startdatum, men utan slutdatum.				
-                careContactStatus:
-                Status på vårdkontakten enligt kodverk ur NPÖ RIV-spec 2.2.</xs:documentation>
+      <xs:documentation></xs:documentation>
     </xs:annotation>
     <xs:sequence>
       <xs:element name="performerHealthCareUnit" type="tns:IIType" minOccurs="1"/>
@@ -207,6 +194,7 @@
     <xs:sequence>
       <xs:element name="content" type="tns:MultimediaType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="participatingCareUnitHSAId" type="tns:IIType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element minOccurs="0" name="typeOfCarePlanEnum" type="codes:TypeOfCarePlanEnum"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -414,8 +402,8 @@
       <xs:documentation/>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="code" type="tns:CVType" minOccurs="0"/>
-      <xs:element name="referredInformation" type="tns:ReferredInformationType" minOccurs="0"/>
+      <xs:element name="code" type="tns:CVType" minOccurs="1"/>
+      <xs:element name="referredInformation" type="tns:ReferredInformationType" minOccurs="1" maxOccurs="unbounded"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -607,6 +595,18 @@
       <xs:enumeration value="PVTJ"/>
       <xs:enumeration value="SVTJ"/>
       <xs:enumeration value="SÄBO"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TypeOfCarePlanEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Samordnad individuell plan"/>
+      <xs:enumeration value="Samordnad plan enligt LPT och LRV"/>
+      <xs:enumeration value="Samordnad plan vid utskrivning"/>
+      <xs:enumeration value="Vårdplan"/>
+      <xs:enumeration value="Habiliteringsplan"/>
+      <xs:enumeration value="Rehabiliteringsplan"/>
+      <xs:enumeration value="Genomförande plan"/>
+      <xs:enumeration value="Standardiserad vårdplan"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/logistics/logistics/trunk/schemas/core_components/itintegration_registry_1.0.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="urn:riv:itintegration:registry:1" elementFormDefault="qualified" version="1.0" xmlns="urn:riv:itintegration:registry:1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
