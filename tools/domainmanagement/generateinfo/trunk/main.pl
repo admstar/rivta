@@ -110,7 +110,7 @@ verify :-
 	sv_verify(domains, DoLines),
 	verify2('Domains in SVN', DoLines, 50 ),
 	sv_verify(interactions, ILines),
-	verify2('Interactions in SVN', ILines, 1300 ),
+	verify2('Interactions in SVN', ILines, 1100 ),
 	sv_verify(tkb, BLines),
 	verify2('TKBs in SVN', BLines, 240 ),
 	l_counter_get(error_count, RC) ,
