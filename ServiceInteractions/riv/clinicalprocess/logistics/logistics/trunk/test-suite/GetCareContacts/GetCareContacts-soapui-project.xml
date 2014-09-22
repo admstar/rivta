@@ -52,7 +52,7 @@
   <wsdl:binding name="GetCareContactsResponderBinding" type="tns:GetCareContactsResponderInterface">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     <wsdl:operation name="GetCareContacts">
-      <soap:operation soapAction="urn:riv:ehr:patientsummary:GetCareContactsResponder:2:GetCareContacts" style="document"/>
+      <soap:operation soapAction="urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:3:GetCareContacts" style="document"/>
       <wsdl:input>
         <soap:header use="literal" message="tns:GetCareContactsRequest" part="LogicalAddress"/>
         <soap:body use="literal" parts="parameters"/>
@@ -91,6 +91,7 @@
   <xs:complexType name="GetCareContactsType">
     <xs:sequence>
       <xs:element name="careUnitHSAId" type="core:HSAIdType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="careGiverHSAId" type="core:HSAIdType"/>
       <xs:element name="patientId" type="core:PersonIdType"/>
       <xs:element name="datePeriod" type="core:DatePeriodType" minOccurs="0"/>
       <xs:element name="sourceSystemHSAId" type="core:HSAIdType" minOccurs="0"/>
@@ -130,6 +131,21 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="CareServiceType">
+    <xs:sequence>
+      <xs:element name="careServiceHeader" type="tns:PatientSummaryHeaderType"/>
+      <xs:element name="careServiceBody" type="tns:CareServiceBodyType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CarePlanType">
+    <xs:sequence>
+      <xs:element name="carePlanHeader" type="tns:PatientSummaryHeaderType"/>
+      <xs:element name="carePlanBody" type="tns:CarePlanBodyType"/>
+      <xs:element name="relation" type="tns:RelationType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="CareContactBodyType">
     <xs:annotation>
       <xs:documentation>careContactCode:
@@ -155,6 +171,33 @@
       <xs:element name="careContactStatus" type="tns:CVType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="additionalPatientInformation" type="tns:AdditionalPatientInformationType" minOccurs="0"/>
       <xs:element name="relation" type="tns:RelationType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CareServiceBodyType">
+    <xs:annotation>
+      <xs:documentation></xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="performerHealthCareUnit" type="tns:IIType" minOccurs="1"/>
+      <xs:element name="performerHealthCareProfessional" type="tns:IIType" minOccurs="0"/>
+      <xs:element name="typeOfCareService" type="codes:TypeOfCareServiceEnum" minOccurs="1"/>
+      <xs:element name="timePeriod" type="tns:TimePeriodType" minOccurs="1"/>
+      <xs:element name="input" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="scope" type="xs:string" minOccurs="1"/>
+      <xs:element minOccurs="0" name="housing" type="xs:string"/>
+      <xs:element name="relation" type="tns:RelationType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CarePlanBodyType">
+    <xs:annotation>
+      <xs:documentation></xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="content" type="tns:MultimediaType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="participatingCareUnitHSAId" type="tns:IIType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element minOccurs="0" name="typeOfCarePlanEnum" type="codes:TypeOfCarePlanEnum"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -362,8 +405,8 @@
       <xs:documentation/>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="code" type="tns:CVType" minOccurs="0"/>
-      <xs:element name="referredInformation" type="tns:ReferredInformationType" minOccurs="0"/>
+      <xs:element name="code" type="tns:CVType" minOccurs="1"/>
+      <xs:element name="referredInformation" type="tns:ReferredInformationType" minOccurs="1" maxOccurs="unbounded"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -374,7 +417,7 @@
     <xs:sequence>
       <xs:element name="id" type="tns:IIType" minOccurs="1"/>
       <xs:element name="time" type="tns:TimeStampType"/>
-      <xs:element name="urn" type="xs:anyURI" minOccurs="1"/>
+      <xs:element name="type" type="xs:string" minOccurs="1"/>
       <xs:element name="informationOwner" type="tns:InformationOwnerType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
@@ -385,6 +428,15 @@
     </xs:annotation>
     <xs:sequence>
       <xs:element name="id" type="tns:IIType" minOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MultimediaType">
+    <xs:sequence>
+      <xs:element name="id" type="xs:string" minOccurs="0"/>
+      <xs:element name="mediaType" type="codes:MediaTypeEnum"/>
+      <xs:element name="value" type="xs:base64Binary" minOccurs="0"/>
+      <xs:element name="reference" type="xs:anyURI" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -464,35 +516,58 @@
       </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
-  <!--<xs:simpleType name="CareContactStatusEnum">
-        <xs:restriction base="xs:int">
-            <xs:enumeration value="1">
-                <xs:annotation>
-                    <xs:documentation>Ej påbörjad</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="2">
-                <xs:annotation>
-                    <xs:documentation>Inställd</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="3">
-                <xs:annotation>
-                    <xs:documentation>Pågående</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="4">
-                <xs:annotation>
-                    <xs:documentation>Avbruten</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="5">
-                <xs:annotation>
-                    <xs:documentation>Avslutad</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-        </xs:restriction>
-    </xs:simpleType>-->
+  <xs:simpleType name="MediaTypeEnum">
+    <xs:union memberTypes="tns:ApplicationMediaEnum tns:AudioMediaTypeEnum tns:ImageMediaTypeEnum tns:ModelMediaTypeEnum tns:MultipartMediaTypeEnum tns:TextMediaTypeEnum tns:VideoMediaTypeEnum"/>
+  </xs:simpleType>
+  <xs:simpleType name="ImageMediaTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="image/g3fax"/>
+      <xs:enumeration value="image/gif"/>
+      <xs:enumeration value="image/jpeg"/>
+      <xs:enumeration value="image/png"/>
+      <xs:enumeration value="image/tiff"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MultipartMediaTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="multipart/x-hl7-cda-level1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="VideoMediaTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="video/mpeg"/>
+      <xs:enumeration value="video/x-avi"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TextMediaTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="text/html"/>
+      <xs:enumeration value="text/plain"/>
+      <xs:enumeration value="text/rtf"/>
+      <xs:enumeration value="text/sgml"/>
+      <xs:enumeration value="text/x-hl7-ft"/>
+      <xs:enumeration value="text/xml"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ModelMediaTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="model/vrml"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ApplicationMediaEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="application/dicom"/>
+      <xs:enumeration value="application/msword"/>
+      <xs:enumeration value="application/pdf"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AudioMediaTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="audio/basic"/>
+      <xs:enumeration value="audio/k32adpcm"/>
+      <xs:enumeration value="audio/mpeg"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:simpleType name="DateTypeFormatEnum">
     <xs:restriction base="xs:string">
       <xs:enumeration value="YYYY"/>
@@ -513,6 +588,28 @@
       <xs:enumeration value="TRANSFORMATION_ERROR"/>
       <xs:enumeration value="APPLICATION_ERROR"/>
       <xs:enumeration value="TECHNICAL_ERROR"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TypeOfCareServiceEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="HSJV"/>
+      <xs:enumeration value="HTJ"/>
+      <xs:enumeration value="LSS"/>
+      <xs:enumeration value="PVTJ"/>
+      <xs:enumeration value="SVTJ"/>
+      <xs:enumeration value="SÄBO"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TypeOfCarePlanEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Samordnad individuell plan"/>
+      <xs:enumeration value="Samordnad plan enligt LPT och LRV"/>
+      <xs:enumeration value="Samordnad plan vid utskrivning"/>
+      <xs:enumeration value="Vårdplan"/>
+      <xs:enumeration value="Habiliteringsplan"/>
+      <xs:enumeration value="Rehabiliteringsplan"/>
+      <xs:enumeration value="Genomförande plan"/>
+      <xs:enumeration value="Standardiserad vårdplan"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/logistics/logistics/trunk/schemas/core_components/itintegration_registry_1.0.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="urn:riv:itintegration:registry:1" elementFormDefault="qualified" version="1.0" xmlns="urn:riv:itintegration:registry:1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
@@ -544,7 +641,7 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>${webServiceUrl}</con:endpoint><con:endpoint>http://tempuri.org</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:ehr:patientsummary:GetCareContactsResponder:2:GetCareContacts" name="GetCareContacts" bindingOperationName="GetCareContacts" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/></con:operation></con:interface><con:testSuite name="GetCareContacts TestSuite" id="ccea20ca-e88e-4e5b-8745-364d1dd7d957"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Date boundaries" searchProperties="true" id="8cf5057e-f55a-49df-9ffb-160d07141452"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>${webServiceUrl}</con:endpoint><con:endpoint>http://tempuri.org</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:3:GetCareContacts" name="GetCareContacts" bindingOperationName="GetCareContacts" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/></con:operation></con:interface><con:testSuite name="GetCareContacts TestSuite" id="ccea20ca-e88e-4e5b-8745-364d1dd7d957"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Date boundaries" searchProperties="true" id="8cf5057e-f55a-49df-9ffb-160d07141452"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
 
 def utils = new GroovyUtils(context)
@@ -733,7 +830,7 @@ expectedDocumentIds.each {id ->
 	if (!documentIds.contains(id)) {
 		contextHelper.fail('Response does not contain a expected CareContact. DocumentId: ' + id)
 	}
-}</scriptText></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:ehr:patientsummary:GetCareContactsResponder:2:GetCareContacts" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/><con:reportParameters/><con:breakPoints><con:testStepId>74fd6c8e-e3f8-4fb1-b45f-90a4ad24c35b</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Only PatientId" searchProperties="true" id="b5a867ea-0448-47b6-9e0f-9ae9c4eb0df1"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+}</scriptText></con:configuration></con:assertion><con:credentials><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:ehr:patientsummary:GetCareContactsResponder:2:GetCareContacts" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/><con:reportParameters/><con:breakPoints><con:testStepId>74fd6c8e-e3f8-4fb1-b45f-90a4ad24c35b</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Only PatientId" searchProperties="true" id="b5a867ea-0448-47b6-9e0f-9ae9c4eb0df1"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
 
 def utils = new GroovyUtils(context)
@@ -1067,7 +1164,91 @@ expectedDocumentIds.each {id ->
 	if (!documentIds.contains(id)) {
 		contextHelper.fail('Response does not contain a expected CareContact. DocumentId: ' + id)
 	}
-}</scriptText></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:ehr:patientsummary:GetCareContactsResponder:2:GetCareContacts" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/><con:reportParameters/><con:breakPoints><con:testStepId>74fd6c8e-e3f8-4fb1-b45f-90a4ad24c35b</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints></con:testCase><con:properties/><con:reportParameters/></con:testSuite><con:testSuite name="Fault tests"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Verify SourceSystemHSAid and CareContactId" searchProperties="true" id="6583aca7-a717-40c0-81bb-0f41647101f8"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+}</scriptText></con:configuration></con:assertion><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:ehr:patientsummary:GetCareContactsResponder:2:GetCareContacts" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/><con:reportParameters/><con:breakPoints><con:testStepId>74fd6c8e-e3f8-4fb1-b45f-90a4ad24c35b</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="CareGiverHSAId" searchProperties="true" id="89eca304-b729-4f4a-a19c-c913ed24afc9"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def dataFile = new File(utils.projectPath + "/data.xml")
+def source = new XmlDataReader(context, dataFile)
+
+source.load("CareGiverHSAId Filter")</script></con:config></con:testStep><con:testStep type="request" name="Call GetCareContacts"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetCareContactsResponderBinding</con:interface><con:operation>GetCareContacts</con:operation><con:request name="Call GetCareContacts"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="x-mock-response" value="CareGiverHSAId Filter"/>
+  &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:3" xmlns:urn2="urn:riv:clinicalprocess:logistics:logistics:3">
+   <soapenv:Header>
+      <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn1:GetCareContacts>
+         <urn1:careGiverHSAId>${careGiverHSAId}</urn1:careGiverHSAId>
+         <urn1:patientId>
+            <urn2:id>${patientId}</urn2:id>
+            <urn2:type>${patientIdType}</urn2:type>
+         </urn1:patientId>
+      </urn1:GetCareContacts>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:assertion type="Response SLA Assertion" name="Response SLA"><con:configuration><SLA>15000</SLA></con:configuration></con:assertion><con:assertion type="Schema Compliance" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="SOAP Response" name="SOAP Response"/><con:assertion type="GroovyScriptAssertion" name="Assert Schematron"><con:configuration><scriptText>import se.skl.rivta.testsupport.soapui.validation.SchematronValidator
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def contextHelper = new ContextHelper(context)
+def validator = new SchematronValidator()
+
+def failures = validator.validateMessage(messageExchange.response.getResponseContent(),
+	new File(utils.projectPath + "/constraints.xml"))
+
+failures.each { failure -> contextHelper.fail(failure.text) }</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="AND ensure returned careGiverHSAId is correct"><con:configuration><scriptText>import com.eviware.soapui.support.XmlHolder
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def contextHelper = new ContextHelper(context)
+
+def holder = new XmlHolder( messageExchange.response.responseContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:3'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:logistics:logistics:3'
+
+def careContacts = holder.getDomNodes('/soapenv:Envelope/soapenv:Body/urn:GetCareContactsResponse/urn:careContact')
+
+careContacts.each {c ->
+    def contactHolder = new XmlHolder( c )
+    holder.namespaces.each {key, value -> contactHolder.namespaces[key] = value}
+
+    def documentId = contactHolder.getNodeValue('/urn:careContact/urn1:careContactHeader/urn1:documentId')
+    def careGiverHSAId = contactHolder.getNodeValue('/urn:careContact/urn1:careContactHeader/urn1:accountableHealthcareProfessional/urn1:healthcareProfessionalCareGiverHSAId')
+
+    if (careGiverHSAId != context.careGiverHSAId) {
+        contextHelper.fail("Response contains a contact with other CareGiverHSAId. CareGiverHSAId: ${careGiverHSAId} DocumentId: ${documentId}")
+    }
+}</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="AND ensure documentId's are correct"><con:configuration><scriptText>import com.eviware.soapui.support.XmlHolder
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def contextHelper = new ContextHelper(context)
+
+def holder = new XmlHolder( messageExchange.response.responseContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:3'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:logistics:logistics:3'
+
+def documentIds = holder.getNodeValues('/soapenv:Envelope/soapenv:Body/urn:GetCareContactsResponse/urn:careContact/urn1:careContactHeader/urn1:documentId') as List
+
+def expectedDocumentIds = context.expectedDocumentIds ? context.expectedDocumentIds.tokenize(',') : []
+def unexpectedDocumentIds = context.unexpectedDocumentIds ? context.unexpectedDocumentIds.tokenize(',') : []
+
+documentIds.each {id -> 
+	if (unexpectedDocumentIds.contains(id)) {
+		contextHelper.fail('Response contains a unexpected CareContact. DocumentId: ' + id)
+	}
+}
+expectedDocumentIds.each {id -> 
+	if (!documentIds.contains(id)) {
+		contextHelper.fail('Response does not contain a expected CareContact. DocumentId: ' + id)
+	}
+}</scriptText></con:configuration></con:assertion><con:credentials><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:ehr:patientsummary:GetCareContactsResponder:2:GetCareContacts" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/><con:reportParameters/></con:testSuite><con:testSuite name="Fault tests"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Verify SourceSystemHSAid and CareContactId" searchProperties="true" id="6583aca7-a717-40c0-81bb-0f41647101f8"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
 
 def utils = new GroovyUtils(context)

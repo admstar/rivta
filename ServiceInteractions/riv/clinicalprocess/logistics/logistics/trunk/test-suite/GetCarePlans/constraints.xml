@@ -23,9 +23,9 @@ under the License.
         queryBinding='xslt2'
         schemaVersion='ISO19757-3'>
 
-    <iso:title>Validation for GetFunctionalStatus</iso:title>
-    <iso:ns prefix='urn' uri='urn:riv:clinicalprocess:healthcond:description:GetFunctionalStatusResponder:2' />
-    <iso:ns prefix='urn1' uri='urn:riv:clinicalprocess:healthcond:description:2' />
+    <iso:title>Validation for GetCarePlans</iso:title>
+    <iso:ns prefix='urn1' uri='urn:riv:clinicalprocess:logistics:logistics:3'/>
+    <iso:ns prefix='urn' uri='urn:riv:clinicalprocess:logistics:logistics:GetCarePlansResponder:2'/>
 
 	<iso:pattern abstract="true" id="pattern.CvTypeStrict">		
 		<iso:rule context="$path/urn1:code">
@@ -88,24 +88,23 @@ under the License.
 
 
 	<!-- Rules for Response, fields that MUST NOT exist in the response -->
-	<iso:pattern id="No documentTitle">
-		<iso:rule context="urn1:documentTitle">
-			<iso:assert test="not(exists(.))"><iso:name/> MUST NOT exist in urn1:functionalStatusAssessmentHeader</iso:assert>
-		</iso:rule>
-	</iso:pattern>
-	
 	<iso:pattern id="No nullified">
 		<iso:rule context="urn1:nullified">
-			<iso:assert test="not(exists(.))"><iso:name/> MUST NOT exist in urn1:functionalStatusAssessmentHeader</iso:assert>
+			<iso:assert test="not(exists(.))"><iso:name/> MUST NOT exist in urn1:carePlanHeader</iso:assert>
 		</iso:rule>
 	</iso:pattern>
 
 	<iso:pattern id="No nullifiedReason">
 		<iso:rule context="urn1:nullifiedReason">
-			<iso:assert test="not(exists(.))"><iso:name/> MUST NOT exist in urn1:functionalStatusAssessmentHeader</iso:assert>
+			<iso:assert test="not(exists(.))"><iso:name/> MUST NOT exist in urn1:carePlanHeader</iso:assert>
 		</iso:rule>
 	</iso:pattern>
 
 	<!-- Choice rules for Response, fields that MUST exist given some precondition -->
+	<iso:pattern id="documentTitle">
+		<iso:rule context="urn1:carePlanHeader">
+			<iso:assert test="count(urn1:documentTitle) = 1"><iso:name/> MUST exist in urn1:carePlanHeader</iso:assert>
+		</iso:rule>
+	</iso:pattern>
 
 </iso:schema>

@@ -24,8 +24,8 @@ under the License.
         schemaVersion='ISO19757-3'>
 
     <iso:title>Validation for GetCareContacts</iso:title>
-    <iso:ns prefix='urn1' uri='urn:riv:clinicalprocess:logistics:logistics:2'/>
-    <iso:ns prefix='urn' uri='urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:2'/>
+    <iso:ns prefix='urn1' uri='urn:riv:clinicalprocess:logistics:logistics:3'/>
+    <iso:ns prefix='urn' uri='urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:3'/>
 
 	<iso:pattern abstract="true" id="pattern.CvType">
 		<iso:rule context="$path">
@@ -67,5 +67,42 @@ under the License.
             <iso:assert test="count(urn1:nullified) = 0"><iso:name /> must not contain nullified element.</iso:assert>
         </iso:rule>
     </iso:pattern>
+
+	<!-- Rules for Response, fields that MUST NOT exist in the response -->
+	<iso:pattern id="No documentTitle">
+		<iso:rule context="urn1:documentTitle">
+			<iso:assert test="not(exists(.))"><iso:name/> MUST NOT exist in urn1:careContactHeader</iso:assert>
+		</iso:rule>
+	</iso:pattern>
+
+	<iso:pattern id="No documentTime">
+		<iso:rule context="urn1:documentTime">
+			<iso:assert test="not(exists(.))"><iso:name/> MUST NOT exist in urn1:careContactHeader</iso:assert>
+		</iso:rule>
+	</iso:pattern>
+
+	<iso:pattern id="No legalAuthenticator">
+		<iso:rule context="urn1:legalAuthenticator">
+			<iso:assert test="not(exists(.))"><iso:name/> MUST NOT exist in urn1:careContactHeader</iso:assert>
+		</iso:rule>
+	</iso:pattern>
+	
+	<iso:pattern id="No nullified">
+		<iso:rule context="urn1:nullified">
+			<iso:assert test="not(exists(.))"><iso:name/> MUST NOT exist in urn1:careContactHeader</iso:assert>
+		</iso:rule>
+	</iso:pattern>
+
+	<iso:pattern id="No nullifiedReason">
+		<iso:rule context="urn1:nullifiedReason">
+			<iso:assert test="not(exists(.))"><iso:name/> MUST NOT exist in urn1:careContactHeader</iso:assert>
+		</iso:rule>
+	</iso:pattern>
+
+	<iso:pattern id="No careContactId">
+		<iso:rule context="urn1:careContactId">
+			<iso:assert test="not(exists(.))"><iso:name/> MUST NOT exist in urn1:careContactId</iso:assert>
+		</iso:rule>
+	</iso:pattern>
 
 </iso:schema>
