@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project activeEnvironment="Default" name="GetCarePlansMock" resourceRoot="" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetCarePlansResponderBinding" type="wsdl" bindingName="{urn:riv:clinicalprocess:logistics:logistics:GetCarePlans:2:rivtabp21}GetCarePlansResponderBinding" soapVersion="1_1" anonymous="optional" definition="file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/logistics/logistics/trunk/schemas/interactions/GetCarePlansInteraction/GetCarePlansInteraction_2.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/logistics/logistics/trunk/schemas/interactions/GetCarePlansInteraction/GetCarePlansInteraction_2.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/logistics/logistics/trunk/schemas/interactions/GetCarePlansInteraction/GetCarePlansInteraction_2.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+<con:soapui-project activeEnvironment="Default" name="GetCareContactsMock" resourceRoot="${projectDir}" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetCareContactsResponderBinding" type="wsdl" bindingName="{urn:riv:clinicalprocess:logistics:logistics:GetCareContacts:3:rivtabp21}GetCareContactsResponderBinding" soapVersion="1_1" anonymous="optional" definition="../../schemas/interactions/GetCareContactsInteraction/GetCareContactsInteraction_3.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/logistics/logistics/trunk/schemas/interactions/GetCareContactsInteraction/GetCareContactsInteraction_3.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/logistics/logistics/trunk/schemas/interactions/GetCareContactsInteraction/GetCareContactsInteraction_3.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
@@ -15,44 +15,46 @@
  KIND, either express or implied. See the License for the
  specific language governing permissions and limitations
  under the License.-->
-<wsdl:definitions name="GetCarePlansInteraction" targetNamespace="urn:riv:clinicalprocess:logistics:logistics:GetCarePlans:2:rivtabp21" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tjsr="urn:riv:clinicalprocess:logistics:logistics:GetCarePlansResponder:2" xmlns:tjsi="urn:riv:clinicalprocess:logistics:logistics:GetCarePlansInitiator:2" xmlns:tns="urn:riv:clinicalprocess:logistics:logistics:GetCarePlans:2:rivtabp21" xmlns:itr="urn:riv:itintegration:registry:1">
+<wsdl:definitions name="GetCareContactsInteraction" targetNamespace="urn:riv:clinicalprocess:logistics:logistics:GetCareContacts:3:rivtabp21" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tjsr="urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:3" xmlns:tjsi="urn:riv:clinicalprocess:logistics:logistics:GetCareContactsInitiator:3" xmlns:tns="urn:riv:clinicalprocess:logistics:logistics:GetCareContacts:3:rivtabp21" xmlns:itr="urn:riv:itintegration:registry:1">
   <xs:annotation>
-    <xs:documentation>Tjänsteinteraktionens namn: GetCarePlansInteraction
+    <xs:documentation>Tjänsteinteraktionens namn: GetCareContactsInteraction
 			 Beskrivning: 
-			   Care plans for a subject of care
+			   Care encounters for a subject of care
 			 Revisioner: 
-			 Tjänstedomän: clinicalprocess:logistics
+			 Tjänstedomän: clinicalprocess:logistics:logistics
 			 Tjänsteinteraktionstyp: Fråga-Svar
 			 WS-profil: RIVTABP21
 			 Förvaltas av: Sveriges Kommuner och Landsting</xs:documentation>
   </xs:annotation>
   <wsdl:types>
-    <xs:schema targetNamespace="urn:riv:clinicalprocess:logistics:logistics:GetCarePlans:2:rivtabp21">
-      <xs:import schemaLocation="GetCarePlansResponder_2.0.xsd" namespace="urn:riv:clinicalprocess:logistics:logistics:GetCarePlansResponder:2"/>
+    <xs:schema targetNamespace="urn:riv:clinicalprocess:logistics:logistics:GetCareContacts:3:rivtabp21">
+      <xs:import schemaLocation="GetCareContactsResponder_3.0.xsd" namespace="urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:3"/>
       <xs:import schemaLocation="../../core_components/itintegration_registry_1.0.xsd" namespace="urn:riv:itintegration:registry:1"/>
     </xs:schema>
   </wsdl:types>
-  <wsdl:message name="GetCarePlansRequest">
+  <wsdl:message name="GetCareContactsRequest">
     <wsdl:part name="LogicalAddress" element="itr:LogicalAddress">
-      <wsdl:documentation>National: The HSA-id of Inera AB ("national" aggregation service)</wsdl:documentation>
+      <wsdl:documentation>National: The HSA-id of Inera AB ("national" aggregation service)
+			Regional: The HSA-id of Inera AB (regional aggregation service)
+			Specific Source system: The HSA-id of the source system</wsdl:documentation>
     </wsdl:part>
-    <wsdl:part name="parameters" element="tjsr:GetCarePlans"/>
+    <wsdl:part name="parameters" element="tjsr:GetCareContacts"/>
   </wsdl:message>
-  <wsdl:message name="GetCarePlansResponse">
-    <wsdl:part name="parameters" element="tjsr:GetCarePlansResponse"/>
+  <wsdl:message name="GetCareContactsResponse">
+    <wsdl:part name="parameters" element="tjsr:GetCareContactsResponse"/>
   </wsdl:message>
-  <wsdl:portType name="GetCarePlansResponderInterface">
-    <wsdl:operation name="GetCarePlans">
-      <wsdl:input message="tns:GetCarePlansRequest"/>
-      <wsdl:output message="tns:GetCarePlansResponse"/>
+  <wsdl:portType name="GetCareContactsResponderInterface">
+    <wsdl:operation name="GetCareContacts">
+      <wsdl:input message="tns:GetCareContactsRequest"/>
+      <wsdl:output message="tns:GetCareContactsResponse"/>
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name="GetCarePlansResponderBinding" type="tns:GetCarePlansResponderInterface">
+  <wsdl:binding name="GetCareContactsResponderBinding" type="tns:GetCareContactsResponderInterface">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <wsdl:operation name="GetCarePlans">
-      <soap:operation soapAction="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans" style="document"/>
+    <wsdl:operation name="GetCareContacts">
+      <soap:operation soapAction="urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:3:GetCareContacts" style="document"/>
       <wsdl:input>
-        <soap:header use="literal" message="tns:GetCarePlansRequest" part="LogicalAddress"/>
+        <soap:header use="literal" message="tns:GetCareContactsRequest" part="LogicalAddress"/>
         <soap:body use="literal" parts="parameters"/>
       </wsdl:input>
       <wsdl:output>
@@ -60,12 +62,12 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name="GetCarePlansResponderService">
-    <wsdl:port name="GetCarePlansResponderPort" binding="tns:GetCarePlansResponderBinding">
+  <wsdl:service name="GetCareContactsResponderService">
+    <wsdl:port name="GetCareContactsResponderPort" binding="tns:GetCareContactsResponderBinding">
       <soap:address location="http://tempuri.org"/>
     </wsdl:port>
   </wsdl:service>
-</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/logistics/logistics/trunk/schemas/interactions/GetCarePlansInteraction/GetCarePlansResponder_2.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/logistics/logistics/trunk/schemas/interactions/GetCareContactsInteraction/GetCareContactsResponder_3.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
@@ -81,14 +83,15 @@
  KIND, either express or implied. See the License for the
  specific language governing permissions and limitations
  under the License.-->
-<xs:schema targetNamespace="urn:riv:clinicalprocess:logistics:logistics:GetCarePlansResponder:2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:clinicalprocess:logistics:logistics:GetCarePlansResponder:2" xmlns:core="urn:riv:clinicalprocess:logistics:logistics:3" xmlns:codes="urn:riv:clinicalprocess:logistics:logistics:enums:3">
+<xs:schema targetNamespace="urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:3" xmlns:core="urn:riv:clinicalprocess:logistics:logistics:3" xmlns:codes="urn:riv:clinicalprocess:logistics:logistics:enums:3">
   <xs:import schemaLocation="../../core_components/clinicalprocess_logistics_logistics_3.0.xsd" namespace="urn:riv:clinicalprocess:logistics:logistics:3"/>
   <xs:import schemaLocation="../../core_components/clinicalprocess_logistics_logistics_enum_3.0.xsd" namespace="urn:riv:clinicalprocess:logistics:logistics:enums:3"/>
-  <xs:element name="GetCarePlans" type="tns:GetCarePlansType"/>
-  <xs:element name="GetCarePlansResponse" type="tns:GetCarePlansResponseType"/>
-  <xs:complexType name="GetCarePlansType">
+  <xs:element name="GetCareContacts" type="tns:GetCareContactsType"/>
+  <xs:element name="GetCareContactsResponse" type="tns:GetCareContactsResponseType"/>
+  <xs:complexType name="GetCareContactsType">
     <xs:sequence>
       <xs:element name="careUnitHSAId" type="core:HSAIdType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="careGiverHSAId" type="core:HSAIdType"/>
       <xs:element name="patientId" type="core:PersonIdType"/>
       <xs:element name="datePeriod" type="core:DatePeriodType" minOccurs="0"/>
       <xs:element name="sourceSystemHSAId" type="core:HSAIdType" minOccurs="0"/>
@@ -96,9 +99,9 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="GetCarePlansResponseType">
+  <xs:complexType name="GetCareContactsResponseType">
     <xs:sequence>
-      <xs:element name="carePlan" type="core:CarePlanType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="careContact" type="core:CareContactType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="result" type="core:ResultType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
@@ -638,14 +641,7 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://beirut:8088/mockGetCarePlansResponderBinding</con:endpoint><con:endpoint>http://tempuri.org</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans" name="GetCarePlans" bindingOperationName="GetCarePlans" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://tempuri.org</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2">
-   <soapenv:Header>
-      <urn:LogicalAddress>?</urn:LogicalAddress>
-   </soapenv:Header>
-   <soapenv:Body>
-      <urn1:GetCarePlans/>
-   </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans"/></con:call></con:operation></con:interface><con:mockService port="8088" path="/mockGetCarePlansResponderBinding" host="beirut" name="GetCarePlansResponderBinding MockService"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:properties/><con:mockOperation name="GetCarePlans" interface="GetCarePlansResponderBinding" operation="GetCarePlans"><con:settings/><con:defaultResponse>ERROR</con:defaultResponse><con:dispatchStyle>SCRIPT</con:dispatchStyle><con:dispatchPath>import com.eviware.soapui.support.XmlHolder
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://Acrend-Admin:8088/mockGetCareContactsResponderBinding</con:endpoint><con:endpoint>http://tempuri.org</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:3:GetCareContacts" name="GetCareContacts" bindingOperationName="GetCareContacts" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/></con:operation></con:interface><con:mockService port="8088" path="/mockGetCareContactsResponderBinding" host="Acrend-Admin" name="GetCareContactsResponderBinding MockService"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:mockOperation name="GetCareContacts" interface="GetCareContactsResponderBinding" operation="GetCareContacts"><con:settings/><con:dispatchPath>import com.eviware.soapui.support.XmlHolder
 import com.eviware.soapui.impl.wsdl.support.wsdl.WsdlContext
 import com.eviware.soapui.impl.wsdl.support.wsdl.WsdlValidator
 import com.eviware.soapui.impl.wsdl.panels.mockoperation.WsdlMockRequestMessageExchange
@@ -656,7 +652,6 @@ def wsdlcontext = new WsdlContext("http://localhost:${mockService.port}/${mockSe
 def validator = new WsdlValidator(wsdlcontext);
 def msgExchange = new WsdlMockRequestMessageExchange(mockRequest, mockOperation); 
 def errors = validator.assertRequest(msgExchange, false);
-
 def msg = ""
 if (errors.length > 0) {
 	errors.each {
@@ -664,545 +659,505 @@ if (errors.length > 0) {
 		msg += "${it.toString()}\n"
 	}
 	context.validationMessages = msg
-	return "SoapFault"
+	return "SoapFault-Request"
 }
 
 def holder = new XmlHolder( mockRequest.requestContent )
 holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
 holder.namespaces['urn'] = 'urn:riv:itintegration:registry:1'
-holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:logistics:logistics:GetCarePlansResponder:2'
+holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:3'
 holder.namespaces['urn2'] = 'urn:riv:clinicalprocess:logistics:logistics:3'
 
-def careUnitHSAid = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetCarePlans/urn1:careUnitHSAid')
-def patientId = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetCarePlans/urn1:patientId/urn2:id')
-def patientIdType = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetCarePlans/urn1:patientId/urn2:type')
+def careUnitHSAId = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetCareContacts/urn1:careUnitHSAId')
+def patientId = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetCareContacts/urn1:patientId/urn2:id')
+def patientIdType = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetCareContacts/urn1:patientId/urn2:type')
 
 context.patientId = patientId
 context.patientIdType = patientIdType
-context.careUnitHSAid = careUnitHSAid
+context.careUnitHSAId = careUnitHSAId
 
 def responseName = mockRequest.requestHeaders['x-mock-response'][0]
 log.debug("responseName: ${responseName}")
 
-return responseName</con:dispatchPath><con:response name="BasicResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:logistics:logistics:GetCarePlansResponder:2" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:3">
+return responseName</con:dispatchPath><con:dispatchStyle>SCRIPT</con:dispatchStyle><con:defaultResponse>SoapFault</con:defaultResponse><con:response name="SoapFault" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+  <soapenv:Body>
+    <soapenv:Fault>
+      <faultcode>server</faultcode>
+      <faultstring xml:lang="SE">That's an error!</faultstring>
+      <!--Optional:-->
+      <faultactor>1</faultactor>
+      <!--Optional:-->
+      <detail>
+      	<text>Illegal values!</text>
+      </detail>
+    </soapenv:Fault>
+  </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:ehr:patientsummary:GetCareContactsResponder:2:GetCareContacts"/></con:response><con:response name="Response DateBoundaries" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:script>context.careContactId = 556677</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:3" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:3">
    <soapenv:Header/>
    <soapenv:Body>
-      <urn:GetCarePlansResponse>
-         <!--Zero or more repetitions:-->
-         <urn:carePlan>
-            <urn1:carePlanHeader>
-               <urn1:documentId>${documentId}</urn1:documentId>
-               <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
-               <urn1:documentTime>20120102122322</urn1:documentTime>
+      <urn:GetCareContactsResponse>
+         <!--DocumentDate within range-->
+         <urn:careContact>
+            <urn1:careContactHeader>
+               <urn1:documentId>${careContactId}0</urn1:documentId>
+               <urn1:sourceSystemHSAId>1234</urn1:sourceSystemHSAId>
                <urn1:patientId>
                   <urn1:id>${patientId}</urn1:id>
                   <urn1:type>${patientIdType}</urn1:type>
                </urn1:patientId>
                <urn1:accountableHealthcareProfessional>
-                  <urn1:authorTime>20120102122322</urn1:authorTime>
-                  <!--Optional:-->
+                  <urn1:authorTime>20130631100000</urn1:authorTime>
                   <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                  <!--Optional:-->
                   <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalRoleCode>
-                     <!--Optional:-->
-                     <urn1:code>?</urn1:code>
-                     <!--Optional:-->
-                     <urn1:codeSystem>?</urn1:codeSystem>
-                     <!--Optional:-->
-                     <urn1:codeSystemName>?</urn1:codeSystemName>
-                     <!--Optional:-->
-                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                     <!--Optional:-->
-                     <urn1:displayName>?</urn1:displayName>
-                     <!--Optional:-->
-                     <urn1:originalText>?</urn1:originalText>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:healthcareProfessionalRoleCode>
-                  <!--Optional:-->
                   <urn1:healthcareProfessionalOrgUnit>
-                     <!--Optional:-->
                      <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                     <!--Optional:-->
                      <urn1:orgUnitName>?</urn1:orgUnitName>
-                     <!--Optional:-->
-                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                     <!--Optional:-->
-                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                     <!--Optional:-->
-                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                     <!--Optional:-->
-                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                     <!--You may enter ANY elements at this point-->
                   </urn1:healthcareProfessionalOrgUnit>
-                  <!--Optional:-->
                   <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
-                  <!--Optional:-->
                   <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
-                  <!--You may enter ANY elements at this point-->
                </urn1:accountableHealthcareProfessional>
-               <!--Optional:-->
-               <urn1:legalAuthenticator>
-                  <urn1:signatureTime>20120102122322</urn1:signatureTime>
-                  <!--Optional:-->
-                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
-                  <!--Optional:-->
-                  <urn1:legalAuthenticatorName>?</urn1:legalAuthenticatorName>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:legalAuthenticator>
                <urn1:approvedForPatient>true</urn1:approvedForPatient>
-               <urn1:careContactId>?</urn1:careContactId>
-            </urn1:carePlanHeader>
-            <urn1:carePlanBody>
-               <!--Zero or more repetitions:-->
-               <urn1:content>
-                  <!--Optional:-->
-                  <urn1:id>?</urn1:id>
-                  <urn1:mediaType>text/html</urn1:mediaType>
-                  <!--Optional:-->
-                  <urn1:value>cid:675591582458</urn1:value>
-                  <!--Optional:-->
-                  <urn1:reference>?</urn1:reference>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:content>
-               <!--Zero or more repetitions:-->
-               <urn1:participatingCareUnitHSAId>
-                  <urn1:root>?</urn1:root>
-                  <!--Optional:-->
-                  <urn1:extension>?</urn1:extension>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:participatingCareUnitHSAId>
-               <!--You may enter ANY elements at this point-->
-            </urn1:carePlanBody>
-            <!--Zero or more repetitions:-->
-         </urn:carePlan>
-         <urn:result>
-            <urn1:resultCode>OK</urn1:resultCode>
-            <urn1:logId>0000-1111</urn1:logId>
-         </urn:result>
-         <!--You may enter ANY elements at this point-->
-      </urn:GetCarePlansResponse>
-   </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans"/></con:response><con:response name="DateResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:logistics:logistics:GetCarePlansResponder:2" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:3">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <urn:GetCarePlansResponse>
-         <!--Zero or more repetitions:-->
-         <urn:carePlan>
-            <urn1:carePlanHeader>
-               <urn1:documentId>${documentId}</urn1:documentId>
-               <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
-               <urn1:documentTime>20120102122322</urn1:documentTime>
+            </urn1:careContactHeader>
+            <urn1:careContactBody>
+               <urn1:careContactOrgUnit>
+                  <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                  <urn1:orgUnitName>?</urn1:orgUnitName>
+               </urn1:careContactOrgUnit>
+               <urn1:careContactTimePeriod>
+                  <urn1:start>20130401100000</urn1:start>
+                  <urn1:end>20130531101500</urn1:end>
+               </urn1:careContactTimePeriod>
+               <urn1:careContactStatus>
+                  <urn1:code>Ej påbörjad</urn1:code>
+               </urn1:careContactStatus>
+            </urn1:careContactBody>
+         </urn:careContact>
+         <!--CareContactTimePeriod  Starts before, ends within-->
+         <urn:careContact>
+            <urn1:careContactHeader>
+               <urn1:documentId>${careContactId}1</urn1:documentId>
+               <urn1:sourceSystemHSAId>1234</urn1:sourceSystemHSAId>
                <urn1:patientId>
                   <urn1:id>${patientId}</urn1:id>
                   <urn1:type>${patientIdType}</urn1:type>
                </urn1:patientId>
                <urn1:accountableHealthcareProfessional>
-                  <urn1:authorTime>20120102122322</urn1:authorTime>
-                  <!--Optional:-->
+                  <urn1:authorTime>20130603100000</urn1:authorTime>
                   <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                  <!--Optional:-->
                   <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalRoleCode>
-                     <!--Optional:-->
-                     <urn1:code>?</urn1:code>
-                     <!--Optional:-->
-                     <urn1:codeSystem>?</urn1:codeSystem>
-                     <!--Optional:-->
-                     <urn1:codeSystemName>?</urn1:codeSystemName>
-                     <!--Optional:-->
-                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                     <!--Optional:-->
-                     <urn1:displayName>?</urn1:displayName>
-                     <!--Optional:-->
-                     <urn1:originalText>?</urn1:originalText>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:healthcareProfessionalRoleCode>
-                  <!--Optional:-->
                   <urn1:healthcareProfessionalOrgUnit>
-                     <!--Optional:-->
                      <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                     <!--Optional:-->
                      <urn1:orgUnitName>?</urn1:orgUnitName>
-                     <!--Optional:-->
-                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                     <!--Optional:-->
-                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                     <!--Optional:-->
-                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                     <!--Optional:-->
-                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                     <!--You may enter ANY elements at this point-->
                   </urn1:healthcareProfessionalOrgUnit>
-                  <!--Optional:-->
                   <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
-                  <!--Optional:-->
                   <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
-                  <!--You may enter ANY elements at this point-->
                </urn1:accountableHealthcareProfessional>
-               <!--Optional:-->
-               <urn1:legalAuthenticator>
-                  <urn1:signatureTime>20120102122322</urn1:signatureTime>
-                  <!--Optional:-->
-                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
-                  <!--Optional:-->
-                  <urn1:legalAuthenticatorName>?</urn1:legalAuthenticatorName>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:legalAuthenticator>
                <urn1:approvedForPatient>true</urn1:approvedForPatient>
-               <urn1:careContactId>?</urn1:careContactId>
-            </urn1:carePlanHeader>
-            <urn1:carePlanBody>
-               <!--Zero or more repetitions:-->
-               <urn1:content>
-                  <!--Optional:-->
-                  <urn1:id>?</urn1:id>
-                  <urn1:mediaType>text/html</urn1:mediaType>
-                  <!--Optional:-->
-                  <urn1:value>cid:675591582458</urn1:value>
-                  <!--Optional:-->
-                  <urn1:reference>?</urn1:reference>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:content>
-               <!--Zero or more repetitions:-->
-               <urn1:participatingCareUnitHSAId>
-                  <urn1:root>?</urn1:root>
-                  <!--Optional:-->
-                  <urn1:extension>?</urn1:extension>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:participatingCareUnitHSAId>
-               <!--You may enter ANY elements at this point-->
-            </urn1:carePlanBody>
-            <!--Zero or more repetitions:-->
-         </urn:carePlan>
+            </urn1:careContactHeader>
+            <urn1:careContactBody>
+               <urn1:careContactOrgUnit>
+                  <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                  <urn1:orgUnitName>?</urn1:orgUnitName>
+               </urn1:careContactOrgUnit>
+               <urn1:careContactTimePeriod>
+                  <urn1:start>20130403100000</urn1:start>
+                  <urn1:end>20130503101500</urn1:end>
+               </urn1:careContactTimePeriod>
+               <urn1:careContactStatus>
+                  <urn1:code>Ej påbörjad</urn1:code>
+               </urn1:careContactStatus>
+            </urn1:careContactBody>
+         </urn:careContact>
+         <!--CareContactTimePeriod  Starts within, ends after-->
+         <urn:careContact>
+            <urn1:careContactHeader>
+               <urn1:documentId>${careContactId}2</urn1:documentId>
+               <urn1:sourceSystemHSAId>1234</urn1:sourceSystemHSAId>
+               <urn1:patientId>
+                  <urn1:id>${patientId}</urn1:id>
+                  <urn1:type>${patientIdType}</urn1:type>
+               </urn1:patientId>
+               <urn1:accountableHealthcareProfessional>
+                  <urn1:authorTime>20130404100000</urn1:authorTime>
+                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                  <urn1:healthcareProfessionalOrgUnit>
+                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                     <urn1:orgUnitName>?</urn1:orgUnitName>
+                  </urn1:healthcareProfessionalOrgUnit>
+                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+               </urn1:accountableHealthcareProfessional>
+               <urn1:approvedForPatient>true</urn1:approvedForPatient>
+            </urn1:careContactHeader>
+            <urn1:careContactBody>
+               <urn1:careContactOrgUnit>
+                  <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                  <urn1:orgUnitName>?</urn1:orgUnitName>
+               </urn1:careContactOrgUnit>
+               <urn1:careContactTimePeriod>
+                  <urn1:start>20130504100000</urn1:start>
+                  <urn1:end>20130604101500</urn1:end>
+               </urn1:careContactTimePeriod>
+               <urn1:careContactStatus>
+                  <urn1:code>Ej påbörjad</urn1:code>
+               </urn1:careContactStatus>
+            </urn1:careContactBody>
+         </urn:careContact>
+         <!--CareContactTimePeriod  Starts before, ends after-->
+         <urn:careContact>
+            <urn1:careContactHeader>
+               <urn1:documentId>${careContactId}3</urn1:documentId>
+               <urn1:sourceSystemHSAId>1234</urn1:sourceSystemHSAId>
+               <urn1:patientId>
+                  <urn1:id>${patientId}</urn1:id>
+                  <urn1:type>${patientIdType}</urn1:type>
+               </urn1:patientId>
+               <urn1:accountableHealthcareProfessional>
+                  <urn1:authorTime>20130404100000</urn1:authorTime>
+                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                  <urn1:healthcareProfessionalOrgUnit>
+                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                     <urn1:orgUnitName>?</urn1:orgUnitName>
+                  </urn1:healthcareProfessionalOrgUnit>
+                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+               </urn1:accountableHealthcareProfessional>
+               <urn1:approvedForPatient>true</urn1:approvedForPatient>
+            </urn1:careContactHeader>
+            <urn1:careContactBody>
+               <urn1:careContactOrgUnit>
+                  <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                  <urn1:orgUnitName>?</urn1:orgUnitName>
+               </urn1:careContactOrgUnit>
+               <urn1:careContactTimePeriod>
+                  <urn1:start>20130404100000</urn1:start>
+                  <urn1:end>20130604101500</urn1:end>
+               </urn1:careContactTimePeriod>
+               <urn1:careContactStatus>
+                  <urn1:code>Ej påbörjad</urn1:code>
+               </urn1:careContactStatus>
+            </urn1:careContactBody>
+         </urn:careContact>
+         <!--CareContactTimePeriod  Starts within, ends within-->
+         <urn:careContact>
+            <urn1:careContactHeader>
+               <urn1:documentId>${careContactId}4</urn1:documentId>
+               <urn1:sourceSystemHSAId>1234</urn1:sourceSystemHSAId>
+               <urn1:patientId>
+                  <urn1:id>${patientId}</urn1:id>
+                  <urn1:type>${patientIdType}</urn1:type>
+               </urn1:patientId>
+               <urn1:accountableHealthcareProfessional>
+                  <urn1:authorTime>20130404100000</urn1:authorTime>
+                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                  <urn1:healthcareProfessionalOrgUnit>
+                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                     <urn1:orgUnitName>?</urn1:orgUnitName>
+                  </urn1:healthcareProfessionalOrgUnit>
+                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+               </urn1:accountableHealthcareProfessional>
+               <urn1:approvedForPatient>true</urn1:approvedForPatient>
+            </urn1:careContactHeader>
+            <urn1:careContactBody>
+               <urn1:careContactOrgUnit>
+                  <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                  <urn1:orgUnitName>?</urn1:orgUnitName>
+               </urn1:careContactOrgUnit>
+               <urn1:careContactTimePeriod>
+                  <urn1:start>20130504100000</urn1:start>
+                  <urn1:end>20130504101500</urn1:end>
+               </urn1:careContactTimePeriod>
+               <urn1:careContactStatus>
+                  <urn1:code>Ej påbörjad</urn1:code>
+               </urn1:careContactStatus>
+            </urn1:careContactBody>
+         </urn:careContact>
+         <!--CareContactTimePeriod  Starts before, no end-->
+         <urn:careContact>
+            <urn1:careContactHeader>
+               <urn1:documentId>${careContactId}6</urn1:documentId>
+               <urn1:sourceSystemHSAId>1234</urn1:sourceSystemHSAId>
+               <urn1:patientId>
+                  <urn1:id>${patientId}</urn1:id>
+                  <urn1:type>${patientIdType}</urn1:type>
+               </urn1:patientId>
+               <urn1:accountableHealthcareProfessional>
+                  <urn1:authorTime>20130404100000</urn1:authorTime>
+                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                  <urn1:healthcareProfessionalOrgUnit>
+                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                     <urn1:orgUnitName>?</urn1:orgUnitName>
+                  </urn1:healthcareProfessionalOrgUnit>
+                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+               </urn1:accountableHealthcareProfessional>
+               <urn1:approvedForPatient>true</urn1:approvedForPatient>
+            </urn1:careContactHeader>
+            <urn1:careContactBody>
+               <urn1:careContactOrgUnit>
+                  <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                  <urn1:orgUnitName>?</urn1:orgUnitName>
+               </urn1:careContactOrgUnit>
+               <urn1:careContactTimePeriod>
+                  <urn1:start>20130504100000</urn1:start>
+               </urn1:careContactTimePeriod>
+               <urn1:careContactStatus>
+                  <urn1:code>Ej påbörjad</urn1:code>
+               </urn1:careContactStatus>
+            </urn1:careContactBody>
+         </urn:careContact>
          <urn:result>
             <urn1:resultCode>OK</urn1:resultCode>
             <urn1:logId>0000-1111</urn1:logId>
          </urn:result>
-         <!--You may enter ANY elements at this point-->
-      </urn:GetCarePlansResponse>
+      </urn:GetCareContactsResponse>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans"/></con:response><con:response name="CareUnitHSAIdResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:logistics:logistics:GetCarePlansResponder:2" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:3">
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:ehr:patientsummary:GetCareContactsResponder:2:GetCareContacts"/></con:response><con:response name="Empty Response" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:3" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:3">
    <soapenv:Header/>
    <soapenv:Body>
-      <urn:GetCarePlansResponse>
-         <!--Zero or more repetitions:-->
-         <urn:carePlan>
-            <urn1:carePlanHeader>
+      <urn:GetCareContactsResponse>
+         <urn:result>
+            <urn1:resultCode>OK</urn1:resultCode>
+            <urn1:logId>0000-1111</urn1:logId>
+         </urn:result>
+      </urn:GetCareContactsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:ehr:patientsummary:GetCareContactsResponder:2:GetCareContacts"/></con:response><con:response name="Response CareUnitHsaId" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:script>context.careContactId = new Random().nextInt(1000000)</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:3" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:3">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetCareContactsResponse>
+         <urn:careContact>
+            <urn1:careContactHeader>
+               <urn1:documentId>${careContactId}</urn1:documentId>
+               <urn1:sourceSystemHSAId>123456</urn1:sourceSystemHSAId>
+               <urn1:patientId>
+                  <urn1:id>${patientId}</urn1:id>
+                  <urn1:type>${patientIdType}</urn1:type>
+               </urn1:patientId>
+               <urn1:accountableHealthcareProfessional>
+                  <urn1:authorTime>${now}</urn1:authorTime>
+                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                  <urn1:healthcareProfessionalOrgUnit>
+                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                     <urn1:orgUnitName>?</urn1:orgUnitName>
+                  </urn1:healthcareProfessionalOrgUnit>
+                  <urn1:healthcareProfessionalCareUnitHSAId>${careUnitHSAId}</urn1:healthcareProfessionalCareUnitHSAId>
+                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+               </urn1:accountableHealthcareProfessional>
+               <urn1:approvedForPatient>true</urn1:approvedForPatient>
+            </urn1:careContactHeader>
+            <urn1:careContactBody>
+               <urn1:careContactOrgUnit>
+                  <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                  <urn1:orgUnitName>?</urn1:orgUnitName>
+               </urn1:careContactOrgUnit>
+               <urn1:careContactTimePeriod>
+                  <urn1:start>20120101100000</urn1:start>
+                  <urn1:end>20121231100000</urn1:end>
+               </urn1:careContactTimePeriod>
+               <urn1:careContactStatus>
+                  <urn1:code>Ej påbörjad</urn1:code>
+               </urn1:careContactStatus>
+            </urn1:careContactBody>
+         </urn:careContact>
+         <urn:result>
+            <urn1:resultCode>OK</urn1:resultCode>
+            <urn1:logId>0000-1111</urn1:logId>
+         </urn:result>
+      </urn:GetCareContactsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:ehr:patientsummary:GetCareContactsResponder:2:GetCareContacts"/></con:response><con:response name="Only PatientId" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:script>context.careContactId = new Random().nextInt(1000000)</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:3" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:3">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetCareContactsResponse>
+         <urn:careContact>
+            <urn1:careContactHeader>
+               <urn1:documentId>${careContactId}</urn1:documentId>
+               <urn1:sourceSystemHSAId/>
+               <urn1:patientId>
+                  <urn1:id>${patientId}</urn1:id>
+                  <urn1:type>${patientIdType}</urn1:type>
+               </urn1:patientId>
+               <urn1:accountableHealthcareProfessional>
+                  <urn1:authorTime>${now}</urn1:authorTime>
+                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                  <urn1:healthcareProfessionalOrgUnit>
+                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                     <urn1:orgUnitName>?</urn1:orgUnitName>
+                  </urn1:healthcareProfessionalOrgUnit>
+                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+               </urn1:accountableHealthcareProfessional>
+               <urn1:approvedForPatient>true</urn1:approvedForPatient>
+            </urn1:careContactHeader>
+            <urn1:careContactBody>
+               <urn1:careContactOrgUnit>
+                  <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                  <urn1:orgUnitName>?</urn1:orgUnitName>
+               </urn1:careContactOrgUnit>
+               <urn1:careContactTimePeriod>
+                  <urn1:start>20120101100000</urn1:start>
+                  <urn1:end>20121231100000</urn1:end>
+               </urn1:careContactTimePeriod>
+            </urn1:careContactBody>
+         </urn:careContact>
+         <urn:result>
+            <urn1:resultCode>OK</urn1:resultCode>
+            <urn1:logId>0000-1111</urn1:logId>
+         </urn:result>
+      </urn:GetCareContactsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:ehr:patientsummary:GetCareContactsResponder:2:GetCareContacts"/></con:response><con:response name="CareContactId Filter" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:script>context.careContactId = new Random().nextInt(1000000)</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:3" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:3">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetCareContactsResponse>
+         <urn:careContact>
+            <urn1:careContactHeader>
+               <urn1:documentId>${careContactId}</urn1:documentId>
+               <urn1:sourceSystemHSAId>${sourceSystemHSAId}</urn1:sourceSystemHSAId>
+               <urn1:patientId>
+                  <urn1:id>${patientId}</urn1:id>
+                  <urn1:type>${patientIdType}</urn1:type>
+               </urn1:patientId>
+               <urn1:accountableHealthcareProfessional>
+                  <urn1:authorTime>${now}</urn1:authorTime>
+                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                  <urn1:healthcareProfessionalOrgUnit>
+                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                     <urn1:orgUnitName>?</urn1:orgUnitName>
+                  </urn1:healthcareProfessionalOrgUnit>
+                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+               </urn1:accountableHealthcareProfessional>
+               <urn1:approvedForPatient>true</urn1:approvedForPatient>
+            </urn1:careContactHeader>
+            <urn1:careContactBody>
+               <urn1:careContactOrgUnit>
+                  <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                  <urn1:orgUnitName>?</urn1:orgUnitName>
+               </urn1:careContactOrgUnit>
+               <urn1:careContactTimePeriod>
+                  <urn1:start>20120101100000</urn1:start>
+                  <urn1:end>20121231100000</urn1:end>
+               </urn1:careContactTimePeriod>
+               <urn1:careContactStatus><urn1:code>Ej Påbörjad</urn1:code></urn1:careContactStatus>
+            </urn1:careContactBody>
+         </urn:careContact>
+         <urn:result>
+            <urn1:resultCode>OK</urn1:resultCode>
+            <urn1:logId>0000-1111</urn1:logId>
+         </urn:result>
+      </urn:GetCareContactsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:ehr:patientsummary:GetCareContactsResponder:2:GetCareContacts"/></con:response><con:response name="Http-header filter" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:script/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:3" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:3">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetCareContactsResponse>
+         <urn:careContact>
+            <urn1:careContactHeader>
+               <urn1:documentId>987654321</urn1:documentId>
+               <urn1:sourceSystemHSAId>223344</urn1:sourceSystemHSAId>
+               <urn1:patientId>
+                  <urn1:id>${patientId}</urn1:id>
+                  <urn1:type>${patientIdType}</urn1:type>
+               </urn1:patientId>
+               <urn1:accountableHealthcareProfessional>
+                  <urn1:authorTime>${now}</urn1:authorTime>
+                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                  <urn1:healthcareProfessionalOrgUnit>
+                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                     <urn1:orgUnitName>?</urn1:orgUnitName>
+                  </urn1:healthcareProfessionalOrgUnit>
+                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+               </urn1:accountableHealthcareProfessional>
+               <urn1:approvedForPatient>true</urn1:approvedForPatient>
+            </urn1:careContactHeader>
+            <urn1:careContactBody>
+               <urn1:careContactOrgUnit>
+                  <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                  <urn1:orgUnitName>?</urn1:orgUnitName>
+               </urn1:careContactOrgUnit>
+               <urn1:careContactTimePeriod>
+                  <urn1:start>20120101100000</urn1:start>
+                  <urn1:end>20121231100000</urn1:end>
+               </urn1:careContactTimePeriod>
+            </urn1:careContactBody>
+         </urn:careContact>
+         <urn:result>
+            <urn1:resultCode>OK</urn1:resultCode>
+            <urn1:logId>0000-1111</urn1:logId>
+         </urn:result>
+      </urn:GetCareContactsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:ehr:patientsummary:GetCareContactsResponder:2:GetCareContacts"/></con:response><con:response name="SoapFault-Request" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+  <soapenv:Body>
+    <soapenv:Fault>
+      <faultcode>server</faultcode>
+      <faultstring xml:lang="SE">That's an error!</faultstring>
+      <!--Optional:-->
+      <faultactor>1</faultactor>
+      <!--Optional:-->
+      <detail>
+      	<text>Illegal values:
+      	${validationMessages}</text>
+      </detail>
+    </soapenv:Fault>
+  </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:ehr:patientsummary:GetCareContactsResponder:2:GetCareContacts"/></con:response><con:response name="CareGiverHSAId Filter" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:script>context.careContactId = new Random().nextInt(1000000)</con:script><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:3" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:3">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetCareContactsResponse>
+         <urn:careContact>
+            <urn1:careContactHeader>
                <urn1:documentId>5566770</urn1:documentId>
-               <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
-               <urn1:documentTime>20120102122322</urn1:documentTime>
+               <urn1:sourceSystemHSAId>${sourceSystemHSAId}</urn1:sourceSystemHSAId>
                <urn1:patientId>
                   <urn1:id>${patientId}</urn1:id>
                   <urn1:type>${patientIdType}</urn1:type>
                </urn1:patientId>
                <urn1:accountableHealthcareProfessional>
-                  <urn1:authorTime>20120102122322</urn1:authorTime>
-                  <!--Optional:-->
+                  <urn1:authorTime>${now}</urn1:authorTime>
                   <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                  <!--Optional:-->
                   <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalRoleCode>
-                     <!--Optional:-->
-                     <urn1:code>?</urn1:code>
-                     <!--Optional:-->
-                     <urn1:codeSystem>?</urn1:codeSystem>
-                     <!--Optional:-->
-                     <urn1:codeSystemName>?</urn1:codeSystemName>
-                     <!--Optional:-->
-                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                     <!--Optional:-->
-                     <urn1:displayName>?</urn1:displayName>
-                     <!--Optional:-->
-                     <urn1:originalText>?</urn1:originalText>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:healthcareProfessionalRoleCode>
-                  <!--Optional:-->
                   <urn1:healthcareProfessionalOrgUnit>
-                     <!--Optional:-->
                      <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                     <!--Optional:-->
                      <urn1:orgUnitName>?</urn1:orgUnitName>
-                     <!--Optional:-->
-                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                     <!--Optional:-->
-                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                     <!--Optional:-->
-                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                     <!--Optional:-->
-                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                     <!--You may enter ANY elements at this point-->
                   </urn1:healthcareProfessionalOrgUnit>
-                  <!--Optional:-->
                   <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
-                  <!--You may enter ANY elements at this point-->
+                  <urn1:healthcareProfessionalCareGiverHSAId>123465</urn1:healthcareProfessionalCareGiverHSAId>
                </urn1:accountableHealthcareProfessional>
-               <!--Optional:-->
-               <urn1:legalAuthenticator>
-                  <urn1:signatureTime>20120102122322</urn1:signatureTime>
-                  <!--Optional:-->
-                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
-                  <!--Optional:-->
-                  <urn1:legalAuthenticatorName>?</urn1:legalAuthenticatorName>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:legalAuthenticator>
                <urn1:approvedForPatient>true</urn1:approvedForPatient>
-               <urn1:careContactId>?</urn1:careContactId>
-            </urn1:carePlanHeader>
-            <urn1:carePlanBody>
-               <!--Zero or more repetitions:-->
-               <urn1:content>
-                  <!--Optional:-->
-                  <urn1:id>?</urn1:id>
-                  <urn1:mediaType>text/html</urn1:mediaType>
-                  <!--Optional:-->
-                  <urn1:value>cid:675591582458</urn1:value>
-                  <!--Optional:-->
-                  <urn1:reference>?</urn1:reference>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:content>
-               <!--Zero or more repetitions:-->
-               <urn1:participatingCareUnitHSAId>
-                  <urn1:root>?</urn1:root>
-                  <!--Optional:-->
-                  <urn1:extension>?</urn1:extension>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:participatingCareUnitHSAId>
-               <!--You may enter ANY elements at this point-->
-            </urn1:carePlanBody>
-            <!--Zero or more repetitions:-->
-         </urn:carePlan>
+            </urn1:careContactHeader>
+            <urn1:careContactBody>
+               <urn1:careContactOrgUnit>
+                  <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                  <urn1:orgUnitName>?</urn1:orgUnitName>
+               </urn1:careContactOrgUnit>
+               <urn1:careContactTimePeriod>
+                  <urn1:start>20120101100000</urn1:start>
+                  <urn1:end>20121231100000</urn1:end>
+               </urn1:careContactTimePeriod>
+               <urn1:careContactStatus><urn1:code>Ej Påbörjad</urn1:code></urn1:careContactStatus>
+            </urn1:careContactBody>
+         </urn:careContact>
          <urn:result>
             <urn1:resultCode>OK</urn1:resultCode>
             <urn1:logId>0000-1111</urn1:logId>
          </urn:result>
-         <!--You may enter ANY elements at this point-->
-      </urn:GetCarePlansResponse>
+      </urn:GetCareContactsResponse>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans"/></con:response><con:response name="CareContactResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:logistics:logistics:GetCarePlansResponder:2" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:3">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <urn:GetCarePlansResponse>
-         <!--Zero or more repetitions:-->
-         <urn:carePlan>
-            <urn1:carePlanHeader>
-               <urn1:documentId>${documentId}</urn1:documentId>
-               <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
-               <urn1:documentTime>20120102122322</urn1:documentTime>
-               <urn1:patientId>
-                  <urn1:id>${patientId}</urn1:id>
-                  <urn1:type>${patientIdType}</urn1:type>
-               </urn1:patientId>
-               <urn1:accountableHealthcareProfessional>
-                  <urn1:authorTime>20120102122322</urn1:authorTime>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalRoleCode>
-                     <!--Optional:-->
-                     <urn1:code>?</urn1:code>
-                     <!--Optional:-->
-                     <urn1:codeSystem>?</urn1:codeSystem>
-                     <!--Optional:-->
-                     <urn1:codeSystemName>?</urn1:codeSystemName>
-                     <!--Optional:-->
-                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                     <!--Optional:-->
-                     <urn1:displayName>?</urn1:displayName>
-                     <!--Optional:-->
-                     <urn1:originalText>?</urn1:originalText>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:healthcareProfessionalRoleCode>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalOrgUnit>
-                     <!--Optional:-->
-                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                     <!--Optional:-->
-                     <urn1:orgUnitName>?</urn1:orgUnitName>
-                     <!--Optional:-->
-                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                     <!--Optional:-->
-                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                     <!--Optional:-->
-                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                     <!--Optional:-->
-                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:healthcareProfessionalOrgUnit>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:accountableHealthcareProfessional>
-               <!--Optional:-->
-               <urn1:legalAuthenticator>
-                  <urn1:signatureTime>20120102122322</urn1:signatureTime>
-                  <!--Optional:-->
-                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
-                  <!--Optional:-->
-                  <urn1:legalAuthenticatorName>?</urn1:legalAuthenticatorName>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:legalAuthenticator>
-               <urn1:approvedForPatient>true</urn1:approvedForPatient>
-               <urn1:careContactId>?</urn1:careContactId>
-            </urn1:carePlanHeader>
-            <urn1:carePlanBody>
-               <!--Zero or more repetitions:-->
-               <urn1:content>
-                  <!--Optional:-->
-                  <urn1:id>?</urn1:id>
-                  <urn1:mediaType>text/html</urn1:mediaType>
-                  <!--Optional:-->
-                  <urn1:value>cid:675591582458</urn1:value>
-                  <!--Optional:-->
-                  <urn1:reference>?</urn1:reference>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:content>
-               <!--Zero or more repetitions:-->
-               <urn1:participatingCareUnitHSAId>
-                  <urn1:root>?</urn1:root>
-                  <!--Optional:-->
-                  <urn1:extension>?</urn1:extension>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:participatingCareUnitHSAId>
-               <!--You may enter ANY elements at this point-->
-            </urn1:carePlanBody>
-            <!--Zero or more repetitions:-->
-         </urn:carePlan>
-         <urn:result>
-            <urn1:resultCode>OK</urn1:resultCode>
-            <urn1:logId>0000-1111</urn1:logId>
-         </urn:result>
-         <!--You may enter ANY elements at this point-->
-      </urn:GetCarePlansResponse>
-   </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans"/></con:response><con:response name="HTTPHeaderResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:logistics:logistics:GetCarePlansResponder:2" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:3">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <urn:GetCarePlansResponse>
-         <!--Zero or more repetitions:-->
-         <urn:carePlan>
-            <urn1:carePlanHeader>
-               <urn1:documentId>${documentId}</urn1:documentId>
-               <urn1:sourceSystemHSAId>?</urn1:sourceSystemHSAId>
-               <urn1:documentTime>20120102122322</urn1:documentTime>
-               <urn1:patientId>
-                  <urn1:id>${patientId}</urn1:id>
-                  <urn1:type>${patientIdType}</urn1:type>
-               </urn1:patientId>
-               <urn1:accountableHealthcareProfessional>
-                  <urn1:authorTime>20120102122322</urn1:authorTime>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalRoleCode>
-                     <!--Optional:-->
-                     <urn1:code>?</urn1:code>
-                     <!--Optional:-->
-                     <urn1:codeSystem>?</urn1:codeSystem>
-                     <!--Optional:-->
-                     <urn1:codeSystemName>?</urn1:codeSystemName>
-                     <!--Optional:-->
-                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                     <!--Optional:-->
-                     <urn1:displayName>?</urn1:displayName>
-                     <!--Optional:-->
-                     <urn1:originalText>?</urn1:originalText>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:healthcareProfessionalRoleCode>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalOrgUnit>
-                     <!--Optional:-->
-                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
-                     <!--Optional:-->
-                     <urn1:orgUnitName>?</urn1:orgUnitName>
-                     <!--Optional:-->
-                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
-                     <!--Optional:-->
-                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
-                     <!--Optional:-->
-                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
-                     <!--Optional:-->
-                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:healthcareProfessionalOrgUnit>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
-                  <!--Optional:-->
-                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:accountableHealthcareProfessional>
-               <!--Optional:-->
-               <urn1:legalAuthenticator>
-                  <urn1:signatureTime>20120102122322</urn1:signatureTime>
-                  <!--Optional:-->
-                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
-                  <!--Optional:-->
-                  <urn1:legalAuthenticatorName>?</urn1:legalAuthenticatorName>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:legalAuthenticator>
-               <urn1:approvedForPatient>true</urn1:approvedForPatient>
-               <urn1:careContactId>?</urn1:careContactId>
-            </urn1:carePlanHeader>
-            <urn1:carePlanBody>
-               <!--Zero or more repetitions:-->
-               <urn1:content>
-                  <!--Optional:-->
-                  <urn1:id>?</urn1:id>
-                  <urn1:mediaType>text/html</urn1:mediaType>
-                  <!--Optional:-->
-                  <urn1:value>cid:675591582458</urn1:value>
-                  <!--Optional:-->
-                  <urn1:reference>?</urn1:reference>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:content>
-               <!--Zero or more repetitions:-->
-               <urn1:participatingCareUnitHSAId>
-                  <urn1:root>?</urn1:root>
-                  <!--Optional:-->
-                  <urn1:extension>?</urn1:extension>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:participatingCareUnitHSAId>
-               <!--You may enter ANY elements at this point-->
-            </urn1:carePlanBody>
-            <!--Zero or more repetitions:-->
-         </urn:carePlan>
-         <urn:result>
-            <urn1:resultCode>OK</urn1:resultCode>
-            <urn1:logId>0000-1111</urn1:logId>
-         </urn:result>
-         <!--You may enter ANY elements at this point-->
-      </urn:GetCarePlansResponse>
-   </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans"/></con:response><con:response name="ERROR" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:logistics:logistics:GetCarePlansResponder:2" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:3">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <urn:GetCarePlansResponse>
-         <urn:result>
-            <urn1:resultCode>ERROR</urn1:resultCode>
-            <urn1:errorCode>INVALID_REQUEST</urn1:errorCode>
-            <urn1:logId>0000-1111</urn1:logId>
-         </urn:result>
-      </urn:GetCarePlansResponse>
-   </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans"/></con:response><con:response name="EmptyResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:logistics:logistics:GetCarePlansResponder:2" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:3">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <urn:GetCarePlansResponse>
-         <urn:result>
-            <urn1:resultCode>OK</urn1:resultCode>
-            <urn1:logId>0000-1111</urn1:logId>
-         </urn:result>
-      </urn:GetCarePlansResponse>
-   </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans"/></con:response><con:dispatchConfig/></con:mockOperation></con:mockService><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:logistics:logistics:GetCareContactsResponder:3:GetCareContacts"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/><con:onRequestScript>import java.text.SimpleDateFormat
+
+def sdf = new SimpleDateFormat("yyyyMMddHHmmss")
+def now = sdf.format(new Date())
+context.now = now</con:onRequestScript></con:mockService><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/><con:reporting><con:xmlTemplates/><con:parameters/></con:reporting><con:sensitiveInformation/></con:soapui-project>
