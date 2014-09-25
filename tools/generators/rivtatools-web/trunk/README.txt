@@ -16,7 +16,19 @@ The following technology is used:
 
 Development language: Groovy
 Unit-testing: JUnit 4 + XMLUnit
-IDE: Eclipse with the latest Groovy (springsource) and Google App Engine (google) plug-ins. The Eclipse project file is committed to the project, while the Eclipse workspace isn't
+IDE: Eclipse with the latest Groovy (springsource) and Google App Engine (google) plug-ins. The Eclipse project files are committed to the project, while the Eclipse workspace isn't
 Target web container: Google App Engine
 JRE: 1.6 due to restrictions of GAE
 Web framework: None. It is currently coded on the plain Servlet API.
+
+Eclipse IDE: Use GGTS, see http://spring.io/tools. Currently v3.6.1 (based on Eclipse 4.4, Luna)
+
+Google App Engine (google) plug-ins
+- See https://cloud.google.com/appengine/docs/java/tools/eclipse
+- Install Google Plugin for Eclipse 4.4, v3.7.0 + SDKs/Google App Enginge Java SDK, v1.9.11
+
+The project has a dependency to xml unit v1.1. Setup xml unit as:
+- Download from http://sourceforge.net/projects/xmlunit/files/xmlunit%20for%20Java/XMLUnit%20Java%201.1/xmlunit-1.1-bin.zip/download
+- Unzip to a folder of your choice
+- Define a classpath variable XMLUNIT_HOME in Eclipse to point to that folder
+  (in Preferences --> Java --> Build Path --> Classpath Variables)
