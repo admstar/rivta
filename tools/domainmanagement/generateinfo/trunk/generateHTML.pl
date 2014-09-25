@@ -337,6 +337,7 @@ html_domain_info_services(Domain, Tag,
 	    ]),
 	    sv_get_interaction(Service, Version, _RivVersion,Description,Domain,Tag, lastChanged(Date, _Time)),
 	    TrList) ,
+	TrList \= [] ,
 	! .
 
 html_domain_info_services(_Domain, _Tag, p('(Denna tag kunde ej återfinnas i svn, varför information om tjänster ej kan presenteras)')) .
@@ -356,7 +357,8 @@ html_domain_info_consumers(Domain,
 	findall(
 	    li([b(C_Desc), ' (', C_HSA, ')']),
 	    tk_get_domain_consumer(prod, Domain, C_HSA, C_Desc) ,
-	    TrList),
+	    TrList) ,
+	TrList \= [] ,
 	! .
 
 
@@ -377,6 +379,7 @@ html_domain_info_producers(Domain,
 	    li([b(C_Desc), ' (', C_HSA, ')']),
 	    tk_get_domain_producer(prod, Domain, C_HSA, C_Desc) ,
 	    TrList),
+	TrList \= [] ,
 	! .
 
 html_domain_info_producers(_Domain, [] ) .

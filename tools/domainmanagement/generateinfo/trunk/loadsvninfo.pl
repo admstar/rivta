@@ -123,7 +123,11 @@ record_files([ docs | RpathRest], DomainList, Dtag) :-
 % This clause manage WSDL files ---------------------
 record_files(Rpath, DomainList, Dtag) :-
 	nonvar(Dtag),
-	Rpath = [ _InteractionName, interactions, schemas | _Rest] ,
+	% A patch to manage the faked level in Sec services domains
+	(
+	    Rpath = [ _InteractionName, interactions, schemas | _Rest] ;
+	    Rpath = [ _InteractionName, _BifFakeLvl, interactions, schemas | _Rest]
+	) ,
 	l_ls(Rpath, ItemList) ,
 	member(File, ItemList),
 	sub_atom(File, _Before, _Len, _After, 'Interaction'),

@@ -63,6 +63,7 @@ tk_verify(No) :-
 	      List) ,
 	length(List, No) .
 
+% -----------------------------------------------------------------------
 
 loadTAK2(Envir, File) :-
 	nonvar(Envir) ,
@@ -108,8 +109,10 @@ loadTAK4([InteractionLong, _ConsumerHSA, _ConsumerDesc, _LogicalAddress, _LADesc
 
 % Parse: urn:riv:ehr:accesscontrol:AssertCareEngagement:1:rivtabp20
 get_interaction_info(InteractionLong, interaction(DomainList, Interaction, IVersion, RivV)) :-
-	atomic_list_concat([urn, riv | InterList], ':', InteractionLong) ,
-	reverse(InterList, [RivVersion, IVersion, Interaction | DomainListRev]),
+	atomic_list_concat([urn, riv | InterList1], ':', InteractionLong) ,
+	% A patch to manage the faked level in Sec services domains
+	patchBifDomain(InterList1, InterList2),
+	reverse(InterList2, [RivVersion, IVersion, Interaction | DomainListRev]),
 	reverse(DomainListRev, DomainList) ,
 	get_interaction_info2(RivVersion, RivV) .
 %	l_write_trace([DomainList, Interaction, IVersion, RivV],3 ) .
@@ -118,6 +121,14 @@ get_interaction_info2(rivtabp20, 20) :- ! .
 get_interaction_info2(rivtabp21, 21) :- ! .
 get_interaction_info2(Rivtabp, 00) :-
 	l_write_trace(['Error in get_interaction_info2', Rivtabp], 0) .
+
+% Mangage error in Security services domains
+patchBifDomain([ehr,patientrelationship, _FakeLvl | Rest] ,[ehr,patientrelationship | Rest]) :- ! .
+patchBifDomain([ehr,patientconsent, _FakeLvl | Rest] ,[ehr,patientconsent | Rest]) :- ! .
+patchBifDomain([ehr,blocking, _FakeLvl | Rest] ,[ehr,blocking | Rest]) :- ! .
+patchBifDomain(OkDomain, OkDomain).
+
+
 
 
 
