@@ -54,7 +54,7 @@
 			<!--ursprunglig remitterande organisatorisk enhet-->
 			<xs:element name="requestOrganisation" type="FullOrganisationType"/>
 			<!--har remitterande HoS-personal/Organisatorisk enhet-->
-			<xs:element name="author" type="AuthorType"/>
+			<xs:element name="author" type="RequestAuthorType"/>
 			<!--har remissmottagande Organisatorisk enhet-->
 			<xs:element name="recipient" type="RecipientType"/>
 			<!--har vidareskickande-->
@@ -84,7 +84,7 @@
 			<xs:element name="typeOfRequestConfirmation" type="codes:codeRequestConfirmationType"/>
 			<!--eRemiss.versions-id-->
 			<xs:element name="requestVersionNumber" type="VersionNumberType"/>
-			<xs:element name="requestConfirmationTime" type="TimeStampType" minOccurs="0"/>
+			<xs:element name="requestConfirmationTime" type="TimeStampType"/>
 			<xs:element name="patient" type="SimplePatientType"/>
 			<!--besvarande organisatorisk enhet-->
 			<xs:element name="confirmingOrganisation" type="FullOrganisationType"/>
@@ -314,7 +314,15 @@ Examples: 1
 	</xs:complexType>
 	<xs:complexType name="AuthorType">
 		<xs:sequence>
-			<!--eRemiss.remissdatum-->
+			<xs:element name="healthcareProfessional" type="HealthcareProfessionalType" minOccurs="0"/>
+			<xs:element name="typeOfHealthcareProfessional" type="codes:codeForProfession" minOccurs="0"/>
+			<!-- custodian + author.representedOrganisation-->
+			<xs:element name="healthcareProfessionalOrganisation" type="OrganisationType"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RequestAuthorType">
+		<xs:sequence>
 			<xs:element name="date" type="DateType"/>
 			<xs:element name="healthcareProfessional" type="HealthcareProfessionalType" minOccurs="0"/>
 			<xs:element name="typeOfHealthcareProfessional" type="codes:codeForProfession" minOccurs="0"/>
