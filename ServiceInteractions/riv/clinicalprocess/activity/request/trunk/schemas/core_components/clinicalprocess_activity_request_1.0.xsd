@@ -52,7 +52,7 @@
 			<!--berör Patient-->
 			<xs:element name="patient" type="PatientType"/>
 			<!--ursprunglig remitterande organisatorisk enhet-->
-			<xs:element name="requestOrganisaton" type="FullOrganisationType"/>
+			<xs:element name="requestOrganisation" type="FullOrganisationType"/>
 			<!--har remitterande HoS-personal/Organisatorisk enhet-->
 			<xs:element name="author" type="AuthorType"/>
 			<!--har remissmottagande Organisatorisk enhet-->
@@ -114,6 +114,35 @@
 			<xs:element name="outcome" type="OutcomeType"/>
 			<!--bilaga-->
 			<xs:element name="attachment" type="AttachmentType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RequestStatusType">
+		<xs:sequence>
+			<!--RemissStatus-id-->
+			<xs:element name="requestStatusId" type="RequestStatusIdType" minOccurs="0"/>
+			<!--RemissStatus-->
+			<xs:element name="requestStatus" type="CVType"/>
+			<!--RemissStatustid-->
+			<xs:element name="statusTime" type="TimeStampType"/>
+			<!--RemissStatussättare-->
+			<xs:element name="statusSetter" type="SimpleAuthorType"/>
+			<!--eRemiss.id-->
+			<xs:element name="requestId" type="RequestIdType"/>
+			<!--eRemiss.versions-id-->
+			<xs:element name="requestVersionNumber" type="VersionNumberType"/>
+			<!--eRemisstyp-->
+			<xs:element name="typeOfRequest" type="CVType"/>
+			<!--eRemissmedium-->
+			<xs:element name="requestMedium" type="CVType"/>
+			<!--organisatorisk enhet-->
+			<xs:element name="requestOrganisation" type="RequestStatusOrganisationType"/>
+			<!--eRemiss.har remitterande HoS-personal-->
+			<xs:element name="requestAuthor" type="SimpleAuthorType"/>
+			<!--eRemiss.berör Patient-->
+			<xs:element name="patient" type="SimplePatientType"/>
+			<!--eRemiss.har remissmottagande Organisatorisk enhet-->
+			<xs:element name="recipient" type="FullRecipientType"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -197,7 +226,7 @@ Examples: 1
 	<!-- Telecom number format +123-12345678 -->
 	<xs:simpleType name="TelecomNumberType">
 		<xs:restriction base="xs:string">
-			<xs:pattern value="\+\d+-\d+"/>
+			<xs:maxLength value="200"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<!-- Date format SSYYMMDD -->
@@ -262,7 +291,7 @@ Examples: 1
 			<xs:element name="postalCode">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:maxLength value="6"/>
+						<xs:maxLength value="5"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -287,7 +316,6 @@ Examples: 1
 		<xs:sequence>
 			<!--eRemiss.remissdatum-->
 			<xs:element name="date" type="DateType"/>
-			<!--Required when type codeRequestOutcomeType = SR, KS, KB, RB-->
 			<xs:element name="healthcareProfessional" type="HealthcareProfessionalType" minOccurs="0"/>
 			<xs:element name="typeOfHealthcareProfessional" type="codes:codeForProfession" minOccurs="0"/>
 			<!-- custodian + author.representedOrganisation-->
@@ -297,8 +325,8 @@ Examples: 1
 	</xs:complexType>
 	<xs:complexType name="SimpleAuthorType">
 		<xs:sequence>
-			<xs:element name="healthcareProfessional" type="HealthcareProfessionalType"/>
-			<xs:element name="healthcareProfessionalOrganisation" type="FullOrganisationType"/>
+			<xs:element name="healthcareProfessional" type="HealthcareProfessionalType" minOccurs="0"/>
+			<xs:element name="healthcareProfessionalOrganisation" type="RequestStatusOrganisationType"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -318,7 +346,7 @@ Examples: 1
 	</xs:complexType>
 	<xs:complexType name="FullRecipientType">
 		<xs:sequence>
-			<xs:element name="healthcareProfessionalOrganisation" type="FullOrganisationType"/>
+			<xs:element name="healthcareProfessionalOrganisation" type="RequestStatusOrganisationType"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -376,6 +404,46 @@ Examples: 1
             </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="careUnitId" type="HsaIdType"/>
+			<xs:element name="careUnitName" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="64"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="careUnitTelephone" type="xs:string" minOccurs="0"/>
+			<xs:element name="careUnitEmail" type="xs:string" minOccurs="0"/>
+			<xs:element name="careUnitAddress" type="xs:string" minOccurs="0"/>
+			<xs:element name="careUnitLocation" type="xs:string" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RequestStatusOrganisationType">
+		<xs:annotation>
+			<xs:documentation>
+                Information om en organisationsenhet.
+                Hämtad från http://rivta.googlecode.com
+				Anpassad (mestadels språkligt) till NeR.
+				
+				Anges careUnitId bör inga andra fält anges.
+				Anges inte careUnitId bör åtminstone careUnitName anges.
+                
+                careUnitId: 
+                HSA-id för enhet
+                careUnitName
+                Namn på enhet
+                careUnitTelephone: 
+                Telefon till enhet
+                careUnitEmail: 
+                Epost till enhet
+                careUnitAddress: 
+                Postadress till enhet
+                careUnitLocation: 
+                Text som anger namnet på plats eller ort för enhetens eller funktionens fysiska placering
+            </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
 			<xs:element name="careUnitId" type="HsaIdType" minOccurs="0"/>
 			<xs:element name="careUnitName" minOccurs="0">
 				<xs:simpleType>
@@ -396,7 +464,7 @@ Examples: 1
 			<xs:element name="desiredRequestRecipient" minOccurs="0">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:maxLength value="8192"/>
+						<xs:maxLength value="200"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -410,7 +478,7 @@ Examples: 1
 			<xs:element name="interpreterRequirement" minOccurs="0">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
-						<xs:maxLength value="8192"/>
+						<xs:maxLength value="200"/>
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
@@ -666,35 +734,6 @@ Examples: 1
 			<xs:maxLength value="8192"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:complexType name="RequestStatusType">
-		<xs:sequence>
-			<!--RemissStatus-id-->
-			<xs:element name="requestStatusId" type="RequestStatusIdType" minOccurs="0"/>
-			<!--RemissStatus-->
-			<xs:element name="requestStatus" type="CVType"/>
-			<!--RemissStatustid-->
-			<xs:element name="statusTime" type="TimeStampType"/>
-			<!--RemissStatussättare-->
-			<xs:element name="statusSetter" type="SimpleAuthorType"/>
-			<!--eRemiss.id-->
-			<xs:element name="requestId" type="RequestIdType"/>
-			<!--eRemiss.versions-id-->
-			<xs:element name="requestVersionNumber" type="VersionNumberType"/>
-			<!--eRemisstyp-->
-			<xs:element name="typeOfRequest" type="CVType"/>
-			<!--eRemissmedium-->
-			<xs:element name="requestMedium" type="CVType"/>
-			<!--organisatorisk enhet-->
-			<xs:element name="requestOrganisaton" type="FullOrganisationType"/>
-			<!--eRemiss.har remitterande HoS-personal-->
-			<xs:element name="requestAuthor" type="SimpleAuthorType"/>
-			<!--eRemiss.berör Patient-->
-			<xs:element name="patient" type="SimplePatientType"/>
-			<!--eRemiss.har remissmottagande Organisatorisk enhet-->
-			<xs:element name="recipient" type="FullRecipientType"/>
-			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:complexType name="RequestStatusIdType">
 		<xs:attribute name="extension" use="required">
 			<xs:simpleType>
