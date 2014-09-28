@@ -5,7 +5,7 @@
 SVNDIR=$HOME/rivta-read-only
 SVNRIVDIR=$SVNDIR/ServiceInteractions/riv
 
-EXECDIR=$SVNDIR/tools/domainmanagement/generateinfo/trunk
+EXECDIR=$SVNDIR/tools/domainmanagement/generateinfo/tags/1.0-RC1
 TAKPROD=$EXECDIR/TakProd.csv
 TAKQA=$EXECDIR/TakQA.csv
 
