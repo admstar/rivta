@@ -1,4 +1,5 @@
 :- module(leolib, [
+	      l_common_prefix/2,
 	      l_counter_get/2,
 	      l_counter_set/2,
 	      l_counter_inc/2,
@@ -11,6 +12,7 @@
 	      l_erase_all/2,
 	      l_file_date_time/3,
 	      l_get_date_time/7,
+	      l_get_hostname/2,
 	      l_html_write/1,
 	      l_html_write/2,
 	      l_load_dom_file/2,
@@ -187,6 +189,36 @@ reverse_atom(Text, Text2) :-
 	atom_chars(Text2, TextList2) .
 
 
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Extract common substring from list
+Input is a list of strings
+Output is the longest substring of the common beginnings of the
+strings. ['abcdef', 'abqgr'] would return 'ab'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+l_common_prefix([] , '') :- ! .
+l_common_prefix([S1] , S1) :- ! .
+l_common_prefix([S1, S2 | Rest] , Prefix) :-
+	common_prefix(S1, S2, SPref),
+	l_common_prefix( [SPref | Rest], Prefix) .
+
+common_prefix(S1, S2, CommonPrefix) :-
+	atom(S1),
+	atom(S2) ,
+	atom_chars(S1, S1L),
+	atom_chars(S2, S2L),
+	common_prefix(S1L, S2L, CPL),
+	! ,
+	atom_chars(CommonPrefix, CPL).
+
+common_prefix(L1 , L2 , [] ) :-
+	(   L1 = [] ; L2 = [] ) ,
+	! .
+
+common_prefix([Char | Rest1], [Char| Rest2], [Char | RestCommon] ) :-
+	! ,
+	common_prefix( Rest1 , Rest2, RestCommon) .
+
+common_prefix( _L1, _L2, [] ) .
 
 /* ========================================================================
 Type checking
@@ -464,6 +496,13 @@ urlencode2([32|Rest] , [37,50,48 | Rest2]) :-
 
 urlencode2([Char|Rest] , [Char | Rest2]) :-
 	urlencode2(Rest, Rest2).
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Get hostname from URL
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+l_get_hostname(URL, Hostname) :-
+	atomic_list_concat([_Prot, '', Hostname | _Args] , '/', URL) .
+
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Predicate to write HTML structures, as HTML, to a stream
