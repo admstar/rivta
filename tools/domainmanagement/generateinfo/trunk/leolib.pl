@@ -219,7 +219,7 @@ common_prefix2(_L1 , [] , [] ) :- ! .
 
 common_prefix2([Char | Rest1], [Char| Rest2], [Char | RestCommon] ) :-
 	! ,
-	common_prefix( Rest1 , Rest2, RestCommon) .
+	common_prefix2( Rest1 , Rest2, RestCommon) .
 
 common_prefix2( _L1, _L2, [] ) .
 
@@ -268,8 +268,12 @@ l_counter_set(CounterName, Value) :-
 l_counter_inc(CounterName, NewValue) :-
 	nonvar(CounterName),
 	l_counter_get(CounterName, Value) ,
+	! ,
 	NewValue is Value + 1 ,
 	l_counter_set(CounterName, NewValue ).
+
+l_counter_inc(CounterName, 0) :-
+	l_counter_set(CounterName, 0) .
 
 l_counter_dec(CounterName, NewValue) :-
 	nonvar(CounterName),

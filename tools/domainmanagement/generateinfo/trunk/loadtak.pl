@@ -195,6 +195,8 @@ store(service_contract, Envir, Interaction, Domain, IVersion, RivVersion, Sc_Id)
 	recorded(takInfo, service_contract(Envir, Sc_Id, Interaction, Domain, IVersion, RivVersion)) ,
 	! .
 store(service_contract, Envir, Interaction, Domain, IVersion, RivVersion, Sc_Id) :-
+	% Get unique id
+	l_counter_inc(service_contract_id, Sc_Id),
 	recordz(takInfo, service_contract(Envir, Sc_Id, Interaction, Domain, IVersion, RivVersion)) .
 
 % Help predicate to store(producer clause
@@ -204,13 +206,13 @@ store_producer(Envir, HSA, Desc, Hostname) :-
 	recordz(takInfo, producer(Envir, HSA, Desc, Hostname)) .
 
 store_producer(Envir, HSA, Desc, Hostname) :-
-	recorded(takInfo, producer(Envir, HSA, DescStored, HostnameStored)) ,
+	recorded(takInfo, producer(Envir, HSA, DescStored, _HostnameStored)) ,
 	% Remove different postfixes of all the descriptions
 	l_common_prefix([Desc, DescStored], NewDesc) ,
 	l_strip_blanks(NewDesc, NewDesc2),
 	l_strip_trailing_chars(NewDesc2, '-', NewDesc3),
 	l_strip_blanks(NewDesc3, NewDesc4),
-	atom_length(NewDesc4, Len),
+	atom_length(NewDesc4, _Len),
 %	Len > 1 ,
 %	l_erase_all(takInfo, producer(Envir, HSA, DescStored,
 %	HostnameStored)) ,
