@@ -25,6 +25,8 @@
 	      l_remove_characters/3,
 	      l_set_trace_lvl/1,
 	      l_strip_blanks/2,
+	      l_strip_leading_chars/3,
+	      l_strip_trailing_chars/3,
 	      l_trace_lvl/1,
 	      l_type_check/2,
 	      l_urlencode/2,
@@ -136,11 +138,11 @@ Strip leading or trailing chars does just that.
 Char should be a single atom character
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 l_strip_blanks(Text1, Text4) :-
-	strip_leading_chars(Text1, '\t',  Text2) , % Also remove leading tabs
-	strip_leading_chars(Text2, ' ',  Text3) ,
-	strip_trailing_chars(Text3, ' ', Text4) .
+	l_strip_leading_chars(Text1, '\t',  Text2) , % Also remove leading tabs
+	l_strip_leading_chars(Text2, ' ',  Text3) ,
+	l_strip_trailing_chars(Text3, ' ', Text4) .
 
-strip_trailing_chars(Text, Char, Text2) :-
+l_strip_trailing_chars(Text, Char, Text2) :-
 	char_code(Char, Code),
 	atom_codes(Text, TextList),
 	reverse(TextList, TextList2) ,
@@ -148,7 +150,7 @@ strip_trailing_chars(Text, Char, Text2) :-
 	reverse(TextList3, TextList4) ,
 	atom_codes(Text2, TextList4) .
 
-strip_leading_chars(Text, Char, Text2) :-
+l_strip_leading_chars(Text, Char, Text2) :-
 	char_code(Char, Code) ,
 	atom_codes(Text, TextList),
 	strip_leading_chars2(TextList, Code, TextList2),
@@ -206,19 +208,20 @@ common_prefix(S1, S2, CommonPrefix) :-
 	atom(S2) ,
 	atom_chars(S1, S1L),
 	atom_chars(S2, S2L),
-	common_prefix(S1L, S2L, CPL),
+	common_prefix2(S1L, S2L, CPL),
 	! ,
 	atom_chars(CommonPrefix, CPL).
 
-common_prefix(L1 , L2 , [] ) :-
-	(   L1 = [] ; L2 = [] ) ,
-	! .
+common_prefix2([] , _L2 , [] ) :- ! .
 
-common_prefix([Char | Rest1], [Char| Rest2], [Char | RestCommon] ) :-
+common_prefix2(_L1 , [] , [] ) :- ! .
+
+
+common_prefix2([Char | Rest1], [Char| Rest2], [Char | RestCommon] ) :-
 	! ,
 	common_prefix( Rest1 , Rest2, RestCommon) .
 
-common_prefix( _L1, _L2, [] ) .
+common_prefix2( _L1, _L2, [] ) .
 
 /* ========================================================================
 Type checking

@@ -11,8 +11,9 @@
 
 tk_loadtak(Envir, File) :- loadTAK2(Envir, File) .
 
+%	recorded(takInfo, service_contract(Envir, Sc_Id, Interaction, Domain, IVersion, RivVersion)) ,
 tk_get_tak_info(Envir, Domain, Interaction, IVersion, RivVersion) :-
-	recorded(takInfo, takInfo(Envir, Domain, Interaction, IVersion, RivVersion)) .
+	recorded(takInfo, service_contract(Envir, _ScId, Interaction, Domain, IVersion, RivVersion)) .
 
 tk_get_tak_date(Envir, Date) :-
 	recorded(takInfo, takDate(Envir, Date)) .
@@ -80,13 +81,13 @@ loadTAK3(_Envir, []) :- ! .
 
 loadTAK3(Envir, [Line|Rest]) :-
 	atomic_list_concat(NameList, '\t', Line) ,
-	loadTAK4(NameList, Cons, Prod, LA, Acc) ,
-	nonvar(Cons), % Verify that we were able to parse the line
-	nonvar(Prod),
-	nonvar(LA),
-	nonvar(Acc),
-	recordz(takInfo, takInfo(Envir, Acc, Cons, Prod, LA)) ,
-	l_write_trace([Cons, Prod, LA, Acc], 2) ,
+	loadTAK4(Envir, NameList) ,
+%	nonvar(Cons), % Verify that we were able to parse the line
+%	nonvar(Prod),
+%	nonvar(LA),
+%	nonvar(Acc),
+%	recordz(takInfo, takInfo(Envir, Acc, Cons, Prod, LA)) ,
+	l_write_trace(NameList, 2) ,
 	! ,
 	loadTAK3(Envir, Rest) .
 
@@ -94,21 +95,39 @@ loadTAK3(Envir, [Line|Rest]) :-
 	l_write_trace(['tk_loadtak: could not parse line', Line], 0) ,
 	loadTAK3(Envir, Rest) .
 
-loadTAK4([InteractionLong, ConsumerHSA, ConsumerDesc, LogicalAddress, LADesc, ProducerHSA, ProducerDesc, ProducerUrl],
-	 consumer(ConsumerHSA, ConsumerDesc) ,
-	 producer(ProducerHSA, ProducerDesc, ProducerUrl) ,
-	 logical_adress(LogicalAddress, LADesc) ,
-	 access(InteractionStruct, ConsumerHSA, LogicalAddress, ProducerHSA)
+loadTAK4(Envir, [InteractionLong, InConsumerHSA, InConsumerDesc, InLogicalAddress, InLADesc, InProducerHSA, InProducerDesc, InProducerUrl]
+%        ,
+%	 consumer(ConsumerHSA, ConsumerDesc) ,
+%	 producer(ProducerHSA, ProducerDesc, Hostname) ,
+%	 logical_adress(LogicalAddress, LADesc) ,
+%	 InteractionStruct,
+%	 access(InteractionStruct, ConsumerHSA, LogicalAddress,
+%	 ProducerHSA)
 	) :-
-	get_interaction_info(InteractionLong, InteractionStruct) ,
-	l_write_trace([InteractionStruct, ConsumerHSA, ConsumerDesc, LogicalAddress, LADesc, ProducerHSA, ProducerDesc], 3) .
+	l_strip_blanks(InConsumerHSA, ConsumerHSA),
+	l_strip_blanks(InConsumerDesc, ConsumerDesc),
+	l_strip_blanks(InLogicalAddress, LogicalAddress),
+	l_strip_blanks(InLADesc, LADesc),
+	l_strip_blanks(InProducerHSA, ProducerHSA),
+	l_strip_blanks(InProducerDesc, ProducerDesc),
+	l_strip_blanks(InProducerUrl, ProducerUrl),
+	store(consumer, Envir, ConsumerHSA, ConsumerDesc) ,
+	l_get_hostname(ProducerUrl, Hostname) ,
+	store(producer, Envir, ProducerHSA, ProducerDesc, Hostname) ,
+	store(logical_address, Envir, LogicalAddress, LADesc) ,
+	get_interaction_info(InteractionLong, Interaction, Domain, IVersion, RivVersion) ,
+	store(service_contract, Envir, Interaction, Domain, IVersion, RivVersion, SC_Id) ,
+	store(routing, Envir, SC_Id, LogicalAddress, ProducerHSA),
+	store(authorization, Envir, SC_Id, LogicalAddress, ConsumerHSA) ,
+	l_write_trace([Envir, ConsumerHSA, ConsumerDesc, LogicalAddress, LADesc, ProducerHSA, ProducerDesc, Hostname, Interaction, Domain, IVersion, RivVersion, SC_Id ], 3) .
 
-loadTAK4([InteractionLong, _ConsumerHSA, _ConsumerDesc, _LogicalAddress, _LADesc, _ProducerHSA, _ProducerDesc, _ProducerUrl],
-	_Cons, _Prod, _LA, _Acc) :-
+loadTAK4(_Envir, [InteractionLong, _ConsumerHSA, _ConsumerDesc, _LogicalAddress, _LADesc, _ProducerHSA, _ProducerDesc, _ProducerUrl]
+%	, _Cons, _Prod, _LA, _Acc
+	) :-
 	l_write_trace('Line could not be parsed', InteractionLong, 0) .
 
 % Parse: urn:riv:ehr:accesscontrol:AssertCareEngagement:1:rivtabp20
-get_interaction_info(InteractionLong, interaction(DomainList, Interaction, IVersion, RivV)) :-
+get_interaction_info(InteractionLong, Interaction, DomainList, IVersion, RivV) :-
 	atomic_list_concat([urn, riv | InterList1], ':', InteractionLong) ,
 	% A patch to manage the faked level in Sec services domains
 	patchBifDomain(InterList1, InterList2),
@@ -122,11 +141,98 @@ get_interaction_info2(rivtabp21, 21) :- ! .
 get_interaction_info2(Rivtabp, 00) :-
 	l_write_trace(['Error in get_interaction_info2', Rivtabp], 0) .
 
+% Store consumer information
+store(consumer, Envir, HSA, Desc) :-
+	recorded(takInfo, consumer(Envir, HSA, Desc)) ,
+	! .
+store(consumer, Envir, HSA, Desc) :-
+	\+ recorded(takInfo, consumer(Envir, HSA, _Desc)) ,
+	recordz(takInfo, consumer(Envir, HSA, Desc)) ,
+	! .
+store(consumer, Envir, HSA, Desc) :-
+%	recorded(takInfo, consumer(Envir, HSA, StoredDesc)) ,
+	l_write_trace(['*** Error, consumer with HSA= "', HSA, '" exist with different descriptions in ', Envir, nl,Desc,nl], 0).
+
+
+% Store information about logical addresses
+store(logical_address, Envir, LA, LADesc) :-
+	recorded(takInfo, logical_address(Envir, LA, LADesc)) ,
+	! .
+store(logical_address, Envir, LA, LADesc) :-
+	\+ recorded(takInfo, logical_address(Envir, LA, _LADesc)) ,
+	recordz(takInfo, logical_address(Envir, LA, LADesc)) ,
+	! .
+store(logical_address, Envir, LA, _Desc) :-
+%	recorded(takInfo, consumer(Envir, HSA, storedDesc)) ,
+	l_write_trace(['*** Error, logical_address with HSA= "', LA, '" exist with different descriptions in ', Envir, nl], 0).
+
+
+% Store producer information
+store(producer, Envir, ProducerHSA, Desc, Hostname) :-
+	% Remove extra characters from HSA-id
+	clean_producer_hsa(ProducerHSA, InHSA),
+	l_strip_blanks(InHSA, HSA) ,
+	store_producer( Envir, HSA, Desc, Hostname).
+
+% Routing records
+store(routing, Envir, Sc_Id, Logical_address, ProducerHSA) :-
+	recorded(takInfo, routing(Envir, Sc_Id, Logical_address, ProducerHSA)) ,
+	! .
+store(routing, Envir, Sc_Id, Logical_address, ProducerHSA) :-
+	recordz(takInfo, routing(Envir, Sc_Id, Logical_address, ProducerHSA)) .
+
+% Authorization records
+store(authorization, Envir, Sc_Id, Logical_address, ConsumerHSA) :-
+	recorded(takInfo, authorization(Envir, Sc_Id, Logical_address, ConsumerHSA)) ,
+	! .
+store(authorization, Envir, Sc_Id, Logical_address, ConsumerHSA) :-
+	recordz(takInfo, authorization(Envir, Sc_Id, Logical_address, ConsumerHSA)) .
+
+
+
+% Service contract
+store(service_contract, Envir, Interaction, Domain, IVersion, RivVersion, Sc_Id) :-
+	recorded(takInfo, service_contract(Envir, Sc_Id, Interaction, Domain, IVersion, RivVersion)) ,
+	! .
+store(service_contract, Envir, Interaction, Domain, IVersion, RivVersion, Sc_Id) :-
+	recordz(takInfo, service_contract(Envir, Sc_Id, Interaction, Domain, IVersion, RivVersion)) .
+
+% Help predicate to store(producer clause
+store_producer(Envir, HSA, Desc, Hostname) :-
+	\+ recorded(takInfo, producer(Envir, HSA, _DescStored, _HostnameStored)) ,
+	! ,
+	recordz(takInfo, producer(Envir, HSA, Desc, Hostname)) .
+
+store_producer(Envir, HSA, Desc, Hostname) :-
+	recorded(takInfo, producer(Envir, HSA, DescStored, HostnameStored)) ,
+	% Remove different postfixes of all the descriptions
+	l_common_prefix([Desc, DescStored], NewDesc) ,
+	l_strip_blanks(NewDesc, NewDesc2),
+	l_strip_trailing_chars(NewDesc2, '-', NewDesc3),
+	l_strip_blanks(NewDesc3, NewDesc4),
+	atom_length(NewDesc4, Len),
+%	Len > 1 ,
+%	l_erase_all(takInfo, producer(Envir, HSA, DescStored,
+%	HostnameStored)) ,
+	! ,
+	recordz(takInfo, producer(Envir, HSA, NewDesc4, Hostname)) .
+
+
+store_producer(Envir, HSA, _Desc, _Hostname) :-
+	l_write_trace(['*** Error, producer with HSA= "', HSA, '" exist with completly different descriptions in ', Envir, nl], 0).
+
+% Remove all characters after " - " sequence
+clean_producer_hsa(InHsa, OutHsa) :-
+	sub_atom(InHsa, FoundAt, _Len, _After, ' - '),
+	sub_atom(InHsa, 0, FoundAt, _After2, OutHsa).
+
 % Mangage error in Security services domains
 patchBifDomain([ehr,patientrelationship, _FakeLvl | Rest] ,[ehr,patientrelationship | Rest]) :- ! .
 patchBifDomain([ehr,patientconsent, _FakeLvl | Rest] ,[ehr,patientconsent | Rest]) :- ! .
-patchBifDomain([ehr,blocking, _FakeLvl | Rest] ,[ehr,blocking | Rest]) :- ! .
 patchBifDomain(OkDomain, OkDomain).
+
+
+
 
 
 
