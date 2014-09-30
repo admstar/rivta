@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!-- 
  Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
@@ -46,7 +45,11 @@
 			<xs:element name="type" type="tns:CVType" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="time" type="tns:TimePeriodType" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="method" type="tns:CVType" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="value" type="tns:PQType" minOccurs="1" maxOccurs="1"/>
+			
+			<!--Exactly one of quantitativeValue and codedValue shall be used at any one time-->
+			<xs:element name="quantitativeValue" type="tns:PQType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="codedValue" type="tns:CVType" minOccurs="0" maxOccurs="1"/>
+			
 			<xs:element name="targetSite" type="tns:CVType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="approvedForPatient" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="device" type="tns:DeviceType" minOccurs="0" maxOccurs="1"/>
@@ -204,7 +207,7 @@
 	<xs:complexType name="RelationType">
 		<xs:sequence>
 			<xs:element name="code" type="tns:CVType" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="referredInformation" type="tns:ReferredInformationType" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element name="referredInformation" type="tns:ReferredInformationType" minOccurs="1" maxOccurs="1"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
