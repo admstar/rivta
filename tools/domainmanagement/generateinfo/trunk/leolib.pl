@@ -507,8 +507,9 @@ urlencode2([Char|Rest] , [Char | Rest2]) :-
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Get hostname from URL
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-l_get_hostname(URL, Hostname) :-
-	atomic_list_concat([_Prot, '', Hostname | _Args] , '/', URL) .
+l_get_hostname(URL, Hostname2) :-
+	atomic_list_concat([_Prot, '', Hostname1 | _Args] , '/', URL) ,
+	atomic_list_concat([Hostname2 | _], ':', Hostname1 ).
 
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

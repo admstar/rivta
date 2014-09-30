@@ -14,6 +14,9 @@ DOMAINSDIR=$WWWDIR/domains
 
 DOMAINTABLEURL='http://code.google.com/p/rivta/wiki/ServiceDomainTable'
 
+# Check if libreoffice is running. Must be killed before prolog code is started!
+# ps -ef | grep libreoffice
+
 echo "*** Update SVN"
 cd $SVNDIR
 svn update
