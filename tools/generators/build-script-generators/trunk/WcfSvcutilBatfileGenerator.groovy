@@ -13,6 +13,9 @@ import groovy.io.FileType
  * Version 1.1 - 2014-01-31
  * The generated script is placed in a code_gen directory
  *
+ * Version 1.2 - 2014-mm-nn
+ * - Added code_gen to cd-commands and path of the generated C# files
+ * - Added /syncOnly to the svcutil - command to support VS 2012. VS 2010 users has to manually remove this switch.
  */
 
 def getAllFilesMathcing(direcory, pattern){
@@ -117,7 +120,7 @@ def addWcfScriptInformation(wcf, wsdlFiles, domain, version){
 	wcf.append('SET NAMESPACE=/namespace:*,' + buildCorrectNamespace(domain, version) + newLine)
 	wcf.append('SET SVCUTIL="svcutil.exe"' + newLine)
 	//wcf.append('SET XCORE=%SCHEMADIR%\\core_components\\*.xsd' + newLine)
-	wcf.append('%SVCUTIL% /language:cs %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%'+ newLine)
+	wcf.append('%SVCUTIL% /language:cs /syncOnly %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%'+ newLine)
 	wcf.append(newLine)
 	wcf.append('CD code_gen\\wcf' + newLine)
 	wcf.append("ECHO Generating Service contract .Net Binding interfaces and classes for ${domain} Release ${version}" +   newLine)
