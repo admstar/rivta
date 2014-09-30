@@ -84,7 +84,7 @@ class OperationWsdlDSL {
 	 * @return
 	 */
 	static String getSoapAction(Operation that) {
-		"urn:${that.serviceInteraction.getServiceDomain().root}:${that.serviceInteraction.getServiceDomain().domain}:${that.serviceInteraction.getServiceDomain().subDomain}:${that.name}${that.roleName}:${that.serviceInteraction.version.majorVersion}:${that.name}"
+		"urn:${that.serviceInteraction.getServiceDomain().root}:${that.serviceInteraction.getServiceDomain().domain}:${that.serviceInteraction.getServiceDomain().subDomain}:${that.serviceInteraction.getServiceDomain().subDomain2}:${that.name}${that.roleName}:${that.serviceInteraction.version.majorVersion}:${that.name}"
 	}
 	
 	/**

@@ -22,9 +22,10 @@ class ServiceDomain {
 	String root
 	String domain
 	String subDomain
+	String subDomain2
 	List<ServiceInteraction> serviceInteractions = new ArrayList<ServiceInteraction>()
 	
 	String toString() {
-		"${domain}:${subDomain}"
+		"${domain}:${subDomain}:${subDomain2}"
 	}
 }
