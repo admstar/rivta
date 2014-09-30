@@ -14,8 +14,9 @@ import groovy.io.FileType
  * The generated script is placed in a code_gen directory
  *
  * Version 1.2 - 2014-mm-nn
- * - Added code_gen to cd-commands and path of the generated C# files
+ * - Added code_gen to cd-commands and path of the generated C# files.
  * - Added /syncOnly to the svcutil - command to support VS 2012. VS 2010 users has to manually remove this switch.
+ * - Added "#pragma warning disable 1591" as the first line in the generated C# file to avoid warnings regarding missing XML comments.
  */
 
 def getAllFilesMathcing(direcory, pattern){
@@ -115,12 +116,17 @@ def addWcfScriptInformation(wcf, wsdlFiles, domain, version){
 	
 	wcf.append(newLine)
 	wcf.append(newLine)
-	wcf.append('SET OUTFILE=/out:code_gen\\wcf\\generated-src\\' + buildOutFileNameForWcf(domain) + newLine)
+	wcf.append('SET OUTFILE=code_gen\\wcf\\generated-src\\' + buildOutFileNameForWcf(domain) + newLine)
 	wcf.append('SET APPCONFIG=/config:code_gen\\wcf\\generated-src\\app.config' + newLine)
 	wcf.append('SET NAMESPACE=/namespace:*,' + buildCorrectNamespace(domain, version) + newLine)
 	wcf.append('SET SVCUTIL="svcutil.exe"' + newLine)
 	//wcf.append('SET XCORE=%SCHEMADIR%\\core_components\\*.xsd' + newLine)
-	wcf.append('%SVCUTIL% /language:cs /syncOnly %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%'+ newLine)
+	wcf.append('%SVCUTIL% /language:cs /syncOnly /out:%OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%'+ newLine)
+	wcf.append(newLine)
+	wcf.append('ECHO Adding #pragma warning disable 1591 to %OUTFILE%' + newLine)
+	wcf.append('ECHO #pragma warning disable 1591 > %OUTFILE%.tmp' + newLine)
+	wcf.append('TYPE %OUTFILE% >> %OUTFILE%.tmp' + newLine)
+	wcf.append('MOVE /Y %OUTFILE%.tmp %OUTFILE%' + newLine)
 	wcf.append(newLine)
 	wcf.append('CD code_gen\\wcf' + newLine)
 	wcf.append("ECHO Generating Service contract .Net Binding interfaces and classes for ${domain} Release ${version}" +   newLine)
