@@ -45,7 +45,7 @@ def getTemplateWcf(baseDir, rivtaProfile){
 	@REM specific language governing permissions and limitations
 	@REM under the License.
 	@REM ---------------------------------------------------------------------------------
-	CD ..
+	CD ..\\..
 	
 	SET SCHEMADIR=schemas
 	
@@ -119,7 +119,7 @@ def addWcfScriptInformation(wcf, wsdlFiles, domain, version){
 	//wcf.append('SET XCORE=%SCHEMADIR%\\core_components\\*.xsd' + newLine)
 	wcf.append('%SVCUTIL% /language:cs %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%'+ newLine)
 	wcf.append(newLine)
-	wcf.append('CD wcf' + newLine)
+	wcf.append('CD code_gen\\wcf' + newLine)
 	wcf.append("ECHO Generating Service contract .Net Binding interfaces and classes for ${domain} Release ${version}" +   newLine)
 	wcf.append('ECHO I DotNetprojektet ska du ta lagga till referens till System.ServiceModel' + newLine)
 }
