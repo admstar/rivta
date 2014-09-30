@@ -41,8 +41,8 @@ class SchemaGeneratorTest extends GroovyTestCase {
         Document myExpectedSchema = XMLUnit.buildDocument(XMLUnit.getControlParser(), new InputStreamReader(responderSchema, Charset.forName("UTF-8")))
 		
 		Repository rep = new Repository();
-		rep.addServiceInteraction("Fake Org", "riv", "insuranceprocess", "healthreporting", 1, 0, "RegisterMedicalCertificate", "Interaction to transfer a new report for sickness","LogicalAddress is the organization id for F�rs�kringskassan.", false, MEPEnum.InOut, false, RivtaProfileEnum.RIVTABP21);
-		ServiceInteraction si = rep.getServiceInteraction("RegisterMedicalCertificate","riv", "insuranceprocess", "healthreporting", 1, 0)
+		rep.addServiceInteraction("Fake Org", "riv", "insuranceprocess", "healthreporting", "subdomain2", 1, 0, "RegisterMedicalCertificate", "Interaction to transfer a new report for sickness","LogicalAddress is the organization id for F�rs�kringskassan.", false, MEPEnum.InOut, false, RivtaProfileEnum.RIVTABP21);
+		ServiceInteraction si = rep.getServiceInteraction("RegisterMedicalCertificate","riv", "insuranceprocess", "healthreporting", "subdomain2", 1, 0)
 		
 		String generatedXSDString = new SchemaGenerator().generateResponderSchema(si)
 		Document generatedXSD = XMLUnit.buildDocument(XMLUnit.getControlParser(), new StringReader(generatedXSDString))
@@ -58,8 +58,8 @@ class SchemaGeneratorTest extends GroovyTestCase {
 		Document myExpectedSchema = XMLUnit.buildDocument(XMLUnit.getControlParser(), new InputStreamReader(responderSchema, Charset.forName("UTF-8")))
 		
 		Repository rep = new Repository();
-		rep.addServiceInteraction("Fake Org", "riv", "insuranceprocess", "healthreporting", 1, 0, "GetMedicalCertificate", "Interaction to fetch a sickness report","LogicalAddress is the organization id for F�rs�kringskassan.", false, MEPEnum.InOut, true, RivtaProfileEnum.RIVTABP21);
-		ServiceInteraction si = rep.getServiceInteraction("GetMedicalCertificate","riv", "insuranceprocess", "healthreporting", 1, 0)
+		rep.addServiceInteraction("Fake Org", "riv", "insuranceprocess", "healthreporting", "subdomain2", 1, 0, "GetMedicalCertificate", "Interaction to fetch a sickness report","LogicalAddress is the organization id for F�rs�kringskassan.", false, MEPEnum.InOut, true, RivtaProfileEnum.RIVTABP21);
+		ServiceInteraction si = rep.getServiceInteraction("GetMedicalCertificate","riv", "insuranceprocess", "healthreporting", "subdomain2", 1, 0)
 		
 		String generatedXSDString = new SchemaGenerator().generateResponderSchema(si)
 		Document generatedXSD = XMLUnit.buildDocument(XMLUnit.getControlParser(), new StringReader(generatedXSDString))
@@ -75,8 +75,8 @@ class SchemaGeneratorTest extends GroovyTestCase {
         Document myExpectedSchema = XMLUnit.buildDocument(XMLUnit.getControlParser(), new InputStreamReader(initiatorSchema, Charset.forName("UTF-8")))
 		
 		Repository rep = new Repository();
-		rep.addServiceInteraction("Fake Org","riv", "insuranceprocess", "healthreporting", 1, 0, "RegisterMedicalCertificate", "Interaction to transfer a new report for sickness","LogicalAddress is the organization id for F�rs�kringskassan.", false, MEPEnum.InOut, false, RivtaProfileEnum.RIVTABP20);
-		ServiceInteraction si = rep.getServiceInteraction("RegisterMedicalCertificate","riv", "insuranceprocess", "healthreporting", 1, 0)
+		rep.addServiceInteraction("Fake Org","riv", "insuranceprocess", "healthreporting", "subdomain2", 1, 0, "RegisterMedicalCertificate", "Interaction to transfer a new report for sickness","LogicalAddress is the organization id for F�rs�kringskassan.", false, MEPEnum.InOut, false, RivtaProfileEnum.RIVTABP20);
+		ServiceInteraction si = rep.getServiceInteraction("RegisterMedicalCertificate","riv", "insuranceprocess", "healthreporting", "subdomain2", 1, 0)
 		
 		String generatedXSDString = new SchemaGenerator().generateInitiatorSchema(si)
 		Document generatedXSD = XMLUnit.buildDocument(XMLUnit.getControlParser(), new StringReader(generatedXSDString))
@@ -92,8 +92,8 @@ class SchemaGeneratorTest extends GroovyTestCase {
         Document myExpectedSchema = XMLUnit.buildDocument(XMLUnit.getControlParser(), new InputStreamReader(coreSchema, Charset.forName("UTF-8")))
 		
 		Repository rep = new Repository();
-		rep.addServiceInteraction("Fake Org","riv", "insuranceprocess", "healthreporting", 1, 0, "RegisterMedicalCertificate", "Interaction to transfer a new report for sickness","LogicalAddress is the organization id for F�rs�kringskassan.", false, MEPEnum.InOut, false, RivtaProfileEnum.RIVTABP20);
-		ServiceInteraction si = rep.getServiceInteraction("RegisterMedicalCertificate","riv", "insuranceprocess", "healthreporting", 1, 0)
+		rep.addServiceInteraction("Fake Org","riv", "insuranceprocess", "healthreporting", "subdomain2", 1, 0, "RegisterMedicalCertificate", "Interaction to transfer a new report for sickness","LogicalAddress is the organization id for F�rs�kringskassan.", false, MEPEnum.InOut, false, RivtaProfileEnum.RIVTABP20);
+		ServiceInteraction si = rep.getServiceInteraction("RegisterMedicalCertificate","riv", "insuranceprocess", "healthreporting", "subdomain2", 1, 0)
 		
 		String generatedXSDString = new SchemaGenerator().generateCoreSchema(si)
 		Document generatedXSD = XMLUnit.buildDocument(XMLUnit.getControlParser(), new StringReader(generatedXSDString))

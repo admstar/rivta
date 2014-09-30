@@ -35,7 +35,7 @@ class ServiceInteractionWsdlDSL {
 	 *
 	 */	
 	static String getWsdlTargetNamespace(ServiceInteraction that) {
-		"urn:${that.serviceDomain.root}:${that.serviceDomain.domain}:${that.serviceDomain.subDomain}:${that.name}:${that.version.majorVersion}:${that.profile.toString().toLowerCase()}"
+		"urn:${that.serviceDomain.root}:${that.serviceDomain.domain}:${that.serviceDomain.subDomain}:${that.serviceDomain.subDomain2}:${that.name}:${that.version.majorVersion}:${that.profile.toString().toLowerCase()}"
 	}
 	
 	/**
@@ -45,7 +45,7 @@ class ServiceInteractionWsdlDSL {
 	 *
 	 */	
 	static String getResponderServiceSchemaTargetNamespace(ServiceInteraction that) {
-		"urn:${that.serviceDomain.root}:${that.serviceDomain.domain}:${that.serviceDomain.subDomain}:${that.name}Responder:${that.version.majorVersion}"
+		"urn:${that.serviceDomain.root}:${that.serviceDomain.domain}:${that.serviceDomain.subDomain}:${that.serviceDomain.subDomain2}:${that.name}Responder:${that.version.majorVersion}"
 	}	
 	
 	/**
@@ -55,7 +55,7 @@ class ServiceInteractionWsdlDSL {
 	 *
 	 */	
 	static String getInitiatorServiceSchemaTargetNamespace(ServiceInteraction that) {
-		"urn:${that.serviceDomain.root}:${that.serviceDomain.domain}:${that.serviceDomain.subDomain}:${that.name}Initiator:${that.version.majorVersion}"
+		"urn:${that.serviceDomain.root}:${that.serviceDomain.domain}:${that.serviceDomain.subDomain}:${that.serviceDomain.subDomain2}:${that.name}Initiator:${that.version.majorVersion}"
 	}
 	
 	/**
@@ -65,16 +65,16 @@ class ServiceInteractionWsdlDSL {
 	 *
 	 */	
 	static String getCoreSchemaNamespace(ServiceInteraction that) {
-		"urn:${that.serviceDomain.root}:${that.serviceDomain.domain}:${that.serviceDomain.subDomain}:${that.version.majorVersion}"
+		"urn:${that.serviceDomain.root}:${that.serviceDomain.domain}:${that.serviceDomain.subDomain}:${that.serviceDomain.subDomain2}:${that.version.majorVersion}"
 	}	
 	
 	/**
-	 * ${huvuddomän}_${underdomän}_${m.n}.xsd
+	 * ${huvuddomän}_${underdomän}_${underdomän2}_${m.n}.xsd
 	 * @param that
 	 * @return
 	 */
 	static String getCoreSchemaName(ServiceInteraction that) {
-		"${that.serviceDomain.domain}_${that.serviceDomain.subDomain}_${that.version}.xsd"
+		"${that.serviceDomain.domain}_${that.serviceDomain.subDomain}_${that.serviceDomain.subDomain2}_${that.version}.xsd"
 	}	
 	
 	/**

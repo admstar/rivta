@@ -45,8 +45,8 @@ class WSDLGeneratorTest extends GroovyTestCase {
         Document myExpectedWSDL = XMLUnit.buildDocument(XMLUnit.getControlParser(), new InputStreamReader(noBiDirInOutWSDL, Charset.forName("UTF-8")))
 		
 		Repository rep = new Repository();
-		rep.addServiceInteraction( "Fake Org","riv", "insuranceprocess", "healthreporting", 1, 0, "RegisterMedicalCertificate", "Submission of medical health reports to the Swedish social insurance institutions","LogicalAddress is the organization id for the insurance institution.", false, MEPEnum.InOut, false, RivtaProfileEnum.RIVTABP20);
-		ServiceInteraction si = rep.getServiceInteraction("RegisterMedicalCertificate","riv", "insuranceprocess", "healthreporting", 1, 0)
+		rep.addServiceInteraction( "Fake Org","riv", "insuranceprocess", "healthreporting", "subdomain2", 1, 0, "RegisterMedicalCertificate", "Submission of medical health reports to the Swedish social insurance institutions","LogicalAddress is the organization id for the insurance institution.", false, MEPEnum.InOut, false, RivtaProfileEnum.RIVTABP20);
+		ServiceInteraction si = rep.getServiceInteraction("RegisterMedicalCertificate","riv", "insuranceprocess", "healthreporting", "subdomain2", 1, 0)
 		
 		String generatedWSDLString = new WSDLGenerator().generateWSDL(si)
 		Document generatedWSDL = XMLUnit.buildDocument(XMLUnit.getControlParser(), new StringReader(generatedWSDLString))
@@ -62,8 +62,8 @@ class WSDLGeneratorTest extends GroovyTestCase {
         Document myExpectedWSDL = XMLUnit.buildDocument(XMLUnit.getControlParser(), new InputStreamReader(noBiDirInOutWSDL, Charset.forName("UTF-8")))
 		
 		Repository rep = new Repository();
-		rep.addServiceInteraction( "Fake Org","riv", "insuranceprocess", "healthreporting", 1, 0, "RegisterMedicalCertificate", "Submission of medical health reports to the Swedish social insurance institutions","LogicalAddress is the organization id for the insurance institution.", false, MEPEnum.InOut, false, RivtaProfileEnum.RIVTABP21);
-		ServiceInteraction si = rep.getServiceInteraction("RegisterMedicalCertificate","riv", "insuranceprocess", "healthreporting", 1, 0)
+		rep.addServiceInteraction( "Fake Org","riv", "insuranceprocess", "healthreporting", "subdomain2", 1, 0, "RegisterMedicalCertificate", "Submission of medical health reports to the Swedish social insurance institutions","LogicalAddress is the organization id for the insurance institution.", false, MEPEnum.InOut, false, RivtaProfileEnum.RIVTABP21);
+		ServiceInteraction si = rep.getServiceInteraction("RegisterMedicalCertificate","riv", "insuranceprocess", "healthreporting", "subdomain2", 1, 0)
 		
 		String generatedWSDLString = new WSDLGenerator().generateWSDL(si)
 		Document generatedWSDL = XMLUnit.buildDocument(XMLUnit.getControlParser(), new StringReader(generatedWSDLString))
@@ -79,8 +79,8 @@ class WSDLGeneratorTest extends GroovyTestCase {
 		Document myExpectedWSDL = XMLUnit.buildDocument(XMLUnit.getControlParser(), new InputStreamReader(noBiDirInOutWSDL, Charset.forName("UTF-8")))
 		
 		Repository rep = new Repository();
-		rep.addServiceInteraction("Fake Org", "other", "insuranceprocess", "healthreporting", 1, 0, "RegisterMedicalCertificate", "Submission of medical health reports to the Swedish social insurance institutions",null, false, MEPEnum.InOut, false, RivtaProfileEnum.WSIBP11);
-		ServiceInteraction si = rep.getServiceInteraction("RegisterMedicalCertificate","other", "insuranceprocess", "healthreporting", 1, 0)
+		rep.addServiceInteraction("Fake Org", "other", "insuranceprocess", "healthreporting", "subdomain2", 1, 0, "RegisterMedicalCertificate", "Submission of medical health reports to the Swedish social insurance institutions",null, false, MEPEnum.InOut, false, RivtaProfileEnum.WSIBP11);
+		ServiceInteraction si = rep.getServiceInteraction("RegisterMedicalCertificate","other", "insuranceprocess", "healthreporting", "subdomain2", 1, 0)
 		
 		String generatedWSDLString = new WSDLGenerator().generateWSDL(si)
 		Document generatedWSDL = XMLUnit.buildDocument(XMLUnit.getControlParser(), new StringReader(generatedWSDLString))

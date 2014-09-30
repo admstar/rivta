@@ -47,12 +47,13 @@ public class ServiceContractGeneratorServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 	throws IOException {
 		// Set default values for form fields
-		[description : "Submission of medical health reports to the Swedish social insurance institutions",
+		[description : "Hantera ordinations- och förskrivningsrelaterat utfall av aktivitet",
 		iprHolder : "Sveriges Kommuner och Landsting",
-		name : "RegisterMedicalCertificate",
+		name : "GetMedicationHistory",
 		architectureDomain: "riv",
-		domain : "insuranceprocess",
-		subDomain : "healthreporting",
+		domain : "clinicalprocess",
+		subDomain : "activityprescription",
+		subDomain2 : "actoutcome",
 		majorVersion : 1,
 		minorVersion : 0,
 		logicalAddressDescription : "The organisation number of the receiving insurance institution",
@@ -89,8 +90,8 @@ public class ServiceContractGeneratorServlet extends HttpServlet {
 			isBiDir = false
 		}
 		
-		rep.addServiceInteraction(p.iprHolder, p.architectureDomain, p.domain, p.subDomain, Integer.parseInt(p.majorVersion), Integer.parseInt(p.minorVersion), p.name, p.description, p.logicalAddressDescription, isBiDir, mep, Boolean.parseBoolean(p.isReadOnly), RivtaProfileEnum.valueOf(p.profile));
-		ServiceInteraction si = rep.getServiceInteraction(p.name, p.architectureDomain, p.domain, p.subDomain, Integer.parseInt(p.majorVersion), Integer.parseInt(p.minorVersion))
+		rep.addServiceInteraction(p.iprHolder, p.architectureDomain, p.domain, p.subDomain, p.subDomain2, Integer.parseInt(p.majorVersion), Integer.parseInt(p.minorVersion), p.name, p.description, p.logicalAddressDescription, isBiDir, mep, Boolean.parseBoolean(p.isReadOnly), RivtaProfileEnum.valueOf(p.profile));
+		ServiceInteraction si = rep.getServiceInteraction(p.name, p.architectureDomain, p.domain, p.subDomain, p.subDomain2, Integer.parseInt(p.majorVersion), Integer.parseInt(p.minorVersion))
 		
 		String button = p.generate		
 		
