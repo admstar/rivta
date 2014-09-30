@@ -217,7 +217,7 @@ store(service_contract, Envir, Interaction, Domain, IVersion, RivVersion, Sc_Id)
 
 % Help predicate to store(producer clause
 store_producer(Envir, HSA, Desc, Hostname) :-
-	\+ recorded(takInfo, producer(Envir, HSA, _DescStored, _HostnameStored)) ,
+	\+ recorded(takInfo, producer(Envir, HSA, _Desc, _Hostname)) ,
 	atom_length(Desc, Len),
 	Len > 1 ,
 	! ,
@@ -238,7 +238,7 @@ store_producer(Envir, HSA, Desc, Hostname) :-
 
 
 store_producer(Envir, HSA, Desc, _Hostname) :-
-	l_write_trace(['*** Error, producer with HSA= "', HSA, '" exist with description problem ("', Desc, '") in ', Envir, nl], 0).
+	l_write_trace(['*** Error, producer with HSA= "', HSA, '" exist with description problem ("', Desc, '") in ', Envir, nl], 1).
 
 % Remove all characters after " - " sequence
 clean_producer_hsa(InHsa, OutHsa) :-
