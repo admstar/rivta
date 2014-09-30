@@ -112,8 +112,8 @@ def addWcfScriptInformation(wcf, wsdlFiles, domain, version){
 	
 	wcf.append(newLine)
 	wcf.append(newLine)
-	wcf.append('SET OUTFILE=/out:wcf\\generated-src\\' + buildOutFileNameForWcf(domain) + newLine)
-	wcf.append('SET APPCONFIG=/config:wcf\\generated-src\\app.config' + newLine)
+	wcf.append('SET OUTFILE=/out:code_gen\\wcf\\generated-src\\' + buildOutFileNameForWcf(domain) + newLine)
+	wcf.append('SET APPCONFIG=/config:code_gen\\wcf\\generated-src\\app.config' + newLine)
 	wcf.append('SET NAMESPACE=/namespace:*,' + buildCorrectNamespace(domain, version) + newLine)
 	wcf.append('SET SVCUTIL="svcutil.exe"' + newLine)
 	//wcf.append('SET XCORE=%SCHEMADIR%\\core_components\\*.xsd' + newLine)
