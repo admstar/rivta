@@ -1,15 +1,24 @@
 :- module(loadtak, [
+	      tk_get_producer/4,
 	      tk_loadtak/2 ,
+	      /*
 	      tk_get_domain_consumer/4,
 	      tk_get_domain_producer/4,
 	      tk_get_interaction/5,
 	      tk_get_tak_date/2,
 	      tk_get_tak_info/5,
+	      */
 	      tk_verify/1
 	  ]) .
 
 
 tk_loadtak(Envir, File) :- loadTAK2(Envir, File) .
+
+tk_get_producer(Envir, HSA, Desc, Hostname) :-
+	recorded(takInfo, producer(Envir, HSA, Desc, Hostname)) .
+
+
+/*
 
 %	recorded(takInfo, service_contract(Envir, Sc_Id, Interaction, Domain, IVersion, RivVersion)) ,
 tk_get_tak_info(Envir, Domain, Interaction, IVersion, RivVersion) :-
@@ -54,6 +63,8 @@ tk_get_interaction(Envir, Interaction, IntVersion, BPVersion, Domain) :-
 	    _ ,
 	    _ ) .
 
+*/
+
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Verify the loading of the domain table
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -69,9 +80,15 @@ tk_verify(No) :-
 loadTAK2(Envir, File) :-
 	nonvar(Envir) ,
 	l_erase_all(takInfo, takDate(Envir, _Date)) ,
+	l_counter_set(service_contract_id, 0) ,
 	l_file_date_time(File, Date, _Time),
 	recordz(takInfo, takDate(Envir, Date)) ,
-	l_erase_all(takInfo, takInfo(Envir, _Acc, _Cons, _Prod, _LA)) ,
+	l_erase_all(takInfo, consumer(Envir, _, _)) ,
+	l_erase_all(takInfo, producer(Envir, _, _, _)) ,
+	l_erase_all(takInfo, logical_adress(Envir, _, _)) ,
+	l_erase_all(takInfo, authorization(Envir, _, _, _)) ,
+	l_erase_all(takInfo, routing(Envir, _, _, _)) ,
+	l_erase_all(takInfo, service_contract(Envir, _, _, _, _, _)) ,
 	l_read_file_to_list(File, [_HeaderLine | Lines], [encoding(iso_latin_1)]) ,
 %	l_write_trace(Lines, 3),
 	sort(Lines, Lines2),
@@ -189,7 +206,6 @@ store(authorization, Envir, Sc_Id, Logical_address, ConsumerHSA) :-
 	recordz(takInfo, authorization(Envir, Sc_Id, Logical_address, ConsumerHSA)) .
 
 
-
 % Service contract
 store(service_contract, Envir, Interaction, Domain, IVersion, RivVersion, Sc_Id) :-
 	recorded(takInfo, service_contract(Envir, Sc_Id, Interaction, Domain, IVersion, RivVersion)) ,
@@ -202,26 +218,27 @@ store(service_contract, Envir, Interaction, Domain, IVersion, RivVersion, Sc_Id)
 % Help predicate to store(producer clause
 store_producer(Envir, HSA, Desc, Hostname) :-
 	\+ recorded(takInfo, producer(Envir, HSA, _DescStored, _HostnameStored)) ,
+	atom_length(Desc, Len),
+	Len > 1 ,
 	! ,
 	recordz(takInfo, producer(Envir, HSA, Desc, Hostname)) .
 
 store_producer(Envir, HSA, Desc, Hostname) :-
-	recorded(takInfo, producer(Envir, HSA, DescStored, _HostnameStored)) ,
+	recorded(takInfo, producer(Envir, HSA, DescStored, HostnameStored)) ,
 	% Remove different postfixes of all the descriptions
 	l_common_prefix([Desc, DescStored], NewDesc) ,
 	l_strip_blanks(NewDesc, NewDesc2),
 	l_strip_trailing_chars(NewDesc2, '-', NewDesc3),
 	l_strip_blanks(NewDesc3, NewDesc4),
-	atom_length(NewDesc4, _Len),
-%	Len > 1 ,
-%	l_erase_all(takInfo, producer(Envir, HSA, DescStored,
-%	HostnameStored)) ,
+	atom_length(NewDesc4, Len),
+	Len > 1 ,
+	l_erase_all(takInfo, producer(Envir, HSA, DescStored, HostnameStored)) ,
 	! ,
 	recordz(takInfo, producer(Envir, HSA, NewDesc4, Hostname)) .
 
 
-store_producer(Envir, HSA, _Desc, _Hostname) :-
-	l_write_trace(['*** Error, producer with HSA= "', HSA, '" exist with completly different descriptions in ', Envir, nl], 0).
+store_producer(Envir, HSA, Desc, _Hostname) :-
+	l_write_trace(['*** Error, producer with HSA= "', HSA, '" exist with description problem ("', Desc, '") in ', Envir, nl], 0).
 
 % Remove all characters after " - " sequence
 clean_producer_hsa(InHsa, OutHsa) :-
