@@ -1,5 +1,9 @@
 :- module(loadtak, [
+	      tk_get_authorization/4,
+	      tk_get_consumer/3,
 	      tk_get_producer/4,
+	      tk_get_routing/4,
+	      tk_get_service_contract/6,
 	      tk_loadtak/2 ,
 	      /*
 	      tk_get_domain_consumer/4,
@@ -14,20 +18,36 @@
 
 tk_loadtak(Envir, File) :- loadTAK2(Envir, File) .
 
+tk_get_consumer(Envir, HSA, Desc) :-
+	recorded(takInfo, consumer(Envir, HSA, Desc)) .
+
 tk_get_producer(Envir, HSA, Desc, Hostname) :-
-	recorded(takInfo, producer(Envir, HSA, Desc, Hostname)) .
+	recorded(takInfo, producer(Envir, HSA, DescList, Hostname)) ,
+	atomic_list_concat(DescList, ' / ', Desc) .
+
+tk_get_service_contract(Envir, Sc_Id, Interaction, Domain, IVersion, RivVersion) :-
+	recorded(takInfo, service_contract(Envir, Sc_Id, Interaction, Domain, IVersion, RivVersion)) .
+
+tk_get_authorization(Envir, Sc_Id, Logical_address, ConsumerHSA) :-
+	recorded(takInfo, authorization(Envir, Sc_Id, Logical_address, ConsumerHSA)) .
+
+tk_get_routing(Envir, Sc_Id, Logical_address, ProducerHSA) :-
+	recorded(takInfo, routing(Envir, Sc_Id, Logical_address, ProducerHSA)) .
 
 
-/*
 
 %	recorded(takInfo, service_contract(Envir, Sc_Id, Interaction, Domain, IVersion, RivVersion)) ,
 tk_get_tak_info(Envir, Domain, Interaction, IVersion, RivVersion) :-
-	recorded(takInfo, service_contract(Envir, _ScId, Interaction, Domain, IVersion, RivVersion)) .
+	tk_get_service_contract(Envir, _Sc_Id, Interaction, Domain, IVersion, RivVersion) .
 
 tk_get_tak_date(Envir, Date) :-
 	recorded(takInfo, takDate(Envir, Date)) .
 
+/*
 % This predicate use bagof since I do not want it to return duplicates
+tk_get_domain_consumer(Envir, Domain, Consumer_HSA, Consumer_Desc) :-
+	tk_get_consumer(Envir,
+
 tk_get_domain_consumer(Envir, Domain, Consumer_HSA, Consumer_Desc) :-
 	findall(
 	    [C_HSA, C_Desc] ,
@@ -217,33 +237,56 @@ store(service_contract, Envir, Interaction, Domain, IVersion, RivVersion, Sc_Id)
 
 % Help predicate to store(producer clause
 store_producer(Envir, HSA, Desc, Hostname) :-
-	\+ recorded(takInfo, producer(Envir, HSA, _Desc, _Hostname)) ,
+	\+ recorded(takInfo, producer(Envir, HSA, _DescList, _HostnameStored)) ,
 	atom_length(Desc, Len),
 	Len > 1 ,
 	! ,
-	recordz(takInfo, producer(Envir, HSA, Desc, Hostname)) .
+	recordz(takInfo, producer(Envir, HSA, [Desc], Hostname)) .
 
 store_producer(Envir, HSA, Desc, Hostname) :-
-	recorded(takInfo, producer(Envir, HSA, DescStored, HostnameStored)) ,
+	recorded(takInfo, producer(Envir, HSA, DescList, HostnameStored)) ,
 	% Remove different postfixes of all the descriptions
-	l_common_prefix([Desc, DescStored], NewDesc) ,
-	l_strip_blanks(NewDesc, NewDesc2),
-	l_strip_trailing_chars(NewDesc2, '-', NewDesc3),
-	l_strip_blanks(NewDesc3, NewDesc4),
-	atom_length(NewDesc4, Len),
-	Len > 1 ,
-	l_erase_all(takInfo, producer(Envir, HSA, DescStored, HostnameStored)) ,
+	manage_producer_descriptions(DescList, Desc, UpdatedDescList),
+	l_erase_all(takInfo, producer(Envir, HSA, DescList, HostnameStored)) ,
 	! ,
-	recordz(takInfo, producer(Envir, HSA, NewDesc4, Hostname)) .
-
+	recordz(takInfo, producer(Envir, HSA, UpdatedDescList, Hostname)) .
 
 store_producer(Envir, HSA, Desc, _Hostname) :-
-	l_write_trace(['*** Error, producer with HSA= "', HSA, '" exist with description problem ("', Desc, '") in ', Envir, nl], 1).
+	l_write_trace(['*** Error, producer with HSA= "', HSA, '" exist with description problem ("', Desc, '") in ', Envir, nl], 0).
 
 % Remove all characters after " - " sequence
 clean_producer_hsa(InHsa, OutHsa) :-
 	sub_atom(InHsa, FoundAt, _Len, _After, ' - '),
 	sub_atom(InHsa, 0, FoundAt, _After2, OutHsa).
+
+% Manage producer descriptions
+% Take a list of existing description and a new one. Try tto match the
+% new description with the existing ones, finding a common start longer
+% than (for example) 2.
+% If match, just return the list unchanged, otherwise add the new
+% description to the list and return.
+
+% No match, return the new description
+manage_producer_descriptions([], InDesc, [InDesc]) :- ! .
+
+% Got a match for item, updated the string
+manage_producer_descriptions([Desc1 | InRest], InDesc, [OutDesc | InRest]) :-
+	manage_producer_combine( Desc1, InDesc, OutDesc) ,
+	! .
+
+% No match for item, continue with next
+manage_producer_descriptions([Desc | InRest], InDesc, [Desc | OutRest]) :-
+	manage_producer_descriptions(InRest, InDesc, OutRest) .
+
+% Combine two items if the have the same prefix
+manage_producer_combine(Desc1, InDesc, NewDesc4) :-
+	l_common_prefix([Desc1, InDesc], NewDesc) ,
+	l_strip_blanks(NewDesc, NewDesc2),
+	l_strip_trailing_chars(NewDesc2, '-', NewDesc3),
+	l_strip_blanks(NewDesc3, NewDesc4),
+	atom_length(NewDesc4, Len),
+	Len > 2 .
+
 
 % Mangage error in Security services domains
 patchBifDomain([ehr,patientrelationship, _FakeLvl | Rest] ,[ehr,patientrelationship | Rest]) :- ! .
