@@ -93,7 +93,9 @@ get_domain_index_info_x(
 % ----------------------------------------------------------------------
 
 domain_index_tp_info(Envir, Domain, 'X') :-
-	tk_get_interaction(Envir, _Interaction, _Version, _BPVersion, Domain) ,
+%	tk_get_interaction(Envir, _Interaction, _Version, _BPVersion,
+%	Domain) ,
+	tk_get_service_contract(Envir, _Sc_Id, _Interaction, Domain, _IVersion, _RivVersion) ,
 	! .
 domain_index_tp_info(_Envir, _Domain, ' ') .
 
@@ -177,7 +179,9 @@ get_interaction_index_info(
 % ----------------------------------------------------------------------
 
 interaction_index_tp_info(Envir, Domain, Interaction, 'X') :-
-	tk_get_interaction(Envir, Interaction, _Version, _BPVersion, Domain) ,
+%	tk_get_interaction(Envir, Interaction, _Version, _BPVersion,
+%	Domain) ,
+	tk_get_service_contract(Envir, _Sc_Id, Interaction, Domain, _IVersion, _RivVersion) ,
 	! .
 interaction_index_tp_info(_Envir, _Domain, _Interaction, ' ') .
 
@@ -355,8 +359,9 @@ html_domain_info_consumers(Domain,
 			  ) :-
 	tk_get_tak_date(prod, Date) ,
 	findall(
-	    li([b(C_Desc), ' (', C_HSA, ')']),
-	    tk_get_domain_consumer(prod, Domain, C_HSA, C_Desc) ,
+	    li([b(ConsumerDesc), ' (', ConsumerHSA, ')']),
+%	    tk_get_domain_consumer(prod, Domain, C_HSA, C_Desc) ,
+	    tk_get_service_contract_consumers(prod, _Interaction, Domain, _IVersion, _RivVersion, ConsumerHSA, ConsumerDesc) ,
 	    TrList) ,
 	TrList \= [] ,
 	! .
@@ -376,8 +381,9 @@ html_domain_info_producers(Domain,
 			  ) :-
 	tk_get_tak_date(prod, Date) ,
 	findall(
-	    li([b(C_Desc), ' (', C_HSA, ')']),
-	    tk_get_domain_producer(prod, Domain, C_HSA, C_Desc) ,
+	    li([b(ProducerDesc), ' (', ProducerHostname, ')']),
+%	    tk_get_domain_producer(prod, Domain, C_HSA, C_Desc) ,
+	    tk_get_service_contract_producers(prod, _Interaction, Domain, _IVersion, _RivVersion, ProducerDesc, ProducerHostname),
 	    TrList),
 	TrList \= [] ,
 	! .
@@ -622,23 +628,6 @@ html_tkb_redirect(Domain) :-
 	close(Stream).
 
 % ----------------------------------------------------------------------
-
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Verification predicates
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-list_services_in_unaccepted_domains :-
-	write('*** Service in TAK from a domain which has not been accepted: '), nl ,
-	tk_get_tak_info(prod, Domain, Interaction, IVersion, _RivVersion) ,
-	\+ dt_get_domain_table(Domain, _Version),
-	write(Domain),
-	write(' : '),
-	write(Interaction),
-	write(':'),
-	write(IVersion),
-	nl ,
-	fail.
-
-list_services_in_unaccepted_domains .
 
 
 

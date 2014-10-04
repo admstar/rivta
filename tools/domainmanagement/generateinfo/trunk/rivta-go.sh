@@ -5,7 +5,8 @@
 SVNDIR=$HOME/rivta-read-only
 SVNRIVDIR=$SVNDIR/ServiceInteractions/riv
 
-EXECDIR=$SVNDIR/tools/domainmanagement/generateinfo/tags/1.0-RC1
+#EXECDIR=$SVNDIR/tools/domainmanagement/generateinfo/tags/1.0-RC1
+EXECDIR=$SVNDIR/tools/domainmanagement/generateinfo/trunk
 TAKPROD=$EXECDIR/TakProd.csv
 TAKQA=$EXECDIR/TakQA.csv
 
@@ -74,7 +75,7 @@ fi
 # All looks good so far, copy the html files to the server
 echo "*** All looks good, send it to the server"
 #rsync -avz -e ssh /home/leo/tmp/www/domains/ rivta.se@ssh.rivta.se:/www/domains/
-rsync -avz --rsh='sshpass -e ssh' /home/leo/tmp/www/domains/ rivta.se@ssh.rivta.se:/www/domains/
+#rsync -avz --rsh='sshpass -e ssh' /home/leo/tmp/www/domains/ rivta.se@ssh.rivta.se:/www/domains/
 
 
 
