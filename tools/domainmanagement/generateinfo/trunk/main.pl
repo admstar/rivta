@@ -37,6 +37,7 @@ c_www_domains_dir(Dir) :-
 	getenv('HOME', HomeDir),
 	! ,
 	atomic_concat(HomeDir, '/tmp/www/domains/', Dir) .
+%	atomic_concat(HomeDir, '/tmp/www/domains/', Dir) .
 
 c_www_domains_dir(_Dir) :-
 	l_write_trace('WWW dir not found in main.pl!', 0) ,
@@ -106,7 +107,7 @@ verify :-
 	dt_verify(DLines) ,
 	verify2('Domain table', DLines, 40) ,
 	tk_verify(TLines),
-	verify2('TAK (prod+QA)', TLines, 18000) ,
+	verify2('TAK (prod+QA)', TLines, 2500) ,
 	sv_verify(domains, DoLines),
 	verify2('Domains in SVN', DoLines, 50 ),
 	sv_verify(interactions, ILines),
