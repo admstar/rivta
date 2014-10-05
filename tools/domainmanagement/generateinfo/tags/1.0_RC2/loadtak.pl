@@ -289,8 +289,11 @@ manage_producer_combine(Desc1, InDesc, NewDesc4) :-
 
 
 % Mangage error in Security services domains
-patchBifDomain([ehr,patientrelationship, _FakeLvl | Rest] ,[ehr,patientrelationship | Rest]) :- ! .
+patchBifDomain([ehr,blocking, _FakeLvl | Rest] ,[ehr,blocking | Rest]) :- ! .
+patchBifDomain([ehr,commission, _FakeLvl | Rest] ,[ehr,commission | Rest]) :- ! .
+patchBifDomain([ehr,log, _FakeLvl | Rest] ,[ehr,log | Rest]) :- ! .
 patchBifDomain([ehr,patientconsent, _FakeLvl | Rest] ,[ehr,patientconsent | Rest]) :- ! .
+patchBifDomain([ehr,patientrelationship, _FakeLvl | Rest] ,[ehr,patientrelationship | Rest]) :- ! .
 patchBifDomain(OkDomain, OkDomain).
 
 

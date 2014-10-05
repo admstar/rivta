@@ -29,7 +29,7 @@ svnRootDir('C:/rivta-read-only/ServiceInteractions/riv') :-
 % ----------------------------------------------------------------------
 
 c_www_domains_dir(Dir) :-
-	getenv('WWWDIR', WwwDir),
+	getenv('DOMAINSDIR', WwwDir),
 	! ,
 	atomic_concat(WwwDir, '/', Dir) .
 
@@ -37,12 +37,18 @@ c_www_domains_dir(Dir) :-
 	getenv('HOME', HomeDir),
 	! ,
 	atomic_concat(HomeDir, '/tmp/www/domains/', Dir) .
-%	atomic_concat(HomeDir, '/tmp/www/domains/', Dir) .
 
 c_www_domains_dir(_Dir) :-
 	l_write_trace('WWW dir not found in main.pl!', 0) ,
 	fail .
 
+% ----------------------------------------------------------------------
+c_tkb_text_dir(Dir) :-
+	getenv('TKBTEXTDIR', TkbDir) ,
+	! ,
+	atomic_concat(TkbDir, '/', Dir) .
+
+c_tkb_text_dir('/home/leo/tmp/tkb_store/') .
 % ----------------------------------------------------------------------
 
 c_takFile(prod, Prod) :-
