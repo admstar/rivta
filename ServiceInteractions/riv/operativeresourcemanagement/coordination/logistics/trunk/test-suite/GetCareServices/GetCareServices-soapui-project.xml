@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project activeEnvironment="Default" name="GetCareServices" resourceRoot="" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetCareServicesResponderBinding" type="wsdl" bindingName="{urn:riv:clinicalprocess:logistics:logistics:GetCareServices:2:rivtabp21}GetCareServicesResponderBinding" soapVersion="1_1" anonymous="optional" definition="file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/logistics/logistics/trunk/schemas/interactions/GetCareServicesInteraction/GetCareServicesInteraction_2.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/logistics/logistics/trunk/schemas/interactions/GetCareServicesInteraction/GetCareServicesInteraction_2.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/logistics/logistics/trunk/schemas/interactions/GetCareServicesInteraction/GetCareServicesInteraction_2.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+<con:soapui-project activeEnvironment="Default" name="GetCareServices" resourceRoot="${projectDir}" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetCareServicesResponderBinding" type="wsdl" bindingName="{urn:riv:operativeresourcemanagement:coordination:logistics:GetCareServices:2:rivtabp21}GetCareServicesResponderBinding" soapVersion="1_1" anonymous="optional" definition="../../schemas/interactions/GetCareServicesInteraction/GetCareServicesInteraction_2.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/operativeresourcemanagement/coordination/logistics/trunk/schemas/interactions/GetCareServicesInteraction/GetCareServicesInteraction_2.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/operativeresourcemanagement/coordination/logistics/trunk/schemas/interactions/GetCareServicesInteraction/GetCareServicesInteraction_2.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
@@ -15,26 +15,26 @@
  KIND, either express or implied. See the License for the
  specific language governing permissions and limitations
  under the License.-->
-<wsdl:definitions name="GetCareServicesInteraction" targetNamespace="urn:riv:clinicalprocess:logistics:logistics:GetCareServices:2:rivtabp21" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tjsr="urn:riv:clinicalprocess:logistics:logistics:GetCareServicesResponder:2" xmlns:tjsi="urn:riv:clinicalprocess:logistics:logistics:GetCareServicesInitiator:2" xmlns:tns="urn:riv:clinicalprocess:logistics:logistics:GetCareServices:2:rivtabp21" xmlns:itr="urn:riv:itintegration:registry:1">
+<wsdl:definitions name="GetCareServicesInteraction" targetNamespace="urn:riv:operativeresourcemanagement:coordination:logistics:GetCareServices:2:rivtabp21" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tjsr="urn:riv:operativeresourcemanagement:coordination:logistics:GetCareServicesResponder:2" xmlns:tjsi="urn:riv:operativeresourcemanagement:coordination:logistics:GetCareServicesInitiator:2" xmlns:tns="urn:riv:operativeresourcemanagement:coordination:logistics:GetCareServices:2:rivtabp21" xmlns:itr="urn:riv:itintegration:registry:1">
   <xs:annotation>
     <xs:documentation>Tjänsteinteraktionens namn: GetCareServicesInteraction
 			 Beskrivning: 
 			   Care services for a subject of care
 			 Revisioner: 
-			 Tjänstedomän: clinicalprocess:logistics
+			 Tjänstedomän: operativeresourcemanagement:coordination:logistics
 			 Tjänsteinteraktionstyp: Fråga-Svar
 			 WS-profil: RIVTABP21
 			 Förvaltas av: Sveriges Kommuner och Landsting</xs:documentation>
   </xs:annotation>
   <wsdl:types>
-    <xs:schema targetNamespace="urn:riv:clinicalprocess:logistics:logistics:GetCareServices:2:rivtabp21">
-      <xs:import schemaLocation="GetCareServicesResponder_2.0.xsd" namespace="urn:riv:clinicalprocess:logistics:logistics:GetCareServicesResponder:2"/>
+    <xs:schema targetNamespace="urn:riv:operativeresourcemanagement:coordination:logistics:GetCareServices:2:rivtabp21">
+      <xs:import schemaLocation="GetCareServicesResponder_2.0.xsd" namespace="urn:riv:operativeresourcemanagement:coordination:logistics:GetCareServicesResponder:2"/>
       <xs:import schemaLocation="../../core_components/itintegration_registry_1.0.xsd" namespace="urn:riv:itintegration:registry:1"/>
     </xs:schema>
   </wsdl:types>
   <wsdl:message name="GetCareServicesRequest">
     <wsdl:part name="LogicalAddress" element="itr:LogicalAddress">
-      <wsdl:documentation>The organisation number of the receiving insurance institution</wsdl:documentation>
+      <wsdl:documentation>National: The HSA-id of Inera AB ("national" aggregation service)             Regional: The HSA-id of Inera AB (regional aggregation service)             Specific Source system: The HSA-id of the source system</wsdl:documentation>
     </wsdl:part>
     <wsdl:part name="parameters" element="tjsr:GetCareServices"/>
   </wsdl:message>
@@ -50,7 +50,7 @@
   <wsdl:binding name="GetCareServicesResponderBinding" type="tns:GetCareServicesResponderInterface">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     <wsdl:operation name="GetCareServices">
-      <soap:operation soapAction="urn:riv:clinicalprocess:logistics:GetCareServicesResponder:2:GetCareServices" style="document"/>
+      <soap:operation soapAction="urn:riv:operativeresourcemanagement:coordination:logistics:GetCareServicesResponder:2:GetCareServices" style="document"/>
       <wsdl:input>
         <soap:header use="literal" message="tns:GetCareServicesRequest" part="LogicalAddress"/>
         <soap:body use="literal" parts="parameters"/>
@@ -65,7 +65,7 @@
       <soap:address location="http://tempuri.org"/>
     </wsdl:port>
   </wsdl:service>
-</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/logistics/logistics/trunk/schemas/interactions/GetCareServicesInteraction/GetCareServicesResponder_2.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/operativeresourcemanagement/coordination/logistics/trunk/schemas/interactions/GetCareServicesInteraction/GetCareServicesResponder_2.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
@@ -81,9 +81,8 @@
  KIND, either express or implied. See the License for the
  specific language governing permissions and limitations
  under the License.-->
-<xs:schema targetNamespace="urn:riv:clinicalprocess:logistics:logistics:GetCareServicesResponder:2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:clinicalprocess:logistics:logistics:GetCareServicesResponder:2" xmlns:core="urn:riv:clinicalprocess:logistics:logistics:3" xmlns:codes="urn:riv:clinicalprocess:logistics:logistics:enums:3">
-  <xs:import schemaLocation="../../core_components/clinicalprocess_logistics_logistics_3.0.xsd" namespace="urn:riv:clinicalprocess:logistics:logistics:3"/>
-  <xs:import schemaLocation="../../core_components/clinicalprocess_logistics_logistics_enum_3.0.xsd" namespace="urn:riv:clinicalprocess:logistics:logistics:enums:3"/>
+<xs:schema targetNamespace="urn:riv:operativeresourcemanagement:coordination:logistics:GetCareServicesResponder:2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:operativeresourcemanagement:coordination:logistics:GetCareServicesResponder:2" xmlns:core="urn:riv:operativeresourcemanagement:coordination:logistics:3">
+  <xs:import schemaLocation="../../core_components/operativeresourcemanagement_coordination_logistics_3.0.xsd" namespace="urn:riv:operativeresourcemanagement:coordination:logistics:3"/>
   <xs:element name="GetCareServices" type="tns:GetCareServicesType"/>
   <xs:element name="GetCareServicesResponse" type="tns:GetCareServicesResponseType"/>
   <xs:complexType name="GetCareServicesType">
@@ -103,7 +102,7 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/logistics/logistics/trunk/schemas/core_components/clinicalprocess_logistics_logistics_3.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/operativeresourcemanagement/coordination/logistics/trunk/schemas/core_components/operativeresourcemanagement_coordination_logistics_3.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
@@ -119,8 +118,13 @@
  KIND, either express or implied. See the License for the
  specific language governing permissions and limitations
  under the License.-->
-<xs:schema targetNamespace="urn:riv:clinicalprocess:logistics:logistics:3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:clinicalprocess:logistics:logistics:3" xmlns:codes="urn:riv:clinicalprocess:logistics:logistics:enums:3">
-  <xs:import schemaLocation="./clinicalprocess_logistics_logistics_enum_3.0.xsd" namespace="urn:riv:clinicalprocess:logistics:logistics:enums:3"/>
+<xs:schema targetNamespace="urn:riv:operativeresourcemanagement:coordination:logistics:3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:operativeresourcemanagement:coordination:logistics:3" xmlns:codes="urn:riv:operativeresourcemanagement:coordination:logistics:enums:3">
+  <!--<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:tns="urn:riv:clinicalprocess:logistics:logistics:3"
+    xmlns:codes="urn:riv:clinicalprocess:logistics:logistics:enums:3"
+    targetNamespace="urn:riv:clinicalprocess:logistics:logistics:3" elementFormDefault="qualified"
+    attributeFormDefault="unqualified" version="3.0">-->
+  <xs:import schemaLocation="./operativeresourcemanagement_coordination_logistics_enum_3.0.xsd" namespace="urn:riv:operativeresourcemanagement:coordination:logistics:enums:3"/>
   <xs:complexType name="CareContactType">
     <xs:sequence>
       <xs:element name="careContactHeader" type="tns:PatientSummaryHeaderType"/>
@@ -173,20 +177,7 @@
   </xs:complexType>
   <xs:complexType name="CareServiceBodyType">
     <xs:annotation>
-      <xs:documentation>careContactCode:
-                Typ av vård- och omsorgsdokumentation. Nullvärde tillåtetet.
-                careContactReason:
-                Text som beskriver orsaken till vård- och omsorgskontakt som 
-                vård- och omsorgstagaren själv eller dess företrädare anger.
-                careContactOrgUnit:
-                Den enhet som kontakt utfördes vid
-                careContactTimePeriod:
-                För besök sätts sluttidpunken till samma tid som anges som starttidpunkt.
-                För planerade kontakter sätts ingen sluttidpunkt.
-                Pågående vårdtillfälle ska anges på samma sätt som en planerad vårdkontakt, 
-                dvs med angivet startdatum, men utan slutdatum.				
-                careContactStatus:
-                Status på vårdkontakten enligt kodverk ur NPÖ RIV-spec 2.2.</xs:documentation>
+      <xs:documentation></xs:documentation>
     </xs:annotation>
     <xs:sequence>
       <xs:element name="performerHealthCareUnit" type="tns:IIType" minOccurs="1"/>
@@ -207,6 +198,7 @@
     <xs:sequence>
       <xs:element name="content" type="tns:MultimediaType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="participatingCareUnitHSAId" type="tns:IIType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element minOccurs="0" name="typeOfCarePlanEnum" type="codes:TypeOfCarePlanEnum"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -414,8 +406,8 @@
       <xs:documentation/>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="code" type="tns:CVType" minOccurs="0"/>
-      <xs:element name="referredInformation" type="tns:ReferredInformationType" minOccurs="0"/>
+      <xs:element name="code" type="tns:CVType" minOccurs="1"/>
+      <xs:element name="referredInformation" type="tns:ReferredInformationType" minOccurs="1" maxOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -479,7 +471,7 @@
       <xs:element name="message" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/logistics/logistics/trunk/schemas/core_components/clinicalprocess_logistics_logistics_enum_3.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/operativeresourcemanagement/coordination/logistics/trunk/schemas/core_components/operativeresourcemanagement_coordination_logistics_enum_3.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
@@ -495,7 +487,7 @@
  KIND, either express or implied. See the License for the
  specific language governing permissions and limitations
  under the License.-->
-<xs:schema targetNamespace="urn:riv:clinicalprocess:logistics:logistics:enums:3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:clinicalprocess:logistics:logistics:enums:3">
+<xs:schema targetNamespace="urn:riv:operativeresourcemanagement:coordination:logistics:enums:3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:operativeresourcemanagement:coordination:logistics:enums:3">
   <xs:simpleType name="CareContactCodeEnum">
     <xs:restriction base="xs:int">
       <xs:enumeration value="1">
@@ -604,21 +596,64 @@
       <xs:enumeration value="HSJV"/>
       <xs:enumeration value="HTJ"/>
       <xs:enumeration value="LSS"/>
-      <xs:enumeration value="PVTJ"/>
       <xs:enumeration value="SVTJ"/>
       <xs:enumeration value="SÄBO"/>
     </xs:restriction>
   </xs:simpleType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/logistics/logistics/trunk/schemas/core_components/itintegration_registry_1.0.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="urn:riv:itintegration:registry:1" elementFormDefault="qualified" version="1.0" xmlns="urn:riv:itintegration:registry:1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="TypeOfCarePlanEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SIP">
+        <xs:annotation>
+          <xs:documentation>Samordnad individuell plan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SPLPTLRV">
+        <xs:annotation>
+          <xs:documentation>Samordnad plan enligt LPT och LRV</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SPU">
+        <xs:annotation>
+          <xs:documentation>Samordnad plan vid utskrivning</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="VP">
+        <xs:annotation>
+          <xs:documentation>Vårdplan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="HP">
+        <xs:annotation>
+          <xs:documentation>Habiliteringsplan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="RP">
+        <xs:annotation>
+          <xs:documentation>Rehabiliteringsplan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="GP">
+        <xs:annotation>
+          <xs:documentation>Genomförande plan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SVP">
+        <xs:annotation>
+          <xs:documentation>Standardiserad vårdplan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/operativeresourcemanagement/coordination/logistics/trunk/schemas/core_components/itintegration_registry_1.0.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="urn:riv:itintegration:registry:1" elementFormDefault="qualified" version="1.0" xmlns="urn:riv:itintegration:registry:1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
-    <xs:documentation>Beskrivning: 	Grundläggande informationsobjekt för domänen itintegration:registry (adressering av tjänster)
+    <xs:documentation>Beskrivning: 	Grundl��ggande informationsobjekt f��r dom��nen itintegration:registry (adressering av tj��nster)
 			
 			Revisionshistorik: 2011-06-27 Mats Ekhammar, Callista Enterprise AB
 				Added ServiceContractType
 			
 			Datum:			2011-05-04
 			Beskrivning:	Initial version
-			Författare:		marcus.krantz@callistaenterprise.se</xs:documentation>
+			F��rfattare:		marcus.krantz@callistaenterprise.se</xs:documentation>
   </xs:annotation>
   <xs:element name="LogicalAddress" type="LogicalAddressType"/>
   <xs:element name="ServiceContract" type="ServiceContractType"/>
@@ -638,7 +673,7 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://tempuri.org</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:clinicalprocess:logistics:GetCareServicesResponder:2:GetCareServices" name="GetCareServices" bindingOperationName="GetCareServices" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://tempuri.org</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:logistics:GetCareServicesResponder:2">
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://tempuri.org</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:operativeresourcemanagement:coordination:logistics:GetCareServicesResponder:2:GetCareServices" name="GetCareServices" bindingOperationName="GetCareServices" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://tempuri.org</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:logistics:GetCareServicesResponder:2">
    <soapenv:Header>
       <urn:LogicalAddress>?</urn:LogicalAddress>
    </soapenv:Header>
@@ -655,8 +690,10 @@ def source = new XmlDataReader(context, dataFile)
 source.load("Only PatientId")</script></con:config></con:testStep><con:testStep type="request" name="WHEN calling GetServices"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetCareServicesResponderBinding</con:interface><con:operation>GetCareServices</con:operation><con:request name="WHEN calling GetServices"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
   &lt;con:entry key="x-mock-response" value="OnlyPatientIdResponse"/>
   &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
-&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:GetCareServicesResponder:2" xmlns:urn2="urn:riv:clinicalprocess:logistics:logistics:3">
-   <soapenv:Header>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+	xmlns:urn="urn:riv:itintegration:registry:1" 
+xmlns:urn1="${#Project#urn}" 
+xmlns:urn2="${#Project#urn1}">     <soapenv:Header>
       <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
    </soapenv:Header>
    <soapenv:Body>
@@ -723,8 +760,10 @@ def source = new XmlDataReader(context, dataFile)
 source.load("Date Boundaries")</script></con:config></con:testStep><con:testStep type="request" name="WHEN calling GetServices"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetCareServicesResponderBinding</con:interface><con:operation>GetCareServices</con:operation><con:request name="WHEN calling GetServices"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
   &lt;con:entry key="x-mock-response" value="DateBoundariesResponse"/>
   &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
-&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:GetCareServicesResponder:2" xmlns:urn2="urn:riv:clinicalprocess:logistics:logistics:3">
-   <soapenv:Header>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+	xmlns:urn="urn:riv:itintegration:registry:1" 
+xmlns:urn1="${#Project#urn}" 
+xmlns:urn2="${#Project#urn1}">   <soapenv:Header>
       <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
    </soapenv:Header>
    <soapenv:Body>
@@ -826,8 +865,10 @@ def source = new XmlDataReader(context, dataFile)
 source.load("CareUnitHSAId Filter")</script></con:config></con:testStep><con:testStep type="request" name="WHEN calling GetServices"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetCareServicesResponderBinding</con:interface><con:operation>GetCareServices</con:operation><con:request name="WHEN calling GetServices"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
   &lt;con:entry key="x-mock-response" value="CareUnitHSAIdResponse"/>
   &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
-&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:GetCareServicesResponder:2" xmlns:urn2="urn:riv:clinicalprocess:logistics:logistics:3">
-   <soapenv:Header>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+	xmlns:urn="urn:riv:itintegration:registry:1" 
+xmlns:urn1="${#Project#urn}" 
+xmlns:urn2="${#Project#urn1}">   <soapenv:Header>
       <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
    </soapenv:Header>
    <soapenv:Body>
@@ -926,8 +967,10 @@ def source = new XmlDataReader(context, dataFile)
 source.load("CareContactId Filter")</script></con:config></con:testStep><con:testStep type="request" name="WHEN calling GetServices"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetCareServicesResponderBinding</con:interface><con:operation>GetCareServices</con:operation><con:request name="WHEN calling GetServices"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
   &lt;con:entry key="x-mock-response" value="CareContactIdResponse"/>
   &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
-&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:GetCareServicesResponder:2" xmlns:urn2="urn:riv:clinicalprocess:logistics:logistics:3">
-   <soapenv:Header>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+	xmlns:urn="urn:riv:itintegration:registry:1" 
+xmlns:urn1="${#Project#urn}" 
+xmlns:urn2="${#Project#urn1}">   <soapenv:Header>
       <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
    </soapenv:Header>
    <soapenv:Body>
@@ -1026,8 +1069,10 @@ def source = new XmlDataReader(context, dataFile)
 source.load("NonExisting PatientId")</script></con:config></con:testStep><con:testStep type="request" name="WHEN calling GetServices"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetCareServicesResponderBinding</con:interface><con:operation>GetCareServices</con:operation><con:request name="WHEN calling GetServices"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
   &lt;con:entry key="x-mock-response" value="EmptyResponse"/>
   &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
-&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:GetCareServicesResponder:2" xmlns:urn2="urn:riv:clinicalprocess:logistics:logistics:3">
-   <soapenv:Header>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+	xmlns:urn="urn:riv:itintegration:registry:1" 
+xmlns:urn1="${#Project#urn}" 
+xmlns:urn2="${#Project#urn1}">   <soapenv:Header>
       <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
    </soapenv:Header>
    <soapenv:Body>
@@ -1074,8 +1119,10 @@ def source = new XmlDataReader(context, dataFile)
 source.load("NonExisting CareContactId")</script></con:config></con:testStep><con:testStep type="request" name="WHEN calling GetServices"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetCareServicesResponderBinding</con:interface><con:operation>GetCareServices</con:operation><con:request name="WHEN calling GetServices"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
   &lt;con:entry key="x-mock-response" value="EmptyResponse"/>
   &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
-&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:GetCareServicesResponder:2" xmlns:urn2="urn:riv:clinicalprocess:logistics:logistics:3">
-   <soapenv:Header>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+	xmlns:urn="urn:riv:itintegration:registry:1" 
+xmlns:urn1="${#Project#urn}" 
+xmlns:urn2="${#Project#urn1}">   <soapenv:Header>
       <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
    </soapenv:Header>
    <soapenv:Body>
@@ -1123,8 +1170,10 @@ def source = new XmlDataReader(context, dataFile)
 source.load("HTTPHeader Filter")</script></con:config></con:testStep><con:testStep type="request" name="WHEN calling GetServices"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetCareServicesResponderBinding</con:interface><con:operation>GetCareServices</con:operation><con:request name="WHEN calling GetServices"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
   &lt;con:entry key="x-mock-response" value="HTTPHeaderResponse"/>
   &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
-&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:GetCareServicesResponder:2" xmlns:urn2="urn:riv:clinicalprocess:logistics:logistics:3">
-   <soapenv:Header>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+	xmlns:urn="urn:riv:itintegration:registry:1" 
+xmlns:urn1="${#Project#urn}" 
+xmlns:urn2="${#Project#urn1}">   <soapenv:Header>
       <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
    </soapenv:Header>
    <soapenv:Body>
@@ -1222,8 +1271,10 @@ def source = new XmlDataReader(context, dataFile)
 source.load("SourceSystemHSAId and CareContactId")</script></con:config></con:testStep><con:testStep type="request" name="WHEN calling GetServices"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetCareServicesResponderBinding</con:interface><con:operation>GetCareServices</con:operation><con:request name="WHEN calling GetServices"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
   &lt;con:entry key="x-mock-response" value="OnlyPatientIdResponse"/>
   &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
-&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:GetCareServicesResponder:2" xmlns:urn2="urn:riv:clinicalprocess:logistics:logistics:3">
-   <soapenv:Header>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+	xmlns:urn="urn:riv:itintegration:registry:1" 
+xmlns:urn1="${#Project#urn}" 
+xmlns:urn2="${#Project#urn1}">   <soapenv:Header>
       <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
    </soapenv:Header>
    <soapenv:Body>
@@ -1292,8 +1343,10 @@ def source = new XmlDataReader(context, dataFile)
 source.load("SourceSystemHSAId and LogicalAddress")</script></con:config></con:testStep><con:testStep type="request" name="WHEN calling GetServices"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetCareServicesResponderBinding</con:interface><con:operation>GetCareServices</con:operation><con:request name="WHEN calling GetServices"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
   &lt;con:entry key="x-mock-response" value="OnlyPatientIdResponse"/>
   &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
-&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:GetCareServicesResponder:2" xmlns:urn2="urn:riv:clinicalprocess:logistics:logistics:3">
-   <soapenv:Header>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+	xmlns:urn="urn:riv:itintegration:registry:1" 
+xmlns:urn1="${#Project#urn}" 
+xmlns:urn2="${#Project#urn1}">   <soapenv:Header>
       <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
    </soapenv:Header>
    <soapenv:Body>
@@ -1351,4 +1404,4 @@ declare namespace urn1='${#Project#urn1}';
 //urn:GetCareServicesResponse[1]/urn:result[1]/urn1:logId[matches(., '.*')]</path><content>*</content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="AND ensure result.resultCode equals OK"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
 declare namespace urn='${#Project#urn}';
 declare namespace urn1='${#Project#urn1}';
-//urn:GetCareServicesResponse[1]/urn:result[1]/urn1:resultCode/text()</path><content>OK</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:clinicalprocess:logistics:GetCareServicesResponder:2:GetCareServices" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>urn</con:name><con:value>urn:riv:clinicalprocess:logistics:logistics:GetCareServicesResponder:2</con:value></con:property><con:property><con:name>urn1</con:name><con:value>urn:riv:clinicalprocess:logistics:logistics:3</con:value></con:property><con:property><con:name>headerNode</con:name><con:value>/soapenv:Envelope/soapenv:Body/urn:GetCareServicesResponse/urn:careService/urn1:careServiceHeader</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>
+//urn:GetCareServicesResponse[1]/urn:result[1]/urn1:resultCode/text()</path><content>OK</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:clinicalprocess:logistics:GetCareServicesResponder:2:GetCareServices" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>urn</con:name><con:value>urn:riv:operativeresourcemanagement:coordination:logistics:GetCareServicesResponder:2</con:value></con:property><con:property><con:name>urn1</con:name><con:value>urn:riv:operativeresourcemanagement:coordination:logistics:3</con:value></con:property><con:property><con:name>headerNode</con:name><con:value>/soapenv:Envelope/soapenv:Body/urn:GetCareServicesResponse/urn:careService/urn1:careServiceHeader</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>
