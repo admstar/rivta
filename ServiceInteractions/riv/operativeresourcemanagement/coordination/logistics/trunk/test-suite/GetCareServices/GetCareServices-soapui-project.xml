@@ -693,10 +693,10 @@ def contextHelper = new ContextHelper(context)
 def holder = new XmlHolder( messageExchange.response.responseContent )
 holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
 // Fetch properties from TestSuite Custom properties
-holder.namespaces['urn'] = context.expand('${#TestSuite#urn}')
-holder.namespaces['urn1'] = context.expand('${#TestSuite#urn1}')
+holder.namespaces['urn'] = context.expand('${#Project#urn}')
+holder.namespaces['urn1'] = context.expand('${#Project#urn1}')
 
-def records = holder.getDomNodes(context.expand('${#TestSuite#headerNode}'))
+def records = holder.getDomNodes(context.expand('${#Project#headerNode}'))
 assert records.length > 0 :"Response contains no records."
 
 // Compare patientId and patientIdType in the response to what we have in data.xml for this test case.
@@ -708,11 +708,11 @@ records.each {c ->
     def patientIdType = recordHolder.getNodeValue('//urn1:patientId/urn1:type')
     assert (patientId != context.patientId || patientIdType != context.patientIdType) != true : "Response contains a record with other PatientId. PatientId: ${patientId}, Type: ${patientIdType} DocumentId: ${documentId}"
 }</scriptText></con:configuration></con:assertion><con:assertion type="XPath Match" name="AND ensure a result.logId exists"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
-declare namespace urn='${#TestSuite#urn}';
-declare namespace urn1='${#TestSuite#urn1}';
+declare namespace urn='${#Project#urn}';
+declare namespace urn1='${#Project#urn1}';
 //urn:GetCareServicesResponse[1]/urn:result[1]/urn1:logId[matches(., '.*')]</path><content>*</content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="AND ensure result.resultCode equals OK"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
-declare namespace urn='${#TestSuite#urn}';
-declare namespace urn1='${#TestSuite#urn1}';
+declare namespace urn='${#Project#urn}';
+declare namespace urn1='${#Project#urn1}';
 //urn:GetCareServicesResponse[1]/urn:result[1]/urn1:resultCode/text()</path><content>OK</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:clinicalprocess:logistics:GetCareServicesResponder:2:GetCareServices" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Date Boundaries" searchProperties="true" id="788c5b6d-eaf7-4e0a-be9e-e45bff7cf93f"><con:settings/><con:testStep type="groovy" name="GIVEN Date Boundaries data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
 
@@ -765,10 +765,10 @@ def contextHelper = new ContextHelper(context)
 def holder = new XmlHolder( messageExchange.response.responseContent )
 holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
 // Fetch properties from TestSuite Custom properties
-holder.namespaces['urn'] = context.expand('${#TestSuite#urn}')
-holder.namespaces['urn1'] = context.expand('${#TestSuite#urn1}')
+holder.namespaces['urn'] = context.expand('${#Project#urn}')
+holder.namespaces['urn1'] = context.expand('${#Project#urn1}')
 
-def records = holder.getDomNodes(context.expand('${#TestSuite#headerNode}'))
+def records = holder.getDomNodes(context.expand('${#Project#headerNode}'))
 assert records.length > 0 :"Response contains no records."
 
 // Compare patientId and patientIdType in the response to what we have in data.xml for this test case.
@@ -786,10 +786,10 @@ def contextHelper = new ContextHelper(context)
 def holder = new XmlHolder( messageExchange.response.responseContent )
 holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
 // Fetch properties from TestSuite Custom properties
-holder.namespaces['urn'] = context.expand('${#TestSuite#urn}')
-holder.namespaces['urn1'] = context.expand('${#TestSuite#urn1}')
+holder.namespaces['urn'] = context.expand('${#Project#urn}')
+holder.namespaces['urn1'] = context.expand('${#Project#urn1}')
 
-def documentIds = holder.getNodeValues(context.expand('${#TestSuite#headerNode}') + '/urn1:documentId') as List
+def documentIds = holder.getNodeValues(context.expand('${#Project#headerNode}') + '/urn1:documentId') as List
 if (documentIds.size == 0 || documentIds == null) {
     contextHelper.fail("Response contains no documentId's.")
     return
@@ -811,11 +811,11 @@ expectedDocumentIds.each {id ->
         contextHelper.fail("Response does not contain a expected record. DocumentId: $id")
     }
 }</scriptText></con:configuration></con:assertion><con:assertion type="XPath Match" name="AND ensure a result.logId exists"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
-declare namespace urn='${#TestSuite#urn}';
-declare namespace urn1='${#TestSuite#urn1}';
+declare namespace urn='${#Project#urn}';
+declare namespace urn1='${#Project#urn1}';
 //urn:GetCareServicesResponse[1]/urn:result[1]/urn1:logId[matches(., '.*')]</path><content>*</content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="AND ensure result.resultCode equals OK"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
-declare namespace urn='${#TestSuite#urn}';
-declare namespace urn1='${#TestSuite#urn1}';
+declare namespace urn='${#Project#urn}';
+declare namespace urn1='${#Project#urn1}';
 //urn:GetCareServicesResponse[1]/urn:result[1]/urn1:resultCode/text()</path><content>OK</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:clinicalprocess:logistics:GetCareServicesResponder:2:GetCareServices" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="CareUnitHSAId Filter" searchProperties="true" id="ff20dd91-436a-439b-b1d5-15170707b148"><con:settings/><con:testStep type="groovy" name="GIVEN CareUnitHSAId Filter data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
 
@@ -865,10 +865,10 @@ def contextHelper = new ContextHelper(context)
 def holder = new XmlHolder( messageExchange.response.responseContent )
 holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
 // Fetch properties from TestSuite Custom properties
-holder.namespaces['urn'] = context.expand('${#TestSuite#urn}')
-holder.namespaces['urn1'] = context.expand('${#TestSuite#urn1}')
+holder.namespaces['urn'] = context.expand('${#Project#urn}')
+holder.namespaces['urn1'] = context.expand('${#Project#urn1}')
 
-def records = holder.getDomNodes(context.expand('${#TestSuite#headerNode}'))
+def records = holder.getDomNodes(context.expand('${#Project#headerNode}'))
 assert records.length > 0 :"Response contains no records."
 
 // Compare patientId and patientIdType in the response to what we have in data.xml for this test case.
@@ -886,10 +886,10 @@ def contextHelper = new ContextHelper(context)
 def holder = new XmlHolder( messageExchange.response.responseContent )
 holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
 // Fetch properties from TestSuite Custom properties
-holder.namespaces['urn'] = context.expand('${#TestSuite#urn}')
-holder.namespaces['urn1'] = context.expand('${#TestSuite#urn1}')
+holder.namespaces['urn'] = context.expand('${#Project#urn}')
+holder.namespaces['urn1'] = context.expand('${#Project#urn1}')
 
-def documentIds = holder.getNodeValues(context.expand('${#TestSuite#headerNode}') + '/urn1:documentId') as List
+def documentIds = holder.getNodeValues(context.expand('${#Project#headerNode}') + '/urn1:documentId') as List
 if (documentIds.size == 0 || documentIds == null) {
     contextHelper.fail("Response contains no documentId's.")
     return
@@ -911,11 +911,11 @@ expectedDocumentIds.each {id ->
         contextHelper.fail("Response does not contain a expected record. DocumentId: $id")
     }
 }</scriptText></con:configuration></con:assertion><con:assertion type="XPath Match" name="AND ensure a result.logId exists"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
-declare namespace urn='${#TestSuite#urn}';
-declare namespace urn1='${#TestSuite#urn1}';
+declare namespace urn='${#Project#urn}';
+declare namespace urn1='${#Project#urn1}';
 //urn:GetCareServicesResponse[1]/urn:result[1]/urn1:logId[matches(., '.*')]</path><content>*</content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="AND ensure result.resultCode equals OK"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
-declare namespace urn='${#TestSuite#urn}';
-declare namespace urn1='${#TestSuite#urn1}';
+declare namespace urn='${#Project#urn}';
+declare namespace urn1='${#Project#urn1}';
 //urn:GetCareServicesResponse[1]/urn:result[1]/urn1:resultCode/text()</path><content>OK</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:clinicalprocess:logistics:GetCareServicesResponder:2:GetCareServices" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="CareContactId Filter" searchProperties="true" id="af5cd8e5-6035-4c0e-b400-1c92a13c129a"><con:settings/><con:testStep type="groovy" name="GIVEN CareContactId Filter data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
 
@@ -965,10 +965,10 @@ def contextHelper = new ContextHelper(context)
 def holder = new XmlHolder( messageExchange.response.responseContent )
 holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
 // Fetch properties from TestSuite Custom properties
-holder.namespaces['urn'] = context.expand('${#TestSuite#urn}')
-holder.namespaces['urn1'] = context.expand('${#TestSuite#urn1}')
+holder.namespaces['urn'] = context.expand('${#Project#urn}')
+holder.namespaces['urn1'] = context.expand('${#Project#urn1}')
 
-def records = holder.getDomNodes(context.expand('${#TestSuite#headerNode}'))
+def records = holder.getDomNodes(context.expand('${#Project#headerNode}'))
 assert records.length > 0 :"Response contains no records."
 
 // Compare patientId and patientIdType in the response to what we have in data.xml for this test case.
@@ -986,10 +986,10 @@ def contextHelper = new ContextHelper(context)
 def holder = new XmlHolder( messageExchange.response.responseContent )
 holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
 // Fetch properties from TestSuite Custom properties
-holder.namespaces['urn'] = context.expand('${#TestSuite#urn}')
-holder.namespaces['urn1'] = context.expand('${#TestSuite#urn1}')
+holder.namespaces['urn'] = context.expand('${#Project#urn}')
+holder.namespaces['urn1'] = context.expand('${#Project#urn1}')
 
-def documentIds = holder.getNodeValues(context.expand('${#TestSuite#headerNode}') + '/urn1:documentId') as List
+def documentIds = holder.getNodeValues(context.expand('${#Project#headerNode}') + '/urn1:documentId') as List
 if (documentIds.size == 0 || documentIds == null) {
     contextHelper.fail("Response contains no documentId's.")
     return
@@ -1011,11 +1011,11 @@ expectedDocumentIds.each {id ->
         contextHelper.fail("Response does not contain a expected record. DocumentId: $id")
     }
 }</scriptText></con:configuration></con:assertion><con:assertion type="XPath Match" name="AND ensure a result.logId exists"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
-declare namespace urn='${#TestSuite#urn}';
-declare namespace urn1='${#TestSuite#urn1}';
+declare namespace urn='${#Project#urn}';
+declare namespace urn1='${#Project#urn1}';
 //urn:GetCareServicesResponse[1]/urn:result[1]/urn1:logId[matches(., '.*')]</path><content>*</content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="AND ensure result.resultCode equals OK"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
-declare namespace urn='${#TestSuite#urn}';
-declare namespace urn1='${#TestSuite#urn1}';
+declare namespace urn='${#Project#urn}';
+declare namespace urn1='${#Project#urn1}';
 //urn:GetCareServicesResponse[1]/urn:result[1]/urn1:resultCode/text()</path><content>OK</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:clinicalprocess:logistics:GetCareServicesResponder:2:GetCareServices" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="NonExisting PatientId" searchProperties="true" id="a9fb020e-ede3-4cd0-8dcf-7dc80f8b721b"><con:settings/><con:testStep type="groovy" name="GIVEN NonExisting PatientId data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
 
@@ -1056,14 +1056,14 @@ failures.each { failure ->
 }
 
 assert (failures.isEmpty())</scriptText></con:configuration></con:assertion><con:assertion type="XPath Match" name="AND ensure a result.logId exists"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
-declare namespace urn='${#TestSuite#urn}';
-declare namespace urn1='${#TestSuite#urn1}';
+declare namespace urn='${#Project#urn}';
+declare namespace urn1='${#Project#urn1}';
 //urn:GetCareServicesResponse[1]/urn:result[1]/urn1:logId[matches(., '.*')]</path><content>*</content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="AND ensure result.resultCode equals OK"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
-declare namespace urn='${#TestSuite#urn}';
-declare namespace urn1='${#TestSuite#urn1}';
+declare namespace urn='${#Project#urn}';
+declare namespace urn1='${#Project#urn1}';
 //urn:GetCareServicesResponse[1]/urn:result[1]/urn1:resultCode/text()</path><content>OK</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="AND ensure zero care services are returned"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
-declare namespace urn='${#TestSuite#urn}';
-declare namespace urn1='${#TestSuite#urn1}';
+declare namespace urn='${#Project#urn}';
+declare namespace urn1='${#Project#urn1}';
 count(//urn:GetCareServicesResponse[1]/urn:carePlan)</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:clinicalprocess:logistics:GetCareServicesResponder:2:GetCareServices" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="NonExisting CareContactId" searchProperties="true" id="e944c0d4-352f-4a2e-834a-d9b9de13ca33"><con:settings/><con:testStep type="groovy" name="GIVEN NonExisting CareContactId data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
 
@@ -1105,14 +1105,14 @@ failures.each { failure ->
 }
 
 assert (failures.isEmpty())</scriptText></con:configuration></con:assertion><con:assertion type="XPath Match" name="AND ensure a result.logId exists"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
-declare namespace urn='${#TestSuite#urn}';
-declare namespace urn1='${#TestSuite#urn1}';
+declare namespace urn='${#Project#urn}';
+declare namespace urn1='${#Project#urn1}';
 //urn:GetCareServicesResponse[1]/urn:result[1]/urn1:logId[matches(., '.*')]</path><content>*</content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="AND ensure result.resultCode equals OK"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
-declare namespace urn='${#TestSuite#urn}';
-declare namespace urn1='${#TestSuite#urn1}';
+declare namespace urn='${#Project#urn}';
+declare namespace urn1='${#Project#urn1}';
 //urn:GetCareServicesResponse[1]/urn:result[1]/urn1:resultCode/text()</path><content>OK</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="AND ensure zero care services are returned"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
-declare namespace urn='${#TestSuite#urn}';
-declare namespace urn1='${#TestSuite#urn1}';
+declare namespace urn='${#Project#urn}';
+declare namespace urn1='${#Project#urn1}';
 count(//urn:GetCareServicesResponse[1]/urn:carePlan)</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:clinicalprocess:logistics:GetCareServicesResponder:2:GetCareServices" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="HTTPHeader Filter" searchProperties="true" id="d5f14fbd-878a-4971-860a-379a27e89292"><con:settings/><con:testStep type="groovy" name="GIVEN HTTPHeader Filter data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
 
@@ -1161,10 +1161,10 @@ def contextHelper = new ContextHelper(context)
 def holder = new XmlHolder( messageExchange.response.responseContent )
 holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
 // Fetch properties from TestSuite Custom properties
-holder.namespaces['urn'] = context.expand('${#TestSuite#urn}')
-holder.namespaces['urn1'] = context.expand('${#TestSuite#urn1}')
+holder.namespaces['urn'] = context.expand('${#Project#urn}')
+holder.namespaces['urn1'] = context.expand('${#Project#urn1}')
 
-def records = holder.getDomNodes(context.expand('${#TestSuite#headerNode}'))
+def records = holder.getDomNodes(context.expand('${#Project#headerNode}'))
 assert records.length > 0 :"Response contains no records."
 
 // Compare patientId and patientIdType in the response to what we have in data.xml for this test case.
@@ -1182,10 +1182,10 @@ def contextHelper = new ContextHelper(context)
 def holder = new XmlHolder( messageExchange.response.responseContent )
 holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
 // Fetch properties from TestSuite Custom properties
-holder.namespaces['urn'] = context.expand('${#TestSuite#urn}')
-holder.namespaces['urn1'] = context.expand('${#TestSuite#urn1}')
+holder.namespaces['urn'] = context.expand('${#Project#urn}')
+holder.namespaces['urn1'] = context.expand('${#Project#urn1}')
 
-def documentIds = holder.getNodeValues(context.expand('${#TestSuite#headerNode}') + '/urn1:documentId') as List
+def documentIds = holder.getNodeValues(context.expand('${#Project#headerNode}') + '/urn1:documentId') as List
 if (documentIds.size == 0 || documentIds == null) {
     contextHelper.fail("Response contains no documentId's.")
     return
@@ -1207,11 +1207,11 @@ expectedDocumentIds.each {id ->
         contextHelper.fail("Response does not contain a expected record. DocumentId: $id")
     }
 }</scriptText></con:configuration></con:assertion><con:assertion type="XPath Match" name="AND ensure a result.logId exists"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
-declare namespace urn='${#TestSuite#urn}';
-declare namespace urn1='${#TestSuite#urn1}';
+declare namespace urn='${#Project#urn}';
+declare namespace urn1='${#Project#urn1}';
 //urn:GetCareServicesResponse[1]/urn:result[1]/urn1:logId[matches(., '.*')]</path><content>*</content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="AND ensure result.resultCode equals OK"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
-declare namespace urn='${#TestSuite#urn}';
-declare namespace urn1='${#TestSuite#urn1}';
+declare namespace urn='${#Project#urn}';
+declare namespace urn1='${#Project#urn1}';
 //urn:GetCareServicesResponse[1]/urn:result[1]/urn1:resultCode/text()</path><content>OK</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:clinicalprocess:logistics:GetCareServicesResponder:2:GetCareServices" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties><con:property><con:name>urn</con:name><con:value>urn:riv:clinicalprocess:logistics:logistics:GetCareServicesResponder:2</con:value></con:property><con:property><con:name>urn1</con:name><con:value>urn:riv:clinicalprocess:logistics:logistics:3</con:value></con:property><con:property><con:name>headerNode</con:name><con:value>/soapenv:Envelope/soapenv:Body/urn:GetCareServicesResponse/urn:careService/urn1:careServiceHeader</con:value></con:property></con:properties></con:testSuite><con:testSuite name="Fault tests"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Verify SourceSystemHSAId and CareContactId" searchProperties="true" id="153d5793-91cb-49f2-8f78-e4d807681019"><con:settings/><con:testStep type="groovy" name="GIVEN SourceSystemHSAId and CareContactID data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
 

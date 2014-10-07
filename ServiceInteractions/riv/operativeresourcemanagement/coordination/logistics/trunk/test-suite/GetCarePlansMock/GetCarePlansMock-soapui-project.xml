@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project activeEnvironment="Default" name="GetCarePlansMock" resourceRoot="" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetCarePlansResponderBinding" type="wsdl" bindingName="{urn:riv:clinicalprocess:logistics:logistics:GetCarePlans:2:rivtabp21}GetCarePlansResponderBinding" soapVersion="1_1" anonymous="optional" definition="file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/logistics/logistics/trunk/schemas/interactions/GetCarePlansInteraction/GetCarePlansInteraction_2.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/logistics/logistics/trunk/schemas/interactions/GetCarePlansInteraction/GetCarePlansInteraction_2.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/logistics/logistics/trunk/schemas/interactions/GetCarePlansInteraction/GetCarePlansInteraction_2.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+<con:soapui-project activeEnvironment="Default" name="GetCarePlansMock" resourceRoot="${projectDir}" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetCarePlansResponderBinding" type="wsdl" bindingName="{urn:riv:operativeresourcemanagement:coordination:logistics:GetCarePlans:2:rivtabp21}GetCarePlansResponderBinding" soapVersion="1_1" anonymous="optional" definition="../../schemas/interactions/GetCarePlansInteraction/GetCarePlansInteraction_2.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/operativeresourcemanagement/coordination/logistics/trunk/schemas/interactions/GetCarePlansInteraction/GetCarePlansInteraction_2.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/operativeresourcemanagement/coordination/logistics/trunk/schemas/interactions/GetCarePlansInteraction/GetCarePlansInteraction_2.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
@@ -15,26 +15,26 @@
  KIND, either express or implied. See the License for the
  specific language governing permissions and limitations
  under the License.-->
-<wsdl:definitions name="GetCarePlansInteraction" targetNamespace="urn:riv:clinicalprocess:logistics:logistics:GetCarePlans:2:rivtabp21" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tjsr="urn:riv:clinicalprocess:logistics:logistics:GetCarePlansResponder:2" xmlns:tjsi="urn:riv:clinicalprocess:logistics:logistics:GetCarePlansInitiator:2" xmlns:tns="urn:riv:clinicalprocess:logistics:logistics:GetCarePlans:2:rivtabp21" xmlns:itr="urn:riv:itintegration:registry:1">
+<wsdl:definitions name="GetCarePlansInteraction" targetNamespace="urn:riv:operativeresourcemanagement:coordination:logistics:GetCarePlans:2:rivtabp21" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tjsr="urn:riv:operativeresourcemanagement:coordination:logistics:GetCarePlansResponder:2" xmlns:tjsi="urn:riv:operativeresourcemanagement:coordination:logistics:GetCarePlansInitiator:2" xmlns:tns="urn:riv:operativeresourcemanagement:coordination:logistics:GetCarePlans:2:rivtabp21" xmlns:itr="urn:riv:itintegration:registry:1">
   <xs:annotation>
     <xs:documentation>Tjänsteinteraktionens namn: GetCarePlansInteraction
 			 Beskrivning: 
 			   Care plans for a subject of care
 			 Revisioner: 
-			 Tjänstedomän: clinicalprocess:logistics
+			 Tjänstedomän: operativeresourcemanagement:coordination:logistics
 			 Tjänsteinteraktionstyp: Fråga-Svar
 			 WS-profil: RIVTABP21
 			 Förvaltas av: Sveriges Kommuner och Landsting</xs:documentation>
   </xs:annotation>
   <wsdl:types>
-    <xs:schema targetNamespace="urn:riv:clinicalprocess:logistics:logistics:GetCarePlans:2:rivtabp21">
-      <xs:import schemaLocation="GetCarePlansResponder_2.0.xsd" namespace="urn:riv:clinicalprocess:logistics:logistics:GetCarePlansResponder:2"/>
+    <xs:schema targetNamespace="urn:riv:operativeresourcemanagement:coordination:logistics:GetCarePlans:2:rivtabp21">
+      <xs:import schemaLocation="GetCarePlansResponder_2.0.xsd" namespace="urn:riv:operativeresourcemanagement:coordination:logistics:GetCarePlansResponder:2"/>
       <xs:import schemaLocation="../../core_components/itintegration_registry_1.0.xsd" namespace="urn:riv:itintegration:registry:1"/>
     </xs:schema>
   </wsdl:types>
   <wsdl:message name="GetCarePlansRequest">
     <wsdl:part name="LogicalAddress" element="itr:LogicalAddress">
-      <wsdl:documentation>National: The HSA-id of Inera AB ("national" aggregation service)</wsdl:documentation>
+      <wsdl:documentation>National: The HSA-id of Inera AB ("national" aggregation service)             Regional: The HSA-id of Inera AB (regional aggregation service)             Specific Source system: The HSA-id of the source system</wsdl:documentation>
     </wsdl:part>
     <wsdl:part name="parameters" element="tjsr:GetCarePlans"/>
   </wsdl:message>
@@ -50,7 +50,7 @@
   <wsdl:binding name="GetCarePlansResponderBinding" type="tns:GetCarePlansResponderInterface">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     <wsdl:operation name="GetCarePlans">
-      <soap:operation soapAction="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans" style="document"/>
+      <soap:operation soapAction="urn:riv:operativeresourcemanagement:coordination:logistics:GetCarePlansResponder:2:GetCarePlans" style="document"/>
       <wsdl:input>
         <soap:header use="literal" message="tns:GetCarePlansRequest" part="LogicalAddress"/>
         <soap:body use="literal" parts="parameters"/>
@@ -65,7 +65,7 @@
       <soap:address location="http://tempuri.org"/>
     </wsdl:port>
   </wsdl:service>
-</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/logistics/logistics/trunk/schemas/interactions/GetCarePlansInteraction/GetCarePlansResponder_2.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/operativeresourcemanagement/coordination/logistics/trunk/schemas/interactions/GetCarePlansInteraction/GetCarePlansResponder_2.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
@@ -81,9 +81,8 @@
  KIND, either express or implied. See the License for the
  specific language governing permissions and limitations
  under the License.-->
-<xs:schema targetNamespace="urn:riv:clinicalprocess:logistics:logistics:GetCarePlansResponder:2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:clinicalprocess:logistics:logistics:GetCarePlansResponder:2" xmlns:core="urn:riv:clinicalprocess:logistics:logistics:3" xmlns:codes="urn:riv:clinicalprocess:logistics:logistics:enums:3">
-  <xs:import schemaLocation="../../core_components/clinicalprocess_logistics_logistics_3.0.xsd" namespace="urn:riv:clinicalprocess:logistics:logistics:3"/>
-  <xs:import schemaLocation="../../core_components/clinicalprocess_logistics_logistics_enum_3.0.xsd" namespace="urn:riv:clinicalprocess:logistics:logistics:enums:3"/>
+<xs:schema targetNamespace="urn:riv:operativeresourcemanagement:coordination:logistics:GetCarePlansResponder:2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:operativeresourcemanagement:coordination:logistics:GetCarePlansResponder:2" xmlns:core="urn:riv:operativeresourcemanagement:coordination:logistics:3">
+  <xs:import schemaLocation="../../core_components/operativeresourcemanagement_coordination_logistics_3.0.xsd" namespace="urn:riv:operativeresourcemanagement:coordination:logistics:3"/>
   <xs:element name="GetCarePlans" type="tns:GetCarePlansType"/>
   <xs:element name="GetCarePlansResponse" type="tns:GetCarePlansResponseType"/>
   <xs:complexType name="GetCarePlansType">
@@ -103,7 +102,7 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/logistics/logistics/trunk/schemas/core_components/clinicalprocess_logistics_logistics_3.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/operativeresourcemanagement/coordination/logistics/trunk/schemas/core_components/operativeresourcemanagement_coordination_logistics_3.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
@@ -119,8 +118,13 @@
  KIND, either express or implied. See the License for the
  specific language governing permissions and limitations
  under the License.-->
-<xs:schema targetNamespace="urn:riv:clinicalprocess:logistics:logistics:3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:clinicalprocess:logistics:logistics:3" xmlns:codes="urn:riv:clinicalprocess:logistics:logistics:enums:3">
-  <xs:import schemaLocation="./clinicalprocess_logistics_logistics_enum_3.0.xsd" namespace="urn:riv:clinicalprocess:logistics:logistics:enums:3"/>
+<xs:schema targetNamespace="urn:riv:operativeresourcemanagement:coordination:logistics:3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:operativeresourcemanagement:coordination:logistics:3" xmlns:codes="urn:riv:operativeresourcemanagement:coordination:logistics:enums:3">
+  <!--<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:tns="urn:riv:clinicalprocess:logistics:logistics:3"
+    xmlns:codes="urn:riv:clinicalprocess:logistics:logistics:enums:3"
+    targetNamespace="urn:riv:clinicalprocess:logistics:logistics:3" elementFormDefault="qualified"
+    attributeFormDefault="unqualified" version="3.0">-->
+  <xs:import schemaLocation="./operativeresourcemanagement_coordination_logistics_enum_3.0.xsd" namespace="urn:riv:operativeresourcemanagement:coordination:logistics:enums:3"/>
   <xs:complexType name="CareContactType">
     <xs:sequence>
       <xs:element name="careContactHeader" type="tns:PatientSummaryHeaderType"/>
@@ -403,7 +407,7 @@
     </xs:annotation>
     <xs:sequence>
       <xs:element name="code" type="tns:CVType" minOccurs="1"/>
-      <xs:element name="referredInformation" type="tns:ReferredInformationType" minOccurs="1" maxOccurs="unbounded"/>
+      <xs:element name="referredInformation" type="tns:ReferredInformationType" minOccurs="1" maxOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -467,7 +471,7 @@
       <xs:element name="message" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/logistics/logistics/trunk/schemas/core_components/clinicalprocess_logistics_logistics_enum_3.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/operativeresourcemanagement/coordination/logistics/trunk/schemas/core_components/operativeresourcemanagement_coordination_logistics_enum_3.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
@@ -483,7 +487,7 @@
  KIND, either express or implied. See the License for the
  specific language governing permissions and limitations
  under the License.-->
-<xs:schema targetNamespace="urn:riv:clinicalprocess:logistics:logistics:enums:3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:clinicalprocess:logistics:logistics:enums:3">
+<xs:schema targetNamespace="urn:riv:operativeresourcemanagement:coordination:logistics:enums:3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:operativeresourcemanagement:coordination:logistics:enums:3">
   <xs:simpleType name="CareContactCodeEnum">
     <xs:restriction base="xs:int">
       <xs:enumeration value="1">
@@ -592,33 +596,64 @@
       <xs:enumeration value="HSJV"/>
       <xs:enumeration value="HTJ"/>
       <xs:enumeration value="LSS"/>
-      <xs:enumeration value="PVTJ"/>
       <xs:enumeration value="SVTJ"/>
       <xs:enumeration value="SÄBO"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="TypeOfCarePlanEnum">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="Samordnad individuell plan"/>
-      <xs:enumeration value="Samordnad plan enligt LPT och LRV"/>
-      <xs:enumeration value="Samordnad plan vid utskrivning"/>
-      <xs:enumeration value="Vårdplan"/>
-      <xs:enumeration value="Habiliteringsplan"/>
-      <xs:enumeration value="Rehabiliteringsplan"/>
-      <xs:enumeration value="Genomförande plan"/>
-      <xs:enumeration value="Standardiserad vårdplan"/>
+      <xs:enumeration value="SIP">
+        <xs:annotation>
+          <xs:documentation>Samordnad individuell plan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SPLPTLRV">
+        <xs:annotation>
+          <xs:documentation>Samordnad plan enligt LPT och LRV</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SPU">
+        <xs:annotation>
+          <xs:documentation>Samordnad plan vid utskrivning</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="VP">
+        <xs:annotation>
+          <xs:documentation>Vårdplan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="HP">
+        <xs:annotation>
+          <xs:documentation>Habiliteringsplan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="RP">
+        <xs:annotation>
+          <xs:documentation>Rehabiliteringsplan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="GP">
+        <xs:annotation>
+          <xs:documentation>Genomförande plan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SVP">
+        <xs:annotation>
+          <xs:documentation>Standardiserad vårdplan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/logistics/logistics/trunk/schemas/core_components/itintegration_registry_1.0.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="urn:riv:itintegration:registry:1" elementFormDefault="qualified" version="1.0" xmlns="urn:riv:itintegration:registry:1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/operativeresourcemanagement/coordination/logistics/trunk/schemas/core_components/itintegration_registry_1.0.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="urn:riv:itintegration:registry:1" elementFormDefault="qualified" version="1.0" xmlns="urn:riv:itintegration:registry:1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
-    <xs:documentation>Beskrivning: 	Grundläggande informationsobjekt för domänen itintegration:registry (adressering av tjänster)
+    <xs:documentation>Beskrivning: 	Grundl��ggande informationsobjekt f��r dom��nen itintegration:registry (adressering av tj��nster)
 			
 			Revisionshistorik: 2011-06-27 Mats Ekhammar, Callista Enterprise AB
 				Added ServiceContractType
 			
 			Datum:			2011-05-04
 			Beskrivning:	Initial version
-			Författare:		marcus.krantz@callistaenterprise.se</xs:documentation>
+			F��rfattare:		marcus.krantz@callistaenterprise.se</xs:documentation>
   </xs:annotation>
   <xs:element name="LogicalAddress" type="LogicalAddressType"/>
   <xs:element name="ServiceContract" type="ServiceContractType"/>
@@ -638,14 +673,14 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://beirut:8088/mockGetCarePlansResponderBinding</con:endpoint><con:endpoint>http://tempuri.org</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans" name="GetCarePlans" bindingOperationName="GetCarePlans" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://tempuri.org</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2">
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://beirut:8088/mockGetCarePlansResponderBinding</con:endpoint><con:endpoint>http://tempuri.org</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:operativeresourcemanagement:coordination:logistics:GetCarePlansResponder:2:GetCarePlans" name="GetCarePlans" bindingOperationName="GetCarePlans" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://tempuri.org</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2">
    <soapenv:Header>
       <urn:LogicalAddress>?</urn:LogicalAddress>
    </soapenv:Header>
    <soapenv:Body>
       <urn1:GetCarePlans/>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans"/></con:call></con:operation></con:interface><con:mockService port="8088" path="/mockGetCarePlansResponderBinding" host="beirut" name="GetCarePlansResponderBinding MockService"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:properties/><con:mockOperation name="GetCarePlans" interface="GetCarePlansResponderBinding" operation="GetCarePlans"><con:settings/><con:defaultResponse>ERROR</con:defaultResponse><con:dispatchStyle>SCRIPT</con:dispatchStyle><con:dispatchPath>import com.eviware.soapui.support.XmlHolder
+</soapenv:Envelope>]]></con:request><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans"/></con:call></con:operation></con:interface><con:mockService port="8088" path="/mockGetCarePlansResponderBinding" host="beirut" name="GetCarePlansResponderBinding MockService"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:properties/><con:mockOperation name="GetCarePlans" interface="GetCarePlansResponderBinding" operation="GetCarePlans"><con:settings/><con:defaultResponse>ERROR</con:defaultResponse><con:dispatchStyle>SCRIPT</con:dispatchStyle><con:dispatchPath>import com.eviware.soapui.support.XmlHolder
 import com.eviware.soapui.impl.wsdl.support.wsdl.WsdlContext
 import com.eviware.soapui.impl.wsdl.support.wsdl.WsdlValidator
 import com.eviware.soapui.impl.wsdl.panels.mockoperation.WsdlMockRequestMessageExchange
@@ -670,8 +705,8 @@ if (errors.length > 0) {
 def holder = new XmlHolder( mockRequest.requestContent )
 holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
 holder.namespaces['urn'] = 'urn:riv:itintegration:registry:1'
-holder.namespaces['urn1'] = 'urn:riv:clinicalprocess:logistics:logistics:GetCarePlansResponder:2'
-holder.namespaces['urn2'] = 'urn:riv:clinicalprocess:logistics:logistics:3'
+holder.namespaces['urn1'] = context.expand('${#Project#urn}')
+holder.namespaces['urn2'] = context.expand('${#Project#urn1}')
 
 def careUnitHSAid = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetCarePlans/urn1:careUnitHSAid')
 def patientId = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetCarePlans/urn1:patientId/urn2:id')
@@ -684,8 +719,9 @@ context.careUnitHSAid = careUnitHSAid
 def responseName = mockRequest.requestHeaders['x-mock-response'][0]
 log.debug("responseName: ${responseName}")
 
-return responseName</con:dispatchPath><con:response name="BasicResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:logistics:logistics:GetCarePlansResponder:2" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:3">
-   <soapenv:Header/>
+return responseName</con:dispatchPath><con:response name="BasicResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+xmlns:urn="${#Project#urn}" 
+xmlns:urn1="${#Project#urn1}">   <soapenv:Header/>
    <soapenv:Body>
       <urn:GetCarePlansResponse>
          <!--Zero or more repetitions:-->
@@ -785,8 +821,10 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" httpRes
          <!--You may enter ANY elements at this point-->
       </urn:GetCarePlansResponse>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans"/></con:response><con:response name="DateResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:logistics:logistics:GetCarePlansResponder:2" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:3">
-   <soapenv:Header/>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans"/></con:response><con:response name="DateResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+xmlns:urn="${#Project#urn}" 
+xmlns:urn1="${#Project#urn1}">
+<soapenv:Header/>
    <soapenv:Body>
       <urn:GetCarePlansResponse>
          <!--Zero or more repetitions:-->
@@ -886,8 +924,10 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" httpRes
          <!--You may enter ANY elements at this point-->
       </urn:GetCarePlansResponse>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans"/></con:response><con:response name="CareUnitHSAIdResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:logistics:logistics:GetCarePlansResponder:2" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:3">
-   <soapenv:Header/>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans"/></con:response><con:response name="CareUnitHSAIdResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+xmlns:urn="${#Project#urn}" 
+xmlns:urn1="${#Project#urn1}">
+<soapenv:Header/>
    <soapenv:Body>
       <urn:GetCarePlansResponse>
          <!--Zero or more repetitions:-->
@@ -987,8 +1027,10 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" httpRes
          <!--You may enter ANY elements at this point-->
       </urn:GetCarePlansResponse>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans"/></con:response><con:response name="CareContactResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:logistics:logistics:GetCarePlansResponder:2" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:3">
-   <soapenv:Header/>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans"/></con:response><con:response name="CareContactResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+xmlns:urn="${#Project#urn}" 
+xmlns:urn1="${#Project#urn1}">
+<soapenv:Header/>
    <soapenv:Body>
       <urn:GetCarePlansResponse>
          <!--Zero or more repetitions:-->
@@ -1088,8 +1130,9 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" httpRes
          <!--You may enter ANY elements at this point-->
       </urn:GetCarePlansResponse>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans"/></con:response><con:response name="HTTPHeaderResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:logistics:logistics:GetCarePlansResponder:2" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:3">
-   <soapenv:Header/>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans"/></con:response><con:response name="HTTPHeaderResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+xmlns:urn="${#Project#urn}" 
+xmlns:urn1="${#Project#urn1}">   <soapenv:Header/>
    <soapenv:Body>
       <urn:GetCarePlansResponse>
          <!--Zero or more repetitions:-->
@@ -1189,8 +1232,10 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" httpRes
          <!--You may enter ANY elements at this point-->
       </urn:GetCarePlansResponse>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans"/></con:response><con:response name="ERROR" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:logistics:logistics:GetCarePlansResponder:2" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:3">
-   <soapenv:Header/>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans"/></con:response><con:response name="ERROR" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+xmlns:urn="${#Project#urn}" 
+xmlns:urn1="${#Project#urn1}">
+<soapenv:Header/>
    <soapenv:Body>
       <urn:GetCarePlansResponse>
          <urn:result>
@@ -1200,8 +1245,9 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" httpRes
          </urn:result>
       </urn:GetCarePlansResponse>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans"/></con:response><con:response name="EmptyResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:logistics:logistics:GetCarePlansResponder:2" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:3">
-   <soapenv:Header/>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans"/></con:response><con:response name="EmptyResponse" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+xmlns:urn="${#Project#urn}" 
+xmlns:urn1="${#Project#urn1}">   <soapenv:Header/>
    <soapenv:Body>
       <urn:GetCarePlansResponse>
          <urn:result>
@@ -1210,4 +1256,4 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" httpRes
          </urn:result>
       </urn:GetCarePlansResponse>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans"/></con:response><con:dispatchConfig/></con:mockOperation></con:mockService><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:logistics:GetCarePlansResponder:2:GetCarePlans"/></con:response><con:dispatchConfig/></con:mockOperation></con:mockService><con:properties><con:property><con:name>urn</con:name><con:value>urn:riv:operativeresourcemanagement:coordination:logistics:GetCarePlansResponder:2</con:value></con:property><con:property><con:name>urn1</con:name><con:value>urn:riv:operativeresourcemanagement:coordination:logistics:3</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
