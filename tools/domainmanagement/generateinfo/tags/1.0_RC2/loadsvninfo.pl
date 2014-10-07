@@ -171,7 +171,8 @@ record_files(Rpath, DomainList, Dtag) :-
 	l_ls(Rpath, Itemlist) ,
 	l_write_trace(['record_files2 - Itemlist: ', Itemlist], 4),
 	member(trunk, Itemlist),
-	member(tags, Itemlist),
+	% tags does not always exist
+	%	member(tags, Itemlist),
 	\+ excluded_domain(Rpath) ,
 	l_write_trace(['Domain identified: ', Rpath], 2),
 	get_domain_name(Rpath, DomainList),
