@@ -1,4 +1,10 @@
 :- module(loadtak, [
+	      tk_get_all_authorizations/2,
+	      tk_get_all_consumers/2,
+	      tk_get_all_logical_addresses/2,
+	      tk_get_all_producers/2,
+	      tk_get_all_routings/2,
+	      tk_get_all_service_contracts/2,
 	      tk_get_authorization/4,
 	      tk_get_consumer/3,
 	      tk_get_logical_address/3,
@@ -30,6 +36,11 @@ set_consumer(Envir, HSA, Desc) :-
 
 tk_get_consumer(Envir, HSA, Desc) :-
 	recorded(takConsumer, consumer(HSA, Desc, Envir)) .
+
+tk_get_all_consumers(Envir, List) :-
+	setof(consumer( HSA, Desc),
+	      tk_get_consumer(Envir, HSA, Desc),
+	      List) .
 % -----------------------------------------------------------------------
 set_producer(Envir, HSA, DescList, Hostname) :-
 	get_producer(Envir, HSA, DescList, Hostname) ,
@@ -47,6 +58,11 @@ tk_get_producer(Envir, HSA, Desc, Hostname) :-
 	get_producer(Envir, HSA, DescList, Hostname) ,
 	atomic_list_concat(DescList, ' / ', Desc) .
 
+tk_get_all_producers(Envir, List) :-
+	setof(producer(HSA, Desc, Hostname) ,
+	      tk_get_producer(Envir, HSA, Desc, Hostname) ,
+	      List).
+
 % -----------------------------------------------------------------------
 set_service_contract(Envir, Sc_Id, Interaction, Domain, IVersion, RivVersion) :-
 	tk_get_service_contract(Envir, Sc_Id, Interaction, Domain, IVersion, RivVersion) ,
@@ -57,6 +73,11 @@ set_service_contract(Envir, Sc_Id, Interaction, Domain, IVersion, RivVersion) :-
 
 tk_get_service_contract(Envir, Sc_Id, Interaction, Domain, IVersion, RivVersion) :-
 	recorded(takService, service_contract(Sc_Id, Interaction, Domain, IVersion, RivVersion, Envir)) .
+
+tk_get_all_service_contracts(Envir, List) :-
+	setof(service_contract(Sc_Id, Interaction, Domain, IVersion, RivVersion) ,
+	      tk_get_service_contract(Envir, Sc_Id, Interaction, Domain, IVersion, RivVersion) ,
+	      List) .
 
 % -----------------------------------------------------------------------
 set_authorization(Envir, Sc_Id, Logical_address, ConsumerHSA) :-
@@ -69,6 +90,11 @@ set_authorization(Envir, Sc_Id, Logical_address, ConsumerHSA) :-
 tk_get_authorization(Envir, Sc_Id, Logical_address, ConsumerHSA) :-
 	recorded(takAuth, authorization(Sc_Id, Logical_address, ConsumerHSA, Envir)) .
 
+tk_get_all_authorizations(Envir, List) :-
+	setof(authorization(B,C,D),
+	      tk_get_authorization(Envir,B,C,D) ,
+	      List) .
+
 % -----------------------------------------------------------------------
 set_routing(Envir, Sc_Id, Logical_address, Hostname) :-
 	tk_get_routing(Envir, Sc_Id, Logical_address, Hostname) ,
@@ -80,6 +106,10 @@ set_routing(Envir, Sc_Id, Logical_address, Hostname) :-
 tk_get_routing(Envir, Sc_Id, Logical_address, Hostname) :-
 	recorded(takRouting, routing(Sc_Id, Logical_address, Hostname, Envir)) .
 
+tk_get_all_routings(Envir, List) :-
+	setof(routing(B,C,D) ,
+	      tk_get_routing(Envir, B, C, D),
+	      List) .
 % -----------------------------------------------------------------------
 
 set_logical_address(Envir, LA, LADesc) :-
@@ -91,6 +121,11 @@ set_logical_address(Envir, LA, LADesc) :-
 
 tk_get_logical_address(Envir, LA, LADesc) :-
 	recorded(takLA, logical_address(LA, LADesc, Envir)) .
+
+tk_get_all_logical_addresses(Envir, List) :-
+	setof(logical_address(B,C),
+	      tk_get_logical_address(Envir,B,C) ,
+	      List) .
 % -----------------------------------------------------------------------
 
 tk_get_service_contract_consumers(Envir, Interaction, Domain, IVersion, RivVersion, ConsumerHSA, ConsumerDesc) :-
@@ -133,9 +168,7 @@ Verify the loading of the domain table
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 tk_verify(No) :-
-	setof(struct(A,B,C),
-	      tk_get_logical_address(A,B,C) ,
-	      List) ,
+	tk_get_all_authorizations(_, List) ,
 	length(List, No) .
 
 % -----------------------------------------------------------------------

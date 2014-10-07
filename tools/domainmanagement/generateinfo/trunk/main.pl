@@ -113,7 +113,7 @@ verify :-
 	dt_verify(DLines) ,
 	verify2('Domain table', DLines, 40) ,
 	tk_verify(TLines),
-	verify2('TAK (prod+QA)', TLines, 2500) ,
+	verify2('TAK (prod+QA)', TLines, 16000) ,
 	sv_verify(domains, DoLines),
 	verify2('Domains in SVN', DoLines, 50 ),
 	sv_verify(interactions, ILines),
