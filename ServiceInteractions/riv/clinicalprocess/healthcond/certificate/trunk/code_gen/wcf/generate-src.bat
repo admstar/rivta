@@ -29,9 +29,18 @@ SET SVCUTIL="svcutil.exe"
 SET W1=%SCHEMADIR%\GetCertificateForCareInteraction\GetCertificateForCareInteraction_0.9_RIVTABP21.wsdl
 SET X1=%SCHEMADIR%\GetCertificateForCareInteraction\*.xsd
 
+SET W2=%SCHEMADIR%\ListCertificatesForCareInteraction\ListCertificatesForCareInteraction_0.9_RIVTABP21.wsdl
+SET X2=%SCHEMADIR%\ListCertificatesForCareInteraction\*.xsd
+
+SET W3=%SCHEMADIR%\ListCertificatesForCitizenInteraction\ListCertificatesForCitizenInteraction_0.9_RIVTABP21.wsdl
+SET X3=%SCHEMADIR%\ListCertificatesForCitizenInteraction\*.xsd
+
+SET W4=%SCHEMADIR%\RegisterCertificateInteraction\RegisterCertificateInteraction_0.9_RIVTABP21.wsdl
+SET X4=%SCHEMADIR%\RegisterCertificateInteraction\*.xsd
+
 SET X15=schemas\core_components\*.xsd
 
-SET SCHEMAS=%W1% %X1% %X2%
+SET SCHEMAS=%W1% %X1% %W2% %X2% %W3% %X3% %W4% %X4% %X15%
 
 %SVCUTIL% /language:cs /wrapped %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
 
