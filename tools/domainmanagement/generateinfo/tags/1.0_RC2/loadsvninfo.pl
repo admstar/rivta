@@ -171,8 +171,7 @@ record_files(Rpath, DomainList, Dtag) :-
 	l_ls(Rpath, Itemlist) ,
 	l_write_trace(['record_files2 - Itemlist: ', Itemlist], 4),
 	member(trunk, Itemlist),
-	% tags does not always exist
-	%	member(tags, Itemlist),
+	member(tags, Itemlist),
 	\+ excluded_domain(Rpath) ,
 	l_write_trace(['Domain identified: ', Rpath], 2),
 	get_domain_name(Rpath, DomainList),
@@ -507,7 +506,8 @@ get_tkb_inlednings1([Inledning, LongName, ShortName| _Rest], LongName, ShortName
 	member(Inledning,
 	       [
 		   '1.1 Svenskt namn' ,
-		   '1.1. Svenskt namn'
+		   '1.1. Svenskt namn',
+		   '1 Svenskt namn' % Needed for ehr:blocking
 	       ]),
 	       ! .
 
@@ -540,13 +540,15 @@ get_tkb_inlednings2([Line|Rest], [Line|Sofar]) :-
 Find start of WEB description text.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 get_tkb_inledningw1([Inledning|Rest], Rest ) :-
-	member(Inledning,
+	member(Item,
 	       [
-		   '1.2 WEB beskrivning',
-		   '1.2 Webbeskrivning',
-		   '1.2. WEB beskrivning'
+		   '1.2 web beskrivning',
+		   '1.2 webbeskrivning',
+		   '1.2. web beskrivning',
+		   '2 WEB beskrivning' % Needed for ehr:blocking
 	       ]),
-	       ! .
+	sub_atom_icasechk(Inledning, _Start, Item),
+	! .
 
 get_tkb_inledningw1([_First|Rest], Rest2 ) :-
 	get_tkb_inledningw1(Rest, Rest2 ) .
@@ -564,8 +566,8 @@ get_tkb_inledningw2([Avslutning|_Rest], [] ) :-
 		 'Förändrade tjänstekontrakt',
 		 '2. Generella regler',
 		 'tekniskt-oberoende']) ,
-	       sub_atom_icasechk(Avslutning, _Start, Text) ,
-	       ! .
+	sub_atom_icasechk(Avslutning, _Start, Text) ,
+	! .
 
 get_tkb_inledningw2([Line|Rest], [Line|Sofar]) :-
 	get_tkb_inledningw2(Rest, Sofar) .
