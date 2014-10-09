@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Service Contract Template Generator</title>
+        
+<script type="text/javascript"
+src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>        
+<script type="text/javascript"> 
+\$(document).ready(function() {
+	\$('#profile').change(function() {
+		\$('#logicalAddressDescription').attr("TYPE", \$(this).val() == "WSIBP11" ? "HIDDEN" : "TEXT")
+	}).change();	
+	\$('#serviceInteractionType').change(function() {
+		\$('#generateInitiatorXsd').attr("disabled", \$(this).val() != "Bidirectional")	
+		\$('#isReadOnly').attr("disabled", \$(this).val() != "Request-Response")
+		if (\$(this).val() != "Request-Response") \$('#isReadOnly').val("false")
+	}).change();
+	
+});
+</script> 
+         
+    </head>
+    <body onload="init()" >
+    	<div><img alt="" src="/images/cehis-logo.png" /></div>   
+        <h1>Service contract skeleton generator</h1>        
+        <p><em>All fields are mandatory. Use buttons bellow to generate complete WSDL and skeleton service schemas.</em></p>
+        <p><em>There is also a button for downloading a zip file of all artifacts.</em></p>
+        <form action="/generator" method="post">
+        	<table><tr><td>
+            <table>
+                <tr><td>Service name:</td><td><input name="name" id="name" type="text" value="${request.getAttribute("name")}" size="50" /></td></tr>
+                 <tr><td>IPR holder:</td><td><input name="iprHolder" id="iprHolder" type="text" value="${request.getAttribute("iprHolder")}" size="50" /></td></tr>
+                <tr><td>Description:</td><td><input size="68" name="description" id="description" value="${request.getAttribute("description")}" type="text" /></td></tr>
+                <tr><td>Architecture domain:</td><td><input name="architectureDomain" id="architectureDomain" value="${request.getAttribute("architectureDomain")}" type="text" /></td></tr>
+                <tr><td>Service domain:</td><td><input name="domain" id="domain" value="${request.getAttribute("domain")}" type="text" /></td></tr>
+                <tr><td>Sub-domain:</td><td><input name="subDomain" id="subDomain" type="text" value="${request.getAttribute("subDomain")}" /></td></tr>
+                <tr><td>Major version:</td><td><input name="majorVersion" id="majorVersion" type="text" value="${request.getAttribute("majorVersion")}" size="2" /></td></tr>
+                <tr><td>Minor version:</td><td><input name="minorVersion" id="minorVersion" type="text" value="${request.getAttribute("minorVersion")}" size="2" /></td></tr>
+                <tr><td>Logical address description:</td><td><input name="logicalAddressDescription" id="logicalAddressDescription" size="68" type="text" value="${request.getAttribute("logicalAddressDescription")}" /></td></tr>
+                <tr><td>Service interaction type:</td><td>
+                		<% def siType = request.getAttribute("serviceInteractionType") %>
+                		<% def reqRespSelected = siType == 'Request-Response' ? "selected='selected'" : '' %>
+                		<% def oneWaySelected = siType == 'One-Way' ? "selected='selected'" :  ''%>
+                		<% def biDirSelected = siType == 'Bidirectional' ? "selected='selected'" : '' %>
+                        <select name="serviceInteractionType" id="serviceInteractionType">
+                            <option value="Request-Response" ${reqRespSelected}>Request-Response</option>
+                            <option value="One-Way" ${oneWaySelected}>One-Way</option>
+                            <option value="Bidirectional" ${biDirSelected}>Bidirectional</option>
+                		</select>
+                		                <input type="submit" value="Show Diagram" name="generate" id="showDiagram"></input></td></tr>
+                		<tr><td>Read-only:</td><td>
+                		<% def isReadOnly = request.getAttribute("isReadOnly") %>
+                		<% def isReadOnlyTrueSelected = isReadOnly == 'true' ? "selected='selected'" :  ''%>
+                		<% def isReadOnlyFalseSelected = isReadOnly == 'false' ? "selected='selected'" : '' %>
+                        <select name="isReadOnly" id="isReadOnly">
+                            <option value="true" ${isReadOnlyTrueSelected}>True</option>
+                            <option value="false" ${isReadOnlyFalseSelected}>False</option>
+                		</select>                		
+
+
+                <tr><td>RIV TA Profile:</td><td> 
+                		<% def profile = request.getAttribute("profile") %>
+                		<% def bp20Selected = profile == 'RIVTABP20' ? 'selected' : '' %>
+                		<% def bp21Selected = profile == 'RIVTABP21' ? 'selected' : '' %>
+                		<% def bp11Selected = profile == 'WSIBP11' ? 'selected' : '' %>
+                        <select name="profile" id="profile"> 
+                            <option value="RIVTABP20" selected=${bp20Selected}>RIV TA Basic Profile 2.0</option>
+                            <option value="RIVTABP21" ${bp21Selected}>RIV TA Basic Profile 2.1</option>                            
+                            <option value="WSIBP11" ${bp11Selected}>Plain WS-I Basic Profile 1.1</option>
+                        </select>
+                </td></tr>
+            </table></td>
+            <td><% if (request.getAttribute("umlImageUrl") != null) { %> <div><img alt="" src='${request.getAttribute("umlImageUrl")}' /></div> <% } %></td>
+            </tr></table>
+            <p />
+            <div>
+            <input type="submit" value="Generate complete WSDL" name="generate" id="generateWsdl"></input>
+            <input type="submit" value="Generate Responder Schema skeleton" name="generate" id="generateResponderXsd"></input>
+            <input type="submit" value="Generate Initiator Schema skeleton" name="generate" id="generateInitiatorXsd"></input>
+            <input type="submit" value="Generate zip" name="generate" id="generateZip"></input>
+            </div>
+            <p /><p /><p />
+            <p><em>Provided without any warranties by <a href="http://www.cehis.se" >Center for eHealth in Sweden</a>.</em></p>
+        </form>
+        <p />
+    </body>
+</html>
