@@ -7,6 +7,7 @@
 	      tk_get_all_service_contracts/2,
 	      tk_get_authorization/4,
 	      tk_get_consumer/3,
+	      tk_get_interaction_info/5,
 	      tk_get_logical_address/3,
 	      tk_get_producer/4,
 	      tk_get_routing/4,
@@ -228,7 +229,7 @@ loadTAK4(Envir, [InteractionLong, InConsumerHSA, InConsumerDesc, InLogicalAddres
 	l_get_hostname(ProducerUrl, Hostname) ,
 	store(producer, Envir, ProdHSA2, ProducerDesc, Hostname) ,
 	set_logical_address(Envir, LogicalAddress, LADesc) ,
-	get_interaction_info(InteractionLong, Interaction, Domain, IVersion, RivVersion) ,
+	tk_get_interaction_info(InteractionLong, Interaction, Domain, IVersion, RivVersion) ,
 	store(service_contract, Envir, Interaction, Domain, IVersion, RivVersion, SC_Id) ,
 	set_routing(Envir, SC_Id, LogicalAddress, Hostname),
 	set_authorization(Envir, SC_Id, LogicalAddress, ConsumerHSA) ,
@@ -240,7 +241,7 @@ loadTAK4(_Envir, [InteractionLong, _ConsumerHSA, _ConsumerDesc, _LogicalAddress,
 	l_write_trace('Line could not be parsed', InteractionLong, 0) .
 
 % Parse: urn:riv:ehr:accesscontrol:AssertCareEngagement:1:rivtabp20
-get_interaction_info(InteractionLong, Interaction, DomainList, IVersion, RivV) :-
+tk_get_interaction_info(InteractionLong, Interaction, DomainList, IVersion, RivV) :-
 	atomic_list_concat([urn, riv | InterList1], ':', InteractionLong) ,
 	% A patch to manage the faked level in Sec services domains
 	patchBifDomain(InterList1, InterList2),
