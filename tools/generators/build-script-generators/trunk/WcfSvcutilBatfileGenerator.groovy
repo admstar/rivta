@@ -13,7 +13,7 @@ import groovy.io.FileType
  * Version 1.1 - 2014-01-31
  * The generated script is placed in a code_gen directory
  *
- * Version 1.2 - 2014-mm-nn
+ * Version 1.2 - 2014-10-15
  * - Added code_gen to cd-commands and path of the generated C# files.
  * - Added /syncOnly to the svcutil - command to support VS 2012. VS 2010 users has to manually remove this switch.
  * - Added "#pragma warning disable 1591" as the first line in the generated C# file to avoid warnings regarding missing XML comments.
