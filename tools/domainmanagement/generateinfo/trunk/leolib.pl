@@ -1,5 +1,6 @@
 :- module(leolib, [
 	      l_common_prefix/2,
+	      l_counter_add/2,
 	      l_counter_get/2,
 	      l_counter_set/2,
 	      l_counter_inc/2,
@@ -274,6 +275,13 @@ l_counter_inc(CounterName, NewValue) :-
 
 l_counter_inc(CounterName, 0) :-
 	l_counter_set(CounterName, 0) .
+
+l_counter_add(CounterName, AddValue) :-
+	nonvar(CounterName),
+	l_counter_get(CounterName, Value) ,
+	! ,
+	NewValue is Value + AddValue ,
+	l_counter_set(CounterName, NewValue ).
 
 l_counter_dec(CounterName, NewValue) :-
 	nonvar(CounterName),
