@@ -7,6 +7,7 @@
 	      tk_get_all_service_contracts/2,
 	      tk_get_authorization/4,
 	      tk_get_consumer/3,
+	      tk_get_domain/2,
 	      tk_get_interaction_info/5,
 	      tk_get_logical_address/3,
 	      tk_get_producer/4,
@@ -79,7 +80,15 @@ tk_get_all_service_contracts(Envir, List) :-
 	setof(service_contract(Sc_Id, Interaction, Domain, IVersion, RivVersion) ,
 	      tk_get_service_contract(Envir, Sc_Id, Interaction, Domain, IVersion, RivVersion) ,
 	      List) .
-
+% -----------------------------------------------------------------------
+tk_get_domain(Envir, Domain) :-
+	findall(
+	    domain(Domain) ,
+	    tk_get_service_contract(Envir, _Sc_Id, _Interaction, Domain, _IVersion, _RivVersion) ,
+	    List),
+	List \= [] ,
+	sort(List, L2),
+	member(domain(Domain), L2).
 % -----------------------------------------------------------------------
 set_authorization(Envir, Sc_Id, Logical_address, ConsumerHSA) :-
 	tk_get_authorization(Envir, Sc_Id, Logical_address, ConsumerHSA) ,

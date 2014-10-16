@@ -1,5 +1,6 @@
 :- module(statistics, [
 	      loadstat/0,
+	      print_consumer_servicedomain/0,
 	      st_get_all_stat_records/2,
 	      st_get_stat_record/5,
 	      st_get_stat_record/6,
@@ -202,6 +203,8 @@ Below are a number of predicates to extract the statistic information in
 different formats
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
+% -----------------------------------------------------------------------
+% Grand total
 total_count(_X) :-
 	l_counter_set(total_count, 0) ,
 	st_get_stat_record(prod,_Cons,_LA,_Sc,Count) ,
@@ -210,3 +213,58 @@ total_count(_X) :-
 total_count(X) :-
 	l_counter_get(total_count, X) ,
 	l_counter_remove(total_count) .
+
+% Accumulate over all LA
+get_stat_count(ConsumerHSA, Domain, _Count ) :-
+	nonvar(ConsumerHSA),
+	nonvar(Domain),
+	l_counter_set(total_count, 0) ,
+	tk_get_service_contract(prod, Sc_Id, _Interaction, Domain, _IVersion, _RivVersion) ,
+	st_get_stat_record(prod, ConsumerHSA, _LogicalAddress, Sc_Id, Count ) ,
+	l_counter_add(total_count, Count) ,
+	fail.
+
+get_stat_count(_ConsumerHSA, _Domain, Count ) :-
+	l_counter_get(total_count, Count) ,
+	l_counter_remove(total_count) .
+
+
+% -----------------------------------------------------------------------
+get_unique_domain( Sc_Id, Domain) :-
+	tk_get_service_contract(prod, Sc_Id, _Interaction, Domain, _IVersion, _RivVersion) ,
+	! .
+% -----------------------------------------------------------------------
+get_unique_consumer_logical_address_interaction(ConsumerHSA, LogicalAddress, Sc_Id) :-
+	nonvar(ConsumerHSA),
+	var(LogicalAddress),
+	var(Sc_Id),
+	setof(
+	    struct(LogicalAddress, Sc_Id),
+	    st_get_stat_record(prod, ConsumerHSA, LogicalAddress, Sc_Id, _Count ),
+	    List),
+	sort(List, L2),
+	! ,
+	member(struct(LogicalAddress, Sc_Id), L2) .
+
+% -----------------------------------------------------------------------
+% Consumers use of service domain
+print_consumer_servicedomain :-
+	open('/home/leo/Documents/data/2014/CeHis/tmp/consumers.csv', write, Stream, [encoding(iso_latin_1)]) ,
+	print_consumer_servicedomain2(Stream) ,
+	close(Stream) .
+
+print_consumer_servicedomain2(Stream) :-
+	l_write_list(Stream, ['Tjänstekonsument HSA;Tjänstekonsument beskrivning;Tjänstedomän;Antal anrop', nl]) ,
+	tk_get_consumer(prod, ConsumerHSA, ConsumerDesc ),
+	tk_get_domain(prod, DomainList),
+	get_stat_count(ConsumerHSA, DomainList, Count),
+	Count > 0 ,
+	atomic_list_concat(DomainList, ':', Domain),
+	l_write_list([ConsumerHSA, ';', ConsumerDesc, ';', Domain, ';', Count, nl]) ,
+	l_write_list(Stream, [ConsumerHSA, ';', ConsumerDesc, ';', Domain, ';', Count, nl]) ,
+	fail.
+
+print_consumer_servicedomain2(_) .
+
+
+
