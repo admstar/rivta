@@ -83,9 +83,10 @@
  KIND, either express or implied. See the License for the
  specific language governing permissions and limitations
  under the License.-->
-<xs:schema targetNamespace="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2" xmlns:core="urn:riv:clinicalprocess:healthcond:description:2" xmlns:codes="urn:riv:clinicalprocess:healthcond:description:enums:2">
+<xs:schema targetNamespace="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2" xmlns:core="urn:riv:clinicalprocess:healthcond:description:2" xmlns:codes="urn:riv:clinicalprocess:healthcond:description:enums:2" xmlns:m1="urn:riv:clinicalprocess:healthcond:description:2.1">
   <xs:import schemaLocation="../../core_components/clinicalprocess_healthcond_description_2.1.xsd" namespace="urn:riv:clinicalprocess:healthcond:description:2"/>
   <xs:import schemaLocation="../../core_components/clinicalprocess_healthcond_description_enum_2.1.xsd" namespace="urn:riv:clinicalprocess:healthcond:description:enums:2"/>
+  <xs:import namespace="urn:riv:clinicalprocess:healthcond:description:2.1" schemaLocation="../../core_components/clinicalprocess_healthcond_description_2.1_ext.xsd"/>
   <xs:element name="GetCareDocumentation" type="tns:GetCareDocumentationType"/>
   <xs:element name="GetCareDocumentationResponse" type="tns:GetCareDocumentationResponseType"/>
   <xs:complexType name="GetCareDocumentationType">
@@ -105,8 +106,7 @@
     </xs:annotation>
     <xs:sequence>
       <xs:element name="careDocumentation" type="core:CareDocumentationType" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element minOccurs="0" name="result" type="core:ResultType"/>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="m1:result" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/description/trunk/schemas/core_components/clinicalprocess_healthcond_description_2.1.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
@@ -143,7 +143,6 @@
     </xs:annotation>
     <xs:sequence>
       <xs:element name="clinicalDocumentNote" type="tns:ClinicalDocumentNoteType"/>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="FunctionalStatusAssessmentType">
@@ -172,7 +171,7 @@
     </xs:annotation>
     <xs:sequence>
       <xs:element name="code" type="tns:CVType" minOccurs="1"/>
-      <xs:element name="referredInformation" type="tns:ReferredInformationType" minOccurs="1"/>
+      <xs:element name="referredInformation" type="tns:ReferredInformationType" minOccurs="1" maxOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -222,8 +221,7 @@
       <xs:element name="clinicalDocumentNoteTitle" type="xs:string" minOccurs="0"/>
       <xs:element name="clinicalDocumentNoteText" type="xs:string" maxOccurs="1" minOccurs="0"/>
       <xs:element name="multimediaEntry" type="tns:MultimediaType" minOccurs="0" maxOccurs="1"/>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="dissentingOpinion" type="tns:DissentingOpinionType"/>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="dissentintOpinion" type="tns:DissentingOpinionType"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="PatientSummaryHeaderType">
@@ -315,7 +313,6 @@
       <xs:element name="careContactId" type="xs:string" minOccurs="0"/>
       <xs:element minOccurs="0" name="nullified" type="xs:boolean"/>
       <xs:element minOccurs="0" name="nullifiedReason" type="xs:string"/>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="HealthcareProfessionalType">
@@ -778,53 +775,26 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="MediaTypeEnum">
-    <xs:union memberTypes="tns:ApplicationMediaEnum tns:AudioMediaTypeEnum tns:ImageMediaTypeEnum tns:ModelMediaTypeEnum tns:MultipartMediaTypeEnum tns:TextMediaTypeEnum tns:VideoMediaTypeEnum"/>
-  </xs:simpleType>
-  <xs:simpleType name="ApplicationMediaEnum">
     <xs:restriction base="xs:string">
       <xs:enumeration value="application/dicom"/>
       <xs:enumeration value="application/msword"/>
       <xs:enumeration value="application/pdf"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="AudioMediaTypeEnum">
-    <xs:restriction base="xs:string">
       <xs:enumeration value="audio/basic"/>
       <xs:enumeration value="audio/k32adpcm"/>
       <xs:enumeration value="audio/mpeg"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="ImageMediaTypeEnum">
-    <xs:restriction base="xs:string">
       <xs:enumeration value="image/g3fax"/>
       <xs:enumeration value="image/gif"/>
       <xs:enumeration value="image/jpeg"/>
       <xs:enumeration value="image/png"/>
       <xs:enumeration value="image/tiff"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="ModelMediaTypeEnum">
-    <xs:restriction base="xs:string">
       <xs:enumeration value="model/vrml"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="MultipartMediaTypeEnum">
-    <xs:restriction base="xs:string">
       <xs:enumeration value="multipart/x-hl7-cda-level1"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="TextMediaTypeEnum">
-    <xs:restriction base="xs:string">
       <xs:enumeration value="text/html"/>
       <xs:enumeration value="text/plain"/>
       <xs:enumeration value="text/rtf"/>
       <xs:enumeration value="text/sgml"/>
       <xs:enumeration value="text/x-hl7-ft"/>
       <xs:enumeration value="text/xml"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="VideoMediaTypeEnum">
-    <xs:restriction base="xs:string">
       <xs:enumeration value="video/mpeg"/>
       <xs:enumeration value="video/x-avi"/>
     </xs:restriction>
@@ -917,6 +887,35 @@
       <xs:enumeration value="TECHNICAL_ERROR"/>
     </xs:restriction>
   </xs:simpleType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/description/trunk/schemas/core_components/clinicalprocess_healthcond_description_2.1_ext.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.-->
+<xs:schema targetNamespace="urn:riv:clinicalprocess:healthcond:description:2.1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:m1="urn:riv:clinicalprocess:healthcond:description:2.1" xmlns:codes="urn:riv:clinicalprocess:healthcond:description:enums:2">
+  <xs:import schemaLocation="clinicalprocess_healthcond_description_enum_2.1.xsd" namespace="urn:riv:clinicalprocess:healthcond:description:enums:2"/>
+  <xs:element name="result">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="resultCode" type="codes:ResultCodeEnum"/>
+        <xs:element name="errorCode" type="codes:ErrorCodeEnum" minOccurs="0"/>
+        <xs:element name="logId" type="xs:string"/>
+        <xs:element minOccurs="0" name="subCode" type="xs:string"/>
+        <xs:element name="message" type="xs:string" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/description/trunk/schemas/core_components/itintegration_registry_1.0.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="urn:riv:itintegration:registry:1" elementFormDefault="qualified" version="1.0" xmlns="urn:riv:itintegration:registry:1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
     <xs:documentation>Beskrivning: 	Grundläggande informationsobjekt för domänen itintegration:registry (adressering av tjänster)
@@ -985,7 +984,8 @@ context.careUnitHSAid = careUnitHSAid
 def responseName = mockRequest.requestHeaders['x-mock-response'][0]
 log.debug("responseName: ${responseName}")
 
-return responseName</con:dispatchPath><con:dispatchStyle>SCRIPT</con:dispatchStyle><con:defaultResponse>Response DateBoundaries</con:defaultResponse><con:response name="Response DateBoundaries" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:2">
+return responseName</con:dispatchPath><con:dispatchStyle>SCRIPT</con:dispatchStyle><con:defaultResponse>Response DateBoundaries</con:defaultResponse><con:response name="Response DateBoundaries" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:2"
+xmlns:urn2="urn:riv:clinicalprocess:healthcond:description:2.1">
    <soapenv:Header/>
    <soapenv:Body>
       <urn:GetCareDocumentationResponse>
@@ -1066,13 +1066,17 @@ return responseName</con:dispatchPath><con:dispatchStyle>SCRIPT</con:dispatchSty
                   <urn1:clinicalDocumentNoteCode>utr</urn1:clinicalDocumentNoteCode>
                   <urn1:clinicalDocumentNoteTitle>title</urn1:clinicalDocumentNoteTitle>
                   <urn1:clinicalDocumentNoteText>text</urn1:clinicalDocumentNoteText>
+                  <urn1:multimediaEntry>
+                     <urn1:mediaType>application/pdf</urn1:mediaType>
+                     <urn1:value>cid:703746323182</urn1:value>
+                  </urn1:multimediaEntry>
                </urn1:clinicalDocumentNote>
             </urn1:careDocumentationBody>
          </urn:careDocumentation>
-         <urn:result>
-            <urn1:resultCode>OK</urn1:resultCode>
-            <urn1:logId>1</urn1:logId>
-         </urn:result>
+         <urn2:result>
+            <urn2:resultCode>OK</urn2:resultCode>
+            <urn2:logId>1</urn2:logId>
+         </urn2:result>
       </urn:GetCareDocumentationResponse>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2:GetCareDocumentation"/></con:response><con:response name="SoapFault" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
@@ -1096,7 +1100,8 @@ return responseName</con:dispatchPath><con:dispatchStyle>SCRIPT</con:dispatchSty
       </detail>
     </soapenv:Fault>
   </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2:GetCareDocumentation"/></con:response><con:response name="Response CareUnitHsaId" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:2">
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2:GetCareDocumentation"/></con:response><con:response name="Response CareUnitHsaId" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:2"
+xmlns:urn2="urn:riv:clinicalprocess:healthcond:description:2.1">
    <soapenv:Header/>
    <soapenv:Body>
       <urn:GetCareDocumentationResponse>
@@ -1178,13 +1183,14 @@ return responseName</con:dispatchPath><con:dispatchStyle>SCRIPT</con:dispatchSty
                </urn1:clinicalDocumentNote>
             </urn1:careDocumentationBody>
          </urn:careDocumentation>
-         <urn:result>
-            <urn1:resultCode>OK</urn1:resultCode>
-            <urn1:logId>1</urn1:logId>
-         </urn:result>
+         <urn2:result>
+            <urn2:resultCode>OK</urn2:resultCode>
+            <urn2:logId>1</urn2:logId>
+         </urn2:result>
       </urn:GetCareDocumentationResponse>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2:GetCareDocumentation"/></con:response><con:response name="Only PatientId" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:2">
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2:GetCareDocumentation"/></con:response><con:response name="Only PatientId" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:2"
+xmlns:urn2="urn:riv:clinicalprocess:healthcond:description:2.1">
    <soapenv:Header/>
    <soapenv:Body>
       <urn:GetCareDocumentationResponse>
@@ -1268,23 +1274,26 @@ return responseName</con:dispatchPath><con:dispatchStyle>SCRIPT</con:dispatchSty
                </urn1:clinicalDocumentNote>
             </urn1:careDocumentationBody>
          </urn:careDocumentation>
-         <urn:result>
-            <urn1:resultCode>OK</urn1:resultCode>
-            <urn1:logId>1</urn1:logId>
-         </urn:result>
+         <urn2:result>
+            <urn2:resultCode>OK</urn2:resultCode>
+            <urn2:logId>1</urn2:logId>
+         </urn2:result>
       </urn:GetCareDocumentationResponse>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2:GetCareDocumentation"/></con:response><con:response name="Empty Response" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:2">
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2:GetCareDocumentation"/></con:response><con:response name="Empty Response" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:2"
+xmlns:urn2="urn:riv:clinicalprocess:healthcond:description:2.1">
    <soapenv:Header/>
    <soapenv:Body>
       <urn:GetCareDocumentationResponse>
-         <urn:result>
-            <urn1:resultCode>OK</urn1:resultCode>
-            <urn1:logId>1</urn1:logId>
-         </urn:result>
+         <urn2:result>
+            <urn2:resultCode>OK</urn2:resultCode>
+            <urn2:logId>1</urn2:logId>
+         </urn2:result>
       </urn:GetCareDocumentationResponse>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2:GetCareDocumentation"/></con:response><con:response name="CareContactId Filter" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:2">
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2:GetCareDocumentation"/></con:response><con:response name="CareContactId Filter" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:2"
+xmlns:urn2="urn:riv:clinicalprocess:healthcond:description:2.1">
+
    <soapenv:Header/>
    <soapenv:Body>
       <urn:GetCareDocumentationResponse>
@@ -1368,13 +1377,15 @@ return responseName</con:dispatchPath><con:dispatchStyle>SCRIPT</con:dispatchSty
                </urn1:clinicalDocumentNote>
             </urn1:careDocumentationBody>
          </urn:careDocumentation>
-         <urn:result>
-            <urn1:resultCode>OK</urn1:resultCode>
-            <urn1:logId>1</urn1:logId>
-         </urn:result>
+         <urn2:result>
+            <urn2:resultCode>OK</urn2:resultCode>
+            <urn2:logId>1</urn2:logId>
+         </urn2:result>
       </urn:GetCareDocumentationResponse>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2:GetCareDocumentation"/></con:response><con:response name="Http-header Filter" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:2">
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2:GetCareDocumentation"/></con:response><con:response name="Http-header Filter" encoding="UTF-8" httpResponseStatus="200"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:2"
+xmlns:urn2="urn:riv:clinicalprocess:healthcond:description:2.1">
+
    <soapenv:Header/>
    <soapenv:Body>
       <urn:GetCareDocumentationResponse>
@@ -1458,10 +1469,144 @@ return responseName</con:dispatchPath><con:dispatchStyle>SCRIPT</con:dispatchSty
                </urn1:clinicalDocumentNote>
             </urn1:careDocumentationBody>
          </urn:careDocumentation>
-         <urn:result>
-            <urn1:resultCode>OK</urn1:resultCode>
-            <urn1:logId>1</urn1:logId>
-         </urn:result>
+         <urn2:result>
+            <urn2:resultCode>OK</urn2:resultCode>
+            <urn2:logId>1</urn2:logId>
+         </urn2:result>
+      </urn:GetCareDocumentationResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2:GetCareDocumentation"/></con:response><con:response name="Response 9" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+xmlns:urn="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2" xmlns:urn1="urn:riv:clinicalprocess:healthcond:description:2" 
+xmlns:urn2="urn:riv:clinicalprocess:healthcond:description:2.1">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetCareDocumentationResponse>
+         <!--Zero or more repetitions:-->
+         <urn:careDocumentation>
+            <urn1:careDocumentationHeader>
+               <urn1:documentId>?</urn1:documentId>
+               <urn1:sourceSystemHSAid>?</urn1:sourceSystemHSAid>
+               <!--Optional:-->
+               <urn1:documentTitle>?</urn1:documentTitle>
+               <!--Optional:-->
+               <urn1:documentTime>?</urn1:documentTime>
+               <urn1:patientId>
+                  <urn1:id>?</urn1:id>
+                  <urn1:type>?</urn1:type>
+                  <!--You may enter ANY elements at this point-->
+               </urn1:patientId>
+               <urn1:accountableHealthcareProfessional>
+                  <urn1:authorTime>?</urn1:authorTime>
+                  <!--Optional:-->
+                  <urn1:healthcareProfessionalHSAId>?</urn1:healthcareProfessionalHSAId>
+                  <!--Optional:-->
+                  <urn1:healthcareProfessionalName>?</urn1:healthcareProfessionalName>
+                  <!--Optional:-->
+                  <urn1:healthcareProfessionalRoleCode>
+                     <!--Optional:-->
+                     <urn1:code>?</urn1:code>
+                     <!--Optional:-->
+                     <urn1:codeSystem>?</urn1:codeSystem>
+                     <!--Optional:-->
+                     <urn1:codeSystemName>?</urn1:codeSystemName>
+                     <!--Optional:-->
+                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
+                     <!--Optional:-->
+                     <urn1:displayName>?</urn1:displayName>
+                     <!--Optional:-->
+                     <urn1:originalText>?</urn1:originalText>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:healthcareProfessionalRoleCode>
+                  <!--Optional:-->
+                  <urn1:healthcareProfessionalOrgUnit>
+                     <urn1:orgUnitHSAId>?</urn1:orgUnitHSAId>
+                     <urn1:orgUnitName>?</urn1:orgUnitName>
+                     <!--Optional:-->
+                     <urn1:orgUnitTelecom>?</urn1:orgUnitTelecom>
+                     <!--Optional:-->
+                     <urn1:orgUnitEmail>?</urn1:orgUnitEmail>
+                     <!--Optional:-->
+                     <urn1:orgUnitAddress>?</urn1:orgUnitAddress>
+                     <!--Optional:-->
+                     <urn1:orgUnitLocation>?</urn1:orgUnitLocation>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:healthcareProfessionalOrgUnit>
+                  <!--Optional:-->
+                  <urn1:healthcareProfessionalCareUnitHSAId>?</urn1:healthcareProfessionalCareUnitHSAId>
+                  <!--Optional:-->
+                  <urn1:healthcareProfessionalCareGiverHSAId>?</urn1:healthcareProfessionalCareGiverHSAId>
+                  <!--You may enter ANY elements at this point-->
+               </urn1:accountableHealthcareProfessional>
+               <!--Optional:-->
+               <urn1:legalAuthenticator>
+                  <urn1:signatureTime>?</urn1:signatureTime>
+                  <!--Optional:-->
+                  <urn1:legalAuthenticatorHSAId>?</urn1:legalAuthenticatorHSAId>
+                  <!--Optional:-->
+                  <urn1:legalAuthenticatorName>?</urn1:legalAuthenticatorName>
+                  <!--You may enter ANY elements at this point-->
+               </urn1:legalAuthenticator>
+               <urn1:approvedForPatient>?</urn1:approvedForPatient>
+               <!--Optional:-->
+               <urn1:careContactId>?</urn1:careContactId>
+               <!--Optional:-->
+               <urn1:nullified>?</urn1:nullified>
+               <!--Optional:-->
+               <urn1:nullifiedReason>?</urn1:nullifiedReason>
+            </urn1:careDocumentationHeader>
+            <urn1:careDocumentationBody>
+               <urn1:clinicalDocumentNote>
+                  <!--Optional:-->
+                  <urn1:clinicalDocumentNoteCode>?</urn1:clinicalDocumentNoteCode>
+                  <!--Optional:-->
+                  <urn1:clinicalDocumentTypeCode>?</urn1:clinicalDocumentTypeCode>
+                  <!--Optional:-->
+                  <urn1:clinicalDocumentNoteTitle>?</urn1:clinicalDocumentNoteTitle>
+                  <!--Optional:-->
+                  <urn1:clinicalDocumentNoteText>?</urn1:clinicalDocumentNoteText>
+                  <!--Optional:-->
+                  <urn1:multimediaEntry>
+                     <urn1:mediaType>?</urn1:mediaType>
+                     <!--Optional:-->
+                     <urn1:value>cid:318461800516</urn1:value>
+                     <!--Optional:-->
+                     <urn1:reference>?</urn1:reference>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:multimediaEntry>
+                  <!--Zero or more repetitions:-->
+                  <urn1:dissentintOpinion>
+                     <!--Optional:-->
+                     <urn1:opinionId>
+                        <urn1:root>?</urn1:root>
+                        <!--Optional:-->
+                        <urn1:extension>?</urn1:extension>
+                        <!--You may enter ANY elements at this point-->
+                     </urn1:opinionId>
+                     <urn1:authorTime>?</urn1:authorTime>
+                     <urn1:opinion>?</urn1:opinion>
+                     <urn1:personId>
+                        <urn1:id>?</urn1:id>
+                        <urn1:type>?</urn1:type>
+                        <!--You may enter ANY elements at this point-->
+                     </urn1:personId>
+                     <urn1:personName>?</urn1:personName>
+                     <!--You may enter ANY elements at this point-->
+                  </urn1:dissentintOpinion>
+               </urn1:clinicalDocumentNote>
+            </urn1:careDocumentationBody>
+            <!--You may enter ANY elements at this point-->
+         </urn:careDocumentation>
+         <!--Optional:-->
+         <urn2:result>
+            <urn2:resultCode>?</urn2:resultCode>
+            <!--Optional:-->
+            <urn2:errorCode>?</urn2:errorCode>
+            <urn2:logId>?</urn2:logId>
+            <!--Optional:-->
+            <urn2:subCode>?</urn2:subCode>
+            <!--Optional:-->
+            <urn2:message>?</urn2:message>
+         </urn2:result>
       </urn:GetCareDocumentationResponse>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:description:GetCareDocumentationResponder:2:GetCareDocumentation"/></con:response><con:dispatchConfig/></con:mockOperation><con:properties/></con:mockService><con:requirements/><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/><con:reporting><con:xmlTemplates/><con:parameters/></con:reporting><con:sensitiveInformation/></con:soapui-project>
