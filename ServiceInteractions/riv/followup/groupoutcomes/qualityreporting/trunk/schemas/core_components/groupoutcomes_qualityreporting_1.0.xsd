@@ -178,7 +178,7 @@
     <xs:sequence>
       <xs:element name="measureIdVersionIndependent" type="tns:IIType" minOccurs="1" maxOccurs="1"/>
       <xs:element name="measureIdVersionNumber" type="xs:integer" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="measureIdVersionDependent" type="tns:IIType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="measureIdVersionDependent" type="tns:IIType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="measurePeriod" type="tns:DatePeriodType" minOccurs="1" maxOccurs="1"/>
       <xs:element name="firstServiceEncounter" type="tns:DateType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="lastServiceEncounter" type="tns:DateType" minOccurs="0" maxOccurs="1"/>
@@ -280,14 +280,19 @@
     <xs:annotation>
       <xs:documentation>
         Kod som anger varför en enhet saknar värde. 
-        Giltiga värden är ”MSK” som betyder att värdet är känt men har utelämnats pga lägre antal 
-        rapporterade än indikatorns tröskelvärde för visning, alternativt ”UNK” som betyder att 
-        inrapporterade värden saknas från organisationen i fråga. 
+        Giltiga värden är ”MSK” som betyder att värdet är känt men har dolts 
+        pga lägre antal rapporterade värden än tröskelvärde för visning, 
+        ”INV, vilket betyder att nämnaren eller mätpopulationen är 0 och inget värde kan anges, 
+        samt ”UNK” som betyder att inrapporterade värden saknas från organisationen i fråga. 
+        I schemat tillåts även "NI" som är en generell felkod som kan användas om producenten 
+        inte kan urskilja orsaken till att ett värde saknas, "NI" är inte specificerad i TKB:n. 
       </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:enumeration value="MSK"/>
       <xs:enumeration value="UNK"/>
+      <xs:enumeration value="INV"/>
+      <xs:enumeration value="NI"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="OrganizationTypeCodeEnum">
