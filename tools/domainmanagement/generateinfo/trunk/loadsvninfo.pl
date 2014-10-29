@@ -545,6 +545,7 @@ get_tkb_inledningw1([Inledning|Rest], Rest ) :-
 		   '1.2 web beskrivning',
 		   '1.2 webbeskrivning',
 		   '1.2. web beskrivning',
+		   '1.1 Webbeskrivning', % Needed för clinicalprocess:activityprescription:actoutcome
 		   '2 WEB beskrivning' % Needed for ehr:blocking
 	       ]),
 	sub_atom_icasechk(Inledning, _Start, Item),
@@ -565,6 +566,8 @@ get_tkb_inledningw2([Avslutning|_Rest], [] ) :-
 		 '2 Målgrupp',
 		 'Förändrade tjänstekontrakt',
 		 '2. Generella regler',
+		 '3 Om dokumentet', % Needed for ehr:blocking
+		 '1.3 Om dokumentet', % Needed for ehr:log
 		 'tekniskt-oberoende']) ,
 	sub_atom_icasechk(Avslutning, _Start, Text) ,
 	! .
@@ -574,47 +577,6 @@ get_tkb_inledningw2([Line|Rest], [Line|Sofar]) :-
 
 
 
-/*
-%Find start of ordinary description text. There are a number of
-%alternatives.
-
-get_tkb_inledning1([Inledning|Rest], Rest ) :-
-	member(Inledning,
-	       ['Inledning',
-		'1 Inledning',
-		'1. Inledning',
-		'1 Om dokumentet',
-		'1.1 Om dokumentet',
-		'2. Inledning',
-		'2 Inledning',
-		'3 Inledning',
-		'4 Inledning']),
-	       ! .
-
-get_tkb_inledning1([_First|Rest], Rest2 ) :-
-	get_tkb_inledning1(Rest, Rest2 ) .
-
-
-
-%Identify end of ordinary description
-
-get_tkb_inledning2([Avslutning|_Rest], [] ) :-
-	member(Text,
-	       [ 'teknikoberoende',
-		 %'de tekniska kontrakten' ,
-		 'de tekniska kontrakten' ,
-		 % 'teknik-oberoende',
-		 '2 Målgrupp',
-		 'Förändrade tjänstekontrakt',
-		 '2. Generella regler',
-		 '1.2. Bakgrund',
-		 'tekniskt-oberoende']) ,
-	       sub_atom_icasechk(Avslutning, _Start, Text) ,
-	       ! .
-
-get_tkb_inledning2([Line|Rest], [Line|Sofar]) :-
-	get_tkb_inledning2(Rest, Sofar) .
-*/
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Convert between different formats for tags, branches and trunk
