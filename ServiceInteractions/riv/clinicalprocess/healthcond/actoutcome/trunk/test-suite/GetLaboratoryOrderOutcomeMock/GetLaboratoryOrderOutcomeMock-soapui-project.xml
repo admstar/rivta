@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project activeEnvironment="Default" name="GetLaboratoryOrderOutcomeMock" resourceRoot="${projectDir}" soapui-version="5.0.0-beta" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetLaboratoryOrderOutcomeResponderBinding" type="wsdl" bindingName="{urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcome:3:rivtabp21}GetLaboratoryOrderOutcomeResponderBinding" soapVersion="1_1" anonymous="optional" definition="../../schemas/interactions/GetLaboratoryOrderOutcomeInteraction/GetLaboratoryOrderOutcomeInteraction_3.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/actoutcome/trunk/schemas/interactions/GetLaboratoryOrderOutcomeInteraction/GetLaboratoryOrderOutcomeInteraction_3.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/actoutcome/trunk/schemas/interactions/GetLaboratoryOrderOutcomeInteraction/GetLaboratoryOrderOutcomeInteraction_3.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+<con:soapui-project activeEnvironment="Default" name="GetLaboratoryOrderOutcomeMock" resourceRoot="${projectDir}" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetLaboratoryOrderOutcomeResponderBinding" type="wsdl" bindingName="{urn:riv:clinicalprocess:healthcond:actoutcome:GetLaboratoryOrderOutcome:3:rivtabp21}GetLaboratoryOrderOutcomeResponderBinding" soapVersion="1_1" anonymous="optional" definition="../../schemas/interactions/GetLaboratoryOrderOutcomeInteraction/GetLaboratoryOrderOutcomeInteraction_3.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/actoutcome/trunk/schemas/interactions/GetLaboratoryOrderOutcomeInteraction/GetLaboratoryOrderOutcomeInteraction_3.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/actoutcome/trunk/schemas/interactions/GetLaboratoryOrderOutcomeInteraction/GetLaboratoryOrderOutcomeInteraction_3.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
@@ -146,6 +146,7 @@
       <xs:element name="actText" type="xs:string"/>
       <xs:element name="actTime" type="tns:TimeStampType" minOccurs="0"/>
       <xs:element name="actResult" type="tns:MultimediaType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element minOccurs="0" name="attested" type="tns:AttestedType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -546,12 +547,21 @@
       <xs:element name="method" type="xs:string" minOccurs="0"/>
       <xs:element maxOccurs="unbounded" minOccurs="0" name="relationToAnalysis" type="tns:RelationToAnalysisType"/>
       <xs:element name="analysisOutcome" type="tns:AnalysisOutcomeType" minOccurs="0"/>
+      <xs:element minOccurs="0" name="attested" type="tns:AttestedType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="RelationToAnalysisType">
     <xs:sequence>
       <xs:element name="analysisId" type="tns:IIType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AttestedType">
+    <xs:sequence>
+      <xs:element name="attestedTime" type="tns:TimeStampType"/>
+      <xs:element name="attesterHSAId" type="tns:HSAIdType"/>
+      <xs:element name="attesterName" type="xs:string" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
