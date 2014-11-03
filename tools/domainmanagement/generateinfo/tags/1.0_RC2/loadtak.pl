@@ -1,6 +1,14 @@
 :- module(loadtak, [
+	      tk_get_all_authorizations/2,
+	      tk_get_all_consumers/2,
+	      tk_get_all_logical_addresses/2,
+	      tk_get_all_producers/2,
+	      tk_get_all_routings/2,
+	      tk_get_all_service_contracts/2,
 	      tk_get_authorization/4,
 	      tk_get_consumer/3,
+	      tk_get_domain/2,
+	      tk_get_interaction_info/5,
 	      tk_get_logical_address/3,
 	      tk_get_producer/4,
 	      tk_get_routing/4,
@@ -30,6 +38,11 @@ set_consumer(Envir, HSA, Desc) :-
 
 tk_get_consumer(Envir, HSA, Desc) :-
 	recorded(takConsumer, consumer(HSA, Desc, Envir)) .
+
+tk_get_all_consumers(Envir, List) :-
+	setof(consumer( HSA, Desc),
+	      tk_get_consumer(Envir, HSA, Desc),
+	      List) .
 % -----------------------------------------------------------------------
 set_producer(Envir, HSA, DescList, Hostname) :-
 	get_producer(Envir, HSA, DescList, Hostname) ,
@@ -47,6 +60,11 @@ tk_get_producer(Envir, HSA, Desc, Hostname) :-
 	get_producer(Envir, HSA, DescList, Hostname) ,
 	atomic_list_concat(DescList, ' / ', Desc) .
 
+tk_get_all_producers(Envir, List) :-
+	setof(producer(HSA, Desc, Hostname) ,
+	      tk_get_producer(Envir, HSA, Desc, Hostname) ,
+	      List).
+
 % -----------------------------------------------------------------------
 set_service_contract(Envir, Sc_Id, Interaction, Domain, IVersion, RivVersion) :-
 	tk_get_service_contract(Envir, Sc_Id, Interaction, Domain, IVersion, RivVersion) ,
@@ -58,6 +76,19 @@ set_service_contract(Envir, Sc_Id, Interaction, Domain, IVersion, RivVersion) :-
 tk_get_service_contract(Envir, Sc_Id, Interaction, Domain, IVersion, RivVersion) :-
 	recorded(takService, service_contract(Sc_Id, Interaction, Domain, IVersion, RivVersion, Envir)) .
 
+tk_get_all_service_contracts(Envir, List) :-
+	setof(service_contract(Sc_Id, Interaction, Domain, IVersion, RivVersion) ,
+	      tk_get_service_contract(Envir, Sc_Id, Interaction, Domain, IVersion, RivVersion) ,
+	      List) .
+% -----------------------------------------------------------------------
+tk_get_domain(Envir, Domain) :-
+	findall(
+	    domain(Domain) ,
+	    tk_get_service_contract(Envir, _Sc_Id, _Interaction, Domain, _IVersion, _RivVersion) ,
+	    List),
+	List \= [] ,
+	sort(List, L2),
+	member(domain(Domain), L2).
 % -----------------------------------------------------------------------
 set_authorization(Envir, Sc_Id, Logical_address, ConsumerHSA) :-
 	tk_get_authorization(Envir, Sc_Id, Logical_address, ConsumerHSA) ,
@@ -68,6 +99,11 @@ set_authorization(Envir, Sc_Id, Logical_address, ConsumerHSA) :-
 
 tk_get_authorization(Envir, Sc_Id, Logical_address, ConsumerHSA) :-
 	recorded(takAuth, authorization(Sc_Id, Logical_address, ConsumerHSA, Envir)) .
+
+tk_get_all_authorizations(Envir, List) :-
+	setof(authorization(B,C,D),
+	      tk_get_authorization(Envir,B,C,D) ,
+	      List) .
 
 % -----------------------------------------------------------------------
 set_routing(Envir, Sc_Id, Logical_address, Hostname) :-
@@ -80,6 +116,10 @@ set_routing(Envir, Sc_Id, Logical_address, Hostname) :-
 tk_get_routing(Envir, Sc_Id, Logical_address, Hostname) :-
 	recorded(takRouting, routing(Sc_Id, Logical_address, Hostname, Envir)) .
 
+tk_get_all_routings(Envir, List) :-
+	setof(routing(B,C,D) ,
+	      tk_get_routing(Envir, B, C, D),
+	      List) .
 % -----------------------------------------------------------------------
 
 set_logical_address(Envir, LA, LADesc) :-
@@ -91,6 +131,11 @@ set_logical_address(Envir, LA, LADesc) :-
 
 tk_get_logical_address(Envir, LA, LADesc) :-
 	recorded(takLA, logical_address(LA, LADesc, Envir)) .
+
+tk_get_all_logical_addresses(Envir, List) :-
+	setof(logical_address(B,C),
+	      tk_get_logical_address(Envir,B,C) ,
+	      List) .
 % -----------------------------------------------------------------------
 
 tk_get_service_contract_consumers(Envir, Interaction, Domain, IVersion, RivVersion, ConsumerHSA, ConsumerDesc) :-
@@ -133,9 +178,7 @@ Verify the loading of the domain table
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 tk_verify(No) :-
-	setof(struct(A,B,C),
-	      tk_get_logical_address(A,B,C) ,
-	      List) ,
+	tk_get_all_authorizations(_, List) ,
 	length(List, No) .
 
 % -----------------------------------------------------------------------
@@ -195,7 +238,7 @@ loadTAK4(Envir, [InteractionLong, InConsumerHSA, InConsumerDesc, InLogicalAddres
 	l_get_hostname(ProducerUrl, Hostname) ,
 	store(producer, Envir, ProdHSA2, ProducerDesc, Hostname) ,
 	set_logical_address(Envir, LogicalAddress, LADesc) ,
-	get_interaction_info(InteractionLong, Interaction, Domain, IVersion, RivVersion) ,
+	tk_get_interaction_info(InteractionLong, Interaction, Domain, IVersion, RivVersion) ,
 	store(service_contract, Envir, Interaction, Domain, IVersion, RivVersion, SC_Id) ,
 	set_routing(Envir, SC_Id, LogicalAddress, Hostname),
 	set_authorization(Envir, SC_Id, LogicalAddress, ConsumerHSA) ,
@@ -207,19 +250,25 @@ loadTAK4(_Envir, [InteractionLong, _ConsumerHSA, _ConsumerDesc, _LogicalAddress,
 	l_write_trace('Line could not be parsed', InteractionLong, 0) .
 
 % Parse: urn:riv:ehr:accesscontrol:AssertCareEngagement:1:rivtabp20
-get_interaction_info(InteractionLong, Interaction, DomainList, IVersion, RivV) :-
+tk_get_interaction_info(InteractionLong, Interaction, DomainList2, IVersion, RivV) :-
 	atomic_list_concat([urn, riv | InterList1], ':', InteractionLong) ,
 	% A patch to manage the faked level in Sec services domains
 	patchBifDomain(InterList1, InterList2),
 	reverse(InterList2, [RivVersion, IVersion, Interaction | DomainListRev]),
 	reverse(DomainListRev, DomainList) ,
-	get_interaction_info2(RivVersion, RivV) .
+	get_interaction_info2(RivVersion, RivV) ,
+	get_interaction_info3(DomainList, DomainList2) .
 %	l_write_trace([DomainList, Interaction, IVersion, RivV],3 ) .
 
 get_interaction_info2(rivtabp20, 20) :- ! .
 get_interaction_info2(rivtabp21, 21) :- ! .
 get_interaction_info2(Rivtabp, 00) :-
 	l_write_trace(['Error in get_interaction_info2', Rivtabp], 0) .
+
+% Hantering av domäner som inte följer RIVTA
+get_interaction_info3([inera,'se.apotekensservice'| Rest] , ['se_apotekensservice'| Rest] ) :- ! .
+get_interaction_info3(DomainList, DomainList) .
+
 
 % Store producer information
 store(producer, Envir, ProducerHSA, Desc, Hostname) :-
