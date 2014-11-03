@@ -250,19 +250,25 @@ loadTAK4(_Envir, [InteractionLong, _ConsumerHSA, _ConsumerDesc, _LogicalAddress,
 	l_write_trace('Line could not be parsed', InteractionLong, 0) .
 
 % Parse: urn:riv:ehr:accesscontrol:AssertCareEngagement:1:rivtabp20
-tk_get_interaction_info(InteractionLong, Interaction, DomainList, IVersion, RivV) :-
+tk_get_interaction_info(InteractionLong, Interaction, DomainList2, IVersion, RivV) :-
 	atomic_list_concat([urn, riv | InterList1], ':', InteractionLong) ,
 	% A patch to manage the faked level in Sec services domains
 	patchBifDomain(InterList1, InterList2),
 	reverse(InterList2, [RivVersion, IVersion, Interaction | DomainListRev]),
 	reverse(DomainListRev, DomainList) ,
-	get_interaction_info2(RivVersion, RivV) .
+	get_interaction_info2(RivVersion, RivV) ,
+	get_interaction_info3(DomainList, DomainList2) .
 %	l_write_trace([DomainList, Interaction, IVersion, RivV],3 ) .
 
 get_interaction_info2(rivtabp20, 20) :- ! .
 get_interaction_info2(rivtabp21, 21) :- ! .
 get_interaction_info2(Rivtabp, 00) :-
 	l_write_trace(['Error in get_interaction_info2', Rivtabp], 0) .
+
+% Hantering av domäner som inte följer RIVTA
+get_interaction_info3([inera,'se.apotekensservice'| Rest] , ['se_apotekensservice'| Rest] ) :- ! .
+get_interaction_info3(DomainList, DomainList) .
+
 
 % Store producer information
 store(producer, Envir, ProducerHSA, Desc, Hostname) :-
