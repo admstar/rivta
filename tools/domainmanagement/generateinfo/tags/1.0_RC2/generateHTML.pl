@@ -17,7 +17,47 @@ Create HTML output
 html_generate :-
 	html_generate_domain_pages ,
 	html_generate_interaction_index ,
-	html_generate_domain_index .
+	html_generate_domain_index ,
+	xml_generate_domain_index .
+
+/* =======================================================================
+Generate an XML file for all domains and services
+========================================================================== */
+
+xml_generate_domain_index :-
+	c_www_domains_dir(Dir) ,
+	atomic_concat(Dir, 'domains.xml' , XMLFile),
+	open(XMLFile, write, Stream, []) ,
+	get_xml_domains(Content) ,
+	l_html_write(Content, Stream) ,
+	close(Stream).
+
+% ----------------------------------------------------------------------
+
+get_xml_domains(domains(DomainInfoList)) :-
+	findall(
+	    DomainInfo,
+	    (	 sv_get_domain(Domain) , get_xml_domain(Domain, DomainInfo) ) ,
+	    DomainInfoList ) .
+
+get_xml_domain(Domain, domain([attribute(name, DomainName)], ReleaseInfo) ) :-
+	atomic_list_concat(Domain, ':', DomainName) ,
+	get_domain_presentation_list(Domain, ReleaseList) ,
+	get_xml_release(Domain, ReleaseList, ReleaseInfo) .
+
+get_xml_release(_Domain, [], '') :- ! .
+get_xml_release(Domain, [Tag | Rest], [release([attribute(version, Tag)], ServiceContractInfo) | RestServiceContractInfo]) :-
+	get_xml_serviceContract(Domain, Tag, ServiceContractInfo),
+	get_xml_release(Domain, Rest, RestServiceContractInfo ) .
+
+get_xml_serviceContract(Domain,
+			DomVersion,
+			SCList) :-
+	format_tag(Domain, DomVersion, Tag),
+	findall(
+	    serviceContract([attribute(version, Version), attribute('lastUpdated', Date)] ,	Service ) ,
+	    sv_get_interaction(Service, Version, _RivVersion, _Description, Domain, Tag, lastChanged(Date, _Time)) ,
+	    SCList) .
 
 /* =======================================================================
 Generate an index file for all domains
@@ -562,6 +602,13 @@ tag_synonym(Tag, 'Releasekandidat', 'releasekandidat') :-
 	! .
 
 tag_synonym(_Tag, 'Release', 'release') .
+
+% ----------------------------------------------------------------------
+% Create a correct tag
+format_tag(_Domain, trunk, trunk) :- ! .
+format_tag(Domain, Version, tag(Tag)) :-
+	atomic_list_concat(Domain, '_', Tag1) ,
+	atomic_list_concat([Tag1, Version], '_', Tag) .
 
 % ----------------------------------------------------------------------
 
