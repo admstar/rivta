@@ -605,7 +605,8 @@ html_write_starttag(Tag, Attributes, Stream) :-
 	write(Stream, '<') ,
 	write(Stream, Tag),
 	html_write_attributes(Attributes, Stream) ,
-	write(Stream, '>') .
+	write(Stream, '>') ,
+	( html_nl_after_starttag(Tag) -> nl(Stream) ; true ) .
 
 html_write_endtag(Tag, Stream) :-
 	( html_nl_before_endtag(Tag) -> nl(Stream) ; true ) ,
@@ -615,15 +616,19 @@ html_write_endtag(Tag, Stream) :-
 	( html_nl_after_endtag(Tag) -> nl(Stream) ; true ) .
 
 html_nl_before_starttag(Tag) :-
-	member(Tag, [html, head, meta, link, title, body, h1, h2, h3, h4, h5, p, table, tr, ul, ol, li] ),
+	member(Tag, [html, head, meta, link, title, body, h1, h2, h3, h4, h5, p, table, tr, ul, ol, li, release] ),
+	! .
+
+html_nl_after_starttag(Tag) :-
+	member(Tag, [domains, domain] ),
 	! .
 
 html_nl_before_endtag(Tag) :-
-	member(Tag, [table, ul] ),
+	member(Tag, [table, ul, domain] ),
 	! .
 
 html_nl_after_endtag(Tag) :-
-	member(Tag, [h1, h2, h3, h4, h5, table, title, body, p, meta, head] ),
+	member(Tag, [h1, h2, h3, h4, h5, table, title, body, p, meta, head, domain, serviceContract] ),
 	! .
 
 html_write_attributes([], _Stream) :- ! .
