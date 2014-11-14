@@ -11,30 +11,30 @@
 
  http://www.apache.org/licenses/LICENSE-2.0
 
- Unless required by applicable law or agreed to in writing,
- software distributed under the License is distributed on an
- "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- KIND, either express or implied. See the License for the
- specific language governing permissions and limitations
- under the License.
- -->
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied. See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
 <xs:schema
-        xmlns:xs='http://www.w3.org/2001/XMLSchema'
-        xmlns='urn:riv:clinicalprocess:activityprescription:prescribe:1'
-        targetNamespace='urn:riv:clinicalprocess:activityprescription:prescribe:1'
-        elementFormDefault='qualified'
-        attributeFormDefault='unqualified'
-        version='1.0'>
+    xmlns:xs='http://www.w3.org/2001/XMLSchema'
+    xmlns='urn:riv:clinicalprocess:activityprescription:prescribe:1'
+    targetNamespace='urn:riv:clinicalprocess:activityprescription:prescribe:1'
+    elementFormDefault='qualified'
+    attributeFormDefault='unqualified'
+    version='1.0'>
 
     <xs:annotation>
         <xs:documentation>
             Beskrivning: 	    Informationsobjekt för dosmodell
             Revisionshistorik:  2013-04-29 Fredrik Johansson, Apotekens Service AB
-                                Separat schema för doseringsmodell. Nya doseringstyper.
-                                2013-05-01 Daniel Sundberg, Apotekens Service AB
-                                Rensat objekt som inte skiljer sig in/ut.
-                                2013-06-28 Daniel Sundberg, Apotekens Service AB.
-                                Konsoliderat struktur och ordning för läsbarhet.
+            Separat schema för doseringsmodell. Nya doseringstyper.
+            2013-05-01 Daniel Sundberg, Apotekens Service AB
+            Rensat objekt som inte skiljer sig in/ut.
+            2013-06-28 Daniel Sundberg, Apotekens Service AB.
+            Konsoliderat struktur och ordning för läsbarhet.
         </xs:documentation>
     </xs:annotation>
 
@@ -483,7 +483,7 @@ Obligatorisk parameter om Fast dosering saknas.</xs:documentation>
                 </xs:element>
 
                 <xs:element name="dagNr"
-                            type="xs:int"
+                            type="Dagnummer"
                             minOccurs="1"
                             maxOccurs="1"
                             nillable="false">
@@ -533,7 +533,7 @@ Obligatorisk parameter om Fast dosering saknas.</xs:documentation>
 
             <xs:element name="dos"
                         type="Intervall"
-                        minOccurs="1"
+                        minOccurs="0"
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
@@ -743,7 +743,7 @@ Obligatorisk parameter om Fast dosering saknas.</xs:documentation>
     <xs:simpleType name="villkorstext">
         <xs:annotation>
             <xs:documentation>Text som anger villkor kopplat till en villkorsdosering, t.ex. "vid behov".
-Kan anges endast om Villkorsdosering används.</xs:documentation>
+                Kan anges endast om Villkorsdosering används.</xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
             <xs:minLength value="1"/>
@@ -813,5 +813,14 @@ Kan anges endast om Villkorsdosering används.</xs:documentation>
             <xs:enumeration value="AR"/>
         </xs:restriction>
     </xs:simpleType>
-
+    
+    <xs:simpleType name="Dagnummer">
+        <xs:annotation>
+            <xs:documentation>Dag i månaden</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="31"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>
