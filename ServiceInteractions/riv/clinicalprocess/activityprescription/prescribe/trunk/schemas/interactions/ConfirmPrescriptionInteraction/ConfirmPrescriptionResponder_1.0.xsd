@@ -79,13 +79,23 @@ Anges för patienter med befintligt underlag.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
-            <xs:element name="forskrivningsId"
+            <xs:element name="samtyckeLasRecept"
+                        type="xs:boolean"
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>Patientens givna samtycke till att läsa ur receptdepån.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="receptId"
                         type="xs:long"
                         minOccurs="1"
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Förskrivningens id.</xs:documentation>
+                    <xs:documentation>Receptets id.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
@@ -123,17 +133,27 @@ Anges för patienter med befintligt underlag.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
-            <xs:element name="klientinformation"
-                        type="prescribe:Klientinformation"
-                        minOccurs="0"
+            <xs:element name="anvandareinformation"
+                        type="prescribe:Anvandareinformation"
+                        minOccurs="1"
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
                     <xs:documentation>Klientinformation innehållande anropande systems information.
-Obligatorisk information vid anrop till receptregister.</xs:documentation>
+Obligatorisk information vid anrop till Receptdepå human.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
+            <xs:element name="klientinformation"
+                        type="prescribe:Klientinformation"
+                        minOccurs="1"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>Klientinformation innehållande anropande systems information.
+Obligatorisk information vid anrop till Receptdepå human.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
 
             <xs:any namespace='##other'
                     processContents='lax'
@@ -147,12 +167,22 @@ Obligatorisk information vid anrop till receptregister.</xs:documentation>
         <xs:sequence>
 
             <xs:element name="ordinationsId"
-                        type="xs:string"
+                        type="prescribe:UUID"
                         minOccurs="0"
                         maxOccurs="1"
                         nillable="false">
                 <xs:annotation>
                     <xs:documentation>Referens till ordination som verifierats.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="ordinationkedjeId"
+                        type="prescribe:UUID"
+                        minOccurs="0"
+                        maxOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>Referens till ordinationskedjan som skapats.</xs:documentation>
                 </xs:annotation>
             </xs:element>
 
