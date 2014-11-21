@@ -40,7 +40,13 @@ get_xml_domains(domains(DomainInfoList)) :-
 	    (	 sv_get_domain(Domain) , get_xml_domain(Domain, DomainInfo) ) ,
 	    DomainInfoList ) .
 
-get_xml_domain(Domain, domain([attribute(name, DomainName)], ReleaseInfo) ) :-
+get_xml_domain(Domain, domain([
+			   attribute(name, DomainName),
+			   attribute(swedish_name, LongSwedish),
+			   attribute(swedish_nickname, ShortSwedish)
+		       ],
+			      ReleaseInfo) ) :-
+	get_latest_tkb_info(Domain, _Tag, _TkbLink, _LastChanged, _TkbDescription, LongSwedish, ShortSwedish) ,
 	atomic_list_concat(Domain, ':', DomainName) ,
 	get_domain_presentation_list(Domain, ReleaseList) ,
 	get_xml_release(Domain, ReleaseList, ReleaseInfo) .
