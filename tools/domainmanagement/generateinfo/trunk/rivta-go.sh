@@ -13,6 +13,8 @@ TAKQA=$EXECDIR/TakQA.csv
 WWWDIR=$HOME/tmp/www
 DOMAINSDIR=$WWWDIR/domains
 
+TKBTEXTDIR=$HOME/tmp/tkb_store
+
 DOMAINTABLEURL='http://code.google.com/p/rivta/wiki/ServiceDomainTable'
 
 # Check if libreoffice is running. Must be killed before prolog code is started!
