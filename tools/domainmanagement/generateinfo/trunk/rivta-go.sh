@@ -2,20 +2,20 @@
 
 # The following environment variable must be set
 
-SVNDIR=$HOME/rivta-read-only
-SVNRIVDIR=$SVNDIR/ServiceInteractions/riv
+export SVNDIR=$HOME/rivta-read-only
+export SVNRIVDIR=$SVNDIR/ServiceInteractions/riv
 
 #EXECDIR=$SVNDIR/tools/domainmanagement/generateinfo/tags/1.0-RC1
-EXECDIR=$SVNDIR/tools/domainmanagement/generateinfo/trunk
-TAKPROD=$EXECDIR/TakProd.csv
-TAKQA=$EXECDIR/TakQA.csv
+export EXECDIR=$SVNDIR/tools/domainmanagement/generateinfo/trunk
+export TAKPROD=$EXECDIR/TakProd.csv
+export TAKQA=$EXECDIR/TakQA.csv
 
-WWWDIR=$HOME/tmp/www
-DOMAINSDIR=$WWWDIR/domains
+export WWWDIR=$HOME/tmp/www
+export DOMAINSDIR=$WWWDIR/domains
 
-TKBTEXTDIR=$HOME/tmp/tkb_store
+export TKBTEXTDIR=$HOME/tmp/tkb_store
 
-DOMAINTABLEURL='http://code.google.com/p/rivta/wiki/ServiceDomainTable'
+export DOMAINTABLEURL='http://code.google.com/p/rivta/wiki/ServiceDomainTable'
 
 # Check if libreoffice is running. Must be killed before prolog code is started!
 # ps -ef | grep libreoffice
