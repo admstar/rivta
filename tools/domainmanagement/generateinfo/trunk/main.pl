@@ -16,16 +16,20 @@ domainTableUrl(Url) :-
 	! .
 
 domainTableUrl('http://code.google.com/p/rivta/wiki/ServiceDomainTable').
+
 % ----------------------------------------------------------------------
+
 svnRootDir(Value) :-
 	getenv('SVNRIVDIR', Value) ,
 	! .
 
-svnRootDir('/home/leo/rivta-read-only/ServiceInteractions/riv') :-
-	l_current_os(unix) .
+svnRootDir(Dir) :-
+	c_home(HomeDir),
+	atomic_concat(HomeDir, '/rivta-read-only/ServiceInteractions/riv', Dir) .
 
-svnRootDir('C:/rivta-read-only/ServiceInteractions/riv') :-
-	l_current_os(win) .
+% ----------------------------------------------------------------------
+
+c_home(HomeDir) :- getenv('HOME', HomeDir) .
 
 % ----------------------------------------------------------------------
 
@@ -35,7 +39,7 @@ c_www_domains_dir(Dir) :-
 	atomic_concat(WwwDir, '/', Dir) .
 
 c_www_domains_dir(Dir) :-
-	getenv('HOME', HomeDir),
+	c_home(HomeDir),
 	! ,
 	atomic_concat(HomeDir, '/tmp/www/domains/', Dir) .
 
@@ -49,7 +53,15 @@ c_tkb_text_dir(Dir) :-
 	! ,
 	atomic_concat(TkbDir, '/', Dir) .
 
-c_tkb_text_dir('/home/leo/tmp/tkb_store/') .
+c_tkb_text_dir(Dir) :-
+	c_home(HomeDir),
+	! ,
+	atomic_concat(HomeDir, '/tmp/tkb_store/', Dir) .
+
+c_tkb_text_dir(_Dir) :-
+	l_write_trace('tkb_store dir not found in main.pl!', 0) ,
+	fail .
+
 % ----------------------------------------------------------------------
 
 c_takFile(prod, Prod) :-

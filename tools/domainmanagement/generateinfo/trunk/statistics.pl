@@ -249,9 +249,12 @@ get_unique_consumer_logical_address_interaction(ConsumerHSA, LogicalAddress, Sc_
 % -----------------------------------------------------------------------
 % Consumers use of service domain
 print_consumer_servicedomain :-
-	open('/home/leo/Documents/data/2014/CeHis/tmp/consumers.csv', write, Stream, [encoding(iso_latin_1)]) ,
+	c_home(HomeDir),
+	atomic_concat(HomeDir, '/tmp/consumers.csv', File) ,
+	open(File, write, Stream, [encoding(iso_latin_1)]) ,
 	print_consumer_servicedomain2(Stream) ,
-	close(Stream) .
+	close(Stream) ,
+	l_write_list(['CSV file written to: ', File, nl]) .
 
 print_consumer_servicedomain2(Stream) :-
 	l_write_list(Stream, ['Tjänstekonsument HSA;Tjänstekonsument beskrivning;Tjänstedomän;Antal anrop', nl]) ,
