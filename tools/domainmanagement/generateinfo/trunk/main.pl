@@ -3,7 +3,6 @@
 :- use_module(loadsvninfo).
 :- use_module(loadtak).
 :- use_module(generateHTML).
-:- use_module(generateSQL).
 :- use_module(library(http/html_write)).
 
 

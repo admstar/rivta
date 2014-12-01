@@ -1,5 +1,6 @@
 :- module(generateHTML, [
-	      html_generate/0
+	      html_generate/0,
+	      sql_generate/0
 	  ]) .
 
 :- use_module(leolib).
@@ -644,8 +645,146 @@ format_description([Line|Rest], [Line|Rest2]) :-
 
 
 /* =======================================================================
-	Other misc stuff
+	The SQL DATA FILE GENERATION STUFF
 ========================================================================== */
+
+sql_generate :-
+	l_counter_set(domains_tbl, 0),
+	l_counter_set(domain_releases_tbl, 0),
+	l_counter_set(interactions_tbl, 0),
+	l_counter_set(domain_releases_interactions_tbl, 0),
+	l_counter_set(tak_tbl, 0),
+	l_counter_set(service_components_tbl, 0),
+	l_counter_set(logical_addresses_tbl, 0),
+	l_counter_set(routing_tbl, 0),
+	l_counter_set(call_authorization_tbl, 0),
+	l_erase_all(domains_tbl),
+	l_erase_all(domain_releases_tbl),
+	l_erase_all(interactions_tbl),
+	l_erase_all(domain_releases_interactions_tbl),
+	l_erase_all(tak_tbl),
+	l_erase_all(service_components_tbl),
+	l_erase_all(logical_addresses_tbl),
+	l_erase_all(routing_tbl),
+	l_erase_all(call_authorization_tbl),
+	sql_generate_domains .
+
+
+
+/* ===================================================================
+Generate the domains table
+- description
+- id
+- lvl1
+- lvl2
+- lvl3
+- swedish_long
+- swedish_short
+
+recordz(domains_tbl,
+	domains_tbl(id,
+		    lvl1,
+		    lvl2,
+		    lvl3,
+		    description,
+		    swedish_short,
+		    swedish_long))
+
+recordz(domain_releases_tbl,
+	domain_releases_tbl(id,
+			    tag,
+			    domain_id,
+			    s_accept,
+			    i_accept,
+			    t_accept))
+
+recordz(interactions_tbl,
+	interactions_tbl(id,
+			 last_changed_date,
+			 description,
+			 minor,
+			 major,
+			 name,
+			 rivta_version))
+
+recordz(domain_releases_interactions_tbl,
+	domain_releases_interactions_tbl(id,
+					 domain_release_id,
+					 interaction_id))
+
+recordz(tak_tbl, tak_tbl(id,
+			 name))
+
+recordz(service_components_tbl, service_components_tbl(id,
+						       tak_id,
+						       hsaid,
+						       description,
+						       hostname ))
+
+recordz(logical_addresses_tbl,
+	logical_addresses_tbl(id,
+			      logical_address,
+			      description,
+			      tak_id))
+
+recordz(routing_tbl,
+	routing_tbl(id,
+		    tak_id,
+		    service_component_id,
+		    interaction_id,
+		    logical_address_id))
+
+recordz(call_authorization_tbl,
+	call_authorization_tbl(id,
+			       interaction_id,
+			       logical_address_id,
+			       service_component_id,
+			       tak_id))
+
+====================================================================== */
+sql_generate_domains :-
+	sv_get_domain(Domain) ,
+	store_domain(Domain) ,
+	fail .
+
+sql_generate_domains .
+
+% ----------------------------------------------------------------------
+
+store_domain(Domain) :-
+	get_latest_tkb_info(Domain, _Tag, _TkbLink, _LastChanged, Description, LongSwedish, ShortSwedish) ,
+	store_domain2(Domain, Domain, Description, LongSwedish, ShortSwedish) .
+
+store_domain2(Domain, [Lvl2, Lvl3], Description, Swedish_long, Swedish_short) :- store_domain2(Domain, [none, Lvl2, Lvl3], Description, Swedish_long, Swedish_short) .
+
+store_domain2(Domain, [Lvl1, Lvl2, Lvl3], Description, Swedish_long, Swedish_short) :-
+	l_counter_inc(domains_tbl, Id),
+	recordz(domains_tbl,
+		domains_tbl(Id,
+			    Lvl1,
+			    Lvl2,
+			    Lvl3,
+			    Description,
+			    Swedish_short,
+			    Swedish_long)) .
+%	store_domain_releases(Domain, Id) .
+
+% ----------------------------------------------------------------------
+
+/*
+store_domain_releases(Domain, Domain_id) :-
+
+	recordz(domain_releases_tbl,
+		domain_releases_tbl(id,
+				    tag,
+				    domain_id,
+				    s_accept,
+			    i_accept,
+				    t_accept))
+
+*/
+% ----------------------------------------------------------------------
+
 
 
 
