@@ -667,7 +667,13 @@ sql_generate :-
 	l_erase_all(logical_addresses_tbl),
 	l_erase_all(routing_tbl),
 	l_erase_all(call_authorization_tbl),
-	sql_generate_domains .
+	c_www_domains_dir(Dir) ,
+	atomic_concat(Dir, 'domdb.sql' , SQLFile),
+	open(SQLFile, write, Stream, []) ,
+	store_domains(Stream) ,
+	close(Stream).
+
+
 
 
 
@@ -693,19 +699,17 @@ recordz(domains_tbl,
 recordz(domain_releases_tbl,
 	domain_releases_tbl(id,
 			    tag,
-			    domain_id,
-			    s_accept,
-			    i_accept,
-			    t_accept))
+			    domain_id))
 
-recordz(interactions_tbl,
-	interactions_tbl(id,
-			 last_changed_date,
-			 description,
-			 minor,
-			 major,
-			 name,
-			 rivta_version))
+recorded(interactions_tbl,
+	 interactions_tbl(Id,
+			  Name,
+			  Date,
+			  Major,
+			  Minor,
+			  RivVersion,
+			  Description )) .
+
 
 recordz(domain_releases_interactions_tbl,
 	domain_releases_interactions_tbl(id,
@@ -742,50 +746,87 @@ recordz(call_authorization_tbl,
 			       tak_id))
 
 ====================================================================== */
-sql_generate_domains :-
+store_domains(Stream) :-
 	sv_get_domain(Domain) ,
-	store_domain(Domain) ,
+	store_domain(Stream, Domain) ,
 	fail .
 
-sql_generate_domains .
+store_domains(_Stream) .
 
 % ----------------------------------------------------------------------
 
-store_domain(Domain) :-
-	get_latest_tkb_info(Domain, _Tag, _TkbLink, _LastChanged, Description, LongSwedish, ShortSwedish) ,
-	store_domain2(Domain, Domain, Description, LongSwedish, ShortSwedish) .
+store_domain(Stream, Domain) :-
+	% domain table
+	get_latest_tkb_info(Domain, _Tag, _TkbLink, _LastChanged, DescriptionList, Swedish_short, Swedish_long) ,
+	atomic_list_concat(Domain, ':', DomainName) ,
+	atomic_list_concat(DescriptionList, ' ', DomDescription),
+	atomic_list_concat([DomainName, Swedish_short, Swedish_long, DomDescription], ''' , ''', Values),
+	write(Stream, 'INSERT INTO domain ( name, swedish_short, swedish_long, description) VALUES ('''),
+	write(Stream, Values ),
+	write(Stream, ''' );'),
+	nl(Stream) ,
+	%set @domain_id var
+	write(Stream, 'SET @domain_id = (SELECT id FROM domain WHERE name = '''),
+	write(Stream, DomainName),
+	write(Stream, ''' );'),
+	nl(Stream),
+	% domain_version table
+	get_domain_presentation_list(Domain, DomVerList) ,
+	member(DomVer, DomVerList),
+	write(Stream, 'INSERT INTO domain_version (domain_id, name) VALUES (@domain_id, '''),
+	write(Stream, DomVer),
+	write(Stream, ''' );'),
+	nl(Stream) ,
+	% interactions table
+	format_tag(Domain, DomVer, Tag),
+	sv_get_interaction(Service, Version, RivVersion, IntDescription, Domain, Tag, lastChanged(Date, _Time)),
+	split_version(Version, Major, Minor),
+	write(Stream, 'INSERT INTO interaction (domain_id, name, major, minor, last_changed_date, rivta_version, description) VALUES (@domain_id, '''),
+	atomic_list_concat(['rivtabp', RivVersion], RivtaBpVersion),
+	atomic_list_concat([Service, Major, Minor, Date, RivtaBpVersion, IntDescription], ''' , ''', Values2),
+	write(Stream, Values2),
+	write(Stream, ''' );'),
+	nl(Stream) ,
+	% domain_version_interactions table
+	atomic_list_concat(['INSERT INTO domain_version_interactions (domain_version_id, interaction_id) VALUES ( (SELECT id FROM domain_version WHERE domain_id = @domain_id AND name = ''',
+			    DomVer,
+			    '''), (SELECT id FROM interaction WHERE domain_id = @domain_id AND name = ''',
+			    Service,
+			    ''' AND major = ',
+			    Major,
+			    ' AND minor = ',
+			    Minor,
+			    ') );'],
+			    Values3) ,
+	write(Stream, Values3),
+	nl(Stream).
 
-store_domain2(Domain, [Lvl2, Lvl3], Description, Swedish_long, Swedish_short) :- store_domain2(Domain, [none, Lvl2, Lvl3], Description, Swedish_long, Swedish_short) .
 
-store_domain2(Domain, [Lvl1, Lvl2, Lvl3], Description, Swedish_long, Swedish_short) :-
-	l_counter_inc(domains_tbl, Id),
-	recordz(domains_tbl,
-		domains_tbl(Id,
-			    Lvl1,
-			    Lvl2,
-			    Lvl3,
-			    Description,
-			    Swedish_short,
-			    Swedish_long)) .
-%	store_domain_releases(Domain, Id) .
+split_version(Version, Major, Minor) :- atomic_list_concat([Major, Minor], '.', Version) .
 
-% ----------------------------------------------------------------------
+/* ===================================================================
 
-/*
-store_domain_releases(Domain, Domain_id) :-
+Generate the SQL insert statements
 
-	recordz(domain_releases_tbl,
-		domain_releases_tbl(id,
-				    tag,
-				    domain_id,
-				    s_accept,
-			    i_accept,
-				    t_accept))
+INSERT INTO domain (name, swedish_short, swedish_long, description)
+VALUES ('crm:scheduling', 'Tidbokning', 'individens processtöd:tillgängliggör kontaktväg:tidbokning', 'beskrivning...');
 
-*/
-% ----------------------------------------------------------------------
+SET @domain_id = (SELECT id FROM domain WHERE name = 'crm:scheduling');
+
+INSERT INTO domain_version (domain_id, name)
+VALUES (@domain_id, '1.1.1');
+
+INSERT INTO interaction (domain_id, name, major, minor, last_changed_date, rivta_version, description)
+    VALUES (@domain_id, 'CancelBooking', 1, 1, '2014-07-01', 'rivtabp20', 'beskrivning...');
+
+INSERT INTO domain_version_interactions (domain_version_id, interaction_id)
+    VALUES (
+      (SELECT id FROM domain_version WHERE domain_id = @domain_id AND name = '1.1.1'),
+      (SELECT id FROM interaction WHERE domain_id = @domain_id AND name = 'CancelBooking' AND major = 1 AND minor = 1)
+    );
 
 
+====================================================================== */
 
 
 
