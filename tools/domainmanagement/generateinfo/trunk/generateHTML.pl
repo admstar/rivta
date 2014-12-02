@@ -19,7 +19,8 @@ html_generate :-
 	html_generate_domain_pages ,
 	html_generate_interaction_index ,
 	html_generate_domain_index ,
-	xml_generate_domain_index .
+	xml_generate_domain_index ,
+	sql_generate .
 
 /* =======================================================================
 Generate an XML file for all domains and services
@@ -760,7 +761,8 @@ store_domain(Stream, Domain) :-
 	get_latest_tkb_info(Domain, _Tag, _TkbLink, _LastChanged, DescriptionList, Swedish_short, Swedish_long) ,
 	atomic_list_concat(Domain, ':', DomainName) ,
 	atomic_list_concat(DescriptionList, ' ', DomDescription),
-	atomic_list_concat([DomainName, Swedish_short, Swedish_long, DomDescription], ''' , ''', Values),
+	l_remove_characters(DomDescription, [''''], DomDescription2) ,
+	atomic_list_concat([DomainName, Swedish_short, Swedish_long, DomDescription2], ''' , ''', Values),
 	write(Stream, 'INSERT INTO domain ( name, swedish_short, swedish_long, description) VALUES ('''),
 	write(Stream, Values ),
 	write(Stream, ''' );'),
@@ -780,14 +782,16 @@ store_domain(Stream, Domain) :-
 	% interactions table
 	format_tag(Domain, DomVer, Tag),
 	sv_get_interaction(Service, Version, RivVersion, IntDescription, Domain, Tag, lastChanged(Date, _Time)),
+	l_remove_characters(IntDescription, [''''], IntDescription2) ,
 	split_version(Version, Major, Minor),
-	write(Stream, 'INSERT INTO interaction (domain_id, name, major, minor, last_changed_date, rivta_version, description) VALUES (@domain_id, '''),
+	write(Stream, 'INSERT IGNORE INTO interaction (domain_id, name, major, minor, last_changed_date, rivta_version, description) VALUES (@domain_id, '''),
 	atomic_list_concat(['rivtabp', RivVersion], RivtaBpVersion),
-	atomic_list_concat([Service, Major, Minor, Date, RivtaBpVersion, IntDescription], ''' , ''', Values2),
+	atomic_list_concat([Service, Major, Minor, Date, RivtaBpVersion, IntDescription2], ''' , ''', Values2),
 	write(Stream, Values2),
 	write(Stream, ''' );'),
 	nl(Stream) ,
 	% domain_version_interactions table
+	rivta_check(DomVer, Service, Major, Minor, AndRestrict),
 	atomic_list_concat(['INSERT INTO domain_version_interactions (domain_version_id, interaction_id) VALUES ( (SELECT id FROM domain_version WHERE domain_id = @domain_id AND name = ''',
 			    DomVer,
 			    '''), (SELECT id FROM interaction WHERE domain_id = @domain_id AND name = ''',
@@ -796,6 +800,7 @@ store_domain(Stream, Domain) :-
 			    Major,
 			    ' AND minor = ',
 			    Minor,
+			    AndRestrict,
 			    ') );'],
 			    Values3) ,
 	write(Stream, Values3),
@@ -804,6 +809,11 @@ store_domain(Stream, Domain) :-
 
 split_version(Version, Major, Minor) :- atomic_list_concat([Major, Minor], '.', Version) .
 
+rivta_check('1.0.3', 'AssertCareEngagement', 1, 0, ' AND rivta_version = ''rivtabp21''') :- ! .
+rivta_check(_DomVer, _Service, _Major, _Minor, '') .
+/*
+INSERT INTO domain_version_interactions (domain_version_id, interaction_id) VALUES ( (SELECT id FROM domain_version WHERE domain_id = @domain_id AND name = '1.0.3'), (SELECT id FROM interaction WHERE domain_id = @domain_id AND name = 'AssertCareEngagement' AND major = 1 AND minor = 0 AND rivta_version = 'rivtabp21') )
+*/
 /* ===================================================================
 
 Generate the SQL insert statements
