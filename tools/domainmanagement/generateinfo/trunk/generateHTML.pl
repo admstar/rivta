@@ -669,7 +669,7 @@ sql_generate :-
 	l_erase_all(routing_tbl),
 	l_erase_all(call_authorization_tbl),
 	c_www_domains_dir(Dir) ,
-	atomic_concat(Dir, 'domdb.sql' , SQLFile),
+	atomic_concat(Dir, 'domdb.sql.txt' , SQLFile),
 	open(SQLFile, write, Stream, []) ,
 	store_domains(Stream) ,
 	close(Stream).
@@ -791,7 +791,7 @@ store_domain(Stream, Domain) :-
 	write(Stream, ''' );'),
 	nl(Stream) ,
 	% domain_version_interactions table
-	rivta_check(DomVer, Service, Major, Minor, AndRestrict),
+%	rivta_check(DomVer, Service, Major, Minor, AndRestrict),
 	atomic_list_concat(['INSERT INTO domain_version_interactions (domain_version_id, interaction_id) VALUES ( (SELECT id FROM domain_version WHERE domain_id = @domain_id AND name = ''',
 			    DomVer,
 			    '''), (SELECT id FROM interaction WHERE domain_id = @domain_id AND name = ''',
@@ -800,8 +800,9 @@ store_domain(Stream, Domain) :-
 			    Major,
 			    ' AND minor = ',
 			    Minor,
-			    AndRestrict,
-			    ') );'],
+			    ' AND rivta_version = ''',
+			    RivtaBpVersion,
+			    ''') );'],
 			    Values3) ,
 	write(Stream, Values3),
 	nl(Stream).
@@ -809,8 +810,9 @@ store_domain(Stream, Domain) :-
 
 split_version(Version, Major, Minor) :- atomic_list_concat([Major, Minor], '.', Version) .
 
-rivta_check('1.0.3', 'AssertCareEngagement', 1, 0, ' AND rivta_version = ''rivtabp21''') :- ! .
-rivta_check(_DomVer, _Service, _Major, _Minor, '') .
+% rivta_check('1.0.3', 'AssertCareEngagement', 1, 0, ' AND rivta_version
+% = ''rivtabp21''') :- ! .
+%rivta_check(_DomVer, _Service, _Major, _Minor, '') .
 /*
 INSERT INTO domain_version_interactions (domain_version_id, interaction_id) VALUES ( (SELECT id FROM domain_version WHERE domain_id = @domain_id AND name = '1.0.3'), (SELECT id FROM interaction WHERE domain_id = @domain_id AND name = 'AssertCareEngagement' AND major = 1 AND minor = 0 AND rivta_version = 'rivtabp21') )
 */
