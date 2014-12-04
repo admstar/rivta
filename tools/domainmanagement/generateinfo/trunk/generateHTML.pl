@@ -669,7 +669,7 @@ sql_generate :-
 	l_erase_all(routing_tbl),
 	l_erase_all(call_authorization_tbl),
 	c_www_domains_dir(Dir) ,
-	atomic_concat(Dir, 'domdb.sql.txt' , SQLFile),
+	atomic_concat(Dir, 'domdb.sql' , SQLFile),
 	open(SQLFile, write, Stream, []) ,
 	store_domains(Stream) ,
 	close(Stream).
