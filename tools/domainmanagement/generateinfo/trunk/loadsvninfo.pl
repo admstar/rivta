@@ -441,8 +441,14 @@ get_tkb_file_info2(_Filepath, Txtfilepath, TkbTimestamp) :-
 get_tkb_file_info2(Filepath, Txtfilepath, _TkbTimestamp) :-
 	file_directory_name(Txtfilepath, Txtpath),
 	l_write_trace(['TKB txt to be generated: ', Txtfilepath], 1) ,
-	atomic_list_concat(['libreoffice --invisible --convert-to txt:Text --outdir ' ,Txtpath, ' \'', Filepath,'\' '], Command),
-	shell(Command).
+%	atomic_list_concat(['libreoffice --invisible --convert-to
+%	txt:Text --outdir ' ,Txtpath, ' \'', Filepath,'\' '], Command),
+	atomic_list_concat(['mkdir -p \'' , Txtpath, '\' '], Command1),
+	atomic_list_concat(['docx2txt < \'' , Filepath, '\' >  \'', Txtfilepath,'\''], Command2),
+	write(Command1) , nl ,
+	write(Command2) , nl ,
+	shell(Command1) ,
+	shell(Command2).
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 The description is read from the text file.
@@ -505,35 +511,12 @@ Find start of Swedish name
 get_tkb_inlednings1([Inledning, LongName, ShortName| _Rest], LongName, ShortName ) :-
 	member(Inledning,
 	       [
-		   '1.1 Svenskt namn' ,
-		   '1.1. Svenskt namn',
-		   '1 Svenskt namn' % Needed for ehr:blocking
+		   'Svenskt namn'
 	       ]),
 	       ! .
 
 get_tkb_inlednings1([_First|Rest], LongName, ShortName ) :-
 	get_tkb_inlednings1(Rest, LongName, ShortName ) .
-
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Identify end of Swedish name
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-get_tkb_inlednings2([Avslutning|_Rest], [] ) :-
-	member(Text,
-	       [ 'teknikoberoende',
-		 'Versionsinformation' ,
-		 'de tekniska kontrakten' ,
-		 % 'teknik-oberoende',
-		 '2 Målgrupp',
-		 'Förändrade tjänstekontrakt',
-		 '2. Generella regler',
-		 'tekniskt-oberoende']) ,
-	       sub_atom_icasechk(Avslutning, _Start, Text) ,
-	       ! .
-
-get_tkb_inlednings2([Line|Rest], [Line|Sofar]) :-
-	get_tkb_inledningw2(Rest, Sofar) .
-
-
 
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -542,13 +525,12 @@ Find start of WEB description text.
 get_tkb_inledningw1([Inledning|Rest], Rest ) :-
 	member(Item,
 	       [
-		   '1.2 web beskrivning',
-		   '1.2 webbeskrivning',
-		   '1.2. web beskrivning',
-		   '1.1 Webbeskrivning', % Needed för clinicalprocess:activityprescription:actoutcome
-		   '2 WEB beskrivning' % Needed for ehr:blocking
+		   'web beskrivning',
+		   'webbeskrivning',
+		   'Webbeskrivning', % Needed för clinicalprocess:activityprescription:actoutcome
+		   'WEB beskrivning' % Needed for ehr:blocking
 	       ]),
-	sub_atom_icasechk(Inledning, _Start, Item),
+	sub_atom_icasechk(Inledning, 0, Item),
 	! .
 
 get_tkb_inledningw1([_First|Rest], Rest2 ) :-
@@ -559,17 +541,14 @@ Identify end of WEB description
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 get_tkb_inledningw2([Avslutning|_Rest], [] ) :-
 	member(Text,
-	       [ 'teknikoberoende',
-		 'Versionsinformation' ,
-		 'de tekniska kontrakten' ,
-		 % 'teknik-oberoende',
-		 '2 Målgrupp',
+	       [ 'Versionsinformation' ,
+		 'Målgrupp',
 		 'Förändrade tjänstekontrakt',
-		 '2. Generella regler',
-		 '3 Om dokumentet', % Needed for ehr:blocking
-		 '1.3 Om dokumentet', % Needed for ehr:log
-		 'tekniskt-oberoende']) ,
-	sub_atom_icasechk(Avslutning, _Start, Text) ,
+		 'Generella regler',
+		 'I arbetet har',
+		 'Referenser',
+		 'Om dokumentet' ]) ,
+	sub_atom_icasechk(Avslutning, 0, Text) ,
 	! .
 
 get_tkb_inledningw2([Line|Rest], [Line|Sofar]) :-
