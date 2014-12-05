@@ -758,7 +758,7 @@ store_domains(_Stream) .
 
 store_domain(Stream, Domain) :-
 	% domain table
-	get_latest_tkb_info(Domain, _Tag, _TkbLink, _LastChanged, DescriptionList, Swedish_short, Swedish_long) ,
+	get_latest_tkb_info(Domain, _Tag, _TkbLink, _LastChanged, DescriptionList, Swedish_long, Swedish_short) ,
 	atomic_list_concat(Domain, ':', DomainName) ,
 	atomic_list_concat(DescriptionList, ' ', DomDescription),
 	l_remove_characters(DomDescription, [''''], DomDescription2) ,
