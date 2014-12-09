@@ -125,5 +125,98 @@
       <xs:element name="tom" type="partialDate" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
-
+  
+    <!-- Nedan återfinns typer som definierats för att baseras på CV istället 
+      för att som i tidigare tjänstekontrakt använda CD. I modellerna anges CV 
+      och det är detta som antas gälla framöver. Används initialt i webcert djupintegration 
+      och är avgränsande för dess initiala intygshantering (läkarintyg) -->
+      <xs:complexType name="typAvUtlatandeType">
+        <xs:complexContent>
+          <xs:restriction base="iso:CV">
+            <xs:attribute name="code" type="xs:string" use="required"
+              fixed="FK7263" />
+            <xs:attribute name="codeSystem" type="iso:Uid" use="required"
+              fixed="f6fb361a-e31d-48b8-8657-99b63912dd9b" />
+            <xs:attribute name="codeSystemName" type="xs:string"
+              use="required" fixed="kv_utlåtandetyp_intyg" />
+            <xs:attribute name="displayName" type="xs:string" use="required"
+              fixed="Läkarintyg enligt 3 kap. 8 § lagen (1962:381) om allmän försäkring" />
+          </xs:restriction>
+        </xs:complexContent>
+      </xs:complexType>
+      
+      <xs:complexType name="handelsekodType">
+        <xs:complexContent>
+          <xs:restriction base="iso:CV">
+            <xs:attribute name="code" type="handelsekodCodeRestrictionType"
+              use="required" />
+            <!-- id för detta kodverk är ej tillgängligt -->
+            <xs:attribute name="codeSystem" type="iso:Uid" use="required" />
+            <xs:attribute name="codeSystemName" type="xs:string"
+              use="required" fixed="kv_händelse" />
+            <xs:attribute name="displayName" type="xs:string"
+              use="required" />
+          </xs:restriction>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:simpleType name="handelsekodCodeRestrictionType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="HAN1">
+            <xs:annotation>
+              <xs:documentation>Intygsutkast skapat</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="HAN2">
+            <xs:annotation>
+              <xs:documentation>Intyg signerat</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="HAN3">
+            <xs:annotation>
+              <xs:documentation>Intyg skickat till FK</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="HAN4">
+            <xs:annotation>
+              <xs:documentation>Intygsutkast raderat</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="HAN5">
+            <xs:annotation>
+              <xs:documentation>Intyg makulerat</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="HAN6">
+            <xs:annotation>
+              <xs:documentation>Ny fråga från FK</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="HAN7">
+            <xs:annotation>
+              <xs:documentation>Nytt svar från FK</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="HAN8">
+            <xs:annotation>
+              <xs:documentation>Ny fråga till FK</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="HAN9">
+            <xs:annotation>
+              <xs:documentation>Hanterad fråga från FK</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="HAN10">
+            <xs:annotation>
+              <xs:documentation>Hanterat svar från FK</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="HAN11">
+            <xs:annotation>
+              <xs:documentation>Intygsutkast ändrat</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      
 </xs:schema>
