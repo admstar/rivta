@@ -141,4 +141,62 @@
     <xsd:restriction base="xsd:string"/>
   </xsd:simpleType>
 
+  <xsd:complexType name="CV">
+    <xsd:complexContent>
+      <xsd:extension base="ANY">
+        <xsd:sequence>
+          <xsd:element name="originalText" type="xsd:string"
+            minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+              <xsd:documentation>
+                The text or phrase used as the basis for the
+                coding.
+              </xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="code" type="xsd:string" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>
+              The plain code symbol defined by the code
+              system.
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="codeSystem" type="Uid" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>
+              Specifies the code system that defines the code.
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="codeSystemName" type="xsd:string"
+          use="optional">
+          <xsd:annotation>
+            <xsd:documentation>
+              A common name of the coding system.
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="codeSystemVersion" type="xsd:string"
+          use="optional">
+          <xsd:annotation>
+            <xsd:documentation>
+              If applicable, a version descriptor defined
+              specifically for the given code system.
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="displayName" type="xsd:string" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>
+              A name or title for the code, under which the
+              sending system shows the code value to its users.
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  
 </xsd:schema>
