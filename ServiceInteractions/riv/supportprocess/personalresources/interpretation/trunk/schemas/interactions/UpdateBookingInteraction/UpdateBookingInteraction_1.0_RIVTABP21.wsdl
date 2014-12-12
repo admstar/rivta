@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Kentor licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tjsr="urn:supportprocess:personalresources:interpretation:UpdateBookingResponder:1" xmlns:tjsi="urn:supportprocess:personalresources:interpretation:UpdateBookingInitiator:1" xmlns:tns="urn:supportprocess:personalresources:interpretation:UpdateBooking:1:rivtabp21" xmlns:itr="urn:riv:itintegration:registry:1" xmlns:ns="urn:supportprocess:personalresources:interpretation:1" name="UpdateBookingInteraction" targetNamespace="urn:supportprocess:personalresources:interpretation:UpdateBooking:1:rivtabp21">
+	<wsdl:types>
+		<xs:schema targetNamespace="urn:supportprocess:personalresources:interpretation:UpdateBooking:1:rivtabp21">
+			<xs:import schemaLocation="UpdateBookingResponder_1.0.xsd" namespace="urn:supportprocess:personalresources:interpretation:UpdateBookingResponder:1"/>
+			<xs:import schemaLocation="../../core_components/itintegration_registry_1.0.xsd" namespace="urn:riv:itintegration:registry:1"/>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="UpdateBookingRequest">
+		<wsdl:part name="LogicalAddress" element="itr:LogicalAddress">
+			<wsdl:documentation>-</wsdl:documentation>
+		</wsdl:part>
+		<wsdl:part name="parameters" element="tjsr:UpdateBooking"/>
+	</wsdl:message>
+	<wsdl:message name="UpdateBookingResponse">
+		<wsdl:part name="parameters" element="tjsr:UpdateBookingResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="UpdateBookingResponderInterface">
+		<wsdl:operation name="UpdateBooking">
+			<wsdl:input message="tns:UpdateBookingRequest"/>
+			<wsdl:output message="tns:UpdateBookingResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="UpdateBookingResponderBinding" type="tns:UpdateBookingResponderInterface">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="UpdateBooking">
+			<soap:operation soapAction="urn:supportprocess:personalresources:interpretation:UpdateBookingResponder:1:UpdateBooking" style="document"/>
+			<wsdl:input>
+				<soap:header message="tns:UpdateBookingRequest" part="LogicalAddress" use="literal"/>
+				<soap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="UpdateBookingResponderService">
+		<wsdl:port name="UpdateBookingResponderPort" binding="tns:UpdateBookingResponderBinding">
+			<soap:address location="http://tempuri.org"/>
+		</wsdl:port>
+	</wsdl:service>
+	<xs:annotation>
+		<xs:documentation>
+			 Tjänsteinteraktionens namn: UpdateBookingInteraction
+			 Beskrivning: 
+			   Updating of interpretation bookings
+			 Revisioner: 
+			 Tjänstedomän: supportservices:interpretationservice
+			 Tjänsteinteraktionstyp: Fråga-Svar
+			 WS-profil: RIVTABP21
+			 Förvaltas av: Kentor
+			 </xs:documentation>
+	</xs:annotation>
+</wsdl:definitions>
