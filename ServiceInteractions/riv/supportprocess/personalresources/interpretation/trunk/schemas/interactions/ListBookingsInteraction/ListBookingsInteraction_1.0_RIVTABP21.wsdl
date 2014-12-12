@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Kentor licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tjsr="urn:supportprocess:personalresources:interpretation:ListBookingsResponder:1" xmlns:tjsi="urn:supportprocess:personalresources:interpretation:ListBookingsInitiator:1" xmlns:tns="urn:supportprocess:personalresources:interpretation:ListBookings:1:rivtabp21" xmlns:itr="urn:riv:itintegration:registry:1" xmlns:ns="urn:supportprocess:personalresources:interpretation:1" name="ListBookingsInteraction" targetNamespace="urn:supportprocess:personalresources:interpretation:ListBookings:1:rivtabp21">
+	<wsdl:types>
+		<xs:schema targetNamespace="urn:supportprocess:personalresources:interpretation:ListBookings:1:rivtabp21">
+			<xs:import schemaLocation="ListBookingsResponder_1.0.xsd" namespace="urn:supportprocess:personalresources:interpretation:ListBookingsResponder:1"/>
+			<xs:import schemaLocation="../../core_components/itintegration_registry_1.0.xsd" namespace="urn:riv:itintegration:registry:1"/>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="ListBookingsRequest">
+		<wsdl:part name="LogicalAddress" element="itr:LogicalAddress">
+			<wsdl:documentation>-</wsdl:documentation>
+		</wsdl:part>
+		<wsdl:part name="parameters" element="tjsr:ListBookings"/>
+	</wsdl:message>
+	<wsdl:message name="ListBookingsResponse">
+		<wsdl:part name="parameters" element="tjsr:ListBookingsResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="ListBookingsResponderInterface">
+		<wsdl:operation name="ListBookings">
+			<wsdl:input message="tns:ListBookingsRequest"/>
+			<wsdl:output message="tns:ListBookingsResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="ListBookingsResponderBinding" type="tns:ListBookingsResponderInterface">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="ListBookings">
+			<soap:operation soapAction="urn:supportprocess:personalresources:interpretation:ListBookingsResponder:1:ListBookings" style="document"/>
+			<wsdl:input>
+				<soap:header message="tns:ListBookingsRequest" part="LogicalAddress" use="literal"/>
+				<soap:body parts="parameters" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="ListBookingsResponderService">
+		<wsdl:port name="ListBookingsResponderPort" binding="tns:ListBookingsResponderBinding">
+			<soap:address location="http://tempuri.org"/>
+		</wsdl:port>
+	</wsdl:service>
+	<xs:annotation>
+		<xs:documentation>
+			 Tjänsteinteraktionens namn: ListBookingsInteraction
+			 Beskrivning: 
+			   Submission of medical health reports to the Swedish social insurance institutions
+			 Revisioner: 
+			 Tjänstedomän: supportservices:interpretationservice
+			 Tjänsteinteraktionstyp: Fråga-Svar
+			 WS-profil: RIVTABP21
+			 Förvaltas av: Kentor
+			 </xs:documentation>
+	</xs:annotation>
+</wsdl:definitions>
