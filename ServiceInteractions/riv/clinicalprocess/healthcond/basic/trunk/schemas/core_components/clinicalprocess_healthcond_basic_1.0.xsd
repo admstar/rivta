@@ -25,32 +25,10 @@
 			<xs:element name="type" type="tns:CVType" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="time" type="tns:TimePeriodType" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="method" type="tns:CVType" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="value" type="tns:CVType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="value" type="tns:ValueANYType" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="targetSite" type="tns:CVType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="valueNegation" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="approvedForPatient" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="location" type="tns:LocationType" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="patient" type="tns:PatientType" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="legalAuthenticator" type="tns:LegalAuthenticatorType" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="sourceSystem" type="tns:SourceSystemType" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="relation" type="tns:RelationType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="performerRole" type="tns:PerformerRoleType" minOccurs="1" maxOccurs="1"/>
-			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="MeasurementType">
-		<xs:sequence>
-			<xs:element name="id" type="tns:IIType" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="type" type="tns:CVType" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="time" type="tns:TimePeriodType" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="method" type="tns:CVType" minOccurs="0" maxOccurs="1"/>
-			
-			<!--Exactly one of quantitativeValue and codedValue shall be used at any one time-->
-			<xs:element name="quantitativeValue" type="tns:PQType" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="codedValue" type="tns:CVType" minOccurs="0" maxOccurs="1"/>
-			
-			<xs:element name="targetSite" type="tns:CVType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="approvedForPatient" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="device" type="tns:DeviceType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="location" type="tns:LocationType" minOccurs="0" maxOccurs="1"/>
@@ -59,6 +37,7 @@
 			<xs:element name="sourceSystem" type="tns:SourceSystemType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="relation" type="tns:RelationType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="performerRole" type="tns:PerformerRoleType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="additionalParticipant" type="AdditionalParticipantType" minOccurs="0" maxOccurs="unbounded" />
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -160,6 +139,7 @@
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
+
 	<xs:complexType name="PatientType">
 		<xs:sequence>
 			<xs:element name="id" type="tns:IIType" minOccurs="1" maxOccurs="1"/>
@@ -190,7 +170,7 @@
 		</xs:annotation>
 		<xs:sequence>
 			<!-- NOTICE DOUBLE BELOW AND REVISE IF NECESSARY -->
-			<xs:element name="value" type="xs:double" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="value" type="xs:decimal" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="unit" type="xs:string" minOccurs="1" maxOccurs="1"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
@@ -256,6 +236,7 @@
 			<xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])(0[0-9]|1[0-9]|2[0123])([0-5])([0-9])([0-5])([0-9])"/>
 		</xs:restriction>
 	</xs:simpleType>
+	
 	<xs:simpleType name="URNType">
 		<xs:annotation>
 			<xs:documentation>
@@ -267,4 +248,17 @@ Regular expression to validate RFC 2141 URN syntax.
 			<xs:pattern value="urn:[a-zA-Z0-9][a-zA-Z0-9-]{1,31}:([a-zA-Z0-9()+,.:=@;$_!*'-]|%[0-9A-Fa-f]{2})+"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="UUIDType">
+        <xs:restriction base="xs:string">
+            <xs:length value="36" fixed="true" />
+            <xs:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[8-9a-bA-B][0-9a-fA-F]{3}-[0-9a-fA-F]{12}" fixed="true" />
+        </xs:restriction>
+    </xs:simpleType>
+	<xs:complexType name="ValueANYType">
+		<xs:choice>
+			<xs:element name="pq" type="PQType"/>
+			<xs:element name="ts" type="TimeStampType"/>
+			<xs:element name="cv" type="CVType" />
+		</xs:choice>
+	</xs:complexType>
 </xs:schema>
