@@ -17,10 +17,10 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<wsdl:definitions name='ProcessMeasurementInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tjsr='urn:riv:clinicalprocess:healthcond:basic:ProcessMeasurementResponder:1' xmlns:tjsi='urn:riv:clinicalprocess:healthcond:basic:ProcessMeasurementInitiator:1' xmlns:tns='urn:riv:clinicalprocess:healthcond:basic:ProcessMeasurement:1:rivtabp21' targetNamespace='urn:riv:clinicalprocess:healthcond:basic:ProcessMeasurement:1:rivtabp21' xmlns:itr='urn:riv:itintegration:registry:1'>
+<wsdl:definitions name='ProcessMeasurementsInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tjsr='urn:riv:clinicalprocess:healthcond:basic:ProcessMeasurementsResponder:1' xmlns:tjsi='urn:riv:clinicalprocess:healthcond:basic:ProcessMeasurementsInitiator:1' xmlns:tns='urn:riv:clinicalprocess:healthcond:basic:ProcessMeasurements:1:rivtabp21' targetNamespace='urn:riv:clinicalprocess:healthcond:basic:ProcessMeasurements:1:rivtabp21' xmlns:itr='urn:riv:itintegration:registry:1'>
   <xs:annotation>
     <xs:documentation>
-			 Tjänsteinteraktionens namn: ProcessMeasurementInteraction
+			 Tjänsteinteraktionens namn: ProcessMeasurementsInteraction
 			 Beskrivning: 
 			   Process measurement report
 			 Revisioner: 
@@ -31,32 +31,32 @@
 			 </xs:documentation>
   </xs:annotation>
   <wsdl:types>
-    <xs:schema targetNamespace='urn:riv:clinicalprocess:healthcond:basic:ProcessMeasurement:1:rivtabp21'>
-      <xs:import schemaLocation='ProcessMeasurementResponder_1.0.xsd' namespace='urn:riv:clinicalprocess:healthcond:basic:ProcessMeasurementResponder:1' />
+    <xs:schema targetNamespace='urn:riv:clinicalprocess:healthcond:basic:ProcessMeasurements:1:rivtabp21'>
+      <xs:import schemaLocation='ProcessMeasurementsResponder_1.0.xsd' namespace='urn:riv:clinicalprocess:healthcond:basic:ProcessMeasurementsResponder:1' />
       <xs:import schemaLocation='../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
     </xs:schema>
   </wsdl:types>
-  <wsdl:message name='ProcessMeasurementRequest'>
+  <wsdl:message name='ProcessMeasurementsRequest'>
     <wsdl:part name='LogicalAddress' element='itr:LogicalAddress'>
       <wsdl:documentation>The organisation number of the receiving insurance institution</wsdl:documentation>
     </wsdl:part>
-    <wsdl:part name='parameters' element='tjsr:ProcessMeasurement' />
+    <wsdl:part name='parameters' element='tjsr:ProcessMeasurements' />
   </wsdl:message>
-  <wsdl:message name='ProcessMeasurementResponse'>
-    <wsdl:part name='parameters' element='tjsr:ProcessMeasurementResponse' />
+  <wsdl:message name='ProcessMeasurementsResponse'>
+    <wsdl:part name='parameters' element='tjsr:ProcessMeasurementsResponse' />
   </wsdl:message>
-  <wsdl:portType name='ProcessMeasurementResponderInterface'>
-    <wsdl:operation name='ProcessMeasurement'>
-      <wsdl:input message='tns:ProcessMeasurementRequest' />
-      <wsdl:output message='tns:ProcessMeasurementResponse' />
+  <wsdl:portType name='ProcessMeasurementsResponderInterface'>
+    <wsdl:operation name='ProcessMeasurements'>
+      <wsdl:input message='tns:ProcessMeasurementsRequest' />
+      <wsdl:output message='tns:ProcessMeasurementsResponse' />
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name='ProcessMeasurementResponderBinding' type='tns:ProcessMeasurementResponderInterface'>
+  <wsdl:binding name='ProcessMeasurementsResponderBinding' type='tns:ProcessMeasurementsResponderInterface'>
     <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
-    <wsdl:operation name='ProcessMeasurement'>
-      <soap:operation soapAction='urn:riv:clinicalprocess:healthcond:basic:ProcessMeasurementResponder:1:ProcessMeasurement' style='document' />
+    <wsdl:operation name='ProcessMeasurements'>
+      <soap:operation soapAction='urn:riv:clinicalprocess:healthcond:basic:ProcessMeasurementsResponder:1:ProcessMeasurements' style='document' />
       <wsdl:input>
-        <soap:header use='literal' message='tns:ProcessMeasurementRequest' part='LogicalAddress' />
+        <soap:header use='literal' message='tns:ProcessMeasurementsRequest' part='LogicalAddress' />
         <soap:body use='literal' parts='parameters' />
       </wsdl:input>
       <wsdl:output>
@@ -64,8 +64,8 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name='ProcessMeasurementResponderService'>
-    <wsdl:port name='ProcessMeasurementResponderPort' binding='tns:ProcessMeasurementResponderBinding'>
+  <wsdl:service name='ProcessMeasurementsResponderService'>
+    <wsdl:port name='ProcessMeasurementsResponderPort' binding='tns:ProcessMeasurementsResponderBinding'>
       <soap:address location='http://tempuri.org' />
     </wsdl:port>
   </wsdl:service>
