@@ -17,10 +17,10 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<wsdl:definitions name='ProcessObservationInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tjsr='urn:riv:clinicalprocess:healthcond:basic:ProcessObservationResponder:1' xmlns:tjsi='urn:riv:clinicalprocess:healthcond:basic:ProcessObservationInitiator:1' xmlns:tns='urn:riv:clinicalprocess:healthcond:basic:ProcessObservation:1:rivtabp21' targetNamespace='urn:riv:clinicalprocess:healthcond:basic:ProcessObservation:1:rivtabp21' xmlns:itr='urn:riv:itintegration:registry:1'>
+<wsdl:definitions name='ProcessObservationsInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tjsr='urn:riv:clinicalprocess:healthcond:basic:ProcessObservationsResponder:1' xmlns:tjsi='urn:riv:clinicalprocess:healthcond:basic:ProcessObservationsInitiator:1' xmlns:tns='urn:riv:clinicalprocess:healthcond:basic:ProcessObservations:1:rivtabp21' targetNamespace='urn:riv:clinicalprocess:healthcond:basic:ProcessObservations:1:rivtabp21' xmlns:itr='urn:riv:itintegration:registry:1'>
   <xs:annotation>
     <xs:documentation>
-			 Tjänsteinteraktionens namn: ProcessObservationInteraction
+			 Tjänsteinteraktionens namn: ProcessObservationsInteraction
 			 Beskrivning: 
 			   Process observation report
 			 Revisioner: 
@@ -31,32 +31,32 @@
 			 </xs:documentation>
   </xs:annotation>
   <wsdl:types>
-    <xs:schema targetNamespace='urn:riv:clinicalprocess:healthcond:basic:ProcessObservation:1:rivtabp21'>
-      <xs:import schemaLocation='ProcessObservationResponder_1.0.xsd' namespace='urn:riv:clinicalprocess:healthcond:basic:ProcessObservationResponder:1' />
+    <xs:schema targetNamespace='urn:riv:clinicalprocess:healthcond:basic:ProcessObservations:1:rivtabp21'>
+      <xs:import schemaLocation='ProcessObservationsResponder_1.0.xsd' namespace='urn:riv:clinicalprocess:healthcond:basic:ProcessObservationsResponder:1' />
       <xs:import schemaLocation='../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
     </xs:schema>
   </wsdl:types>
-  <wsdl:message name='ProcessObservationRequest'>
+  <wsdl:message name='ProcessObservationsRequest'>
     <wsdl:part name='LogicalAddress' element='itr:LogicalAddress'>
       <wsdl:documentation>The organisation number of the receiving insurance institution</wsdl:documentation>
     </wsdl:part>
-    <wsdl:part name='parameters' element='tjsr:ProcessObservation' />
+    <wsdl:part name='parameters' element='tjsr:ProcessObservations' />
   </wsdl:message>
-  <wsdl:message name='ProcessObservationResponse'>
-    <wsdl:part name='parameters' element='tjsr:ProcessObservationResponse' />
+  <wsdl:message name='ProcessObservationsResponse'>
+    <wsdl:part name='parameters' element='tjsr:ProcessObservationsResponse' />
   </wsdl:message>
-  <wsdl:portType name='ProcessObservationResponderInterface'>
-    <wsdl:operation name='ProcessObservation'>
-      <wsdl:input message='tns:ProcessObservationRequest' />
-      <wsdl:output message='tns:ProcessObservationResponse' />
+  <wsdl:portType name='ProcessObservationsResponderInterface'>
+    <wsdl:operation name='ProcessObservations'>
+      <wsdl:input message='tns:ProcessObservationsRequest' />
+      <wsdl:output message='tns:ProcessObservationsResponse' />
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name='ProcessObservationResponderBinding' type='tns:ProcessObservationResponderInterface'>
+  <wsdl:binding name='ProcessObservationsResponderBinding' type='tns:ProcessObservationsResponderInterface'>
     <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
-    <wsdl:operation name='ProcessObservation'>
-      <soap:operation soapAction='urn:riv:clinicalprocess:healthcond:basic:ProcessObservationResponder:1:ProcessObservation' style='document' />
+    <wsdl:operation name='ProcessObservations'>
+      <soap:operation soapAction='urn:riv:clinicalprocess:healthcond:basic:ProcessObservationsResponder:1:ProcessObservations' style='document' />
       <wsdl:input>
-        <soap:header use='literal' message='tns:ProcessObservationRequest' part='LogicalAddress' />
+        <soap:header use='literal' message='tns:ProcessObservationsRequest' part='LogicalAddress' />
         <soap:body use='literal' parts='parameters' />
       </wsdl:input>
       <wsdl:output>
@@ -64,8 +64,8 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name='ProcessObservationResponderService'>
-    <wsdl:port name='ProcessObservationResponderPort' binding='tns:ProcessObservationResponderBinding'>
+  <wsdl:service name='ProcessObservationsResponderService'>
+    <wsdl:port name='ProcessObservationsResponderPort' binding='tns:ProcessObservationsResponderBinding'>
       <soap:address location='http://tempuri.org' />
     </wsdl:port>
   </wsdl:service>
