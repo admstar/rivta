@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 
-# Version 1.3-BETA - 2014-08-DD - LEO
+#	Version 1.4-BETA - 2014-12-16 - Leriks Added optional document in docs for test pourpose
+#  Version 1.3-BETA - 2014-08-DD - LEO
 #   Added -f flag to force creating zip even if RC not equal 0
 #   Added a version number in final printout. 
 # Version 1.2 - 2014-06-26 - LEO
@@ -31,11 +32,11 @@ import urllib2
 # Constants
 TOPLEVELDOMAINDIRECTORY = 'riv'
 ZIPCOMMAND = 'zip -r'
-CURRENT_VERSION='1.3-BETA'
+CURRENT_VERSION='1.4-BETA'
 NEXT_VERSION='1.3'
 
 programDescription = '''
-verifyDomainFolder 1.3-BETA. 
+verifyDomainFolder 1.4-BETA.
 The program verifies a service domain structure. 
 It iterates through all folders in a RIVTA Service Domain structure, starting from a trunk or specific tags folder.
 It verifies that the folder is defined according to the RIV TA Konfigurationsstyrning document,
@@ -62,7 +63,7 @@ MANDATORYCONTENT = {
 	'code_gen' : [[ '^jaxws$', '1'], ['^wcf$', '1']] ,
 	'code_gen/jaxws' : [[ '^pom.xml$', '1']] ,
 	'code_gen/wcf' : [[ '.bat$', '1']] ,
-	'docs' : [[ '^TKB_#DOMAIN#.doc', '1'], [ '^AB_#DOMAIN#.doc', '1']] ,
+	'docs' : [[ '^TKB_#DOMAIN#.doc', '1'], [ '^AB_#DOMAIN#.doc', '1'], [ '^VIS_#DOMAIN#.doc', '1']] ,
 	'schemas' : [[ '^interactions$', '1'], ['^core_components$', '1']] ,
 	'schemas/core_components' : [[ '.xsd$', '1']] ,
 	'schemas/interactions' : [[ 'Interaction$', '1']] ,
