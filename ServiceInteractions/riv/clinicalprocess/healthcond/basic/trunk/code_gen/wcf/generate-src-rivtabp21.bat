@@ -1,5 +1,5 @@
 
-	@REM ---------------------------------------------------------------------------------
+@REM ---------------------------------------------------------------------------------
 	
 @REM Generates c# WCF service contracts (interface), client proxies and wcf config
 	
@@ -37,27 +37,26 @@
 @REM ---------------------------------------------------------------------------------
 	
 CD ..
-	
+
+CD ..	
 	
 SET SCHEMADIR=schemas
 	
 	
-SET W0=%SCHEMADIR%\interactions\GetObservationInteraction\GetObservationInteraction_1.0_RIVTABP21.wsdl
-SET X0=%SCHEMADIR%\interactions\GetObservationInteraction\*.xsd
-SET W1=%SCHEMADIR%\interactions\GetMeasurementInteraction\GetMeasurementInteraction_1.0_RIVTABP21.wsdl
-SET X1=%SCHEMADIR%\interactions\GetMeasurementInteraction\*.xsd
-SET W2=%SCHEMADIR%\interactions\ProcessMeasurementInteraction\ProcesMeasurementInteraction_1.0_RIVTABP21.wsdl
-SET X2=%SCHEMADIR%\interactions\ProcessMeasurementInteraction\*.xsd
-SET W3=%SCHEMADIR%\interactions\ProcessObservationInteraction\ProcessObservationInteraction_1.0_RIVTABP21.wsdl
-SET X3=%SCHEMADIR%\interactions\ProcessObservationInteraction\*.xsd
-SET W4=%SCHEMADIR%\interactions\DeleteMeasurementInteraction\DeleteMeasurementInteraction_1.0_RIVTABP21.wsdl
-SET X4=%SCHEMADIR%\interactions\DeleteMeasurementInteraction\*.xsd
-SET W5=%SCHEMADIR%\interactions\DeleteObservationInteraction\DeleteObservationInteraction_1.0_RIVTABP21.wsdl
-SET X5=%SCHEMADIR%\interactions\DeleteObservationInteraction\*.xsd
+SET W0=%SCHEMADIR%\interactions\GetObservationsInteraction\GetObservationsInteraction_1.0_RIVTABP21.wsdl
+SET X0=%SCHEMADIR%\interactions\GetObservationsInteraction\*.xsd
+
+SET W3=%SCHEMADIR%\interactions\ProcessObservationsInteraction\ProcessObservationsInteraction_1.0_RIVTABP21.wsdl
+ 
+SET X3=%SCHEMADIR%\interactions\ProcessObservationsInteraction\*.xsd
+ 
+SET W5=%SCHEMADIR%\interactions\DeleteObservationsInteraction\DeleteObservationsInteraction_1.0_RIVTABP21.wsdl
+
+SET X5=%SCHEMADIR%\interactions\DeleteObservationsInteraction\*.xsd
 
 SET XCORE=%SCHEMADIR%\core_components\*.xsd
 
-SET SCHEMAS=%XCORE% %W0% %X0% %W1% %X1% %W2% %X2% %W3% %X3% %W4% %X4% %W5% %X5% 
+SET SCHEMAS=%XCORE% %W0% %X0% %W3% %X3% %W5% %X5%
 
 SET OUTFILE=/out:wcf\generated-src\ClinicalprocessHealthcondBasicInteractions.cs
 SET APPCONFIG=/config:wcf\generated-src\app.config
@@ -65,6 +64,7 @@ SET NAMESPACE=/namespace:*,Riv.Clinicalprocess.Healthcond.Basic.Schemas.v1
 SET SVCUTIL="svcutil.exe"
 %SVCUTIL% /language:cs %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
 
+cd code_gen
 CD wcf
 ECHO Generating Service contract .Net Binding interfaces and classes for clinicalprocess:healthcond:basic Release 1
 ECHO I DotNetprojektet ska du ta lagga till referens till System.ServiceModel
