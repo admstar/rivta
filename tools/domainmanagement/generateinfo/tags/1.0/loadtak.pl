@@ -17,13 +17,6 @@
 	      tk_get_service_contract_producers/7,
 	      tk_get_tak_date/2,
 	      tk_loadtak/2 ,
-	      /*
-	      tk_get_domain_consumer/4,
-	      tk_get_domain_producer/4,
-	      tk_get_interaction/5,
-	      tk_get_tak_date/2,
-	      tk_get_tak_info/5,
-	      */
 	      tk_verify/1
 	  ]) .
 
@@ -306,7 +299,10 @@ store_producer(Envir, HSA, Desc, _Hostname) :-
 % Remove all characters after " - " sequence
 clean_producer_hsa(InHsa, OutHsa) :-
 	sub_atom(InHsa, FoundAt, _Len, _After, ' - '),
+	! ,
 	sub_atom(InHsa, 0, FoundAt, _After2, OutHsa).
+
+clean_producer_hsa(Hsa, Hsa) .
 
 % Manage producer descriptions
 % Take a list of existing description and a new one. Try tto match the
