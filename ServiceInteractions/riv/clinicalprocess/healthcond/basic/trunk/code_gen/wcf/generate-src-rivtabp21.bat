@@ -58,8 +58,8 @@ SET XCORE=%SCHEMADIR%\core_components\*.xsd
 
 SET SCHEMAS=%XCORE% %W0% %X0% %W3% %X3% %W5% %X5%
 
-SET OUTFILE=/out:wcf\generated-src\ClinicalprocessHealthcondBasicInteractions.cs
-SET APPCONFIG=/config:wcf\generated-src\app.config
+SET OUTFILE=/out:code_gen\wcf\generated-src\ClinicalprocessHealthcondBasicInteractions.cs
+SET APPCONFIG=/config:code_gen\wcf\generated-src\app.config
 SET NAMESPACE=/namespace:*,Riv.Clinicalprocess.Healthcond.Basic.Schemas.v1
 SET SVCUTIL="svcutil.exe"
 %SVCUTIL% /language:cs %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
