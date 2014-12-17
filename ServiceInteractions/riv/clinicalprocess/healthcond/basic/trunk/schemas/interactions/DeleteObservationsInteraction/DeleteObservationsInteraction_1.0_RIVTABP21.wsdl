@@ -17,10 +17,10 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<wsdl:definitions name='DeleteObservationInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tjsr='urn:riv:clinicalprocess:healthcond:basic:DeleteObservationResponder:1' xmlns:tjsi='urn:riv:clinicalprocess:healthcond:basic:DeleteObservationInitiator:1' xmlns:tns='urn:riv:clinicalprocess:healthcond:basic:DeleteObservation:1:rivtabp21' targetNamespace='urn:riv:clinicalprocess:healthcond:basic:DeleteObservation:1:rivtabp21' xmlns:itr='urn:riv:itintegration:registry:1'>
+<wsdl:definitions name='DeleteObservationsInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tjsr='urn:riv:clinicalprocess:healthcond:basic:DeleteObservationsResponder:1' xmlns:tjsi='urn:riv:clinicalprocess:healthcond:basic:DeleteObservationsInitiator:1' xmlns:tns='urn:riv:clinicalprocess:healthcond:basic:DeleteObservations:1:rivtabp21' targetNamespace='urn:riv:clinicalprocess:healthcond:basic:DeleteObservations:1:rivtabp21' xmlns:itr='urn:riv:itintegration:registry:1'>
   <xs:annotation>
     <xs:documentation>
-			 Tjänsteinteraktionens namn: DeleteObservationInteraction
+			 Tjänsteinteraktionens namn: DeleteObservationsInteraction
 			 Beskrivning: 
 			   Delete observation report
 			 Revisioner: 
@@ -31,32 +31,32 @@
 			 </xs:documentation>
   </xs:annotation>
   <wsdl:types>
-    <xs:schema targetNamespace='urn:riv:clinicalprocess:healthcond:basic:DeleteObservation:1:rivtabp21'>
-      <xs:import schemaLocation='DeleteObservationResponder_1.0.xsd' namespace='urn:riv:clinicalprocess:healthcond:basic:DeleteObservationResponder:1' />
+    <xs:schema targetNamespace='urn:riv:clinicalprocess:healthcond:basic:DeleteObservations:1:rivtabp21'>
+      <xs:import schemaLocation='DeleteObservationsResponder_1.0.xsd' namespace='urn:riv:clinicalprocess:healthcond:basic:DeleteObservationsResponder:1' />
       <xs:import schemaLocation='../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
     </xs:schema>
   </wsdl:types>
-  <wsdl:message name='DeleteObservationRequest'>
+  <wsdl:message name='DeleteObservationsRequest'>
     <wsdl:part name='LogicalAddress' element='itr:LogicalAddress'>
       <wsdl:documentation>The organisation number of the receiving insurance institution</wsdl:documentation>
     </wsdl:part>
-    <wsdl:part name='parameters' element='tjsr:DeleteObservation' />
+    <wsdl:part name='parameters' element='tjsr:DeleteObservations' />
   </wsdl:message>
-  <wsdl:message name='DeleteObservationResponse'>
-    <wsdl:part name='parameters' element='tjsr:DeleteObservationResponse' />
+  <wsdl:message name='DeleteObservationsResponse'>
+    <wsdl:part name='parameters' element='tjsr:DeleteObservationsResponse' />
   </wsdl:message>
-  <wsdl:portType name='DeleteObservationResponderInterface'>
-    <wsdl:operation name='DeleteObservation'>
-      <wsdl:input message='tns:DeleteObservationRequest' />
-      <wsdl:output message='tns:DeleteObservationResponse' />
+  <wsdl:portType name='DeleteObservationsResponderInterface'>
+    <wsdl:operation name='DeleteObservations'>
+      <wsdl:input message='tns:DeleteObservationsRequest' />
+      <wsdl:output message='tns:DeleteObservationsResponse' />
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name='DeleteObservationResponderBinding' type='tns:DeleteObservationResponderInterface'>
+  <wsdl:binding name='DeleteObservationsResponderBinding' type='tns:DeleteObservationsResponderInterface'>
     <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
-    <wsdl:operation name='DeleteObservation'>
-      <soap:operation soapAction='urn:riv:clinicalprocess:healthcond:basic:DeleteObservationResponder:1:DeleteObservation' style='document' />
+    <wsdl:operation name='DeleteObservations'>
+      <soap:operation soapAction='urn:riv:clinicalprocess:healthcond:basic:DeleteObservationsResponder:1:DeleteObservations' style='document' />
       <wsdl:input>
-        <soap:header use='literal' message='tns:DeleteObservationRequest' part='LogicalAddress' />
+        <soap:header use='literal' message='tns:DeleteObservationsRequest' part='LogicalAddress' />
         <soap:body use='literal' parts='parameters' />
       </wsdl:input>
       <wsdl:output>
@@ -64,8 +64,8 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name='DeleteObservationResponderService'>
-    <wsdl:port name='DeleteObservationResponderPort' binding='tns:DeleteObservationResponderBinding'>
+  <wsdl:service name='DeleteObservationsResponderService'>
+    <wsdl:port name='DeleteObservationsResponderPort' binding='tns:DeleteObservationsResponderBinding'>
       <soap:address location='http://tempuri.org' />
     </wsdl:port>
   </wsdl:service>
