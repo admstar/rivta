@@ -57,7 +57,7 @@
   </xs:complexType>
   <xs:complexType name="RequiredGenderWithRequirement">
     <xs:sequence>
-      <xs:element name="RequiredGender" type="tns:Gender" minOccurs="0"/>
+      <xs:element name="RequiredGender" type="tns:KV_KÖN" minOccurs="0"/>
       <xs:element name="RequiredLevel" type="tns:RequirementLevel"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
@@ -147,6 +147,8 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
+      <xs:element name="DoorCode" minOccurs="0" type="xs:string"/>
+      <xs:element name="LocationDetails" minOccurs="0" type="xs:string"/>
       <xs:element name="LocationName">
         <xs:simpleType>
           <xs:restriction base="xs:string">
@@ -168,7 +170,7 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
-      <xs:element name="CaregiverName">
+      <xs:element name="HealthCareProfessionalName">
         <xs:simpleType>
           <xs:restriction base="xs:string">
             <xs:minLength value="1"/>
@@ -217,7 +219,7 @@
       <xs:element name="Occasions" type="tns:BookingOccasion" maxOccurs="unbounded"/>
       <xs:element name="Data" type="tns:BookingData"/>
       <xs:element name="InquiryState" type="tns:InquiryState"/>
-      <xs:element name="LastResponseTimeUtc" type="xs:dateTime"/>
+      <xs:element name="LastResponseTime" type="xs:dateTime"/>
       <xs:element name="FirstInRank" type="xs:boolean"/>
       <xs:element name="InterpreterName" minOccurs="0">
         <xs:simpleType>
@@ -277,7 +279,7 @@
           </xs:restriction>
         </xs:simpleType>
       </xs:element>
-      <xs:element name="Gender" type="tns:Gender"/>
+      <xs:element name="Gender" type="tns:KV_KÖN"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -348,10 +350,12 @@
       <xs:enumeration value="LateCanceled"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="Gender">
+  <xs:simpleType name="KV_KÖN">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="Male"/>
-      <xs:enumeration value="Female"/>
+      <xs:enumeration value="okänt"/>
+      <xs:enumeration value="man"/>
+      <xs:enumeration value="kvinna"/>
+      <xs:enumeration value="ej tillämpligt"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="InterpretationType">
