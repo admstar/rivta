@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project activeEnvironment="Default" name="GetMedicationHistoryMock" resourceRoot="" soapui-version="5.0.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetMedicationHistoryResponderBinding" type="wsdl" bindingName="{urn:riv:clinicalprocess:activityprescription:actoutcome:GetMedicationHistory:2:rivtabp21}GetMedicationHistoryResponderBinding" soapVersion="1_1" anonymous="optional" definition="file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/activityprescription/actoutcome/trunk/schemas/interactions/GetMedicationHistoryInteraction/GetMedicationHistoryInteraction_2.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/activityprescription/actoutcome/trunk/schemas/interactions/GetMedicationHistoryInteraction/GetMedicationHistoryInteraction_2.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/activityprescription/actoutcome/trunk/schemas/interactions/GetMedicationHistoryInteraction/GetMedicationHistoryInteraction_2.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+<con:soapui-project activeEnvironment="Default" name="GetMedicationHistoryMock" resourceRoot="${projectDir}" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetMedicationHistoryResponderBinding" type="wsdl" bindingName="{urn:riv:clinicalprocess:activityprescription:actoutcome:GetMedicationHistory:2:rivtabp21}GetMedicationHistoryResponderBinding" soapVersion="1_1" anonymous="optional" definition="../../schemas/interactions/GetMedicationHistoryInteraction/GetMedicationHistoryInteraction_2.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/activityprescription/actoutcome/trunk/schemas/interactions/GetMedicationHistoryInteraction/GetMedicationHistoryInteraction_2.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/activityprescription/actoutcome/trunk/schemas/interactions/GetMedicationHistoryInteraction/GetMedicationHistoryInteraction_2.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. Inera licenses this file
@@ -19,7 +19,7 @@
   <xs:annotation>
     <xs:documentation>Tjänsteinteraktionens namn: GetMedicationHistoryInteraction
 			 Beskrivning: 
-			   
+			   Get medication history for a patient 
 			 Revisioner: 
 			 Tjänstedomän: activityprescription:actoutcome
 			 Tjänsteinteraktionstyp: Fråga-Svar
@@ -34,7 +34,7 @@
   </wsdl:types>
   <wsdl:message name="GetMedicationHistoryRequest">
     <wsdl:part name="LogicalAddress" element="itr:LogicalAddress">
-      <wsdl:documentation/>
+      <wsdl:documentation>The HSA-id of the source system or the HSA-id of Inera AB (for national aggregations service) or HSA-id of an agency (for local/regional aggregation service)</wsdl:documentation>
     </wsdl:part>
     <wsdl:part name="parameters" element="tjsr:GetMedicationHistory"/>
   </wsdl:message>
@@ -50,7 +50,7 @@
   <wsdl:binding name="GetMedicationHistoryResponderBinding" type="tns:GetMedicationHistoryResponderInterface">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     <wsdl:operation name="GetMedicationHistory">
-      <soap:operation soapAction="urn:riv:clinicalprocess:activityprescription:actoutcome:GetMedicationHistoryResponder:1:GetMedicationHistory" style="document"/>
+      <soap:operation soapAction="urn:riv:clinicalprocess:activityprescription:actoutcome:GetMedicationHistoryResponder:2:GetMedicationHistory" style="document"/>
       <wsdl:input>
         <soap:header use="literal" message="tns:GetMedicationHistoryRequest" part="LogicalAddress"/>
         <soap:body use="literal" parts="parameters"/>
@@ -65,7 +65,7 @@
       <soap:address location="http://tempuri.org"/>
     </wsdl:port>
   </wsdl:service>
-</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/activityprescription/actoutcome/trunk/schemas/interactions/GetMedicationHistoryInteraction/GetMedicationHistoryResponder_2.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/activityprescription/actoutcome/trunk/schemas/interactions/GetMedicationHistoryInteraction/GetMedicationHistoryResponder_2.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. Inera licenses this file
@@ -81,7 +81,7 @@
  KIND, either express or implied. See the License for the
  specific language governing permissions and limitations
  under the License.-->
-<xs:schema targetNamespace="urn:riv:clinicalprocess:activityprescription:actoutcome:GetMedicationHistoryResponder:2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:clinicalprocess:activityprescription:actoutcome:GetMedicationHistoryResponder:2" xmlns:codes="urn:riv:clinicalprocess:activityprescription:actoutcome:enums:2" xmlns:core="urn:riv:clinicalprocess:activityprescription:actoutcome:2">
+<xs:schema targetNamespace="urn:riv:clinicalprocess:activityprescription:actoutcome:GetMedicationHistoryResponder:2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:clinicalprocess:activityprescription:actoutcome:GetMedicationHistoryResponder:2" xmlns:codes="urn:riv:clinicalprocess:activityprescription:actoutcome:enums:2" xmlns:core="urn:riv:clinicalprocess:activityprescription:actoutcome:2">
   <xs:import schemaLocation="../../core_components/clinicalprocess_activityprescription_actoutcome_2.0.xsd" namespace="urn:riv:clinicalprocess:activityprescription:actoutcome:2"/>
   <xs:import schemaLocation="../../core_components/clinicalprocess_activityprescription_actoutcome_enum_2.0.xsd" namespace="urn:riv:clinicalprocess:activityprescription:actoutcome:enums:2"/>
   <xs:element name="GetMedicationHistory" type="tns:GetMedicationHistoryType"/>
@@ -94,7 +94,7 @@
       <xs:element name="datePeriod" type="core:DatePeriodType" minOccurs="0"/>
       <xs:element name="sourceSystemHSAId" type="core:HSAIdType" minOccurs="0"/>
       <xs:element name="careContactId" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="prescriptionChainId" type="core:IIType"/>
+      <xs:element maxOccurs="1" minOccurs="0" name="prescriptionChainId" type="core:IIType"/>
       <xs:element maxOccurs="1" minOccurs="0" name="prescriptionStatus" type="codes:PrescriptionStatusEnum"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
@@ -106,7 +106,7 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/activityprescription/actoutcome/trunk/schemas/core_components/clinicalprocess_activityprescription_actoutcome_2.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/activityprescription/actoutcome/trunk/schemas/core_components/clinicalprocess_activityprescription_actoutcome_2.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
@@ -122,7 +122,7 @@
  KIND, either express or implied. See the License for the
  specific language governing permissions and limitations
  under the License.-->
-<xs:schema targetNamespace="urn:riv:clinicalprocess:activityprescription:actoutcome:2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:clinicalprocess:activityprescription:actoutcome:2" xmlns:codes="urn:riv:clinicalprocess:activityprescription:actoutcome:enums:2">
+<xs:schema targetNamespace="urn:riv:clinicalprocess:activityprescription:actoutcome:2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:clinicalprocess:activityprescription:actoutcome:2" xmlns:codes="urn:riv:clinicalprocess:activityprescription:actoutcome:enums:2">
   <xs:import schemaLocation="./clinicalprocess_activityprescription_actoutcome_enum_2.0.xsd" namespace="urn:riv:clinicalprocess:activityprescription:actoutcome:enums:2"/>
   <xs:complexType name="VaccinationMedicalRecordType">
     <xs:sequence>
@@ -337,7 +337,7 @@
     <xs:sequence>
       <xs:element name="id" type="tns:IIType"/>
       <xs:element name="time" type="tns:TimeStampType" minOccurs="1"/>
-      <xs:element name="uri" type="xs:anyURI" minOccurs="1"/>
+      <xs:element name="type" type="xs:string" minOccurs="1"/>
       <xs:element name="informationOwner" type="tns:InformationOwnerType" minOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
@@ -379,9 +379,9 @@
     <xs:sequence>
       <xs:element name="prescriptionId" type="tns:IIType"/>
       <xs:element name="typeOfPrescription" type="codes:TypeOfPrescriptionEnum"/>
-      <xs:element name="prescriptionStatus" type="tns:CVType" minOccurs="1"/>
+      <xs:element name="prescriptionStatus" type="codes:PrescriptionStatusEnum" minOccurs="1"/>
       <xs:element name="prescriptionNote" type="xs:string" minOccurs="0"/>
-      <xs:element maxOccurs="unbounded" minOccurs="1" name="principalPrescriptionReason" type="tns:PrescriptionReasonType"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="principalPrescriptionReason" type="tns:PrescriptionReasonType"/>
       <xs:element maxOccurs="unbounded" minOccurs="0" name="additionalPrescriptionReason" type="tns:PrescriptionReasonType"/>
       <xs:element name="evaluationTime" type="tns:TimeStampType" minOccurs="0"/>
       <xs:element name="treatmentPurpose" type="xs:string" minOccurs="0"/>
@@ -563,7 +563,7 @@
       <xs:element name="doseStep" type="tns:PQType" minOccurs="1"/>
       <xs:element name="timeStep" type="tns:PQType" minOccurs="1"/>
       <xs:element name="rampStart" type="tns:RampEndpointType"/>
-      <xs:element name="rampStart" type="tns:RampEndpointType"/>
+      <xs:element name="rampEnd" type="tns:RampEndpointType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -699,7 +699,7 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/activityprescription/actoutcome/trunk/schemas/core_components/clinicalprocess_activityprescription_actoutcome_enum_2.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/activityprescription/actoutcome/trunk/schemas/core_components/clinicalprocess_activityprescription_actoutcome_enum_2.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
@@ -726,9 +726,6 @@
   <xs:simpleType name="ErrorCodeEnum">
     <xs:restriction base="xs:string">
       <xs:enumeration value="INVALID_REQUEST"/>
-      <xs:enumeration value="TRANSFORMATION_ERROR"/>
-      <xs:enumeration value="APPLICATION_ERROR"/>
-      <xs:enumeration value="TECHNICAL_ERROR"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="NonReplaceableEnum">
@@ -739,8 +736,8 @@
   </xs:simpleType>
   <xs:simpleType name="TypeOfPrescriptionEnum">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="Insättning"/>
-      <xs:enumeration value="Utsättning"/>
+      <xs:enumeration value="I"/>
+      <xs:enumeration value="U"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="PrescriptionStatusEnum">
@@ -749,7 +746,7 @@
       <xs:enumeration value="Inactive"/>
     </xs:restriction>
   </xs:simpleType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/activityprescription/actoutcome/trunk/schemas/core_components/itintegration_registry_1.0.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="urn:riv:itintegration:registry:1" elementFormDefault="qualified" version="1.0" xmlns="urn:riv:itintegration:registry:1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/activityprescription/actoutcome/trunk/schemas/core_components/itintegration_registry_1.0.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="urn:riv:itintegration:registry:1" elementFormDefault="qualified" version="1.0" xmlns="urn:riv:itintegration:registry:1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
     <xs:documentation>Beskrivning: 	Grundl��ggande informationsobjekt f��r dom��nen itintegration:registry (adressering av tj��nster)
 			
@@ -778,7 +775,7 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://Khaleds-iMac.local:8088/</con:endpoint><con:endpoint>http://tempuri.org</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:clinicalprocess:activityprescription:actoutcome:GetMedicationHistoryResponder:1:GetMedicationHistory" name="GetMedicationHistory" bindingOperationName="GetMedicationHistory" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://Khaleds-iMac.local:8088/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:clinicalprocess:activityprescription:actoutcome:GetMedicationHistoryResponder:1" xmlns:urn2="urn:riv:clinicalprocess:activityprescription:actoutcome:1">
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://Khaleds-iMac.local:8088/mockGetMedicationHistoryResponderBinding</con:endpoint><con:endpoint>http://tempuri.org</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:clinicalprocess:activityprescription:actoutcome:GetMedicationHistoryResponder:2:GetMedicationHistory" name="GetMedicationHistory" bindingOperationName="GetMedicationHistory" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://Khaleds-iMac.local:8088/mockGetMedicationHistoryResponderBinding</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:clinicalprocess:activityprescription:actoutcome:GetMedicationHistoryResponder:1" xmlns:urn2="urn:riv:clinicalprocess:activityprescription:actoutcome:1">
    <soapenv:Header>
       <urn:LogicalAddress>?</urn:LogicalAddress>
    </soapenv:Header>
@@ -831,7 +828,7 @@
          <!--You may enter ANY elements at this point-->
       </urn1:GetMedicationHistory>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:clinicalprocess:activityprescription:actoutcome:GetMedicationHistoryResponder:1:GetMedicationHistory"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:mockService port="8088" path="/" host="Khaleds-iMac.local" name="GetMedicationHistoryMock" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:properties/><con:mockOperation name="GetMedicationHistory" interface="GetMedicationHistoryResponderBinding" operation="GetMedicationHistory"><con:settings/><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SCRIPT</con:dispatchStyle><con:dispatchPath>import com.eviware.soapui.support.XmlHolder
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:clinicalprocess:activityprescription:actoutcome:GetMedicationHistoryResponder:1:GetMedicationHistory"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:mockService port="8088" path="/mockGetMedicationHistoryResponderBinding" host="localhost" name="GetMedicationHistoryMock" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:properties/><con:mockOperation name="GetMedicationHistory" interface="GetMedicationHistoryResponderBinding" operation="GetMedicationHistory"><con:settings/><con:defaultResponse>SoapFault</con:defaultResponse><con:dispatchStyle>SCRIPT</con:dispatchStyle><con:dispatchPath>import com.eviware.soapui.support.XmlHolder
 import com.eviware.soapui.impl.wsdl.support.wsdl.WsdlContext
 import com.eviware.soapui.impl.wsdl.support.wsdl.WsdlValidator
 import com.eviware.soapui.impl.wsdl.panels.mockoperation.WsdlMockRequestMessageExchange
@@ -3298,22 +3295,8 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                      <urn1:extension>?</urn1:extension>
                      <!--You may enter ANY elements at this point-->
                   </urn1:prescriptionId>
-                  <urn1:typeOfPrescription>Insättning</urn1:typeOfPrescription>
-                  <urn1:prescriptionStatus>
-                     <!--Optional:-->
-                     <urn1:code>?</urn1:code>
-                     <!--Optional:-->
-                     <urn1:codeSystem>?</urn1:codeSystem>
-                     <!--Optional:-->
-                     <urn1:codeSystemName>?</urn1:codeSystemName>
-                     <!--Optional:-->
-                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                     <!--Optional:-->
-                     <urn1:displayName>?</urn1:displayName>
-                     <!--Optional:-->
-                     <urn1:originalText>?</urn1:originalText>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:prescriptionStatus>
+                  <urn1:typeOfPrescription>I</urn1:typeOfPrescription>
+                  <urn1:prescriptionStatus>Active</urn1:prescriptionStatus>
                   <!--Optional:-->
                   <urn1:prescriptionNote>?</urn1:prescriptionNote>
                   <!--Zero or more repetitions:-->
@@ -3660,7 +3643,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                  </urn1:unstructuredDosageInformation>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampStart>
-                              <urn1:rampStart>
+                              <urn1:rampEnd>
                                  <!--Optional:-->
                                  <urn1:frequencyDosage>
                                     <urn1:dose>
@@ -3739,7 +3722,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:unstructuredDosageInformation>
                                  <!--You may enter ANY elements at this point-->
-                              </urn1:rampStart>
+                              </urn1:rampEnd>
                               <!--You may enter ANY elements at this point-->
                            </urn1:rampedDosage>
                            <!--Optional:-->
@@ -3915,7 +3898,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                  </urn1:unstructuredDosageInformation>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampStart>
-                              <urn1:rampStart>
+                              <urn1:rampEnd>
                                  <!--Optional:-->
                                  <urn1:frequencyDosage>
                                     <urn1:dose>
@@ -3994,7 +3977,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:unstructuredDosageInformation>
                                  <!--You may enter ANY elements at this point-->
-                              </urn1:rampStart>
+                              </urn1:rampEnd>
                               <!--You may enter ANY elements at this point-->
                            </urn1:rampedDosage>
                            <!--Optional:-->
@@ -4171,7 +4154,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                  </urn1:unstructuredDosageInformation>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampStart>
-                              <urn1:rampStart>
+                              <urn1:rampEnd>
                                  <!--Optional:-->
                                  <urn1:frequencyDosage>
                                     <urn1:dose>
@@ -4250,7 +4233,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:unstructuredDosageInformation>
                                  <!--You may enter ANY elements at this point-->
-                              </urn1:rampStart>
+                              </urn1:rampEnd>
                               <!--You may enter ANY elements at this point-->
                            </urn1:rampedDosage>
                            <!--Optional:-->
@@ -4605,7 +4588,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:rampStart>
-                                 <urn1:rampStart>
+                                 <urn1:rampEnd>
                                     <!--Optional:-->
                                     <urn1:frequencyDosage>
                                        <urn1:dose>
@@ -4684,7 +4667,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                        <!--You may enter ANY elements at this point-->
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
-                                 </urn1:rampStart>
+                                 </urn1:rampEnd>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampedDosage>
                               <!--Optional:-->
@@ -4860,7 +4843,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:rampStart>
-                                 <urn1:rampStart>
+                                 <urn1:rampEnd>
                                     <!--Optional:-->
                                     <urn1:frequencyDosage>
                                        <urn1:dose>
@@ -4939,7 +4922,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                        <!--You may enter ANY elements at this point-->
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
-                                 </urn1:rampStart>
+                                 </urn1:rampEnd>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampedDosage>
                               <!--Optional:-->
@@ -5116,7 +5099,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:rampStart>
-                                 <urn1:rampStart>
+                                 <urn1:rampEnd>
                                     <!--Optional:-->
                                     <urn1:frequencyDosage>
                                        <urn1:dose>
@@ -5195,7 +5178,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                        <!--You may enter ANY elements at this point-->
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
-                                 </urn1:rampStart>
+                                 </urn1:rampEnd>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampedDosage>
                               <!--Optional:-->
@@ -5275,7 +5258,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                      <!--You may enter ANY elements at this point-->
                   </urn1:id>
                   <urn1:time>20120101121212</urn1:time>
-                  <urn1:uri>?</urn1:uri>
+                  <urn1:type>vko</urn1:type>
                   <urn1:informationOwner>
                      <urn1:id>
                         <urn1:root>?</urn1:root>
@@ -7654,22 +7637,8 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                      <urn1:extension>?</urn1:extension>
                      <!--You may enter ANY elements at this point-->
                   </urn1:prescriptionId>
-                  <urn1:typeOfPrescription>Utsättning</urn1:typeOfPrescription>
-                  <urn1:prescriptionStatus>
-                     <!--Optional:-->
-                     <urn1:code>?</urn1:code>
-                     <!--Optional:-->
-                     <urn1:codeSystem>?</urn1:codeSystem>
-                     <!--Optional:-->
-                     <urn1:codeSystemName>?</urn1:codeSystemName>
-                     <!--Optional:-->
-                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                     <!--Optional:-->
-                     <urn1:displayName>?</urn1:displayName>
-                     <!--Optional:-->
-                     <urn1:originalText>?</urn1:originalText>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:prescriptionStatus>
+                  <urn1:typeOfPrescription>U</urn1:typeOfPrescription>
+                  <urn1:prescriptionStatus>Active</urn1:prescriptionStatus>
                   <!--Optional:-->
                   <urn1:prescriptionNote>?</urn1:prescriptionNote>
                   <!--Zero or more repetitions:-->
@@ -8161,7 +8130,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:rampStart>
-                                 <urn1:rampStart>
+                                 <urn1:rampEnd>
                                     <!--Optional:-->
                                     <urn1:frequencyDosage>
                                        <urn1:dose>
@@ -8240,7 +8209,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                        <!--You may enter ANY elements at this point-->
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
-                                 </urn1:rampStart>
+                                 </urn1:rampEnd>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampedDosage>
                               <!--Optional:-->
@@ -8416,7 +8385,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:rampStart>
-                                 <urn1:rampStart>
+                                 <urn1:rampEnd>
                                     <!--Optional:-->
                                     <urn1:frequencyDosage>
                                        <urn1:dose>
@@ -8495,7 +8464,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                        <!--You may enter ANY elements at this point-->
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
-                                 </urn1:rampStart>
+                                 </urn1:rampEnd>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampedDosage>
                               <!--Optional:-->
@@ -8672,7 +8641,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:rampStart>
-                                 <urn1:rampStart>
+                                 <urn1:rampEnd>
                                     <!--Optional:-->
                                     <urn1:frequencyDosage>
                                        <urn1:dose>
@@ -8751,7 +8720,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                        <!--You may enter ANY elements at this point-->
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
-                                 </urn1:rampStart>
+                                 </urn1:rampEnd>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampedDosage>
                               <!--Optional:-->
@@ -8830,7 +8799,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                      <!--You may enter ANY elements at this point-->
                   </urn1:id>
                   <urn1:time>20120101121212</urn1:time>
-                  <urn1:uri>?</urn1:uri>
+                  <urn1:type>?</urn1:type>
                   <urn1:informationOwner>
                      <urn1:id>
                         <urn1:root>?</urn1:root>
@@ -8891,22 +8860,8 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                      <urn1:extension>?</urn1:extension>
                      <!--You may enter ANY elements at this point-->
                   </urn1:prescriptionId>
-                  <urn1:typeOfPrescription>Utsättning</urn1:typeOfPrescription>
-                  <urn1:prescriptionStatus>
-                     <!--Optional:-->
-                     <urn1:code>?</urn1:code>
-                     <!--Optional:-->
-                     <urn1:codeSystem>?</urn1:codeSystem>
-                     <!--Optional:-->
-                     <urn1:codeSystemName>?</urn1:codeSystemName>
-                     <!--Optional:-->
-                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                     <!--Optional:-->
-                     <urn1:displayName>?</urn1:displayName>
-                     <!--Optional:-->
-                     <urn1:originalText>?</urn1:originalText>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:prescriptionStatus>
+                  <urn1:typeOfPrescription>U</urn1:typeOfPrescription>
+                  <urn1:prescriptionStatus>Active</urn1:prescriptionStatus>
                   <!--Optional:-->
                   <urn1:prescriptionNote>?</urn1:prescriptionNote>
                   <!--Zero or more repetitions:-->
@@ -9398,7 +9353,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:rampStart>
-                                 <urn1:rampStart>
+                                 <urn1:rampEnd>
                                     <!--Optional:-->
                                     <urn1:frequencyDosage>
                                        <urn1:dose>
@@ -9477,7 +9432,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                        <!--You may enter ANY elements at this point-->
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
-                                 </urn1:rampStart>
+                                 </urn1:rampEnd>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampedDosage>
                               <!--Optional:-->
@@ -9653,7 +9608,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:rampStart>
-                                 <urn1:rampStart>
+                                 <urn1:rampEnd>
                                     <!--Optional:-->
                                     <urn1:frequencyDosage>
                                        <urn1:dose>
@@ -9732,7 +9687,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                        <!--You may enter ANY elements at this point-->
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
-                                 </urn1:rampStart>
+                                 </urn1:rampEnd>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampedDosage>
                               <!--Optional:-->
@@ -9909,7 +9864,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:rampStart>
-                                 <urn1:rampStart>
+                                 <urn1:rampEnd>
                                     <!--Optional:-->
                                     <urn1:frequencyDosage>
                                        <urn1:dose>
@@ -9988,7 +9943,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                        <!--You may enter ANY elements at this point-->
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
-                                 </urn1:rampStart>
+                                 </urn1:rampEnd>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampedDosage>
                               <!--Optional:-->
@@ -10067,7 +10022,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                      <!--You may enter ANY elements at this point-->
                   </urn1:id>
                   <urn1:time>20120101121212</urn1:time>
-                  <urn1:uri>?</urn1:uri>
+                  <urn1:type>?</urn1:type>
                   <urn1:informationOwner>
                      <urn1:id>
                         <urn1:root>?</urn1:root>
@@ -10151,22 +10106,8 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                      <urn1:extension>?</urn1:extension>
                      <!--You may enter ANY elements at this point-->
                   </urn1:prescriptionId>
-                  <urn1:typeOfPrescription>Utsättning</urn1:typeOfPrescription>
-                  <urn1:prescriptionStatus>
-                     <!--Optional:-->
-                     <urn1:code>?</urn1:code>
-                     <!--Optional:-->
-                     <urn1:codeSystem>?</urn1:codeSystem>
-                     <!--Optional:-->
-                     <urn1:codeSystemName>?</urn1:codeSystemName>
-                     <!--Optional:-->
-                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                     <!--Optional:-->
-                     <urn1:displayName>?</urn1:displayName>
-                     <!--Optional:-->
-                     <urn1:originalText>?</urn1:originalText>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:prescriptionStatus>
+                  <urn1:typeOfPrescription>U</urn1:typeOfPrescription>
+                  <urn1:prescriptionStatus>Active</urn1:prescriptionStatus>
                   <!--Optional:-->
                   <urn1:prescriptionNote>?</urn1:prescriptionNote>
                   <!--Zero or more repetitions:-->
@@ -10658,7 +10599,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:rampStart>
-                                 <urn1:rampStart>
+                                 <urn1:rampEnd>
                                     <!--Optional:-->
                                     <urn1:frequencyDosage>
                                        <urn1:dose>
@@ -10737,7 +10678,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                        <!--You may enter ANY elements at this point-->
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
-                                 </urn1:rampStart>
+                                 </urn1:rampEnd>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampedDosage>
                               <!--Optional:-->
@@ -10913,7 +10854,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:rampStart>
-                                 <urn1:rampStart>
+                                 <urn1:rampEnd>
                                     <!--Optional:-->
                                     <urn1:frequencyDosage>
                                        <urn1:dose>
@@ -10992,7 +10933,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                        <!--You may enter ANY elements at this point-->
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
-                                 </urn1:rampStart>
+                                 </urn1:rampEnd>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampedDosage>
                               <!--Optional:-->
@@ -11169,7 +11110,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:rampStart>
-                                 <urn1:rampStart>
+                                 <urn1:rampEnd>
                                     <!--Optional:-->
                                     <urn1:frequencyDosage>
                                        <urn1:dose>
@@ -11248,7 +11189,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                        <!--You may enter ANY elements at this point-->
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
-                                 </urn1:rampStart>
+                                 </urn1:rampEnd>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampedDosage>
                               <!--Optional:-->
@@ -11327,7 +11268,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                      <!--You may enter ANY elements at this point-->
                   </urn1:id>
                   <urn1:time>20120101121212</urn1:time>
-                  <urn1:uri>?</urn1:uri>
+                  <urn1:type>?</urn1:type>
                   <urn1:informationOwner>
                      <urn1:id>
                         <urn1:root>?</urn1:root>
@@ -11388,22 +11329,8 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                      <urn1:extension>?</urn1:extension>
                      <!--You may enter ANY elements at this point-->
                   </urn1:prescriptionId>
-                  <urn1:typeOfPrescription>Utsättning</urn1:typeOfPrescription>
-                  <urn1:prescriptionStatus>
-                     <!--Optional:-->
-                     <urn1:code>?</urn1:code>
-                     <!--Optional:-->
-                     <urn1:codeSystem>?</urn1:codeSystem>
-                     <!--Optional:-->
-                     <urn1:codeSystemName>?</urn1:codeSystemName>
-                     <!--Optional:-->
-                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                     <!--Optional:-->
-                     <urn1:displayName>?</urn1:displayName>
-                     <!--Optional:-->
-                     <urn1:originalText>?</urn1:originalText>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:prescriptionStatus>
+                  <urn1:typeOfPrescription>U</urn1:typeOfPrescription>
+                  <urn1:prescriptionStatus>Active</urn1:prescriptionStatus>
                   <!--Optional:-->
                   <urn1:prescriptionNote>?</urn1:prescriptionNote>
                   <!--Zero or more repetitions:-->
@@ -11895,7 +11822,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:rampStart>
-                                 <urn1:rampStart>
+                                 <urn1:rampEnd>
                                     <!--Optional:-->
                                     <urn1:frequencyDosage>
                                        <urn1:dose>
@@ -11974,7 +11901,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                        <!--You may enter ANY elements at this point-->
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
-                                 </urn1:rampStart>
+                                 </urn1:rampEnd>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampedDosage>
                               <!--Optional:-->
@@ -12150,7 +12077,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:rampStart>
-                                 <urn1:rampStart>
+                                 <urn1:rampEnd>
                                     <!--Optional:-->
                                     <urn1:frequencyDosage>
                                        <urn1:dose>
@@ -12229,7 +12156,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                        <!--You may enter ANY elements at this point-->
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
-                                 </urn1:rampStart>
+                                 </urn1:rampEnd>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampedDosage>
                               <!--Optional:-->
@@ -12406,7 +12333,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:rampStart>
-                                 <urn1:rampStart>
+                                 <urn1:rampEnd>
                                     <!--Optional:-->
                                     <urn1:frequencyDosage>
                                        <urn1:dose>
@@ -12485,7 +12412,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                        <!--You may enter ANY elements at this point-->
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
-                                 </urn1:rampStart>
+                                 </urn1:rampEnd>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampedDosage>
                               <!--Optional:-->
@@ -12564,7 +12491,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                      <!--You may enter ANY elements at this point-->
                   </urn1:id>
                   <urn1:time>20120101121212</urn1:time>
-                  <urn1:uri>?</urn1:uri>
+                  <urn1:type>?</urn1:type>
                   <urn1:informationOwner>
                      <urn1:id>
                         <urn1:root>?</urn1:root>
@@ -12638,22 +12565,8 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                      <urn1:extension>?</urn1:extension>
                      <!--You may enter ANY elements at this point-->
                   </urn1:prescriptionId>
-                  <urn1:typeOfPrescription>Utsättning</urn1:typeOfPrescription>
-                  <urn1:prescriptionStatus>
-                     <!--Optional:-->
-                     <urn1:code>?</urn1:code>
-                     <!--Optional:-->
-                     <urn1:codeSystem>?</urn1:codeSystem>
-                     <!--Optional:-->
-                     <urn1:codeSystemName>?</urn1:codeSystemName>
-                     <!--Optional:-->
-                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                     <!--Optional:-->
-                     <urn1:displayName>?</urn1:displayName>
-                     <!--Optional:-->
-                     <urn1:originalText>?</urn1:originalText>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:prescriptionStatus>
+                  <urn1:typeOfPrescription>U</urn1:typeOfPrescription>
+                  <urn1:prescriptionStatus>Active</urn1:prescriptionStatus>
                   <!--Optional:-->
                   <urn1:prescriptionNote>?</urn1:prescriptionNote>
                   <!--Zero or more repetitions:-->
@@ -13145,7 +13058,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:rampStart>
-                                 <urn1:rampStart>
+                                 <urn1:rampEnd>
                                     <!--Optional:-->
                                     <urn1:frequencyDosage>
                                        <urn1:dose>
@@ -13224,7 +13137,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                        <!--You may enter ANY elements at this point-->
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
-                                 </urn1:rampStart>
+                                 </urn1:rampEnd>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampedDosage>
                               <!--Optional:-->
@@ -13400,7 +13313,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:rampStart>
-                                 <urn1:rampStart>
+                                 <urn1:rampEnd>
                                     <!--Optional:-->
                                     <urn1:frequencyDosage>
                                        <urn1:dose>
@@ -13479,7 +13392,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                        <!--You may enter ANY elements at this point-->
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
-                                 </urn1:rampStart>
+                                 </urn1:rampEnd>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampedDosage>
                               <!--Optional:-->
@@ -13656,7 +13569,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:rampStart>
-                                 <urn1:rampStart>
+                                 <urn1:rampEnd>
                                     <!--Optional:-->
                                     <urn1:frequencyDosage>
                                        <urn1:dose>
@@ -13735,7 +13648,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                        <!--You may enter ANY elements at this point-->
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
-                                 </urn1:rampStart>
+                                 </urn1:rampEnd>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampedDosage>
                               <!--Optional:-->
@@ -13814,7 +13727,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                      <!--You may enter ANY elements at this point-->
                   </urn1:id>
                   <urn1:time>20120101121212</urn1:time>
-                  <urn1:uri>?</urn1:uri>
+                  <urn1:type>?</urn1:type>
                   <urn1:informationOwner>
                      <urn1:id>
                         <urn1:root>?</urn1:root>
@@ -13887,22 +13800,8 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                      <urn1:extension>?</urn1:extension>
                      <!--You may enter ANY elements at this point-->
                   </urn1:prescriptionId>
-                  <urn1:typeOfPrescription>Utsättning</urn1:typeOfPrescription>
-                  <urn1:prescriptionStatus>
-                     <!--Optional:-->
-                     <urn1:code>?</urn1:code>
-                     <!--Optional:-->
-                     <urn1:codeSystem>?</urn1:codeSystem>
-                     <!--Optional:-->
-                     <urn1:codeSystemName>?</urn1:codeSystemName>
-                     <!--Optional:-->
-                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                     <!--Optional:-->
-                     <urn1:displayName>?</urn1:displayName>
-                     <!--Optional:-->
-                     <urn1:originalText>?</urn1:originalText>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:prescriptionStatus>
+                  <urn1:typeOfPrescription>U</urn1:typeOfPrescription>
+                  <urn1:prescriptionStatus>Active</urn1:prescriptionStatus>
                   <!--Optional:-->
                   <urn1:prescriptionNote>?</urn1:prescriptionNote>
                   <!--Zero or more repetitions:-->
@@ -14394,7 +14293,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:rampStart>
-                                 <urn1:rampStart>
+                                 <urn1:rampEnd>
                                     <!--Optional:-->
                                     <urn1:frequencyDosage>
                                        <urn1:dose>
@@ -14473,7 +14372,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                        <!--You may enter ANY elements at this point-->
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
-                                 </urn1:rampStart>
+                                 </urn1:rampEnd>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampedDosage>
                               <!--Optional:-->
@@ -14649,7 +14548,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:rampStart>
-                                 <urn1:rampStart>
+                                 <urn1:rampEnd>
                                     <!--Optional:-->
                                     <urn1:frequencyDosage>
                                        <urn1:dose>
@@ -14728,7 +14627,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                        <!--You may enter ANY elements at this point-->
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
-                                 </urn1:rampStart>
+                                 </urn1:rampEnd>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampedDosage>
                               <!--Optional:-->
@@ -14905,7 +14804,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:rampStart>
-                                 <urn1:rampStart>
+                                 <urn1:rampEnd>
                                     <!--Optional:-->
                                     <urn1:frequencyDosage>
                                        <urn1:dose>
@@ -14984,7 +14883,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                        <!--You may enter ANY elements at this point-->
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
-                                 </urn1:rampStart>
+                                 </urn1:rampEnd>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampedDosage>
                               <!--Optional:-->
@@ -15063,7 +14962,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                      <!--You may enter ANY elements at this point-->
                   </urn1:id>
                   <urn1:time>20120101121212</urn1:time>
-                  <urn1:uri>?</urn1:uri>
+                  <urn1:type>?</urn1:type>
                   <urn1:informationOwner>
                      <urn1:id>
                         <urn1:root>?</urn1:root>
@@ -15136,22 +15035,8 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                      <urn1:extension>?</urn1:extension>
                      <!--You may enter ANY elements at this point-->
                   </urn1:prescriptionId>
-                  <urn1:typeOfPrescription>Utsättning</urn1:typeOfPrescription>
-                  <urn1:prescriptionStatus>
-                     <!--Optional:-->
-                     <urn1:code>?</urn1:code>
-                     <!--Optional:-->
-                     <urn1:codeSystem>?</urn1:codeSystem>
-                     <!--Optional:-->
-                     <urn1:codeSystemName>?</urn1:codeSystemName>
-                     <!--Optional:-->
-                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                     <!--Optional:-->
-                     <urn1:displayName>?</urn1:displayName>
-                     <!--Optional:-->
-                     <urn1:originalText>?</urn1:originalText>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:prescriptionStatus>
+                  <urn1:typeOfPrescription>U</urn1:typeOfPrescription>
+                  <urn1:prescriptionStatus>Active</urn1:prescriptionStatus>
                   <!--Optional:-->
                   <urn1:prescriptionNote>?</urn1:prescriptionNote>
                   <!--Zero or more repetitions:-->
@@ -15643,7 +15528,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:rampStart>
-                                 <urn1:rampStart>
+                                 <urn1:rampEnd>
                                     <!--Optional:-->
                                     <urn1:frequencyDosage>
                                        <urn1:dose>
@@ -15722,7 +15607,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                        <!--You may enter ANY elements at this point-->
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
-                                 </urn1:rampStart>
+                                 </urn1:rampEnd>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampedDosage>
                               <!--Optional:-->
@@ -15898,7 +15783,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:rampStart>
-                                 <urn1:rampStart>
+                                 <urn1:rampEnd>
                                     <!--Optional:-->
                                     <urn1:frequencyDosage>
                                        <urn1:dose>
@@ -15977,7 +15862,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                        <!--You may enter ANY elements at this point-->
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
-                                 </urn1:rampStart>
+                                 </urn1:rampEnd>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampedDosage>
                               <!--Optional:-->
@@ -16154,7 +16039,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:rampStart>
-                                 <urn1:rampStart>
+                                 <urn1:rampEnd>
                                     <!--Optional:-->
                                     <urn1:frequencyDosage>
                                        <urn1:dose>
@@ -16233,7 +16118,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                        <!--You may enter ANY elements at this point-->
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
-                                 </urn1:rampStart>
+                                 </urn1:rampEnd>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampedDosage>
                               <!--Optional:-->
@@ -16312,7 +16197,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                      <!--You may enter ANY elements at this point-->
                   </urn1:id>
                   <urn1:time>20120101121212</urn1:time>
-                  <urn1:uri>?</urn1:uri>
+                  <urn1:type>?</urn1:type>
                   <urn1:informationOwner>
                      <urn1:id>
                         <urn1:root>?</urn1:root>
@@ -16385,22 +16270,8 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                      <urn1:extension>?</urn1:extension>
                      <!--You may enter ANY elements at this point-->
                   </urn1:prescriptionId>
-                  <urn1:typeOfPrescription>Utsättning</urn1:typeOfPrescription>
-                  <urn1:prescriptionStatus>
-                     <!--Optional:-->
-                     <urn1:code>?</urn1:code>
-                     <!--Optional:-->
-                     <urn1:codeSystem>?</urn1:codeSystem>
-                     <!--Optional:-->
-                     <urn1:codeSystemName>?</urn1:codeSystemName>
-                     <!--Optional:-->
-                     <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                     <!--Optional:-->
-                     <urn1:displayName>?</urn1:displayName>
-                     <!--Optional:-->
-                     <urn1:originalText>?</urn1:originalText>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:prescriptionStatus>
+                  <urn1:typeOfPrescription>U</urn1:typeOfPrescription>
+                  <urn1:prescriptionStatus>Active</urn1:prescriptionStatus>
                   <!--Optional:-->
                   <urn1:prescriptionNote>?</urn1:prescriptionNote>
                   <!--Zero or more repetitions:-->
@@ -16892,7 +16763,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:rampStart>
-                                 <urn1:rampStart>
+                                 <urn1:rampEnd>
                                     <!--Optional:-->
                                     <urn1:frequencyDosage>
                                        <urn1:dose>
@@ -16971,7 +16842,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                        <!--You may enter ANY elements at this point-->
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
-                                 </urn1:rampStart>
+                                 </urn1:rampEnd>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampedDosage>
                               <!--Optional:-->
@@ -17147,7 +17018,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:rampStart>
-                                 <urn1:rampStart>
+                                 <urn1:rampEnd>
                                     <!--Optional:-->
                                     <urn1:frequencyDosage>
                                        <urn1:dose>
@@ -17226,7 +17097,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                        <!--You may enter ANY elements at this point-->
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
-                                 </urn1:rampStart>
+                                 </urn1:rampEnd>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampedDosage>
                               <!--Optional:-->
@@ -17403,7 +17274,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
                                  </urn1:rampStart>
-                                 <urn1:rampStart>
+                                 <urn1:rampEnd>
                                     <!--Optional:-->
                                     <urn1:frequencyDosage>
                                        <urn1:dose>
@@ -17482,7 +17353,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                                        <!--You may enter ANY elements at this point-->
                                     </urn1:unstructuredDosageInformation>
                                     <!--You may enter ANY elements at this point-->
-                                 </urn1:rampStart>
+                                 </urn1:rampEnd>
                                  <!--You may enter ANY elements at this point-->
                               </urn1:rampedDosage>
                               <!--Optional:-->
@@ -17561,7 +17432,7 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                      <!--You may enter ANY elements at this point-->
                   </urn1:id>
                   <urn1:time>20120101121212</urn1:time>
-                  <urn1:uri>?</urn1:uri>
+                  <urn1:type>?</urn1:type>
                   <urn1:informationOwner>
                      <urn1:id>
                         <urn1:root>?</urn1:root>
@@ -17584,4 +17455,15 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
          <!--You may enter ANY elements at this point-->
       </urn:GetMedicationHistoryResponse>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:activityprescription:actoutcome:GetMedicationHistoryResponder:1:GetMedicationHistory"/></con:response><con:dispatchConfig/></con:mockOperation></con:mockService><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/><con:reporting><con:xmlTemplates/><con:parameters/></con:reporting></con:soapui-project>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:activityprescription:actoutcome:GetMedicationHistoryResponder:1:GetMedicationHistory"/></con:response><con:response name="INVALID_REQUEST" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:clinicalprocess:activityprescription:actoutcome:GetMedicationHistoryResponder:2" xmlns:urn1="urn:riv:clinicalprocess:activityprescription:actoutcome:2">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetMedicationHistoryResponse>
+         <urn:result>
+            <urn1:resultCode>ERROR</urn1:resultCode>
+            <urn1:errorCode>INVALID_REQUEST</urn1:errorCode>
+            <urn1:logId>3333-4444-5555-6666</urn1:logId>
+         </urn:result>
+      </urn:GetMedicationHistoryResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:activityprescription:actoutcome:GetMedicationHistoryResponder:2:GetMedicationHistory"/></con:response><con:dispatchConfig/></con:mockOperation></con:mockService><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/><con:reporting><con:xmlTemplates/><con:parameters/></con:reporting><con:sensitiveInformation/></con:soapui-project>
