@@ -47,8 +47,15 @@
 <section>
 <h1>TestSuite description GetMedicationHistory</h1>
 <summary>
-<p>This document describes the testcases used to verify the implementation of GetMedicationHistory
-                        prior to integration with the national platform.</p>
+<article>
+<p>This testsuite is designed to verify the GetMedicationHistory contract.</p>
+<details>
+<summary>Global variables used</summary>
+<ul>
+<li>webServiceUrl</li>
+</ul>
+</details>
+</article>
 </summary>
 <article>
 <h2>Tools</h2>
@@ -69,7 +76,24 @@
 <li>You should now be able to run the test suite!</li>
 </ol>
 </article>
-<h2>Testcase description</h2>
+<h2>Testcases</h2>
+<article>
+<h3>Basic Testcase</h3>
+<p>Verifies that the response contains
+            correct patientId<br>
+            documentId's match the expectedDocumentIds list<br>
+        </p>
+<details>
+<summary>Variables used</summary>
+<ul>
+<li>httpHeaderHsaId</li>
+<li>logicalAddress</li>
+<li>patientId</li>
+<li>patientIdType</li>
+<li>expectedDocumentIds</li>
+</ul>
+</details>
+</article>
 <article>
 <h3>Date Boundaries</h3>
 <p>Verifies that the result only contains information within the date boundaries for the given patient.<br>
@@ -109,7 +133,7 @@
 <ul>
 <li>httpHeaderHsaId</li>
 <li>logicalAddress</li>
-<li>careUnitHSAid</li>
+<li>careUnitHSAId</li>
 <li>patientId</li>
 <li>patientIdType</li>
 <li>sourceSystemHSAid</li>
@@ -169,7 +193,7 @@
 <li>patientId</li>
 <li>patientIdType</li>
 <li>careContactId</li>
-<li>sourceSystemHSAid</li>
+<li>sourceSystemHSAId</li>
 </ul>
 </details>
 </article>
@@ -193,7 +217,7 @@
 </details>
 </article>
 <article>
-<h3>Http-header Filter</h3>
+<h3>HTTPHeader Filter</h3>
 <p>Verifies that the result only contains information with correct PatientId, and that the source
             system should filter MedicationMedicalRecords based on the HttpHeader 'x-rivta-original-serviceconsumer-hsaid'.<br>
             Enter a PatientId that has more than one MedicationMedicalRecord in the source system.<br>
@@ -210,6 +234,7 @@
 <li>logicalAddress</li>
 <li>patientId</li>
 <li>patientIdType</li>
+<li>expectedCareUnitIds</li>
 <li>expectedDocumentIds</li>
 <li>unexpectedDocumentIds</li>
 </ul>
@@ -249,6 +274,25 @@
 <li>patientIdType</li>
 <li>careContactId</li>
 <li>sourceSystemHSAid</li>
+</ul>
+</details>
+</article>
+<article>
+<h3>Active Medication</h3>
+<p>The test verifies that all returned medication records are active<br>
+            Enter a PatientId and a CareContactId and the correct SourceSystemHSAid of a CareContact that should be found in the source system.<br>
+            The field logicalAddress should not match SourceSystemHSAid.<br>
+            The field httpHeaderHsaId should contain a value that does not affect the list of records.</p>
+<details>
+<summary>Variables used</summary>
+<ul>
+<li>httpHeaderHsaId</li>
+<li>logicalAddress</li>
+<li>careUnitHSAid</li>
+<li>patientId</li>
+<li>patientIdType</li>
+<li>expectedDocumentIds</li>
+<li>unexpectedDocumentIds</li>
 </ul>
 </details>
 </article>
