@@ -12,8 +12,8 @@
 <xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'
 	xmlns:tns='urn:riv:clinicalprocess:healthcond:certificate:CreateDraftCertificateResponder:1'
 	xmlns:core='urn:riv:clinicalprocess:healthcond:certificate:1'
-	xmlns:cer="urn:riv:clinicalprocess:healthcond:certificate:types:1"
-	xmlns:iso="urn:iso:21090:dt:1"
+	xmlns:types="urn:riv:clinicalprocess:healthcond:certificate:types:1"
+
 	targetNamespace='urn:riv:clinicalprocess:healthcond:certificate:CreateDraftCertificateResponder:1'
 	elementFormDefault='qualified' attributeFormDefault='unqualified'
 	version='1.0'>
@@ -22,53 +22,51 @@
 		namespace='urn:riv:clinicalprocess:healthcond:certificate:1' />
 	<xs:import namespace="urn:riv:clinicalprocess:healthcond:certificate:types:1"
 		schemaLocation="../../core_components/clinicalprocess_healthcond_certificate_types_1.0.xsd" />
-	<xs:import namespace="urn:iso:21090:dt:1"
-		schemaLocation="../../core_components/iso_dt_subset_1.0.xsd" />
 	<xs:element name='CreateDraftCertificate' type='tns:CreateDraftCertificateType' />
 	<xs:element name='CreateDraftCertificateResponse' type='tns:CreateDraftCertificateResponseType' />
 	<xs:complexType name='CreateDraftCertificateType'>
 		<xs:sequence>
-			<xs:element name="utlatande" type="tns:utlatandeType" />
+			<xs:element name="utlatande" type="tns:Utlatande" />
 			<xs:any namespace='##other' processContents='lax' minOccurs='0'
 				maxOccurs='unbounded' />
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name='CreateDraftCertificateResponseType'>
 		<xs:sequence>
-			<xs:element name="utlatande-id" type="cer:utlatandeId"
+			<xs:element name="utlatande-id" type="types:UtlatandeId"
 				minOccurs="0" />
 			<xs:element name="result" type="core:ResultType" />
 			<xs:any namespace='##other' processContents='lax' minOccurs='0'
 				maxOccurs='unbounded' />
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="utlatandeType">
+	<xs:complexType name="Utlatande">
 		<xs:sequence>
-			<xs:element name="typAvUtlatande" type="cer:typAvUtlatandeType" />
-			<xs:element name="patient" type="tns:patientType"/>
-			<xs:element name="skapadAv" type="tns:hosPersonalType" />
+			<xs:element name="typAvUtlatande" type="types:TypAvUtlatande" />
+			<xs:element name="patient" type="tns:Patient"/>
+			<xs:element name="skapadAv" type="tns:HosPersonal" />
 			<xs:any namespace="##other" processContents="lax" minOccurs="0"
 				maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
-	 <xs:complexType name="patientType">
+	 <xs:complexType name="Patient">
     <xs:sequence>
-      <xs:element name="person-id" type="cer:personId"/>
-      <xs:element name="fornamn" type="cer:nonEmptyString" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="efternamn" type="cer:nonEmptyString"/>
-       <xs:element name="mellannamn" type="cer:nonEmptyString" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="person-id" type="types:PersonId"/>
+      <xs:element name="fornamn" type="types:nonEmptyString" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="efternamn" type="types:nonEmptyString"/>
+       <xs:element name="mellannamn" type="types:nonEmptyString" minOccurs="0" maxOccurs="unbounded"/>
        <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  	<xs:complexType name="hosPersonalType"> <!-- Skapat av -->
+  	<xs:complexType name="HosPersonal"> <!-- Skapat av -->
 		<xs:sequence>
-			<xs:element name="personal-id" type="cer:hsaId">
+			<xs:element name="personal-id" type="types:HsaId">
 				<xs:annotation>
 					<xs:documentation>HSA-id, o.i.d för HSA-id är 1.2.752.129.2.1.4.1
 					</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="fullstandigtNamn" type="cer:nonEmptyString">
+			<xs:element name="fullstandigtNamn" type="types:nonEmptyString">
 				<xs:annotation>
 					<xs:documentation>Förnamn + efternamn sammanslaget.
 						Personen kan ej
@@ -77,21 +75,21 @@
 					</xs:documentation>
 				</xs:annotation>
 				</xs:element>
-			<xs:element name="enhet" type="tns:enhetType" />
+			<xs:element name="enhet" type="tns:Enhet" />
 			<xs:any namespace="##other" processContents="lax" minOccurs="0"
 				maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
 
-	<xs:complexType name="enhetType">
+	<xs:complexType name="Enhet">
 		<xs:sequence>
-			<xs:element name="enhets-id" type="cer:hsaId">
+			<xs:element name="enhets-id" type="types:HsaId">
 				<xs:annotation>
 					<xs:documentation>HSA-id, o.i.d för HSA-id är 1.2.752.129.2.1.4.1
 					</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="enhetsnamn" type="cer:nonEmptyString" />
+			<xs:element name="enhetsnamn" type="types:nonEmptyString" />
 			<xs:any namespace="##other" processContents="lax" minOccurs="0"
 				maxOccurs="unbounded" />
 		</xs:sequence>
