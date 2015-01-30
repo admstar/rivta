@@ -32,14 +32,37 @@
 		<xs:complexContent>
 			<xs:restriction base="CV">
 				<xs:attribute name="code" type="xs:string" use="required" />
-				<xs:attribute name="codeSystem" type="Uid" use="required"
-					fixed="1.2.752.116.1.1.1.1.3" />
-				<xs:attribute name="codeSystemName" type="xs:string"
-					use="required" fixed="ICD-10-SE" />
+				<xs:attribute name="codeSystem" type="DiagnosKodsystemRestriktion" use="required"/>
+				<xs:attribute name="codeSystemName" type="DiagnosKodsystemNamnRestriktion"
+					use="required" />
 				<xs:attribute name="displayName" type="xs:string" use="required" />
 			</xs:restriction>
 		</xs:complexContent>
 	</xs:complexType>
+
+	<xs:simpleType name="DiagnosKodsystemRestriktion">
+		<xs:restriction base="Uid">
+			<xs:enumeration value="1.2.752.116.1.1.1.1.3">
+				<xs:annotation>
+					<xs:documentation>ICD-10-SE</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1.2.752.116.1.3.1.4.1">
+				<xs:annotation>
+					<xs:documentation>KSH97-P</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+		<xs:simpleType name="DiagnosKodsystemNamnRestriktion">
+		<xs:restriction base="Uid">
+			<xs:enumeration value="ICD-10-SE">
+			</xs:enumeration>
+			<xs:enumeration value="KSH97-P">
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
 	<xs:complexType name="PersonId">
 		<xs:complexContent>
 			<xs:restriction base="II">
@@ -92,9 +115,11 @@
 	<xs:simpleType name="Datum">
 		<xs:annotation>
 			<xs:documentation>
-				Date value is a string with the format &#34;YYYY-MM-DD&#34; that
+				Date value is a string with the format
+				&#34;YYYY-MM-DD&#34; that
 				conforms to the constrained ISO 8601.
-				Time and timezone precision is not required.
+				Time
+				and timezone precision is not required.
 			</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
@@ -106,7 +131,8 @@
 	<xs:simpleType name="TidStampel">
 		<xs:annotation>
 			<xs:documentation>
-				DateTime value is a string with the format &#34;YYYY-MM-DDThh:mm:ss&#34;
+				DateTime value is a string with the format
+				&#34;YYYY-MM-DDThh:mm:ss&#34;
 				that conforms to the constrained ISO
 				8601.
 				Fraction of seconds and timezone precision is not required.
@@ -121,10 +147,12 @@
 	<xs:simpleType name="PartielltDatum">
 		<xs:annotation>
 			<xs:documentation>
-				PartialDate value is a string with the format &#34;YYYY[-MM[-DD]]&#34; that
+				PartialDate value is a string with the format
+				&#34;YYYY[-MM[-DD]]&#34; that
 				conforms to the constrained ISO
 				8601.
-				In contrast to the date type, this type also allows for year-only and
+				In
+				contrast to the date type, this type also allows for year-only and
 				year-and-month values.
 			</xs:documentation>
 		</xs:annotation>
@@ -151,7 +179,8 @@
 	<xs:complexType name="CV">
 		<xs:annotation>
 			<xs:documentation>
-				Grundtyp för att utrycka kodvärden från ett kodverk inklusive förklarande
+				Grundtyp för att utrycka kodvärden från ett kodverk
+				inklusive förklarande
 				text
 			</xs:documentation>
 		</xs:annotation>
@@ -201,7 +230,8 @@
 			<xs:restriction base="CV">
 				<xs:attribute name="code" type="HandelsekodKodRestriktion"
 					use="required" />
-				<xs:attribute name="codeSystem" type="Uid" use="required" fixed="dfd7bbad-dbe5-4a2f-ba25-f7b9b2cc6b14"/>
+				<xs:attribute name="codeSystem" type="Uid" use="required"
+					fixed="dfd7bbad-dbe5-4a2f-ba25-f7b9b2cc6b14" />
 				<xs:attribute name="codeSystemName" type="xs:string"
 					use="required" fixed="kv_händelse" />
 				<xs:attribute name="displayName" type="xs:string" use="required" />
