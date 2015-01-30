@@ -18,10 +18,10 @@
  under the License.
  -->    
 <xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' 
-    xmlns:tns='urn:riv:ehr:log:querying:GetLogsForCareProviderResponder:1.1'                
+    xmlns:tns='urn:riv:ehr:log:querying:GetAccessLogsForPatientResponder:1'                
     xmlns:logquerying='urn:riv:ehr:log:querying:1'
     xmlns:log='urn:riv:ehr:log:1'
-    targetNamespace='urn:riv:ehr:log:querying:GetLogsForCareProviderResponder:1.1'
+    targetNamespace='urn:riv:ehr:log:querying:GetAccessLogsForPatientResponder:1'
     elementFormDefault='qualified'
     attributeFormDefault='unqualified'
     version='1.1'>
@@ -30,14 +30,14 @@
     <xs:import schemaLocation='../../../core_components/ehr_log_1.0.xsd' namespace='urn:riv:ehr:log:1' />
 
 
-    <xs:element name='GetLogsForCareProviderRequest' type='tns:GetLogsForCareProviderRequestType'/>
+    <xs:element name='GetAccessLogsForPatientRequest' type='tns:GetAccessLogsForPatientRequestType'/>
 
-    <xs:complexType name='GetLogsForCareProviderRequestType'>
+    <xs:complexType name='GetAccessLogsForPatientRequestType'>
         <xs:annotation>
             <xs:documentation xml:lang='sv'>
-                Tjänst som returnerar loggposter för angiven vårdgivare, all åtkomst som har skett av vårdgivarens medarbetare.
-                Logguttaget begränsas av angivet datumintervall . 
-                Tjänsten returnerar en lista med loggposter (kan vara noll dvs en tom lista) om resultatkod är OK.		
+                Tjänst som returnerar lista för angiven patient, vilka vårdgivare som har haft åtkomst till information. Informationen som returneras innehåller även tidpunkt, syfte och typ av resurs.       	
+                Logguttaget begränsas av angivet datumintervall.
+                Tjänsten returnerar en lista med vårdgivare (kan vara noll dvs en tom lista) om resultatkod är OK .
                 Tjänsten returnerar alltid inom 15 sekunder, även ifall rapporten ännu inte har hunnit skapats. Tiden är konfigurerbar av systemet och kan ändras vid behov.
                 Om rapporten inte har hunnit skapats av tjänsten returneras ett id (queuedReportId) som identifierar den rapport som håller på att skapas, man får även i detta fall resultkoden REPORTONQUEUE eller REPORTINPROCESS. Man får även en indikation på hur länge det förväntas ta innan rapporten är genererad (queueTime). 
                 Med hjälp av queuedReportId skall ytterligare anrop sedan göras av det anropade systemet för att kontrollera/hämta den skapade rapporten. Obeservera att man måste ange queuedReportId, i annat fall kommer en ny rapport att skapas.
@@ -49,23 +49,22 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="CareProviderId" type="log:HsaId"/>
+            <xs:element name="PatientId" type="log:PersonId"/>
             <xs:element name="FromDate" type="xs:dateTime"/>
             <xs:element name="ToDate" type="xs:dateTime"/>
             <xs:element name="QueuedReportId" type="log:Id" minOccurs="0"/>
-            <xs:element name="CareUnitId" type="log:HsaId" minOccurs="0"/>
             <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:element name='GetLogsForCareProviderResponse' type='tns:GetLogsForCareProviderResponseType'/>
+    <xs:element name='GetAccessLogsForPatientResponse' type='tns:GetAccessLogsForPatientResponseType'/>
 
-    <xs:complexType name='GetLogsForCareProviderResponseType'>
+    <xs:complexType name='GetAccessLogsForPatientResponseType'>
         <xs:annotation>
             <xs:documentation xml:lang='sv'>
-                Tjänst som returnerar loggposter för angiven vårdgivare, all åtkomst som har skett av vårdgivarens medarbetare.
-                Logguttaget begränsas av angivet datumintervall . 
-                Tjänsten returnerar en lista med loggposter (kan vara noll dvs en tom lista) om resultatkod är OK.		
+                Tjänst som returnerar lista för angiven patient, vilka vårdgivare som har haft åtkomst till information. Informationen som returneras innehåller även tidpunkt, syfte och typ av resurs.       	
+                Logguttaget begränsas av angivet datumintervall.
+                Tjänsten returnerar en lista med vårdgivare (kan vara noll dvs en tom lista) om resultatkod är OK .
                 Tjänsten returnerar alltid inom 15 sekunder, även ifall rapporten ännu inte har hunnit skapats. Tiden är konfigurerbar av systemet och kan ändras vid behov.
                 Om rapporten inte har hunnit skapats av tjänsten returneras ett id (queuedReportId) som identifierar den rapport som håller på att skapas, man får även i detta fall resultkoden REPORTONQUEUE eller REPORTINPROCESS. Man får även en indikation på hur länge det förväntas ta innan rapporten är genererad (queueTime). 
                 Med hjälp av queuedReportId skall ytterligare anrop sedan göras av det anropade systemet för att kontrollera/hämta den skapade rapporten. Obeservera att man måste ange queuedReportId, i annat fall kommer en ny rapport att skapas.
@@ -77,7 +76,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="LogsResultType" type="logquerying:LogsResultType"/>
+            <xs:element name="AccessLogsResultType" type="logquerying:AccessLogsResultType"/>
             <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
         </xs:sequence>
     </xs:complexType>
