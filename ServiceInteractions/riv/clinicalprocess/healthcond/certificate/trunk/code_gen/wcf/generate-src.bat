@@ -26,25 +26,25 @@ SET NAMESPACE=/namespace:*,Riv.Clinicalprocess.Healthcond.Certificate.Schemas.v1
 SET SCHEMADIR="schemas\interactions"
 SET SVCUTIL="svcutil.exe"
 
-SET W1=%SCHEMADIR%\GetCertificateForCareInteraction\GetCertificateForCareInteraction_0.9_RIVTABP21.wsdl
+SET W1=%SCHEMADIR%\GetCertificateForCareInteraction\GetCertificateForCareInteraction_1.0_RIVTABP21.wsdl
 SET X1=%SCHEMADIR%\GetCertificateForCareInteraction\*.xsd
 
-SET W2=%SCHEMADIR%\ListCertificatesForCareInteraction\ListCertificatesForCareInteraction_0.9_RIVTABP21.wsdl
+SET W2=%SCHEMADIR%\ListCertificatesForCareInteraction\ListCertificatesForCareInteraction_1.0_RIVTABP21.wsdl
 SET X2=%SCHEMADIR%\ListCertificatesForCareInteraction\*.xsd
 
-SET W3=%SCHEMADIR%\ListCertificatesForCitizenInteraction\ListCertificatesForCitizenInteraction_0.9_RIVTABP21.wsdl
+SET W3=%SCHEMADIR%\ListCertificatesForCitizenInteraction\ListCertificatesForCitizenInteraction_1.0_RIVTABP21.wsdl
 SET X3=%SCHEMADIR%\ListCertificatesForCitizenInteraction\*.xsd
 
-SET W4=%SCHEMADIR%\RegisterCertificateInteraction\RegisterCertificateInteraction_0.9_RIVTABP21.wsdl
+SET W4=%SCHEMADIR%\RegisterCertificateInteraction\RegisterCertificateInteraction_1.0_RIVTABP21.wsdl
 SET X4=%SCHEMADIR%\RegisterCertificateInteraction\*.xsd
 
-SET W5=%SCHEMADIR%\ListCertificatesForCareWithQAInteraction\ListCertificatesForCareWithQAInteraction_0.9_RIVTABP21.wsdl
+SET W5=%SCHEMADIR%\ListCertificatesForCareWithQAInteraction\ListCertificatesForCareWithQAInteraction_1.0_RIVTABP21.wsdl
 SET X5=%SCHEMADIR%\ListCertificatesForCareWithQAInteraction\*.xsd
 
-SET W6=%SCHEMADIR%\CertificateStatusUpdateForCareInteraction\CertificateStatusUpdateForCareInteraction_0.9_RIVTABP21.wsdl
+SET W6=%SCHEMADIR%\CertificateStatusUpdateForCareInteraction\CertificateStatusUpdateForCareInteraction_1.0_RIVTABP21.wsdl
 SET X6=%SCHEMADIR%\CertificateStatusUpdateForCareInteraction\*.xsd
 
-SET W7=%SCHEMADIR%\CreateDraftCertificateInteraction\CreateDraftCertificateInteraction_0.9_RIVTABP21.wsdl
+SET W7=%SCHEMADIR%\CreateDraftCertificateInteraction\CreateDraftCertificateInteraction_1.0_RIVTABP21.wsdl
 SET X7=%SCHEMADIR%\CreateDraftCertificateInteraction\*.xsd
 
 SET X15=schemas\core_components\*.xsd
