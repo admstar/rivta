@@ -17,21 +17,21 @@
  specific language governing permissions and limitations
  under the License.
  -->    
-<wsdl:definitions name='GetInfoLogsForPatientInteraction'
+<wsdl:definitions name='GetAccessLogsForPatientInteraction'
     xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'
     xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/'
     xmlns:xs='http://www.w3.org/2001/XMLSchema'
-    xmlns:tjsr='urn:riv:ehr:log:querying:GetInfoLogsForPatientResponder:1'
+    xmlns:tjsr='urn:riv:ehr:log:querying:GetAccessLogsForPatientResponder:1'
     xmlns:itr='urn:riv:itintegration:registry:1'
-    xmlns:tns='urn:riv:ehr:log:querying:GetInfoLogsForPatient:1:rivtabp21'
-    targetNamespace='urn:riv:ehr:log:querying:GetInfoLogsForPatient:1:rivtabp21'>
+    xmlns:tns='urn:riv:ehr:log:querying:GetAccessLogsForPatient:1:rivtabp21'
+    targetNamespace='urn:riv:ehr:log:querying:GetAccessLogsForPatient:1:rivtabp21'>
 
     <wsdl:documentation xml:lang='sv'>
-         Tjänsteinteraktionens namn: GetInfoLogsForPatient
+         Tjänsteinteraktionens namn: GetAccessLogsForPatient
          Beskrivning: 
-           Tjänst som returnerar lista för angiven vårdgivare samt patient, vilka vårdgivare som har haft åtkomst till vårdgivarens information där vårdgivaren är informationsägare				 
-           Logguttaget begränsas av angivet datumintervall. 
-           Tjänsten returnerar en lista med vårdgivare (kan vara noll dvs en tom lista) om resultatkod är OK.		
+           Tjänst som returnerar lista för angiven patient, vilka vårdgivare som har haft åtkomst till information. Informationen som returneras innehåller även tidpunkt, syfte och typ av resurs.       	
+           Logguttaget begränsas av angivet datumintervall.
+           Tjänsten returnerar en lista med vårdgivare (kan vara noll dvs en tom lista) om resultatkod är OK .
            Tjänsten returnerar alltid inom 15 sekunder, även ifall rapporten ännu inte har hunnit skapats. Tiden är konfigurerbar av systemet och kan ändras vid behov.
            Om rapporten inte har hunnit skapats av tjänsten returneras ett id (queuedReportId) som identifierar den rapport som håller på att skapas, man får även i detta fall resultkoden REPORTONQUEUE eller REPORTINPROCESS. Man får även en indikation på hur länge det förväntas ta innan rapporten är genererad (queueTime). 
            Med hjälp av queuedReportId skall ytterligare anrop sedan göras av det anropade systemet för att kontrollera/hämta den skapade rapporten. Obeservera att man måste ange queuedReportId, i annat fall kommer en ny rapport att skapas.
@@ -48,38 +48,38 @@
     </wsdl:documentation>
     
     <wsdl:types>
-        <xs:schema targetNamespace='urn:riv:ehr:log:querying:GetInfoLogsForPatient:1:rivtabp21'>
-            <xs:import schemaLocation='GetInfoLogsForPatientResponder_1.0.xsd' namespace='urn:riv:ehr:log:querying:GetInfoLogsForPatientResponder:1' />
+        <xs:schema targetNamespace='urn:riv:ehr:log:querying:GetAccessLogsForPatient:1:rivtabp21'>
+            <xs:import schemaLocation='GetAccessLogsForPatientResponder_1.1.xsd' namespace='urn:riv:ehr:log:querying:GetAccessLogsForPatientResponder:1' />
             <xs:import schemaLocation='../../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
         </xs:schema>
     </wsdl:types>
     
         
-    <wsdl:message name='GetInfoLogsForPatientRequest'>
+    <wsdl:message name='GetAccessLogsForPatientRequest'>
         <wsdl:part name='LogicalAddress' element='itr:LogicalAddress'>
             <wsdl:documentation xml:lang='sv'>Ineras nationella HSA-id SE165565594230-1000.</wsdl:documentation>
         </wsdl:part>
     
-        <wsdl:part name='parameters' element='tjsr:GetInfoLogsForPatientRequest' />
+        <wsdl:part name='parameters' element='tjsr:GetAccessLogsForPatientRequest' />
     </wsdl:message>
 
-    <wsdl:message name='GetInfoLogsForPatientResponse'>
-        <wsdl:part name='parameters' element='tjsr:GetInfoLogsForPatientResponse' />
+    <wsdl:message name='GetAccessLogsForPatientResponse'>
+        <wsdl:part name='parameters' element='tjsr:GetAccessLogsForPatientResponse' />
     </wsdl:message>
 
-    <wsdl:portType name='GetInfoLogsForPatientResponderInterface'>
-        <wsdl:operation name='GetInfoLogsForPatient'>
-            <wsdl:input message='tns:GetInfoLogsForPatientRequest' />
-            <wsdl:output message='tns:GetInfoLogsForPatientResponse' />
+    <wsdl:portType name='GetAccessLogsForPatientResponderInterface'>
+        <wsdl:operation name='GetAccessLogsForPatient'>
+            <wsdl:input message='tns:GetAccessLogsForPatientRequest' />
+            <wsdl:output message='tns:GetAccessLogsForPatientResponse' />
         </wsdl:operation>
     </wsdl:portType>
 
-    <wsdl:binding name='GetInfoLogsForPatientResponderBinding' type='tns:GetInfoLogsForPatientResponderInterface'>
+    <wsdl:binding name='GetAccessLogsForPatientResponderBinding' type='tns:GetAccessLogsForPatientResponderInterface'>
         <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
-        <wsdl:operation name='GetInfoLogsForPatient'>
-            <soap:operation soapAction='urn:riv:ehr:log:querying:GetInfoLogsForPatientResponder:1:GetInfoLogsForPatient' style='document' />
+        <wsdl:operation name='GetAccessLogsForPatient'>
+            <soap:operation soapAction='urn:riv:ehr:log:querying:GetAccessLogsForPatientResponder:1:GetAccessLogsForPatient' style='document' />
             <wsdl:input>
-                <soap:header use='literal' message='tns:GetInfoLogsForPatientRequest' part='LogicalAddress' />
+                <soap:header use='literal' message='tns:GetAccessLogsForPatientRequest' part='LogicalAddress' />
                 <soap:body use='literal' parts='parameters' />
             </wsdl:input>
             <wsdl:output>
@@ -88,8 +88,8 @@
         </wsdl:operation>
     </wsdl:binding>
 
-    <wsdl:service name='GetInfoLogsForPatientResponderService'>
-        <wsdl:port name='GetInfoLogsForPatientResponderPort' binding='tns:GetInfoLogsForPatientResponderBinding'>
+    <wsdl:service name='GetAccessLogsForPatientResponderService'>
+        <wsdl:port name='GetAccessLogsForPatientResponderPort' binding='tns:GetAccessLogsForPatientResponderBinding'>
             <soap:address location='http://tempuri.org' />
         </wsdl:port>
     </wsdl:service>
