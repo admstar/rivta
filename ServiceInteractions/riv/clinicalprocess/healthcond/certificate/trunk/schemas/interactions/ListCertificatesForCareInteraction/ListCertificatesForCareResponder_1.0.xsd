@@ -3,7 +3,7 @@
         targetNamespace="urn:riv:clinicalprocess:healthcond:certificate:ListCertificatesForCareResponder:1"
         xmlns:tns="urn:riv:clinicalprocess:healthcond:certificate:ListCertificatesForCareResponder:1"
         elementFormDefault="qualified" version="1.0"
-        xmlns:c="urn:riv:clinicalprocess:healthcond:certificate:1">
+        xmlns:core="urn:riv:clinicalprocess:healthcond:certificate:1">
 
   <import schemaLocation="../../core_components/clinicalprocess_healthcond_certificate_1.0.xsd"
           namespace="urn:riv:clinicalprocess:healthcond:certificate:1"/>
@@ -13,15 +13,15 @@
 
   <complexType name="ListCertificatesForCareType">
     <sequence>
-      <element name="nationalIdentityNumber" type="string"/>
-      <element name="careUnit" type="string" minOccurs="1" maxOccurs="unbounded"/>
+      <element name="person-id" type="string"/>
+      <element name="enhet" type="string" minOccurs="1" maxOccurs="unbounded"/>
       <any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
   <complexType name="ListCertificatesForCareResponseType">
     <sequence>
-      <element name="meta" type="c:CertificateMetaType" maxOccurs="unbounded" minOccurs="0"/>
-      <element name="result" type="c:ResultType"/>
+      <element name="meta" type="core:CertificateMetaType" maxOccurs="unbounded" minOccurs="0"/>
+      <element name="result" type="core:ResultType"/>
       <any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>

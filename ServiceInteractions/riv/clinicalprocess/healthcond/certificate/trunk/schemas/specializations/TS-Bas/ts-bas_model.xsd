@@ -22,13 +22,11 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns="urn:riv:clinicalprocess:healthcond:certificate:1"
            xmlns:c="urn:riv:clinicalprocess:healthcond:certificate:types:1"
-           xmlns:iso="urn:iso:21090:dt:1"
            xmlns:ext="urn:riv:clinicalprocess:healthcond:certificate:ts-bas:1"
            targetNamespace="urn:riv:clinicalprocess:healthcond:certificate:1"
            elementFormDefault="qualified" attributeFormDefault="unqualified"
            version="1.0">
 
-  <xs:import namespace="urn:iso:21090:dt:1" schemaLocation="../../core_components/iso_dt_subset_1.0.xsd"/>
   <xs:import namespace="urn:riv:clinicalprocess:healthcond:certificate:ts-bas:1" schemaLocation="ts-bas_model_extension.xsd"/>
 
   <xs:import namespace="urn:riv:clinicalprocess:healthcond:certificate:types:1"
@@ -38,11 +36,11 @@
 
   <xs:complexType name="utlatandeType">
     <xs:sequence>
-      <xs:element name="utlatande-id" type="c:utlatandeId"/>
-      <xs:element name="typAvUtlatande" type="c:utlatandeTyp"/>
+      <xs:element name="utlatande-id" type="c:UtlatandeId"/>
+      <xs:element name="typAvUtlatande" type="c:TypAvUtlatande"/>
       <xs:element name="kommentar" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="signeringsdatum" type="c:dateTime"/>
-      <xs:element name="skickatdatum" type="c:dateTime" minOccurs="0"/>
+      <xs:element name="signeringsdatum" type="c:TidStampel"/>
+      <xs:element name="skickatdatum" type="c:TidStampel" minOccurs="0"/>
 
       <xs:element name="patient" type="patientType"/>
       <xs:element name="skapadAv" type="hosPersonalType"/>
@@ -63,7 +61,7 @@
 
   <xs:complexType name="patientType">
     <xs:sequence>
-      <xs:element name="person-id" type="c:personId"/>
+      <xs:element name="person-id" type="c:PersonId"/>
       <xs:element name="fornamn" type="xs:string" maxOccurs="unbounded"/>
       <xs:element name="efternamn" type="xs:string"/>
       <xs:element name="postadress" type="xs:string"/>
@@ -80,9 +78,9 @@
   </xs:complexType>
   <xs:complexType name="vardkontaktKod">
     <xs:complexContent>
-      <xs:restriction base="iso:CD">
+      <xs:restriction base="c:CV">
         <xs:attribute name="code" type="vardkontaktKodEnum" use="required"/>
-        <xs:attribute name="codeSystem" type="iso:Uid" use="required" fixed="1.2.752.116.2.1.1.1"/>
+        <xs:attribute name="codeSystem" type="c:Uid" use="required" fixed="1.2.752.116.2.1.1.1"/>
         <xs:attribute name="codeSystemName" type="xs:string" use="required" fixed="SNOMED-CT"/>
       </xs:restriction>
     </xs:complexContent>
@@ -94,9 +92,9 @@
   </xs:simpleType>
   <xs:complexType name="idKontrollKod">
     <xs:complexContent>
-      <xs:restriction base="iso:CD">
+      <xs:restriction base="c:CV">
         <xs:attribute name="code" type="idKontrollKodEnum" use="required"/>
-        <xs:attribute name="codeSystem" type="iso:Uid" use="required" fixed="e7cc8f30-a353-4c42-b17a-a189b6876647"/>
+        <xs:attribute name="codeSystem" type="c:Uid" use="required" fixed="e7cc8f30-a353-4c42-b17a-a189b6876647"/>
         <xs:attribute name="codeSystemName" type="xs:string" use="required" fixed="kv_id_kontroll"/>
       </xs:restriction>
     </xs:complexContent>
@@ -125,9 +123,9 @@
   </xs:complexType>
   <xs:complexType name="aktivitetKod">
     <xs:complexContent>
-      <xs:restriction base="iso:CD">
+      <xs:restriction base="c:CV">
         <xs:attribute name="code" type="aktivitetKodEnum" use="required"/>
-        <xs:attribute name="codeSystem" type="iso:Uid" use="required"/>
+        <xs:attribute name="codeSystem" type="c:Uid" use="required"/>
         <xs:attribute name="codeSystemName" type="xs:string" use="required"/>
       </xs:restriction>
     </xs:complexContent>
@@ -148,16 +146,16 @@
       <xs:element name="observations-id" type="ext:relationId" minOccurs="0" />
       <xs:element name="observationskod" type="observationKod" />
       <xs:element name="beskrivning" type="xs:string" minOccurs="0"/>
-      <xs:element name="varde" type="iso:PQ" minOccurs="0"/>
+      <xs:element name="varde" type="c:PQ" minOccurs="0"/>
       <xs:element name="forekomst" type="xs:boolean" minOccurs="0"/>
       <xs:element ref="ext:lateralitet" minOccurs="0" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="observationKod">
     <xs:complexContent>
-      <xs:restriction base="iso:CD">
+      <xs:restriction base="c:CV">
         <xs:attribute name="code" type="observationKodEnum" use="required"/>
-        <xs:attribute name="codeSystem" type="iso:Uid" use="required"/>
+        <xs:attribute name="codeSystem" type="c:Uid" use="required"/>
         <xs:attribute name="codeSystemName" type="xs:string" use="required"/>
       </xs:restriction>
     </xs:complexContent>
@@ -210,9 +208,9 @@
   </xs:complexType>
   <xs:complexType name="rekommendationKod">
     <xs:complexContent>
-      <xs:restriction base="iso:CD">
+      <xs:restriction base="c:CV">
         <xs:attribute name="code" type="rekommendationKodEnum" use="required"/>
-        <xs:attribute name="codeSystem" type="iso:Uid" use="required" fixed="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"/>
+        <xs:attribute name="codeSystem" type="c:Uid" use="required" fixed="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"/>
         <xs:attribute name="codeSystemName" type="xs:string" use="required" fixed="kv_rekommendation_intyg"/>
       </xs:restriction>
     </xs:complexContent>
@@ -226,7 +224,7 @@
 
   <xs:complexType name="hosPersonalType">
     <xs:sequence>
-      <xs:element name="personal-id" type="c:hsaId">
+      <xs:element name="personal-id" type="c:HsaId">
         <xs:annotation>
           <xs:documentation>HSA-id, o.i.d för HSA-id är 1.2.752.129.2.1.4.1</xs:documentation>
         </xs:annotation>
@@ -248,7 +246,7 @@
 
   <xs:complexType name="enhetType">
     <xs:sequence>
-      <xs:element name="enhets-id" type="c:hsaId">
+      <xs:element name="enhets-id" type="c:HsaId">
         <xs:annotation>
           <xs:documentation>HSA-id, o.i.d för HSA-id är 1.2.752.129.2.1.4.1</xs:documentation>
         </xs:annotation>
@@ -264,7 +262,7 @@
 
   <xs:complexType name="vardgivareType">
     <xs:sequence>
-      <xs:element name="vardgivare-id" type="c:hsaId">
+      <xs:element name="vardgivare-id" type="c:HsaId">
         <xs:annotation>
           <xs:documentation>HSA-id, o.i.d för HSA-id är 1.2.752.129.2.1.4.1</xs:documentation>
         </xs:annotation>
