@@ -144,7 +144,24 @@
 		</xs:restriction>
 	</xs:simpleType>
 
-	<xs:simpleType name="PartielltDatum">
+    <xs:simpleType name="TidStampelMedMillisekunder">
+        <xs:annotation>
+            <xs:documentation>
+                DateTime value is a string with the format
+                &#34;YYYY-MM-DDThh:mm:ss&#34;
+                that conforms to the constrained ISO
+                8601.
+                Fraction of seconds and timezone precision is not required.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:dateTime">
+            <xs:pattern
+                    value="\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d.\d{3}" />
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <xs:simpleType name="PartielltDatum">
 		<xs:annotation>
 			<xs:documentation>
 				PartialDate value is a string with the format
