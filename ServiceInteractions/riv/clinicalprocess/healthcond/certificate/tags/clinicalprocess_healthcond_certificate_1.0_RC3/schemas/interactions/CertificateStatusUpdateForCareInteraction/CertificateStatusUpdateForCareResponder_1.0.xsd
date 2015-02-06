@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:core="urn:riv:clinicalprocess:healthcond:certificate:1"
+	xmlns:types="urn:riv:clinicalprocess:healthcond:certificate:types:1"
+	xmlns:tns="urn:riv:clinicalprocess:healthcond:certificate:CertificateStatusUpdateForCareResponder:1"
+	targetNamespace="urn:riv:clinicalprocess:healthcond:certificate:CertificateStatusUpdateForCareResponder:1"
+	elementFormDefault="qualified" attributeFormDefault="unqualified"
+	version="1.0">
+
+	<xs:import namespace="urn:riv:clinicalprocess:healthcond:certificate:1"
+		schemaLocation="../../core_components/clinicalprocess_healthcond_certificate_1.0.xsd" />
+	<xs:import namespace="urn:riv:clinicalprocess:healthcond:certificate:types:1"
+		schemaLocation="../../core_components/clinicalprocess_healthcond_certificate_types_1.0.xsd" />
+	
+	<xs:element name="CertificateStatusUpdateForCare" type="tns:CertificateStatusUpdateForCareType" />
+	<xs:element name="CertificateStatusUpdateForCareResponse"
+		type="tns:CertificateStatusUpdateForCareResponseType" />
+
+	<xs:complexType name="CertificateStatusUpdateForCareType">
+		<xs:sequence>
+			<xs:element name="utlatande" type="tns:utlatandeType" />
+			<xs:any namespace="##other" processContents="lax" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+<!-- Detta tjänstekontrakt innehåller ett antal typer som ersätter mer generella definitioner i core -->
+ <xs:complexType name="utlatandeType">
+    <xs:sequence>
+    	<xs:element name="utlatande-id" type="types:UtlatandeId"/>
+    	<xs:element name="typAvUtlatande" type="types:TypAvUtlatande"/>
+    	<xs:element name="signeringsdatum" type="types:TidStampel" minOccurs="0" />
+    	<xs:element name="patient" type="tns:Patient"/>
+      <xs:element name="skapadAv" type="tns:HosPersonal"/>
+	  <xs:element name="diagnos" type="types:Diagnos" minOccurs="0" />
+      <xs:element name="arbetsformaga" type="tns:Arbetsformaga" minOccurs="0" maxOccurs="4"/>
+      <xs:element name="handelse" type="tns:Handelse" />
+	  <xs:element name="fragorOchSvar" type="tns:FragorOchSvar" />
+      <xs:any namespace="##other" processContents="lax" minOccurs="0"
+              maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  
+	<xs:complexType name="HosPersonal"> <!-- Skapat av -->
+		<xs:sequence>
+			<xs:element name="personal-id" type="types:HsaId">
+				<xs:annotation>
+					<xs:documentation>HSA-id, o.i.d för HSA-id är 1.2.752.129.2.1.4.1
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="fullstandigtNamn" type="types:nonEmptyString">
+				<xs:annotation>
+					<xs:documentation>Förnamn + efternamn sammanslaget.
+						Personen kan ej
+						ha skyddad identitet, så det fungerar med obligatoriskt
+						namn.
+					</xs:documentation>
+				</xs:annotation>
+				</xs:element>
+			<xs:element name="enhet" type="tns:Enhet" />
+			<xs:any namespace="##other" processContents="lax" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Enhet">
+		<xs:sequence>
+			<xs:element name="enhets-id" type="types:HsaId">
+				<xs:annotation>
+					<xs:documentation>HSA-id, o.i.d för HSA-id är 1.2.752.129.2.1.4.1
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="enhetsnamn" type="types:nonEmptyString" />
+			<xs:any namespace="##other" processContents="lax" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="Arbetsformaga">
+		<xs:sequence>
+			<xs:element name="varde" type="types:PQ"/>
+			<xs:element name="period" type="types:DatumPeriod"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="Handelse">
+		<xs:sequence>
+			<xs:element name="handelsekod" type="types:Handelsekod" />
+			<xs:element name="handelsetidpunkt" type="types:TidStampelMedMillisekunder" />
+			<xs:any namespace="##other" processContents="lax" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="FragorOchSvar"> <!-- Frågor och svar -->
+		<xs:sequence>
+			<xs:sequence>
+				<xs:element name="antalFragor" type="xs:int" />
+				<xs:element name="antalHanteradeFragor" type="xs:int" />
+				<xs:element name="antalSvar" type="xs:int" />
+				<xs:element name="antalHanteradeSvar" type="xs:int" />
+				<xs:any namespace="##other" processContents="lax" minOccurs="0"
+					maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Patient">
+		<xs:sequence>
+			<xs:element name="person-id" type="types:PersonId"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CertificateStatusUpdateForCareResponseType">
+		<xs:sequence>
+			<xs:element name="result" type="core:ResultType" />
+			<xs:any namespace="##other" processContents="lax" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
