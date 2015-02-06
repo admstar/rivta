@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="urn:riv:clinicalprocess:healthcond:certificate:ListCertificatesForCitizenResponder:1"
+        xmlns:tns="urn:riv:clinicalprocess:healthcond:certificate:ListCertificatesForCitizenResponder:1"
+        elementFormDefault="qualified" version="1.0"
+        xmlns:core="urn:riv:clinicalprocess:healthcond:certificate:1"
+        xmlns:types="urn:riv:clinicalprocess:healthcond:certificate:types:1">
+
+    <import schemaLocation="../../core_components/clinicalprocess_healthcond_certificate_1.0.xsd"
+        namespace="urn:riv:clinicalprocess:healthcond:certificate:1"/>
+    <import schemaLocation="../../core_components/clinicalprocess_healthcond_certificate_types_1.0.xsd"
+        namespace="urn:riv:clinicalprocess:healthcond:certificate:types:1"/>
+    
+    <element name="ListCertificatesForCitizenRequest" type="tns:ListCertificatesForCitizenType"/>
+    <element name="ListCertificatesForCitizenResponse" type="tns:ListCertificatesForCitizenResponseType"/>
+
+    <complexType name="ListCertificatesForCitizenType">
+        <sequence>
+            <element name="person-id" type="string"/>
+            <element name="utlatandeTyp" type="string" minOccurs="0" maxOccurs="unbounded"/> <!-- Default all types -->
+            <element name="tillganglig" type="string" minOccurs="0"/> <!-- Default true -->
+            <element name="franDatum" type="types:Datum" minOccurs="0"/>
+            <element name="tillDatum" type="types:Datum" minOccurs="0"/>
+            <any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+    <complexType name="ListCertificatesForCitizenResponseType">
+        <sequence>
+            <element name="meta" type="core:CertificateMetaType" maxOccurs="unbounded" minOccurs="0"/>
+            <element name="result" type="core:ResultType"/>
+            <any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+</schema>
