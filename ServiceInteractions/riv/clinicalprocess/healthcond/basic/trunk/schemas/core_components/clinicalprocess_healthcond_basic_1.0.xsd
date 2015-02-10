@@ -210,6 +210,19 @@
 			<xs:element name="referredInformationType" type="xs:string" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:complexType name="ResultType">
+        <xs:annotation>
+            <xs:documentation>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="resultCode" type="codes:ResultCodeEnum"/>
+            <xs:element name="errorCode" type="codes:ErrorCodeEnum" minOccurs="0"/>
+            <xs:element name="logId" type="xs:string"/>
+            <xs:element minOccurs="0" name="subCode" type="xs:string"/>
+            <xs:element name="message" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
 	<xs:complexType name="SCType">
 		<xs:sequence>
 			<xs:element name="code" type="tns:CVType" minOccurs="0"/>
@@ -219,6 +232,13 @@
 	<xs:complexType name="SourceSystemType">
 		<xs:sequence>
 			<xs:element name="id" type="tns:IIType"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SourceSystemNullFlavorResponseType">
+		<xs:sequence>
+			<xs:element name="sourceSystem" type="tns:SourceSystemType"/>
+			<xs:element name="result" type="tns:ResultType" maxOccurs="unbounded"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
