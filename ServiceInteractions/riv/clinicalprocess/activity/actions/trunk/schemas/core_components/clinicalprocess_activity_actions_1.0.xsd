@@ -19,6 +19,21 @@
  -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:clinicalprocess:activity:actions:1" xmlns:codes="urn:riv:clinicalprocess:activity:actions:enum:1" targetNamespace="urn:riv:clinicalprocess:activity:actions:1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
 	<xs:import namespace="urn:riv:clinicalprocess:activity:actions:enum:1" schemaLocation="./clinicalprocess_activity_actions_enum_1.0.xsd"/>
+	<xs:complexType name="ActivityGroupType">
+		<xs:sequence>
+			<xs:element name="patient" type="tns:PatientType"/>
+			<xs:element name="performerRole" type="tns:PerformerRoleType"/>
+			<xs:element name="legalAuthenticator" type="tns:LegalAuthenticatorType" minOccurs="0"/>
+			<xs:element name="additionalParticipant" type="tns:AdditionalParticipantType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="sourceSystem" type="tns:SourceSystemType"/>
+			<xs:element name="device" type="tns:DeviceType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="location" type="tns:LocationType" minOccurs="0"/>
+			<xs:element name="careProcessId" type="tns:UUIDType" minOccurs="0"/>
+			<xs:element name="activity" type="tns:ActivityType" maxOccurs="unbounded"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
 	<xs:complexType name="ActivityType">
 		<xs:sequence>
 			<xs:element name="id" type="tns:IIType" minOccurs="1" maxOccurs="1"/>
@@ -29,13 +44,13 @@
 			<xs:element name="method" type="tns:CVType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="approvedForPatient" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="device" type="tns:DeviceType" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="location" type="tns:LocationType" minOccurs="0" maxOccurs="1"/>
-			<xs:element name="patient" type="tns:PatientType" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="sourceSystem" type="tns:SourceSystemType" minOccurs="0" maxOccurs="1"/>
+<!--			<xs:element name="device" type="tns:DeviceType" minOccurs="0" maxOccurs="1"/> -->
+<!--			<xs:element name="location" type="tns:LocationType" minOccurs="0" maxOccurs="1"/> -->
+<!--			<xs:element name="patient" type="tns:PatientType" minOccurs="1" maxOccurs="1"/> -->
+<!--			<xs:element name="sourceSystem" type="tns:SourceSystemType" minOccurs="0" maxOccurs="1"/> -->
 			<xs:element name="relation" type="tns:RelationType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="performerRole" type="tns:PerformerRoleType" minOccurs="1" maxOccurs="1"/>
-			<xs:element name="additionalParticipant" type="tns:AdditionalParticipantType" minOccurs="0" maxOccurs="unbounded"/>
+<!--			<xs:element name="performerRole" type="tns:PerformerRoleType" minOccurs="1" maxOccurs="1"/> -->
+<!--			<xs:element name="additionalParticipant" type="tns:AdditionalParticipantType" minOccurs="0" maxOccurs="unbounded"/> -->
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -242,6 +257,12 @@ Regular expression to validate RFC 2141 URN syntax.
 		</xs:annotation>
 		<xs:restriction base="xs:anyURI">
 			<xs:pattern value="urn:[a-zA-Z0-9][a-zA-Z0-9-]{1,31}:([a-zA-Z0-9()+,.:=@;$_!*'-]|%[0-9A-Fa-f]{2})+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UUIDType">
+		<xs:restriction base="xs:string">
+			<xs:length value="36" fixed="true"/>
+			<xs:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[8-9a-bA-B][0-9a-fA-F]{3}-[0-9a-fA-F]{12}"/>
 		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>
