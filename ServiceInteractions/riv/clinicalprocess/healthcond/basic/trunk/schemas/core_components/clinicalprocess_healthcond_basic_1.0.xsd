@@ -26,8 +26,6 @@
 			<xs:element name="legalAuthenticator" type="tns:LegalAuthenticatorType" minOccurs="0"/>
 			<xs:element name="additionalParticipant" type="tns:AdditionalParticipantType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="sourceSystem" type="tns:SourceSystemType"/>
-			<xs:element name="device" type="tns:DeviceType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="location" type="tns:LocationType" minOccurs="0"/>
 			<xs:element name="careProcessId" type="tns:UUIDType" minOccurs="0"/>
 			<xs:element name="observation" type="tns:ObservationType" maxOccurs="unbounded"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
@@ -37,6 +35,7 @@
 		<xs:sequence>
 			<xs:element name="id" type="tns:IIType"/>
 			<xs:element name="type" type="tns:CVType"/>
+			<xs:element name="status" type="tns:CVType" minOccurs="0"/>
 			<xs:element name="time" type="tns:TimePeriodType"/>
 			<xs:element name="method" type="tns:CVType" minOccurs="0"/>
 			<xs:element name="value" type="tns:ValueANYType"/>
@@ -56,6 +55,7 @@
 			<xs:element name="person" type="tns:PersonType" minOccurs="0"/>
 			<xs:element name="organisation" type="tns:OrganisationType" minOccurs="0"/>
 			<xs:element name="device" type="tns:DeviceType" minOccurs="0"/>
+			<xs:element name="location" type="tns:LocationType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -296,6 +296,7 @@ Regular expression to validate RFC 2141 URN syntax.
 			<!-- Only one of these (should have been xs:choice, but is xs:sequence due to compatibility issues) -->
 			<xs:element name="pq" type="tns:PQType" minOccurs="0"/>
 			<xs:element name="ts" type="tns:TimeStampType" minOccurs="0"/>
+			<xs:element name="ivl_ts" type="tns:TimePeriodType" minOccurs="0"/>
 			<xs:element name="cv" type="tns:CVType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
