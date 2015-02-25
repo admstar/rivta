@@ -36,7 +36,7 @@
 			<xs:element name="id" type="tns:IIType"/>
 			<xs:element name="type" type="tns:CVType"/>
 			<xs:element name="status" type="tns:CVType" minOccurs="0"/>
-			<xs:element name="time" type="tns:TimePeriodType"/>
+			<xs:element name="time" type="tns:PartialTimePeriodType"/>
 			<xs:element name="method" type="tns:CVType" minOccurs="0"/>
 			<xs:element name="value" type="tns:ValueANYType"/>
 			<xs:element name="targetSite" type="tns:CVType" minOccurs="0"/>
@@ -53,7 +53,7 @@
 			<xs:element name="id" type="tns:IIType"/>
 			<xs:element name="type" type="tns:CVType"/>
 			<xs:element name="role" type="tns:CVType"/>
-			<xs:element name="time" type="tns:TimePeriodType"/>
+			<xs:element name="time" type="tns:TimePeriodType" minOccurs="0"/>
 			<xs:element name="person" type="tns:PersonType" minOccurs="0"/>
 			<xs:element name="organisation" type="tns:OrganisationType" minOccurs="0"/>
 			<xs:element name="device" type="tns:DeviceType" minOccurs="0"/>
@@ -135,7 +135,7 @@
 	<xs:complexType name="LegalAuthenticatorType">
 		<xs:sequence>
 			<xs:element name="id" type="tns:IIType" minOccurs="0"/>
-			<xs:element name="time" type="tns:TimeStampType"/>
+			<xs:element name="time" type="tns:PartialTimeStampType"/>
 			<xs:element name="name" type="xs:string" minOccurs="0"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
@@ -193,7 +193,7 @@
 	<xs:complexType name="ReferredInformationType">
 		<xs:sequence>
 			<xs:element name="id" type="tns:IIType"/>
-			<xs:element name="time" type="tns:TimeStampType"/>
+			<xs:element name="time" type="tns:PartialTimeStampType"/>
 			<xs:element name="type" type="xs:string"/>
 			<xs:element name="informationOwner" type="tns:InformationOwnerType"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
@@ -263,6 +263,24 @@
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
+		<xs:complexType name="PartialTimePeriodType">
+		<xs:annotation>
+			<xs:documentation>
+                Används för att specificera ett datumintervall
+                med hjälp av start- och slutdatum.
+                
+                start: 
+                Startdatum på formatet YYYYMMDDhhmmss
+                end: 
+                Slutdatum på formatet YYYYMMDDhhmmss
+            </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="start" type="tns:PartialTimeStampType" minOccurs="0"/>
+			<xs:element name="end" type="tns:PartialTimeStampType" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="PartialTimeStampType">
 		<xs:annotation>
 			<xs:documentation>YYYY, YYYYMM, YYYYMMDD, YYYYMMDDhh, YYYYMMDDhhmm, YYYYMMDDhhmmss</xs:documentation>
@@ -297,17 +315,6 @@
 			<xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])(0[0-9]|1[0-9]|2[0123])([0-5])([0-9])([0-5])([0-9])"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="URNType">
-		<xs:annotation>
-			<xs:documentation>
-Regular expression to validate RFC 2141 URN syntax.
-"urn:[a-zA-Z0-9][a-zA-Z0-9-]{1,31}:([a-zA-Z0-9()+,.:=@;$_!*'-]|%[0-9A-Fa-f]{2})+"
-      </xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:anyURI">
-			<xs:pattern value="urn:[a-zA-Z0-9][a-zA-Z0-9-]{1,31}:([a-zA-Z0-9()+,.:=@;$_!*'-]|%[0-9A-Fa-f]{2})+"/>
-		</xs:restriction>
-	</xs:simpleType>
 	<xs:simpleType name="UUIDType">
 		<xs:restriction base="xs:string">
 			<xs:length value="36" fixed="true"/>
@@ -318,8 +325,8 @@ Regular expression to validate RFC 2141 URN syntax.
 		<xs:sequence>
 			<!-- Only one of these (should have been xs:choice, but is xs:sequence due to compatibility issues) -->
 			<xs:element name="pq" type="tns:PQType" minOccurs="0"/>
-			<xs:element name="ts" type="tns:TimeStampType" minOccurs="0"/>
-			<xs:element name="ivl_ts" type="tns:TimePeriodType" minOccurs="0"/>
+			<xs:element name="ts" type="tns:PartialTimeStampType" minOccurs="0"/>
+			<xs:element name="ivl_ts" type="tns:PartialTimePeriodType" minOccurs="0"/>
 			<xs:element name="cv" type="tns:CVType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
