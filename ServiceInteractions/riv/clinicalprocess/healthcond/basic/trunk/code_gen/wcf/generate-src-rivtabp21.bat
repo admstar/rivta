@@ -48,7 +48,7 @@ SET X0=%SCHEMADIR%\interactions\GetObservationsInteraction\*.xsd
 
 SET XCORE=%SCHEMADIR%\core_components\*.xsd
 
-SET SCHEMAS=%XCORE% %W0% 
+SET SCHEMAS=%XCORE% %W0% %X0% 
 
 SET OUTFILE=/out:code_gen\wcf\generated-src\ClinicalprocessHealthcondBasicInteractions.cs
 SET APPCONFIG=/config:code_gen\wcf\generated-src\app.config
