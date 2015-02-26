@@ -1,0 +1,940 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="ProcessObservations" resourceRoot="" soapui-version="5.0.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="ProcessObservationsResponderBinding" type="wsdl" bindingName="{urn:riv:clinicalprocess:healthcond:basic:ProcessObservations:1:rivtabp21}ProcessObservationsResponderBinding" soapVersion="1_1" anonymous="optional" definition="file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/basic/trunk/schemas/interactions/ProcessObservationsInteraction/ProcessObservationsInteraction_1.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/basic/trunk/schemas/interactions/ProcessObservationsInteraction/ProcessObservationsInteraction_1.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/basic/trunk/schemas/interactions/ProcessObservationsInteraction/ProcessObservationsInteraction_1.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.-->
+<wsdl:definitions name="ProcessObservationsInteraction" targetNamespace="urn:riv:clinicalprocess:healthcond:basic:ProcessObservations:1:rivtabp21" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tjsr="urn:riv:clinicalprocess:healthcond:basic:ProcessObservationsResponder:1" xmlns:tjsi="urn:riv:clinicalprocess:healthcond:basic:ProcessObservationsInitiator:1" xmlns:tns="urn:riv:clinicalprocess:healthcond:basic:ProcessObservations:1:rivtabp21" xmlns:itr="urn:riv:itintegration:registry:1">
+  <xs:annotation>
+    <xs:documentation>Tjänsteinteraktionens namn: ProcessObservationsInteraction
+			 Beskrivning: 
+			   Process observation report
+			 Revisioner: 
+			 Tjänstedomän: clinicalprocess:healthcond:basic
+			 Tjänsteinteraktionstyp: Fråga-Svar
+			 WS-profil: RIVTABP21
+			 Förvaltas av: Sveriges Kommuner och Landsting</xs:documentation>
+  </xs:annotation>
+  <wsdl:types>
+    <xs:schema targetNamespace="urn:riv:clinicalprocess:healthcond:basic:ProcessObservations:1:rivtabp21">
+      <xs:import schemaLocation="ProcessObservationsResponder_1.0.xsd" namespace="urn:riv:clinicalprocess:healthcond:basic:ProcessObservationsResponder:1"/>
+      <xs:import schemaLocation="../../core_components/itintegration_registry_1.0.xsd" namespace="urn:riv:itintegration:registry:1"/>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="ProcessObservationsRequest">
+    <wsdl:part name="LogicalAddress" element="itr:LogicalAddress">
+      <wsdl:documentation>The organisation number of the receiving insurance institution</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="parameters" element="tjsr:ProcessObservations"/>
+  </wsdl:message>
+  <wsdl:message name="ProcessObservationsResponse">
+    <wsdl:part name="parameters" element="tjsr:ProcessObservationsResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="ProcessObservationsResponderInterface">
+    <wsdl:operation name="ProcessObservations">
+      <wsdl:input message="tns:ProcessObservationsRequest"/>
+      <wsdl:output message="tns:ProcessObservationsResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ProcessObservationsResponderBinding" type="tns:ProcessObservationsResponderInterface">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="ProcessObservations">
+      <soap:operation soapAction="urn:riv:clinicalprocess:healthcond:basic:ProcessObservationsResponder:1:ProcessObservations" style="document"/>
+      <wsdl:input>
+        <soap:header use="literal" message="tns:ProcessObservationsRequest" part="LogicalAddress"/>
+        <soap:body use="literal" parts="parameters"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ProcessObservationsResponderService">
+    <wsdl:port name="ProcessObservationsResponderPort" binding="tns:ProcessObservationsResponderBinding">
+      <soap:address location="http://tempuri.org"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/basic/trunk/schemas/interactions/ProcessObservationsInteraction/ProcessObservationsResponder_1.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.-->
+<xs:schema targetNamespace="urn:riv:clinicalprocess:healthcond:basic:ProcessObservationsResponder:1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:clinicalprocess:healthcond:basic:ProcessObservationsResponder:1" xmlns:core="urn:riv:clinicalprocess:healthcond:basic:1">
+  <xs:import namespace="urn:riv:clinicalprocess:healthcond:basic:1" schemaLocation="../../core_components/clinicalprocess_healthcond_basic_1.0.xsd"/>
+  <xs:element name="ProcessObservations" type="tns:ProcessObservationsType"/>
+  <xs:element name="ProcessObservationsResponse" type="tns:ProcessObservationsResponseType"/>
+  <xs:complexType name="ProcessObservationsType">
+    <xs:sequence>
+      <xs:element name="observationGroup" type="core:ObservationGroupType" minOccurs="1" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProcessObservationsResponseType">
+    <xs:sequence>
+      <xs:element name="result" type="core:ResultType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="ResultCodeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="OK"/>
+      <xs:enumeration value="ERROR"/>
+      <xs:enumeration value="INFO"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/basic/trunk/schemas/core_components/clinicalprocess_healthcond_basic_1.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.-->
+<xs:schema targetNamespace="urn:riv:clinicalprocess:healthcond:basic:1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:clinicalprocess:healthcond:basic:1" xmlns:codes="urn:riv:clinicalprocess:healthcond:basic:enum:1">
+  <xs:import namespace="urn:riv:clinicalprocess:healthcond:basic:enum:1" schemaLocation="./clinicalprocess_healthcond_basic_enum_1.0.xsd"/>
+  <xs:complexType name="ObservationGroupType">
+    <xs:sequence>
+      <xs:element name="patient" type="tns:PatientType"/>
+      <xs:element name="performerRole" type="tns:PerformerRoleType"/>
+      <xs:element name="legalAuthenticator" type="tns:LegalAuthenticatorType" minOccurs="0"/>
+      <xs:element name="additionalParticipant" type="tns:AdditionalParticipantType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="sourceSystem" type="tns:SourceSystemType"/>
+      <xs:element name="device" type="tns:DeviceType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="location" type="tns:LocationType" minOccurs="0"/>
+      <xs:element name="careProcessId" type="tns:UUIDType" minOccurs="0"/>
+      <xs:element name="observation" type="tns:ObservationType" maxOccurs="unbounded"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ObservationType">
+    <xs:sequence>
+      <xs:element name="id" type="tns:IIType"/>
+      <xs:element name="type" type="tns:CVType"/>
+      <xs:element name="time" type="tns:TimePeriodType"/>
+      <xs:element name="method" type="tns:CVType" minOccurs="0"/>
+      <xs:element name="value" type="tns:ValueANYType"/>
+      <xs:element name="targetSite" type="tns:CVType" minOccurs="0"/>
+      <xs:element name="valueNegation" type="xs:boolean"/>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+      <xs:element name="approvedForPatient" type="xs:boolean"/>
+      <xs:element name="relation" type="tns:RelationType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AdditionalParticipantType">
+    <xs:sequence>
+      <xs:element name="id" type="tns:IIType"/>
+      <xs:element name="type" type="tns:CVType"/>
+      <xs:element name="role" type="tns:CVType"/>
+      <xs:element name="person" type="tns:PersonType" minOccurs="0"/>
+      <xs:element name="organisation" type="tns:OrganisationType" minOccurs="0"/>
+      <xs:element name="device" type="tns:DeviceType" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AddressType">
+    <xs:sequence>
+      <xs:element name="use" type="tns:CVType" minOccurs="0"/>
+      <xs:element name="part" type="tns:AddressPartType" maxOccurs="unbounded"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AddressPartType">
+    <xs:sequence>
+      <xs:element name="value" type="xs:string"/>
+      <xs:element name="type" type="codes:AddressPartTypeEnum" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CareGiverType">
+    <xs:sequence>
+      <xs:element name="id" type="tns:IIType"/>
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CareUnitType">
+    <xs:sequence>
+      <xs:element name="id" type="tns:IIType"/>
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+      <xs:element name="careGiver" type="tns:CareGiverType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CVType">
+    <xs:annotation>
+      <xs:documentation/>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="code" type="xs:string"/>
+      <xs:element name="codeSystem" type="xs:string"/>
+      <xs:element name="codeSystemName" type="xs:string" minOccurs="0"/>
+      <xs:element name="codeSystemVersion" type="xs:string" minOccurs="0"/>
+      <xs:element name="displayName" type="xs:string" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="DateType">
+    <xs:annotation>
+      <xs:documentation/>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="DeviceType">
+    <xs:sequence>
+      <xs:element name="id" type="tns:IIType" minOccurs="0"/>
+      <xs:element name="type" type="tns:CVType" minOccurs="0"/>
+      <xs:element name="model" type="tns:SCType" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IIType">
+    <xs:sequence>
+      <xs:element name="root" type="xs:string"/>
+      <xs:element name="extension" type="xs:string"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InformationOwnerType">
+    <xs:sequence>
+      <xs:element name="id" type="tns:IIType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LegalAuthenticatorType">
+    <xs:sequence>
+      <xs:element name="id" type="tns:IIType" minOccurs="0"/>
+      <xs:element name="time" type="tns:TimeStampType"/>
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LocationType">
+    <xs:sequence>
+      <xs:element name="id" type="tns:IIType" minOccurs="0"/>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="address" type="tns:AddressType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="telecom" type="tns:TelType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OrganisationType">
+    <xs:sequence>
+      <xs:element name="id" type="tns:IIType" minOccurs="0"/>
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PatientType">
+    <xs:sequence>
+      <xs:element name="id" type="tns:IIType"/>
+      <xs:element name="dateOfBirth" type="tns:DateType"/>
+      <xs:element name="gender" type="tns:CVType" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PerformerRoleType">
+    <xs:sequence>
+      <xs:element name="id" type="tns:IIType" minOccurs="0"/>
+      <xs:element name="code" type="tns:CVType"/>
+      <xs:element name="person" type="tns:PersonType" minOccurs="0"/>
+      <xs:element name="careUnit" type="tns:CareUnitType" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PersonType">
+    <xs:sequence>
+      <xs:element name="id" type="tns:IIType" minOccurs="0"/>
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PQType">
+    <xs:annotation>
+      <xs:documentation/>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="value" type="xs:decimal"/>
+      <xs:element name="unit" type="xs:string"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReferredInformationType">
+    <xs:sequence>
+      <xs:element name="id" type="tns:IIType"/>
+      <xs:element name="time" type="tns:TimeStampType"/>
+      <xs:element name="type" type="xs:string"/>
+      <xs:element name="informationOwner" type="tns:InformationOwnerType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RelationType">
+    <xs:sequence>
+      <xs:element name="code" type="tns:CVType"/>
+      <xs:element name="referredInformation" type="tns:ReferredInformationType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RelationFilterType">
+    <xs:sequence>
+      <xs:element name="id" type="tns:IIType" minOccurs="0"/>
+      <xs:element name="typeCode" type="tns:CVType" minOccurs="0"/>
+      <xs:element name="referredInformationType" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ResultType">
+    <xs:annotation>
+      <xs:documentation></xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="resultCode" type="codes:ResultCodeEnum"/>
+      <xs:element name="errorCode" type="codes:ErrorCodeEnum" minOccurs="0"/>
+      <xs:element name="logId" type="xs:string"/>
+      <xs:element minOccurs="0" name="subCode" type="xs:string"/>
+      <xs:element name="message" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SCType">
+    <xs:sequence>
+      <xs:element name="code" type="tns:CVType" minOccurs="0"/>
+      <xs:element name="value" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SourceSystemType">
+    <xs:sequence>
+      <xs:element name="id" type="tns:IIType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SourceSystemNullFlavorResponseType">
+    <xs:sequence>
+      <xs:element name="sourceSystem" type="tns:SourceSystemType"/>
+      <xs:element name="result" type="tns:ResultType" maxOccurs="unbounded"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TelType">
+    <xs:sequence>
+      <xs:element name="use" type="codes:TelTypeEnum"/>
+      <xs:element name="value" type="xs:string"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TimePeriodType">
+    <xs:annotation>
+      <xs:documentation>Används för att specificera ett datumintervall
+                med hjälp av start- och slutdatum.
+                
+                start: 
+                Startdatum på formatet YYYYMMDDhhmmss
+                end: 
+                Slutdatum på formatet YYYYMMDDhhmmss</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="start" type="tns:TimeStampType" minOccurs="0"/>
+      <xs:element name="end" type="tns:TimeStampType" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="TimeStampType">
+    <xs:annotation>
+      <xs:documentation>A quantity specifying a point on the axis of natural time.
+                A point in time is most often represented as a calendar
+                expression.
+                
+                The time has the format YYYYMMDDhhmmss</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])(0[0-9]|1[0-9]|2[0123])([0-5])([0-9])([0-5])([0-9])"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="URNType">
+    <xs:annotation>
+      <xs:documentation>Regular expression to validate RFC 2141 URN syntax.
+"urn:[a-zA-Z0-9][a-zA-Z0-9-]{1,31}:([a-zA-Z0-9()+,.:=@;$_!*'-]|%[0-9A-Fa-f]{2})+"</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:anyURI">
+      <xs:pattern value="urn:[a-zA-Z0-9][a-zA-Z0-9-]{1,31}:([a-zA-Z0-9()+,.:=@;$_!*'-]|%[0-9A-Fa-f]{2})+"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UUIDType">
+    <xs:restriction base="xs:string">
+      <xs:length value="36" fixed="true"/>
+      <xs:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[8-9a-bA-B][0-9a-fA-F]{3}-[0-9a-fA-F]{12}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ValueANYType">
+    <xs:sequence>
+      <!--Only one of these (should have been xs:choice, but is xs:sequence due to compatibility issues)-->
+      <xs:element name="pq" type="tns:PQType" minOccurs="0"/>
+      <xs:element name="ts" type="tns:TimeStampType" minOccurs="0"/>
+      <xs:element name="cv" type="tns:CVType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/basic/trunk/schemas/core_components/clinicalprocess_healthcond_basic_enum_1.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+ 
+ http://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.-->
+<xs:schema targetNamespace="urn:riv:clinicalprocess:healthcond:basic:enum:1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:clinicalprocess:healthcond:basic:enum:1">
+  <xs:simpleType name="AddressPartTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SAL">
+        <xs:annotation>
+          <xs:documentation>Gatuadressrad (används frekvent då man inte vill bryta ned adressrymden i gatutyper, byggnadsnr etc.)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CAR">
+        <xs:annotation>
+          <xs:documentation>C/O (care of) adress</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CEN">
+        <xs:annotation>
+          <xs:documentation>Områdes- kvartersbenämning (definierar område eller kvarter som berörd adress ligger i, t.ex. SoFo)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CNT">
+        <xs:annotation>
+          <xs:documentation>Land</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CPA">
+        <xs:annotation>
+          <xs:documentation>Län</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CTY">
+        <xs:annotation>
+          <xs:documentation>Postort</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="POB">
+        <xs:annotation>
+          <xs:documentation>Postbox</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ZIP">
+        <xs:annotation>
+          <xs:documentation>Postnummer</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PRE">
+        <xs:annotation>
+          <xs:documentation>Distriktsområde</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="STA">
+        <xs:annotation>
+          <xs:documentation>Region eller provins</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ResultCodeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="OK"/>
+      <xs:enumeration value="ERROR"/>
+      <xs:enumeration value="INFO"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!--Error codes for resultType-->
+  <xs:simpleType name="ErrorCodeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="UNKNOWN_PARAMETER_VALUE">
+        <xs:annotation>
+          <xs:documentation>Försök att filtrera på okänd kod/värde. Detta innebär att systemet inte har teknisk möjlighet att hantera den efterfrågade informationen.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="POLICY_VIOLATION">
+        <xs:annotation>
+          <xs:documentation>Den efterfrågade informationen lämnas inte ut till konsument av policyskäl.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="RESTRICTED_BY_PATIENT">
+        <xs:annotation>
+          <xs:documentation>Den efterfrågade informationen lämnas inte ut till konsument eftersom patienten har registrerat en spärr.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="OTHER">
+        <xs:annotation>
+          <xs:documentation>Information lämnades inte ut av annan anledning.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TelTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="voice">
+        <xs:annotation>
+          <xs:documentation>Nummer för att föra ett röstsamtal</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="fax">
+        <xs:annotation>
+          <xs:documentation>Faxnummer</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="data">
+        <xs:annotation>
+          <xs:documentation>E-post adress</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="sms">
+        <xs:annotation>
+          <xs:documentation>Nummer för mobila textmeddelanden</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/basic/trunk/schemas/core_components/itintegration_registry_1.0.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="urn:riv:itintegration:registry:1" elementFormDefault="qualified" version="1.0" xmlns="urn:riv:itintegration:registry:1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:annotation>
+    <xs:documentation>Beskrivning: 	Grundl��ggande informationsobjekt f��r dom��nen itintegration:registry (adressering av tj��nster)
+			
+			Revisionshistorik: 2011-06-27 Mats Ekhammar, Callista Enterprise AB
+				Added ServiceContractType
+			
+			Datum:			2011-05-04
+			Beskrivning:	Initial version
+			F��rfattare:		marcus.krantz@callistaenterprise.se</xs:documentation>
+  </xs:annotation>
+  <xs:element name="LogicalAddress" type="LogicalAddressType"/>
+  <xs:element name="ServiceContract" type="ServiceContractType"/>
+  <xs:simpleType name="LogicalAddressType">
+    <xs:annotation>
+      <xs:documentation>Defines the type for logical address according to national reference architecture.
+				Superseeds wsa:To as type for logical address header in RIVTA 2.1.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:complexType name="ServiceContractType">
+    <xs:annotation>
+      <xs:documentation>Type which describes a service contract. Used in interaction GetSupportedServiceContracts.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ServiceContractNamespace" type="xs:anyURI"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://tempuri.org</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:clinicalprocess:healthcond:basic:ProcessObservationsResponder:1:ProcessObservations" name="ProcessObservations" bindingOperationName="ProcessObservations" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://tempuri.org</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:healthcond:basic:ProcessObservationsResponder:1" xmlns:urn2="urn:riv:clinicalprocess:healthcond:basic:1">
+   <soapenv:Header>
+      <urn:LogicalAddress>?</urn:LogicalAddress>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn1:ProcessObservations>
+         <urn1:observationGroup>
+            <urn2:patient>
+               <urn2:id>
+                  <urn2:root>?</urn2:root>
+                  <urn2:extension>?</urn2:extension>
+                  <!--You may enter ANY elements at this point-->
+               </urn2:id>
+               <urn2:dateOfBirth>?</urn2:dateOfBirth>
+               <!--Optional:-->
+               <urn2:gender>
+                  <urn2:code>?</urn2:code>
+                  <urn2:codeSystem>?</urn2:codeSystem>
+                  <!--Optional:-->
+                  <urn2:codeSystemName>?</urn2:codeSystemName>
+                  <!--Optional:-->
+                  <urn2:codeSystemVersion>?</urn2:codeSystemVersion>
+                  <!--Optional:-->
+                  <urn2:displayName>?</urn2:displayName>
+                  <!--You may enter ANY elements at this point-->
+               </urn2:gender>
+               <!--You may enter ANY elements at this point-->
+            </urn2:patient>
+            <urn2:performerRole>
+               <!--Optional:-->
+               <urn2:id>
+                  <urn2:root>?</urn2:root>
+                  <urn2:extension>?</urn2:extension>
+                  <!--You may enter ANY elements at this point-->
+               </urn2:id>
+               <urn2:code>
+                  <urn2:code>?</urn2:code>
+                  <urn2:codeSystem>?</urn2:codeSystem>
+                  <!--Optional:-->
+                  <urn2:codeSystemName>?</urn2:codeSystemName>
+                  <!--Optional:-->
+                  <urn2:codeSystemVersion>?</urn2:codeSystemVersion>
+                  <!--Optional:-->
+                  <urn2:displayName>?</urn2:displayName>
+                  <!--You may enter ANY elements at this point-->
+               </urn2:code>
+               <!--Optional:-->
+               <urn2:person>
+                  <!--Optional:-->
+                  <urn2:id>
+                     <urn2:root>?</urn2:root>
+                     <urn2:extension>?</urn2:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </urn2:id>
+                  <!--Optional:-->
+                  <urn2:name>?</urn2:name>
+                  <!--You may enter ANY elements at this point-->
+               </urn2:person>
+               <!--Optional:-->
+               <urn2:careUnit>
+                  <urn2:id>
+                     <urn2:root>?</urn2:root>
+                     <urn2:extension>?</urn2:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </urn2:id>
+                  <!--Optional:-->
+                  <urn2:name>?</urn2:name>
+                  <urn2:careGiver>
+                     <urn2:id>
+                        <urn2:root>?</urn2:root>
+                        <urn2:extension>?</urn2:extension>
+                        <!--You may enter ANY elements at this point-->
+                     </urn2:id>
+                     <!--Optional:-->
+                     <urn2:name>?</urn2:name>
+                     <!--You may enter ANY elements at this point-->
+                  </urn2:careGiver>
+                  <!--You may enter ANY elements at this point-->
+               </urn2:careUnit>
+               <!--You may enter ANY elements at this point-->
+            </urn2:performerRole>
+            <!--Optional:-->
+            <urn2:legalAuthenticator>
+               <!--Optional:-->
+               <urn2:id>
+                  <urn2:root>?</urn2:root>
+                  <urn2:extension>?</urn2:extension>
+                  <!--You may enter ANY elements at this point-->
+               </urn2:id>
+               <urn2:time>?</urn2:time>
+               <!--Optional:-->
+               <urn2:name>?</urn2:name>
+               <!--You may enter ANY elements at this point-->
+            </urn2:legalAuthenticator>
+            <!--Zero or more repetitions:-->
+            <urn2:additionalParticipant>
+               <urn2:id>
+                  <urn2:root>?</urn2:root>
+                  <urn2:extension>?</urn2:extension>
+                  <!--You may enter ANY elements at this point-->
+               </urn2:id>
+               <urn2:type>
+                  <urn2:code>?</urn2:code>
+                  <urn2:codeSystem>?</urn2:codeSystem>
+                  <!--Optional:-->
+                  <urn2:codeSystemName>?</urn2:codeSystemName>
+                  <!--Optional:-->
+                  <urn2:codeSystemVersion>?</urn2:codeSystemVersion>
+                  <!--Optional:-->
+                  <urn2:displayName>?</urn2:displayName>
+                  <!--You may enter ANY elements at this point-->
+               </urn2:type>
+               <urn2:role>
+                  <urn2:code>?</urn2:code>
+                  <urn2:codeSystem>?</urn2:codeSystem>
+                  <!--Optional:-->
+                  <urn2:codeSystemName>?</urn2:codeSystemName>
+                  <!--Optional:-->
+                  <urn2:codeSystemVersion>?</urn2:codeSystemVersion>
+                  <!--Optional:-->
+                  <urn2:displayName>?</urn2:displayName>
+                  <!--You may enter ANY elements at this point-->
+               </urn2:role>
+               <!--Optional:-->
+               <urn2:person>
+                  <!--Optional:-->
+                  <urn2:id>
+                     <urn2:root>?</urn2:root>
+                     <urn2:extension>?</urn2:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </urn2:id>
+                  <!--Optional:-->
+                  <urn2:name>?</urn2:name>
+                  <!--You may enter ANY elements at this point-->
+               </urn2:person>
+               <!--Optional:-->
+               <urn2:organisation>
+                  <!--Optional:-->
+                  <urn2:id>
+                     <urn2:root>?</urn2:root>
+                     <urn2:extension>?</urn2:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </urn2:id>
+                  <!--Optional:-->
+                  <urn2:name>?</urn2:name>
+               </urn2:organisation>
+               <!--Optional:-->
+               <urn2:device>
+                  <!--Optional:-->
+                  <urn2:id>
+                     <urn2:root>?</urn2:root>
+                     <urn2:extension>?</urn2:extension>
+                     <!--You may enter ANY elements at this point-->
+                  </urn2:id>
+                  <!--Optional:-->
+                  <urn2:type>
+                     <urn2:code>?</urn2:code>
+                     <urn2:codeSystem>?</urn2:codeSystem>
+                     <!--Optional:-->
+                     <urn2:codeSystemName>?</urn2:codeSystemName>
+                     <!--Optional:-->
+                     <urn2:codeSystemVersion>?</urn2:codeSystemVersion>
+                     <!--Optional:-->
+                     <urn2:displayName>?</urn2:displayName>
+                     <!--You may enter ANY elements at this point-->
+                  </urn2:type>
+                  <!--Optional:-->
+                  <urn2:model>
+                     <!--Optional:-->
+                     <urn2:code>
+                        <urn2:code>?</urn2:code>
+                        <urn2:codeSystem>?</urn2:codeSystem>
+                        <!--Optional:-->
+                        <urn2:codeSystemName>?</urn2:codeSystemName>
+                        <!--Optional:-->
+                        <urn2:codeSystemVersion>?</urn2:codeSystemVersion>
+                        <!--Optional:-->
+                        <urn2:displayName>?</urn2:displayName>
+                        <!--You may enter ANY elements at this point-->
+                     </urn2:code>
+                     <!--Optional:-->
+                     <urn2:value>?</urn2:value>
+                  </urn2:model>
+                  <!--You may enter ANY elements at this point-->
+               </urn2:device>
+               <!--You may enter ANY elements at this point-->
+            </urn2:additionalParticipant>
+            <urn2:sourceSystem>
+               <urn2:id>
+                  <urn2:root>?</urn2:root>
+                  <urn2:extension>?</urn2:extension>
+                  <!--You may enter ANY elements at this point-->
+               </urn2:id>
+               <!--You may enter ANY elements at this point-->
+            </urn2:sourceSystem>
+            <!--Zero or more repetitions:-->
+            <urn2:device>
+               <!--Optional:-->
+               <urn2:id>
+                  <urn2:root>?</urn2:root>
+                  <urn2:extension>?</urn2:extension>
+                  <!--You may enter ANY elements at this point-->
+               </urn2:id>
+               <!--Optional:-->
+               <urn2:type>
+                  <urn2:code>?</urn2:code>
+                  <urn2:codeSystem>?</urn2:codeSystem>
+                  <!--Optional:-->
+                  <urn2:codeSystemName>?</urn2:codeSystemName>
+                  <!--Optional:-->
+                  <urn2:codeSystemVersion>?</urn2:codeSystemVersion>
+                  <!--Optional:-->
+                  <urn2:displayName>?</urn2:displayName>
+                  <!--You may enter ANY elements at this point-->
+               </urn2:type>
+               <!--Optional:-->
+               <urn2:model>
+                  <!--Optional:-->
+                  <urn2:code>
+                     <urn2:code>?</urn2:code>
+                     <urn2:codeSystem>?</urn2:codeSystem>
+                     <!--Optional:-->
+                     <urn2:codeSystemName>?</urn2:codeSystemName>
+                     <!--Optional:-->
+                     <urn2:codeSystemVersion>?</urn2:codeSystemVersion>
+                     <!--Optional:-->
+                     <urn2:displayName>?</urn2:displayName>
+                     <!--You may enter ANY elements at this point-->
+                  </urn2:code>
+                  <!--Optional:-->
+                  <urn2:value>?</urn2:value>
+               </urn2:model>
+               <!--You may enter ANY elements at this point-->
+            </urn2:device>
+            <!--Optional:-->
+            <urn2:location>
+               <!--Optional:-->
+               <urn2:id>
+                  <urn2:root>?</urn2:root>
+                  <urn2:extension>?</urn2:extension>
+                  <!--You may enter ANY elements at this point-->
+               </urn2:id>
+               <urn2:name>?</urn2:name>
+               <!--Zero or more repetitions:-->
+               <urn2:address>
+                  <!--Optional:-->
+                  <urn2:use>
+                     <urn2:code>?</urn2:code>
+                     <urn2:codeSystem>?</urn2:codeSystem>
+                     <!--Optional:-->
+                     <urn2:codeSystemName>?</urn2:codeSystemName>
+                     <!--Optional:-->
+                     <urn2:codeSystemVersion>?</urn2:codeSystemVersion>
+                     <!--Optional:-->
+                     <urn2:displayName>?</urn2:displayName>
+                     <!--You may enter ANY elements at this point-->
+                  </urn2:use>
+                  <!--1 or more repetitions:-->
+                  <urn2:part>
+                     <urn2:value>?</urn2:value>
+                     <!--Optional:-->
+                     <urn2:type>?</urn2:type>
+                     <!--You may enter ANY elements at this point-->
+                  </urn2:part>
+                  <!--You may enter ANY elements at this point-->
+               </urn2:address>
+               <!--Zero or more repetitions:-->
+               <urn2:telecom>
+                  <urn2:use>?</urn2:use>
+                  <urn2:value>?</urn2:value>
+                  <!--You may enter ANY elements at this point-->
+               </urn2:telecom>
+               <!--You may enter ANY elements at this point-->
+            </urn2:location>
+            <!--Optional:-->
+            <urn2:careProcessId>?</urn2:careProcessId>
+            <!--1 or more repetitions:-->
+            <urn2:observation>
+               <urn2:id>
+                  <urn2:root>?</urn2:root>
+                  <urn2:extension>?</urn2:extension>
+                  <!--You may enter ANY elements at this point-->
+               </urn2:id>
+               <urn2:type>
+                  <urn2:code>?</urn2:code>
+                  <urn2:codeSystem>?</urn2:codeSystem>
+                  <!--Optional:-->
+                  <urn2:codeSystemName>?</urn2:codeSystemName>
+                  <!--Optional:-->
+                  <urn2:codeSystemVersion>?</urn2:codeSystemVersion>
+                  <!--Optional:-->
+                  <urn2:displayName>?</urn2:displayName>
+                  <!--You may enter ANY elements at this point-->
+               </urn2:type>
+               <urn2:time>
+                  <!--Optional:-->
+                  <urn2:start>?</urn2:start>
+                  <!--Optional:-->
+                  <urn2:end>?</urn2:end>
+                  <!--You may enter ANY elements at this point-->
+               </urn2:time>
+               <!--Optional:-->
+               <urn2:method>
+                  <urn2:code>?</urn2:code>
+                  <urn2:codeSystem>?</urn2:codeSystem>
+                  <!--Optional:-->
+                  <urn2:codeSystemName>?</urn2:codeSystemName>
+                  <!--Optional:-->
+                  <urn2:codeSystemVersion>?</urn2:codeSystemVersion>
+                  <!--Optional:-->
+                  <urn2:displayName>?</urn2:displayName>
+                  <!--You may enter ANY elements at this point-->
+               </urn2:method>
+               <urn2:value>
+                  <!--Optional:-->
+                  <urn2:pq>
+                     <urn2:value>?</urn2:value>
+                     <urn2:unit>?</urn2:unit>
+                     <!--You may enter ANY elements at this point-->
+                  </urn2:pq>
+                  <!--Optional:-->
+                  <urn2:ts>?</urn2:ts>
+                  <!--Optional:-->
+                  <urn2:cv>
+                     <urn2:code>?</urn2:code>
+                     <urn2:codeSystem>?</urn2:codeSystem>
+                     <!--Optional:-->
+                     <urn2:codeSystemName>?</urn2:codeSystemName>
+                     <!--Optional:-->
+                     <urn2:codeSystemVersion>?</urn2:codeSystemVersion>
+                     <!--Optional:-->
+                     <urn2:displayName>?</urn2:displayName>
+                     <!--You may enter ANY elements at this point-->
+                  </urn2:cv>
+               </urn2:value>
+               <!--Optional:-->
+               <urn2:targetSite>
+                  <urn2:code>?</urn2:code>
+                  <urn2:codeSystem>?</urn2:codeSystem>
+                  <!--Optional:-->
+                  <urn2:codeSystemName>?</urn2:codeSystemName>
+                  <!--Optional:-->
+                  <urn2:codeSystemVersion>?</urn2:codeSystemVersion>
+                  <!--Optional:-->
+                  <urn2:displayName>?</urn2:displayName>
+                  <!--You may enter ANY elements at this point-->
+               </urn2:targetSite>
+               <urn2:valueNegation>?</urn2:valueNegation>
+               <!--Optional:-->
+               <urn2:description>?</urn2:description>
+               <urn2:approvedForPatient>?</urn2:approvedForPatient>
+               <!--Zero or more repetitions:-->
+               <urn2:relation>
+                  <urn2:code>
+                     <urn2:code>KOD för samband med beställning</urn2:code>
+                     <urn2:codeSystem>SNOMED eller HL7</urn2:codeSystem>
+                  </urn2:code>
+                  <urn2:referredInformation>
+                     <urn2:id>
+                        <urn2:root>system-hsaid för beställningen</urn2:root>
+                        <urn2:extension>id't på beställningen</urn2:extension>
+                     </urn2:id>
+                     <urn2:time>tid när beställningen gjordes</urn2:time>
+                     <urn2:type>cao-ao</urn2:type>
+                     <urn2:informationOwner>
+                        <urn2:id>
+                           <urn2:root>1.2.752.129.2.1.4.1</urn2:root>
+                           <urn2:extension>system-hsaid för beställningen</urn2:extension>
+                        </urn2:id>
+                     </urn2:informationOwner>
+                  </urn2:referredInformation>
+               </urn2:relation>
+               <!--You may enter ANY elements at this point-->
+            </urn2:observation>
+            <!--You may enter ANY elements at this point-->
+         </urn1:observationGroup>
+         <!--You may enter ANY elements at this point-->
+      </urn1:ProcessObservations>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:clinicalprocess:healthcond:basic:ProcessObservationsResponder:1:ProcessObservations"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>
