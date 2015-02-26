@@ -30,12 +30,14 @@
 	<xs:complexType name="GetActivityType">
 		<xs:sequence>
 			<xs:element name="patientId" type="core:IIType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="time" type="core:TimePeriodType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="activityId" type="core:IIType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="activityStatus" type="core:CVType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="time" type="core:TimePeriodType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="careGiverId" type="core:IIType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="careUnitId" type="core:IIType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="sourceSystemId" type="core:IIType" minOccurs="0" maxOccurs="1"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="relation"
+				type="core:RelationFilterType"/>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
