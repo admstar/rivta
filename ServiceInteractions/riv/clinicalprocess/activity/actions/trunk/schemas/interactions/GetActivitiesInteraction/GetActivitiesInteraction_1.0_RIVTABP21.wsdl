@@ -17,10 +17,10 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<wsdl:definitions name='GetActivityInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tjsr='urn:riv:clinicalprocess:activity:actions:GetActivityResponder:1' xmlns:tjsi='urn:riv:clinicalprocess:activity:actions:GetActivityInitiator:1' xmlns:tns='urn:riv:clinicalprocess:activity:actions:GetActivity:1:rivtabp21' targetNamespace='urn:riv:clinicalprocess:activity:actions:GetActivity:1:rivtabp21' xmlns:itr='urn:riv:itintegration:registry:1'>
+<wsdl:definitions name='GetActivitiesInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tjsr='urn:riv:clinicalprocess:activity:actions:GetActivitiesResponder:1' xmlns:tjsi='urn:riv:clinicalprocess:activity:actions:GetActivitiesInitiator:1' xmlns:tns='urn:riv:clinicalprocess:activity:actions:GetActivities:1:rivtabp21' targetNamespace='urn:riv:clinicalprocess:activity:actions:GetActivities:1:rivtabp21' xmlns:itr='urn:riv:itintegration:registry:1'>
   <xs:annotation>
     <xs:documentation>
-			 Tjänsteinteraktionens namn: GetActivityInteraction
+			 Tjänsteinteraktionens namn: GetActivitiesInteraction
 			 Beskrivning: 
 			   Retrieval of activity reports 
 			 Revisioner: 
@@ -31,32 +31,32 @@
 			 </xs:documentation>
   </xs:annotation>
   <wsdl:types>
-    <xs:schema targetNamespace='urn:riv:clinicalprocess:activity:actions:GetActivity:1:rivtabp21'>
-      <xs:import schemaLocation='GetActivityResponder_1.0.xsd' namespace='urn:riv:clinicalprocess:activity:actions:GetActivityResponder:1' />
+    <xs:schema targetNamespace='urn:riv:clinicalprocess:activity:actions:GetActivities:1:rivtabp21'>
+      <xs:import schemaLocation='GetActivitiesResponder_1.0.xsd' namespace='urn:riv:clinicalprocess:activity:actions:GetActivitiesResponder:1' />
       <xs:import schemaLocation='../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
     </xs:schema>
   </wsdl:types>
-  <wsdl:message name='GetActivityRequest'>
+  <wsdl:message name='GetActivitiesRequest'>
     <wsdl:part name='LogicalAddress' element='itr:LogicalAddress'>
       <wsdl:documentation>The organisation number of the receiving insurance institution</wsdl:documentation>
     </wsdl:part>
-    <wsdl:part name='parameters' element='tjsr:GetActivity' />
+    <wsdl:part name='parameters' element='tjsr:GetActivities' />
   </wsdl:message>
-  <wsdl:message name='GetActivityResponse'>
-    <wsdl:part name='parameters' element='tjsr:GetActivityResponse' />
+  <wsdl:message name='GetActivitiesResponse'>
+    <wsdl:part name='parameters' element='tjsr:GetActivitiesResponse' />
   </wsdl:message>
-  <wsdl:portType name='GetActivityResponderInterface'>
-    <wsdl:operation name='GetActivity'>
-      <wsdl:input message='tns:GetActivityRequest' />
-      <wsdl:output message='tns:GetActivityResponse' />
+  <wsdl:portType name='GetActivitiesResponderInterface'>
+    <wsdl:operation name='GetActivities'>
+      <wsdl:input message='tns:GetActivitiesRequest' />
+      <wsdl:output message='tns:GetActivitiesResponse' />
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name='GetActivityResponderBinding' type='tns:GetActivityResponderInterface'>
+  <wsdl:binding name='GetActivitiesResponderBinding' type='tns:GetActivitiesResponderInterface'>
     <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
-    <wsdl:operation name='GetActivity'>
-      <soap:operation soapAction='urn:riv:clinicalprocess:activity:actions:GetActivityResponder:1:GetActivity' style='document' />
+    <wsdl:operation name='GetActivities'>
+      <soap:operation soapAction='urn:riv:clinicalprocess:activity:actions:GetActivitiesResponder:1:GetActivities' style='document' />
       <wsdl:input>
-        <soap:header use='literal' message='tns:GetActivityRequest' part='LogicalAddress' />
+        <soap:header use='literal' message='tns:GetActivitiesRequest' part='LogicalAddress' />
         <soap:body use='literal' parts='parameters' />
       </wsdl:input>
       <wsdl:output>
@@ -64,8 +64,8 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name='GetActivityResponderService'>
-    <wsdl:port name='GetActivityResponderPort' binding='tns:GetActivityResponderBinding'>
+  <wsdl:service name='GetActivitiesResponderService'>
+    <wsdl:port name='GetActivitiesResponderPort' binding='tns:GetActivitiesResponderBinding'>
       <soap:address location='http://tempuri.org' />
     </wsdl:port>
   </wsdl:service>
