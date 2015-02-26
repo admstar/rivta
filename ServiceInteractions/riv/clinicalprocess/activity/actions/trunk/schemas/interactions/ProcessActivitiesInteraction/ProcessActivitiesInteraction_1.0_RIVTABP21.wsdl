@@ -17,10 +17,10 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<wsdl:definitions name='ProcessActivityInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tjsr='urn:riv:clinicalprocess:activity:actions:ProcessActivityResponder:1' xmlns:tjsi='urn:riv:clinicalprocess:activity:actions:ProcessActivityInitiator:1' xmlns:tns='urn:riv:clinicalprocess:activity:actions:ProcessActivity:1:rivtabp21' targetNamespace='urn:riv:clinicalprocess:activity:actions:ProcessActivity:1:rivtabp21' xmlns:itr='urn:riv:itintegration:registry:1'>
+<wsdl:definitions name='ProcessActivitiesInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tjsr='urn:riv:clinicalprocess:activity:actions:ProcessActivitiesResponder:1' xmlns:tjsi='urn:riv:clinicalprocess:activity:actions:ProcessActivitiesInitiator:1' xmlns:tns='urn:riv:clinicalprocess:activity:actions:ProcessActivities:1:rivtabp21' targetNamespace='urn:riv:clinicalprocess:activity:actions:ProcessActivities:1:rivtabp21' xmlns:itr='urn:riv:itintegration:registry:1'>
   <xs:annotation>
     <xs:documentation>
-			 Tjänsteinteraktionens namn: ProcessActivityInteraction
+			 Tjänsteinteraktionens namn: ProcessActivitiesInteraction
 			 Beskrivning: 
 			   Process activity report
 			 Revisioner: 
@@ -31,32 +31,32 @@
 			 </xs:documentation>
   </xs:annotation>
   <wsdl:types>
-    <xs:schema targetNamespace='urn:riv:clinicalprocess:activity:actions:ProcessActivity:1:rivtabp21'>
-      <xs:import schemaLocation='ProcessActivityResponder_1.0.xsd' namespace='urn:riv:clinicalprocess:activity:actions:ProcessActivityResponder:1' />
+    <xs:schema targetNamespace='urn:riv:clinicalprocess:activity:actions:ProcessActivities:1:rivtabp21'>
+      <xs:import schemaLocation='ProcessActivitiesResponder_1.0.xsd' namespace='urn:riv:clinicalprocess:activity:actions:ProcessActivitiesResponder:1' />
       <xs:import schemaLocation='../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
     </xs:schema>
   </wsdl:types>
-  <wsdl:message name='ProcessActivityRequest'>
+  <wsdl:message name='ProcessActivitiesRequest'>
     <wsdl:part name='LogicalAddress' element='itr:LogicalAddress'>
       <wsdl:documentation>The organisation number of the receiving insurance institution</wsdl:documentation>
     </wsdl:part>
-    <wsdl:part name='parameters' element='tjsr:ProcessActivity' />
+    <wsdl:part name='parameters' element='tjsr:ProcessActivities' />
   </wsdl:message>
-  <wsdl:message name='ProcessActivityResponse'>
-    <wsdl:part name='parameters' element='tjsr:ProcessActivityResponse' />
+  <wsdl:message name='ProcessActivitiesResponse'>
+    <wsdl:part name='parameters' element='tjsr:ProcessActivitiesResponse' />
   </wsdl:message>
-  <wsdl:portType name='ProcessActivityResponderInterface'>
-    <wsdl:operation name='ProcessActivity'>
-      <wsdl:input message='tns:ProcessActivityRequest' />
-      <wsdl:output message='tns:ProcessActivityResponse' />
+  <wsdl:portType name='ProcessActivitiesResponderInterface'>
+    <wsdl:operation name='ProcessActivities'>
+      <wsdl:input message='tns:ProcessActivitiesRequest' />
+      <wsdl:output message='tns:ProcessActivitiesResponse' />
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name='ProcessActivityResponderBinding' type='tns:ProcessActivityResponderInterface'>
+  <wsdl:binding name='ProcessActivitiesResponderBinding' type='tns:ProcessActivitiesResponderInterface'>
     <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
-    <wsdl:operation name='ProcessActivity'>
-      <soap:operation soapAction='urn:riv:clinicalprocess:activity:actions:ProcessActivityResponder:1:ProcessActivity' style='document' />
+    <wsdl:operation name='ProcessActivities'>
+      <soap:operation soapAction='urn:riv:clinicalprocess:activity:actions:ProcessActivitiesResponder:1:ProcessActivities' style='document' />
       <wsdl:input>
-        <soap:header use='literal' message='tns:ProcessActivityRequest' part='LogicalAddress' />
+        <soap:header use='literal' message='tns:ProcessActivitiesRequest' part='LogicalAddress' />
         <soap:body use='literal' parts='parameters' />
       </wsdl:input>
       <wsdl:output>
@@ -64,8 +64,8 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name='ProcessActivityResponderService'>
-    <wsdl:port name='ProcessActivityResponderPort' binding='tns:ProcessActivityResponderBinding'>
+  <wsdl:service name='ProcessActivitiesResponderService'>
+    <wsdl:port name='ProcessActivitiesResponderPort' binding='tns:ProcessActivitiesResponderBinding'>
       <soap:address location='http://tempuri.org' />
     </wsdl:port>
   </wsdl:service>
