@@ -46,17 +46,9 @@ SET SCHEMADIR=schemas
 SET W0=%SCHEMADIR%\interactions\GetObservationsInteraction\GetObservationsInteraction_1.0_RIVTABP21.wsdl
 SET X0=%SCHEMADIR%\interactions\GetObservationsInteraction\*.xsd
 
-SET W3=%SCHEMADIR%\interactions\ProcessObservationsInteraction\ProcessObservationsInteraction_1.0_RIVTABP21.wsdl
- 
-SET X3=%SCHEMADIR%\interactions\ProcessObservationsInteraction\*.xsd
- 
-SET W5=%SCHEMADIR%\interactions\DeleteObservationsInteraction\DeleteObservationsInteraction_1.0_RIVTABP21.wsdl
-
-SET X5=%SCHEMADIR%\interactions\DeleteObservationsInteraction\*.xsd
-
 SET XCORE=%SCHEMADIR%\core_components\*.xsd
 
-SET SCHEMAS=%XCORE% %W0% %X0% %W3% %X3% %W5% %X5%
+SET SCHEMAS=%XCORE% %W0% 
 
 SET OUTFILE=/out:code_gen\wcf\generated-src\ClinicalprocessHealthcondBasicInteractions.cs
 SET APPCONFIG=/config:code_gen\wcf\generated-src\app.config
