@@ -17,10 +17,10 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<wsdl:definitions name='DeleteActivitiesInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tjsr='urn:riv:clinicalprocess:activity:actions:DeleteActivitiesResponder:1' xmlns:tjsi='urn:riv:clinicalprocess:activity:actions:DeleteActivitiesInitiator:1' xmlns:tns='urn:riv:clinicalprocess:activity:actions:DeleteActivities:1:rivtabp21' targetNamespace='urn:riv:clinicalprocess:activity:actions:DeleteActivities:1:rivtabp21' xmlns:itr='urn:riv:itintegration:registry:1'>
+<wsdl:definitions name='DeleteActivityInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:tjsr='urn:riv:clinicalprocess:activity:actions:DeleteActivityResponder:1' xmlns:tjsi='urn:riv:clinicalprocess:activity:actions:DeleteActivityInitiator:1' xmlns:tns='urn:riv:clinicalprocess:activity:actions:DeleteActivity:1:rivtabp21' targetNamespace='urn:riv:clinicalprocess:activity:actions:DeleteActivity:1:rivtabp21' xmlns:itr='urn:riv:itintegration:registry:1'>
   <xs:annotation>
     <xs:documentation>
-			 Tjänsteinteraktionens namn: DeleteActivitiesInteraction
+			 Tjänsteinteraktionens namn: DeleteActivityInteraction
 			 Beskrivning: 
 			   Delete activity report
 			 Revisioner: 
@@ -31,32 +31,32 @@
 			 </xs:documentation>
   </xs:annotation>
   <wsdl:types>
-    <xs:schema targetNamespace='urn:riv:clinicalprocess:activity:actions:DeleteActivities:1:rivtabp21'>
-      <xs:import schemaLocation='DeleteActivitiesResponder_1.0.xsd' namespace='urn:riv:clinicalprocess:activity:actions:DeleteActivitiesResponder:1' />
+    <xs:schema targetNamespace='urn:riv:clinicalprocess:activity:actions:DeleteActivity:1:rivtabp21'>
+      <xs:import schemaLocation='DeleteActivityResponder_1.0.xsd' namespace='urn:riv:clinicalprocess:activity:actions:DeleteActivityResponder:1' />
       <xs:import schemaLocation='../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
     </xs:schema>
   </wsdl:types>
-  <wsdl:message name='DeleteActivitiesRequest'>
+  <wsdl:message name='DeleteActivityRequest'>
     <wsdl:part name='LogicalAddress' element='itr:LogicalAddress'>
       <wsdl:documentation>The organisation number of the receiving insurance institution</wsdl:documentation>
     </wsdl:part>
-    <wsdl:part name='parameters' element='tjsr:DeleteActivities' />
+    <wsdl:part name='parameters' element='tjsr:DeleteActivity' />
   </wsdl:message>
-  <wsdl:message name='DeleteActivitiesResponse'>
-    <wsdl:part name='parameters' element='tjsr:DeleteActivitiesResponse' />
+  <wsdl:message name='DeleteActivityResponse'>
+    <wsdl:part name='parameters' element='tjsr:DeleteActivityResponse' />
   </wsdl:message>
-  <wsdl:portType name='DeleteActivitiesResponderInterface'>
-    <wsdl:operation name='DeleteActivities'>
-      <wsdl:input message='tns:DeleteActivitiesRequest' />
-      <wsdl:output message='tns:DeleteActivitiesResponse' />
+  <wsdl:portType name='DeleteActivityResponderInterface'>
+    <wsdl:operation name='DeleteActivity'>
+      <wsdl:input message='tns:DeleteActivityRequest' />
+      <wsdl:output message='tns:DeleteActivityResponse' />
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name='DeleteActivitiesResponderBinding' type='tns:DeleteActivitiesResponderInterface'>
+  <wsdl:binding name='DeleteActivityResponderBinding' type='tns:DeleteActivityResponderInterface'>
     <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
-    <wsdl:operation name='DeleteActivities'>
-      <soap:operation soapAction='urn:riv:clinicalprocess:activity:actions:DeleteActivitiesResponder:1:DeleteActivities' style='document' />
+    <wsdl:operation name='DeleteActivity'>
+      <soap:operation soapAction='urn:riv:clinicalprocess:activity:actions:DeleteActivityResponder:1:DeleteActivity' style='document' />
       <wsdl:input>
-        <soap:header use='literal' message='tns:DeleteActivitiesRequest' part='LogicalAddress' />
+        <soap:header use='literal' message='tns:DeleteActivityRequest' part='LogicalAddress' />
         <soap:body use='literal' parts='parameters' />
       </wsdl:input>
       <wsdl:output>
@@ -64,8 +64,8 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name='DeleteActivitiesResponderService'>
-    <wsdl:port name='DeleteActivitiesResponderPort' binding='tns:DeleteActivitiesResponderBinding'>
+  <wsdl:service name='DeleteActivityResponderService'>
+    <wsdl:port name='DeleteActivityResponderPort' binding='tns:DeleteActivityResponderBinding'>
       <soap:address location='http://tempuri.org' />
     </wsdl:port>
   </wsdl:service>
