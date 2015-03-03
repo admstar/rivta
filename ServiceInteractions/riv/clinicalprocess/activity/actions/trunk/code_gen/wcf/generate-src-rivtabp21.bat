@@ -42,10 +42,10 @@ CD ..
 SET SCHEMADIR=schemas
 	
 	
-SET W0=%SCHEMADIR%\interactions\GetActivityInteraction\GetActivityInteraction_1.0_RIVTABP21.wsdl
-SET X0=%SCHEMADIR%\interactions\GetActivityInteraction\*.xsd
-SET W1=%SCHEMADIR%\interactions\ProcessActivityInteraction\ProcessActivityInteraction_1.0_RIVTABP21.wsdl
-SET X1=%SCHEMADIR%\interactions\ProcessActivityInteraction\*.xsd
+SET W0=%SCHEMADIR%\interactions\GetActivitiesInteraction\GetActivitiesInteraction_1.0_RIVTABP21.wsdl
+SET X0=%SCHEMADIR%\interactions\GetActivitiesInteraction\*.xsd
+SET W1=%SCHEMADIR%\interactions\ProcessActivitiesInteraction\ProcessActivitiesInteraction_1.0_RIVTABP21.wsdl
+SET X1=%SCHEMADIR%\interactions\ProcessActivitiesInteraction\*.xsd
 SET W2=%SCHEMADIR%\interactions\DeleteActivityInteraction\DeleteActivityInteraction_1.0_RIVTABP21.wsdl
 SET X2=%SCHEMADIR%\interactions\DeleteActivityInteraction\*.xsd
 
