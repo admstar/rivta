@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>se.telia.riv</groupId>
+  <artifactId>clinicalprocess-activity-order</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0</version>
+  <name>clinicalprocess-activity-order-schemas</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+    <schema.path>${basedir}/../../schemas</schema.path>
+    <cxf.version>3.0.4</cxf.version>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <dependencies/>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>repository.codehaus.org</id>
+      <url>http://repository.codehaus.org/</url>
+    </pluginRepository>
+  </pluginRepositories>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-codegen-plugin</artifactId>
+        <version>${cxf.version}</version>
+        <executions>
+          <execution>
+            <id>generate-sources</id>
+            <phase>generate-sources</phase>
+            <configuration>
+			<fork>once</fork>
+			<additionalJvmArgs>-Dfile.encoding=UTF-8</additionalJvmArgs>
+              <sourceRoot>${basedir}/target/generated/src/main/java</sourceRoot>
+				<validate>true</validate>
+              <wsdlOptions>
+				<!-- First WSDL contract -->
+                <wsdlOption>
+                  <wsdl>${schema.path}/interactions/ProcessActivityOrderInteraction/ProcessActivityOrderInteraction_1.0_RIVTABP21.wsdl</wsdl>
+                  <extraargs>
+                    <extraarg>-p</extraarg>
+                    <extraarg>urn:riv:clinicalprocess:activity:order:ProcessActivityOrder:1:rivtabp21=se.riv.clinicalprocess.activity.order.processactivityorder.v1.rivtabp21</extraarg>
+                    <extraarg>-p</extraarg>
+                    <extraarg>urn:riv:clinicalprocess:activity:order:ProcessActivityOrderResponder:1=se.riv.clinicalprocess.activity.order.processactivityorderresponder.v1</extraarg>
+                    <extraarg>-p</extraarg>
+                    <extraarg>urn:riv:clinicalprocess:activity:order:ProcessActivityOrderInitiator:1=se.riv.clinicalprocess.activity.order.processactivityorderinitiator.v1</extraarg>
+                    <extraarg>-p</extraarg>
+                    <extraarg>urn:riv:itintegration:registry:1=se.riv.itintegration.registry.v1</extraarg>
+                  </extraargs>
+                </wsdlOption>								
+
+              </wsdlOptions>
+            </configuration>
+            <goals>
+              <goal>wsdl2java</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+		  <version>3.2</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+
+    </plugins>
+    <resources>
+      <resource>
+        <directory>${schema.path}</directory>
+      </resource>
+    </resources>
+  </build>
+</project>
