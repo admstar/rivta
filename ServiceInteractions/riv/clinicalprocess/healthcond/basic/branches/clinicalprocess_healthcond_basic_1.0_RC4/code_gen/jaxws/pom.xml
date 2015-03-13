@@ -9,15 +9,11 @@
   <url>http://maven.apache.org</url>
   <properties>
     <schema.path>${basedir}/../../schemas</schema.path>
-    <cxf.version>2.2.2</cxf.version>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <cxf.version>3.0.4</cxf.version>
   </properties>
   <dependencies/>
   <repositories>
-    <repository>
-      <id>java.net</id>
-      <url>http://download.java.net/maven/1/</url>
-      <layout>legacy</layout>
-    </repository>
     <repository>
       <id>m2.java.net</id>
       <name>Java.net Repository for Maven2</name>
@@ -44,6 +40,7 @@
             <configuration>
               <sourceRoot>${basedir}/target/generated/src/main/java</sourceRoot>
               <wsdlOptions>
+<!--
 			<wsdloption>
                   <wsdl>${schema.path}/interactions/GetObservationsInteraction/GetObservationsInteraction_1.0_RIVTABP21.wsdl</wsdl>
                   <extraargs>
@@ -78,6 +75,7 @@
                     <extraarg>urn:riv:clinicalprocess:healthcond:basic:1=se.riv.clinicalprocess.healthcond.basic.v1</extraarg>
                   </extraargs>
                 </wsdloption>
+-->
 			<wsdloption>
                   <wsdl>${schema.path}/interactions/ProcessObservationsInteraction/ProcessObservationsInteraction_1.0_RIVTABP21.wsdl</wsdl>
                   <extraargs>
@@ -105,10 +103,10 @@
       </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
+		<version>3.2</version>
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
-			<version>3.2</version>
         </configuration>
       </plugin>
     </plugins>
