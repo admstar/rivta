@@ -46,14 +46,8 @@
   <xs:complexType name="UpdateOfferType">
     <xs:sequence>
       <xs:element name="sourceSystemHSAId" type="tns:IIType"/>
-      <xs:element name="organisation" type="tns:OrganisationType" maxOccurs="1"/>
-      <xs:element maxOccurs="1" name="address" type="tns:AddressType"/>
-      <xs:element name="contract" type="tns:ContractType" maxOccurs="unbounded"/>
-      <xs:element name="agreement" type="tns:AgreementType" maxOccurs="unbounded"/>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="contactPreference"
-        type="tns:ContactPreferenceType"/>
+      <xs:element name="county" type="tns:IIType" maxOccurs="1"/>
       <xs:element name="product" type="tns:ProductType_setter" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="property" type="tns:CVType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -142,14 +136,13 @@
     </xs:annotation>
     <xs:sequence>
       <xs:element name="name" type="xs:string"/>
-      <xs:element minOccurs="0" name="datePeriod" type="tns:DatePeriodType"/>
-      <xs:element minOccurs="0" name="iCalendar" type="xs:string"/>
+      <xs:element name="productId" type="tns:IIType"/>
       <xs:element name="description" type="xs:string" minOccurs="0"/>
       <xs:element minOccurs="0" name="requestRequirement" type="xs:string"/>
       <xs:element minOccurs="0" name="requestComment" type="xs:string"/>
       <xs:element minOccurs="0" name="bookable" type="xs:boolean"/>
       <xs:element minOccurs="0" name="bookableFor" type="xs:string"/>
-      <xs:element name="property" type="tns:CVType" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="property" type="tns:CVType" maxOccurs="unbounded" minOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -348,19 +341,7 @@ Exempel: </xs:documentation>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name="URNType">
-    <xs:annotation>
-      <xs:documentation>
-        Regular expression to validate RFC 2141 URN syntax.
-        "urn:[a-zA-Z0-9][a-zA-Z0-9-]{1,31}:([a-zA-Z0-9()+,.:=@;$_!*'-]|%[0-9A-Fa-f]{2})+"
-      </xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:anyURI">
-      <xs:pattern
-        value="urn:[a-zA-Z0-9][a-zA-Z0-9-]{1,31}:([a-zA-Z0-9()+,.:=@;$_!*'-]|%[0-9A-Fa-f]{2})+"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="UUIDType">
+ <xs:simpleType name="UUIDType">
     <xs:restriction base="xs:string">
       <xs:length value="36" fixed="true"/>
       <xs:pattern
