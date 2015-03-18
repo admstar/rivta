@@ -27,6 +27,7 @@
 
   <!-- -->
 
+
   <!-- -->
   <xs:complexType name="OfferType">
     <xs:sequence>
@@ -46,11 +47,35 @@
   <xs:complexType name="UpdateOfferType">
     <xs:sequence>
       <xs:element name="sourceSystemHSAId" type="tns:IIType"/>
+      <xs:element name="organisation" type="tns:OrganisationType" maxOccurs="1"/>
+      <xs:element name="openingHours" type="xs:string"/>
+      <xs:element maxOccurs="1" name="address" type="tns:AddressType"/>
+      <xs:element name="contract" type="tns:ContractType" maxOccurs="unbounded"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="contactPreference"
+        type="tns:ContactPreferenceType"/>
+      <xs:element name="product" type="tns:ProductReferenceType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="property" type="tns:CVType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="UpdateProductCatalogueType">
+    <xs:sequence>
+      <xs:element name="sourceSystemHSAId" type="tns:IIType"/>
       <xs:element name="county" type="tns:IIType" maxOccurs="1"/>
       <xs:element name="product" type="tns:ProductType_setter" minOccurs="0" maxOccurs="unbounded"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
+
+  <xs:complexType name="ProductReferenceType">
+    <xs:sequence>
+      <xs:element name="id" type="tns:IIType"/>
+      <xs:element name="county" type="tns:CVType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="AgreementType">
     <xs:sequence>
       <xs:element name="id" type="tns:IIType"/>
@@ -71,13 +96,25 @@
 
   <xs:complexType name="AddressType">
     <xs:sequence>
-      <xs:element name="invoiceAddress" type="xs:string" minOccurs="0"/>
-      <xs:element name="mailAddress" type="xs:string" minOccurs="0"/>
+      <xs:element name="invoiceAddress" type="tns:NAVNETType" minOccurs="0"/>
+      <xs:element name="mailAddress" type="tns:EmailAddressType" minOccurs="0"/>
       <xs:element name="webAddress" type="xs:anyURI" minOccurs="0"/>
       <xs:element name="visitAddress" type="tns:GPSType" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
+
+  <xs:complexType name="NAVNETType">
+    <xs:sequence>
+      <xs:element name="streetAdress1" type="xs:string" minOccurs="0"/>
+      <xs:element name="streetAdress2" type="xs:string" minOccurs="0"/>
+      <xs:element minOccurs="0" name="county"/>
+      <xs:element name="postalCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="postalCity" type="xs:string" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
 
   <xs:complexType name="GPSType">
     <xs:sequence>
@@ -316,6 +353,10 @@ Exempel: </xs:documentation>
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:simpleType name="EmailAddressType">
+    <xs:restriction base="xs:string"> </xs:restriction>
+  </xs:simpleType>
+
   <xs:complexType name="IIType">
     <xs:sequence>
       <xs:element name="root" type="xs:string"/>
@@ -341,7 +382,7 @@ Exempel: </xs:documentation>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
- <xs:simpleType name="UUIDType">
+  <xs:simpleType name="UUIDType">
     <xs:restriction base="xs:string">
       <xs:length value="36" fixed="true"/>
       <xs:pattern
