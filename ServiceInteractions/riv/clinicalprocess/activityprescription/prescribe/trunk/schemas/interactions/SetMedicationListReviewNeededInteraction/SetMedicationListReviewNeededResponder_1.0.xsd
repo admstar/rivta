@@ -18,36 +18,34 @@
  under the License.
  -->		
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:tns="urn:riv:clinicalprocess:activityprescription:prescribe:RegisterMedicationDispenseAuthorizationResponder:1"
+  xmlns:tns="urn:riv:clinicalprocess:activityprescription:prescribe:SetMedicationListReviewNeededResponder:1"
   xmlns:core="urn:riv:clinicalprocess:activityprescription:prescribe:2"
   xmlns:fhir="http://hl7.org/fhir" xmlns:riv="urn:riv:datatypes:1"
-  targetNamespace="urn:riv:clinicalprocess:activityprescription:prescribe:RegisterMedicationDispenseAuthorizationResponder:1"
+  xmlns:codes="urn:riv:clinicalprocess:activityprescription:prescribe:enum:1"
+  targetNamespace="urn:riv:clinicalprocess:activityprescription:prescribe:SetMedicationListReviewNeededResponder:1"
   elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
-
-  <xs:import schemaLocation="../../core_components/clinicalprocess_activityprescription_prescribe_1.0.xsd"
+  <xs:import
+    schemaLocation="../../core_components/clinicalprocess_activityprescription_prescribe_1.0_enum.xsd"
+    namespace="urn:riv:clinicalprocess:activityprescription:prescribe:enum:1"/>
+  <xs:import
+    schemaLocation="../../core_components/clinicalprocess_activityprescription_prescribe_1.0.xsd"
     namespace="urn:riv:clinicalprocess:activityprescription:prescribe:2"/>
   <xs:import schemaLocation="../../core_components/LightFhir.xsd" namespace="http://hl7.org/fhir"/>
   <xs:import schemaLocation="../../core_components/RIVTATypes.xsd" namespace="urn:riv:datatypes:1"/>
-
-  <xs:element name="RegisterMedicationDispenseAuthorization"
-    type="tns:RegisterMedicationDispenseAuthorizationType"/>
-  <xs:element name="RegisterMedicationDispenseAuthorizationResponse"
-    type="tns:RegisterMedicationDispenseAuthorizationResponseType"/>
-  <xs:complexType name="RegisterMedicationDispenseAuthorizationType">
+  <xs:element name="SetMedicationListReviewNeeded" type="tns:SetMedicationListReviewNeededType"/>
+  <xs:element name="SetMedicationListReviewNeededResponse"
+    type="tns:SetMedicationListReviewNeededResponseType"/>
+  <xs:complexType name="SetMedicationListReviewNeededType">
     <xs:sequence>
       <xs:element name="patientId" type="fhir:Identifier"/>
-      <xs:element name="medicationListVersion" type="fhir:Identifier"/>
-      <xs:element name="medicationPrescriptionSequenceId" type="fhir:Identifier"/>
-      <xs:element name="medicationDispensePrescription"
-        type="core:MedicationDispensPrescription_setter"/>
-      <xs:element name="isEPrescription" type="xs:boolean" minOccurs="1"/>
+      <xs:element name="medicationListVersion" type="fhir:Identifier" minOccurs="0"/>
+      <xs:element name="reviewedBy" type="core:HealthcareProfessionalType" minOccurs="0"/>
+      <xs:element name="reviewTime" type="xs:dateTime" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="RegisterMedicationDispenseAuthorizationResponseType">
+  <xs:complexType name="SetMedicationListReviewNeededResponseType">
     <xs:sequence>
-      <xs:element name="medicationDispensePrescription" type="core:MedicationDispensPrescription"
-        minOccurs="1" maxOccurs="1"/>
       <xs:element name="result" type="riv:ResultType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
