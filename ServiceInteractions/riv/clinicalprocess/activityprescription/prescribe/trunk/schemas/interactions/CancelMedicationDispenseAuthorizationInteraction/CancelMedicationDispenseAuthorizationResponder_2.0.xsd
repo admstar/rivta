@@ -18,12 +18,11 @@
  under the License.
  -->		
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:tns="urn:riv:clinicalprocess:activityprescription:prescribe:AttachMedicationDispenseAuthorizationResponder:2"
+  xmlns:tns="urn:riv:clinicalprocess:activityprescription:prescribe:CancelMedicationDispenseAuthorizationResponder:2"
   xmlns:core="urn:riv:clinicalprocess:activityprescription:prescribe:2"
-  xmlns:fhir="http://hl7.org/fhir"
-  xmlns:riv="urn:riv:datatypes:1"
+  xmlns:fhir="http://hl7.org/fhir" xmlns:riv="urn:riv:datatypes:1"
   xmlns:codes="urn:riv:clinicalprocess:activityprescription:prescribe:enum:2"
-  targetNamespace="urn:riv:clinicalprocess:activityprescription:prescribe:AttachMedicationDispenseAuthorizationResponder:2"
+  targetNamespace="urn:riv:clinicalprocess:activityprescription:prescribe:CancelMedicationDispenseAuthorizationResponder:2"
   elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
   <xs:import schemaLocation="../../core_components/clinicalprocess_activityprescription_prescribe_2.0.xsd"
     namespace="urn:riv:clinicalprocess:activityprescription:prescribe:2"/>
@@ -33,20 +32,21 @@
   <xs:import schemaLocation="../../core_components/LightFhir.xsd" namespace="http://hl7.org/fhir"/>
   <xs:import schemaLocation="../../core_components/RIVTATypes.xsd" namespace="urn:riv:datatypes:1"/>
 
-  <xs:element name="AttachMedicationDispenseAuthorization"
-    type="tns:AttachMedicationDispenseAuthorizationType"/>
-  <xs:element name="AttachMedicationDispenseAuthorizationResponse"
-    type="tns:AttachMedicationDispenseAuthorizationResponseType"/>
-  <xs:complexType name="AttachMedicationDispenseAuthorizationType">
+  <xs:element name="CancelMedicationDispenseAuthorization"
+    type="tns:CancelMedicationDispenseAuthorizationType"/>
+  <xs:element name="CancelMedicationDispenseAuthorizationResponse"
+    type="tns:CancelMedicationDispenseAuthorizationResponseType"/>
+
+
+  <xs:complexType name="CancelMedicationDispenseAuthorizationType">
     <xs:sequence>
       <xs:element name="patientId" type="fhir:Identifier"/>
-      <xs:element name="medicationListVersion" type="fhir:Identifier"/>
-      <xs:element name="medicationId" type="fhir:Identifier"/>
-      <xs:element name="medicationDispenseAuthorizationId" type="fhir:Identifier"/>
+      <xs:element name="medicationDispenseAuthorizationId" type="fhir:Identifier"
+        maxOccurs="unbounded"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="AttachMedicationDispenseAuthorizationResponseType">
+  <xs:complexType name="CancelMedicationDispenseAuthorizationResponseType">
     <xs:sequence>
       <xs:element name="result" type="riv:ResultType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
