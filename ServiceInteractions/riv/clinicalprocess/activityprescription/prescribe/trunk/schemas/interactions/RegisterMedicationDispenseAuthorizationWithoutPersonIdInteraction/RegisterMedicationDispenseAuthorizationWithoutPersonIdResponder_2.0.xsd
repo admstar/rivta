@@ -18,11 +18,12 @@
  under the License.
  -->		
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:tns="urn:riv:clinicalprocess:activityprescription:prescribe:RegisterMedicationDispensePrescriptionWithoutPersonIdResponder:2"
+  xmlns:tns="urn:riv:clinicalprocess:activityprescription:prescribe:RegisterMedicationDispenseAuthorizationWithoutPersonIdResponder:2"
   xmlns:core="urn:riv:clinicalprocess:activityprescription:prescribe:2"
-  xmlns:fhir="http://hl7.org/fhir" xmlns:riv="urn:riv:datatypes:1"
+  xmlns:fhir="http://hl7.org/fhir" 
+  xmlns:riv="urn:riv:datatypes:1"
   xmlns:codes="urn:riv:clinicalprocess:activityprescription:prescribe:enum:2"
-  targetNamespace="urn:riv:clinicalprocess:activityprescription:prescribe:RegisterMedicationDispensePrescriptionWithoutPersonIdResponder:2"
+  targetNamespace="urn:riv:clinicalprocess:activityprescription:prescribe:RegisterMedicationDispenseAuthorizationWithoutPersonIdResponder:2"
   elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
   <xs:import
     schemaLocation="../../core_components/clinicalprocess_activityprescription_prescribe_2.0.xsd"
@@ -33,22 +34,22 @@
   <xs:import schemaLocation="../../core_components/LightFhir.xsd" namespace="http://hl7.org/fhir"/>
   <xs:import schemaLocation="../../core_components/RIVTATypes.xsd" namespace="urn:riv:datatypes:1"/>
 
-  <xs:element name="RegisterMedicationDispensePrescriptionWithoutPersonId"
-    type="tns:RegisterMedicationDispensePrescriptionWithoutPersonIdType"/>
-  <xs:element name="RegisterMedicationDispensePrescriptionWithoutPersonIdResponse"
-    type="tns:RegisterMedicationDispensePrescriptionWithoutPersonIdResponseType"/>
-  <xs:complexType name="RegisterMedicationDispensePrescriptionWithoutPersonIdType">
+  <xs:element name="RegisterMedicationDispenseAuthorizationWithoutPersonId"
+    type="tns:RegisterMedicationDispenseAuthorizationWithoutPersonIdType"/>
+  <xs:element name="RegisterMedicationDispenseAuthorizationWithoutPersonIdResponse"
+    type="tns:RegisterMedicationDispenseAuthorizationWithoutPersonIdResponseType"/>
+  <xs:complexType name="RegisterMedicationDispenseAuthorizationWithoutPersonIdType">
     <xs:sequence>
-      <xs:element name="medicationDispensePrescription"
+      <xs:element name="medicationDispenseAuthorization"
         type="core:MedicationDispensPrescription_setter" maxOccurs="unbounded"/>
       <xs:element maxOccurs="unbounded" name="medicationPrescription"
         type="core:MedicationPrescription_setter"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="RegisterMedicationDispensePrescriptionWithoutPersonIdResponseType">
+  <xs:complexType name="RegisterMedicationDispenseAuthorizationWithoutPersonIdResponseType">
     <xs:sequence>
-      <xs:element name="medicationDispensePrescriptionId" type="fhir:Identifier" minOccurs="1"
+      <xs:element name="medicationDispenseAuthorizationId" type="fhir:Identifier" minOccurs="1"
         maxOccurs="unbounded"/>
       <xs:element name="result" type="riv:ResultType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
