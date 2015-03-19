@@ -1,61 +1,67 @@
-@REM ---------------------------------------------------------------------------------
-@REM Generates c# WCF service contracts (interface), client proxies and wcf config
-@REM file for the WSDLs + XML Schemas of the service domain, using .Net WCF tool svcuti.exe
-@REM ---------------------------------------------------------------------------------
-@REM Licensed to the Apache Software Foundation (ASF) under one
-@REM or more contributor license agreements. See the NOTICE file
-@REM distributed with this work for additional information
-@REM regarding copyright ownership. Inera AB licenses this file
-@REM to you under the Apache License, Version 2.0 (the
-@REM "License"); you may not use this file except in compliance
-@REM with the License. You may obtain a copy of the License at
-@REM
-@REM http://www.apache.org/licenses/LICENSE-2.0
-@REM Unless required by applicable law or agreed to in writing,
-@REM software distributed under the License is distributed on an
-@REM "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-@REM KIND, either express or implied. See the License for the
-@REM specific language governing permissions and limitations
-@REM under the License.
-@REM ---------------------------------------------------------------------------------
-CD ..
-	
-SET SCHEMADIR=schemas
-SET W0=%SCHEMADIR%\interactions\GetActivePrescriptionsInteraction\GetActivePrescriptionsInteraction_1.0_RIVTABP21.wsdl
-SET X0=%SCHEMADIR%\interactions\GetActivePrescriptionsInteraction\*.xsd
+chcp 1252
 
-SET W1=%SCHEMADIR%\interactions\GetUnconfirmedPrescriptionsInteraction\GetUnconfirmedPrescriptionsInteraction_1.0_RIVTABP21.wsdl
-SET X1=%SCHEMADIR%\interactions\GetUnconfirmedPrescriptionsInteraction\*.xsd
+SET SCHEMADIR="..\..\schemas\interactions"
+SET XSDDIR="..\..\schemas\core_components"
+rem SET SCHEMADIR="C:\Users\plus\Google Drive\NOD Tj?nstekontrakt v2\schemas\interactions"
+rem SET XSDDIR="C:\Users\plus\Google Drive\NOD Tj?nstekontrakt v2\schemas\core_components"
+rem SET SCHEMADIR="C:\BACKED\HCT_VSS\INERA\NOD\wcf\schemas\interactions"
+rem SET XSDDIR="C:\BACKED\HCT_VSS\INERA\NOD\wcf\schemas\core_components"
 
-SET W2=%SCHEMADIR%\interactions\GetInactivePrescriptionsInteraction\GetInactivePrescriptionsInteraction_1.0_RIVTABP21.wsdl
-SET X2=%SCHEMADIR%\interactions\GetInactivePrescriptionsInteraction\*.xsd
+SET W0=%SCHEMADIR%\AttachMedicationDispensePrescriptionInteraction\*.wsdl
+SET X0=%SCHEMADIR%\AttachMedicationDispensePrescriptionInteraction\*.xsd
 
-SET W3=%SCHEMADIR%\interactions\GetPrescriptionHistoryInteraction\GetPrescriptionHistoryInteraction_1.0_RIVTABP21.wsdl
-SET X3=%SCHEMADIR%\interactions\GetPrescriptionHistoryInteraction\*.xsd
+SET W1=%SCHEMADIR%\CancelMedicationDispensePrescriptionInteraction\*.wsdl
+SET X1=%SCHEMADIR%\CancelMedicationDispensePrescriptionInteraction\*.xsd
 
-SET W4=%SCHEMADIR%\interactions\RegisterPrescriptionInteraction\RegisterPrescriptionInteraction_1.0_RIVTABP21.wsdl
-SET X4=%SCHEMADIR%\interactions\RegisterPrescriptionInteraction\*.xsd
+SET W2=%SCHEMADIR%\CheckMedicationListVersionInteraction\*.wsdl
+SET X2=%SCHEMADIR%\CheckMedicationListVersionInteraction\*.xsd
 
-SET W5=%SCHEMADIR%\interactions\DiscontinuePrescriptionInteraction\DiscontinuePrescriptionInteraction_1.0_RIVTABP21.wsdl
-SET X5=%SCHEMADIR%\interactions\DiscontinuePrescriptionInteraction\*.xsd
+SET W3=%SCHEMADIR%\DiscontinueMedicationInteraction\*.wsdl
+SET X3=%SCHEMADIR%\DiscontinueMedicationInteraction\*.xsd
 
-SET W6=%SCHEMADIR%\interactions\ChangePrescriptionInteraction\ChangePrescriptionInteraction_1.0_RIVTABP21.wsdl
-SET X6=%SCHEMADIR%\interactions\ChangePrescriptionInteraction\*.xsd
+SET W4=%SCHEMADIR%\GetDispensedDrugsInteraction\*.wsdl
+SET X4=%SCHEMADIR%\GetDispensedDrugsInteraction\*.xsd
 
-SET W7=%SCHEMADIR%\interactions\ConfirmPrescriptionInteraction\ConfirmPrescriptionInteraction_1.0_RIVTABP21.wsdl
-SET X7=%SCHEMADIR%\interactions\ConfirmPrescriptionInteraction\*.xsd
+SET W12=%SCHEMADIR%\GetLFConsentInteraction\*.wsdl
+SET X12=%SCHEMADIR%\GetLFConsentInteraction\*.xsd
 
-SET XCORE=%SCHEMADIR%\core_components\*.xsd
+SET W5=%SCHEMADIR%\GetMedicationDispenseAuthorizationsInteraction\*.wsdl
+SET X5=%SCHEMADIR%\GetMedicationDispenseAuthorizationsInteraction\*.xsd
 
-SET SCHEMAS=%XCORE% %W0% %X0% %W1% %X1% %W2% %X2% %W3% %X3% %W4% %X4% %W5% %X5% %W6% %X6% %W7% %X7% 
+SET W6=%SCHEMADIR%\GetMedicationPrescriptionsInteraction\*.wsdl
+SET X6=%SCHEMADIR%\GetMedicationPrescriptionsInteraction\*.xsd
 
-SET OUTFILE=/out:wcf\generated-src\clinicalprocess_activityprescription_prescribe.cs
-SET APPCONFIG=/config:wcf\generated-src\app.config
-SET NAMESPACE=/namespace:*,riv.clinicalprocess.activityprescription.prescribe.schemas.v1
+SET W7=%SCHEMADIR%\RegisterMedicationDispenseAuthorizationsInteractions\*.wsdl
+SET X7=%SCHEMADIR%\RegisterMedicationDispenseAuthorizationsInteractions\*.xsd
+
+SET W8=%SCHEMADIR%\RegisterMedicationDispensePrescriptionWithoutPersonIdInteraction\*.wsdl
+SET X8=%SCHEMADIR%\RegisterMedicationDispensePrescriptionWithoutPersonIdInteraction\*.xsd
+
+SET W9=%SCHEMADIR%\RegisterMedicationPrescriptionInteraction\*.wsdl
+SET X9=%SCHEMADIR%\RegisterMedicationPrescriptionInteraction\*.xsd
+
+SET W10=%SCHEMADIR%\SetMedicationListReviewedInteraction\*.wsdl
+SET X10=%SCHEMADIR%\SetMedicationListReviewedInteraction\*.xsd
+
+SET W11=%SCHEMADIR%\SetMedicationListReviewNeededInteraction\*.wsdl
+SET X11=%SCHEMADIR%\SetMedicationListReviewNeededInteraction\*.xsd
+
+SET W13=%SCHEMADIR%\UpdateLFConsentInteraction\*.wsdl
+SET X13=%SCHEMADIR%\UpdateLFConsentInteraction\*.xsd
+
+
+
+SET XCORE=%XSDDIR%\*.xsd %XSDDIR%\generated\*.xsd
+
+SET SCHEMAS=%XCORE% %W0% %X0% %W1% %X1% %W2% %X2%  %W3% %X3%  %W4% %X4%  %W5% %X5%  %W6% %X6%  %W7% %X7%  %W8% %X8%  %W9% %X9%  %W10% %X10%  %W11% %X11%  %W12% %X12%  %W13% %X13%
+
+SET OUTFILE=/out:generated-src\nod.cs
+SET APPCONFIG=/config:generated-src\app.config
+SET NAMESPACE=/namespace:*,clinicalprocess_activityprescription_prescribe_2_0
 SET SVCUTIL="svcutil.exe"
-SET XCORE=%SCHEMADIR%\core_components\*.xsd
-%SVCUTIL% /language:cs %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
 
-CD wcf
-ECHO Generating Service contract .Net Binding interfaces and classes for clinicalprocess:activityprescription:prescribe Release 1
-ECHO Reference to System.ServiceModel is needed in DotNetproject.
+rem chcp 850
+%SVCUTIL% /language:cs %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
+pause
+
+
