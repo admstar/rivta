@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Inera licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->		
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' 
+  targetNamespace='urn:riv:clinicalprocess:activityprescription:prescribe:enum:1'
+  elementFormDefault='qualified' attributeFormDefault='unqualified' version='1.0'>
+
+    <xs:simpleType name="MedicationStatusEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ACTIVE">
+                <xs:annotation>
+                    <xs:documentation>Aktiv</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="INACTIVE">
+                <xs:annotation>
+                    <xs:documentation>Inaktiv</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ALL">
+                <xs:annotation>
+                    <xs:documentation>Alla</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- A better name for LF? -->
+    <xs:simpleType name="LFConsentEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ONETIME_CONSENT">
+                <xs:annotation>
+                    <xs:documentation>Engångs-samtycke.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CONSENT">
+                <xs:annotation>
+                    <xs:documentation>Tillsvidaresamtycke registrat hos EHM.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="EMERGENCY">
+                <xs:annotation>
+                    <xs:documentation>Nödåtgärd, emergency</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="ResultCodeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="OK"/>
+            <xs:enumeration value="INFO"/>
+            <xs:enumeration value="ERROR"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <!-- @TODO se över alla felmeddelanden, eventuellt skapa subkoder -->
+    <xs:simpleType name="ErrorCodeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="VALIDATIONERROR"><xs:annotation>
+                <xs:documentation>En eller flera inparametrar innehåller felaktiga värden. Angiven tjänst utfördes ej.</xs:documentation></xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ACCESSDENIED"/>
+            <xs:enumeration value="NOTFOUND"/>
+            <xs:enumeration value="ALREADYEXISTS"/>
+            <xs:enumeration value="INVALIDSTATE"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="SubCodeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SUB_RR_ERROR">
+                <xs:annotation><xs:documentation>Felmeddelande</xs:documentation></xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

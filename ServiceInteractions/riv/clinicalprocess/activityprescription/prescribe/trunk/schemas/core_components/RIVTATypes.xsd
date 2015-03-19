@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:datatypes:1"
+    xmlns:codes="urn:riv:clinicalprocess:activityprescription:prescribe:enum:1"
+    targetNamespace="urn:riv:datatypes:1" elementFormDefault="qualified"
+    attributeFormDefault="unqualified" version="2.0">
+
+    <xs:import
+        schemaLocation="../core_components/clinicalprocess_activityprescription_prescribe_1.0_enum.xsd"
+        namespace="urn:riv:clinicalprocess:activityprescription:prescribe:enum:1"/>
+
+    <xs:complexType name="ResultType">
+        <xs:annotation>
+            <xs:documentation>
+                ResultType hanterar logiska fel.
+                
+                resultCode: 
+                Kan endast vara OK, INFO eller ERROR.
+                errorCode: 
+                Sätts endast om resultCode är ERROR. Tillåtna värden sätts per tjänstedomän.
+                subcode: 
+                Tillåtna värden sätts per tjänstedomän.
+                logId: 
+                En UUID som kan användas vid felanmälan för att användas vid felsökning av producent.
+                message: 
+                En beskrivande text som kan visas för användaren.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="resultCode" type="codes:ResultCodeEnum"/>
+            <xs:element name="errorCode" type="codes:ErrorCodeEnum" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="subcode" type="codes:SubCodeEnum" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="logId" type="xs:string"/>
+            <xs:element name="message" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DatePeriodType">
+        <xs:annotation>
+            <xs:documentation>
+start xs:date Periodens startdatum. Minst ett av start och end skall anges.	0..1
+end	xs:date Periodens slutdatum. Minst ett av start och end skall anges.	0..1
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="start" type="xs:date" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="end" type="xs:date" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="my_ResultType" type="tns:ResultType"/>
+
+</xs:schema>
