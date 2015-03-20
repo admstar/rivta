@@ -32,17 +32,17 @@
     
     
 
-    <xs:complexType name="MedicationList">
+    <xs:complexType name="MedicationDispenseCase">
         <xs:sequence>
-            <xs:element name="patientId" type="fhir:Identifier" minOccurs="1" maxOccurs="1" />
-            <xs:element name="version" type="fhir:Identifier" minOccurs="1" maxOccurs="1" />
-            <xs:element name="medicationPrescriptionSequences" type="tns:MedicationPrescriptionSequence" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="medicationStatements" type="tns:MedicationStatement" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="reviews" type="tns:Review" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="medicationDispensePrescriptions" type="tns:MedicationDispensePrescription" minOccurs="1" maxOccurs="unbounded" />
+            <xs:element name="revocations" type="tns:Revocation" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="dispenseReference" type="xs:string" minOccurs="0" maxOccurs="1" />
+            <xs:element name="dispenseStatus" type="tns:DispenseStatus" minOccurs="0" maxOccurs="1" />
+            <xs:element name="dispensedDrugs" type="tns:DispensedDrug" minOccurs="0" maxOccurs="unbounded" />
         </xs:sequence>
     </xs:complexType>
 
-    <xs:element name="my_MedicationList_Element" type="tns:MedicationList" />
+    <xs:element name="my_MedicationDispenseCase_Element" type="tns:MedicationDispenseCase" />
 
 
 

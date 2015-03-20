@@ -32,17 +32,32 @@
     
     
 
-    <xs:complexType name="MedicationList">
+    <xs:complexType name="MedicationDispensePrescriptionForDoseDispensing">
+        <xs:complexContent mixed="false">
+            <xs:extension base="tns:MedicationDispensePrescription">
+                <xs:sequence>
+                    <xs:element name="acute" type="xs:boolean" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="substitutionNotAllowedByPatient" type="xs:boolean" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="substitutionNotAllowedByPrescriber" type="xs:boolean" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="dosage" type="dosage:Tillfallesdosering" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="startTime" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="endComment" type="xs:string" minOccurs="0" maxOccurs="1" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="my_MedicationDispensePrescriptionForDoseDispensing_Element" type="tns:MedicationDispensePrescriptionForDoseDispensing" />
+
+    <xs:complexType name="MedicationDispensePrescriptionForDoseDispensing_setter">
         <xs:sequence>
-            <xs:element name="patientId" type="fhir:Identifier" minOccurs="1" maxOccurs="1" />
-            <xs:element name="version" type="fhir:Identifier" minOccurs="1" maxOccurs="1" />
-            <xs:element name="medicationPrescriptionSequences" type="tns:MedicationPrescriptionSequence" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="medicationStatements" type="tns:MedicationStatement" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="reviews" type="tns:Review" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="acute" type="xs:boolean" minOccurs="1" maxOccurs="1" />
+            <xs:element name="substitutionNotAllowedByPatient" type="xs:boolean" minOccurs="1" maxOccurs="1" />
+            <xs:element name="substitutionNotAllowedByPrescriber" type="xs:boolean" minOccurs="1" maxOccurs="1" />
         </xs:sequence>
     </xs:complexType>
 
-    <xs:element name="my_MedicationList_Element" type="tns:MedicationList" />
+    <xs:element name="my_MedicationDispensePrescriptionForDoseDispensing_setter_Element" type="tns:MedicationDispensePrescriptionForDoseDispensing_setter" />
 
 
 

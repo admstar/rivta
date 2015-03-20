@@ -29,22 +29,13 @@
     <xs:import schemaLocation="..\xsd_imports\LightFihr.xsd" namespace="http://hl7.org/fhir"/>
     <xs:include schemaLocation="all.xsd"/>
     -->
-    
-    
-
-    <xs:complexType name="MedicationList">
+    <xs:complexType name="Review">
         <xs:sequence>
-            <xs:element name="patientId" type="fhir:Identifier" minOccurs="1" maxOccurs="1" />
-            <xs:element name="version" type="fhir:Identifier" minOccurs="1" maxOccurs="1" />
-            <xs:element name="medicationPrescriptionSequences" type="tns:MedicationPrescriptionSequence" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="medicationStatements" type="tns:MedicationStatement" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="reviews" type="tns:Review" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="reviewedBy" type="tns:HealthcareProfessionalType" maxOccurs="unbounded" />
+            <xs:element name="time" type="xs:dateTime" maxOccurs="unbounded" />
         </xs:sequence>
     </xs:complexType>
 
-    <xs:element name="my_MedicationList_Element" type="tns:MedicationList" />
-
-
-
+    <xs:element name="my_Review_Element" type="tns:Review" />
 
 </xs:schema>
