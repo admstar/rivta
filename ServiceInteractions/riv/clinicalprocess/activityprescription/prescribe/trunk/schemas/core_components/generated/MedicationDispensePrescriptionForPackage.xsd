@@ -32,20 +32,35 @@
     
     
 
-    <xs:complexType name="DrugArticle">
+    <xs:complexType name="MedicationDispensePrescriptionForPackage">
         <xs:complexContent mixed="false">
-            <xs:extension base="tns:Medication">
+            <xs:extension base="tns:MedicationDispensePrescription">
                 <xs:sequence>
-                    <xs:element name="notInterchangable" type="xs:boolean" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="NPLPackid" type="fhir:Identifier" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="distributedTradeName" type="xs:string" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="distributedDrug" type="tns:DistributedDrug" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="substitutionNotAllowed" type="xs:boolean" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="startPackage" type="xs:boolean" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="firstDispenseBefore" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="dispenseInterval" type="xs:int" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="intervalUnit" type="xs:string" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="numberOfDispenses" type="xs:int" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="numberOfPackages" type="xs:int" minOccurs="1" maxOccurs="1" />
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
 
-    <xs:element name="my_DrugArticle_Element" type="tns:DrugArticle" />
+    <xs:element name="my_MedicationDispensePrescriptionForPackage_Element" type="tns:MedicationDispensePrescriptionForPackage" />
+
+    <xs:complexType name="MedicationDispensePrescriptionForPackage_setter">
+        <xs:sequence>
+            <xs:element name="startPackage" type="xs:boolean" minOccurs="1" maxOccurs="1" />
+            <xs:element name="firstDispenseBefore" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+            <xs:element name="dispenseInterval" type="xs:int" minOccurs="0" maxOccurs="1" />
+            <xs:element name="numberOfDispenses" type="xs:int" minOccurs="1" maxOccurs="1" />
+            <xs:element name="numberOfPackages" type="xs:int" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="my_MedicationDispensePrescriptionForPackage_setter_Element" type="tns:MedicationDispensePrescriptionForPackage_setter" />
 
 
 
