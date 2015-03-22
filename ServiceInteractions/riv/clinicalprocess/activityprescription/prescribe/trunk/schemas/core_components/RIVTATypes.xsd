@@ -65,6 +65,18 @@ end	xs:date Periodens slutdatum. Minst ett av start och end skall anges.	0..1
         </xs:sequence>
     </xs:complexType>
 
-    <xs:element name="my_ResultType" type="tns:ResultType"/>
+    <xs:complexType name="DateTimePeriodType">
+        <xs:annotation>
+            <xs:documentation>
+                start xs:date Periodens startdatum. Minst ett av start och end skall anges.	0..1
+                end	xs:date Periodens slutdatum. Minst ett av start och end skall anges.	0..1
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="start" type="xs:dateTime" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="end" type="xs:dateTime" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+    
 
 </xs:schema>
