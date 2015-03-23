@@ -18,28 +18,27 @@
  under the License.
  -->		
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:tns="urn:riv:service:catalogue:UpdateProductCatalogueResponder:1"
+  xmlns:tns="urn:riv:service:catalogue:UpdateProductsResponder:1"
   xmlns:core="urn:riv:service:catalogue:2"
-  targetNamespace="urn:riv:service:catalogue:UpdateProductCatalogueResponder:1"
+  targetNamespace="urn:riv:service:catalogue:UpdateProductsResponder:1"
   elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
   <xs:import schemaLocation="../../core_components/service_catalogue_2.0.xsd"
     namespace="urn:riv:service:catalogue:2"/>
 
-  <xs:element name="UpdateProductCatalogue" type="tns:UpdateProductCatalogueType"/>
-  <xs:element name="UpdateProductCatalogueResponse" type="tns:UpdateProductCatalogueResponseType"/>
+  <xs:element name="UpdateProducts" type="tns:UpdateProductsType"/>
+  <xs:element name="UpdateProductsResponse" type="tns:UpdateProductsResponseType"/>
 
-  <xs:complexType name="UpdateProductCatalogueType">
+  <xs:complexType name="UpdateProductsType">
     <xs:annotation>
-      <xs:documentation>En eller flera produkter.</xs:documentation>
+      <xs:documentation>Update or create one or more products.</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="catalogue" type="core:UpdateProductCatalogueType" minOccurs="1"
-        maxOccurs="1"/>
+      <xs:element name="catalogue" type="core:UpdateProductsType" minOccurs="1" maxOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="UpdateProductCatalogueResponseType">
+  <xs:complexType name="UpdateProductsResponseType">
     <xs:sequence>
       <xs:element minOccurs="1" name="result" type="core:ResultType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>

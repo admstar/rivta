@@ -17,16 +17,16 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<wsdl:definitions name='UpdateProductCatalogueInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/'
+<wsdl:definitions name='UpdateProductsInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/'
   xmlns:xs='http://www.w3.org/2001/XMLSchema'
-  xmlns:tjsr='urn:riv:service:catalogue:UpdateProductCatalogueResponder:1'
-  xmlns:tjsi='urn:riv:service:catalogue:UpdateProductCatalogueInitiator:1'
-  xmlns:tns='urn:riv:service:catalogue:UpdateProductCatalogue:1:rivtabp21'
-  targetNamespace='urn:riv:service:catalogue:UpdateProductCatalogue:1:rivtabp21'
+  xmlns:tjsr='urn:riv:service:catalogue:UpdateProductsResponder:1'
+  xmlns:tjsi='urn:riv:service:catalogue:UpdateProductsInitiator:1'
+  xmlns:tns='urn:riv:service:catalogue:UpdateProducts:1:rivtabp21'
+  targetNamespace='urn:riv:service:catalogue:UpdateProducts:1:rivtabp21'
   xmlns:itr='urn:riv:itintegration:registry:1'>
   <xs:annotation>
     <xs:documentation>
-			 Tjänsteinteraktionens namn: UpdateProductCatalogueInteraction
+			 Tjänsteinteraktionens namn: UpdateProductsInteraction
 			 Beskrivning: 
 			   Uppdatera en produktkatalog
 			 Revisioner: 
@@ -37,32 +37,32 @@
 			 </xs:documentation>
   </xs:annotation>
   <wsdl:types>
-    <xs:schema targetNamespace='urn:riv:service:catalogue:UpdateProductCatalogue:1:rivtabp21'>
-      <xs:import schemaLocation='UpdateProductCatalogueResponder_1.0.xsd' namespace='urn:riv:service:catalogue:UpdateProductCatalogueResponder:1' />
+    <xs:schema targetNamespace='urn:riv:service:catalogue:UpdateProducts:1:rivtabp21'>
+      <xs:import schemaLocation='UpdateProductsResponder_1.0.xsd' namespace='urn:riv:service:catalogue:UpdateProductsResponder:1' />
       <xs:import schemaLocation='../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
     </xs:schema>
   </wsdl:types>
-  <wsdl:message name='UpdateProductCatalogueRequest'>
+  <wsdl:message name='UpdateProductsRequest'>
     <wsdl:part name='LogicalAddress' element='itr:LogicalAddress'>
       <wsdl:documentation>The organisation number of the organization owning the targeted caregiver catalogue.</wsdl:documentation>
     </wsdl:part>
-    <wsdl:part name='parameters' element='tjsr:UpdateProductCatalogue' />
+    <wsdl:part name='parameters' element='tjsr:UpdateProducts' />
   </wsdl:message>
-  <wsdl:message name='UpdateProductCatalogueResponse'>
-    <wsdl:part name='parameters' element='tjsr:UpdateProductCatalogueResponse' />
+  <wsdl:message name='UpdateProductsResponse'>
+    <wsdl:part name='parameters' element='tjsr:UpdateProductsResponse' />
   </wsdl:message>
-  <wsdl:portType name='UpdateProductCatalogueResponderInterface'>
-    <wsdl:operation name='UpdateProductCatalogue'>
-      <wsdl:input message='tns:UpdateProductCatalogueRequest' />
-      <wsdl:output message='tns:UpdateProductCatalogueResponse' />
+  <wsdl:portType name='UpdateProductsResponderInterface'>
+    <wsdl:operation name='UpdateProducts'>
+      <wsdl:input message='tns:UpdateProductsRequest' />
+      <wsdl:output message='tns:UpdateProductsResponse' />
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name='UpdateProductCatalogueResponderBinding' type='tns:UpdateProductCatalogueResponderInterface'>
+  <wsdl:binding name='UpdateProductsResponderBinding' type='tns:UpdateProductsResponderInterface'>
     <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
-    <wsdl:operation name='UpdateProductCatalogue'>
-      <soap:operation soapAction='urn:riv:service:catalogue:UpdateProductCatalogueResponder:1:UpdateProductCatalogue' style='document' />
+    <wsdl:operation name='UpdateProducts'>
+      <soap:operation soapAction='urn:riv:service:catalogue:UpdateProductsResponder:1:UpdateProducts' style='document' />
       <wsdl:input>
-        <soap:header use='literal' message='tns:UpdateProductCatalogueRequest' part='LogicalAddress' />
+        <soap:header use='literal' message='tns:UpdateProductsRequest' part='LogicalAddress' />
         <soap:body use='literal' parts='parameters' />
       </wsdl:input>
       <wsdl:output>
@@ -70,8 +70,8 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name='UpdateProductCatalogueResponderService'>
-    <wsdl:port name='UpdateProductCatalogueResponderPort' binding='tns:UpdateProductCatalogueResponderBinding'>
+  <wsdl:service name='UpdateProductsResponderService'>
+    <wsdl:port name='UpdateProductsResponderPort' binding='tns:UpdateProductsResponderBinding'>
       <soap:address location='http://tempuri.org' />
     </wsdl:port>
   </wsdl:service>
