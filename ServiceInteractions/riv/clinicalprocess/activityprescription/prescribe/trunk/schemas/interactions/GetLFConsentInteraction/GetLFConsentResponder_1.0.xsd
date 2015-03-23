@@ -35,25 +35,17 @@
   <xs:import schemaLocation="../../core_components/RIVTATypes.xsd" namespace="urn:riv:datatypes:1"/>
 
   <xs:element name="GetLFConsents" type="tns:GetLFConsentsType"/>
-  <xs:element name="GetLFConsentsResponse"
-    type="tns:GetLFConsentsResponseType"/>
+  <xs:element name="GetLFConsentsResponse" type="tns:GetLFConsentsResponseType"/>
   <xs:complexType name="GetLFConsentsType">
     <xs:sequence>
       <xs:element name="patientId" type="fhir:Identifier"/>
-      <xs:element name="medicationPrescriptionSequenceId" type="fhir:Identifier" minOccurs="0"
-        maxOccurs="unbounded"/>
-      <xs:element minOccurs="0" name="includeMedicalDispensPrescriptions" type="xs:boolean" minOccurs="1"/>
-      <xs:element minOccurs="0" name="decisionFilterPeriod" type="riv:DatePeriodType"/>
-      <xs:element minOccurs="0" name="medicationStatus" type="codes:MedicationStatusEnum"/>
-      <xs:element minOccurs="0" name="medicationListVersion" type="fhir:Identifier"/>
-      <xs:element name="registrationTime" minOccurs="0" type="xs:dateTime"/>
+      <xs:element name="prescriber" type="fhir:Identifier" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="GetLFConsentsResponseType">
     <xs:sequence>
-      <xs:element name="medicationList" type="core:MedicationList" maxOccurs="unbounded"
-        minOccurs="0"/>
+      <xs:element name="hasConsent" type="xs:boolean" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element name="result" type="riv:ResultType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
