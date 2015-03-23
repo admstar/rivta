@@ -17,16 +17,16 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<wsdl:definitions name='GetProductCatalogueInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/'
+<wsdl:definitions name='GetProductsInteraction' xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/'
   xmlns:xs='http://www.w3.org/2001/XMLSchema'
-  xmlns:tjsr='urn:riv:service:catalogue:GetProductCatalogueResponder:1'
-  xmlns:tjsi='urn:riv:service:catalogue:GetProductCatalogueInitiator:1'
-  xmlns:tns='urn:riv:service:catalogue:GetProductCatalogue:1:rivtabp21'
-  targetNamespace='urn:riv:service:catalogue:GetProductCatalogue:1:rivtabp21'
+  xmlns:tjsr='urn:riv:service:catalogue:GetProductsResponder:2'
+  xmlns:tjsi='urn:riv:service:catalogue:GetProductsInitiator:2'
+  xmlns:tns='urn:riv:service:catalogue:GetProducts:1:rivtabp21'
+  targetNamespace='urn:riv:service:catalogue:GetProducts:2:rivtabp21'
   xmlns:itr='urn:riv:itintegration:registry:1'>
   <xs:annotation>
     <xs:documentation>
-			 Tjänsteinteraktionens namn: GetProductCatalogueInteraction
+			 Tjänsteinteraktionens namn: GetProductsInteraction
 			 Beskrivning: 
 			   Service for finding caregivers
 			 Revisioner: 
@@ -37,32 +37,32 @@
 			 </xs:documentation>
   </xs:annotation>
   <wsdl:types>
-    <xs:schema targetNamespace='urn:riv:service:catalogue:GetProductCatalogue:1:rivtabp21'>
-      <xs:import schemaLocation='GetProductCatalogueResponder_1.0.xsd' namespace='urn:riv:service:catalogue:GetProductCatalogueResponder:1' />
+    <xs:schema targetNamespace='urn:riv:service:catalogue:GetProducts:1:rivtabp21'>
+      <xs:import schemaLocation='GetProductsResponder_2.0.xsd' namespace='urn:riv:service:catalogue:GetProductsResponder:2' />
       <xs:import schemaLocation='../../core_components/itintegration_registry_1.0.xsd' namespace='urn:riv:itintegration:registry:1' />
     </xs:schema>
   </wsdl:types>
-  <wsdl:message name='GetProductCatalogueRequest'>
+  <wsdl:message name='GetProductsRequest'>
     <wsdl:part name='LogicalAddress' element='itr:LogicalAddress'>
       <wsdl:documentation>The organisation number of the organization owning the targeted caregiver catalogue.</wsdl:documentation>
     </wsdl:part>
-    <wsdl:part name='parameters' element='tjsr:GetProductCatalogue' />
+    <wsdl:part name='parameters' element='tjsr:GetProducts' />
   </wsdl:message>
-  <wsdl:message name='GetProductCatalogueResponse'>
-    <wsdl:part name='parameters' element='tjsr:GetProductCatalogueResponse' />
+  <wsdl:message name='GetProductsResponse'>
+    <wsdl:part name='parameters' element='tjsr:GetProductsResponse' />
   </wsdl:message>
-  <wsdl:portType name='GetProductCatalogueResponderInterface'>
-    <wsdl:operation name='GetProductCatalogue'>
-      <wsdl:input message='tns:GetProductCatalogueRequest' />
-      <wsdl:output message='tns:GetProductCatalogueResponse' />
+  <wsdl:portType name='GetProductsResponderInterface'>
+    <wsdl:operation name='GetProducts'>
+      <wsdl:input message='tns:GetProductsRequest' />
+      <wsdl:output message='tns:GetProductsResponse' />
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name='GetProductCatalogueResponderBinding' type='tns:GetProductCatalogueResponderInterface'>
+  <wsdl:binding name='GetProductsResponderBinding' type='tns:GetProductsResponderInterface'>
     <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
-    <wsdl:operation name='GetProductCatalogue'>
-      <soap:operation soapAction='urn:riv:service:catalogue:GetProductCatalogueResponder:1:GetProductCatalogue' style='document' />
+    <wsdl:operation name='GetProducts'>
+      <soap:operation soapAction='urn:riv:service:catalogue:GetProductsResponder:1:GetProducts' style='document' />
       <wsdl:input>
-        <soap:header use='literal' message='tns:GetProductCatalogueRequest' part='LogicalAddress' />
+        <soap:header use='literal' message='tns:GetProductsRequest' part='LogicalAddress' />
         <soap:body use='literal' parts='parameters' />
       </wsdl:input>
       <wsdl:output>
@@ -70,8 +70,8 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name='GetProductCatalogueResponderService'>
-    <wsdl:port name='GetProductCatalogueResponderPort' binding='tns:GetProductCatalogueResponderBinding'>
+  <wsdl:service name='GetProductsResponderService'>
+    <wsdl:port name='GetProductsResponderPort' binding='tns:GetProductsResponderBinding'>
       <soap:address location='http://tempuri.org' />
     </wsdl:port>
   </wsdl:service>

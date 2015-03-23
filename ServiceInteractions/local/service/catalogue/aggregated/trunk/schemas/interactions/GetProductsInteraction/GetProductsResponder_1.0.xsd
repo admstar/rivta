@@ -18,17 +18,17 @@
  under the License.
  -->		
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:tns="urn:riv:service:catalogue:GetProductCatalogueResponder:1"
+  xmlns:tns="urn:riv:service:catalogue:GetProductsResponder:2"
   xmlns:core="urn:riv:service:catalogue:2"
-  targetNamespace="urn:riv:service:catalogue:GetProductCatalogueResponder:1"
-  elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+  targetNamespace="urn:riv:service:catalogue:GetProductsResponder:2"
+  elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
   <xs:import schemaLocation="../../core_components/service_catalogue_2.0.xsd"
     namespace="urn:riv:service:catalogue:2"/>
 
-  <xs:element name="GetProductCatalogue" type="tns:GetProductCatalogueType"/>
-  <xs:element name="GetProductCatalogueResponse" type="tns:GetProductCatalogueResponseType"/>
+  <xs:element name="GetProducts" type="tns:GetProductsType"/>
+  <xs:element name="GetProductsResponse" type="tns:GetProductsResponseType"/>
 
-  <xs:complexType name="GetProductCatalogueType">
+  <xs:complexType name="GetProductsType">
     <xs:annotation>
       <xs:documentation>Get all products or for specific codeSystem(s) if specified.
       For example fetch only SLL products by setting codeSystem to "...."</xs:documentation>
@@ -39,7 +39,7 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="GetProductCatalogueResponseType">
+  <xs:complexType name="GetProductsResponseType">
     <xs:sequence>
       <xs:element maxOccurs="unbounded" minOccurs="0" name="productCatalogue" type="core:CSType"/>
       <xs:element name="result" type="core:ResultType"/>
