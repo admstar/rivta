@@ -17,16 +17,13 @@
  specific language governing permissions and limitations
  under the License.
  -->		
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:service:catalogue:1"
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:service:catalogue:2"
   xmlns:codes="urn:riv:service:catalogue:aggregated:enums:2"
-  targetNamespace="urn:riv:service:catalogue:1" elementFormDefault="qualified"
-  attributeFormDefault="unqualified" version="1.0">
+  targetNamespace="urn:riv:service:catalogue:2" elementFormDefault="qualified"
+  attributeFormDefault="unqualified" version="2.0">
 
   <xs:import namespace="urn:riv:service:catalogue:aggregated:enums:2"
     schemaLocation="service_catalogue_aggregated_enum_2.0.xsd"/>
-
-  <!-- -->
-
 
   <!-- -->
   <xs:complexType name="OfferType">
@@ -59,7 +56,7 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="UpdateProductCatalogueType">
+  <xs:complexType name="UpdateProductsType">
     <xs:sequence>
       <xs:element name="sourceSystemHSAId" type="tns:IIType"/>
       <xs:element name="county" type="tns:IIType" maxOccurs="1"/>
@@ -114,7 +111,6 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-
 
   <xs:complexType name="GPSType">
     <xs:sequence>
@@ -173,7 +169,8 @@
     </xs:annotation>
     <xs:sequence>
       <xs:element name="name" type="xs:string"/>
-      <xs:element name="productId" type="tns:IIType"/>
+      <xs:element name="productId" type="tns:UUIDType"/>
+      <xs:element name="parentProductId" type="tns:UUIDType" minOccurs="0"/>
       <xs:element name="description" type="xs:string" minOccurs="0"/>
       <xs:element minOccurs="0" name="requestRequirement" type="xs:string"/>
       <xs:element minOccurs="0" name="requestComment" type="xs:string"/>
@@ -183,13 +180,16 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
+
   <xs:complexType name="ProductType">
     <xs:annotation>
-      <xs:documentation>Product information</xs:documentation>
+      <xs:documentation>Vårdutbud i form av produkter som definieras av fasta egenskaper samt i form av kod/kodverk.</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="productCode" type="xs:string"/>
-      <xs:element name="productDescription" type="xs:string" minOccurs="0"/>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="productId" type="xs:string"/>
+      <xs:element name="sourceSystemHSAId" type="tns:IIType"/>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
       <xs:element minOccurs="0" name="requestComment" type="xs:string"/>
       <xs:element name="property" type="tns:CVType" maxOccurs="unbounded" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
@@ -215,12 +215,12 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="CSType">
+  <xs:complexType name="CountyCatalogueType">
     <xs:annotation>
       <xs:documentation>Product information</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="codeSystem" type="xs:string"/>
+      <xs:element name="county" type="tns:CVType"/>
       <xs:element name="product" type="tns:ProductType" maxOccurs="unbounded" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
@@ -298,14 +298,26 @@ Exempel: </xs:documentation>
   <xs:complexType name="ResultType">
     <xs:annotation>
       <xs:documentation>
+        ResultType hanterar logiska fel.
+        
+        resultCode: 
+        Kan endast vara OK, INFO eller ERROR.
+        errorCode: 
+        Sätts endast om resultCode är ERROR. Tillåtna värden sätts per tjänstedomän.
+        subcode: 
+        Tillåtna värden sätts per tjänstedomän.
+        logId: 
+        En UUID som kan användas vid felanmälan för att användas vid felsökning av producent.
+        message: 
+        En beskrivande text som kan visas för användaren.
       </xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="level" type="codes:ResultLevelEnum"/>
-      <xs:element name="code" type="codes:ResultCodeEnum"/>
+      <xs:element name="resultCode" type="codes:ResultCodeEnum"/>
+      <xs:element name="errorCode" type="codes:ErrorCodeEnum" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="subcode" type="codes:SubCodeEnum" minOccurs="0" maxOccurs="1"/>
       <xs:element name="logId" type="xs:string"/>
-      <xs:element minOccurs="0" name="subCode" type="xs:string"/>
-      <xs:element name="message" type="xs:string" minOccurs="0"/>
+      <xs:element name="message" type="xs:string" minOccurs="0" maxOccurs="1"/>
     </xs:sequence>
   </xs:complexType>
 
