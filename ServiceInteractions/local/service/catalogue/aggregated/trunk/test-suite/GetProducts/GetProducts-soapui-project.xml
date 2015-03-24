@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project activeEnvironment="Default" name="GetProductCatalogue" resourceRoot="" soapui-version="4.6.4" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetProductCatalogueResponderBinding" type="wsdl" bindingName="{urn:riv:service:catalogue:GetProductCatalogue:1:rivtabp21}GetProductCatalogueResponderBinding" soapVersion="1_1" anonymous="optional" definition="file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/interactions/GetProductCatalogueInteraction/GetProductCatalogueInteraction_1.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/interactions/GetProductCatalogueInteraction/GetProductCatalogueInteraction_1.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/interactions/GetProductCatalogueInteraction/GetProductCatalogueInteraction_1.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+<con:soapui-project activeEnvironment="Default" name="GetProducts 2.0" resourceRoot="" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetProductsResponderBinding" type="wsdl" bindingName="{urn:riv:service:catalogue:GetProducts:2:rivtabp21}GetProductsResponderBinding" soapVersion="1_1" anonymous="optional" definition="file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/interactions/GetProductsInteraction/GetProductsInteraction_2.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/interactions/GetProductsInteraction/GetProductsInteraction_2.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/interactions/GetProductsInteraction/GetProductsInteraction_2.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
@@ -15,11 +15,11 @@
  KIND, either express or implied. See the License for the
  specific language governing permissions and limitations
  under the License.-->
-<wsdl:definitions name="GetProductCatalogueInteraction" targetNamespace="urn:riv:service:catalogue:GetProductCatalogue:1:rivtabp21" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tjsr="urn:riv:service:catalogue:GetProductCatalogueResponder:1" xmlns:tjsi="urn:riv:service:catalogue:GetProductCatalogueInitiator:1" xmlns:tns="urn:riv:service:catalogue:GetProductCatalogue:1:rivtabp21" xmlns:itr="urn:riv:itintegration:registry:1">
+<wsdl:definitions name="GetProductsInteraction" targetNamespace="urn:riv:service:catalogue:GetProducts:2:rivtabp21" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tjsr="urn:riv:service:catalogue:GetProductsResponder:2" xmlns:tjsi="urn:riv:service:catalogue:GetProductsInitiator:2" xmlns:tns="urn:riv:service:catalogue:GetProducts:2:rivtabp21" xmlns:itr="urn:riv:itintegration:registry:1">
   <xs:annotation>
-    <xs:documentation>Tjänsteinteraktionens namn: GetProductCatalogueInteraction
+    <xs:documentation>Tjänsteinteraktionens namn: GetProductsInteraction
 			 Beskrivning: 
-			   Service for finding caregivers
+			   Service for finding products
 			 Revisioner: 
 			 Tjänstedomän: service:catalogue
 			 Tjänsteinteraktionstyp: Fråga-Svar
@@ -27,32 +27,32 @@
 			 Förvaltas av: Stockholms Läns Landsting</xs:documentation>
   </xs:annotation>
   <wsdl:types>
-    <xs:schema targetNamespace="urn:riv:service:catalogue:GetProductCatalogue:1:rivtabp21">
-      <xs:import schemaLocation="GetProductCatalogueResponder_1.0.xsd" namespace="urn:riv:service:catalogue:GetProductCatalogueResponder:1"/>
+    <xs:schema targetNamespace="urn:riv:service:catalogue:GetProducts:1:rivtabp21">
+      <xs:import schemaLocation="GetProductsResponder_2.0.xsd" namespace="urn:riv:service:catalogue:GetProductsResponder:2"/>
       <xs:import schemaLocation="../../core_components/itintegration_registry_1.0.xsd" namespace="urn:riv:itintegration:registry:1"/>
     </xs:schema>
   </wsdl:types>
-  <wsdl:message name="GetProductCatalogueRequest">
+  <wsdl:message name="GetProductsRequest">
     <wsdl:part name="LogicalAddress" element="itr:LogicalAddress">
       <wsdl:documentation>The organisation number of the organization owning the targeted caregiver catalogue.</wsdl:documentation>
     </wsdl:part>
-    <wsdl:part name="parameters" element="tjsr:GetProductCatalogue"/>
+    <wsdl:part name="parameters" element="tjsr:GetProducts"/>
   </wsdl:message>
-  <wsdl:message name="GetProductCatalogueResponse">
-    <wsdl:part name="parameters" element="tjsr:GetProductCatalogueResponse"/>
+  <wsdl:message name="GetProductsResponse">
+    <wsdl:part name="parameters" element="tjsr:GetProductsResponse"/>
   </wsdl:message>
-  <wsdl:portType name="GetProductCatalogueResponderInterface">
-    <wsdl:operation name="GetProductCatalogue">
-      <wsdl:input message="tns:GetProductCatalogueRequest"/>
-      <wsdl:output message="tns:GetProductCatalogueResponse"/>
+  <wsdl:portType name="GetProductsResponderInterface">
+    <wsdl:operation name="GetProducts">
+      <wsdl:input message="tns:GetProductsRequest"/>
+      <wsdl:output message="tns:GetProductsResponse"/>
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name="GetProductCatalogueResponderBinding" type="tns:GetProductCatalogueResponderInterface">
+  <wsdl:binding name="GetProductsResponderBinding" type="tns:GetProductsResponderInterface">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <wsdl:operation name="GetProductCatalogue">
-      <soap:operation soapAction="urn:riv:service:catalogue:GetProductCatalogueResponder:1:GetProductCatalogue" style="document"/>
+    <wsdl:operation name="GetProducts">
+      <soap:operation soapAction="urn:riv:service:catalogue:GetProductsResponder:2:GetProducts" style="document"/>
       <wsdl:input>
-        <soap:header use="literal" message="tns:GetProductCatalogueRequest" part="LogicalAddress"/>
+        <soap:header use="literal" message="tns:GetProductsRequest" part="LogicalAddress"/>
         <soap:body use="literal" parts="parameters"/>
       </wsdl:input>
       <wsdl:output>
@@ -60,12 +60,12 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name="GetProductCatalogueResponderService">
-    <wsdl:port name="GetProductCatalogueResponderPort" binding="tns:GetProductCatalogueResponderBinding">
+  <wsdl:service name="GetProductsResponderService">
+    <wsdl:port name="GetProductsResponderPort" binding="tns:GetProductsResponderBinding">
       <soap:address location="http://tempuri.org"/>
     </wsdl:port>
   </wsdl:service>
-</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/interactions/GetProductCatalogueInteraction/GetProductCatalogueResponder_1.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/interactions/GetProductsInteraction/GetProductsResponder_2.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
@@ -81,25 +81,35 @@
  KIND, either express or implied. See the License for the
  specific language governing permissions and limitations
  under the License.-->
-<xs:schema targetNamespace="urn:riv:service:catalogue:GetProductCatalogueResponder:1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:service:catalogue:GetProductCatalogueResponder:1" xmlns:core="urn:riv:service:catalogue:1">
-  <xs:import schemaLocation="../../core_components/service_catalogue_1.0.xsd" namespace="urn:riv:service:catalogue:1"/>
-  <xs:element name="GetProductCatalogue" type="tns:GetProductCatalogueType"/>
-  <xs:element name="GetProductCatalogueResponse" type="tns:GetProductCatalogueResponseType"/>
-  <xs:complexType name="GetProductCatalogueType">
+<xs:schema targetNamespace="urn:riv:service:catalogue:GetProductsResponder:2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:service:catalogue:GetProductsResponder:2" xmlns:core="urn:riv:service:catalogue:2">
+  <xs:import schemaLocation="../../core_components/service_catalogue_2.0.xsd" namespace="urn:riv:service:catalogue:2"/>
+  <xs:element name="GetProducts" type="tns:GetProductsType"/>
+  <xs:element name="GetProductsResponse" type="tns:GetProductsResponseType"/>
+  <xs:complexType name="GetProductsType">
     <xs:annotation>
-      <xs:documentation>Hämtar alla produkter.</xs:documentation>
+      <xs:documentation>Get all products or for specific county/counties or sourceSystemHSAId or all products if no county or sourceSystemHSAId is specified.
+
+Example
+county.codeSystem = 1.2.752.129.2.2.1.18
+county.code = 01
+
+sourceSystemHSAId.extension = 1.2.752.129.2.1.4.1
+sourceSystemHSAId.root = SE-1234</xs:documentation>
     </xs:annotation>
     <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="codeSystem" type="core:CVType"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="sourceSystemHSAId" type="core:IIType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="GetProductCatalogueResponseType">
+  <xs:complexType name="GetProductsResponseType">
     <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="codeSystem" type="core:CSType"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="productCatalogue" type="core:CSType"/>
+      <xs:element name="result" type="core:ResultType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/core_components/service_catalogue_1.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/core_components/service_catalogue_2.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
@@ -115,42 +125,110 @@
  KIND, either express or implied. See the License for the
  specific language governing permissions and limitations
  under the License.-->
-<xs:schema targetNamespace="urn:riv:service:catalogue:1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:service:catalogue:1">
+<xs:schema targetNamespace="urn:riv:service:catalogue:2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:service:catalogue:2" xmlns:codes="urn:riv:service:catalogue:aggregated:enums:2">
+  <xs:import namespace="urn:riv:service:catalogue:aggregated:enums:2" schemaLocation="service_catalogue_aggregated_enum_2.0.xsd"/>
   <!---->
-  <xs:complexType name="OffersTransactionType">
-    <xs:annotation>
-      <xs:documentation>When deleteFlag is set to true, the given careUnitId will be deleted from the catalogue.
-        When set to false a create or update will be performed.</xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="deleteFlag" type="xs:boolean"/>
-      <xs:element name="offer" type="tns:OfferType" maxOccurs="1"/>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
   <!---->
   <xs:complexType name="OfferType">
     <xs:sequence>
-      <xs:element name="hsaObject" type="tns:HsaObjectType"/>
+      <xs:element name="organizationalUnit" type="tns:organizationalUnitType"/>
       <xs:element name="validContractDatePeriod" type="tns:DatePeriodType">
         <xs:annotation>
           <xs:documentation>Valid date from when this care unit starts handling type of cares.</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="supportedInteractions" type="tns:SupportedInteractionsType"/>
-      <xs:element name="products" type="tns:ProductType" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="comment" type="xs:string" maxOccurs="1"/>
+      <xs:element name="supportedInteraction" type="tns:SupportedInteractionsType" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="product" type="tns:ProductType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UpdateOfferType">
+    <xs:sequence>
+      <xs:element name="sourceSystemHSAId" type="tns:IIType"/>
+      <xs:element name="organisation" type="tns:OrganisationType" maxOccurs="1"/>
+      <xs:element name="openingHours" type="xs:string"/>
+      <xs:element maxOccurs="1" name="address" type="tns:AddressType"/>
+      <xs:element name="contract" type="tns:ContractType" maxOccurs="unbounded"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="contactPreference" type="tns:ContactPreferenceType"/>
+      <xs:element name="product" type="tns:ProductReferenceType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="property" type="tns:CVType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="UpdateProductsType">
+    <xs:sequence>
+      <xs:element name="sourceSystemHSAId" type="tns:IIType"/>
+      <xs:element name="county" type="tns:IIType" maxOccurs="1"/>
+      <xs:element name="product" type="tns:ProductType_setter" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProductReferenceType">
+    <xs:sequence>
+      <xs:element name="id" type="tns:IIType"/>
+      <xs:element name="county" type="tns:CVType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AgreementType">
+    <xs:sequence>
+      <xs:element name="id" type="tns:IIType"/>
+      <xs:element name="type" type="tns:CVType"/>
+      <xs:element name="datePeriod" type="tns:DatePeriodType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ContractType">
+    <xs:sequence>
+      <xs:element name="id" type="tns:IIType"/>
+      <xs:element name="type" type="tns:CVType"/>
+      <xs:element name="datePeriod" type="tns:DatePeriodType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AddressType">
+    <xs:sequence>
+      <xs:element name="invoiceAddress" type="tns:NAVNETType" minOccurs="0"/>
+      <xs:element name="mailAddress" type="tns:EmailAddressType" minOccurs="0"/>
+      <xs:element name="webAddress" type="xs:anyURI" minOccurs="0"/>
+      <xs:element name="visitAddress" type="tns:GPSType" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="NAVNETType">
+    <xs:sequence>
+      <xs:element name="streetAdress1" type="xs:string" minOccurs="0"/>
+      <xs:element name="streetAdress2" type="xs:string" minOccurs="0"/>
+      <xs:element minOccurs="0" name="county"/>
+      <xs:element name="postalCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="postalCity" type="xs:string" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GPSType">
+    <xs:sequence>
+      <xs:element name="longitude" type="xs:double"/>
+      <xs:element name="latitude" type="xs:double"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ContactPreferenceType">
+    <xs:sequence>
+      <xs:element name="type" type="codes:ContactPreferenceEnum"/>
+      <xs:element name="iCalendar" type="xs:string"/>
+      <xs:element name="value" minOccurs="1" type="xs:string"/>
+      <xs:element name="datePeriod" type="tns:DatePeriodType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <!---->
-  <xs:complexType name="HsaObjectType">
+  <xs:complexType name="organizationalUnitType">
     <xs:annotation>
-      <xs:documentation>careUnitId == HSAid, careUnitName, careUnitAddress</xs:documentation>
+      <xs:documentation/>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="hsaId" type="tns:HsaIdType"/>
-      <xs:element name="relativeDistinguishedName" type="xs:string"/>
+      <xs:element name="HSAId" type="tns:HSAIdType"/>
+      <xs:element name="organizationName" type="xs:string"/>
       <xs:element minOccurs="1" name="postalAddress" type="xs:string"/>
       <xs:element minOccurs="0" name="countyCode" type="xs:string"/>
       <xs:element minOccurs="0" name="postalCode" type="xs:string"/>
@@ -166,20 +244,38 @@
             For example set interaction to urn:clinicalprocess:requestflow:ProcessRequest and urn:clinicalprocess:requestflow:ProcessRequestOutcome
             if the care unit can recieve requests and send request answers.</xs:documentation>
       </xs:annotation>
-      <xs:element name="interaction" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+      <xs:element name="interaction" type="xs:anyURI" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="logicalAddress" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="producerSystemHSAId" type="xs:string" minOccurs="0" maxOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <!---->
+  <xs:complexType name="ProductType_setter">
+    <xs:annotation>
+      <xs:documentation>Vårdutbud i form av produkter som definieras av fasta egenskaper samt i form av kod/kodverk.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="productId" type="tns:IIType"/>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+      <xs:element minOccurs="0" name="requestRequirement" type="xs:string"/>
+      <xs:element minOccurs="0" name="requestComment" type="xs:string"/>
+      <xs:element minOccurs="0" name="bookable" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="bookableFor" type="xs:string"/>
+      <xs:element name="property" type="tns:CVType" maxOccurs="unbounded" minOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="ProductType">
     <xs:annotation>
       <xs:documentation>Product information</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="productCode" type="tns:CVType"/>
-      <xs:element name="properties" type="tns:CVType" maxOccurs="unbounded"/>
-      <xs:element name="description" type="xs:string"/>
-      <xs:element name="price" type="xs:string" minOccurs="0"/>
+      <xs:element name="productCode" type="xs:string"/>
+      <xs:element name="productDescription" type="xs:string" minOccurs="0"/>
+      <xs:element minOccurs="0" name="requestComment" type="xs:string"/>
+      <xs:element name="property" type="tns:CVType" maxOccurs="unbounded" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -214,7 +310,7 @@
       <xs:documentation>Product information</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="name" type="xs:string"/>
+      <xs:element name="product" type="tns:CVType"/>
       <xs:element name="capacity" type="tns:CapacityType" maxOccurs="unbounded" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
@@ -226,16 +322,15 @@
     <xs:sequence>
       <xs:element name="validTo" type="xs:string"/>
       <xs:element name="value" type="xs:string"/>
-      <xs:element name="description" type="xs:string"/>
       <xs:element name="code" type="tns:CVType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="CareUnitCapacityType">
     <xs:sequence>
-      <xs:element name="hsaId" type="tns:HsaIdType"/>
-      <xs:element name="relativeDistinguishedName" type="xs:string"/>
-      <xs:element name="product" type="tns:ProductCapacityType" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="HSAId" type="tns:HSAIdType"/>
+      <xs:element name="organizationName" type="xs:string"/>
+      <xs:element name="productCapacity" type="tns:ProductCapacityType" maxOccurs="unbounded" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -257,12 +352,8 @@
   </xs:complexType>
   <xs:complexType name="CVType">
     <xs:annotation>
-      <xs:documentation>code: Kod
-        codeSystem: Kodverkets oid
-        codeSystemName: Namn på kodverk
-        codeSystemVersion: Version av kodverk.
-        displayName: Namn på kod för visning
-        originalText:</xs:documentation>
+      <xs:documentation>Metadata för utbudspunkten i form av kod/kodverk.
+Exempel:</xs:documentation>
     </xs:annotation>
     <xs:sequence>
       <xs:element name="code" type="xs:string" minOccurs="1"/>
@@ -274,7 +365,29 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  <!--Simple data types-->
+  <xs:complexType name="ResultType">
+    <xs:annotation>
+      <xs:documentation>ResultType hanterar logiska fel.
+        
+        resultCode: 
+        Kan endast vara OK, INFO eller ERROR.
+        errorCode: 
+        Sätts endast om resultCode är ERROR. Tillåtna värden sätts per tjänstedomän.
+        subcode: 
+        Tillåtna värden sätts per tjänstedomän.
+        logId: 
+        En UUID som kan användas vid felanmälan för att användas vid felsökning av producent.
+        message: 
+        En beskrivande text som kan visas för användaren.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="resultCode" type="codes:ResultCodeEnum"/>
+      <xs:element name="errorCode" type="codes:ErrorCodeEnum" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="subcode" type="codes:SubCodeEnum" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="logId" type="xs:string"/>
+      <xs:element name="message" type="xs:string" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
   <!---->
   <xs:simpleType name="CareUnitNameType">
     <xs:annotation>
@@ -306,21 +419,62 @@
     </xs:restriction>
   </xs:simpleType>
   <!---->
-  <xs:simpleType name="HsaIdType">
+  <xs:simpleType name="HSAIdType">
     <xs:restriction base="xs:string">
       <xs:maxLength value="64"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="TS">
+  <xs:simpleType name="EmailAddressType">
+    <xs:restriction base="xs:string"></xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="IIType">
+    <xs:sequence>
+      <xs:element name="root" type="xs:string"/>
+      <xs:element name="extension" type="xs:string"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="InformationOwnerType">
+    <xs:sequence>
+      <xs:element name="id" type="tns:IIType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OrganisationType">
+    <xs:sequence>
+      <xs:element name="id" type="tns:IIType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="name" type="tns:IIType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SourceSystemType">
+    <xs:sequence>
+      <xs:element name="id" type="tns:IIType"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="UUIDType">
     <xs:restriction base="xs:string">
-      <xs:pattern value="[1-9]{1}[0-9]{3}(0[1-9]{1}|1[0-2]{1})([0-2]{1}[0-9]{1}|3[0-1]{1})([0-1]{1}[0-9]{1}|2[0-3]{1})[0-5]{1}[0-9]{1}[0-5]{1}[0-9]{1}"/>
+      <xs:length value="36" fixed="true"/>
+      <xs:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[8-9a-bA-B][0-9a-fA-F]{3}-[0-9a-fA-F]{12}"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="DT">
-    <xs:restriction base="xs:string">
-      <xs:pattern value="[1-9]{1}[0-9]{3}(0[1-9]{1}|1[0-2]{1})([0-2]{1}[0-9]{1}|3[0-1]{1})"/>
-    </xs:restriction>
-  </xs:simpleType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/core_components/service_catalogue_aggregated_enum_2.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+ 
+ http://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.-->
+<xs:schema targetNamespace="urn:riv:service:catalogue:aggregated:enums:2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:service:catalogue:aggregated:enums:2">
   <xs:simpleType name="ResultCodeEnum">
     <xs:restriction base="xs:string">
       <xs:enumeration value="OK"/>
@@ -328,7 +482,33 @@
       <xs:enumeration value="INFO"/>
     </xs:restriction>
   </xs:simpleType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaleddaham/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/core_components/itintegration_registry_1.0.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="urn:riv:itintegration:registry:1" elementFormDefault="qualified" version="1.0" xmlns="urn:riv:itintegration:registry:1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="ErrorCodeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="INVALID_REQUEST"/>
+      <xs:enumeration value="TRANSFORMATION_ERROR"/>
+      <xs:enumeration value="APPLICATION_ERROR"/>
+      <xs:enumeration value="TECHNICAL_ERROR"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SubCodeEnum">
+    <xs:restriction base="xs:string"></xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="InformationQualityEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="BRONZE"/>
+      <xs:enumeration value="SILVER"/>
+      <xs:enumeration value="GOLD"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ContactPreferenceEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="TELEPHONE_PROFESSIONAL"/>
+      <xs:enumeration value="TELEPHONE_CITIZEN"/>
+      <xs:enumeration value="EMAIL"/>
+      <xs:enumeration value="MVK"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/core_components/itintegration_registry_1.0.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="urn:riv:itintegration:registry:1" elementFormDefault="qualified" version="1.0" xmlns="urn:riv:itintegration:registry:1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:annotation>
     <xs:documentation>Beskrivning: 	Grundl��ggande informationsobjekt f��r dom��nen itintegration:registry (adressering av tj��nster)
 			
@@ -357,22 +537,85 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/aggregated-1.0-SNAPSHOT/GetProductCatalogue</con:endpoint><con:endpoint>https://qa.esb.rtp.sll.se:443/vp/service/catalogue/GetProductCatalogue/1/rivtabp21</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:service:catalogue:GetProductCatalogueResponder:1:GetProductCatalogue" name="GetProductCatalogue" bindingOperationName="GetProductCatalogue" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://qa.esb.rtp.sll.se:443/vp/service/catalogue/GetProductCatalogue/1/rivtabp21</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:service:catalogue:GetProductCatalogueResponder:1">
-   <soapenv:Header>
-      <urn:LogicalAddress>SLL-SC</urn:LogicalAddress>
-   </soapenv:Header>
-   <soapenv:Body>
-      <urn1:GetProductCatalogue>
-         <!--You may enter ANY elements at this point-->
-      </urn1:GetProductCatalogue>
-   </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:service:catalogue:GetProductCatalogueResponder:1:GetProductCatalogue"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite name="GetProductCatalogueResponderBinding TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="GetProductCatalogue TestCase" searchProperties="true"><con:settings/><con:testStep type="request" name="GetProductCatalogue"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetProductCatalogueResponderBinding</con:interface><con:operation>GetProductCatalogue</con:operation><con:request name="GetProductCatalogue"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/aggregated-1.0-SNAPSHOT/GetProductCatalogue</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:service:catalogue:GetProductCatalogueResponder:1">
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://tempuri.org</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:service:catalogue:GetProductsResponder:2:GetProducts" name="GetProducts" bindingOperationName="GetProducts" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://tempuri.org</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:service:catalogue:GetProductsResponder:2" xmlns:urn2="urn:riv:service:catalogue:2">
    <soapenv:Header>
       <urn:LogicalAddress>?</urn:LogicalAddress>
    </soapenv:Header>
    <soapenv:Body>
-      <urn1:GetProductCatalogue>
+      <urn1:GetProducts>
+         <!--Zero or more repetitions:-->
+         <urn1:codeSystem>
+            <urn2:code>?</urn2:code>
+            <urn2:codeSystem>?</urn2:codeSystem>
+            <!--Optional:-->
+            <urn2:codeSystemName>?</urn2:codeSystemName>
+            <!--Optional:-->
+            <urn2:codeSystemVersion>?</urn2:codeSystemVersion>
+            <!--Optional:-->
+            <urn2:displayName>?</urn2:displayName>
+            <!--Optional:-->
+            <urn2:originalText>?</urn2:originalText>
+            <!--You may enter ANY elements at this point-->
+         </urn1:codeSystem>
+         <!--Zero or more repetitions:-->
+         <urn1:sourceSystemHSAId>
+            <urn2:root>?</urn2:root>
+            <urn2:extension>?</urn2:extension>
+            <!--You may enter ANY elements at this point-->
+         </urn1:sourceSystemHSAId>
          <!--You may enter ANY elements at this point-->
-      </urn1:GetProductCatalogue>
+      </urn1:GetProducts>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:wsaConfig action="urn:riv:service:catalogue:GetProductCatalogueResponder:1:GetProductCatalogue"/></con:request></con:config></con:testStep><con:properties/><con:reportParameters/></con:testCase><con:properties/><con:reportParameters/></con:testSuite><con:properties/><con:wssContainer/><con:databaseConnectionContainer/></con:soapui-project>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:service:catalogue:GetProductsResponder:2:GetProducts"/></con:call></con:operation></con:interface><con:testSuite name="GetProductsResponderBinding TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Get all products for county" searchProperties="true" id="505de53e-b387-4ab0-92b5-af53ad91d1a7"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def dataFile = new File(utils.projectPath + "/data.xml")
+def source = new XmlDataReader(context, dataFile)
+
+source.load("Get all products for county")</script></con:config></con:testStep><con:testStep type="request" name="GetProducts"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetProductsResponderBinding</con:interface><con:operation>GetProducts</con:operation><con:request name="GetProducts"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:service:catalogue:GetProductsResponder:2" xmlns:urn2="urn:riv:service:catalogue:2">
+   <soapenv:Header>
+      <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn1:GetProducts>
+         <urn1:codeSystem>
+            <urn2:code>${county}</urn2:code>
+            <urn2:codeSystem>?</urn2:codeSystem>
+         </urn1:codeSystem>
+      </urn1:GetProducts>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="Response SLA Assertion" name="Response SLA"><con:configuration><SLA>10000</SLA></con:configuration></con:assertion><con:assertion type="Schema Compliance" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:service:catalogue:GetProductsResponder:2:GetProducts" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Get all products for sourceSystemHSAId" searchProperties="true" id="d92fac4f-02a7-4e35-8a50-bbad143ae07f"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def dataFile = new File(utils.projectPath + "/data.xml")
+def source = new XmlDataReader(context, dataFile)
+
+source.load("Get all products for sourceSystemHSAId")</script></con:config></con:testStep><con:testStep type="request" name="GetProducts"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetProductsResponderBinding</con:interface><con:operation>GetProducts</con:operation><con:request name="GetProducts"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:service:catalogue:GetProductsResponder:2" xmlns:urn2="urn:riv:service:catalogue:2">
+   <soapenv:Header>
+      <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn1:GetProducts>
+         <urn1:sourceSystemHSAId>
+            <urn2:root>?</urn2:root>
+            <urn2:extension>${sourceSystemHSAId}</urn2:extension>
+         </urn1:sourceSystemHSAId>
+      </urn1:GetProducts>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:assertion type="Response SLA Assertion" name="Response SLA"><con:configuration><SLA>10000</SLA></con:configuration></con:assertion><con:assertion type="Schema Compliance" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:service:catalogue:GetProductsResponder:2:GetProducts" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Get all products" searchProperties="true" id="fd9a7b24-4d16-4435-90da-70ccdf7b7567"><con:settings/><con:testStep type="groovy" name="Read data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def dataFile = new File(utils.projectPath + "/data.xml")
+def source = new XmlDataReader(context, dataFile)
+
+source.load("Get all products")</script></con:config></con:testStep><con:testStep type="request" name="GetProducts"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetProductsResponderBinding</con:interface><con:operation>GetProducts</con:operation><con:request name="GetProducts"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:service:catalogue:GetProductsResponder:2" xmlns:urn2="urn:riv:service:catalogue:2">
+   <soapenv:Header>
+      <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn1:GetProducts/>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:assertion type="Schema Compliance" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Response SLA Assertion" name="Response SLA"><con:configuration><SLA>10000</SLA></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:service:catalogue:GetProductsResponder:2:GetProducts" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/></con:soapui-project>
