@@ -20,8 +20,8 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:tns="urn:riv:service:catalogue:GetProductsResponder:2"
   xmlns:core="urn:riv:service:catalogue:2"
-  targetNamespace="urn:riv:service:catalogue:GetProductsResponder:2"
-  elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+  targetNamespace="urn:riv:service:catalogue:GetProductsResponder:2" elementFormDefault="qualified"
+  attributeFormDefault="unqualified" version="2.0">
   <xs:import schemaLocation="../../core_components/service_catalogue_2.0.xsd"
     namespace="urn:riv:service:catalogue:2"/>
 
@@ -30,18 +30,28 @@
 
   <xs:complexType name="GetProductsType">
     <xs:annotation>
-      <xs:documentation>Get all products or for specific codeSystem(s) if specified.
-      For example fetch only SLL products by setting codeSystem to "...."</xs:documentation>
+      <xs:documentation>Get all products or for specific county/counties or sourceSystemHSAId or all products if no county or sourceSystemHSAId is specified.
+
+Example
+county.codeSystem = 1.2.752.129.2.2.1.18
+county.code = 01
+
+sourceSystemHSAId.extension = 1.2.752.129.2.1.4.1
+sourceSystemHSAId.root = SE-1234
+
+</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="codeSystem" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="codeSystem" type="core:CVType"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="sourceSystemHSAId" type="core:IIType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="GetProductsResponseType">
     <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="productCatalogue" type="core:CSType"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="productCatalogue"
+        type="core:CountyCatalogueType"/>
       <xs:element name="result" type="core:ResultType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>

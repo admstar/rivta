@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project activeEnvironment="Default" name="UpdateProducts 1.0" resourceRoot="" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="UpdateProductsResponderBinding" type="wsdl" bindingName="{urn:riv:service:catalogue:UpdateProducts:1:rivtabp21}UpdateProductsResponderBinding" soapVersion="1_1" anonymous="optional" definition="/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/interactions/UpdateProducts/UpdateProductsInteraction_1.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/interactions/UpdateProducts/UpdateProductsInteraction_1.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/interactions/UpdateProducts/UpdateProductsInteraction_1.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+<con:soapui-project activeEnvironment="Default" name="UpdateProducts 1.0" resourceRoot="" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="UpdateProductsResponderBinding" type="wsdl" bindingName="{urn:riv:service:catalogue:UpdateProducts:1:rivtabp21}UpdateProductsResponderBinding" soapVersion="1_1" anonymous="optional" definition="file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/interactions/UpdateProductsInteraction/UpdateProductsInteraction_1.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/interactions/UpdateProductsInteraction/UpdateProductsInteraction_1.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/interactions/UpdateProductsInteraction/UpdateProductsInteraction_1.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
@@ -65,7 +65,7 @@
       <soap:address location="http://tempuri.org"/>
     </wsdl:port>
   </wsdl:service>
-</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/interactions/UpdateProducts/UpdateProductsResponder_1.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/local/service/catalogue/aggregated/trunk/schemas/interactions/UpdateProductsInteraction/UpdateProductsResponder_1.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
@@ -87,10 +87,10 @@
   <xs:element name="UpdateProductsResponse" type="tns:UpdateProductsResponseType"/>
   <xs:complexType name="UpdateProductsType">
     <xs:annotation>
-      <xs:documentation>Update or create one or more products.</xs:documentation>
+      <xs:documentation>Update or create one or more catalogues</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="catalogue" type="core:UpdateProductsType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="catalogue" type="core:UpdateProductsType" minOccurs="1" maxOccurs="unbounded"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -118,7 +118,6 @@
  under the License.-->
 <xs:schema targetNamespace="urn:riv:service:catalogue:2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:service:catalogue:2" xmlns:codes="urn:riv:service:catalogue:aggregated:enums:2">
   <xs:import namespace="urn:riv:service:catalogue:aggregated:enums:2" schemaLocation="service_catalogue_aggregated_enum_2.0.xsd"/>
-  <!---->
   <!---->
   <xs:complexType name="OfferType">
     <xs:sequence>
@@ -248,7 +247,8 @@
     </xs:annotation>
     <xs:sequence>
       <xs:element name="name" type="xs:string"/>
-      <xs:element name="productId" type="tns:IIType"/>
+      <xs:element name="productId" type="tns:UUIDType"/>
+      <xs:element name="parentProductId" type="tns:UUIDType" minOccurs="0"/>
       <xs:element name="description" type="xs:string" minOccurs="0"/>
       <xs:element minOccurs="0" name="requestRequirement" type="xs:string"/>
       <xs:element minOccurs="0" name="requestComment" type="xs:string"/>
@@ -260,11 +260,13 @@
   </xs:complexType>
   <xs:complexType name="ProductType">
     <xs:annotation>
-      <xs:documentation>Product information</xs:documentation>
+      <xs:documentation>Vårdutbud i form av produkter som definieras av fasta egenskaper samt i form av kod/kodverk.</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="productCode" type="xs:string"/>
-      <xs:element name="productDescription" type="xs:string" minOccurs="0"/>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="productId" type="xs:string"/>
+      <xs:element name="sourceSystemHSAId" type="tns:IIType"/>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
       <xs:element minOccurs="0" name="requestComment" type="xs:string"/>
       <xs:element name="property" type="tns:CVType" maxOccurs="unbounded" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
@@ -286,12 +288,12 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="CSType">
+  <xs:complexType name="CountyCatalogueType">
     <xs:annotation>
       <xs:documentation>Product information</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="codeSystem" type="xs:string"/>
+      <xs:element name="county" type="tns:CVType"/>
       <xs:element name="product" type="tns:ProductType" maxOccurs="unbounded" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
@@ -601,50 +603,34 @@ source.load("Update products")</script></con:config></con:testStep><con:testStep
             <urn2:sourceSystemHSAId>
                <urn2:root>?</urn2:root>
                <urn2:extension>?</urn2:extension>
-               <!--You may enter ANY elements at this point-->
             </urn2:sourceSystemHSAId>
             <urn2:county>
                <urn2:root>?</urn2:root>
                <urn2:extension>?</urn2:extension>
-               <!--You may enter ANY elements at this point-->
             </urn2:county>
-            <!--Zero or more repetitions:-->
+            <!-- 1st level product -->
             <urn2:product>
-               <urn2:name>?</urn2:name>
-               <urn2:productId>
-                  <urn2:root>?</urn2:root>
-                  <urn2:extension>?</urn2:extension>
-                  <!--You may enter ANY elements at this point-->
-               </urn2:productId>
-               <!--Optional:-->
-               <urn2:description>?</urn2:description>
-               <!--Optional:-->
-               <urn2:requestRequirement>?</urn2:requestRequirement>
-               <!--Optional:-->
-               <urn2:requestComment>?</urn2:requestComment>
-               <!--Optional:-->
-               <urn2:bookable>true</urn2:bookable>
-               <!--Optional:-->
-               <urn2:bookableFor>?</urn2:bookableFor>
-               <!--1 or more repetitions:-->
+               <urn2:name>Product One</urn2:name>
+               <urn2:productId>de305d54-75b4-431b-adb2-eb6b9e546013</urn2:productId>
+               <urn2:description>Description..</urn2:description>
                <urn2:property>
-                  <urn2:code>?</urn2:code>
-                  <urn2:codeSystem>?</urn2:codeSystem>
-                  <!--Optional:-->
-                  <urn2:codeSystemName>?</urn2:codeSystemName>
-                  <!--Optional:-->
-                  <urn2:codeSystemVersion>?</urn2:codeSystemVersion>
-                  <!--Optional:-->
-                  <urn2:displayName>?</urn2:displayName>
-                  <!--Optional:-->
-                  <urn2:originalText>?</urn2:originalText>
-                  <!--You may enter ANY elements at this point-->
+                  <urn2:code>1812</urn2:code>
+                  <urn2:codeSystem>oid HSA, FIXA</urn2:codeSystem>
                </urn2:property>
-               <!--You may enter ANY elements at this point-->
             </urn2:product>
-            <!--You may enter ANY elements at this point-->
+            <!-- 2nd level product -->
+            <urn2:product>
+               <urn2:name>Product Two</urn2:name>
+               <urn2:productId>067e6162-3b6f-4ae2-a171-2470b63dff00</urn2:productId>
+               <urn2:parentProductId>de305d54-75b4-431b-adb2-eb6b9e546013</urn2:parentProductId>
+               <urn2:description>Description..</urn2:description>
+               <urn2:property>
+                  <urn2:code>1</urn2:code>
+                  <urn2:codeSystem>oid uppdragstyp, FIXA</urn2:codeSystem>
+               </urn2:property>
+            </urn2:product>
+
          </urn1:catalogue>
-         <!--You may enter ANY elements at this point-->
       </urn1:UpdateProducts>
    </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:assertion type="Response SLA Assertion" name="Response SLA"><con:configuration><SLA>2000</SLA></con:configuration></con:assertion><con:assertion type="Schema Compliance" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:service:catalogue:UpdateProductsResponder:1:UpdateProducts" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
