@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Logica licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->
+<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' 
+    xmlns:tns='urn:com:logica:se:healthcare:efrikort:administration:RegisterCardResponder:1'                
+    xmlns:efrikort='urn:com:logica:se:healthcare:efrikort:1'
+    targetNamespace='urn:com:logica:se:healthcare:efrikort:administration:RegisterCardResponder:1'
+    elementFormDefault='qualified'
+    attributeFormDefault='unqualified'
+    version='1.0'>
+
+    <xs:import schemaLocation='../../../core_components/ehr_efrikort_1.0.xsd' namespace='urn:com:logica:se:healthcare:efrikort:1' />
+
+
+    <xs:element name='RegisterCardRequest' type='tns:RegisterCardRequestType'/>
+
+    <xs:complexType name='RegisterCardRequestType'>
+        <xs:annotation>
+            <xs:documentation xml:lang='sv'>
+                Denna tjänst används för att registrera ett frikort utan transaktioner. Tjänsten används för både myndiga och omyndiga personer. I de fall en omyndig person anges måste även målsman anges.
+                Kortet kommer per automatik få utfärdad frikortsstatus.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="PersonId" type="efrikort:PersonIdValue"/>
+            <xs:element name="CardNature" type="efrikort:CardNatureType"/>
+            <xs:element name="LimitReachedDate" type="xs:dateTime"/>
+            <xs:element name="EndDate" type="xs:dateTime"/>
+            <xs:element name="CardId" type="efrikort:CardId" minOccurs="0"/>
+            <xs:element name="GuardianId" type="efrikort:PersonIdValue" minOccurs="0"/>
+            <xs:element name="ExtendExisting" type="xs:boolean"/>
+            <xs:element name="Actor" type="efrikort:ActorType"/>
+            <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name='RegisterCardResponse' type='tns:RegisterCardResponseType'/>
+
+    <xs:complexType name='RegisterCardResponseType'>
+        <xs:annotation>
+            <xs:documentation xml:lang='sv'>
+                Denna tjänst används för att registrera ett frikort utan transaktioner. Tjänsten används för både myndiga och omyndiga personer. I de fall en omyndig person anges måste även målsman anges.
+                Kortet kommer per automatik få utfärdad frikortsstatus.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="RegisterCardResultType" type="efrikort:RegisterCardResultType"/>
+            <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
