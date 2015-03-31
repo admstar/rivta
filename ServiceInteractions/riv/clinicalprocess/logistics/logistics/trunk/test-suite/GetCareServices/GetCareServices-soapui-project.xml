@@ -139,7 +139,6 @@
     <xs:sequence>
       <xs:element name="carePlanHeader" type="tns:PatientSummaryHeaderType"/>
       <xs:element name="carePlanBody" type="tns:CarePlanBodyType"/>
-      <xs:element name="relation" type="tns:RelationType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -167,26 +166,12 @@
       <xs:element name="careContactTimePeriod" type="tns:TimePeriodType" minOccurs="0"/>
       <xs:element name="careContactStatus" type="tns:CVType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="additionalPatientInformation" type="tns:AdditionalPatientInformationType" minOccurs="0"/>
-      <xs:element name="relation" type="tns:RelationType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="CareServiceBodyType">
     <xs:annotation>
-      <xs:documentation>careContactCode:
-                Typ av vård- och omsorgsdokumentation. Nullvärde tillåtetet.
-                careContactReason:
-                Text som beskriver orsaken till vård- och omsorgskontakt som 
-                vård- och omsorgstagaren själv eller dess företrädare anger.
-                careContactOrgUnit:
-                Den enhet som kontakt utfördes vid
-                careContactTimePeriod:
-                För besök sätts sluttidpunken till samma tid som anges som starttidpunkt.
-                För planerade kontakter sätts ingen sluttidpunkt.
-                Pågående vårdtillfälle ska anges på samma sätt som en planerad vårdkontakt, 
-                dvs med angivet startdatum, men utan slutdatum.				
-                careContactStatus:
-                Status på vårdkontakten enligt kodverk ur NPÖ RIV-spec 2.2.</xs:documentation>
+      <xs:documentation></xs:documentation>
     </xs:annotation>
     <xs:sequence>
       <xs:element name="performerHealthCareUnit" type="tns:IIType" minOccurs="1"/>
@@ -196,7 +181,6 @@
       <xs:element name="input" type="xs:string" minOccurs="1" maxOccurs="1"/>
       <xs:element name="scope" type="xs:string" minOccurs="1"/>
       <xs:element minOccurs="0" name="housing" type="xs:string"/>
-      <xs:element name="relation" type="tns:RelationType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -207,6 +191,7 @@
     <xs:sequence>
       <xs:element name="content" type="tns:MultimediaType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="participatingCareUnitHSAId" type="tns:IIType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element minOccurs="0" name="typeOfCarePlanEnum" type="codes:TypeOfCarePlanEnum"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -414,8 +399,7 @@
       <xs:documentation/>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="code" type="tns:CVType" minOccurs="0"/>
-      <xs:element name="referredInformation" type="tns:ReferredInformationType" minOccurs="0"/>
+      <xs:element name="NIType" type="tns:IIType" minOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -526,55 +510,28 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="MediaTypeEnum">
-    <xs:union memberTypes="tns:ApplicationMediaEnum tns:AudioMediaTypeEnum tns:ImageMediaTypeEnum tns:ModelMediaTypeEnum tns:MultipartMediaTypeEnum tns:TextMediaTypeEnum tns:VideoMediaTypeEnum"/>
-  </xs:simpleType>
-  <xs:simpleType name="ImageMediaTypeEnum">
     <xs:restriction base="xs:string">
+      <xs:enumeration value="application/dicom"/>
+      <xs:enumeration value="application/msword"/>
+      <xs:enumeration value="application/pdf"/>
+      <xs:enumeration value="audio/basic"/>
+      <xs:enumeration value="audio/k32adpcm"/>
+      <xs:enumeration value="audio/mpeg"/>
       <xs:enumeration value="image/g3fax"/>
       <xs:enumeration value="image/gif"/>
       <xs:enumeration value="image/jpeg"/>
       <xs:enumeration value="image/png"/>
       <xs:enumeration value="image/tiff"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="MultipartMediaTypeEnum">
-    <xs:restriction base="xs:string">
+      <xs:enumeration value="model/vrml"/>
       <xs:enumeration value="multipart/x-hl7-cda-level1"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="VideoMediaTypeEnum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="video/mpeg"/>
-      <xs:enumeration value="video/x-avi"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="TextMediaTypeEnum">
-    <xs:restriction base="xs:string">
       <xs:enumeration value="text/html"/>
       <xs:enumeration value="text/plain"/>
       <xs:enumeration value="text/rtf"/>
       <xs:enumeration value="text/sgml"/>
       <xs:enumeration value="text/x-hl7-ft"/>
       <xs:enumeration value="text/xml"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="ModelMediaTypeEnum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="model/vrml"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="ApplicationMediaEnum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="application/dicom"/>
-      <xs:enumeration value="application/msword"/>
-      <xs:enumeration value="application/pdf"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="AudioMediaTypeEnum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="audio/basic"/>
-      <xs:enumeration value="audio/k32adpcm"/>
-      <xs:enumeration value="audio/mpeg"/>
+      <xs:enumeration value="video/mpeg"/>
+      <xs:enumeration value="video/x-avi"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="DateTypeFormatEnum">
@@ -594,9 +551,6 @@
   <xs:simpleType name="ErrorCodeEnum">
     <xs:restriction base="xs:string">
       <xs:enumeration value="INVALID_REQUEST"/>
-      <xs:enumeration value="TRANSFORMATION_ERROR"/>
-      <xs:enumeration value="APPLICATION_ERROR"/>
-      <xs:enumeration value="TECHNICAL_ERROR"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="TypeOfCareServiceEnum">
@@ -604,9 +558,52 @@
       <xs:enumeration value="HSJV"/>
       <xs:enumeration value="HTJ"/>
       <xs:enumeration value="LSS"/>
-      <xs:enumeration value="PVTJ"/>
       <xs:enumeration value="SVTJ"/>
       <xs:enumeration value="SÄBO"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TypeOfCarePlanEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SIP">
+        <xs:annotation>
+          <xs:documentation>Samordnad individuell plan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SPLPTLRV">
+        <xs:annotation>
+          <xs:documentation>Samordnad plan enligt LPT och LRV</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SPU">
+        <xs:annotation>
+          <xs:documentation>Samordnad plan vid utskrivning</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="VP">
+        <xs:annotation>
+          <xs:documentation>Vårdplan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="HP">
+        <xs:annotation>
+          <xs:documentation>Habiliteringsplan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="RP">
+        <xs:annotation>
+          <xs:documentation>Rehabiliteringsplan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="GP">
+        <xs:annotation>
+          <xs:documentation>Genomförande plan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SVP">
+        <xs:annotation>
+          <xs:documentation>Standardiserad vårdplan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/logistics/logistics/trunk/schemas/core_components/itintegration_registry_1.0.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="urn:riv:itintegration:registry:1" elementFormDefault="qualified" version="1.0" xmlns="urn:riv:itintegration:registry:1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
@@ -1219,10 +1216,7 @@ def utils = new GroovyUtils(context)
 def dataFile = new File(utils.projectPath + "/data.xml")
 def source = new XmlDataReader(context, dataFile)
 
-source.load("SourceSystemHSAId and CareContactId")</script></con:config></con:testStep><con:testStep type="request" name="WHEN calling GetServices"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetCareServicesResponderBinding</con:interface><con:operation>GetCareServices</con:operation><con:request name="WHEN calling GetServices"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
-  &lt;con:entry key="x-mock-response" value="OnlyPatientIdResponse"/>
-  &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
-&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:GetCareServicesResponder:2" xmlns:urn2="urn:riv:clinicalprocess:logistics:logistics:3">
+source.load("SourceSystemHSAId and CareContactId")</script></con:config></con:testStep><con:testStep type="request" name="WHEN calling GetServices"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetCareServicesResponderBinding</con:interface><con:operation>GetCareServices</con:operation><con:request name="WHEN calling GetServices"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="x-mock-response" value="ERROR" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:GetCareServicesResponder:2" xmlns:urn2="urn:riv:clinicalprocess:logistics:logistics:3">
    <soapenv:Header>
       <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
    </soapenv:Header>
@@ -1237,62 +1231,20 @@ source.load("SourceSystemHSAId and CareContactId")</script></con:config></con:te
          <urn1:careContactId>${careContactId}</urn1:careContactId>
       </urn1:GetCareServices>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:assertion type="Response SLA Assertion" name="Response SLA"><con:configuration><SLA>12000</SLA></con:configuration></con:assertion><con:assertion type="Schema Compliance" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="THEN ensure all schematron rules passes"><con:configuration><scriptText>import se.skl.rivta.testsupport.soapui.validation.SchematronValidator
-import se.skl.rivta.testsupport.soapui.ContextHelper
-import com.eviware.soapui.support.GroovyUtils
-
-def utils = new GroovyUtils(context)
-def contextHelper = new ContextHelper(context)
-def validator = new SchematronValidator()
-
-def constraintsPath = messageExchange.modelItem.testStep.testCase.testSuite.project.getPropertyValue( "constraintsPath" )
-
-def failures = validator.validateMessage(messageExchange.response.responseContent,
-    new File(utils.projectPath + File.separator + "constraints.xml"))
-
-failures.each { failure ->
-    log.error ("Failure $failure.text")
-}
-
-assert (failures.isEmpty())</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="AND ensure patientId's are valid"><con:configuration><scriptText>import com.eviware.soapui.support.XmlHolder
-import se.skl.rivta.testsupport.soapui.ContextHelper
-
-def contextHelper = new ContextHelper(context)
-
-def holder = new XmlHolder( messageExchange.response.responseContent )
-holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
-// Fetch properties from TestSuite Custom properties
-holder.namespaces['urn'] = context.expand('${#Project#urn}')
-holder.namespaces['urn1'] = context.expand('${#Project#urn1}')
-
-def records = holder.getDomNodes(context.expand('${#Project#headerNode}'))
-assert records.length > 0 :"Response contains no records."
-
-// Compare patientId and patientIdType in the response to what we have in data.xml for this test case.
-records.each {c ->
-    def recordHolder = new XmlHolder( c )
-    holder.namespaces.each {key, value -> recordHolder.namespaces[key] = value}
-    def documentId = recordHolder.getNodeValue('//urn1:documentId')
-    def patientId = recordHolder.getNodeValue('//urn1:patientId/urn1:id')
-    def patientIdType = recordHolder.getNodeValue('//urn1:patientId/urn1:type')
-    assert (patientId != context.patientId || patientIdType != context.patientIdType) != true : "Response contains a record with other PatientId. PatientId: ${patientId}, Type: ${patientIdType} DocumentId: ${documentId}"
-}</scriptText></con:configuration></con:assertion><con:assertion type="XPath Match" name="AND ensure a result.logId exists"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:assertion type="Response SLA Assertion" name="Response SLA"><con:configuration><SLA>12000</SLA></con:configuration></con:assertion><con:assertion type="Schema Compliance" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" name="AND ensure resultCode equals ERROR"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
 declare namespace urn='${#Project#urn}';
 declare namespace urn1='${#Project#urn1}';
-//urn:GetCareServicesResponse[1]/urn:result[1]/urn1:logId[matches(., '.*')]</path><content>*</content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="AND ensure result.resultCode equals OK"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
+//urn:GetCareServicesResponse[1]/urn:result[1]/urn1:resultCode/text()</path><content>ERROR</content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>true</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="AND ensure errorCode equals INVALID_REQUEST"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
 declare namespace urn='${#Project#urn}';
 declare namespace urn1='${#Project#urn1}';
-//urn:GetCareServicesResponse[1]/urn:result[1]/urn1:resultCode/text()</path><content>OK</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:clinicalprocess:logistics:GetCareServicesResponder:2:GetCareServices" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Verify SourceSystemHSAId and LogicalAddress" searchProperties="true" id="cf168da5-d860-4fff-99da-8f8c60359692"><con:settings/><con:testStep type="groovy" name="GIVEN SourceSystemHSAId and LogicalAddress data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+//urn:GetCareServicesResponse[1]/urn:result[1]/urn1:errorCode/text()</path><content>INVALID_REQUEST</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:clinicalprocess:logistics:GetCareServicesResponder:2:GetCareServices" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Verify SourceSystemHSAId and LogicalAddress" searchProperties="true" id="cf168da5-d860-4fff-99da-8f8c60359692"><con:settings/><con:testStep type="groovy" name="GIVEN SourceSystemHSAId and LogicalAddress data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
 import com.eviware.soapui.support.GroovyUtils
 
 def utils = new GroovyUtils(context)
 def dataFile = new File(utils.projectPath + "/data.xml")
 def source = new XmlDataReader(context, dataFile)
 
-source.load("SourceSystemHSAId and LogicalAddress")</script></con:config></con:testStep><con:testStep type="request" name="WHEN calling GetServices"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetCareServicesResponderBinding</con:interface><con:operation>GetCareServices</con:operation><con:request name="WHEN calling GetServices"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
-  &lt;con:entry key="x-mock-response" value="OnlyPatientIdResponse"/>
-  &lt;con:entry key="x-rivta-original-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
-&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:GetCareServicesResponder:2" xmlns:urn2="urn:riv:clinicalprocess:logistics:logistics:3">
+source.load("SourceSystemHSAId and LogicalAddress")</script></con:config></con:testStep><con:testStep type="request" name="WHEN calling GetServices"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetCareServicesResponderBinding</con:interface><con:operation>GetCareServices</con:operation><con:request name="WHEN calling GetServices"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;entry key="x-mock-response" value="ERROR" xmlns="http://eviware.com/soapui/config"/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:clinicalprocess:logistics:logistics:GetCareServicesResponder:2" xmlns:urn2="urn:riv:clinicalprocess:logistics:logistics:3">
    <soapenv:Header>
       <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
    </soapenv:Header>
@@ -1306,49 +1258,10 @@ source.load("SourceSystemHSAId and LogicalAddress")</script></con:config></con:t
          <urn1:sourceSystemHSAId>${sourceSystemHSAId}</urn1:sourceSystemHSAId>
       </urn1:GetCareServices>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:assertion type="Response SLA Assertion" name="Response SLA"><con:configuration><SLA>12000</SLA></con:configuration></con:assertion><con:assertion type="Schema Compliance" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="THEN ensure all schematron rules passes"><con:configuration><scriptText>import se.skl.rivta.testsupport.soapui.validation.SchematronValidator
-import se.skl.rivta.testsupport.soapui.ContextHelper
-import com.eviware.soapui.support.GroovyUtils
-
-def utils = new GroovyUtils(context)
-def contextHelper = new ContextHelper(context)
-def validator = new SchematronValidator()
-
-def constraintsPath = messageExchange.modelItem.testStep.testCase.testSuite.project.getPropertyValue( "constraintsPath" )
-
-def failures = validator.validateMessage(messageExchange.response.responseContent,
-    new File(utils.projectPath + File.separator + "constraints.xml"))
-
-failures.each { failure ->
-    log.error ("Failure $failure.text")
-}
-
-assert (failures.isEmpty())</scriptText></con:configuration></con:assertion><con:assertion type="GroovyScriptAssertion" name="AND ensure patientId's are valid"><con:configuration><scriptText>import com.eviware.soapui.support.XmlHolder
-import se.skl.rivta.testsupport.soapui.ContextHelper
-
-def contextHelper = new ContextHelper(context)
-
-def holder = new XmlHolder( messageExchange.response.responseContent )
-holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
-// Fetch properties from TestSuite Custom properties
-holder.namespaces['urn'] = context.expand('${#Project#urn}')
-holder.namespaces['urn1'] = context.expand('${#Project#urn1}')
-
-def records = holder.getDomNodes(context.expand('${#Project#headerNode}'))
-assert records.length > 0 :"Response contains no records."
-
-// Compare patientId and patientIdType in the response to what we have in data.xml for this test case.
-records.each {c ->
-    def recordHolder = new XmlHolder( c )
-    holder.namespaces.each {key, value -> recordHolder.namespaces[key] = value}
-    def documentId = recordHolder.getNodeValue('//urn1:documentId')
-    def patientId = recordHolder.getNodeValue('//urn1:patientId/urn1:id')
-    def patientIdType = recordHolder.getNodeValue('//urn1:patientId/urn1:type')
-    assert (patientId != context.patientId || patientIdType != context.patientIdType) != true : "Response contains a record with other PatientId. PatientId: ${patientId}, Type: ${patientIdType} DocumentId: ${documentId}"
-}</scriptText></con:configuration></con:assertion><con:assertion type="XPath Match" name="AND ensure a result.logId exists"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:assertion type="Response SLA Assertion" name="Response SLA"><con:configuration><SLA>12000</SLA></con:configuration></con:assertion><con:assertion type="Schema Compliance" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" name="AND ensure resultCode equals ERROR"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
 declare namespace urn='${#Project#urn}';
 declare namespace urn1='${#Project#urn1}';
-//urn:GetCareServicesResponse[1]/urn:result[1]/urn1:logId[matches(., '.*')]</path><content>*</content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="AND ensure result.resultCode equals OK"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
+//urn:GetCareServicesResponse[1]/urn:result[1]/urn1:resultCode/text()</path><content>ERROR</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" name="AND ensure errorCode equals INVALID_REQUEST"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
 declare namespace urn='${#Project#urn}';
 declare namespace urn1='${#Project#urn1}';
-//urn:GetCareServicesResponse[1]/urn:result[1]/urn1:resultCode/text()</path><content>OK</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:clinicalprocess:logistics:GetCareServicesResponder:2:GetCareServices" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>urn</con:name><con:value>urn:riv:clinicalprocess:logistics:logistics:GetCareServicesResponder:2</con:value></con:property><con:property><con:name>urn1</con:name><con:value>urn:riv:clinicalprocess:logistics:logistics:3</con:value></con:property><con:property><con:name>headerNode</con:name><con:value>/soapenv:Envelope/soapenv:Body/urn:GetCareServicesResponse/urn:careService/urn1:careServiceHeader</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>
+//urn:GetCareServicesResponse[1]/urn:result[1]/urn1:errorCode/text()</path><content>INVALID_REQUEST</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="urn:riv:clinicalprocess:logistics:GetCareServicesResponder:2:GetCareServices" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>urn</con:name><con:value>urn:riv:clinicalprocess:logistics:logistics:GetCareServicesResponder:2</con:value></con:property><con:property><con:name>urn1</con:name><con:value>urn:riv:clinicalprocess:logistics:logistics:3</con:value></con:property><con:property><con:name>headerNode</con:name><con:value>/soapenv:Envelope/soapenv:Body/urn:GetCareServicesResponse/urn:careService/urn1:careServiceHeader</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>

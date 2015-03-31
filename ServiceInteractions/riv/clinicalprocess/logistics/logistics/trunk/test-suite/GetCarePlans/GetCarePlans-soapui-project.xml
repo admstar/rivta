@@ -139,7 +139,6 @@
     <xs:sequence>
       <xs:element name="carePlanHeader" type="tns:PatientSummaryHeaderType"/>
       <xs:element name="carePlanBody" type="tns:CarePlanBodyType"/>
-      <xs:element name="relation" type="tns:RelationType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -167,7 +166,6 @@
       <xs:element name="careContactTimePeriod" type="tns:TimePeriodType" minOccurs="0"/>
       <xs:element name="careContactStatus" type="tns:CVType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="additionalPatientInformation" type="tns:AdditionalPatientInformationType" minOccurs="0"/>
-      <xs:element name="relation" type="tns:RelationType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -183,7 +181,6 @@
       <xs:element name="input" type="xs:string" minOccurs="1" maxOccurs="1"/>
       <xs:element name="scope" type="xs:string" minOccurs="1"/>
       <xs:element minOccurs="0" name="housing" type="xs:string"/>
-      <xs:element name="relation" type="tns:RelationType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -402,8 +399,7 @@
       <xs:documentation/>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="code" type="tns:CVType" minOccurs="1"/>
-      <xs:element name="referredInformation" type="tns:ReferredInformationType" minOccurs="1" maxOccurs="unbounded"/>
+      <xs:element name="NIType" type="tns:IIType" minOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -514,55 +510,28 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="MediaTypeEnum">
-    <xs:union memberTypes="tns:ApplicationMediaEnum tns:AudioMediaTypeEnum tns:ImageMediaTypeEnum tns:ModelMediaTypeEnum tns:MultipartMediaTypeEnum tns:TextMediaTypeEnum tns:VideoMediaTypeEnum"/>
-  </xs:simpleType>
-  <xs:simpleType name="ImageMediaTypeEnum">
     <xs:restriction base="xs:string">
+      <xs:enumeration value="application/dicom"/>
+      <xs:enumeration value="application/msword"/>
+      <xs:enumeration value="application/pdf"/>
+      <xs:enumeration value="audio/basic"/>
+      <xs:enumeration value="audio/k32adpcm"/>
+      <xs:enumeration value="audio/mpeg"/>
       <xs:enumeration value="image/g3fax"/>
       <xs:enumeration value="image/gif"/>
       <xs:enumeration value="image/jpeg"/>
       <xs:enumeration value="image/png"/>
       <xs:enumeration value="image/tiff"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="MultipartMediaTypeEnum">
-    <xs:restriction base="xs:string">
+      <xs:enumeration value="model/vrml"/>
       <xs:enumeration value="multipart/x-hl7-cda-level1"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="VideoMediaTypeEnum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="video/mpeg"/>
-      <xs:enumeration value="video/x-avi"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="TextMediaTypeEnum">
-    <xs:restriction base="xs:string">
       <xs:enumeration value="text/html"/>
       <xs:enumeration value="text/plain"/>
       <xs:enumeration value="text/rtf"/>
       <xs:enumeration value="text/sgml"/>
       <xs:enumeration value="text/x-hl7-ft"/>
       <xs:enumeration value="text/xml"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="ModelMediaTypeEnum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="model/vrml"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="ApplicationMediaEnum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="application/dicom"/>
-      <xs:enumeration value="application/msword"/>
-      <xs:enumeration value="application/pdf"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="AudioMediaTypeEnum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="audio/basic"/>
-      <xs:enumeration value="audio/k32adpcm"/>
-      <xs:enumeration value="audio/mpeg"/>
+      <xs:enumeration value="video/mpeg"/>
+      <xs:enumeration value="video/x-avi"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="DateTypeFormatEnum">
@@ -582,9 +551,6 @@
   <xs:simpleType name="ErrorCodeEnum">
     <xs:restriction base="xs:string">
       <xs:enumeration value="INVALID_REQUEST"/>
-      <xs:enumeration value="TRANSFORMATION_ERROR"/>
-      <xs:enumeration value="APPLICATION_ERROR"/>
-      <xs:enumeration value="TECHNICAL_ERROR"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="TypeOfCareServiceEnum">
@@ -592,21 +558,52 @@
       <xs:enumeration value="HSJV"/>
       <xs:enumeration value="HTJ"/>
       <xs:enumeration value="LSS"/>
-      <xs:enumeration value="PVTJ"/>
       <xs:enumeration value="SVTJ"/>
       <xs:enumeration value="SÄBO"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="TypeOfCarePlanEnum">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="Samordnad individuell plan"/>
-      <xs:enumeration value="Samordnad plan enligt LPT och LRV"/>
-      <xs:enumeration value="Samordnad plan vid utskrivning"/>
-      <xs:enumeration value="Vårdplan"/>
-      <xs:enumeration value="Habiliteringsplan"/>
-      <xs:enumeration value="Rehabiliteringsplan"/>
-      <xs:enumeration value="Genomförande plan"/>
-      <xs:enumeration value="Standardiserad vårdplan"/>
+      <xs:enumeration value="SIP">
+        <xs:annotation>
+          <xs:documentation>Samordnad individuell plan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SPLPTLRV">
+        <xs:annotation>
+          <xs:documentation>Samordnad plan enligt LPT och LRV</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SPU">
+        <xs:annotation>
+          <xs:documentation>Samordnad plan vid utskrivning</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="VP">
+        <xs:annotation>
+          <xs:documentation>Vårdplan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="HP">
+        <xs:annotation>
+          <xs:documentation>Habiliteringsplan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="RP">
+        <xs:annotation>
+          <xs:documentation>Rehabiliteringsplan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="GP">
+        <xs:annotation>
+          <xs:documentation>Genomförande plan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SVP">
+        <xs:annotation>
+          <xs:documentation>Standardiserad vårdplan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/logistics/logistics/trunk/schemas/core_components/itintegration_registry_1.0.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="urn:riv:itintegration:registry:1" elementFormDefault="qualified" version="1.0" xmlns="urn:riv:itintegration:registry:1" xmlns:xs="http://www.w3.org/2001/XMLSchema">

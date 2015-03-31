@@ -46,7 +46,6 @@
         <xs:sequence>
             <xs:element name="carePlanHeader" type="tns:PatientSummaryHeaderType"/>
             <xs:element name="carePlanBody" type="tns:CarePlanBodyType"/>
-            <xs:element name="relation" type="tns:RelationType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -55,7 +54,7 @@
         <xs:annotation>
             <xs:documentation>
                 careContactCode:
-                    Typ av vård- och omsorgsdokumentation. Nullvärde tillåtetet.
+                    Typ av vård- och omsorgskontakt.
                 careContactReason:
                     Text som beskriver orsaken till vård- och omsorgskontakt som 
                     vård- och omsorgstagaren själv eller dess företrädare anger.
@@ -78,7 +77,6 @@
             <xs:element name="careContactStatus" type="tns:CVType" minOccurs="0" maxOccurs="1"/>
             <xs:element name="additionalPatientInformation"
                 type="tns:AdditionalPatientInformationType" minOccurs="0"/>
-            <xs:element name="relation" type="tns:RelationType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -96,7 +94,6 @@
             <xs:element name="input" type="xs:string" minOccurs="1" maxOccurs="1"/>
             <xs:element name="scope" type="xs:string" minOccurs="1"/>
             <xs:element minOccurs="0" name="housing" type="xs:string"/>
-            <xs:element name="relation" type="tns:RelationType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -193,17 +190,17 @@
             <xs:documentation>
 				Information om en organisationsenhet
 
-				careContactOrgUnitHsaId: 
+				orgUnitHsaId: 
 					HSA-id för organisationsenhet
-				careContactOrgUnitName
+				orgUnitName
 					Namn på organisationsenhet
-				careContactOrgUnitTelecom: 
+				orgUnitTelecom: 
 					Telefon till organisationsenhet
-				careContactOrgUnitEmail: 
+				orgUnitEmail: 
 					Epost till enhet
-				careContactOrgUnitAddress: 
+				orgUnitAddress: 
 					Postadress till enhet
-				careContactOrgUnitLocation: 
+				orgUnitLocation: 
 					Text som anger namnet på plats eller ort för enhetens eller funktionens fysiska placering
 			</xs:documentation>
         </xs:annotation>
@@ -344,41 +341,6 @@
         <xs:sequence>
             <xs:element name="dateOfBirth" type="tns:PartialDateType" minOccurs="0"/>
             <xs:element name="gender" type="tns:CVType" minOccurs="0"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="RelationType">
-        <xs:annotation>
-            <xs:documentation/>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="code" type="tns:CVType" minOccurs="1"/>
-            <xs:element name="referredInformation" type="tns:ReferredInformationType" minOccurs="1"
-                maxOccurs="1"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="ReferredInformationType">
-        <xs:annotation>
-            <xs:documentation/>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="id" type="tns:IIType" minOccurs="1"/>
-            <xs:element name="time" type="tns:TimeStampType"/>
-            <xs:element name="type" type="xs:string" minOccurs="1"/>
-            <xs:element name="informationOwner" type="tns:InformationOwnerType"/>
-            <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="InformationOwnerType">
-        <xs:annotation>
-            <xs:documentation/>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="id" type="tns:IIType" minOccurs="1"/>
             <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
