@@ -23,9 +23,6 @@
 	
 	SET SCHEMADIR=..\schemas
 	
-SET W0=%SCHEMADIR%\interactions\GetMaternityMedicalHistoryInteraction\GetMaternityMedicalHistoryInteraction_3.0_RIVTABP21.wsdl
-SET X0=%SCHEMADIR%\interactions\GetMaternityMedicalHistoryInteraction\*.xsd
-
 SET W1=%SCHEMADIR%\interactions\GetReferralOutcomeInteraction\GetReferralOutcomeInteraction_3.0_RIVTABP21.wsdl
 SET X1=%SCHEMADIR%\interactions\GetReferralOutcomeInteraction\*.xsd
 
@@ -40,7 +37,7 @@ SET X4=%SCHEMADIR%\interactions\GetImagingOutcomeInteraction\*.xsd
 
 SET XCORE=%SCHEMADIR%\core_components\*.xsd
 
-SET SCHEMAS=%XCORE% %W0% %X0% %W1% %X1% %W2% %X2% %W3% %X3% %W4% %X4%
+SET SCHEMAS=%XCORE% %W1% %X1% %W2% %X2% %W3% %X3% %W4% %X4%
 
 SET OUTFILE=/out:wcf\generated-src\ClinicalprocessHealthcondActoutcomeInteractions.cs
 SET APPCONFIG=/config:wcf\generated-src\app.config
