@@ -49,11 +49,13 @@ SET X11=%SCHEMADIR%\SetMedicationListReviewNeededInteraction\*.xsd
 SET W13=%SCHEMADIR%\UpdateLFConsentInteraction\*.wsdl
 SET X13=%SCHEMADIR%\UpdateLFConsentInteraction\*.xsd
 
+SET W14=%SCHEMADIR%\PrintListOfDispensedDrugsInteraction\*.wsdl
+SET X14=%SCHEMADIR%\PrintListOfDispensedDrugsInteraction\*.xsd
 
 
 SET XCORE=%XSDDIR%\*.xsd %XSDDIR%\generated\*.xsd
 
-SET SCHEMAS=%XCORE% %W0% %X0% %W1% %X1% %W2% %X2%  %W3% %X3%  %W4% %X4%  %W5% %X5%  %W6% %X6%  %W7% %X7%  %W8% %X8%  %W9% %X9%  %W10% %X10%  %W11% %X11%  %W12% %X12%  %W13% %X13%
+SET SCHEMAS=%XCORE% %W0% %X0% %W1% %X1% %W2% %X2%  %W3% %X3%  %W4% %X4%  %W5% %X5%  %W6% %X6%  %W7% %X7%  %W8% %X8%  %W9% %X9%  %W10% %X10%  %W11% %X11%  %W12% %X12%  %W13% %X13% %W14% %X14%
 
 SET OUTFILE=/out:generated-src\nod.cs
 SET APPCONFIG=/config:generated-src\app.config
