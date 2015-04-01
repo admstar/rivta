@@ -32,12 +32,9 @@ SET X1=%SCHEMADIR%\interactions\GetDiagnosisInteraction/\*.xsd
 SET W2=%SCHEMADIR%\.\interactions\GetAlertInformationInteraction\GetAlertInformationInteraction_2.0_RIVTABP21.wsdl
 SET X2=%SCHEMADIR%\interactions\GetAlertInformationInteraction/\*.xsd
 
-SET W3=%SCHEMADIR%\.\interactions\GetFunctionalStatusInteraction\GetFunctionalStatusInteraction_2.0_RIVTABP21.wsdl
-SET X3=%SCHEMADIR%\interactions\GetFunctionalStatusInteraction/\*.xsd
-
 SET XCORE=%SCHEMADIR%\core_components\*.xsd
 
-SET SCHEMAS=%XCORE% %W0% %X0% %W1% %X1% %W2% %X2% %W3% %X3%
+SET SCHEMAS=%XCORE% %W0% %X0% %W1% %X1% %W2% %X2%
 
 SET OUTFILE=/out:wcf\generated-src\ClinicalprocessHealthcondDescription.cs
 SET APPCONFIG=/config:wcf\generated-src\app.config
