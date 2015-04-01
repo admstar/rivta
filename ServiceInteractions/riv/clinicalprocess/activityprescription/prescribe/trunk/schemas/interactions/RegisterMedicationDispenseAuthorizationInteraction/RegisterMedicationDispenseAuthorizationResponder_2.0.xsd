@@ -20,12 +20,12 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:tns="urn:riv:clinicalprocess:activityprescription:prescribe:RegisterMedicationDispenseAuthorizationResponder:2"
   xmlns:core="urn:riv:clinicalprocess:activityprescription:prescribe:2"
-  xmlns:fhir="http://hl7.org/fhir" 
-  xmlns:riv="urn:riv:datatypes:1"
+  xmlns:fhir="http://hl7.org/fhir" xmlns:riv="urn:riv:datatypes:1"
   targetNamespace="urn:riv:clinicalprocess:activityprescription:prescribe:RegisterMedicationDispenseAuthorizationResponder:2"
   elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
 
-  <xs:import schemaLocation="../../core_components/clinicalprocess_activityprescription_prescribe_2.0.xsd"
+  <xs:import
+    schemaLocation="../../core_components/clinicalprocess_activityprescription_prescribe_2.0.xsd"
     namespace="urn:riv:clinicalprocess:activityprescription:prescribe:2"/>
   <xs:import schemaLocation="../../core_components/LightFhir.xsd" namespace="http://hl7.org/fhir"/>
   <xs:import schemaLocation="../../core_components/RIVTATypes.xsd" namespace="urn:riv:datatypes:1"/>
@@ -37,8 +37,8 @@
   <xs:complexType name="RegisterMedicationDispenseAuthorizationType">
     <xs:sequence>
       <xs:element name="patientId" type="fhir:Identifier"/>
-      <xs:element name="medicationListVersion" type="fhir:Identifier"/>
-      <xs:element name="medicationPrescriptionSequenceId" type="fhir:Identifier"/>
+      <xs:element name="medicationListVersion" type="fhir:Identifier" minOccurs="0"/>
+      <xs:element name="medicationPrescriptionSequenceId" type="fhir:Identifier" minOccurs="0"/>
       <xs:element name="medicationDispenseAuthorization"
         type="core:MedicationDispensePrescription_setter"/>
       <xs:element name="isEPrescription" type="xs:boolean" minOccurs="1"/>
