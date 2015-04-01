@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project activeEnvironment="Default" name="GetFunctionalStatusMock" resourceRoot="" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetFunctionalStatusResponderBinding" type="wsdl" bindingName="{urn:riv:clinicalprocess:healthcond:description:GetFunctionalStatus:2:rivtabp21}GetFunctionalStatusResponderBinding" soapVersion="1_1" anonymous="optional" definition="../../schemas/interactions/GetFunctionalStatusInteraction/GetFunctionalStatusInteraction_2.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/description/trunk/schemas/interactions/GetFunctionalStatusInteraction/GetFunctionalStatusInteraction_2.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/description/trunk/schemas/interactions/GetFunctionalStatusInteraction/GetFunctionalStatusInteraction_2.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+<con:soapui-project activeEnvironment="Default" name="GetFunctionalStatusMock" resourceRoot="" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetFunctionalStatusResponderBinding" type="wsdl" bindingName="{urn:riv:clinicalprocess:healthcond:description:GetFunctionalStatus:2:rivtabp21}GetFunctionalStatusResponderBinding" soapVersion="1_1" anonymous="optional" definition="/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/description/trunk/schemas/interactions/GetFunctionalStatusInteraction/GetFunctionalStatusInteraction_2.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/description/trunk/schemas/interactions/GetFunctionalStatusInteraction/GetFunctionalStatusInteraction_2.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/description/trunk/schemas/interactions/GetFunctionalStatusInteraction/GetFunctionalStatusInteraction_2.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
  or more contributor license agreements. See the NOTICE file
  distributed with this work for additional information
  regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
@@ -128,29 +128,18 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="CareDocumentationBodyType">
-    <xs:annotation>
-      <xs:documentation>clinicalDocumentNote: 
-					Dokument/anteckning
-				multimediaEntry:
-					Multimedia som finns i dokumentet, motsvaras av platshållare i careDocumentNoteText</xs:documentation>
-    </xs:annotation>
     <xs:sequence>
       <xs:element name="clinicalDocumentNote" type="tns:ClinicalDocumentNoteType"/>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="FunctionalStatusAssessmentType">
     <xs:sequence>
       <xs:element name="functionalStatusAssessmentHeader" type="tns:PatientSummaryHeaderType"/>
       <xs:element name="functionalStatusAssessmentBody" type="tns:FunctionalStatusAssessmentBodyType"/>
-      <xs:element name="relation" type="tns:RelationType" maxOccurs="unbounded" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="FunctionalStatusAssessmentBodyType">
-    <xs:annotation>
-      <xs:documentation></xs:documentation>
-    </xs:annotation>
     <xs:sequence>
       <xs:element name="assessmentCategory" type="codes:AssessmentCategoryEnum"/>
       <xs:element minOccurs="0" name="comment" type="xs:string"/>
@@ -160,19 +149,13 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="RelationType">
-    <xs:annotation>
-      <xs:documentation/>
-    </xs:annotation>
     <xs:sequence>
       <xs:element name="code" type="tns:CVType" minOccurs="1"/>
-      <xs:element name="referredInformation" type="tns:ReferredInformationType" minOccurs="1" maxOccurs="unbounded"/>
+      <xs:element name="referredInformation" type="tns:ReferredInformationType" minOccurs="1" maxOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="ReferredInformationType">
-    <xs:annotation>
-      <xs:documentation/>
-    </xs:annotation>
     <xs:sequence>
       <xs:element name="id" type="tns:IIType" minOccurs="1"/>
       <xs:element name="time" type="tns:TimeStampType"/>
@@ -182,9 +165,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="InformationOwnerType">
-    <xs:annotation>
-      <xs:documentation/>
-    </xs:annotation>
     <xs:sequence>
       <xs:element name="id" type="tns:IIType" minOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
@@ -192,63 +172,16 @@
   </xs:complexType>
   <!--@TODO better names for clinicalDocumentNoteCode-->
   <xs:complexType name="ClinicalDocumentNoteType">
-    <xs:annotation>
-      <xs:documentation>
-        Dokument/anteckning
-
-                clinicalDocumentNoteCode: 
-                    Typ av vård- och omsorgsdokument. 
-                clinicalDocumentNoteTitle: 
-                    Titel på dokument
-                clinicalDocumentNoteText: 
-                    Själva dokumentet. 
-                    Formatet i textfältet ska följa HL7 CDA "Narrative Block". 
-                    Om dokumentet innehåller multimedia läggs en platshållare i texten enligt formatet
-        <renderMultiMedia referencedObject="MM1"/>
-        . 
-                    Innehåller dokumentet fler multimedia läggs ytterligare platshållare i texten, där referencesObject får namn "MM2", "MM3" osv
-      </xs:documentation>
-    </xs:annotation>
     <xs:sequence>
       <xs:element name="clinicalDocumentNoteCode" type="codes:ClinicalDocumentNoteCodeEnum" minOccurs="0" maxOccurs="1"/>
       <xs:element name="clinicalDocumentTypeCode" type="codes:ClinicalDocumentTypeCodeEnum" minOccurs="0" maxOccurs="1"/>
       <xs:element name="clinicalDocumentNoteTitle" type="xs:string" minOccurs="0"/>
       <xs:element name="clinicalDocumentNoteText" type="xs:string" maxOccurs="1" minOccurs="0"/>
       <xs:element name="multimediaEntry" type="tns:MultimediaType" minOccurs="0" maxOccurs="1"/>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="dissentingOpinion" type="tns:DissentingOpinionType"/>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="dissentintOpinion" type="tns:DissentingOpinionType"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="PatientSummaryHeaderType">
-    <xs:annotation>
-      <xs:documentation>documentId: 
-                    Vårddokumentets unika identifierare.
-                    OID kan sättas till 1.2.752.129.2.1.2.1 
-                    (Icke-nationell identifierare Org+lokalt unikt id)
-				sourceSystemHSAId: 
-	                HSAid för det system som dokumentet är skapat i
-                documentTitle: 
-                    Titel på dokumentet/anteckningen
-                documentTime: 
-                    Relevant tid, definieras för varje meddelande
-                patientId: 
-                    Patientens ID. Root sätts till typ av patientidentifierare
-                    Bland tillåtna typer för finns: 
-                    personnummer (1.2.752.129.2.1.3.1), 
-                    samordningsnummer (1.2.752.129.2.1.3.3), 
-                    reservnummer SLL (1.2.752.97.3.1.3)
-                author
-                    Information om författare till dokumentet
-                legalAuthenticator
-                    Information om vem som signerat informationen i dokumentet.
-                approvedForPatient:
-                    Anger om information får delas till patient. Värdet sätts i 
-                    sådant fall till true, i annat fall till false.
-                careContactId:
-                    Identitet för den vård- och omsorgskontakt som föranlett den 
-                    information som omfattas av dokumentet. Identiteten är unik 
-                    inom källsystemet.</xs:documentation>
-    </xs:annotation>
     <xs:sequence>
       <xs:element name="documentId" type="xs:string"/>
       <xs:element name="sourceSystemHSAId" type="tns:HSAIdType"/>
@@ -267,35 +200,6 @@
   <!--Only used here to keep backwards compatibility with GetCareDocumentation 2.0, must be removed in favour
         of PatientSummaryHeaderType above when we go for the next major version-->
   <xs:complexType name="CPatientSummaryHeaderType">
-    <xs:annotation>
-      <xs:documentation>documentId: 
-                Vårddokumentets unika identifierare.
-                OID kan sättas till 1.2.752.129.2.1.2.1 
-                (Icke-nationell identifierare Org+lokalt unikt id)
-                sourceSystemHSAid: 
-                HSAid för det system som dokumentet är skapat i
-                documentTitle: 
-                Titel på dokumentet/anteckningen
-                documentTime: 
-                Relevant tid, definieras för varje meddelande
-                patientId: 
-                Patientens ID. Root sätts till typ av patientidentifierare
-                Bland tillåtna typer för finns: 
-                personnummer (1.2.752.129.2.1.3.1), 
-                samordningsnummer (1.2.752.129.2.1.3.3), 
-                reservnummer SLL (1.2.752.97.3.1.3)
-                author
-                Information om författare till dokumentet
-                legalAuthenticator
-                Information om vem som signerat informationen i dokumentet.
-                approvedForPatient:
-                Anger om information får delas till patient. Värdet sätts i 
-                sådant fall till true, i annat fall till false.
-                careContactId:
-                Identitet för den vård- och omsorgskontakt som föranlett den 
-                information som omfattas av dokumentet. Identiteten är unik 
-                inom källsystemet.</xs:documentation>
-    </xs:annotation>
     <xs:sequence>
       <xs:element name="documentId" type="xs:string"/>
       <xs:element name="sourceSystemHSAid" type="tns:HSAIdType"/>
@@ -308,25 +212,9 @@
       <xs:element name="careContactId" type="xs:string" minOccurs="0"/>
       <xs:element minOccurs="0" name="nullified" type="xs:boolean"/>
       <xs:element minOccurs="0" name="nullifiedReason" type="xs:string"/>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="HealthcareProfessionalType">
-    <xs:annotation>
-      <xs:documentation>Information om hälso- och omsorgspesonal
-                
-                healthcareProfessionalHsaId: 
-                HSA-id för vård- och omsorgspersonal 
-                healthcareProfessionalName
-                Namn på vård- och omsorgspersonal
-                healthcareProfessionalRoleCode: 
-                Information om personens befattning. Om möjligt skall KV Befattning (OID 1.2.752.129.2.2.1.4), se 
-                http://www.inera.se/Documents/TJANSTER_PROJEKT/Katalogtjanst_HSA/Innehall/hsa_innehall_befattning.pdf
-                healthcareProfessionalCareUnitHSAid: 
-                HSA-id för PDL-enhet som vård- och omsorgspersonen är uppdragstagare för
-                healthcareProfessionalCareGiverHSAid: 
-                HSA-id för vårdgivaren, som är vårdgivare för den enhet som författaren är uppdragstagare för</xs:documentation>
-    </xs:annotation>
     <xs:sequence>
       <xs:element name="authorTime" type="tns:TimeStampType"/>
       <xs:element name="healthcareProfessionalHSAId" type="tns:HSAIdType" minOccurs="0"/>
@@ -339,22 +227,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="OrgUnitType">
-    <xs:annotation>
-      <xs:documentation>Information om en organisationsenhet
-                
-                careContactOrgUnitHsaId: 
-                HSA-id för organisationsenhet
-                careContactOrgUnitName
-                Namn på organisationsenhet
-                careContactOrgUnitTelecom: 
-                Telefon till organisationsenhet
-                careContactOrgUnitEmail: 
-                Epost till enhet
-                careContactOrgUnitAddress: 
-                Postadress till enhet
-                careContactOrgUnitLocation: 
-                Text som anger namnet på plats eller ort för enhetens eller funktionens fysiska placering</xs:documentation>
-    </xs:annotation>
     <xs:sequence>
       <xs:element name="orgUnitHSAId" type="tns:HSAIdType" minOccurs="1"/>
       <xs:element name="orgUnitName" type="xs:string" minOccurs="1"/>
@@ -366,9 +238,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="DiagnosisType">
-    <xs:annotation>
-      <xs:documentation></xs:documentation>
-    </xs:annotation>
     <xs:sequence>
       <xs:element name="diagnosisHeader" type="tns:PatientSummaryHeaderType"/>
       <xs:element name="diagnosisBody" type="tns:DiagnosisBodyType"/>
@@ -376,9 +245,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="DiagnosisBodyType">
-    <xs:annotation>
-      <xs:documentation></xs:documentation>
-    </xs:annotation>
     <xs:sequence>
       <xs:element name="typeOfDiagnosis" type="codes:DiagnosisTypeEnum"/>
       <xs:element minOccurs="0" name="chronicDiagnosis" type="xs:boolean"/>
@@ -389,9 +255,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="AlertInformationType">
-    <xs:annotation>
-      <xs:documentation></xs:documentation>
-    </xs:annotation>
     <xs:sequence>
       <xs:element name="alertInformationHeader" type="tns:PatientSummaryHeaderType"/>
       <xs:element name="alertInformationBody" type="tns:AlertInformationBodyType"/>
@@ -399,18 +262,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="RelatedDiagnosisType">
-    <xs:annotation>
-      <xs:documentation></xs:documentation>
-    </xs:annotation>
     <xs:sequence>
       <xs:element name="documentId" type="xs:string"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="AlertInformationBodyType">
-    <xs:annotation>
-      <xs:documentation></xs:documentation>
-    </xs:annotation>
     <xs:sequence>
       <xs:element name="typeOfAlertInformation" type="tns:CVType"/>
       <xs:element name="ascertainedDate" type="tns:DateType" minOccurs="0"/>
@@ -430,9 +287,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="HyperSensitivityType">
-    <xs:annotation>
-      <xs:documentation></xs:documentation>
-    </xs:annotation>
     <xs:sequence>
       <xs:element name="typeOfHypersensitivity" type="tns:CVType" minOccurs="0"/>
       <xs:element name="degreeOfSeverity" type="tns:CVType" minOccurs="0"/>
@@ -443,9 +297,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="PharmaceuticalHypersensitivityType">
-    <xs:annotation>
-      <xs:documentation></xs:documentation>
-    </xs:annotation>
     <xs:sequence>
       <xs:element name="atcSubstance" type="tns:CVType" minOccurs="0"/>
       <xs:element name="nonATCSubstance" type="xs:string" minOccurs="0"/>
@@ -455,9 +306,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="OtherHypersensitivityType">
-    <xs:annotation>
-      <xs:documentation></xs:documentation>
-    </xs:annotation>
     <xs:sequence>
       <xs:element name="hypersensitivityAgent" type="xs:string" minOccurs="0"/>
       <xs:element name="hypersensitivityAgentCode" type="tns:CVType" minOccurs="0"/>
@@ -465,18 +313,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="SeriousDiseaseType">
-    <xs:annotation>
-      <xs:documentation></xs:documentation>
-    </xs:annotation>
     <xs:sequence>
       <xs:element name="disease" type="tns:CVType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="TreatmentType">
-    <xs:annotation>
-      <xs:documentation></xs:documentation>
-    </xs:annotation>
     <xs:sequence>
       <xs:element name="treatmentDescription" type="xs:string"/>
       <xs:element name="treatmentCode" type="tns:CVType" minOccurs="0"/>
@@ -485,9 +327,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="CommunicableDiseaseType">
-    <xs:annotation>
-      <xs:documentation></xs:documentation>
-    </xs:annotation>
     <xs:sequence>
       <xs:element name="communicableDiseaseCode" type="tns:CVType"/>
       <xs:element name="routeOfTransmission" type="tns:CVType" minOccurs="0"/>
@@ -495,18 +334,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="RestrictionOfCareType">
-    <xs:annotation>
-      <xs:documentation></xs:documentation>
-    </xs:annotation>
     <xs:sequence>
       <xs:element name="restrictionOfCareComment" type="xs:string"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="UnstructuredAlertInformationType">
-    <xs:annotation>
-      <xs:documentation></xs:documentation>
-    </xs:annotation>
     <xs:sequence>
       <xs:element name="unstructuredAlertInformationHeading" type="xs:string"/>
       <xs:element name="unstructuredAlertInformationContent" type="xs:string"/>
@@ -514,9 +347,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="RelatedAlertInformationType">
-    <xs:annotation>
-      <xs:documentation></xs:documentation>
-    </xs:annotation>
     <xs:sequence>
       <xs:element name="typeOfAlertInformationRelationship" type="tns:CVType"/>
       <xs:element name="relationComment" type="xs:string" minOccurs="0"/>
@@ -525,9 +355,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="PADLType">
-    <xs:annotation>
-      <xs:documentation></xs:documentation>
-    </xs:annotation>
     <xs:sequence>
       <xs:element name="typeOfAssessment" type="tns:CVType"/>
       <xs:element name="assessment" type="xs:string" minOccurs="1"/>
@@ -535,9 +362,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="DisabilityType">
-    <xs:annotation>
-      <xs:documentation></xs:documentation>
-    </xs:annotation>
     <xs:sequence>
       <xs:element name="disabilityAssessment" type="tns:CVType"/>
       <xs:element name="comment" type="xs:string" minOccurs="0"/>
@@ -550,13 +374,9 @@
         It can also be a type used in two or more service schemas.-->
   <xs:complexType name="DatePeriodType">
     <xs:annotation>
-      <xs:documentation>Används för att specificera ett datumintervall
-                med hjälp av start- och slutdatum.
-                
-                start: 
-                    Startdatum på formatet ÅÅÅÅMMDD
-                end: 
-                    Slutdatum på formatet ÅÅÅÅMMDD</xs:documentation>
+      <xs:documentation>Används för att specificera ett datumintervall med hjälp av start-
+                och slutdatum. start: Startdatum på formatet ÅÅÅÅMMDD end: Slutdatum på formatet
+                ÅÅÅÅMMDD</xs:documentation>
     </xs:annotation>
     <xs:sequence>
       <xs:element name="start" type="tns:DateType"/>
@@ -566,9 +386,6 @@
   </xs:complexType>
   <!--YYYYMMDD-->
   <xs:simpleType name="DateType">
-    <xs:annotation>
-      <xs:documentation/>
-    </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"/>
     </xs:restriction>
@@ -580,22 +397,16 @@
   <xs:complexType name="MultimediaType">
     <xs:sequence>
       <xs:element name="mediaType" type="codes:MediaTypeEnum"/>
-      <xs:sequence>
-        <xs:element name="value" type="xs:base64Binary" minOccurs="0"/>
-        <xs:element name="reference" type="xs:anyURI" minOccurs="0"/>
-        <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-      </xs:sequence>
+      <xs:element name="value" type="xs:base64Binary" minOccurs="0"/>
+      <xs:element name="reference" type="xs:anyURI" minOccurs="0"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="TimePeriodType">
     <xs:annotation>
-      <xs:documentation>Används för att specificera ett datumintervall
-                med hjälp av start- och slutdatum.
-                
-                start: 
-                Startdatum på formatet YYYYMMDDhhmmss
-                end: 
-                Slutdatum på formatet YYYYMMDDhhmmss</xs:documentation>
+      <xs:documentation>Används för att specificera ett datumintervall med hjälp av start-
+                och slutdatum. start: Startdatum på formatet YYYYMMDDhhmmss end: Slutdatum på
+                formatet YYYYMMDDhhmmss</xs:documentation>
     </xs:annotation>
     <xs:sequence>
       <xs:element name="start" type="tns:TimeStampType" minOccurs="0"/>
@@ -605,11 +416,9 @@
   </xs:complexType>
   <xs:simpleType name="TimeStampType">
     <xs:annotation>
-      <xs:documentation>A quantity specifying a point on the axis of natural time.
-                A point in time is most often represented as a calendar
-                expression.
-                
-                The time has the format YYYYMMDDhhmmss</xs:documentation>
+      <xs:documentation>A quantity specifying a point on the axis of natural time. A point in
+                time is most often represented as a calendar expression. The time has the format
+                YYYYMMDDhhmmss</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])(0[0-9]|1[0-9]|2[0123])([0-5])([0-9])([0-5])([0-9])"/>
@@ -630,16 +439,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="LegalAuthenticatorType">
-    <xs:annotation>
-      <xs:documentation>Information om signering
-            
-            signatureTime: 
-            Tidpunkt för signering, format ÅÅÅÅMMDDttmmss. 
-            legalAuthenticatorHSAId: 
-            Information om person som signerat dokumentet
-            legalAuthenticatorName:
-            Information om person som signerat dokumentet</xs:documentation>
-    </xs:annotation>
     <xs:sequence>
       <xs:element name="signatureTime" type="tns:TimeStampType"/>
       <xs:element name="legalAuthenticatorHSAId" type="tns:HSAIdType" minOccurs="0"/>
@@ -771,53 +570,26 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="MediaTypeEnum">
-    <xs:union memberTypes="tns:ApplicationMediaEnum tns:AudioMediaTypeEnum tns:ImageMediaTypeEnum tns:ModelMediaTypeEnum tns:MultipartMediaTypeEnum tns:TextMediaTypeEnum tns:VideoMediaTypeEnum"/>
-  </xs:simpleType>
-  <xs:simpleType name="ApplicationMediaEnum">
     <xs:restriction base="xs:string">
       <xs:enumeration value="application/dicom"/>
       <xs:enumeration value="application/msword"/>
       <xs:enumeration value="application/pdf"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="AudioMediaTypeEnum">
-    <xs:restriction base="xs:string">
       <xs:enumeration value="audio/basic"/>
       <xs:enumeration value="audio/k32adpcm"/>
       <xs:enumeration value="audio/mpeg"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="ImageMediaTypeEnum">
-    <xs:restriction base="xs:string">
       <xs:enumeration value="image/g3fax"/>
       <xs:enumeration value="image/gif"/>
       <xs:enumeration value="image/jpeg"/>
       <xs:enumeration value="image/png"/>
       <xs:enumeration value="image/tiff"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="ModelMediaTypeEnum">
-    <xs:restriction base="xs:string">
       <xs:enumeration value="model/vrml"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="MultipartMediaTypeEnum">
-    <xs:restriction base="xs:string">
       <xs:enumeration value="multipart/x-hl7-cda-level1"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="TextMediaTypeEnum">
-    <xs:restriction base="xs:string">
       <xs:enumeration value="text/html"/>
       <xs:enumeration value="text/plain"/>
       <xs:enumeration value="text/rtf"/>
       <xs:enumeration value="text/sgml"/>
       <xs:enumeration value="text/x-hl7-ft"/>
       <xs:enumeration value="text/xml"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="VideoMediaTypeEnum">
-    <xs:restriction base="xs:string">
       <xs:enumeration value="video/mpeg"/>
       <xs:enumeration value="video/x-avi"/>
     </xs:restriction>
@@ -905,9 +677,6 @@
   <xs:simpleType name="ErrorCodeEnum">
     <xs:restriction base="xs:string">
       <xs:enumeration value="INVALID_REQUEST"/>
-      <xs:enumeration value="TRANSFORMATION_ERROR"/>
-      <xs:enumeration value="APPLICATION_ERROR"/>
-      <xs:enumeration value="TECHNICAL_ERROR"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/healthcond/description/trunk/schemas/core_components/itintegration_registry_1.0.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="urn:riv:itintegration:registry:1" elementFormDefault="qualified" version="1.0" xmlns="urn:riv:itintegration:registry:1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
@@ -1120,40 +889,6 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" httpRes
                </urn1:disability>
                <!--You may enter ANY elements at this point-->
             </urn1:functionalStatusAssessmentBody>
-            <!--Zero or more repetitions:-->
-            <urn1:relation>
-               <urn1:code>
-                  <!--Optional:-->
-                  <urn1:code>?</urn1:code>
-                  <!--Optional:-->
-                  <urn1:codeSystem>?</urn1:codeSystem>
-                  <!--Optional:-->
-                  <urn1:codeSystemName>?</urn1:codeSystemName>
-                  <!--Optional:-->
-                  <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                  <!--Optional:-->
-                  <urn1:displayName>?</urn1:displayName>
-                  <!--Optional:-->
-                  <urn1:originalText>?</urn1:originalText>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:code>
-               <urn1:referredInformation>
-                  <urn1:id>
-                     <urn1:root>?</urn1:root>
-                     <!--Optional:-->
-                     <urn1:extension>?</urn1:extension>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:id>
-                  <urn1:time>20120102122322</urn1:time>
-                  <urn1:type>?</urn1:type>
-                  <urn1:informationOwner>
-                     <urn1:id>
-                        <urn1:root>?</urn1:root>
-                        <urn1:extension>?</urn1:extension>
-                     </urn1:id>
-                  </urn1:informationOwner>
-               </urn1:referredInformation>
-            </urn1:relation>
          </urn:functionalStatusAssessment>
          <urn:result>
             <urn1:resultCode>OK</urn1:resultCode>
@@ -1277,40 +1012,6 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" httpRes
                </urn1:disability>
                <!--You may enter ANY elements at this point-->
             </urn1:functionalStatusAssessmentBody>
-            <!--Zero or more repetitions:-->
-            <urn1:relation>
-               <urn1:code>
-                  <!--Optional:-->
-                  <urn1:code>?</urn1:code>
-                  <!--Optional:-->
-                  <urn1:codeSystem>?</urn1:codeSystem>
-                  <!--Optional:-->
-                  <urn1:codeSystemName>?</urn1:codeSystemName>
-                  <!--Optional:-->
-                  <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                  <!--Optional:-->
-                  <urn1:displayName>?</urn1:displayName>
-                  <!--Optional:-->
-                  <urn1:originalText>?</urn1:originalText>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:code>
-               <urn1:referredInformation>
-                  <urn1:id>
-                     <urn1:root>?</urn1:root>
-                     <!--Optional:-->
-                     <urn1:extension>?</urn1:extension>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:id>
-                  <urn1:time>20120102122322</urn1:time>
-                  <urn1:type>?</urn1:type>
-                  <urn1:informationOwner>
-                     <urn1:id>
-                        <urn1:root>?</urn1:root>
-                        <urn1:extension>?</urn1:extension>
-                     </urn1:id>
-                  </urn1:informationOwner>
-               </urn1:referredInformation>
-            </urn1:relation>
          </urn:functionalStatusAssessment>
          <urn:result>
             <urn1:resultCode>OK</urn1:resultCode>
@@ -1434,40 +1135,6 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" httpRes
                </urn1:disability>
                <!--You may enter ANY elements at this point-->
             </urn1:functionalStatusAssessmentBody>
-            <!--Zero or more repetitions:-->
-            <urn1:relation>
-               <urn1:code>
-                  <!--Optional:-->
-                  <urn1:code>?</urn1:code>
-                  <!--Optional:-->
-                  <urn1:codeSystem>?</urn1:codeSystem>
-                  <!--Optional:-->
-                  <urn1:codeSystemName>?</urn1:codeSystemName>
-                  <!--Optional:-->
-                  <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                  <!--Optional:-->
-                  <urn1:displayName>?</urn1:displayName>
-                  <!--Optional:-->
-                  <urn1:originalText>?</urn1:originalText>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:code>
-               <urn1:referredInformation>
-                  <urn1:id>
-                     <urn1:root>?</urn1:root>
-                     <!--Optional:-->
-                     <urn1:extension>?</urn1:extension>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:id>
-                  <urn1:time>20120102122322</urn1:time>
-                  <urn1:type>?</urn1:type>
-                  <urn1:informationOwner>
-                     <urn1:id>
-                        <urn1:root>?</urn1:root>
-                        <urn1:extension>?</urn1:extension>
-                     </urn1:id>
-                  </urn1:informationOwner>
-               </urn1:referredInformation>
-            </urn1:relation>
          </urn:functionalStatusAssessment>
          <urn:result>
             <urn1:resultCode>OK</urn1:resultCode>
@@ -1591,40 +1258,6 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" httpRes
                </urn1:disability>
                <!--You may enter ANY elements at this point-->
             </urn1:functionalStatusAssessmentBody>
-            <!--Zero or more repetitions:-->
-            <urn1:relation>
-               <urn1:code>
-                  <!--Optional:-->
-                  <urn1:code>?</urn1:code>
-                  <!--Optional:-->
-                  <urn1:codeSystem>?</urn1:codeSystem>
-                  <!--Optional:-->
-                  <urn1:codeSystemName>?</urn1:codeSystemName>
-                  <!--Optional:-->
-                  <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                  <!--Optional:-->
-                  <urn1:displayName>?</urn1:displayName>
-                  <!--Optional:-->
-                  <urn1:originalText>?</urn1:originalText>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:code>
-               <urn1:referredInformation>
-                  <urn1:id>
-                     <urn1:root>?</urn1:root>
-                     <!--Optional:-->
-                     <urn1:extension>?</urn1:extension>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:id>
-                  <urn1:time>20120102122322</urn1:time>
-                  <urn1:type>?</urn1:type>
-                  <urn1:informationOwner>
-                     <urn1:id>
-                        <urn1:root>?</urn1:root>
-                        <urn1:extension>?</urn1:extension>
-                     </urn1:id>
-                  </urn1:informationOwner>
-               </urn1:referredInformation>
-            </urn1:relation>
          </urn:functionalStatusAssessment>
          <urn:result>
             <urn1:resultCode>OK</urn1:resultCode>
@@ -1748,40 +1381,6 @@ return responseName</con:dispatchPath><con:response name="BasicResponse" httpRes
                </urn1:disability>
                <!--You may enter ANY elements at this point-->
             </urn1:functionalStatusAssessmentBody>
-            <!--Zero or more repetitions:-->
-            <urn1:relation>
-               <urn1:code>
-                  <!--Optional:-->
-                  <urn1:code>?</urn1:code>
-                  <!--Optional:-->
-                  <urn1:codeSystem>?</urn1:codeSystem>
-                  <!--Optional:-->
-                  <urn1:codeSystemName>?</urn1:codeSystemName>
-                  <!--Optional:-->
-                  <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                  <!--Optional:-->
-                  <urn1:displayName>?</urn1:displayName>
-                  <!--Optional:-->
-                  <urn1:originalText>?</urn1:originalText>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:code>
-               <urn1:referredInformation>
-                  <urn1:id>
-                     <urn1:root>?</urn1:root>
-                     <!--Optional:-->
-                     <urn1:extension>?</urn1:extension>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:id>
-                  <urn1:time>20120102122322</urn1:time>
-                  <urn1:type>?</urn1:type>
-                  <urn1:informationOwner>
-                     <urn1:id>
-                        <urn1:root>?</urn1:root>
-                        <urn1:extension>?</urn1:extension>
-                     </urn1:id>
-                  </urn1:informationOwner>
-               </urn1:referredInformation>
-            </urn1:relation>
          </urn:functionalStatusAssessment>
          <urn:result>
             <urn1:resultCode>OK</urn1:resultCode>
