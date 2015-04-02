@@ -24,7 +24,7 @@
 	
 	SET SCHEMADIR=schemas
 	
-	SET W0=%SCHEMADIR%\interactions\GetQualityIndicatorsInteraction\GetQualityIndicatorsInteraction_1.0_RIVTABP21.wsdl
+	SET W0=%SCHEMADIR%\interactions\GetQualityIndicatorsInteraction\GetQualityIndicatorsInteraction_2.0_RIVTABP21.wsdl
 SET X0=%SCHEMADIR%\interactions\GetQualityIndicatorsInteraction\*.xsd
 
 SET XCORE=%SCHEMADIR%\core_components\*.xsd
@@ -33,7 +33,7 @@ SET SCHEMAS=%XCORE% %W0% %X0%
 
 SET OUTFILE=/out:wcf\generated-src\FollowupGroupoutcomesQualityreportingInteractions.cs
 SET APPCONFIG=/config:wcf\generated-src\app.config
-SET NAMESPACE=/namespace:*,Riv.Followup.Groupoutcomes.Qualityreporting.Schemas.v1
+SET NAMESPACE=/namespace:*,Riv.Followup.Groupoutcomes.Qualityreporting.Schemas.v2
 SET SVCUTIL="svcutil.exe"
 %SVCUTIL% /language:cs %OUTFILE% %APPCONFIG% %NAMESPACE% %SCHEMAS%
 
