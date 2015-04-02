@@ -184,6 +184,7 @@
       <xs:element name="lastServiceEncounter" type="tns:DateType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="proportionMeasure" type="tns:ProportionMeasureType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="continuousVariableMeasure" type="tns:ContinuousVariableMeasureType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="cohortMeasure" type="tns:CohortMeasureType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="missingMeasure" type="tns:MissingMeasureType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="performingOrganization" type="tns:PerformingOrganizationType" minOccurs="1" maxOccurs="1"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
@@ -224,6 +225,22 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="CohortMeasureType">
+    <xs:annotation>
+      <xs:documentation>
+        De indikatorvärden som enbart räknar förekomster av något har sitt värde i klassen ContinuousVariableMeasureType.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="cohort" type="xs:double" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="confidenceInterval95percent" type="tns:ConfidenceInterval95percentType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="standardDeviation" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="coverage" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="exclusions" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="referenceIntervalValue" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="PerformingOrganizationType">
     <xs:annotation>
       <xs:documentation>
@@ -244,7 +261,7 @@
     </xs:annotation>
     <xs:sequence>
       <xs:element name="hsaId" type="tns:HSAIdType" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="organizationName" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="organizationName" type="xs:string" minOccurs="1" maxOccurs="1"/>
       <xs:element name="organizationType" type="tns:OrganizationTypeCodeEnum" minOccurs="1" maxOccurs="1"/>
       <xs:element name="organizationId" type="tns:IIType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="asOrganizationPartOf" type="tns:PerformingOrganizationType" minOccurs="0" maxOccurs="1"/>
