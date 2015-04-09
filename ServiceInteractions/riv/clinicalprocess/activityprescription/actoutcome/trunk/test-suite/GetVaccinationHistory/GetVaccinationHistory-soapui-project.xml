@@ -124,7 +124,6 @@
     <xs:sequence>
       <xs:element name="vaccinationMedicalRecordHeader" type="tns:PatientSummaryHeaderType" minOccurs="1" maxOccurs="1"/>
       <xs:element name="vaccinationMedicalRecordBody" type="tns:VaccinationMedicalRecordBodyType" minOccurs="1" maxOccurs="1"/>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="relation" type="tns:RelationType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -316,16 +315,6 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="RelationType">
-    <xs:annotation>
-      <xs:documentation></xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="code" type="tns:CVType"/>
-      <xs:element name="referredInformation" type="tns:ReferredInformationType" minOccurs="1"/>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="ReferredInformationType">
     <xs:annotation>
       <xs:documentation></xs:documentation>
@@ -354,7 +343,6 @@
     <xs:sequence>
       <xs:element name="medicationMedicalRecordHeader" type="tns:PatientSummaryHeaderType"/>
       <xs:element name="medicationMedicalRecordBody" type="tns:MedicationMedicalRecordBodyType" minOccurs="1"/>
-      <xs:element name="relation" type="tns:RelationType" maxOccurs="unbounded" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -435,6 +423,7 @@
       <xs:element name="firstDispensationBefore" type="tns:DateType" minOccurs="0"/>
       <xs:element name="prescriptionSignatura" type="xs:string"/>
       <xs:element name="nonReplaceable" type="codes:NonReplaceableEnum" minOccurs="0"/>
+      <xs:element minOccurs="0" name="drug" type="tns:DrugChoiceType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -726,20 +715,20 @@
   </xs:simpleType>
   <xs:simpleType name="NonReplaceableEnum">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="PRESCRIBER"/>
-      <xs:enumeration value="PATIENT"/>
+      <xs:enumeration value="Prescriber"/>
+      <xs:enumeration value="Patient"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="TypeOfPrescriptionEnum">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="Insättning"/>
-      <xs:enumeration value="Utsättning"/>
+      <xs:enumeration value="I"/>
+      <xs:enumeration value="U"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="PrescriptionStatusEnum">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="ACTIVE"/>
-      <xs:enumeration value="INACTIVE"/>
+      <xs:enumeration value="Active"/>
+      <xs:enumeration value="Inactive"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/khaled/NetBeansProjects/rivta/ServiceInteractions/riv/clinicalprocess/activityprescription/actoutcome/trunk/schemas/core_components/itintegration_registry_1.0.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="urn:riv:itintegration:registry:1" elementFormDefault="qualified" version="1.0" xmlns="urn:riv:itintegration:registry:1" xmlns:xs="http://www.w3.org/2001/XMLSchema">

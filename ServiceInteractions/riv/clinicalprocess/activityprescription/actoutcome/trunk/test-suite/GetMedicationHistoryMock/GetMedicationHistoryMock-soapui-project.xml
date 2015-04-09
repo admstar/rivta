@@ -128,7 +128,6 @@
     <xs:sequence>
       <xs:element name="vaccinationMedicalRecordHeader" type="tns:PatientSummaryHeaderType" minOccurs="1" maxOccurs="1"/>
       <xs:element name="vaccinationMedicalRecordBody" type="tns:VaccinationMedicalRecordBodyType" minOccurs="1" maxOccurs="1"/>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="relation" type="tns:RelationType"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -320,16 +319,6 @@
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="RelationType">
-    <xs:annotation>
-      <xs:documentation></xs:documentation>
-    </xs:annotation>
-    <xs:sequence>
-      <xs:element name="code" type="tns:CVType"/>
-      <xs:element name="referredInformation" type="tns:ReferredInformationType" minOccurs="1"/>
-      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="ReferredInformationType">
     <xs:annotation>
       <xs:documentation></xs:documentation>
@@ -358,7 +347,6 @@
     <xs:sequence>
       <xs:element name="medicationMedicalRecordHeader" type="tns:PatientSummaryHeaderType"/>
       <xs:element name="medicationMedicalRecordBody" type="tns:MedicationMedicalRecordBodyType" minOccurs="1"/>
-      <xs:element name="relation" type="tns:RelationType" maxOccurs="unbounded" minOccurs="0"/>
       <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -3179,44 +3167,6 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                <!--You may enter ANY elements at this point-->
             </urn1:medicationMedicalRecordBody>
             <!--Zero or more repetitions:-->
-            <urn1:relation>
-               <urn1:code>
-                  <!--Optional:-->
-                  <urn1:code>?</urn1:code>
-                  <!--Optional:-->
-                  <urn1:codeSystem>?</urn1:codeSystem>
-                  <!--Optional:-->
-                  <urn1:codeSystemName>?</urn1:codeSystemName>
-                  <!--Optional:-->
-                  <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                  <!--Optional:-->
-                  <urn1:displayName>?</urn1:displayName>
-                  <!--Optional:-->
-                  <urn1:originalText>?</urn1:originalText>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:code>
-               <urn1:referredInformation>
-                  <urn1:id>
-                     <urn1:root>?</urn1:root>
-                     <!--Optional:-->
-                     <urn1:extension>?</urn1:extension>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:id>
-                  <urn1:time>?</urn1:time>
-                  <urn1:uri>?</urn1:uri>
-                  <urn1:informationOwner>
-                     <urn1:id>
-                        <urn1:root>?</urn1:root>
-                        <!--Optional:-->
-                        <urn1:extension>?</urn1:extension>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:id>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:informationOwner>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:referredInformation>
-               <!--You may enter ANY elements at this point-->
-            </urn1:relation>
             <!--You may enter ANY elements at this point-->
          </urn:medicationMedicalRecord>
          <urn:result>
@@ -5236,46 +5186,6 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                </urn1:additionalPatientInformation>
                <!--Zero or more repetitions:-->
             </urn1:medicationMedicalRecordBody>
-            <!--Zero or more repetitions:-->
-            <urn1:relation>
-               <urn1:code>
-                  <!--Optional:-->
-                  <urn1:code>?</urn1:code>
-                  <!--Optional:-->
-                  <urn1:codeSystem>?</urn1:codeSystem>
-                  <!--Optional:-->
-                  <urn1:codeSystemName>?</urn1:codeSystemName>
-                  <!--Optional:-->
-                  <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                  <!--Optional:-->
-                  <urn1:displayName>?</urn1:displayName>
-                  <!--Optional:-->
-                  <urn1:originalText>?</urn1:originalText>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:code>
-               <urn1:referredInformation>
-                  <urn1:id>
-                     <urn1:root>?</urn1:root>
-                     <!--Optional:-->
-                     <urn1:extension>?</urn1:extension>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:id>
-                  <urn1:time>20120101121212</urn1:time>
-                  <urn1:type>vko</urn1:type>
-                  <urn1:informationOwner>
-                     <urn1:id>
-                        <urn1:root>?</urn1:root>
-                        <!--Optional:-->
-                        <urn1:extension>?</urn1:extension>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:id>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:informationOwner>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:referredInformation>
-               <!--You may enter ANY elements at this point-->
-            </urn1:relation>
-            <!--You may enter ANY elements at this point-->
          </urn:medicationMedicalRecord>
          <urn:result>
             <urn1:resultCode>OK</urn1:resultCode>
@@ -8777,46 +8687,6 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                   <!--You may enter ANY elements at this point-->
                </urn1:additionalPatientInformation>
             </urn1:medicationMedicalRecordBody>
-            <!--Zero or more repetitions:-->
-            <urn1:relation>
-               <urn1:code>
-                  <!--Optional:-->
-                  <urn1:code>?</urn1:code>
-                  <!--Optional:-->
-                  <urn1:codeSystem>?</urn1:codeSystem>
-                  <!--Optional:-->
-                  <urn1:codeSystemName>?</urn1:codeSystemName>
-                  <!--Optional:-->
-                  <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                  <!--Optional:-->
-                  <urn1:displayName>?</urn1:displayName>
-                  <!--Optional:-->
-                  <urn1:originalText>?</urn1:originalText>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:code>
-               <urn1:referredInformation>
-                  <urn1:id>
-                     <urn1:root>?</urn1:root>
-                     <!--Optional:-->
-                     <urn1:extension>?</urn1:extension>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:id>
-                  <urn1:time>20120101121212</urn1:time>
-                  <urn1:type>?</urn1:type>
-                  <urn1:informationOwner>
-                     <urn1:id>
-                        <urn1:root>?</urn1:root>
-                        <!--Optional:-->
-                        <urn1:extension>?</urn1:extension>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:id>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:informationOwner>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:referredInformation>
-               <!--You may enter ANY elements at this point-->
-            </urn1:relation>
-            <!--You may enter ANY elements at this point-->
          </urn:medicationMedicalRecord>
          <urn:medicationMedicalRecord>
             <urn1:medicationMedicalRecordHeader>
@@ -10000,46 +9870,6 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                   <!--You may enter ANY elements at this point-->
                </urn1:additionalPatientInformation>
             </urn1:medicationMedicalRecordBody>
-            <!--Zero or more repetitions:-->
-            <urn1:relation>
-               <urn1:code>
-                  <!--Optional:-->
-                  <urn1:code>?</urn1:code>
-                  <!--Optional:-->
-                  <urn1:codeSystem>?</urn1:codeSystem>
-                  <!--Optional:-->
-                  <urn1:codeSystemName>?</urn1:codeSystemName>
-                  <!--Optional:-->
-                  <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                  <!--Optional:-->
-                  <urn1:displayName>?</urn1:displayName>
-                  <!--Optional:-->
-                  <urn1:originalText>?</urn1:originalText>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:code>
-               <urn1:referredInformation>
-                  <urn1:id>
-                     <urn1:root>?</urn1:root>
-                     <!--Optional:-->
-                     <urn1:extension>?</urn1:extension>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:id>
-                  <urn1:time>20120101121212</urn1:time>
-                  <urn1:type>?</urn1:type>
-                  <urn1:informationOwner>
-                     <urn1:id>
-                        <urn1:root>?</urn1:root>
-                        <!--Optional:-->
-                        <urn1:extension>?</urn1:extension>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:id>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:informationOwner>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:referredInformation>
-               <!--You may enter ANY elements at this point-->
-            </urn1:relation>
-            <!--You may enter ANY elements at this point-->
          </urn:medicationMedicalRecord>
 
          <urn:result>
@@ -11246,46 +11076,6 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                   <!--You may enter ANY elements at this point-->
                </urn1:additionalPatientInformation>
             </urn1:medicationMedicalRecordBody>
-            <!--Zero or more repetitions:-->
-            <urn1:relation>
-               <urn1:code>
-                  <!--Optional:-->
-                  <urn1:code>?</urn1:code>
-                  <!--Optional:-->
-                  <urn1:codeSystem>?</urn1:codeSystem>
-                  <!--Optional:-->
-                  <urn1:codeSystemName>?</urn1:codeSystemName>
-                  <!--Optional:-->
-                  <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                  <!--Optional:-->
-                  <urn1:displayName>?</urn1:displayName>
-                  <!--Optional:-->
-                  <urn1:originalText>?</urn1:originalText>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:code>
-               <urn1:referredInformation>
-                  <urn1:id>
-                     <urn1:root>?</urn1:root>
-                     <!--Optional:-->
-                     <urn1:extension>?</urn1:extension>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:id>
-                  <urn1:time>20120101121212</urn1:time>
-                  <urn1:type>?</urn1:type>
-                  <urn1:informationOwner>
-                     <urn1:id>
-                        <urn1:root>?</urn1:root>
-                        <!--Optional:-->
-                        <urn1:extension>?</urn1:extension>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:id>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:informationOwner>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:referredInformation>
-               <!--You may enter ANY elements at this point-->
-            </urn1:relation>
-            <!--You may enter ANY elements at this point-->
          </urn:medicationMedicalRecord>
          <urn:medicationMedicalRecord>
             <urn1:medicationMedicalRecordHeader>
@@ -12469,46 +12259,6 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                   <!--You may enter ANY elements at this point-->
                </urn1:additionalPatientInformation>
             </urn1:medicationMedicalRecordBody>
-            <!--Zero or more repetitions:-->
-            <urn1:relation>
-               <urn1:code>
-                  <!--Optional:-->
-                  <urn1:code>?</urn1:code>
-                  <!--Optional:-->
-                  <urn1:codeSystem>?</urn1:codeSystem>
-                  <!--Optional:-->
-                  <urn1:codeSystemName>?</urn1:codeSystemName>
-                  <!--Optional:-->
-                  <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                  <!--Optional:-->
-                  <urn1:displayName>?</urn1:displayName>
-                  <!--Optional:-->
-                  <urn1:originalText>?</urn1:originalText>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:code>
-               <urn1:referredInformation>
-                  <urn1:id>
-                     <urn1:root>?</urn1:root>
-                     <!--Optional:-->
-                     <urn1:extension>?</urn1:extension>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:id>
-                  <urn1:time>20120101121212</urn1:time>
-                  <urn1:type>?</urn1:type>
-                  <urn1:informationOwner>
-                     <urn1:id>
-                        <urn1:root>?</urn1:root>
-                        <!--Optional:-->
-                        <urn1:extension>?</urn1:extension>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:id>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:informationOwner>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:referredInformation>
-               <!--You may enter ANY elements at this point-->
-            </urn1:relation>
-            <!--You may enter ANY elements at this point-->
          </urn:medicationMedicalRecord>
 
          <urn:result>
@@ -13705,46 +13455,6 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                   <!--You may enter ANY elements at this point-->
                </urn1:additionalPatientInformation>
             </urn1:medicationMedicalRecordBody>
-            <!--Zero or more repetitions:-->
-            <urn1:relation>
-               <urn1:code>
-                  <!--Optional:-->
-                  <urn1:code>?</urn1:code>
-                  <!--Optional:-->
-                  <urn1:codeSystem>?</urn1:codeSystem>
-                  <!--Optional:-->
-                  <urn1:codeSystemName>?</urn1:codeSystemName>
-                  <!--Optional:-->
-                  <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                  <!--Optional:-->
-                  <urn1:displayName>?</urn1:displayName>
-                  <!--Optional:-->
-                  <urn1:originalText>?</urn1:originalText>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:code>
-               <urn1:referredInformation>
-                  <urn1:id>
-                     <urn1:root>?</urn1:root>
-                     <!--Optional:-->
-                     <urn1:extension>?</urn1:extension>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:id>
-                  <urn1:time>20120101121212</urn1:time>
-                  <urn1:type>?</urn1:type>
-                  <urn1:informationOwner>
-                     <urn1:id>
-                        <urn1:root>?</urn1:root>
-                        <!--Optional:-->
-                        <urn1:extension>?</urn1:extension>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:id>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:informationOwner>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:referredInformation>
-               <!--You may enter ANY elements at this point-->
-            </urn1:relation>
-            <!--You may enter ANY elements at this point-->
          </urn:medicationMedicalRecord>
          <urn:result>
             <urn1:resultCode>OK</urn1:resultCode>
@@ -14941,45 +14651,6 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                </urn1:additionalPatientInformation>
             </urn1:medicationMedicalRecordBody>
             <!--Zero or more repetitions:-->
-            <urn1:relation>
-               <urn1:code>
-                  <!--Optional:-->
-                  <urn1:code>?</urn1:code>
-                  <!--Optional:-->
-                  <urn1:codeSystem>?</urn1:codeSystem>
-                  <!--Optional:-->
-                  <urn1:codeSystemName>?</urn1:codeSystemName>
-                  <!--Optional:-->
-                  <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                  <!--Optional:-->
-                  <urn1:displayName>?</urn1:displayName>
-                  <!--Optional:-->
-                  <urn1:originalText>?</urn1:originalText>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:code>
-               <urn1:referredInformation>
-                  <urn1:id>
-                     <urn1:root>?</urn1:root>
-                     <!--Optional:-->
-                     <urn1:extension>?</urn1:extension>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:id>
-                  <urn1:time>20120101121212</urn1:time>
-                  <urn1:type>?</urn1:type>
-                  <urn1:informationOwner>
-                     <urn1:id>
-                        <urn1:root>?</urn1:root>
-                        <!--Optional:-->
-                        <urn1:extension>?</urn1:extension>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:id>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:informationOwner>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:referredInformation>
-               <!--You may enter ANY elements at this point-->
-            </urn1:relation>
-            <!--You may enter ANY elements at this point-->
          </urn:medicationMedicalRecord>
          <urn:result>
             <urn1:resultCode>OK</urn1:resultCode>
@@ -16176,45 +15847,6 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                </urn1:additionalPatientInformation>
             </urn1:medicationMedicalRecordBody>
             <!--Zero or more repetitions:-->
-            <urn1:relation>
-               <urn1:code>
-                  <!--Optional:-->
-                  <urn1:code>?</urn1:code>
-                  <!--Optional:-->
-                  <urn1:codeSystem>?</urn1:codeSystem>
-                  <!--Optional:-->
-                  <urn1:codeSystemName>?</urn1:codeSystemName>
-                  <!--Optional:-->
-                  <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                  <!--Optional:-->
-                  <urn1:displayName>?</urn1:displayName>
-                  <!--Optional:-->
-                  <urn1:originalText>?</urn1:originalText>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:code>
-               <urn1:referredInformation>
-                  <urn1:id>
-                     <urn1:root>?</urn1:root>
-                     <!--Optional:-->
-                     <urn1:extension>?</urn1:extension>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:id>
-                  <urn1:time>20120101121212</urn1:time>
-                  <urn1:type>?</urn1:type>
-                  <urn1:informationOwner>
-                     <urn1:id>
-                        <urn1:root>?</urn1:root>
-                        <!--Optional:-->
-                        <urn1:extension>?</urn1:extension>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:id>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:informationOwner>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:referredInformation>
-               <!--You may enter ANY elements at this point-->
-            </urn1:relation>
-            <!--You may enter ANY elements at this point-->
          </urn:medicationMedicalRecord>
          <urn:result>
             <urn1:resultCode>OK</urn1:resultCode>
@@ -17410,45 +17042,6 @@ return responseName</con:dispatchPath><con:response name="Response 1" httpRespon
                   <!--You may enter ANY elements at this point-->
                </urn1:additionalPatientInformation>
             </urn1:medicationMedicalRecordBody>
-            <!--Zero or more repetitions:-->
-            <urn1:relation>
-               <urn1:code>
-                  <!--Optional:-->
-                  <urn1:code>?</urn1:code>
-                  <!--Optional:-->
-                  <urn1:codeSystem>?</urn1:codeSystem>
-                  <!--Optional:-->
-                  <urn1:codeSystemName>?</urn1:codeSystemName>
-                  <!--Optional:-->
-                  <urn1:codeSystemVersion>?</urn1:codeSystemVersion>
-                  <!--Optional:-->
-                  <urn1:displayName>?</urn1:displayName>
-                  <!--Optional:-->
-                  <urn1:originalText>?</urn1:originalText>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:code>
-               <urn1:referredInformation>
-                  <urn1:id>
-                     <urn1:root>?</urn1:root>
-                     <!--Optional:-->
-                     <urn1:extension>?</urn1:extension>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:id>
-                  <urn1:time>20120101121212</urn1:time>
-                  <urn1:type>?</urn1:type>
-                  <urn1:informationOwner>
-                     <urn1:id>
-                        <urn1:root>?</urn1:root>
-                        <!--Optional:-->
-                        <urn1:extension>?</urn1:extension>
-                        <!--You may enter ANY elements at this point-->
-                     </urn1:id>
-                     <!--You may enter ANY elements at this point-->
-                  </urn1:informationOwner>
-                  <!--You may enter ANY elements at this point-->
-               </urn1:referredInformation>
-               <!--You may enter ANY elements at this point-->
-            </urn1:relation>
             <!--You may enter ANY elements at this point-->
          </urn:medicationMedicalRecord>
          <urn:result>
