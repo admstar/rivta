@@ -8,17 +8,13 @@
   <name>itintegration-engagementindex-schemas</name>
   <url>http://maven.apache.org</url>
   <properties>
-    <schema.path>${basedir}/../schemas</schema.path>
-    <cxf.version>2.2.2</cxf.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <schema.path>${basedir}/../../schemas</schema.path>
+    <cxf.version>3.0.4</cxf.version>
   </properties>
   <dependencies/>
   <repositories>
-    <repository>
-      <id>java.net</id>
-      <url>http://download.java.net/maven/1/</url>
-      <layout>legacy</layout>
-    </repository>
-    <repository>
+   <repository>
       <id>m2.java.net</id>
       <name>Java.net Repository for Maven2</name>
       <url>http://download.java.net/maven/2/</url>
@@ -89,21 +85,6 @@
                     <extraarg>urn:riv:itintegration:registry:1=se.riv.itintegration.registry.v1</extraarg>
                   </extraargs>
                 </wsdloption>
-                <wsdloption>
-                  <wsdl>${schema.path}/./interactions/GetUpdatesInteraction/GetUpdatesInteraction_1.0_RIVTABP21.wsdl</wsdl>
-                  <extraargs>
-                    <extraarg>-p</extraarg>
-                    <extraarg>http://www.w3.org/2005/08/addressing=org.w3c.addressing.v1</extraarg>
-                    <extraarg>-p</extraarg>
-                    <extraarg>urn:riv:itintegration:engagementindex:GetUpdatesResponder:1=se.riv.itintegration.engagementindex.getupdatesresponder.v1</extraarg>
-                    <extraarg>-p</extraarg>
-                    <extraarg>urn:riv:itintegration:engagementindex:GetUpdatesInitiator:1=se.riv.itintegration.engagementindex.getupdatesinitiator.v1</extraarg>
-                    <extraarg>-p</extraarg>
-                    <extraarg>urn:riv:itintegration:engagementindex:GetUpdates:1:rivtabp21=se.riv.itintegration.engagementindex.getupdates.v1.rivtabp21</extraarg>
-                    <extraarg>-p</extraarg>
-                    <extraarg>urn:riv:itintegration:registry:1=se.riv.itintegration.registry.v1</extraarg>
-                  </extraargs>
-                </wsdloption>
               </wsdlOptions>
             </configuration>
             <goals>
@@ -114,9 +95,10 @@
       </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
+		<version>3.2</version>
         <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
       </plugin>
     </plugins>
