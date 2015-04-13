@@ -1,0 +1,5 @@
+# Kommentater till JAXWS Referensimpl (Java SE 6) #
+
+RIV TA 2.0 och 2.1 stödjer den i Java SE 6 ingående implementationen av JAX-WS. Det finns emellertid en defekt i det verktyg för att generera java-klasser från WSDL/XSD-filer som medföljer JDK 1.6 (wsimport). Det är en defekt i valideringen av WSDL, med konsekvensen att annoteringar i WSDL-filen på det sätt som föreskrivs av RIV TA 2.0 och 2.1 blir ett hinder för kodgenereringen. Defekten är rapporterad här: https://java.net/jira/browse/JAX_WS-819
+
+Det finns dock ingen stark koppling mellan den produkt som används för generering av Java-kalsser från WSDL/XSD och den JAXWS-stack som används runtime. Det går altså bra att använda t.ex. CXFs motsvarande verktyg wsdl2java för kodgenereringen och sedan använda den i Java SE 6 ingående JAXWS-implementationen som WS-stack. Denna portabilitet garanteras av JSR-181.
