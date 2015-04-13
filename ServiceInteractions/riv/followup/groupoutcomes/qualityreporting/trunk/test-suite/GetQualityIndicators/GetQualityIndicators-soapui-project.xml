@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="GetQualityIndicators" resourceRoot="${projectDir}" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetQualityIndicatorsResponderBinding" type="wsdl" bindingName="{urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicators:2:rivtabp21}GetQualityIndicatorsResponderBinding" soapVersion="1_1" anonymous="optional" definition="../../schemas/interactions/GetQualityIndicatorsInteraction/GetQualityIndicatorsInteraction_2.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/jiriuo/DEV/TK/KR/qualityreporting/trunk/schemas/interactions/GetQualityIndicatorsInteraction/GetQualityIndicatorsInteraction_2.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/jiriuo/DEV/TK/KR/qualityreporting/trunk/schemas/interactions/GetQualityIndicatorsInteraction/GetQualityIndicatorsInteraction_2.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.-->
+<wsdl:definitions name="GetQualityIndicatorsInteraction" targetNamespace="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicators:2:rivtabp21" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tjsr="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2" xmlns:tjsi="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsInitiator:2" xmlns:tns="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicators:2:rivtabp21" xmlns:itr="urn:riv:itintegration:registry:1">
+  <xs:annotation>
+    <xs:documentation>Tjänsteinteraktionens namn: GetQualityIndicatorsInteraction
+			 Beskrivning: 
+			    Uppföljning kärnprocess - hantera utfall för grupper - kvalitetsrapportering
+			 Revisioner: 
+			 Tjänstedomän: groupoutcomes:qualityreporting
+			 Tjänsteinteraktionstyp: Fråga-Svar
+			 WS-profil: RIVTABP21
+			 Förvaltas av: Sveriges Kommuner och Landsting</xs:documentation>
+  </xs:annotation>
+  <wsdl:types>
+    <xs:schema targetNamespace="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicators:2:rivtabp21">
+      <xs:import schemaLocation="GetQualityIndicatorsResponder_2.0.xsd" namespace="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2"/>
+      <xs:import schemaLocation="../../core_components/itintegration_registry_1.0.xsd" namespace="urn:riv:itintegration:registry:1"/>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="GetQualityIndicatorsRequest">
+    <wsdl:part name="LogicalAddress" element="itr:LogicalAddress">
+      <wsdl:documentation>The HSAId of the reporting system</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="parameters" element="tjsr:GetQualityIndicators"/>
+  </wsdl:message>
+  <wsdl:message name="GetQualityIndicatorsResponse">
+    <wsdl:part name="parameters" element="tjsr:GetQualityIndicatorsResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="GetQualityIndicatorsResponderInterface">
+    <wsdl:operation name="GetQualityIndicators">
+      <wsdl:input message="tns:GetQualityIndicatorsRequest"/>
+      <wsdl:output message="tns:GetQualityIndicatorsResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GetQualityIndicatorsResponderBinding" type="tns:GetQualityIndicatorsResponderInterface">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetQualityIndicators">
+      <soap:operation soapAction="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2:GetQualityIndicators" style="document"/>
+      <wsdl:input>
+        <soap:header use="literal" message="tns:GetQualityIndicatorsRequest" part="LogicalAddress"/>
+        <soap:body use="literal" parts="parameters"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GetQualityIndicatorsResponderService">
+    <wsdl:port name="GetQualityIndicatorsResponderPort" binding="tns:GetQualityIndicatorsResponderBinding">
+      <soap:address location="http://tempuri.org"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:/Users/jiriuo/DEV/TK/KR/qualityreporting/trunk/schemas/interactions/GetQualityIndicatorsInteraction/GetQualityIndicatorsResponder_2.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.-->
+<xs:schema targetNamespace="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" vc:minVersion="1.1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2" xmlns:core="urn:riv:followup:groupoutcomes:qualityreporting:2" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning">
+  <xs:import schemaLocation="../../core_components/groupoutcomes_qualityreporting_2.0.xsd" namespace="urn:riv:followup:groupoutcomes:qualityreporting:2"/>
+  <xs:element name="GetQualityIndicators" type="tns:GetQualityIndicatorsType"/>
+  <xs:element name="GetQualityIndicatorsResponse" type="tns:GetQualityIndicatorsResponseType"/>
+  <xs:complexType name="GetQualityIndicatorsType">
+    <xs:sequence>
+      <xs:element name="measureId" type="core:IIType" minOccurs="1" maxOccurs="unbounded"/>
+      <xs:element name="reportingPeriod" type="core:DatePeriodType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="includeMeasurements" type="xs:boolean" minOccurs="0" maxOccurs="1" default="true"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetQualityIndicatorsResponseType">
+    <xs:sequence>
+      <xs:element name="AggregatedQualityReport" type="core:AggregatedQualityReportType" minOccurs="1" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/jiriuo/DEV/TK/KR/qualityreporting/trunk/schemas/core_components/groupoutcomes_qualityreporting_2.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.-->
+<xs:schema targetNamespace="urn:riv:followup:groupoutcomes:qualityreporting:2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" vc:minVersion="1.1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:followup:groupoutcomes:qualityreporting:2" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning">
+  <xs:simpleType name="HSAIdType">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:complexType name="IIType">
+    <xs:annotation>
+      <xs:documentation>Id och utgivarens OID.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="root" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="extension" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="DateType">
+    <xs:annotation>
+      <xs:documentation>Datum uttrycks på formatet ”ÅÅÅÅMMDD”</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TimeStampType">
+    <xs:annotation>
+      <xs:documentation>A quantity specifying a point on the axis of natural time.
+        A point in time is most often represented as a calendar
+        expression.
+        
+        The time has the format YYYYMMDDhhmmss</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])(0[0-9]|1[0-9]|2[0123])([0-5])([0-9])([0-5])([0-9])"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="DatePeriodType">
+    <xs:annotation>
+      <xs:documentation>Avser starttid och sluttid för rapporterade värden.
+        Start specas till år, månad, dag
+        End Specas till år, månad, dag</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="start" type="tns:DateType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="end" type="tns:DateType" minOccurs="1" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ConfidenceInterval95percentType">
+    <xs:annotation>
+      <xs:documentation>Värdeintervall uttryckt som från-och-med och till-och-med.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="low" type="xs:double" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="high" type="xs:double" minOccurs="1" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReportingSystemType">
+    <xs:annotation>
+      <xs:documentation>Det system som producerar indikatorRapporten.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="hsaId" type="tns:HSAIdType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SourceSystemType">
+    <xs:annotation>
+      <xs:documentation>Det system som tillhandahåller värden i indikatorRapporten.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="systemId" type="tns:IIType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReportingOrganizationType">
+    <xs:annotation>
+      <xs:documentation>Den organisation som producerar IndikatorRapporten.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="hsaId" type="tns:HSAIdType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MissingMeasureType">
+    <xs:annotation>
+      <xs:documentation>Om värde saknas för en performingOrganization skall detta anges genom att en missing measure 
+        anges istället för en Proportion- eller ContinuousVariableMeasure .</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="reasonCode" type="tns:MissingMeasureReasonCodeEnum" minOccurs="0" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AggregatedQualityReportType">
+    <xs:annotation>
+      <xs:documentation>En IndikatorRapport skapas av ett rapporterande system och är huvudklassen vid 
+        överföring av indikatorer. För vajre indikatorrapport kommer ett eller flera indikatorVärden.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="measurementChecksum" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="reportingPeriod" type="tns:DatePeriodType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="reportingSystem" type="tns:ReportingSystemType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="reportingOrganization" type="tns:ReportingOrganizationType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="measurement" type="tns:MeasurementType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MeasurementType">
+    <xs:annotation>
+      <xs:documentation>IndikatorVärde är det rapporterade resultatet för en indikator för en viss resultatEnhet och för en viss
+        mätperiod. En indikatorRapport innehåller flera IndikatorVärden.
+        
+        För att visa vilket underlag som ligger till grund för värdet är det möjligt att ange ett datumintervall för
+        vilket mätvärden är beräknat. Detta intervall kommer att rymmas inom intervallet som anges för rapporten.
+        
+        Antingen angivet som
+        1. en kvot, då med värden angivna som täljare och nämnare
+        2. som en procentsats då med mätvärde angivet i procent och enhet = %
+        3. som ett mätvärde då med godtycklig enhet angiven som mätenhet.
+        Ett resultat kan ha ett 95% konfidensintervall angivet som ett intervall med ett lågt och ett högt värde för
+        att definiera spannet.
+        
+        Om en resultatEnhet saknar (tillräckliga) värden för en viss mätperiod anges ändå ett indikatorvärde för
+        avsedd mätperiod och resultatEnhet men med NullFlavor="NI" angivet för mätvärde/kvot.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="measureId" type="tns:IIType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="measureIdVersionNumber" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="measurePeriod" type="tns:DatePeriodType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="firstServiceEncounter" type="tns:DateType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="lastServiceEncounter" type="tns:DateType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="proportionMeasure" type="tns:ProportionMeasureType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="continuousVariableMeasure" type="tns:ContinuousVariableMeasureType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="cohortMeasure" type="tns:CohortMeasureType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="missingMeasure" type="tns:MissingMeasureType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="performingOrganization" type="tns:PerformingOrganizationType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="sourceSystem" type="tns:SourceSystemType" minOccurs="1" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProportionMeasureType">
+    <xs:annotation>
+      <xs:documentation>De indikatorvärden som mäts som kvoter har sitt värde i klassen ProportionMeasure. Denna klass innehåller täljare, nämnare och kvoten däremellan.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="rate" type="xs:double" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="denominator" type="xs:double" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="numerator" type="xs:double" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="confidenceInterval95percent" type="tns:ConfidenceInterval95percentType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="standardDeviation" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="coverage" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="exclusions" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="referenceIntervalRate" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ContinuousVariableMeasureType">
+    <xs:annotation>
+      <xs:documentation>De indikatorvärden som mäts som mätvärden har sitt värde i klassen ContinuousVariableMeasureType.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="measurePopulation" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="value" type="xs:double" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="confidenceInterval95percent" type="tns:ConfidenceInterval95percentType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="standardDeviation" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="coverage" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="exclusions" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="referenceIntervalValue" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CohortMeasureType">
+    <xs:annotation>
+      <xs:documentation>De indikatorvärden som enbart räknar förekomster av något har sitt värde i klassen ContinuousVariableMeasureType.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="cohort" type="xs:double" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="confidenceInterval95percent" type="tns:ConfidenceInterval95percentType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="standardDeviation" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="coverage" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="exclusions" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="referenceIntervalValue" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PerformingOrganizationType">
+    <xs:annotation>
+      <xs:documentation>En resultatenhet är den enhet för vilken ett indikatorVärde uppmätts.
+        En resultatEnhet ingår i en hierarkisk struktur och kan knytas till en högre nivå i hierarkin genom att referera
+        till en enhet på högre nivå.
+        
+        Ett par nivåer har specifika koder, OrganisationsTypKod, som anger
+        Riket - Används vid aggregering på riksnivå samt fungerar som snittvärde för riket vid rapportering
+        på en lägre nivå
+        Region - landsting eller region samt fungerar som snittvärde för regionen vid rapportering på en lägre nivå
+        Kommun - Används ej
+        Sjukhus - identifieras genom sjukhuskod eller HSAId
+        Vårdenhet - den lägsta rapporterande enheten om typ av verksamhet är okänd.
+        Primärvårdsenhet - typ av verksamhet och en underkategori till vårdenhet
+        Medicinklinik - typ av verksamhet och en underkategori till vårdenhet</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="hsaId" type="tns:HSAIdType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="organizationName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="organizationType" type="tns:OrganizationTypeCodeEnum" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="organizationId" type="tns:IIType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="asOrganizationPartOf" type="tns:PerformingOrganizationType" minOccurs="0" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="MissingMeasureReasonCodeEnum">
+    <xs:annotation>
+      <xs:documentation>Kod som anger varför en enhet saknar värde. 
+        Giltiga värden är ”MSK” som betyder att värdet är känt men har dolts 
+        pga lägre antal rapporterade värden än tröskelvärde för visning, 
+        ”INV, vilket betyder att nämnaren eller mätpopulationen är 0 och inget värde kan anges, 
+        samt ”UNK” som betyder att inrapporterade värden saknas från organisationen i fråga. 
+        I schemat tillåts även "NI" som är en generell felkod som kan användas om producenten 
+        inte kan urskilja orsaken till att ett värde saknas, "NI" är inte specificerad i TKB:n.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="MSK"/>
+      <xs:enumeration value="UNK"/>
+      <xs:enumeration value="INV"/>
+      <xs:enumeration value="NI"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OrganizationTypeCodeEnum">
+    <xs:annotation>
+      <xs:documentation>Anger organisationstyp, där värdet hämtas från ett diskret urval av koder</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Land"/>
+      <xs:enumeration value="Lan"/>
+      <xs:enumeration value="Kommun"/>
+      <xs:enumeration value="Sjukhus"/>
+      <xs:enumeration value="Vardenhet"/>
+      <xs:enumeration value="Sjukvardsregion"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/jiriuo/DEV/TK/KR/qualityreporting/trunk/schemas/core_components/itintegration_registry_1.0.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="urn:riv:itintegration:registry:1" elementFormDefault="qualified" version="1.0" xmlns="urn:riv:itintegration:registry:1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:annotation>
+    <xs:documentation>Beskrivning: 	Grundläggande informationsobjekt för domänen itintegration:registry (adressering av tjänster)
+			
+			Revisionshistorik: 2011-06-27 Mats Ekhammar, Callista Enterprise AB
+				Added ServiceContractType
+			
+			Datum:			2011-05-04
+			Beskrivning:	Initial version
+			Författare:		marcus.krantz@callistaenterprise.se</xs:documentation>
+  </xs:annotation>
+  <xs:element name="LogicalAddress" type="LogicalAddressType"/>
+  <xs:element name="ServiceContract" type="ServiceContractType"/>
+  <xs:simpleType name="LogicalAddressType">
+    <xs:annotation>
+      <xs:documentation>Defines the type for logical address according to national reference architecture.
+				Superseeds wsa:To as type for logical address header in RIVTA 2.1.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:complexType name="ServiceContractType">
+    <xs:annotation>
+      <xs:documentation>Type which describes a service contract. Used in interaction GetSupportedServiceContracts.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ServiceContractNamespace" type="xs:anyURI"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>${webServiceUrl}</con:endpoint><con:endpoint>http://tempuri.org</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2:GetQualityIndicators" name="GetQualityIndicators" bindingOperationName="GetQualityIndicators" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://tempuri.org</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2" xmlns:urn2="urn:riv:followup:groupoutcomes:qualityreporting:2">
+   <soapenv:Header>
+      <urn:LogicalAddress>?</urn:LogicalAddress>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn1:GetQualityIndicators>
+         <!--1 or more repetitions:-->
+         <urn1:measureId>
+            <urn2:root>?</urn2:root>
+            <!--Optional:-->
+            <urn2:extension>?</urn2:extension>
+            <!--You may enter ANY elements at this point-->
+         </urn1:measureId>
+         <urn1:reportingPeriod>
+            <urn2:start>?</urn2:start>
+            <urn2:end>?</urn2:end>
+            <!--You may enter ANY elements at this point-->
+         </urn1:reportingPeriod>
+         <!--Optional:-->
+         <urn1:includeMeasurements>true</urn1:includeMeasurements>
+         <!--You may enter ANY elements at this point-->
+      </urn1:GetQualityIndicators>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2:GetQualityIndicators"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite name="TestSuite1"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase1" searchProperties="true" id="08d4cf38-e101-4c54-93f5-1c0ef8c32383"><con:description>Testar strukturen i returnerat svar innehållande 'measurments'</con:description><con:settings/><con:testStep type="groovy" name="Read_data"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def dataFile = new File(utils.projectPath + "/data.xml")
+log.info("Read data file data.xml")
+def source = new XmlDataReader(context, dataFile)
+
+source.load("TestCase1")
+log.info("Loaded TestCase1")</script></con:config></con:testStep><con:testStep type="request" name="Test_Request_1"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetQualityIndicatorsResponderBinding</con:interface><con:operation>GetQualityIndicators</con:operation><con:request name="Test_Request_1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="x-rivta-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
+  &lt;con:entry key="x-mock-response" value="Response-Land"/>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2" xmlns:urn2="urn:riv:followup:groupoutcomes:qualityreporting:2">
+   <soapenv:Header>
+      <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn1:GetQualityIndicators>
+         <!--1 or more repetitions:-->
+         <urn1:measureId>
+            <urn2:root>${measureIdOid}</urn2:root>
+            <urn2:extension>${measureId}</urn2:extension>
+         </urn1:measureId>
+         <urn1:reportingPeriod>
+            <urn2:start>${reportingPeriodStart}</urn2:start>
+            <urn2:end>${reportingPeriodEnd}</urn2:end>
+         </urn1:reportingPeriod>
+         <urn1:includeMeasurements>true</urn1:includeMeasurements>
+      </urn1:GetQualityIndicators>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion"/><con:assertion type="GroovyScriptAssertion" name="Script Assertion"><con:configuration><scriptText>import se.skl.rivta.testsupport.soapui.validation.SchematronValidator
+import se.skl.rivta.testsupport.soapui.ContextHelper
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def contextHelper = new ContextHelper(context)
+def validator = new SchematronValidator()
+
+def failures = validator.validateMessage(messageExchange.response.getResponseContent(),
+	new File(utils.projectPath + "/constraints.sch"))
+
+failures.each { failure -> contextHelper.fail(failure.text) }
+</scriptText></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase2" searchProperties="true" id="d966975f-a64b-4024-a57d-4feb09aba7a9"><con:description>Testar att flaggan 'includeMeasurements' = false i request medför att inga mätvärden bifogas i response.</con:description><con:settings/><con:testStep type="groovy" name="Data for TestCase2"><con:settings/><con:config><script>import se.skl.rivta.testsupport.soapui.datasource.XmlDataReader
+import com.eviware.soapui.support.GroovyUtils
+
+def utils = new GroovyUtils(context)
+def dataFile = new File(utils.projectPath + "/data.xml")
+log.info("Read data file data.xml")
+def source = new XmlDataReader(context, dataFile)
+
+source.load("TestCase2")
+log.info("Loaded TestCase2")</script></con:config></con:testStep><con:testStep type="request" name="Test_Request_2"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetQualityIndicatorsResponderBinding</con:interface><con:operation>GetQualityIndicators</con:operation><con:request name="Test_Request_2"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  &lt;con:entry key="x-rivta-serviceconsumer-hsaid" value="${httpHeaderHsaId}"/>
+  &lt;con:entry key="x-mock-response" value="Response-CHECKSUM-ONLY"/>
+&lt;/xml-fragment></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>${webServiceUrl}</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:itintegration:registry:1" xmlns:urn1="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2" xmlns:urn2="urn:riv:followup:groupoutcomes:qualityreporting:2">
+   <soapenv:Header>
+      <urn:LogicalAddress>${logicalAddress}</urn:LogicalAddress>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn1:GetQualityIndicators>
+         <!--1 or more repetitions:-->
+         <urn1:measureId>
+            <urn2:root>${measureIdOid}</urn2:root>
+            <urn2:extension>${measureId}</urn2:extension>
+         </urn1:measureId>
+         <urn1:reportingPeriod>
+            <urn2:start>${reportingPeriodStart}</urn2:start>
+            <urn2:end>${reportingPeriodEnd}</urn2:end>
+         </urn1:reportingPeriod>
+         <urn1:includeMeasurements>false</urn1:includeMeasurements>
+      </urn1:GetQualityIndicators>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion"/><con:assertion type="XPath Match" name="XPath Match"><con:configuration><path>declare namespace soapenv='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace urn1='urn:riv:followup:groupoutcomes:qualityreporting:2';
+declare namespace urn='urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2';
+exists(//urn1:measurement)</path><content>false</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
