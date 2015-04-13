@@ -1,0 +1,1222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="GetQualityIndicatorsMock" resourceRoot="${projectDir}" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="GetQualityIndicatorsResponderBinding" type="wsdl" bindingName="{urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicators:2:rivtabp21}GetQualityIndicatorsResponderBinding" soapVersion="1_1" anonymous="optional" definition="../../schemas/interactions/GetQualityIndicatorsInteraction/GetQualityIndicatorsInteraction_2.0_RIVTABP21.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/jiriuo/DEV/TK/KR/qualityreporting/trunk/schemas/interactions/GetQualityIndicatorsInteraction/GetQualityIndicatorsInteraction_2.0_RIVTABP21.wsdl"><con:part><con:url>file:/Users/jiriuo/DEV/TK/KR/qualityreporting/trunk/schemas/interactions/GetQualityIndicatorsInteraction/GetQualityIndicatorsInteraction_2.0_RIVTABP21.wsdl</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.-->
+<wsdl:definitions name="GetQualityIndicatorsInteraction" targetNamespace="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicators:2:rivtabp21" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tjsr="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2" xmlns:tjsi="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsInitiator:2" xmlns:tns="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicators:2:rivtabp21" xmlns:itr="urn:riv:itintegration:registry:1">
+  <xs:annotation>
+    <xs:documentation>Tjänsteinteraktionens namn: GetQualityIndicatorsInteraction
+			 Beskrivning: 
+			    Uppföljning kärnprocess - hantera utfall för grupper - kvalitetsrapportering
+			 Revisioner: 
+			 Tjänstedomän: groupoutcomes:qualityreporting
+			 Tjänsteinteraktionstyp: Fråga-Svar
+			 WS-profil: RIVTABP21
+			 Förvaltas av: Sveriges Kommuner och Landsting</xs:documentation>
+  </xs:annotation>
+  <wsdl:types>
+    <xs:schema targetNamespace="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicators:2:rivtabp21">
+      <xs:import schemaLocation="GetQualityIndicatorsResponder_2.0.xsd" namespace="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2"/>
+      <xs:import schemaLocation="../../core_components/itintegration_registry_1.0.xsd" namespace="urn:riv:itintegration:registry:1"/>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="GetQualityIndicatorsRequest">
+    <wsdl:part name="LogicalAddress" element="itr:LogicalAddress">
+      <wsdl:documentation>The HSAId of the reporting system</wsdl:documentation>
+    </wsdl:part>
+    <wsdl:part name="parameters" element="tjsr:GetQualityIndicators"/>
+  </wsdl:message>
+  <wsdl:message name="GetQualityIndicatorsResponse">
+    <wsdl:part name="parameters" element="tjsr:GetQualityIndicatorsResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="GetQualityIndicatorsResponderInterface">
+    <wsdl:operation name="GetQualityIndicators">
+      <wsdl:input message="tns:GetQualityIndicatorsRequest"/>
+      <wsdl:output message="tns:GetQualityIndicatorsResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GetQualityIndicatorsResponderBinding" type="tns:GetQualityIndicatorsResponderInterface">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetQualityIndicators">
+      <soap:operation soapAction="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2:GetQualityIndicators" style="document"/>
+      <wsdl:input>
+        <soap:header use="literal" message="tns:GetQualityIndicatorsRequest" part="LogicalAddress"/>
+        <soap:body use="literal" parts="parameters"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GetQualityIndicatorsResponderService">
+    <wsdl:port name="GetQualityIndicatorsResponderPort" binding="tns:GetQualityIndicatorsResponderBinding">
+      <soap:address location="http://tempuri.org"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:/Users/jiriuo/DEV/TK/KR/qualityreporting/trunk/schemas/interactions/GetQualityIndicatorsInteraction/GetQualityIndicatorsResponder_2.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.-->
+<xs:schema targetNamespace="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" vc:minVersion="1.1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2" xmlns:core="urn:riv:followup:groupoutcomes:qualityreporting:2" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning">
+  <xs:import schemaLocation="../../core_components/groupoutcomes_qualityreporting_2.0.xsd" namespace="urn:riv:followup:groupoutcomes:qualityreporting:2"/>
+  <xs:element name="GetQualityIndicators" type="tns:GetQualityIndicatorsType"/>
+  <xs:element name="GetQualityIndicatorsResponse" type="tns:GetQualityIndicatorsResponseType"/>
+  <xs:complexType name="GetQualityIndicatorsType">
+    <xs:sequence>
+      <xs:element name="measureId" type="core:IIType" minOccurs="1" maxOccurs="unbounded"/>
+      <xs:element name="reportingPeriod" type="core:DatePeriodType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="includeMeasurements" type="xs:boolean" minOccurs="0" maxOccurs="1" default="true"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GetQualityIndicatorsResponseType">
+    <xs:sequence>
+      <xs:element name="AggregatedQualityReport" type="core:AggregatedQualityReportType" minOccurs="1" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/jiriuo/DEV/TK/KR/qualityreporting/trunk/schemas/core_components/groupoutcomes_qualityreporting_2.0.xsd</con:url><con:content><![CDATA[<!--Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements. See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership. Sveriges Kommuner och Landsting licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License. You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.-->
+<xs:schema targetNamespace="urn:riv:followup:groupoutcomes:qualityreporting:2" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0" vc:minVersion="1.1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:riv:followup:groupoutcomes:qualityreporting:2" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning">
+  <xs:simpleType name="HSAIdType">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:complexType name="IIType">
+    <xs:annotation>
+      <xs:documentation>Id och utgivarens OID.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="root" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="extension" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="DateType">
+    <xs:annotation>
+      <xs:documentation>Datum uttrycks på formatet ”ÅÅÅÅMMDD”</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TimeStampType">
+    <xs:annotation>
+      <xs:documentation>A quantity specifying a point on the axis of natural time.
+        A point in time is most often represented as a calendar
+        expression.
+        
+        The time has the format YYYYMMDDhhmmss</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])(0[0-9]|1[0-9]|2[0123])([0-5])([0-9])([0-5])([0-9])"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="DatePeriodType">
+    <xs:annotation>
+      <xs:documentation>Avser starttid och sluttid för rapporterade värden.
+        Start specas till år, månad, dag
+        End Specas till år, månad, dag</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="start" type="tns:DateType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="end" type="tns:DateType" minOccurs="1" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ConfidenceInterval95percentType">
+    <xs:annotation>
+      <xs:documentation>Värdeintervall uttryckt som från-och-med och till-och-med.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="low" type="xs:double" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="high" type="xs:double" minOccurs="1" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReportingSystemType">
+    <xs:annotation>
+      <xs:documentation>Det system som producerar indikatorRapporten.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="hsaId" type="tns:HSAIdType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SourceSystemType">
+    <xs:annotation>
+      <xs:documentation>Det system som tillhandahåller värden i indikatorRapporten.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="systemId" type="tns:IIType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReportingOrganizationType">
+    <xs:annotation>
+      <xs:documentation>Den organisation som producerar IndikatorRapporten.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="hsaId" type="tns:HSAIdType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MissingMeasureType">
+    <xs:annotation>
+      <xs:documentation>Om värde saknas för en performingOrganization skall detta anges genom att en missing measure 
+        anges istället för en Proportion- eller ContinuousVariableMeasure .</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="reasonCode" type="tns:MissingMeasureReasonCodeEnum" minOccurs="0" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AggregatedQualityReportType">
+    <xs:annotation>
+      <xs:documentation>En IndikatorRapport skapas av ett rapporterande system och är huvudklassen vid 
+        överföring av indikatorer. För vajre indikatorrapport kommer ett eller flera indikatorVärden.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="measurementChecksum" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="reportingPeriod" type="tns:DatePeriodType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="reportingSystem" type="tns:ReportingSystemType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="reportingOrganization" type="tns:ReportingOrganizationType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="measurement" type="tns:MeasurementType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MeasurementType">
+    <xs:annotation>
+      <xs:documentation>IndikatorVärde är det rapporterade resultatet för en indikator för en viss resultatEnhet och för en viss
+        mätperiod. En indikatorRapport innehåller flera IndikatorVärden.
+        
+        För att visa vilket underlag som ligger till grund för värdet är det möjligt att ange ett datumintervall för
+        vilket mätvärden är beräknat. Detta intervall kommer att rymmas inom intervallet som anges för rapporten.
+        
+        Antingen angivet som
+        1. en kvot, då med värden angivna som täljare och nämnare
+        2. som en procentsats då med mätvärde angivet i procent och enhet = %
+        3. som ett mätvärde då med godtycklig enhet angiven som mätenhet.
+        Ett resultat kan ha ett 95% konfidensintervall angivet som ett intervall med ett lågt och ett högt värde för
+        att definiera spannet.
+        
+        Om en resultatEnhet saknar (tillräckliga) värden för en viss mätperiod anges ändå ett indikatorvärde för
+        avsedd mätperiod och resultatEnhet men med NullFlavor="NI" angivet för mätvärde/kvot.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="measureId" type="tns:IIType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="measureIdVersionNumber" type="xs:integer" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="measurePeriod" type="tns:DatePeriodType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="firstServiceEncounter" type="tns:DateType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="lastServiceEncounter" type="tns:DateType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="proportionMeasure" type="tns:ProportionMeasureType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="continuousVariableMeasure" type="tns:ContinuousVariableMeasureType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="cohortMeasure" type="tns:CohortMeasureType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="missingMeasure" type="tns:MissingMeasureType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="performingOrganization" type="tns:PerformingOrganizationType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="sourceSystem" type="tns:SourceSystemType" minOccurs="1" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProportionMeasureType">
+    <xs:annotation>
+      <xs:documentation>De indikatorvärden som mäts som kvoter har sitt värde i klassen ProportionMeasure. Denna klass innehåller täljare, nämnare och kvoten däremellan.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="rate" type="xs:double" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="denominator" type="xs:double" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="numerator" type="xs:double" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="confidenceInterval95percent" type="tns:ConfidenceInterval95percentType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="standardDeviation" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="coverage" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="exclusions" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="referenceIntervalRate" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ContinuousVariableMeasureType">
+    <xs:annotation>
+      <xs:documentation>De indikatorvärden som mäts som mätvärden har sitt värde i klassen ContinuousVariableMeasureType.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="measurePopulation" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="value" type="xs:double" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="confidenceInterval95percent" type="tns:ConfidenceInterval95percentType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="standardDeviation" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="coverage" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="exclusions" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="referenceIntervalValue" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CohortMeasureType">
+    <xs:annotation>
+      <xs:documentation>De indikatorvärden som enbart räknar förekomster av något har sitt värde i klassen ContinuousVariableMeasureType.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="cohort" type="xs:double" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="confidenceInterval95percent" type="tns:ConfidenceInterval95percentType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="standardDeviation" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="coverage" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="exclusions" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="referenceIntervalValue" type="xs:double" minOccurs="0" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PerformingOrganizationType">
+    <xs:annotation>
+      <xs:documentation>En resultatenhet är den enhet för vilken ett indikatorVärde uppmätts.
+        En resultatEnhet ingår i en hierarkisk struktur och kan knytas till en högre nivå i hierarkin genom att referera
+        till en enhet på högre nivå.
+        
+        Ett par nivåer har specifika koder, OrganisationsTypKod, som anger
+        Riket - Används vid aggregering på riksnivå samt fungerar som snittvärde för riket vid rapportering
+        på en lägre nivå
+        Region - landsting eller region samt fungerar som snittvärde för regionen vid rapportering på en lägre nivå
+        Kommun - Används ej
+        Sjukhus - identifieras genom sjukhuskod eller HSAId
+        Vårdenhet - den lägsta rapporterande enheten om typ av verksamhet är okänd.
+        Primärvårdsenhet - typ av verksamhet och en underkategori till vårdenhet
+        Medicinklinik - typ av verksamhet och en underkategori till vårdenhet</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="hsaId" type="tns:HSAIdType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="organizationName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="organizationType" type="tns:OrganizationTypeCodeEnum" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="organizationId" type="tns:IIType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="asOrganizationPartOf" type="tns:PerformingOrganizationType" minOccurs="0" maxOccurs="1"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="MissingMeasureReasonCodeEnum">
+    <xs:annotation>
+      <xs:documentation>Kod som anger varför en enhet saknar värde. 
+        Giltiga värden är ”MSK” som betyder att värdet är känt men har dolts 
+        pga lägre antal rapporterade värden än tröskelvärde för visning, 
+        ”INV, vilket betyder att nämnaren eller mätpopulationen är 0 och inget värde kan anges, 
+        samt ”UNK” som betyder att inrapporterade värden saknas från organisationen i fråga. 
+        I schemat tillåts även "NI" som är en generell felkod som kan användas om producenten 
+        inte kan urskilja orsaken till att ett värde saknas, "NI" är inte specificerad i TKB:n.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="MSK"/>
+      <xs:enumeration value="UNK"/>
+      <xs:enumeration value="INV"/>
+      <xs:enumeration value="NI"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OrganizationTypeCodeEnum">
+    <xs:annotation>
+      <xs:documentation>Anger organisationstyp, där värdet hämtas från ett diskret urval av koder</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Land"/>
+      <xs:enumeration value="Lan"/>
+      <xs:enumeration value="Kommun"/>
+      <xs:enumeration value="Sjukhus"/>
+      <xs:enumeration value="Vardenhet"/>
+      <xs:enumeration value="Sjukvardsregion"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/jiriuo/DEV/TK/KR/qualityreporting/trunk/schemas/core_components/itintegration_registry_1.0.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="urn:riv:itintegration:registry:1" elementFormDefault="qualified" version="1.0" xmlns="urn:riv:itintegration:registry:1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:annotation>
+    <xs:documentation>Beskrivning: 	Grundläggande informationsobjekt för domänen itintegration:registry (adressering av tjänster)
+			
+			Revisionshistorik: 2011-06-27 Mats Ekhammar, Callista Enterprise AB
+				Added ServiceContractType
+			
+			Datum:			2011-05-04
+			Beskrivning:	Initial version
+			Författare:		marcus.krantz@callistaenterprise.se</xs:documentation>
+  </xs:annotation>
+  <xs:element name="LogicalAddress" type="LogicalAddressType"/>
+  <xs:element name="ServiceContract" type="ServiceContractType"/>
+  <xs:simpleType name="LogicalAddressType">
+    <xs:annotation>
+      <xs:documentation>Defines the type for logical address according to national reference architecture.
+				Superseeds wsa:To as type for logical address header in RIVTA 2.1.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:complexType name="ServiceContractType">
+    <xs:annotation>
+      <xs:documentation>Type which describes a service contract. Used in interaction GetSupportedServiceContracts.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="ServiceContractNamespace" type="xs:anyURI"/>
+      <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://HIQSTOM097.local:8088/services/GetQualityIndicatorsMockService</con:endpoint><con:endpoint>http://tempuri.org</con:endpoint></con:endpoints><con:operation isOneWay="false" action="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2:GetQualityIndicators" name="GetQualityIndicators" bindingOperationName="GetQualityIndicators" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/></con:operation></con:interface><con:mockService port="8088" path="/services/GetQualityIndicatorsMockService" host="HIQSTOM097.local" name="GetQualityIndicatorsMockService" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:properties/><con:mockOperation name="GetQualityIndicators" interface="GetQualityIndicatorsResponderBinding" operation="GetQualityIndicators"><con:settings/><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SCRIPT</con:dispatchStyle><con:dispatchPath>import com.eviware.soapui.support.XmlHolder
+
+def holder = new XmlHolder( mockRequest.requestContent )
+holder.namespaces['soapenv'] = 'http://schemas.xmlsoap.org/soap/envelope/'
+holder.namespaces['urn'] = 'urn:riv:itintegration:registry:1'
+holder.namespaces['urn1'] = 'urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2'
+holder.namespaces['urn2'] = 'urn:riv:followup:groupoutcomes:qualityreporting:2'
+
+// Read request data
+def logicalAddress= holder.getNodeValue('/soapenv:Envelope/soapenv:Header/urn:LogicalAddress')
+def measureIdRoot = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetQualityIndicators/urn1:measureId[1]/urn2:root')
+def measureIdExtension = holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetQualityIndicators/urn1:measureId[1]/urn2:extension')
+def reportingPeriodStart= holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetQualityIndicators/urn1:reportingPeriod/urn2:start')
+def reportingPeriodEnd= holder.getNodeValue('/soapenv:Envelope/soapenv:Body/urn1:GetQualityIndicators/urn1:reportingPeriod/urn2:end')
+
+// Put in requestContext for access in repsonse
+requestContext.logicalAddressFromRequest = logicalAddress
+requestContext.measureIdRootFromRequest = measureIdRoot
+requestContext.measureIdExtensionFromRequest = measureIdExtension
+requestContext.reportingPeriodStartFromRequest = reportingPeriodStart
+requestContext.reportingPeriodStartFromRequest = reportingPeriodEnd
+
+// Choose the response
+// If header 'x-mock-response' is set then use it otherwise use value from 'measureId' value from request
+def responseName
+def responseNameFromHeader = mockRequest.requestHeaders['x-mock-response'][0]
+log.info("responseName from header(x-mock-response): ${responseNameFromHeader}")
+
+if(responseNameFromHeader){
+	responseName= responseNameFromHeader
+	log.info("Using responseName from header(x-mock-response): ${responseName}")
+}else{
+	responseName= measureIdExtension
+	log.info("Using responseName from measureId): ${responseName}")
+}
+
+return responseName</con:dispatchPath><con:response name="Response-Land" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2" xmlns:urn1="urn:riv:followup:groupoutcomes:qualityreporting:2">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetQualityIndicatorsResponse>
+         <urn:AggregatedQualityReport>
+            <urn1:measurementChecksum>CHECKSUM</urn1:measurementChecksum>
+            <urn1:reportingPeriod>
+               <urn1:start>${reportingPeriodStartFromRequest}</urn1:start>
+               <urn1:end>${reportingPeriodStartFromRequest}</urn1:end>
+            </urn1:reportingPeriod>
+            <urn1:reportingSystem>
+               <urn1:hsaId>${logicalAddressFromRequest}</urn1:hsaId>
+               <urn1:name>REPORTING-SYSTEM-NAME</urn1:name>
+            </urn1:reportingSystem>
+            <urn1:reportingOrganization>
+               <urn1:hsaId>REPORTING-ORG-HSAID</urn1:hsaId>
+               <urn1:name>REPORTING-ORG-NAME</urn1:name>
+            </urn1:reportingOrganization>
+            <urn1:measurement>
+               <urn1:measureId>
+                  <urn1:root>${measureIdRootFromRequest}</urn1:root>
+                  <urn1:extension>${measureIdExtensionFromRequest}</urn1:extension>
+               </urn1:measureId>
+               <urn1:measureIdVersionNumber>1</urn1:measureIdVersionNumber>
+               <urn1:measurePeriod>
+                  <urn1:start>20130301</urn1:start>
+                  <urn1:end>20130331</urn1:end>
+               </urn1:measurePeriod>
+               <urn1:firstServiceEncounter>20130310</urn1:firstServiceEncounter>
+               <urn1:lastServiceEncounter>20130320</urn1:lastServiceEncounter>
+               <urn1:proportionMeasure>
+                  <urn1:rate>0.5</urn1:rate>
+                  <urn1:denominator>10</urn1:denominator>
+                  <urn1:numerator>5</urn1:numerator>
+               </urn1:proportionMeasure>
+               <urn1:performingOrganization>
+                  <urn1:organizationName>Riket</urn1:organizationName>
+                  <urn1:organizationType>Land</urn1:organizationType>
+                  <urn1:organizationId>
+                     <urn1:root>1.2.752.129.2.2.1.19</urn1:root>
+                     <urn1:extension>SE</urn1:extension>
+                  </urn1:organizationId>
+               </urn1:performingOrganization>
+               <urn1:sourceSystem>
+                  <urn1:systemId>
+                     <urn1:root>1.2.752.129.2.1.2.1</urn1:root>
+                     <urn1:extension>SOURCE-SYSTEM-LOCAL-ID</urn1:extension>
+                  </urn1:systemId>
+                  <urn1:name>SOURCE-SYSTEM-NAME</urn1:name>
+               </urn1:sourceSystem>
+            </urn1:measurement>
+         </urn:AggregatedQualityReport>
+      </urn:GetQualityIndicatorsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2:GetQualityIndicators"/></con:response><con:response name="Response-Lan-Land" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2" xmlns:urn1="urn:riv:followup:groupoutcomes:qualityreporting:2">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetQualityIndicatorsResponse>
+         <urn:AggregatedQualityReport>
+            <urn1:measurementChecksum>CHECKSUM</urn1:measurementChecksum>
+            <urn1:reportingPeriod>
+               <urn1:start>${reportingPeriodStartFromRequest}</urn1:start>
+               <urn1:end>${reportingPeriodStartFromRequest}</urn1:end>
+            </urn1:reportingPeriod>
+            <urn1:reportingSystem>
+               <urn1:hsaId>${logicalAddressFromRequest}</urn1:hsaId>
+               <urn1:name>REPORTING-SYSTEM-NAME</urn1:name>
+            </urn1:reportingSystem>
+            <urn1:reportingOrganization>
+               <urn1:hsaId>REPORTING-ORG-HSAID</urn1:hsaId>
+               <urn1:name>REPORTING-ORG-NAME</urn1:name>
+            </urn1:reportingOrganization>
+            <urn1:measurement>
+               <urn1:measureId>
+                  <urn1:root>${measureIdRootFromRequest}</urn1:root>
+                  <urn1:extension>${measureIdExtensionFromRequest}</urn1:extension>
+               </urn1:measureId>
+               <urn1:measureIdVersionNumber>1</urn1:measureIdVersionNumber>
+               <urn1:measurePeriod>
+                  <urn1:start>20130301</urn1:start>
+                  <urn1:end>20130331</urn1:end>
+               </urn1:measurePeriod>
+               <urn1:firstServiceEncounter>20130310</urn1:firstServiceEncounter>
+               <urn1:lastServiceEncounter>20130320</urn1:lastServiceEncounter>
+               <urn1:proportionMeasure>
+                  <urn1:rate>0.5</urn1:rate>
+                  <urn1:denominator>10</urn1:denominator>
+                  <urn1:numerator>5</urn1:numerator>
+               </urn1:proportionMeasure>
+               <urn1:performingOrganization>
+                  <urn1:organizationName>Stockholm</urn1:organizationName>
+                  <urn1:organizationType>Lan</urn1:organizationType>
+                  <urn1:organizationId>
+                     <urn1:root>1.2.752.129.2.2.1.18</urn1:root>
+                     <urn1:extension>01</urn1:extension>
+                  </urn1:organizationId>
+                  <urn1:asOrganizationPartOf>
+                     <urn1:organizationName>Riket</urn1:organizationName>
+                     <urn1:organizationType>Land</urn1:organizationType>
+                     <urn1:organizationId>
+                        <urn1:root>1.2.752.129.2.2.1.19</urn1:root>
+                        <urn1:extension>SE</urn1:extension>
+                     </urn1:organizationId>
+                  </urn1:asOrganizationPartOf>
+               </urn1:performingOrganization>
+               <urn1:sourceSystem>
+                  <urn1:systemId>
+                     <urn1:root>1.2.752.129.2.1.2.1</urn1:root>
+                     <urn1:extension>SOURCE-SYSTEM-ID</urn1:extension>
+                  </urn1:systemId>
+                  <urn1:name>SOURCE-SYSTEM-NAME</urn1:name>
+               </urn1:sourceSystem>
+            </urn1:measurement>
+         </urn:AggregatedQualityReport>
+      </urn:GetQualityIndicatorsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2:GetQualityIndicators"/></con:response><con:response name="Response-VE-Lan-Land" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2" xmlns:urn1="urn:riv:followup:groupoutcomes:qualityreporting:2">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetQualityIndicatorsResponse>
+         <urn:AggregatedQualityReport>
+            <urn1:measurementChecksum>CHECKSUM</urn1:measurementChecksum>
+            <urn1:reportingPeriod>
+               <urn1:start>${reportingPeriodStartFromRequest}</urn1:start>
+               <urn1:end>${reportingPeriodStartFromRequest}</urn1:end>
+            </urn1:reportingPeriod>
+            <urn1:reportingSystem>
+               <urn1:hsaId>${logicalAddressFromRequest}</urn1:hsaId>
+               <urn1:name>REPORTING-SYSTEM-NAME</urn1:name>
+            </urn1:reportingSystem>
+            <urn1:reportingOrganization>
+               <urn1:hsaId>REPORTING-ORG-HSAID</urn1:hsaId>
+               <urn1:name>REPORTING-ORG-NAME</urn1:name>
+            </urn1:reportingOrganization>
+            <urn1:measurement>
+               <urn1:measureId>
+                  <urn1:root>${measureIdRootFromRequest}</urn1:root>
+                  <urn1:extension>${measureIdExtensionFromRequest}</urn1:extension>
+               </urn1:measureId>
+               <urn1:measureIdVersionNumber>1</urn1:measureIdVersionNumber>
+               <urn1:measurePeriod>
+                  <urn1:start>20130301</urn1:start>
+                  <urn1:end>20130331</urn1:end>
+               </urn1:measurePeriod>
+               <urn1:firstServiceEncounter>20130310</urn1:firstServiceEncounter>
+               <urn1:lastServiceEncounter>20130320</urn1:lastServiceEncounter>
+               <urn1:proportionMeasure>
+                  <urn1:rate>0.5</urn1:rate>
+                  <urn1:denominator>10</urn1:denominator>
+                  <urn1:numerator>5</urn1:numerator>
+               </urn1:proportionMeasure>
+               <urn1:performingOrganization>
+                  <urn1:hsaId>SE2321000016-XXXX</urn1:hsaId>
+                  <urn1:organizationName>Vårdenhet under län</urn1:organizationName>
+                  <urn1:organizationType>Vardenhet</urn1:organizationType>
+                  <urn1:asOrganizationPartOf>
+                     <urn1:organizationName>Stockholm</urn1:organizationName>
+                     <urn1:organizationType>Lan</urn1:organizationType>
+                     <urn1:organizationId>
+                        <urn1:root>1.2.752.129.2.2.1.18</urn1:root>
+                        <urn1:extension>01</urn1:extension>
+                     </urn1:organizationId>
+                     <urn1:asOrganizationPartOf>
+                        <urn1:organizationName>Riket</urn1:organizationName>
+                        <urn1:organizationType>Land</urn1:organizationType>
+                        <urn1:organizationId>
+                           <urn1:root>1.2.752.129.2.2.1.19</urn1:root>
+                           <urn1:extension>SE</urn1:extension>
+                        </urn1:organizationId>
+                     </urn1:asOrganizationPartOf>
+                  </urn1:asOrganizationPartOf>
+               </urn1:performingOrganization>
+               <urn1:sourceSystem>
+                  <urn1:systemId>
+                     <urn1:root>1.2.752.129.2.1.2.1</urn1:root>
+                     <urn1:extension>SOURCE-SYSTEM-ID</urn1:extension>
+                  </urn1:systemId>
+                  <urn1:name>SOURCE-SYSTEM-NAME</urn1:name>
+               </urn1:sourceSystem>
+            </urn1:measurement>
+         </urn:AggregatedQualityReport>
+         <!--You may enter ANY elements at this point-->
+      </urn:GetQualityIndicatorsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2:GetQualityIndicators"/></con:response><con:response name="Response-SVRG-Land" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2" xmlns:urn1="urn:riv:followup:groupoutcomes:qualityreporting:2">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetQualityIndicatorsResponse>
+         <urn:AggregatedQualityReport>
+            <urn1:measurementChecksum>CHECKSUM</urn1:measurementChecksum>
+            <urn1:reportingPeriod>
+               <urn1:start>${reportingPeriodStartFromRequest}</urn1:start>
+               <urn1:end>${reportingPeriodStartFromRequest}</urn1:end>
+            </urn1:reportingPeriod>
+            <urn1:reportingSystem>
+               <urn1:hsaId>${logicalAddressFromRequest}</urn1:hsaId>
+               <urn1:name>REPORTING-SYSTEM-NAME</urn1:name>
+            </urn1:reportingSystem>
+            <urn1:reportingOrganization>
+               <urn1:hsaId>REPORTING-ORG-HSAID</urn1:hsaId>
+               <urn1:name>REPORTING-ORG-NAME</urn1:name>
+            </urn1:reportingOrganization>
+            <urn1:measurement>
+               <urn1:measureId>
+                  <urn1:root>${measureIdRootFromRequest}</urn1:root>
+                  <urn1:extension>${measureIdExtensionFromRequest}</urn1:extension>
+               </urn1:measureId>
+               <urn1:measureIdVersionNumber>1</urn1:measureIdVersionNumber>
+               <urn1:measurePeriod>
+                  <urn1:start>20130301</urn1:start>
+                  <urn1:end>20130331</urn1:end>
+               </urn1:measurePeriod>
+               <urn1:firstServiceEncounter>20130310</urn1:firstServiceEncounter>
+               <urn1:lastServiceEncounter>20130320</urn1:lastServiceEncounter>
+               <urn1:proportionMeasure>
+                  <urn1:rate>0.5</urn1:rate>
+                  <urn1:denominator>10</urn1:denominator>
+                  <urn1:numerator>5</urn1:numerator>
+               </urn1:proportionMeasure>
+               <urn1:performingOrganization>
+                  <urn1:organizationName>Stockholms sjukvårdsregion</urn1:organizationName>
+                  <urn1:organizationType>Sjukvardsregion</urn1:organizationType>
+                  <urn1:organizationId>
+                     <urn1:root>OID</urn1:root>
+                     <urn1:extension>TBD</urn1:extension>
+                  </urn1:organizationId>
+                  <urn1:asOrganizationPartOf>
+                     <urn1:organizationName>Riket</urn1:organizationName>
+                     <urn1:organizationType>Land</urn1:organizationType>
+                     <urn1:organizationId>
+                        <urn1:root>1.2.752.129.2.2.1.19</urn1:root>
+                        <urn1:extension>SE</urn1:extension>
+                     </urn1:organizationId>
+                  </urn1:asOrganizationPartOf>
+               </urn1:performingOrganization>
+               <urn1:sourceSystem>
+                  <urn1:systemId>
+                     <urn1:root>1.2.752.129.2.1.2.1</urn1:root>
+                     <urn1:extension>SOURCE-SYSTEM-ID</urn1:extension>
+                  </urn1:systemId>
+                  <urn1:name>SOURCE-SYSTEM-NAME</urn1:name>
+               </urn1:sourceSystem>
+            </urn1:measurement>
+         </urn:AggregatedQualityReport>
+      </urn:GetQualityIndicatorsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2:GetQualityIndicators"/></con:response><con:response name="Response-Kommun-Lan-Land" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2" xmlns:urn1="urn:riv:followup:groupoutcomes:qualityreporting:2">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetQualityIndicatorsResponse>
+         <urn:AggregatedQualityReport>
+            <urn1:measurementChecksum>CHECKSUM</urn1:measurementChecksum>
+            <urn1:reportingPeriod>
+               <urn1:start>${reportingPeriodStartFromRequest}</urn1:start>
+               <urn1:end>${reportingPeriodStartFromRequest}</urn1:end>
+            </urn1:reportingPeriod>
+            <urn1:reportingSystem>
+               <urn1:hsaId>${logicalAddressFromRequest}</urn1:hsaId>
+               <urn1:name>REPORTING-SYSTEM-NAME</urn1:name>
+            </urn1:reportingSystem>
+            <urn1:reportingOrganization>
+               <urn1:hsaId>REPORTING-ORG-HSAID</urn1:hsaId>
+               <urn1:name>REPORTING-ORG-NAME</urn1:name>
+            </urn1:reportingOrganization>
+            <urn1:measurement>
+               <urn1:measureId>
+                  <urn1:root>${measureIdRootFromRequest}</urn1:root>
+                  <urn1:extension>${measureIdExtensionFromRequest}</urn1:extension>
+               </urn1:measureId>
+               <urn1:measureIdVersionNumber>1</urn1:measureIdVersionNumber>
+               <urn1:measurePeriod>
+                  <urn1:start>20130301</urn1:start>
+                  <urn1:end>20130331</urn1:end>
+               </urn1:measurePeriod>
+               <urn1:firstServiceEncounter>20130310</urn1:firstServiceEncounter>
+               <urn1:lastServiceEncounter>20130320</urn1:lastServiceEncounter>
+               <urn1:proportionMeasure>
+                  <urn1:rate>0.5</urn1:rate>
+                  <urn1:denominator>10</urn1:denominator>
+                  <urn1:numerator>5</urn1:numerator>
+               </urn1:proportionMeasure>
+               <urn1:performingOrganization>
+                  <urn1:organizationName>Solna</urn1:organizationName>
+                  <urn1:organizationType>Kommun</urn1:organizationType>
+                  <urn1:organizationId>
+                     <urn1:root>1.2.752.129.2.2.1.17</urn1:root>
+                     <urn1:extension>0184</urn1:extension>
+                  </urn1:organizationId>
+                  <urn1:asOrganizationPartOf>
+                     <urn1:organizationName>Stockholm</urn1:organizationName>
+                     <urn1:organizationType>Lan</urn1:organizationType>
+                     <urn1:organizationId>
+                        <urn1:root>1.2.752.129.2.2.1.18</urn1:root>
+                        <urn1:extension>01</urn1:extension>
+                     </urn1:organizationId>
+                     <urn1:asOrganizationPartOf>
+                        <urn1:organizationName>Riket</urn1:organizationName>
+                        <urn1:organizationType>Land</urn1:organizationType>
+                        <urn1:organizationId>
+                           <urn1:root>1.2.752.129.2.2.1.19</urn1:root>
+                           <urn1:extension>SE</urn1:extension>
+                        </urn1:organizationId>
+                     </urn1:asOrganizationPartOf>
+                  </urn1:asOrganizationPartOf>
+               </urn1:performingOrganization>
+               <urn1:sourceSystem>
+                  <urn1:systemId>
+                     <urn1:root>1.2.752.129.2.1.2.1</urn1:root>
+                     <urn1:extension>SOURCE-SYSTEM-ID</urn1:extension>
+                  </urn1:systemId>
+                  <urn1:name>SOURCE-SYSTEM-NAME</urn1:name>
+               </urn1:sourceSystem>
+            </urn1:measurement>
+         </urn:AggregatedQualityReport>
+         <!--You may enter ANY elements at this point-->
+      </urn:GetQualityIndicatorsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2:GetQualityIndicators"/></con:response><con:response name="Response-SJH-Lan-Land" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2" xmlns:urn1="urn:riv:followup:groupoutcomes:qualityreporting:2">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetQualityIndicatorsResponse>
+         <urn:AggregatedQualityReport>
+            <urn1:measurementChecksum>CHECKSUM</urn1:measurementChecksum>
+            <urn1:reportingPeriod>
+               <urn1:start>${reportingPeriodStartFromRequest}</urn1:start>
+               <urn1:end>${reportingPeriodStartFromRequest}</urn1:end>
+            </urn1:reportingPeriod>
+            <urn1:reportingSystem>
+               <urn1:hsaId>${logicalAddressFromRequest}</urn1:hsaId>
+               <urn1:name>REPORTING-SYSTEM-NAME</urn1:name>
+            </urn1:reportingSystem>
+            <urn1:reportingOrganization>
+               <urn1:hsaId>REPORTING-ORG-HSAID</urn1:hsaId>
+               <urn1:name>REPORTING-ORG-NAME</urn1:name>
+            </urn1:reportingOrganization>
+            <urn1:measurement>
+               <urn1:measureId>
+                  <urn1:root>${measureIdRootFromRequest}</urn1:root>
+                  <urn1:extension>${measureIdExtensionFromRequest}</urn1:extension>
+               </urn1:measureId>
+               <urn1:measureIdVersionNumber>1</urn1:measureIdVersionNumber>
+               <urn1:measurePeriod>
+                  <urn1:start>20130301</urn1:start>
+                  <urn1:end>20130331</urn1:end>
+               </urn1:measurePeriod>
+               <urn1:firstServiceEncounter>20130310</urn1:firstServiceEncounter>
+               <urn1:lastServiceEncounter>20130320</urn1:lastServiceEncounter>
+               <urn1:proportionMeasure>
+                  <urn1:rate>0.5</urn1:rate>
+                  <urn1:denominator>10</urn1:denominator>
+                  <urn1:numerator>5</urn1:numerator>
+               </urn1:proportionMeasure>
+               <urn1:performingOrganization>
+                  <urn1:organizationName>S:t Eriks sjukhus</urn1:organizationName>
+                  <urn1:organizationType>Sjukhus</urn1:organizationType>
+                  <urn1:organizationId>
+                     <urn1:root>1.2.826.0.1.3680043.9.4672.5</urn1:root>
+                     <urn1:extension>10012</urn1:extension>
+                  </urn1:organizationId>
+                  <urn1:asOrganizationPartOf>
+                     <urn1:organizationName>Stockholm</urn1:organizationName>
+                     <urn1:organizationType>Lan</urn1:organizationType>
+                     <urn1:organizationId>
+                        <urn1:root>1.2.752.129.2.2.1.18</urn1:root>
+                        <urn1:extension>01</urn1:extension>
+                     </urn1:organizationId>
+                     <urn1:asOrganizationPartOf>
+                        <urn1:organizationName>Riket</urn1:organizationName>
+                        <urn1:organizationType>Land</urn1:organizationType>
+                        <urn1:organizationId>
+                           <urn1:root>1.2.752.129.2.2.1.19</urn1:root>
+                           <urn1:extension>SE</urn1:extension>
+                        </urn1:organizationId>
+                     </urn1:asOrganizationPartOf>
+                  </urn1:asOrganizationPartOf>
+               </urn1:performingOrganization>
+               <urn1:sourceSystem>
+                  <urn1:systemId>
+                     <urn1:root>1.2.752.129.2.1.2.1</urn1:root>
+                     <urn1:extension>SOURCE-SYSTEM-ID</urn1:extension>
+                  </urn1:systemId>
+                  <urn1:name>SOURCE-SYSTEM-NAME</urn1:name>
+               </urn1:sourceSystem>
+            </urn1:measurement>
+         </urn:AggregatedQualityReport>
+         <!--You may enter ANY elements at this point-->
+      </urn:GetQualityIndicatorsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2:GetQualityIndicators"/></con:response><con:response name="Response-VE-Kommun-Lan-Land" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2" xmlns:urn1="urn:riv:followup:groupoutcomes:qualityreporting:2">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetQualityIndicatorsResponse>
+         <urn:AggregatedQualityReport>
+            <urn1:measurementChecksum>CHECKSUM</urn1:measurementChecksum>
+            <urn1:reportingPeriod>
+               <urn1:start>${reportingPeriodStartFromRequest}</urn1:start>
+               <urn1:end>${reportingPeriodStartFromRequest}</urn1:end>
+            </urn1:reportingPeriod>
+            <urn1:reportingSystem>
+               <urn1:hsaId>${logicalAddressFromRequest}</urn1:hsaId>
+               <urn1:name>REPORTING-SYSTEM-NAME</urn1:name>
+            </urn1:reportingSystem>
+            <urn1:reportingOrganization>
+               <urn1:hsaId>REPORTING-ORG-HSAID</urn1:hsaId>
+               <urn1:name>REPORTING-ORG-NAME</urn1:name>
+            </urn1:reportingOrganization>
+            <urn1:measurement>
+               <urn1:measureId>
+                  <urn1:root>${measureIdRootFromRequest}</urn1:root>
+                  <urn1:extension>${measureIdExtensionFromRequest}</urn1:extension>
+               </urn1:measureId>
+               <urn1:measureIdVersionNumber>1</urn1:measureIdVersionNumber>
+               <urn1:measurePeriod>
+                  <urn1:start>20130301</urn1:start>
+                  <urn1:end>20130331</urn1:end>
+               </urn1:measurePeriod>
+               <urn1:firstServiceEncounter>20130310</urn1:firstServiceEncounter>
+               <urn1:lastServiceEncounter>20130320</urn1:lastServiceEncounter>
+               <urn1:proportionMeasure>
+                  <urn1:rate>0.5</urn1:rate>
+                  <urn1:denominator>10</urn1:denominator>
+                  <urn1:numerator>5</urn1:numerator>
+               </urn1:proportionMeasure>
+               <urn1:performingOrganization>
+                  <urn1:hsaId>SE2321000016-YYYY</urn1:hsaId>
+                  <urn1:organizationName>Vårdenhet under Kommun</urn1:organizationName>
+                  <urn1:organizationType>Vardenhet</urn1:organizationType>
+                  <urn1:asOrganizationPartOf>
+                     <urn1:organizationName>Solna</urn1:organizationName>
+                     <urn1:organizationType>Kommun</urn1:organizationType>
+                     <urn1:organizationId>
+                        <urn1:root>1.2.752.129.2.2.1.17</urn1:root>
+                        <urn1:extension>0184</urn1:extension>
+                     </urn1:organizationId>
+                     <urn1:asOrganizationPartOf>
+                        <urn1:organizationName>Stockholm</urn1:organizationName>
+                        <urn1:organizationType>Lan</urn1:organizationType>
+                        <urn1:organizationId>
+                           <urn1:root>1.2.752.129.2.2.1.18</urn1:root>
+                           <urn1:extension>01</urn1:extension>
+                        </urn1:organizationId>
+                        <urn1:asOrganizationPartOf>
+                           <urn1:organizationName>Riket</urn1:organizationName>
+                           <urn1:organizationType>Land</urn1:organizationType>
+                           <urn1:organizationId>
+                              <urn1:root>1.2.752.129.2.2.1.19</urn1:root>
+                              <urn1:extension>SE</urn1:extension>
+                           </urn1:organizationId>
+                        </urn1:asOrganizationPartOf>
+                     </urn1:asOrganizationPartOf>
+                  </urn1:asOrganizationPartOf>
+               </urn1:performingOrganization>
+               <urn1:sourceSystem>
+                  <urn1:systemId>
+                     <urn1:root>1.2.752.129.2.1.2.1</urn1:root>
+                     <urn1:extension>SOURCE-SYSTEM-ID</urn1:extension>
+                  </urn1:systemId>
+                  <urn1:name>SOURCE-SYSTEM-NAME</urn1:name>
+               </urn1:sourceSystem>
+            </urn1:measurement>
+         </urn:AggregatedQualityReport>
+         <!--You may enter ANY elements at this point-->
+      </urn:GetQualityIndicatorsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2:GetQualityIndicators"/></con:response><con:response name="Response-VE-SJH-Lan-Land" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2" xmlns:urn1="urn:riv:followup:groupoutcomes:qualityreporting:2">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetQualityIndicatorsResponse>
+         <urn:AggregatedQualityReport>
+            <urn1:measurementChecksum>CHECKSUM</urn1:measurementChecksum>
+            <urn1:reportingPeriod>
+               <urn1:start>${reportingPeriodStartFromRequest}</urn1:start>
+               <urn1:end>${reportingPeriodStartFromRequest}</urn1:end>
+            </urn1:reportingPeriod>
+            <urn1:reportingSystem>
+               <urn1:hsaId>${logicalAddressFromRequest}</urn1:hsaId>
+               <urn1:name>REPORTING-SYSTEM-NAME</urn1:name>
+            </urn1:reportingSystem>
+            <urn1:reportingOrganization>
+               <urn1:hsaId>REPORTING-ORG-HSAID</urn1:hsaId>
+               <urn1:name>REPORTING-ORG-NAME</urn1:name>
+            </urn1:reportingOrganization>
+            <urn1:measurement>
+               <urn1:measureId>
+                  <urn1:root>${measureIdRootFromRequest}</urn1:root>
+                  <urn1:extension>${measureIdExtensionFromRequest}</urn1:extension>
+               </urn1:measureId>
+               <urn1:measureIdVersionNumber>1</urn1:measureIdVersionNumber>
+               <urn1:measurePeriod>
+                  <urn1:start>20130301</urn1:start>
+                  <urn1:end>20130331</urn1:end>
+               </urn1:measurePeriod>
+               <urn1:firstServiceEncounter>20130310</urn1:firstServiceEncounter>
+               <urn1:lastServiceEncounter>20130320</urn1:lastServiceEncounter>
+               <urn1:proportionMeasure>
+                  <urn1:rate>0.5</urn1:rate>
+                  <urn1:denominator>10</urn1:denominator>
+                  <urn1:numerator>5</urn1:numerator>
+               </urn1:proportionMeasure>
+               <urn1:performingOrganization>
+                  <urn1:hsaId>SE2321000016-ZZZZ</urn1:hsaId>
+                  <urn1:organizationName>Vårdenhet under sjukhus</urn1:organizationName>
+                  <urn1:organizationType>Vardenhet</urn1:organizationType>
+                  <urn1:asOrganizationPartOf>
+                     <urn1:organizationName>S:t Eriks sjukhus</urn1:organizationName>
+                     <urn1:organizationType>Sjukhus</urn1:organizationType>
+                     <urn1:organizationId>
+                        <urn1:root>1.2.826.0.1.3680043.9.4672.5</urn1:root>
+                        <urn1:extension>10012</urn1:extension>
+                     </urn1:organizationId>
+                     <urn1:asOrganizationPartOf>
+                        <urn1:organizationName>Stockholm</urn1:organizationName>
+                        <urn1:organizationType>Lan</urn1:organizationType>
+                        <urn1:organizationId>
+                           <urn1:root>1.2.752.129.2.2.1.18</urn1:root>
+                           <urn1:extension>01</urn1:extension>
+                        </urn1:organizationId>
+                        <urn1:asOrganizationPartOf>
+                           <urn1:organizationName>Riket</urn1:organizationName>
+                           <urn1:organizationType>Land</urn1:organizationType>
+                           <urn1:organizationId>
+                              <urn1:root>1.2.752.129.2.2.1.19</urn1:root>
+                              <urn1:extension>SE</urn1:extension>
+                           </urn1:organizationId>
+                        </urn1:asOrganizationPartOf>
+                     </urn1:asOrganizationPartOf>
+                  </urn1:asOrganizationPartOf>
+               </urn1:performingOrganization>
+               <urn1:sourceSystem>
+                  <urn1:systemId>
+                     <urn1:root>1.2.752.129.2.1.2.1</urn1:root>
+                     <urn1:extension>SOURCE-SYSTEM-ID</urn1:extension>
+                  </urn1:systemId>
+                  <urn1:name>SOURCE-SYSTEM-NAME</urn1:name>
+               </urn1:sourceSystem>
+            </urn1:measurement>
+         </urn:AggregatedQualityReport>
+         <!--You may enter ANY elements at this point-->
+      </urn:GetQualityIndicatorsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2:GetQualityIndicators"/></con:response><con:response name="Response-CHECKSUM-ONLY" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2" xmlns:urn1="urn:riv:followup:groupoutcomes:qualityreporting:2">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetQualityIndicatorsResponse>
+         <urn:AggregatedQualityReport>
+            <urn1:measurementChecksum>CHECKSUM</urn1:measurementChecksum>
+            <urn1:reportingPeriod>
+               <urn1:start>${reportingPeriodStartFromRequest}</urn1:start>
+               <urn1:end>${reportingPeriodStartFromRequest}</urn1:end>
+            </urn1:reportingPeriod>
+            <urn1:reportingSystem>
+               <urn1:hsaId>${logicalAddressFromRequest}</urn1:hsaId>
+               <urn1:name>REPORTING-SYSTEM-NAME</urn1:name>
+            </urn1:reportingSystem>
+            <urn1:reportingOrganization>
+               <urn1:hsaId>REPORTING-ORG-HSAID</urn1:hsaId>
+               <urn1:name>REPORTING-ORG-NAME</urn1:name>
+            </urn1:reportingOrganization>
+         </urn:AggregatedQualityReport>
+      </urn:GetQualityIndicatorsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2:GetQualityIndicators"/></con:response><con:response name="Response-ProportionMeasure-Land" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2" xmlns:urn1="urn:riv:followup:groupoutcomes:qualityreporting:2">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetQualityIndicatorsResponse>
+         <urn:AggregatedQualityReport>
+            <urn1:measurementChecksum>CHECKSUM</urn1:measurementChecksum>
+            <urn1:reportingPeriod>
+               <urn1:start>${reportingPeriodStartFromRequest}</urn1:start>
+               <urn1:end>${reportingPeriodStartFromRequest}</urn1:end>
+            </urn1:reportingPeriod>
+            <urn1:reportingSystem>
+               <urn1:hsaId>${logicalAddressFromRequest}</urn1:hsaId>
+               <urn1:name>REPORTING-SYSTEM-NAME</urn1:name>
+            </urn1:reportingSystem>
+            <urn1:reportingOrganization>
+               <urn1:hsaId>REPORTING-ORG-HSAID</urn1:hsaId>
+               <urn1:name>REPORTING-ORG-NAME</urn1:name>
+            </urn1:reportingOrganization>
+            <urn1:measurement>
+               <urn1:measureId>
+                  <urn1:root>${measureIdRootFromRequest}</urn1:root>
+                  <urn1:extension>${measureIdExtensionFromRequest}</urn1:extension>
+               </urn1:measureId>
+               <urn1:measureIdVersionNumber>1</urn1:measureIdVersionNumber>
+               <urn1:measurePeriod>
+                  <urn1:start>20130301</urn1:start>
+                  <urn1:end>20130331</urn1:end>
+               </urn1:measurePeriod>
+               <urn1:firstServiceEncounter>20130310</urn1:firstServiceEncounter>
+               <urn1:lastServiceEncounter>20130320</urn1:lastServiceEncounter>
+               <urn1:proportionMeasure>
+                  <urn1:rate>1.0</urn1:rate>
+                  <urn1:denominator>10</urn1:denominator>
+                  <urn1:numerator>5</urn1:numerator>
+                  <!--urn1:confidenceInterval95percent>
+                    <urn1:low></urn1:low>
+                    <urn1:high></urn1:high>
+                </urn1:confidenceInterval95percent>
+                <urn1:standardDeviation></urn1:standardDeviation-->
+                <urn1:coverage>0</urn1:coverage>
+                <!--urn1:exclusions></urn1:exclusions>
+                <urn1:referenceIntervalRate></urn1:referenceIntervalRate-->
+               </urn1:proportionMeasure>
+               <urn1:performingOrganization>
+                  <urn1:organizationName>Riket</urn1:organizationName>
+                  <urn1:organizationType>Land</urn1:organizationType>
+                  <urn1:organizationId>
+                     <urn1:root>1.2.752.129.2.2.1.19</urn1:root>
+                     <urn1:extension>SE</urn1:extension>
+                  </urn1:organizationId>
+               </urn1:performingOrganization>
+               <urn1:sourceSystem>
+                  <urn1:systemId>
+                     <urn1:root>1.2.752.129.2.1.2.1</urn1:root>
+                     <urn1:extension>SOURCE-SYSTEM-LOCAL-ID</urn1:extension>
+                  </urn1:systemId>
+                  <urn1:name>SOURCE-SYSTEM-NAME</urn1:name>
+               </urn1:sourceSystem>
+            </urn1:measurement>
+         </urn:AggregatedQualityReport>
+      </urn:GetQualityIndicatorsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2:GetQualityIndicators"/></con:response><con:response name="Response-ContinuousMeasure-Land" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2" xmlns:urn1="urn:riv:followup:groupoutcomes:qualityreporting:2">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetQualityIndicatorsResponse>
+         <urn:AggregatedQualityReport>
+            <urn1:measurementChecksum>CHECKSUM</urn1:measurementChecksum>
+            <urn1:reportingPeriod>
+               <urn1:start>${reportingPeriodStartFromRequest}</urn1:start>
+               <urn1:end>${reportingPeriodStartFromRequest}</urn1:end>
+            </urn1:reportingPeriod>
+            <urn1:reportingSystem>
+               <urn1:hsaId>${logicalAddressFromRequest}</urn1:hsaId>
+               <urn1:name>REPORTING-SYSTEM-NAME</urn1:name>
+            </urn1:reportingSystem>
+            <urn1:reportingOrganization>
+               <urn1:hsaId>REPORTING-ORG-HSAID</urn1:hsaId>
+               <urn1:name>REPORTING-ORG-NAME</urn1:name>
+            </urn1:reportingOrganization>
+            <urn1:measurement>
+               <urn1:measureId>
+                  <urn1:root>${measureIdRootFromRequest}</urn1:root>
+                  <urn1:extension>${measureIdExtensionFromRequest}</urn1:extension>
+               </urn1:measureId>
+               <urn1:measureIdVersionNumber>1</urn1:measureIdVersionNumber>
+               <urn1:measurePeriod>
+                  <urn1:start>20130301</urn1:start>
+                  <urn1:end>20130331</urn1:end>
+               </urn1:measurePeriod>
+               <urn1:firstServiceEncounter>20130310</urn1:firstServiceEncounter>
+               <urn1:lastServiceEncounter>20130320</urn1:lastServiceEncounter>
+               <urn1:continuousVariableMeasure>
+                <urn1:measurePopulation>1000</urn1:measurePopulation>
+                <urn1:value>5</urn1:value>
+                <!--urn1:confidenceInterval95percent>
+                    <urn1:low></urn1:low>
+                    <urn1:high></urn1:high>
+                </urn1:confidenceInterval95percent>
+                <urn1:standardDeviation></urn1:standardDeviation-->
+                <urn1:coverage>0.5</urn1:coverage>
+                <!--urn1:exclusions></urn1:exclusions>
+                <urn1:referenceIntervalValue></urn1:referenceIntervalValue-->
+            </urn1:continuousVariableMeasure>
+               <urn1:performingOrganization>
+                  <urn1:organizationName>Riket</urn1:organizationName>
+                  <urn1:organizationType>Land</urn1:organizationType>
+                  <urn1:organizationId>
+                     <urn1:root>1.2.752.129.2.2.1.19</urn1:root>
+                     <urn1:extension>SE</urn1:extension>
+                  </urn1:organizationId>
+               </urn1:performingOrganization>
+               <urn1:sourceSystem>
+                  <urn1:systemId>
+                     <urn1:root>1.2.752.129.2.1.2.1</urn1:root>
+                     <urn1:extension>SOURCE-SYSTEM-LOCAL-ID</urn1:extension>
+                  </urn1:systemId>
+                  <urn1:name>SOURCE-SYSTEM-NAME</urn1:name>
+               </urn1:sourceSystem>
+            </urn1:measurement>
+         </urn:AggregatedQualityReport>
+      </urn:GetQualityIndicatorsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2:GetQualityIndicators"/></con:response><con:response name="Response-CohortMeasure-Land" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2" xmlns:urn1="urn:riv:followup:groupoutcomes:qualityreporting:2">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetQualityIndicatorsResponse>
+         <urn:AggregatedQualityReport>
+            <urn1:measurementChecksum>CHECKSUM</urn1:measurementChecksum>
+            <urn1:reportingPeriod>
+               <urn1:start>${reportingPeriodStartFromRequest}</urn1:start>
+               <urn1:end>${reportingPeriodStartFromRequest}</urn1:end>
+            </urn1:reportingPeriod>
+            <urn1:reportingSystem>
+               <urn1:hsaId>${logicalAddressFromRequest}</urn1:hsaId>
+               <urn1:name>REPORTING-SYSTEM-NAME</urn1:name>
+            </urn1:reportingSystem>
+            <urn1:reportingOrganization>
+               <urn1:hsaId>REPORTING-ORG-HSAID</urn1:hsaId>
+               <urn1:name>REPORTING-ORG-NAME</urn1:name>
+            </urn1:reportingOrganization>
+            <urn1:measurement>
+               <urn1:measureId>
+                  <urn1:root>${measureIdRootFromRequest}</urn1:root>
+                  <urn1:extension>${measureIdExtensionFromRequest}</urn1:extension>
+               </urn1:measureId>
+               <urn1:measureIdVersionNumber>1</urn1:measureIdVersionNumber>
+               <urn1:measurePeriod>
+                  <urn1:start>20130301</urn1:start>
+                  <urn1:end>20130331</urn1:end>
+               </urn1:measurePeriod>
+               <urn1:firstServiceEncounter>20130310</urn1:firstServiceEncounter>
+               <urn1:lastServiceEncounter>20130320</urn1:lastServiceEncounter>
+               <urn1:cohortMeasure>
+                  <urn1:cohort>1002</urn1:cohort>
+                  <!--urn1:confidenceInterval95percent>
+                    <urn1:low></urn1:low>
+                    <urn1:high></urn1:high>
+                </urn1:confidenceInterval95percent>
+                <urn1:standardDeviation></urn1:standardDeviation-->
+                <urn1:coverage>0.5</urn1:coverage>
+                <!--urn1:exclusions></urn1:exclusions>
+                <urn1:referenceIntervalValue></urn1:referenceIntervalValue-->
+               </urn1:cohortMeasure>
+               <urn1:performingOrganization>
+                  <urn1:organizationName>Riket</urn1:organizationName>
+                  <urn1:organizationType>Land</urn1:organizationType>
+                  <urn1:organizationId>
+                     <urn1:root>1.2.752.129.2.2.1.19</urn1:root>
+                     <urn1:extension>SE</urn1:extension>
+                  </urn1:organizationId>
+               </urn1:performingOrganization>
+               <urn1:sourceSystem>
+                  <urn1:systemId>
+                     <urn1:root>1.2.752.129.2.1.2.1</urn1:root>
+                     <urn1:extension>SOURCE-SYSTEM-LOCAL-ID</urn1:extension>
+                  </urn1:systemId>
+                  <urn1:name>SOURCE-SYSTEM-NAME</urn1:name>
+               </urn1:sourceSystem>
+            </urn1:measurement>
+         </urn:AggregatedQualityReport>
+      </urn:GetQualityIndicatorsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2:GetQualityIndicators"/></con:response><con:response name="Response-MissingMeasure-Land" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2" xmlns:urn1="urn:riv:followup:groupoutcomes:qualityreporting:2">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:GetQualityIndicatorsResponse>
+         <urn:AggregatedQualityReport>
+            <urn1:measurementChecksum>CHECKSUM</urn1:measurementChecksum>
+            <urn1:reportingPeriod>
+               <urn1:start>${reportingPeriodStartFromRequest}</urn1:start>
+               <urn1:end>${reportingPeriodStartFromRequest}</urn1:end>
+            </urn1:reportingPeriod>
+            <urn1:reportingSystem>
+               <urn1:hsaId>${logicalAddressFromRequest}</urn1:hsaId>
+               <urn1:name>REPORTING-SYSTEM-NAME</urn1:name>
+            </urn1:reportingSystem>
+            <urn1:reportingOrganization>
+               <urn1:hsaId>REPORTING-ORG-HSAID</urn1:hsaId>
+               <urn1:name>REPORTING-ORG-NAME</urn1:name>
+            </urn1:reportingOrganization>
+            <urn1:measurement>
+               <urn1:measureId>
+                  <urn1:root>${measureIdRootFromRequest}</urn1:root>
+                  <urn1:extension>${measureIdExtensionFromRequest}</urn1:extension>
+               </urn1:measureId>
+               <urn1:measureIdVersionNumber>1</urn1:measureIdVersionNumber>
+               <urn1:measurePeriod>
+                  <urn1:start>20130301</urn1:start>
+                  <urn1:end>20130331</urn1:end>
+               </urn1:measurePeriod>
+               <urn1:firstServiceEncounter>20130310</urn1:firstServiceEncounter>
+               <urn1:lastServiceEncounter>20130320</urn1:lastServiceEncounter>
+               <urn1:missingMeasure>
+                  <urn1:reasonCode>UNK</urn1:reasonCode>
+               </urn1:missingMeasure>
+               <urn1:performingOrganization>
+                  <urn1:organizationName>Riket</urn1:organizationName>
+                  <urn1:organizationType>Land</urn1:organizationType>
+                  <urn1:organizationId>
+                     <urn1:root>1.2.752.129.2.2.1.19</urn1:root>
+                     <urn1:extension>SE</urn1:extension>
+                  </urn1:organizationId>
+               </urn1:performingOrganization>
+               <urn1:sourceSystem>
+                  <urn1:systemId>
+                     <urn1:root>1.2.752.129.2.1.2.1</urn1:root>
+                     <urn1:extension>SOURCE-SYSTEM-LOCAL-ID</urn1:extension>
+                  </urn1:systemId>
+                  <urn1:name>SOURCE-SYSTEM-NAME</urn1:name>
+               </urn1:sourceSystem>
+            </urn1:measurement>
+         </urn:AggregatedQualityReport>
+      </urn:GetQualityIndicatorsResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:riv:followup:groupoutcomes:qualityreporting:GetQualityIndicatorsResponder:2:GetQualityIndicators"/></con:response><con:dispatchConfig/></con:mockOperation></con:mockService><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
